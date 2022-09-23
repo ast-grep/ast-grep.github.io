@@ -40,7 +40,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
         with:
-          version: 6.16.0
+          version: 7.12.2
           run_install: |
               - cwd: ./website
                 recursive: true
