@@ -35,7 +35,7 @@ jobs:
           node-version: '16'
 
       - name: Build WASM
-        run: cd crates/wasm && wasm-pack build --target web && cd pkg && npm install && ls
+        run: cd crates/wasm && wasm-pack build --target web && cd pkg && npm install
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
@@ -46,7 +46,7 @@ jobs:
                 recursive: true
 
       - name: Vite Build 🔧
-        run: ls crates/wasm/pkg && cd website && pnpm build
+        run: cd website && pnpm build
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -67,4 +67,3 @@ jobs:
       - name: Deploy to GitHub Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v1
-
