@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@algolia/client-search': 4.14.2
@@ -23,13 +23,13 @@ dependencies:
   web-tree-sitter: 0.20.7
 
 optionalDependencies:
-  ast-grep-wasm: link:../crates/wasm/pkg
+  ast-grep-wasm: file:../crates/wasm/pkg
 
 devDependencies:
   '@algolia/client-search': 4.14.2
   typescript: 4.8.3
   vite: 3.1.2
-  vitepress: 1.0.0-alpha.15_@algolia+client-search@4.14.2
+  vitepress: 1.0.0-alpha.15_tbpndr44ulefs3hehwpi2mkf2y
   vue-tsc: 0.40.13_typescript@4.8.3
 
 packages:
@@ -40,7 +40,7 @@ packages:
       '@algolia/autocomplete-shared': 1.7.1
     dev: true
 
-  /@algolia/autocomplete-preset-algolia/1.7.1_84bcb575a7c193a76ce9e48bebb63fd7:
+  /@algolia/autocomplete-preset-algolia/1.7.1_qs6lk5nhygj2o3hj4sf6xnr724:
     resolution: {integrity: sha512-pJwmIxeJCymU1M6cGujnaIYcY3QPOVYZOXhFkWVM7IxKzy272BwCvMFMyc5NpG/QmiObBxjo7myd060OeTNJXg==}
     peerDependencies:
       '@algolia/client-search': ^4.9.1
@@ -172,10 +172,10 @@ packages:
     resolution: {integrity: sha512-gaP6TxxwQC+K8D6TRx5WULUWKrcbzECOPA2KCVMuI+6C7dNiGUk5yXXzVhc5sld79XKYLnO9DRTI4mjXDYkh+g==}
     dev: true
 
-  /@docsearch/js/3.2.1_@algolia+client-search@4.14.2:
+  /@docsearch/js/3.2.1_tbpndr44ulefs3hehwpi2mkf2y:
     resolution: {integrity: sha512-H1PekEtSeS0msetR2YGGey2w7jQ2wAKfGODJvQTygSwMgUZ+2DHpzUgeDyEBIXRIfaBcoQneqrzsljM62pm6Xg==}
     dependencies:
-      '@docsearch/react': 3.2.1_@algolia+client-search@4.14.2
+      '@docsearch/react': 3.2.1_tbpndr44ulefs3hehwpi2mkf2y
       preact: 10.11.0
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -184,7 +184,7 @@ packages:
       - react-dom
     dev: true
 
-  /@docsearch/react/3.2.1_@algolia+client-search@4.14.2:
+  /@docsearch/react/3.2.1_tbpndr44ulefs3hehwpi2mkf2y:
     resolution: {integrity: sha512-EzTQ/y82s14IQC5XVestiK/kFFMe2aagoYFuTAIfIb/e+4FU7kSMKonRtLwsCiLQHmjvNQq+HO+33giJ5YVtaQ==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
@@ -199,7 +199,7 @@ packages:
         optional: true
     dependencies:
       '@algolia/autocomplete-core': 1.7.1
-      '@algolia/autocomplete-preset-algolia': 1.7.1_84bcb575a7c193a76ce9e48bebb63fd7
+      '@algolia/autocomplete-preset-algolia': 1.7.1_qs6lk5nhygj2o3hj4sf6xnr724
       '@docsearch/css': 3.2.1
       algoliasearch: 4.14.2
     transitivePeerDependencies:
@@ -887,12 +887,12 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress/1.0.0-alpha.15_@algolia+client-search@4.14.2:
+  /vitepress/1.0.0-alpha.15_tbpndr44ulefs3hehwpi2mkf2y:
     resolution: {integrity: sha512-+pHJQCpnv0wVgLRyonisrj7Y77PVhbns2nTLxV9GkH3T+RTY/W2JmRatzBg5WciMaPyO8Ms6F3YElO5PULVv3w==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.2.1
-      '@docsearch/js': 3.2.1_@algolia+client-search@4.14.2
+      '@docsearch/js': 3.2.1_tbpndr44ulefs3hehwpi2mkf2y
       '@vitejs/plugin-vue': 3.1.0_vite@3.1.2+vue@3.2.39
       '@vue/devtools-api': 6.2.1
       '@vueuse/core': 9.2.0_vue@3.2.39
@@ -968,6 +968,11 @@ packages:
       '@vue/server-renderer': 3.2.39_vue@3.2.39
       '@vue/shared': 3.2.39
 
+  /web-tree-sitter/0.20.5:
+    resolution: {integrity: sha512-mpXlqIeEBE5Q71cnBnt8w6XKhIiKmllPECqsIFBtMvzcfCxA8+614iyMJXBCQo95Vs3y1zORLqiLJn25pYZ4Tw==}
+    dev: false
+    optional: true
+
   /web-tree-sitter/0.20.7:
     resolution: {integrity: sha512-flC9JJmTII9uAeeYpWF8hxDJ7bfY+leldQryetll8Nv4WgI+MXc6h7TiyAZASWl9uC9TvmfdgOjZn1DAQecb3A==}
     dev: false
@@ -980,3 +985,22 @@ packages:
     resolution: {integrity: sha512-o96x3OPo8GjWeSLF+wOAbrPfhFOGY0W00GNaxCDv+9hkcDJEnev1yh8S7pgHF0ik6zc8sQLuL8hjHjJULZp8bw==}
     engines: {node: '>= 14'}
     dev: false
+
+  file:../crates/wasm/pkg:
+    resolution: {directory: ../crates/wasm/pkg, type: directory}
+    name: ast-grep-wasm
+    version: 0.1.5
+    requiresBuild: true
+    dependencies:
+      web-tree-sitter-wasm-bindgen: github.com/silvanshade/web-tree-sitter-wasm-bindgen/27237af5caa2619841b818b28e710349d91a4280
+    dev: false
+    optional: true
+
+  github.com/silvanshade/web-tree-sitter-wasm-bindgen/27237af5caa2619841b818b28e710349d91a4280:
+    resolution: {tarball: https://codeload.github.com/silvanshade/web-tree-sitter-wasm-bindgen/tar.gz/27237af5caa2619841b818b28e710349d91a4280}
+    name: web-tree-sitter-wasm-bindgen
+    version: 0.20.5
+    dependencies:
+      web-tree-sitter: 0.20.5
+    dev: false
+    optional: true
