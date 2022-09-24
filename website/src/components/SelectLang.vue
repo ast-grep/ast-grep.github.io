@@ -42,6 +42,6 @@ select {
   cursor: pointer;
 }
 .selector-option-text {
-  color: var(--vp-custom-selctor-option-text);
+  color: var(--vp-custom-selector-option-text);
 }
 </style>
