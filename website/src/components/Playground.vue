@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import TreeSitter from 'web-tree-sitter'
 import init, {find_nodes, setup_parser} from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
+import Toolbars from './Toolbars.vue'
+import { restoreState, Mode as ModeImport } from '../state'
+
+const Mode = ModeImport
 
 async function initializeTreeSitter() {
   await TreeSitter.init()
@@ -16,39 +20,15 @@ async function initializeTreeSitter() {
 await initializeTreeSitter()
 await init()
 
-let source = ref(
-`/* All console.log() call will be highlighted!*/
-
-function tryAstGrep() {
-  console.log('Hello World')
-}
-
-const multiLineExpression =
-  console
-   .log('Also matched!')
-
-if (true) {
-  const notThis = 'console.log("not me")'
-}`
-)
-
-enum Mode {
-  Patch = 'Patch',
-  Config = 'Config',
-}
-let query = ref('console.log($MATCH)')
-let config = ref(`
-# Configure Rule in YAML
-rule:
-  any:
-    - pattern: if (false) { $$$ }
-    - pattern: if (true) { $$$ }
-constraints:
-  # META_VAR: pattern
-`.trim())
-let lang = ref('javascript')
+const state = shallowReactive(restoreState())
+let {
+  source,
+  query,
+  config,
+  mode,
+  lang,
+} = toRefs(state)
 let langLoaded = ref(false)
-let mode = ref(Mode.Patch)
 
 const matchedHighlights = ref([])
 const parserPaths: Record<string, string> = {
@@ -87,25 +67,26 @@ watchEffect(async () => {
 watchEffect(async () => {
   try {
     if (!langLoaded.value) {
-      return () => {}
+      return
     }
     matchedHighlights.value = JSON.parse(await doFind())
   } catch (e) {
     matchedHighlights.value = []
   }
-  return () => {}
+  return
 })
-
 
 const modeText = {
   [Mode.Patch]: 'Pattern Code',
   [Mode.Config]: 'YAML Rule',
 }
+
 let placeholder = ref('code')
 
 </script>
 
 <template>
+  <Toolbars :state="state"/>
   <main class="playground">
     <div class="half">
       <Tabs v-model="placeholder" :modeText="{code: 'Test Code'}">
