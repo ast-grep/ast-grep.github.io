@@ -73,14 +73,14 @@ const Wrapper = defineComponent({
 }
 
 .tab.active {
-  background-color: #fff; /* required for drop-shadow*/
-  border-bottom-color: #fff;
+  background-color: var(--vp-c-bg); /* required for drop-shadow*/
+  border-bottom-color: var(--vp-c-bg);
   opacity: 1;
   color: var(--brand-color);
 }
 .tab-content {
   flex: 1 0 auto;
-  background: white;
+  background: var(--vp-c-bg);
   border: 1px solid #eee;
   border-radius: 0 5px 5px 5px;
   overflow: hidden;

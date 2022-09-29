@@ -78,6 +78,8 @@ onMounted(() => {
     readOnly: props.readonly,
     automaticLayout: false,
     scrollBeyondLastLine: false,
+    wordWrap: 'on',
+    lineNumbersMinChars: 3,
     minimap: {
       enabled: false,
     },

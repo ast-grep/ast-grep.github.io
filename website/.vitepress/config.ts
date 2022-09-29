@@ -18,12 +18,16 @@ export default defineConfig({
     ['script', {}, gaScript],
   ],
   outDir: './dist',
+  appearance: false,
   themeConfig: {
     logo: 'logo.svg',
     nav: [
       { text: 'Guide', link: '/guide/introduction' },
       { text: 'Reference', link: '/reference/cli' },
       { text: 'Playground', link: '/playground' },
+    ],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/ast-grep/ast-grep' },
     ],
     sidebar: [
       {

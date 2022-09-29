@@ -44,4 +44,9 @@ select {
 .selector-option-text {
   color: var(--vp-custom-selctor-option-text);
 }
+@media only screen and (max-width: 780px) {
+  .selector {
+    display: none;
+  }
+}
 </style>

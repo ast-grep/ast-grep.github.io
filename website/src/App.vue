@@ -43,9 +43,16 @@ onMounted(async () => {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   box-sizing: border-box;
 }
+
+@media only screen and (max-width: 780px) {
+  .root {
+    padding: 0 0.5rem;
+  }
+}
+
 .description {
   text-align: left;
 }

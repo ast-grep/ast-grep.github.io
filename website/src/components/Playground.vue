@@ -125,17 +125,17 @@ let placeholder = ref('code')
   flex-wrap: wrap;
   flex: 1 0 auto;
   align-items: stretch;
+  gap: 0 10px;
 }
 .half {
+  min-width: 320px;
   flex: 1 0 30%;
   display: flex;
   flex-direction: column;
   filter: drop-shadow(0 0 8px #00000010);
 }
-.half:first-child {
-  margin-right: 10px;
-}
 .half:focus-within {
   filter: drop-shadow(0 0 16px #00000020);
 }
+
 </style>
