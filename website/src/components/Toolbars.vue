@@ -20,7 +20,7 @@ function select(mode) {
 <template>
   <div class="toolbars">
     <button class="floating" title="Copy your code URL to share!" @click="onShare">
-      <Share/>
+      <Share style="width: 24px; height: 24px;"/>
     </button>
     <button class="switch" @click="select('code')">
       Code
@@ -55,6 +55,7 @@ function select(mode) {
 }
 .switch {
   display: none;
+  border-radius: 5px 5px 0px 0px;
 }
 @media only screen and (max-width: 780px) {
   .toolbars {
@@ -69,7 +70,7 @@ function select(mode) {
     position: absolute;
     left: 50%;
     top: 0;
-    transform: translate(-50%, -20%);
+    transform: translate(-60%, 0%);
     box-shadow: none;
   }
   .switch {
@@ -77,7 +78,7 @@ function select(mode) {
     display: block;
     text-align: center;
     cursor: pointer;
-    padding: 1rem;
+    padding: 0.8rem;
     background: var(--vp-c-bg);
   }
 }
