@@ -29,6 +29,10 @@ let {
   lang,
 } = toRefs(state)
 let langLoaded = ref(false)
+let activeEditor = ref('code')
+function changeActiveEditor(active) {
+  activeEditor.value = active
+}
 
 const matchedHighlights = ref([])
 const parserPaths: Record<string, string> = {
@@ -86,9 +90,13 @@ let placeholder = ref('code')
 </script>
 
 <template>
-  <Toolbars :state="state"/>
+  <Toolbars
+    :state="state"
+    :active="activeEditor"
+    @changeActiveEditor="changeActiveEditor"
+  />
   <main class="playground">
-    <div class="half">
+    <div class="half" :class="activeEditor !== 'code' && 'inactive'">
       <Tabs v-model="placeholder" :modeText="{code: 'Test Code'}">
       <template #code>
         <Monaco v-model="source" :language="lang" :highlights="matchedHighlights"/>
@@ -103,7 +111,7 @@ let placeholder = ref('code')
       </template>
       </Tabs>
     </div>
-    <div class="half">
+    <div class="half" :class="activeEditor !== 'search' && 'inactive'">
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
           <Monaco :language="lang" v-model="query"/>
@@ -126,6 +134,7 @@ let placeholder = ref('code')
   flex: 1 0 auto;
   align-items: stretch;
   gap: 0 10px;
+  position: relative;
 }
 .half {
   min-width: 320px;
@@ -136,6 +145,19 @@ let placeholder = ref('code')
 }
 .half:focus-within {
   filter: drop-shadow(0 0 16px #00000020);
+}
+
+@media only screen and (max-width: 780px) {
+  .half.inactive {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.2s all;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 </style>

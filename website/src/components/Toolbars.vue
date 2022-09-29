@@ -4,15 +4,13 @@ import {serialize} from '../state'
 
 const props = defineProps({
   state: Object,
+  active: String,
 })
 
 async function onShare() {
   history.replaceState({}, '', '#' + serialize(props.state))
   await navigator.clipboard.writeText(location.href)
   alert('Sharable URL has been copied to clipboard!')
-}
-
-function select(mode) {
 }
 
 </script>
@@ -22,10 +20,18 @@ function select(mode) {
     <button class="floating" title="Copy your code URL to share!" @click="onShare">
       <Share style="width: 24px; height: 24px;"/>
     </button>
-    <button class="switch" @click="select('code')">
+    <button
+      class="switch"
+      :class="active === 'code' && 'active'"
+      @click="$emit('changeActiveEditor', 'code')"
+    >
       Code
     </button>
-    <button class="switch" @click="select('code')">
+    <button
+      class="switch"
+      :class="active === 'search' && 'active'"
+      @click="$emit('changeActiveEditor', 'search')"
+    >
       Search
     </button>
   </div>
@@ -80,6 +86,12 @@ function select(mode) {
     cursor: pointer;
     padding: 0.8rem;
     background: var(--vp-c-bg);
+  }
+  .switch.active {
+    color: var(--vp-c-brand);
+  }
+  .switch.active:hover {
+    border-color: var(--vp-c-brand);
   }
 }
 </style>
