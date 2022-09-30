@@ -29,7 +29,6 @@ self.MonacoEnvironment = {
 		return new editorWorker()
 	}
 }
-
 </script>
 
 <script lang="ts" setup>

@@ -6,6 +6,7 @@ use ast_grep_config::{
 };
 use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVarMatchers;
+use ast_grep_core::Pattern;
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
@@ -32,7 +33,7 @@ pub struct WASMConfig {
 
 static INSTANCE: Mutex<Option<ts::Language>> = Mutex::new(None);
 
-#[wasm_bindgen]
+#[wasm_bindgen(js_name = setupParser)]
 pub async fn setup_parser(parser_path: String) -> Result<(), JsError> {
   ts::TreeSitter::init().await?;
   let mut parser = ts::Parser::new()?;
@@ -43,8 +44,8 @@ pub async fn setup_parser(parser_path: String) -> Result<(), JsError> {
   Ok(())
 }
 
-#[wasm_bindgen]
-pub async fn find_nodes(src: String, config: JsValue) -> Result<String, JsError> {
+#[wasm_bindgen(js_name = findNodes)]
+pub fn find_nodes(src: String, config: JsValue) -> Result<String, JsError> {
   let config: WASMConfig = config.into_serde()?;
   let lang = INSTANCE
     .lock()
@@ -69,6 +70,37 @@ pub async fn find_nodes(src: String, config: JsValue) -> Result<String, JsError>
     })
     .collect();
   Ok(format!("{:?}", ret))
+}
+
+#[wasm_bindgen(js_name = fixErrors)]
+pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
+  let config: WASMConfig = config.into_serde()?;
+  let lang = INSTANCE
+    .lock()
+    .expect_throw("get language error")
+    .clone()
+    .expect_throw("current language is not set");
+  let fixer = config.fix.expect_throw("fix is required for rewriting");
+  let fixer = Pattern::new(&fixer, lang.clone());
+  let root = lang.ast_grep(&src);
+  let rule = deserialize_rule(config.rule, lang.clone())?;
+  let matchers = if let Some(c) = config.constraints {
+    try_deserialize_matchers(c, lang).unwrap()
+  } else {
+    MetaVarMatchers::default()
+  };
+  let config = RuleWithConstraint { rule, matchers };
+  let edits: Vec<_> = root.root().replace_all(config, fixer);
+  let mut new_content = String::new();
+  let mut start = 0;
+  for edit in edits {
+    new_content.push_str(&src[start..edit.position]);
+    new_content.push_str(&edit.inserted_text);
+    start = edit.position + edit.deleted_length;
+  }
+  // add trailing statements
+  new_content.push_str(&src[start..]);
+  Ok(new_content)
 }
 
 #[cfg(target_arch = "wasm32")]

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
+import Diff from './Diff.vue'
 import TreeSitter from 'web-tree-sitter'
-import init, {find_nodes, setup_parser} from 'ast-grep-wasm'
+import init, {findNodes, setupParser, fixErrors} from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
@@ -35,6 +36,7 @@ function changeActiveEditor(active) {
 }
 
 const matchedHighlights = ref([])
+const rewrittenCode = ref('')
 const parserPaths: Record<string, string> = {
   javascript: 'tree-sitter-javascript.wasm',
   typescript: 'tree-sitter-typescript.wasm',
@@ -42,12 +44,12 @@ const parserPaths: Record<string, string> = {
 
 async function parseYAML(src: string) {
   const yaml = await import('js-yaml')
-  return yaml.load(src)
+  return yaml.load(src) as any
 }
 
 async function doFind() {
   if (mode.value === Mode.Patch) {
-    return find_nodes(
+    return findNodes(
       source.value,
       {rule: {pattern: query.value}},
     )
@@ -55,7 +57,12 @@ async function doFind() {
     const src = source.value
     const val = config.value;
     const json = await parseYAML(val)
-    return find_nodes(
+    if (json.fix) {
+      rewrittenCode.value = fixErrors(src, json)
+    } else {
+      rewrittenCode.value = ''
+    }
+    return findNodes(
       src,
       json,
     )
@@ -64,7 +71,7 @@ async function doFind() {
 
 watchEffect(async () => {
   langLoaded.value = false
-  await setup_parser(parserPaths[lang.value])
+  await setupParser(parserPaths[lang.value])
   langLoaded.value = true
 })
 
@@ -81,11 +88,16 @@ watchEffect(async () => {
 })
 
 const modeText = {
-  [Mode.Patch]: 'Pattern Code',
-  [Mode.Config]: 'YAML Rule',
+  [Mode.Patch]: 'Pattern',
+  [Mode.Config]: 'YAML',
 }
 
-let placeholder = ref('code')
+let codeText = {
+  code: 'Source',
+  diff: 'Diff',
+}
+
+let codeMode = ref('code')
 
 </script>
 
@@ -97,9 +109,12 @@ let placeholder = ref('code')
   />
   <main class="playground">
     <div class="half" :class="activeEditor !== 'code' && 'inactive'">
-      <Tabs v-model="placeholder" :modeText="{code: 'Test Code'}">
+      <Tabs v-model="codeMode" :modeText="codeText">
       <template #code>
         <Monaco v-model="source" :language="lang" :highlights="matchedHighlights"/>
+      </template>
+      <template #diff>
+        <Diff :source="source" :rewrite="rewrittenCode" :language="lang"/>
       </template>
       <template #addon>
         <p class="match-result">
