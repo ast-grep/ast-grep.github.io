@@ -36,7 +36,7 @@ function changeActiveEditor(active) {
 }
 
 const matchedHighlights = ref([])
-const rewrittenCode = ref('')
+const rewrittenCode = ref(source.value)
 const parserPaths: Record<string, string> = {
   javascript: 'tree-sitter-javascript.wasm',
   typescript: 'tree-sitter-typescript.wasm',
@@ -60,7 +60,7 @@ async function doFind() {
     if (json.fix) {
       rewrittenCode.value = fixErrors(src, json)
     } else {
-      rewrittenCode.value = ''
+      rewrittenCode.value = src
     }
     return findNodes(
       src,
