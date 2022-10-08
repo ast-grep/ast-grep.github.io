@@ -7,7 +7,7 @@ specifiers:
   js-yaml: 4.1.0
   monaco-editor: 0.34.0
   monaco-yaml: 4.0.0
-  typescript: 4.8.3
+  typescript: 4.8.4
   vite: 3.1.4
   vitepress: 1.0.0-alpha.15
   vue: 3.2.39
@@ -27,10 +27,10 @@ optionalDependencies:
 
 devDependencies:
   '@algolia/client-search': 4.14.2
-  typescript: 4.8.3
+  typescript: 4.8.4
   vite: 3.1.4
   vitepress: 1.0.0-alpha.15_tbpndr44ulefs3hehwpi2mkf2y
-  vue-tsc: 0.40.13_typescript@4.8.3
+  vue-tsc: 0.40.13_typescript@4.8.4
 
 packages:
 
@@ -816,8 +816,8 @@ packages:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
 
-  /typescript/4.8.3:
-    resolution: {integrity: sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==}
+  /typescript/4.8.4:
+    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
@@ -910,7 +910,7 @@ packages:
       vue: 3.2.39
     dev: true
 
-  /vue-tsc/0.40.13_typescript@4.8.3:
+  /vue-tsc/0.40.13_typescript@4.8.4:
     resolution: {integrity: sha512-xzuN3g5PnKfJcNrLv4+mAjteMd5wLm5fRhW0034OfNJZY4WhB07vhngea/XeGn7wNYt16r7syonzvW/54dcNiA==}
     hasBin: true
     peerDependencies:
@@ -918,7 +918,7 @@ packages:
     dependencies:
       '@volar/vue-language-core': 0.40.13
       '@volar/vue-typescript': 0.40.13
-      typescript: 4.8.3
+      typescript: 4.8.4
     dev: true
 
   /vue/3.2.39:
