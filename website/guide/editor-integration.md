@@ -3,7 +3,7 @@
 
 ## Neovim
 
-The recommended setup is using lspconfig.
+The recommended setup is using [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig).
 
 ```lua
 local configs = require 'lspconfig.configs'

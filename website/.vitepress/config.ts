@@ -36,7 +36,10 @@ export default defineConfig({
           { text: 'Introduction', link: '/guide/introduction' },
           { text: 'Quick Start', link: '/guide/quick-start' },
           { text: 'Pattern Syntax', link: '/guide/pattern-syntax' },
-          { text: 'Rule Configuration', link: '/guide/rule-config' },
+          { text: 'Rule Configuration', link: '/guide/rule-config', items:[
+            { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule' },
+            { text: 'Composite Rule', link: '/guide/rule-config/composite-rule' },
+          ]},
           { text: 'API Usage', link: '/guide/api-usage' },
           { text: 'Editor Integration', link: '/guide/editor-integration' },
         ],
@@ -58,5 +61,9 @@ export default defineConfig({
         ],
       },
     ],
+    footer: {
+      message: 'Made with ❤️  with Rust',
+      copyright: 'Copyright © 2022-present Herrington Darkholme',
+    }
   },
 })

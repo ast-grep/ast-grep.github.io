@@ -80,39 +80,55 @@ The `language` field in the rule configuration will specify how the rule is inte
 For example, with `language: TypeScript`, the rule pattern `'hello world'` is parsed as TypeScript string literal.
 However, the rule will have a parsing error in languages like C/Java/Rust because single quote is used for character literal and double quote should be used for string.
 
-Every rule configuration will have one single root `rule`. The root rule will have *only one* AST node in one match.
+Every rule configuration will have one single root `rule`. The root rule will have *only one* AST node in one match. The matched node is called target node.
 During scanning and rewriting, ast-grep will produce multiple matches to report all AST nodes that satisfies the `rule` condition as matched instances.
-Though one rule match only have one AST node as matched, we can have more auxiliary nodes to display context or to perform rewrite. We will cover how rules work in details in the following sections.
+Though one rule match only have one AST node as matched, we can have more auxiliary nodes to display context or to perform rewrite. We will cover how rules work in details in the next page.
 
-The first step to understand rule is the two categories of rules: atomic rule and composite rule.
+But for a quick primer, a rule can have a pattern and we can extract meta variables from the matched node.
 
-## Atomic rule
-
-Atomic rule defines the most basic matching rule that determines whether one AST node matches the rule or not.
-
-### `pattern`
-
-reference: [pattern syntax](/guide/pattern-syntax).
+For example, the rule below will match the `console.log('Hello World')`.
 
 ```yaml
 rule:
-  pattern: console.log($GREETING)
+  pattern: console.log($GREET)
 ```
+And we can get `$GREET` set to `'Hello World'`.
 
-### `kind`
+## `fix`
+ast-grep can perform automatic rewriting to the codebase. The `fix` field in the rule configuration specifies how to rewrite the code. We can also use meta variables specified in the `rule` in `fix`. ast-grep will replace the meta-varialbes with the content of actual matched AST nodes.
+
+Example:
 
 ```yaml
 rule:
-  kind: while_statement
+  pattern: console.log($GREET)
+fix: console.log('Hello ' + $GREET)
 ```
 
+will rewrite `console.log('World')` to `console.log('Hello ' + 'World')`.
 
-## Composite rule
+:::warning `fix` is AST-aware
 
-### `all`
+The `fix` field is also parsed by tree-sitter in the same way as pattern.
+Only terminal AST nodes (nodes without children) are rewritten as meta variables.
+:::
 
-### `any`
+An example will be like this. The meta variable `$GREET` will be replaced in the fix `alert($GREET)`, but not in the fix `nonMeta$GREET`.
+Since the latter pattern `$GREET` is not parsed as a meta variable.
 
-### `not`
+## `constraints`
+We can constrain what kind of meta variables we should match.
 
-### Relational rules
+```yaml
+rule:
+  pattern: console.log($GREET)
+constraints:
+  $GREET:
+    kind: identifier
+```
+
+The above rule will constraint the [`kind`](/guide/rule-config/atomic-rule.html#kind) of matched nodes to be only `identifier`.
+
+So `console.log(name)` will match the above rule, but `console.log('Rem')` will not because the matched variable `GREET` is string.
+
+See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRHUkVFVClcbmNvbnN0cmFpbnRzOlxuICBHUkVFVDpcbiAgICBraW5kOiBpZGVudGlmaWVyIiwic291cmNlIjoiY29uc29sZS5sb2coJ0hlbGxvIFdvcmxkJylcbmNvbnNvbGUubG9nKGdyZWV0aW5nKVxuIn0=) in action.
