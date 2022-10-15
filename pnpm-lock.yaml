@@ -8,7 +8,7 @@ specifiers:
   monaco-editor: 0.34.0
   monaco-yaml: 4.0.2
   typescript: 4.8.4
-  vite: 3.1.4
+  vite: 3.1.8
   vitepress: 1.0.0-alpha.15
   vue: 3.2.40
   vue-tsc: 1.0.8
@@ -28,7 +28,7 @@ optionalDependencies:
 devDependencies:
   '@algolia/client-search': 4.14.2
   typescript: 4.8.4
-  vite: 3.1.4
+  vite: 3.1.8
   vitepress: 1.0.0-alpha.15_tbpndr44ulefs3hehwpi2mkf2y
   vue-tsc: 1.0.8_typescript@4.8.4
 
@@ -236,14 +236,14 @@ packages:
     resolution: {integrity: sha512-w7hEHXnPMEZ+4nGKl/KDRVpxkwYxYExuHOYXyzIzCDzEZ9ZCGMAewulr9IqJu2LR4N37fcnb1XVeuZ09qgOxhA==}
     dev: true
 
-  /@vitejs/plugin-vue/3.1.0_vite@3.1.4+vue@3.2.40:
+  /@vitejs/plugin-vue/3.1.0_vite@3.1.8+vue@3.2.40:
     resolution: {integrity: sha512-fmxtHPjSOEIRg6vHYDaem+97iwCUg/uSIaTzp98lhELt2ISOQuDo2hbkBdXod0g15IhfPMQmAxh4heUks2zvDA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 3.1.4
+      vite: 3.1.8
       vue: 3.2.40
     dev: true
 
@@ -829,8 +829,8 @@ packages:
     hasBin: true
     dev: true
 
-  /vite/3.1.4:
-    resolution: {integrity: sha512-JoQI08aBjY9lycL7jcEq4p9o1xUjq5aRvdH4KWaXtkSx7e7RpAh9D3IjzDWRD4Fg44LS3oDAIOG/Kq1L+82psA==}
+  /vite/3.1.8:
+    resolution: {integrity: sha512-m7jJe3nufUbuOfotkntGFupinL/fmuTNuQmiVE7cH2IZMuf4UbfbGYMUT3jVWgGYuRVLY9j8NnrRqgw5rr5QTg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -862,13 +862,13 @@ packages:
     dependencies:
       '@docsearch/css': 3.2.1
       '@docsearch/js': 3.2.1_tbpndr44ulefs3hehwpi2mkf2y
-      '@vitejs/plugin-vue': 3.1.0_vite@3.1.4+vue@3.2.40
+      '@vitejs/plugin-vue': 3.1.0_vite@3.1.8+vue@3.2.40
       '@vue/devtools-api': 6.4.1
       '@vueuse/core': 9.3.0_vue@3.2.40
       body-scroll-lock: 4.0.0-beta.0
       nprogress: 0.2.0
       shiki: 0.11.1
-      vite: 3.1.4
+      vite: 3.1.8
       vue: 3.2.40
     transitivePeerDependencies:
       - '@algolia/client-search'
