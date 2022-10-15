@@ -6,7 +6,7 @@ specifiers:
   ast-grep-wasm: file:./pkg/
   js-yaml: 4.1.0
   monaco-editor: 0.34.0
-  monaco-yaml: 4.0.0
+  monaco-yaml: 4.0.2
   typescript: 4.8.4
   vite: 3.1.4
   vitepress: 1.0.0-alpha.15
@@ -18,7 +18,7 @@ dependencies:
   '@types/js-yaml': 4.0.5
   js-yaml: 4.1.0
   monaco-editor: 0.34.0
-  monaco-yaml: 4.0.0_monaco-editor@0.34.0
+  monaco-yaml: 4.0.2_monaco-editor@0.34.0
   vue: 3.2.40
   web-tree-sitter: 0.20.7
 
@@ -718,8 +718,8 @@ packages:
       monaco-editor: 0.34.0
     dev: false
 
-  /monaco-yaml/4.0.0_monaco-editor@0.34.0:
-    resolution: {integrity: sha512-7/CbvZIHE1iOQF6ny+uPclcsrBnkK54lcZugIB9SzqADljhb3TliJyYs7vouaGNDF73RWvrtZrMsWCC5N/GW+g==}
+  /monaco-yaml/4.0.2_monaco-editor@0.34.0:
+    resolution: {integrity: sha512-Wxn6CblkQDLOUusfi0eZ3qZhkuKYIrK7fXlkJOOG+W18zgKePbuZW0XNWpczlxDC27D753dB18pMnx4U7MZ3yg==}
     peerDependencies:
       monaco-editor: '>=0.30'
     dependencies:
