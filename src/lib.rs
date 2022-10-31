@@ -6,7 +6,7 @@ use ast_grep_config::{
 };
 use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVarMatchers;
-use ast_grep_core::Pattern;
+use ast_grep_core::{Pattern, Node};
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
@@ -17,12 +17,6 @@ use std::sync::Mutex;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-#[derive(Serialize, Deserialize)]
-pub struct MatchResult {
-  pub start: usize,
-  pub end: usize,
-}
 
 #[derive(Serialize, Deserialize)]
 pub struct WASMConfig {
@@ -104,15 +98,37 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   Ok(new_content)
 }
 
+#[derive(Deserialize, Serialize)]
+struct DebugNode {
+  kind: String,
+  start: (usize, usize),
+  end: (usize, usize),
+  is_named: bool,
+  children: Vec<DebugNode>,
+}
+
+fn convert_to_debug_node(n: Node<ts::Language>) -> DebugNode {
+  let children = n.children().map(convert_to_debug_node).collect();
+  DebugNode {
+    kind: n.kind().to_string(),
+    start: n.start_pos(),
+    end: n.end_pos(),
+    is_named: n.is_named(),
+    children,
+  }
+}
+
 #[wasm_bindgen(js_name = dumpASTNodes)]
-pub fn dump_ast_nodes(src: String) -> Result<String, JsError> {
+pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
   let lang = INSTANCE
     .lock()
     .expect_throw("get language error")
     .clone()
     .expect_throw("current language is not set");
   let root = lang.ast_grep(&src);
-  Ok(root.root().to_sexp().to_string())
+  let debug_node = convert_to_debug_node(root.root());
+  let ret = serde_wasm_bindgen::to_value(&debug_node)?;
+  Ok(ret)
 }
 
 #[cfg(target_arch = "wasm32")]
