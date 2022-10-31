@@ -32,6 +32,7 @@ ast-grep-core = "0.1.7"
 ast-grep-config = "0.1.7"
 web-tree-sitter-sg = "1.3.0"
 tree-sitter = { version = "0.9", package = "tree-sitter-facade-sg" }
+serde-wasm-bindgen = "0.4"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.33"

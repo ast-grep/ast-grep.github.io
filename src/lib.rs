@@ -45,8 +45,8 @@ pub async fn setup_parser(parser_path: String) -> Result<(), JsError> {
 }
 
 #[wasm_bindgen(js_name = findNodes)]
-pub fn find_nodes(src: String, config: JsValue) -> Result<String, JsError> {
-  let config: WASMConfig = config.into_serde()?;
+pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
+  let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
   let lang = INSTANCE
     .lock()
     .expect_throw("get language error")
@@ -69,12 +69,13 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<String, JsError> {
       vec![start.0, start.1, end.0, end.1]
     })
     .collect();
-  Ok(format!("{:?}", ret))
+  let ret = serde_wasm_bindgen::to_value(&ret)?;
+  Ok(ret)
 }
 
 #[wasm_bindgen(js_name = fixErrors)]
 pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
-  let config: WASMConfig = config.into_serde()?;
+  let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
   let lang = INSTANCE
     .lock()
     .expect_throw("get language error")
@@ -101,6 +102,17 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   // add trailing statements
   new_content.push_str(&src[start..]);
   Ok(new_content)
+}
+
+#[wasm_bindgen(js_name = dumpASTNodes)]
+pub fn dump_ast_nodes(src: String) -> Result<String, JsError> {
+  let lang = INSTANCE
+    .lock()
+    .expect_throw("get language error")
+    .clone()
+    .expect_throw("current language is not set");
+  let root = lang.ast_grep(&src);
+  Ok(root.root().to_sexp())
 }
 
 #[cfg(target_arch = "wasm32")]
