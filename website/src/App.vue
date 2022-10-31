@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Intro from './components/Intro.vue'
-import { ref, onMounted } from 'vue'
+import { shallowRef, onMounted } from 'vue'
 // vitepress SSR does not support Monaco, lazy load on client side
-let playground = ref<unknown>(null)
+let playground = shallowRef<unknown>(null)
 onMounted(async () => {
   playground.value = (await import('./components/Playground.vue')).default
 })
