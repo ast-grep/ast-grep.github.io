@@ -3,7 +3,7 @@ import { ref, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import Diff from './Diff.vue'
 import TreeSitter from 'web-tree-sitter'
-import init, {findNodes, setupParser, fixErrors} from 'ast-grep-wasm'
+import init, {findNodes, setupParser, fixErrors, dumpASTNodes} from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
@@ -76,11 +76,18 @@ watchEffect(async () => {
 })
 
 watchEffect(async () => {
+  if (!langLoaded.value) {
+    return
+  }
+  console.log(await dumpASTNodes(query.value))
+})
+
+watchEffect(async () => {
   try {
     if (!langLoaded.value) {
       return
     }
-    matchedHighlights.value = JSON.parse(await doFind())
+    matchedHighlights.value = await doFind()
   } catch (e) {
     matchedHighlights.value = []
   }

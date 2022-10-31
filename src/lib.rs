@@ -112,12 +112,12 @@ pub fn dump_ast_nodes(src: String) -> Result<String, JsError> {
     .clone()
     .expect_throw("current language is not set");
   let root = lang.ast_grep(&src);
-  Ok(root.root().to_sexp())
+  Ok(root.root().to_sexp().to_string())
 }
 
 #[cfg(target_arch = "wasm32")]
 async fn get_lang(parser_path: String) -> Result<ts::Language, JsError> {
-  let lang = web_tree_sitter_sys::Language::load_path(&parser_path)
+  let lang = web_tree_sitter_sg::Language::load_path(&parser_path)
     .await
     .map_err(ts::LanguageError::from)?;
   Ok(ts::Language::from(lang))
