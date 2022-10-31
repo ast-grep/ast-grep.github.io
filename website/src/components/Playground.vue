@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, shallowReactive, toRefs, watchEffect } from 'vue'
+import { ref, shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
+import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
 import TreeSitter from 'web-tree-sitter'
 import init, {findNodes, setupParser, fixErrors, dumpASTNodes} from 'ast-grep-wasm'
@@ -31,6 +32,7 @@ let {
 } = toRefs(state)
 let langLoaded = ref(false)
 let activeEditor = ref('code')
+let parser = shallowRef(null)
 function changeActiveEditor(active) {
   activeEditor.value = active
 }
@@ -71,15 +73,14 @@ async function doFind() {
 
 watchEffect(async () => {
   langLoaded.value = false
-  await setupParser(parserPaths[lang.value])
+  parser.value = null
+  const path = parserPaths[lang.value]
+  await setupParser(path)
+  const loadedLang = await globalThis.Language.load(path)
+  const p = new globalThis.Parser()
+  p.setLanguage(loadedLang)
+  parser.value = p
   langLoaded.value = true
-})
-
-watchEffect(async () => {
-  if (!langLoaded.value) {
-    return
-  }
-  console.log(await dumpASTNodes(query.value))
 })
 
 watchEffect(async () => {
@@ -136,7 +137,7 @@ let codeMode = ref('code')
     <div class="half" :class="activeEditor !== 'search' && 'inactive'">
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
-          <Monaco :language="lang" v-model="query"/>
+          <QueryEditor v-model="query" :language="lang" :parser="parser"/>
         </template>
         <template #[Mode.Config]>
           <Monaco language="yaml" v-model="config"/>
