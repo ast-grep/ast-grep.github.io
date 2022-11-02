@@ -146,3 +146,14 @@ button:focus-visible {
   width: 100%;
   margin: 0 auto;
 }
+
+/* style tweaking on playground*/
+body.playground .VPContent.is-home {
+  padding-bottom: 0;
+}
+body.playground .VPHome {
+  padding-bottom: 0;
+}
+body.playground .VPFooter {
+  display: none;
+}

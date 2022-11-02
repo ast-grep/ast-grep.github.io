@@ -9,11 +9,3 @@
 .dark {
   --vp-custom-selctor-option-text: #213547;
 }
-
-/* disable padding on playground*/
-body.playground .VPContent.is-home {
-  padding-bottom: 0;
-}
-body.playground .VPHome {
-  padding-bottom: 0;
-}
