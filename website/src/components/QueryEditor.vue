@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { ref, watch, watchEffect } from 'vue'
+import { shallowRef, watch, watchEffect } from 'vue'
+import DumpTree from './DumpTree.vue'
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -15,7 +16,7 @@ const props = defineProps({
   parser: Object,
 })
 
-let dumped = ref('')
+let dumped = shallowRef(null)
 
 watch(() => props.modelValue, (value) => {
   emits('update:modelValue', value)
@@ -27,73 +28,8 @@ watchEffect(() => {
     return
   }
   // TODO implement this in rust
-  const dumpedAST = parser.parse(modelValue).rootNode
-  dumped.value = renderTree(dumpedAST)
+  dumped.value = parser.parse(modelValue).rootNode
 })
-
-function renderTree(tree: any) {
-  const cursor = tree.walk()
-
-  let row = ''
-  let rows = []
-  let finishedRow = false
-  let visitedChildren = false
-  let indentLevel = 0
-
-  for (let i = 0;; i++) {
-    let displayName: string
-    if (cursor.nodeIsMissing) {
-      displayName = `MISSING ${cursor.nodeType}`
-    } else if (cursor.nodeIsNamed) {
-      displayName = cursor.nodeType
-    }
-
-    if (visitedChildren) {
-      if (displayName) {
-        finishedRow = true
-      }
-
-      if (cursor.gotoNextSibling()) {
-        visitedChildren = false
-      } else if (cursor.gotoParent()) {
-        visitedChildren = true
-        indentLevel--
-      } else {
-        break
-      }
-    } else {
-      if (displayName) {
-        if (finishedRow) {
-          rows.push(row)
-          finishedRow = false
-        }
-        const start = cursor.startPosition
-        const end = cursor.endPosition
-        let fieldName = cursor.currentFieldName()
-        if (fieldName) {
-          fieldName += ': '
-        } else {
-          fieldName = ''
-        }
-        row = `${'  '.repeat(indentLevel)}${fieldName}${displayName} [${start.row}, ${start.column}] - [${end.row}, ${end.column}]`
-        finishedRow = true
-      }
-
-      if (cursor.gotoFirstChild()) {
-        visitedChildren = false
-        indentLevel++
-      } else {
-        visitedChildren = true
-      }
-    }
-  }
-  if (finishedRow) {
-    rows.push(row)
-  }
-
-  cursor.delete()
-  return rows.join('\n')
-}
 
 </script>
 
@@ -102,7 +38,9 @@ function renderTree(tree: any) {
     <div class="query-input">
       <Monaco :language="language" v-model="modelValue"/>
     </div>
-    <pre class="dumped">{{ dumped }}</pre>
+    <div class="dumped">
+      <DumpTree :tree="dumped"/>
+    </div>
   </div>
 </template>
 
@@ -123,7 +61,7 @@ function renderTree(tree: any) {
   overflow: auto;
   font-size: 12px;
   white-space: pre;
-  padding: 1em 2em 1em 2em;
+  padding: 1em 2em 1em 0;
   z-index: 1; /* prevent being covered by monaco */
   border-top: 1px solid #f5f5f5;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
