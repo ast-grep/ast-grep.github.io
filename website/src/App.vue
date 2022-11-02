@@ -4,6 +4,8 @@ import { shallowRef, onMounted } from 'vue'
 // vitepress SSR does not support Monaco, lazy load on client side
 let playground = shallowRef<unknown>(null)
 onMounted(async () => {
+  // apply playground style override, see cutsom.css under .vitepress
+  document.body.classList.add('playground')
   playground.value = (await import('./components/Playground.vue')).default
 })
 </script>
