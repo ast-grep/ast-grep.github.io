@@ -18,6 +18,7 @@ const props = defineProps({
 })
 
 let root = shallowRef(null)
+let highlights = shallowRef([])
 
 watch(() => props.modelValue, (value) => {
   emits('update:modelValue', value)
@@ -35,16 +36,18 @@ watchEffect(() => {
   cursor.delete()
 })
 
-provide(highlightKey, root)
+provide(highlightKey, node => {
+  highlights.value = [node]
+})
 
 </script>
 
 <template>
   <div class="query-editor">
     <div class="query-input">
-      <Monaco :language="language" v-model="modelValue"/>
+      <Monaco :language="language" v-model="modelValue" :highlights="highlights"/>
     </div>
-    <div class="dumped">
+    <div class="dumped" @mouseleave="highlights = []">
       <p>TreeSitter Output</p>
       <TreeNode class="pre" :node="root" v-if="root"/>
     </div>

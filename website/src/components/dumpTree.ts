@@ -1,7 +1,7 @@
 import {Tree, TreeCursor} from 'web-tree-sitter'
 import type { InjectionKey } from 'vue'
 
-export const highlightKey = Symbol.for('highlight-node') as InjectionKey<string>
+export const highlightKey = Symbol.for('highlight-node') as InjectionKey<(n: number[]) => void>
 
 interface Pos {
   row: number

@@ -27,11 +27,20 @@ let {
   children,
 } = deepReactive()
 const highlight = inject(highlightKey)
+function highlightNode() {
+  const { start, end } = props.node
+  highlight?.([
+    start.row,
+    start.column,
+    end.row,
+    end.column,
+  ])
+}
 </script>
 
 <template>
   <div class="tree-node">
-    <p class="click-area" @click.stop="expanded = !expanded">
+    <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
         v-if="children.length > 0"
         class="toggle-sign"
