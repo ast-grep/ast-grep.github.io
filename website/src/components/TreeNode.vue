@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { PropType, ref, toRefs, ComputedRef, computed} from 'vue'
-import { DumpNode } from './dumpTree'
+import { PropType, ref, toRefs, ComputedRef, computed, inject} from 'vue'
+import { DumpNode, highlightKey } from './dumpTree'
 
 const props = defineProps({
   node: {
@@ -26,6 +26,7 @@ let {
   end,
   children,
 } = deepReactive()
+const highlight = inject(highlightKey)
 </script>
 
 <template>
@@ -45,7 +46,7 @@ let {
 
 <style scoped>
 .tree-node {
-  margin: 0 0 0 1.5em;
+  margin: 0 0 0 1em;
   padding: 0 0 0 0.5em;
   border-left: 1px dashed #eee;
   user-select: none;
@@ -53,17 +54,19 @@ let {
   --red:       #a31515;
   --blue:      #006ab1;
   --green:     #008000;
-  --highlight: #fdf6e9;
+  transition: background-color ease-out .217s;
 }
 .click-area {
   cursor: pointer;
 }
+.tree-node:has(> .click-area:hover) {
+  background-color: var(--theme-highlight4);
+}
+/* fallback for browser without :has */
 .click-area:hover {
-  background-color: var(--highlight);
+  background-color: var(--theme-highlight4);
 }
 .toggle-sign {
-  background: white;
-  margin-left: -1em;
   color: var(--green);
   display: inline-block;
 }
