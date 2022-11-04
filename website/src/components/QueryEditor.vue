@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watch, watchEffect, computed } from 'vue'
+import { shallowRef, watch, watchEffect } from 'vue'
 import TreeNode from './TreeNode.vue'
 import { dumpTree } from './dumpTree'
 
@@ -17,7 +17,7 @@ const props = defineProps({
   parser: Object,
 })
 
-let dumped = shallowRef(null)
+let root = shallowRef(null)
 
 watch(() => props.modelValue, (value) => {
   emits('update:modelValue', value)
@@ -29,15 +29,12 @@ watchEffect(() => {
     return
   }
   // TODO implement this in rust
-  dumped.value = parser.parse(modelValue).rootNode
+  const dumped = parser.parse(modelValue).rootNode
+  const cursor = dumped.walk()
+  root.value = dumpTree(cursor)[0]?.children[0]
+  cursor.delete()
 })
 
-const root = computed(() => {
-  const cursor = dumped.value?.walk()
-  const rendered = dumpTree(cursor)[0]?.children[0]
-  cursor?.delete()
-  return rendered
-})
 
 </script>
 
@@ -61,15 +58,15 @@ const root = computed(() => {
 }
 
 .query-input {
-  flex: 70% 7 0;
+  flex: 60% 6 0;
 }
 
 .dumped {
-  flex: 30% 3 0;
+  flex: 40% 4 0;
   overflow: auto;
   font-size: 12px;
   white-space: pre;
-  padding: 1em 2em 1em 0;
+  padding: 1em 0 1em 0;
   z-index: 1; /* prevent being covered by monaco */
   border-top: 1px solid #f5f5f5;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
