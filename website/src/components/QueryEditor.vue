@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watch, watchEffect, provide } from 'vue'
+import { shallowRef, watch, watchEffect, provide, reactive } from 'vue'
 import TreeNode from './TreeNode.vue'
 import { dumpTree, highlightKey } from './dumpTree'
 
@@ -36,21 +36,34 @@ watchEffect(() => {
   cursor.delete()
 })
 
-provide(highlightKey, node => {
-  highlights.value = [node]
+let cursorPosition = shallowRef(null)
+provide(highlightKey, e => {
+  highlights.value = [e]
 })
+
+function changeFocusNode(e) {
+  const {position} = e
+  cursorPosition.value = {
+    row: position.lineNumber - 1,
+    column: position.column - 1,
+  }
+}
 
 </script>
 
 <template>
   <div class="query-editor">
     <div class="query-input">
-      <Monaco :language="language" v-model="modelValue" :highlights="highlights"/>
+      <Monaco
+         v-model="modelValue"
+         @changeCursor="changeFocusNode"
+        :language="language"
+        :highlights="highlights"/>
     </div>
-    <div class="dumped" @mouseleave="highlights = []">
+    <div class="dumped" @mouseenter="cursorPosition = null" @mouseleave="highlights = []">
       <p>TreeSitter Output</p>
       <div class="scrollable">
-        <TreeNode class="pre" :node="root" v-if="root"/>
+        <TreeNode class="pre" :node="root" v-if="root" :cursorPosition="cursorPosition"/>
       </div>
     </div>
   </div>

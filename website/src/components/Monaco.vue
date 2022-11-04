@@ -43,6 +43,7 @@ import {
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
+    (e: 'changeCursor', value: any): void,
 }>()
 
 const props = defineProps({
@@ -89,6 +90,9 @@ onMounted(() => {
   editor.value = editorInstance
   editorInstance.onDidChangeModelContent(() => {
       emits('update:modelValue', editorInstance.getValue())
+  })
+  editorInstance.onDidChangeCursorPosition(e => {
+      emits('changeCursor', e)
   })
   highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformMatch) || [])
 })

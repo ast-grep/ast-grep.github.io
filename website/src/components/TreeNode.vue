@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { PropType, ref, toRefs, ComputedRef, computed, inject} from 'vue'
-import { DumpNode, highlightKey } from './dumpTree'
+import { PropType, ref, toRefs, ComputedRef, computed, inject, watchEffect } from 'vue'
+import { DumpNode, highlightKey, Pos } from './dumpTree'
 
 const props = defineProps({
   node: {
     type: Object as PropType<DumpNode>,
     required: true
+  },
+  cursorPosition: {
+    type: Object as PropType<Pos>,
   },
 })
 
@@ -26,20 +29,55 @@ let {
   end,
   children,
 } = deepReactive()
-const highlight = inject(highlightKey)
+
+const highlightContext = inject(highlightKey)
+
 function highlightNode() {
   const { start, end } = props.node
-  highlight?.([
+  highlightContext?.([
     start.row,
     start.column,
     end.row,
     end.column,
   ])
 }
+
+function withinPos({start, end}: DumpNode, {row, column}: Pos) {
+  let withinStart = (start.row < row) || (start.row === row && start.column <= column)
+  let withinEnd = (end.row > row) || (end.row === row && end.column >= column)
+  return withinStart && withinEnd
+}
+
+let isWithin = computed(() => {
+  const {cursorPosition} = props
+  if (!cursorPosition) {
+    return false
+  }
+  return withinPos(props.node, cursorPosition)
+})
+let isTarget = computed(() => {
+  if (!isWithin.value) {
+    return false
+  }
+  const {node, cursorPosition} = props
+  const isTarget =
+    !expanded.value || // children not expanded, current target is the target
+    !node.children.some(n => withinPos(n, cursorPosition)) // no children within node
+  return isTarget
+})
+
+let nodeRef = ref(null)
+watchEffect(() => {
+  if (isTarget.value) {
+    nodeRef.value?.scrollIntoView({
+      block: 'center',
+    })
+  }
+});
 </script>
 
 <template>
-  <div class="tree-node">
+  <div class="tree-node" ref="nodeRef" :class="{target: isTarget}">
     <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
         v-if="children.length > 0"
@@ -49,7 +87,12 @@ function highlightNode() {
       <span class="node-field">{{ field }}</span>
       <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
     </p>
-    <TreeNode :node="child" v-show="expanded" v-for="child in children"/>
+    <TreeNode
+      :node="child"
+      :cursorPosition="isWithin ? cursorPosition : null"
+      v-if="expanded"
+      v-for="child in children"
+    />
   </div>
 </template>
 
@@ -70,6 +113,9 @@ function highlightNode() {
 }
 .tree-node:has(> .click-area:hover) {
   background-color: var(--theme-highlight4);
+}
+.tree-node.target {
+  background-color: var(--theme-highlight3);
 }
 /* fallback for browser without :has */
 .click-area:hover {
