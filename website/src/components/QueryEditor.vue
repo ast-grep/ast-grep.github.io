@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watch, watchEffect } from 'vue'
-import DumpTree from './DumpTree.vue'
+import { shallowRef, watch, watchEffect, computed } from 'vue'
+import TreeNode from './TreeNode.vue'
+import { dumpTree } from './dumpTree'
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -31,6 +32,13 @@ watchEffect(() => {
   dumped.value = parser.parse(modelValue).rootNode
 })
 
+const root = computed(() => {
+  const cursor = dumped.value?.walk()
+  const rendered = dumpTree(cursor)[0]?.children[0]
+  cursor?.delete()
+  return rendered
+})
+
 </script>
 
 <template>
@@ -39,7 +47,7 @@ watchEffect(() => {
       <Monaco :language="language" v-model="modelValue"/>
     </div>
     <div class="dumped">
-      <DumpTree :tree="dumped"/>
+      <TreeNode class="pre" :node="root" v-if="root"/>
     </div>
   </div>
 </template>
@@ -66,5 +74,10 @@ watchEffect(() => {
   border-top: 1px solid #f5f5f5;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
+}
+.pre {
+  font-family: monospace;
+  margin-left: 2em;
+  line-height: 1.5em;
 }
 </style>
