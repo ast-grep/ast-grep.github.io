@@ -49,7 +49,9 @@ provide(highlightKey, node => {
     </div>
     <div class="dumped" @mouseleave="highlights = []">
       <p>TreeSitter Output</p>
-      <TreeNode class="pre" :node="root" v-if="root"/>
+      <div class="scrollable">
+        <TreeNode class="pre" :node="root" v-if="root"/>
+      </div>
     </div>
   </div>
 </template>
@@ -67,21 +69,30 @@ provide(highlightKey, node => {
 }
 
 .dumped {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 40% 4 0;
   overflow: auto;
   font-size: 12px;
   white-space: pre;
   padding: 1em;
+  padding-top: 0;
   z-index: 1; /* prevent being covered by monaco */
   border-top: 1px solid #f5f5f5;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
 }
 .dumped p {
-  position: absolute;
-  top: 0;
-  right: 1em;
+  text-align: right;
+  background: linear-gradient(to bottom, #fff, #fff7);
+  backdrop-filter: blur(1px);
+  z-index: 0;
+}
+.scrollable {
+  flex: 1 1 100%;
+  padding-top: 1em;
+  margin-top: -1em;
+  overflow-y: auto;
 }
 .pre {
   font-family: monospace;
