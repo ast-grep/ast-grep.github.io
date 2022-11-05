@@ -104,7 +104,7 @@ files:
 - "./integration_tests/test.py"
 ```
 
-Similarly, you can use `ignores` to ignore applying a rule to a certain files. `ignores` supports a list of glob patterns:
+Similarly, you can use `ignores` to ignore applying a rule to certain files. `ignores` supports a list of glob patterns:
 
 ```yaml
 ignores:
