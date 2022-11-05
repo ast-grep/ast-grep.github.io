@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watch, watchEffect, provide, reactive } from 'vue'
+import { shallowRef, watchEffect, provide } from 'vue'
 import TreeNode from './TreeNode.vue'
 import { dumpTree, highlightKey } from './dumpTree'
 
@@ -20,10 +20,6 @@ const props = defineProps({
 let root = shallowRef(null)
 let highlights = shallowRef([])
 
-watch(() => props.modelValue, (value) => {
-  emits('update:modelValue', value)
-})
-
 watchEffect(() => {
   const {modelValue, parser} = props
   if (!parser) {
@@ -41,7 +37,7 @@ provide(highlightKey, e => {
   highlights.value = [e]
 })
 
-function changeFocusNode(e) {
+function changeFocusNode(e: any) {
   const {position} = e
   cursorPosition.value = {
     row: position.lineNumber - 1,
@@ -55,7 +51,8 @@ function changeFocusNode(e) {
   <div class="query-editor">
     <div class="query-input">
       <Monaco
-         v-model="modelValue"
+         :modelValue="modelValue"
+         @update:modelValue="emits('update:modelValue', $event)"
          @changeCursor="changeFocusNode"
         :language="language"
         :highlights="highlights"/>
@@ -98,7 +95,6 @@ function changeFocusNode(e) {
 .dumped p {
   text-align: right;
   background: linear-gradient(to bottom, #fff, #fff7);
-  backdrop-filter: blur(1px);
   z-index: 0;
 }
 .scrollable {
