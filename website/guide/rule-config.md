@@ -94,6 +94,33 @@ rule:
 ```
 And we can get `$GREET` set to `'Hello World'`.
 
+## `files`/`ignores`
+
+Rules can be applied to only certain files in a codebase with `files`. `files` supports a list of glob patterns:
+
+```yaml
+files:
+- "./tests/**"
+- "./integration_tests/test.py"
+```
+
+Similarly, you can use `ignores` to ignore applying a rule to a certain files. `ignores` supports a list of glob patterns:
+
+```yaml
+ignores:
+- "./tests/config/**"
+```
+
+:::tip They work together!
+`ignores` and `files` can be used together.
+:::
+
+:::warning Don't forget `./`
+
+Be sure to add `./` to the beginning of your rules. ast-grep will not recognize the paths if you omit `./`.
+
+:::
+
 ## `fix`
 ast-grep can perform automatic rewriting to the codebase. The `fix` field in the rule configuration specifies how to rewrite the code. We can also use meta variables specified in the `rule` in `fix`. ast-grep will replace the meta-varialbes with the content of actual matched AST nodes.
 
