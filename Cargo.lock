@@ -25,9 +25,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-core"
-version = "0.1.8"
+version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "86307147a1f5b405e4d175ae91d8a31bb2a16452c176c442d337ac72c1248692"
+checksum = "7d3b8049991b59f302d3a2dc97ad98f94faab89581caded24cf27cd635d7be46"
 dependencies = [
  "regex",
  "tree-sitter-facade-sg",
@@ -175,9 +175,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.6.0"
+version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c4eb3267174b8c6c2f654116623910a0fef09c4753f8dd83db29c48a0df988b"
+checksum = "e076559ef8e241f2ae3479e36f97bd5741c0330689e217ad51ce2c76808b868a"
 dependencies = [
  "aho-corasick",
  "memchr",
