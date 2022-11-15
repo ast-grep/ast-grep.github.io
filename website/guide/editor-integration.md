@@ -1,7 +1,13 @@
 # Editor Integration
 
+## VSCode
+
+We have a preview version of [VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode&ssr=false#overview) in the market place.
+
 
 ## Neovim
+
+### nvim-lspconfig
 
 The recommended setup is using [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig).
 
@@ -15,4 +21,14 @@ configs.ast_grep = {
     root_dir = nvim_lsp.util.root_pattern('.git', 'sgconfig.yml');
   };
 }
+```
+
+### coc.nvim
+
+Please see [coc-ast-grep](https://github.com/yaegassy/coc-ast-grep)
+
+You need to have coc.nvim installed for this extension to work. e.g. vim-plug:
+
+```
+Plug 'yaegassy/coc-ast-grep', {'do': 'yarn install --frozen-lockfile'}
 ```
