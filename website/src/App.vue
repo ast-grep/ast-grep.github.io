@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Intro from './components/Intro.vue'
+import Toast from './components/Toast.vue'
 import { shallowRef, onMounted } from 'vue'
 // vitepress SSR does not support Monaco, lazy load on client side
 let playground = shallowRef<unknown>(null)
@@ -26,6 +27,7 @@ onMounted(async () => {
         </h2>
       </div>
     </Suspense>
+    <Toast/>
   </div>
 </template>
 

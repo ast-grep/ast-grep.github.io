@@ -1,6 +1,7 @@
 <script setup>
 import Share from '../icons/Share.vue'
 import {serialize} from '../state'
+import { showToast } from './Toast.vue'
 
 const props = defineProps({
   state: Object,
@@ -10,7 +11,7 @@ const props = defineProps({
 async function onShare() {
   history.replaceState({}, '', '#' + serialize(props.state))
   await navigator.clipboard.writeText(location.href)
-  alert('Sharable URL has been copied to clipboard!')
+  showToast('Sharable URL has been copied to clipboard!')
 }
 
 </script>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { PropType, ref, toRefs, ComputedRef, computed, inject, watchEffect } from 'vue'
+import { PropType, ref, ComputedRef, computed, inject, watchEffect } from 'vue'
 import { DumpNode, highlightKey, Pos } from './dumpTree'
+import { showToast } from './Toast.vue'
 
 const props = defineProps({
   node: {
@@ -74,6 +75,15 @@ watchEffect(() => {
     })
   }
 });
+
+function copyKind(kind: string) {
+  navigator.clipboard.writeText(kind)
+  showToast('Node kind copied!')
+}
+function copyField(name: string) {
+  navigator.clipboard.writeText(name)
+  showToast('Node field copied!')
+}
 </script>
 
 <template>
@@ -83,8 +93,8 @@ watchEffect(() => {
         v-if="children.length > 0"
         class="toggle-sign"
         :class="{expanded}"/>
-      <span class="node-kind">{{ kind }}</span>
-      <span class="node-field">{{ field }}</span>
+      <span class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>
+      <span class="node-field" @click.stop="copyField(kind)">{{ field }}</span>
       <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
     </p>
     <TreeNode
@@ -148,6 +158,9 @@ watchEffect(() => {
 }
 .node-field:empty {
   padding-left: 0;
+}
+.node-field:hover {
+  text-decoration: underline;
 }
 .node-range {
   color: #999;
