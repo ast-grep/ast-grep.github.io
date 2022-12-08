@@ -45,6 +45,8 @@ function changeFocusNode(e: any) {
   }
 }
 
+let isCollapsed = shallowRef(true)
+
 </script>
 
 <template>
@@ -57,8 +59,12 @@ function changeFocusNode(e: any) {
         :language="language"
         :highlights="highlights"/>
     </div>
-    <div class="dumped" @mouseenter="cursorPosition = null" @mouseleave="highlights = []">
-      <p>TreeSitter Output</p>
+    <div class="dumped" :class="!isCollapsed && 'collapsed'"
+      @mouseenter="cursorPosition = null" @mouseleave="highlights = []">
+      <p @click.self="isCollapsed = !isCollapsed">
+        <span class="chevron">›</span>
+        TreeSitter Output
+      </p>
       <div class="scrollable">
         <TreeNode class="pre" :node="root" v-if="root" :cursorPosition="cursorPosition"/>
       </div>
@@ -91,11 +97,28 @@ function changeFocusNode(e: any) {
   border-top: 1px solid #f5f5f5;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
+  transition: flex 0.2s;
+}
+.dumped.collapsed {
+  flex: 2em 0 0;
+  overflow: hidden;
 }
 .dumped p {
   text-align: right;
   background: linear-gradient(to bottom, #fff, #fff7);
   z-index: 0;
+  cursor: pointer;
+}
+.chevron {
+  display: inline-block;
+  transform: rotate(90deg);
+  transition: transform 0.2s;
+}
+.collapsed .chevron {
+  transform: rotate(0);
+}
+.dumped.collapsed > .scrollable {
+  display: none;
 }
 .scrollable {
   flex: 1 1 100%;
