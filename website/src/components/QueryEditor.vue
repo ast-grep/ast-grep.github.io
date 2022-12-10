@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watchEffect, provide } from 'vue'
+import { shallowRef, watchEffect, provide, PropType } from 'vue'
 import TreeNode from './TreeNode.vue'
 import { dumpTree, highlightKey } from './dumpTree'
 
@@ -15,6 +15,7 @@ const props = defineProps({
   },
   modelValue: String,
   parser: Object,
+  matches: Array as PropType<number[][]>,
 })
 
 let root = shallowRef(null)
@@ -57,6 +58,7 @@ let isCollapsed = shallowRef(true)
          @update:modelValue="emits('update:modelValue', $event)"
          @changeCursor="changeFocusNode"
         :language="language"
+        :matches="matches"
         :highlights="highlights"/>
     </div>
     <div class="dumped" :class="!isCollapsed && 'collapsed'"

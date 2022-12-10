@@ -59,6 +59,9 @@ const props = defineProps({
   highlights: {
     type: Array as PropType<number[][]>,
   },
+  matches: {
+    type: Array as PropType<number[][]>,
+  },
 })
 
 const monaco = await import('monaco-editor')
@@ -67,6 +70,7 @@ const containerRef = ref<HTMLDivElement | null>(null)
 const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
 let highlights: monaco.editor.IEditorDecorationsCollection | null = null
+let matches: monaco.editor.IEditorDecorationsCollection | null = null
 
 onMounted(() => {
   if (!containerRef.value) {
@@ -94,10 +98,11 @@ onMounted(() => {
   editorInstance.onDidChangeCursorPosition(e => {
       emits('changeCursor', e)
   })
-  highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformMatch) || [])
+  highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformHighlight) || [])
+  matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch) || [])
 })
 
-const transformMatch = (match: number[]) => {
+const transformHighlight = (match: number[]) => {
     const [sr, sc, er, ec] = match
     return {
       range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
@@ -107,9 +112,24 @@ const transformMatch = (match: number[]) => {
     }
 }
 
+const transformMatch = (match: number[]) => {
+    const [sr, sc, er, ec] = match
+    return {
+      range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
+      options: {
+        inlineClassName: 'monaco-match-span'
+      }
+    }
+}
+
 watch(() => props.highlights, (matched) => {
-  const ranges = matched!.map(transformMatch)
+  const ranges = matched!.map(transformHighlight)
   highlights?.set(ranges)
+})
+
+watch(() => props.matches, (matched) => {
+  const ranges = matched!.map(transformMatch)
+  matches?.set(ranges)
 })
 
 watch(() => props.language, (lang) => {
@@ -140,6 +160,12 @@ onBeforeUnmount(() => {
 </style>
 <style>
 .monaco-highlight-span {
+  text-decoration: underline;
+  background-color: #ffe91030;
+}
+.monaco-match-span {
+  font-style: italic;
+  font-weight: bold;
   background-color: var(--theme-highlight3);
 }
 </style>

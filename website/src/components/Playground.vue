@@ -119,7 +119,7 @@ let codeMode = ref('code')
     <div class="half" :class="activeEditor !== 'code' && 'inactive'">
       <Tabs v-model="codeMode" :modeText="codeText">
       <template #code>
-        <Monaco v-model="source" :language="lang" :highlights="matchedHighlights"/>
+        <QueryEditor v-model="source" :language="lang" :parser="parser" :matches="matchedHighlights"/>
       </template>
       <template #diff>
         <Diff :source="source" :rewrite="rewrittenCode" :language="lang"/>
