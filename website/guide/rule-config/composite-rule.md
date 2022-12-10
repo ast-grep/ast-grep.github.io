@@ -51,51 +51,69 @@ rule:
 
 The above rule will match any `console.log` call but not `console.log('Hello World')`.
 
-## Relational rules
+## Embedded rules
+Sometimes it is necessary to match node nested within other desired nodes. We can use composite rule `all` and relational `inside` to find them, but the result rule is highly nested.
 
-Relational rules are powerful operators that can filter the target nodes based on their surrounding nodes.
-Suppose we have an `await` expression inside a for loop, it is usually a bad idea because every iteration will have to wait for the previous promise to resolve.
-In this case, we can use the relational rule `inside` to filter out the `await` expression.
-
-```yaml
-rule:
-  all:
-    - pattern: await $PROMISE
-    - inside:
-        kind: for_in_statement
-```
-The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule.
-For example, the above rule can be read as "matches a node that is `await` expression and is inside a for loop".
-
-Since relational rules accept other ast-grep rules, we can compose more complex examples by recursively using operators.
+For example, we want to find the usage of `this.foo` in a class getter, we can write the following rule:
 
 ```yaml
 rule:
   all:
-    - pattern: await $PROMISE
-    - inside:
-        any:
-          - kind: for_in_statement
-          - kind: for_statement
-          - kind: while_statement
-          - kind: do_statement
+    - pattern: this.foo                              # the root node
+    - inside:                                        # inside another node
+        all:
+          - pattern:
+              context: class A { get $_() { $$$ } }  # a class getter inside
+              selector: method_definition
+          - inside:                                  # class body
+              immediate: true
+              kind: class_body
+        until:                                       # but not inside nested
+          any:
+            - kind: object                           # either object
+            - kind: class_body                       # or class
 ```
 
-The above rule will match different kind of loops, like `for`, `for-in`, `while` and `do-while`.
+See the [playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNsYXNzIEEge1xuICAgIGdldCB0ZXN0KCkge31cbn0iLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIGFsbDpcbiAgICAtIHBhdHRlcm46IHRoaXMuZm9vXG4gICAgLSBpbnNpZGU6XG4gICAgICAgIGFsbDpcbiAgICAgICAgICAtIHBhdHRlcm46XG4gICAgICAgICAgICAgIGNvbnRleHQ6IGNsYXNzIEEgeyBnZXQgJEdFVFRFUigpIHsgJCQkIH0gfVxuICAgICAgICAgICAgICBzZWxlY3RvcjogbWV0aG9kX2RlZmluaXRpb25cbiAgICAgICAgICAtIGluc2lkZTpcbiAgICAgICAgICAgICAgaW1tZWRpYXRlOiB0cnVlXG4gICAgICAgICAgICAgIGtpbmQ6IGNsYXNzX2JvZHlcbiAgICAgICAgdW50aWw6XG4gICAgICAgICAgYW55OlxuICAgICAgICAgICAgLSBraW5kOiBvYmplY3RcbiAgICAgICAgICAgIC0ga2luZDogY2xhc3NfYm9keSIsInNvdXJjZSI6ImNsYXNzIEEge1xuICBnZXQgdGVzdCgpIHtcbiAgICB0aGlzLmZvb1xuICAgIGxldCBub3RUaGlzID0ge1xuICAgICAgZ2V0IHRlc3QoKSB7XG4gICAgICAgIHRoaXMuZm9vXG4gICAgICB9XG4gICAgfVxuICB9XG4gIG5vdFRoaXMoKSB7XG4gICAgdGhpcy5mb29cbiAgfVxufVxuY29uc3Qgbm90VGhpcyA9IHtcbiAgZ2V0IHRlc3QoKSB7XG4gICAgdGhpcy5mb29cbiAgfVxufSJ9).
 
-So all the code below matches:
 
-```js
-while (foo) {
-  await bar()
-}
-for (let i = 0; i < 10; i++) {
-  await bar()
-}
-for (let key in obj) {
-  await bar()
-}
-do {
-  await bar()
-} while (condition)
+To avoid such nesting-hell code (remember [callback hell](http://callbackhell.com/)?), we can use extra field in the atomic rule to filter out certain nodes. An atomic rule can have `inside`, `has`, `follows` and `precedes` fields. Nodes that will be matched it must be surrounded by corresponding nodes specified by the relation. Put in another way, they are equivalent to having an `all` rule with two sub rules: one is the atomic rule and the other is the relational rule.
+
+For example, consider this rule.
+
+```yaml
+pattern: this.foo
+inside:
+  kind: class_body
 ```
+
+It is equivalent to the `all` rule.
+
+```yaml
+all:
+  - pattern: this.foo
+  - inside:
+      kind: class_body
+```
+
+We call the original atomic rule is augmented by an embedded relational rule.
+
+Back to our `this.foo` in getter example, we can rewrite the rule as below.
+
+```yaml
+rule:
+  pattern: this.foo
+  inside:
+    pattern:
+      context: class A { get $GETTER() { $$$ } }
+      selector: method_definition
+    inside:
+        immediate: true
+        kind: class_body
+    until:
+      any:
+        - kind: object
+        - kind: class_body
+```
+
+It has less indentation than before. See the rewritten rule [in action](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNsYXNzIEEge1xuICAgIGdldCB0ZXN0KCkge31cbn0iLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIHBhdHRlcm46IHRoaXMuZm9vXG4gIGluc2lkZTpcbiAgICBwYXR0ZXJuOlxuICAgICAgY29udGV4dDogY2xhc3MgQSB7IGdldCAkR0VUVEVSKCkgeyAkJCQgfSB9XG4gICAgICBzZWxlY3RvcjogbWV0aG9kX2RlZmluaXRpb25cbiAgICBpbnNpZGU6XG4gICAgICAgIGltbWVkaWF0ZTogdHJ1ZVxuICAgICAgICBraW5kOiBjbGFzc19ib2R5XG4gICAgdW50aWw6XG4gICAgICBhbnk6XG4gICAgICAgIC0ga2luZDogb2JqZWN0XG4gICAgICAgIC0ga2luZDogY2xhc3NfYm9keSIsInNvdXJjZSI6ImNsYXNzIEEge1xuICBnZXQgdGVzdCgpIHtcbiAgICB0aGlzLmZvb1xuICAgIGxldCBub3RUaGlzID0ge1xuICAgICAgZ2V0IHRlc3QoKSB7XG4gICAgICAgIHRoaXMuZm9vXG4gICAgICB9XG4gICAgfVxuICB9XG4gIG5vdFRoaXMoKSB7XG4gICAgdGhpcy5mb29cbiAgfVxufVxuY29uc3Qgbm90VGhpcyA9IHtcbiAgZ2V0IHRlc3QoKSB7XG4gICAgdGhpcy5mb29cbiAgfVxufSJ9).

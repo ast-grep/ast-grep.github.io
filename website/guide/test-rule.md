@@ -4,7 +4,7 @@ Though it is easy to write a simple rule to match some code in ast-grep, writing
 
 To alleviate this pain, ast-grep provides a builtin tool to help you test your rule. You can provide a list of `valid` cases and `invalid` cases to test against your rule.
 
-## Test Basic Concepts
+## Basic Concepts
 
 Ideally, a perfect rule will report issues for all invalid code and approve all valid code. Testing a rule should also cover two categories of code accordingly. If you are familiar with [detection theory](https://en.wikipedia.org/wiki/Detection_theory), you should recognize that testing rule will involve the four scenarios tabulated below.
 

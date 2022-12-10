@@ -82,6 +82,7 @@ However, the rule will have a parsing error in languages like C/Java/Rust becaus
 
 Every rule configuration will have one single root `rule`. The root rule will have *only one* AST node in one match. The matched node is called target node.
 During scanning and rewriting, ast-grep will produce multiple matches to report all AST nodes that satisfies the `rule` condition as matched instances.
+
 Though one rule match only have one AST node as matched, we can have more auxiliary nodes to display context or to perform rewrite. We will cover how rules work in details in the next page.
 
 But for a quick primer, a rule can have a pattern and we can extract meta variables from the matched node.

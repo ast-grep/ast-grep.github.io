@@ -38,6 +38,7 @@ export default defineConfig({
           { text: 'Pattern Syntax', link: '/guide/pattern-syntax' },
           { text: 'Rule Configuration', link: '/guide/rule-config', items:[
             { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule' },
+            { text: 'Relational Rule', link: '/guide/rule-config/relational-rule' },
             { text: 'Composite Rule', link: '/guide/rule-config/composite-rule' },
           ]},
           { text: 'Test Your Rule', link: '/guide/test-rule' },
