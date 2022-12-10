@@ -159,3 +159,6 @@ The above rule will constraint the [`kind`](/guide/rule-config/atomic-rule.html#
 So `console.log(name)` will match the above rule, but `console.log('Rem')` will not because the matched variable `GREET` is string.
 
 See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRHUkVFVClcbmNvbnN0cmFpbnRzOlxuICBHUkVFVDpcbiAgICBraW5kOiBpZGVudGlmaWVyIiwic291cmNlIjoiY29uc29sZS5sb2coJ0hlbGxvIFdvcmxkJylcbmNvbnNvbGUubG9nKGdyZWV0aW5nKVxuIn0=) in action.
+
+After you have written your rule, you can test it with ast-grep's builtin `test` command.
+Let's see it in [next section](/guide/test-rule).

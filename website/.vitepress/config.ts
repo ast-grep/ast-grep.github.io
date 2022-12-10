@@ -40,6 +40,7 @@ export default defineConfig({
             { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule' },
             { text: 'Composite Rule', link: '/guide/rule-config/composite-rule' },
           ]},
+          { text: 'Test Your Rule', link: '/guide/test-rule' },
           { text: 'API Usage', link: '/guide/api-usage' },
           { text: 'Editor Integration', link: '/guide/editor-integration' },
         ],

@@ -11,7 +11,7 @@ rule:
   pattern: console.log($GREETING)
 ```
 
-The above rule will match code like `console.log('Hellow World')`.
+The above rule will match code like `console.log('Hello World')`.
 
 ## `kind`
 
@@ -40,7 +40,7 @@ class Test {
 }
 ```
 
-Here are some situations that you can use `kind`:
+Here are some situations that you can effectively use `kind`:
 1. Pattern code is ambiguous to parse, e.g. `{}` in JavaScript can be either object or code block.
 2. It is too hard to enumerate all patterns of an AST kind node, e.g. matching all Java/TypeScript class declaration will need including all modifiers, generics, `extends` and `implements`.
-3. Patterns only appear within specific context, e.g. the class property defition.
+3. Patterns only appear within specific context, e.g. the class property definition.

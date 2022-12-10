@@ -2,7 +2,7 @@
 
 Composite rule can accept another rule or a list of rules recursively.
 It provides a way to compose atomic rules into a bigger rule for more complex matching.
-Here are some composite rule operatos you can use in ast-grep.
+Here are some composite rule operators you can use in ast-grep.
 
 ## `all`
 
