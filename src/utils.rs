@@ -1,6 +1,6 @@
 use ast_grep_core::{meta_var::MetaVarEnv, MetaVariable, Node, NodeMatch};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use tree_sitter as ts;
 
 #[cfg(feature = "console_error_panic_hook")]
@@ -23,7 +23,7 @@ pub struct WASMNode {
 #[derive(Serialize, Deserialize)]
 pub struct WASMMatch {
   pub node: WASMNode,
-  pub env: HashMap<String, WASMNode>,
+  pub env: BTreeMap<String, WASMNode>,
 }
 
 impl From<NodeMatch<'_, ts::Language>> for WASMMatch {
@@ -36,8 +36,8 @@ impl From<NodeMatch<'_, ts::Language>> for WASMMatch {
   }
 }
 
-fn env_to_hash_map(env: MetaVarEnv<'_, ts::Language>) -> HashMap<String, WASMNode> {
-  let mut map = HashMap::new();
+fn env_to_hash_map(env: MetaVarEnv<'_, ts::Language>) -> BTreeMap<String, WASMNode> {
+  let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
       MetaVariable::Named(name) => {

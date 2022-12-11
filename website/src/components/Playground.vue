@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
+import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
@@ -8,6 +8,8 @@ import init, {findNodes, setupParser, fixErrors} from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
+import EnvDisplay from './EnvDisplay.vue'
+import EditorWithPanel from './EditorWithPanel.vue'
 import { restoreState, Mode as ModeImport } from '../state'
 
 const Mode = ModeImport
@@ -30,15 +32,16 @@ let {
   mode,
   lang,
 } = toRefs(state)
-let langLoaded = ref(false)
-let activeEditor = ref('code')
+let langLoaded = shallowRef(false)
+let activeEditor = shallowRef('code')
 let parser = shallowRef(null)
 function changeActiveEditor(active) {
   activeEditor.value = active
 }
 
-const matchedHighlights = ref([])
-const rewrittenCode = ref(source.value)
+const matchedHighlights = shallowRef([])
+const matchedEnvs = shallowRef([])
+const rewrittenCode = shallowRef(source.value)
 const parserPaths: Record<string, string> = {
   javascript: 'tree-sitter-javascript.wasm',
   typescript: 'tree-sitter-typescript.wasm',
@@ -90,8 +93,10 @@ watchEffect(async () => {
     }
     const matches = await doFind()
     matchedHighlights.value = matches.map(m => m.node.range)
+    matchedEnvs.value = matches.map(m => m.env)
   } catch (e) {
     matchedHighlights.value = []
+    matchedEnvs.value = []
   }
   return
 })
@@ -106,7 +111,7 @@ let codeText = {
   diff: 'Diff',
 }
 
-let codeMode = ref('code')
+let codeMode = shallowRef('code')
 
 </script>
 
@@ -141,7 +146,14 @@ let codeMode = ref('code')
           <QueryEditor v-model="query" :language="lang" :parser="parser"/>
         </template>
         <template #[Mode.Config]>
-          <Monaco language="yaml" v-model="config"/>
+          <EditorWithPanel panelTitle="Matched Variables">
+            <template #editor>
+              <Monaco language="yaml" v-model="config"/>
+            </template>
+            <template #panel>
+              <EnvDisplay :envs="matchedEnvs"/>
+            </template>
+          </EditorWithPanel>
         </template>
         <template #addon>
           <SelectLang v-model="lang"/>
