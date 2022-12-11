@@ -88,7 +88,8 @@ watchEffect(async () => {
     if (!langLoaded.value) {
       return
     }
-    matchedHighlights.value = await doFind()
+    const matches = await doFind()
+    matchedHighlights.value = matches.map(m => m.node.range)
   } catch (e) {
     matchedHighlights.value = []
   }
