@@ -6,8 +6,9 @@ use ast_grep_config::{
 };
 use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVarMatchers;
-use ast_grep_core::{Pattern, Node};
+use ast_grep_core::{Node, Pattern};
 use std::collections::HashMap;
+use utils::WASMMatch;
 
 use serde::{Deserialize, Serialize};
 use tree_sitter as ts;
@@ -54,15 +55,7 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
     MetaVarMatchers::default()
   };
   let config = RuleWithConstraint { rule, matchers };
-  let ret: Vec<_> = root
-    .root()
-    .find_all(config)
-    .map(|n| {
-      let start = n.start_pos();
-      let end = n.end_pos();
-      vec![start.0, start.1, end.0, end.1]
-    })
-    .collect();
+  let ret: Vec<_> = root.root().find_all(config).map(WASMMatch::from).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
 }
