@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import {languageDisplayNames} from './lang'
 
 defineProps({
   modelValue: {
@@ -11,11 +12,6 @@ const emits = defineEmits<{
   (e: 'update:modelValue', val: string): void
 }>()
 
-const languages = {
-  'javascript': 'JavaScript',
-  'typescript': 'TypeScript',
-}
-
 function onChange(event: Event) {
   const target = event.target as HTMLSelectElement
   emits('update:modelValue', String(target.value))
@@ -26,7 +22,7 @@ function onChange(event: Event) {
   <div class="selector">
     Language:
     <select :value="modelValue" @change="onChange">
-      <option class="selector-option-text" v-for="val, key in languages" :value="key">{{val}}</option>
+      <option class="selector-option-text" v-for="val, key in languageDisplayNames" :value="key">{{val}}</option>
     </select> ▿
     </div>
 </template>

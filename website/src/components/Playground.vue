@@ -12,6 +12,8 @@ import EnvDisplay from './EnvDisplay.vue'
 import EditorWithPanel from './EditorWithPanel.vue'
 import { restoreState, Mode as ModeImport } from '../state'
 
+import {parserPaths} from './lang'
+
 const Mode = ModeImport
 
 async function initializeTreeSitter() {
@@ -42,10 +44,6 @@ function changeActiveEditor(active) {
 const matchedHighlights = shallowRef([])
 const matchedEnvs = shallowRef([])
 const rewrittenCode = shallowRef(source.value)
-const parserPaths: Record<string, string> = {
-  javascript: 'tree-sitter-javascript.wasm',
-  typescript: 'tree-sitter-typescript.wasm',
-}
 
 async function parseYAML(src: string) {
   const yaml = await import('js-yaml')
