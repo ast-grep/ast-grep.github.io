@@ -3,28 +3,20 @@ import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
-import TreeSitter from 'web-tree-sitter'
-import init, {findNodes, setupParser, fixErrors} from 'ast-grep-wasm'
+import {findNodes, fixErrors} from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
 import EditorWithPanel from './EditorWithPanel.vue'
+import { initializeParser, setGlobalParser } from './lang'
 import { restoreState, Mode as ModeImport } from '../state'
 
-import {parserPaths} from './lang'
+// important initialization
+await initializeParser()
 
+// this re-aliasing is critical for template usage
 const Mode = ModeImport
-
-async function initializeTreeSitter() {
-  await TreeSitter.init()
-  let entrypoint = globalThis as any
-  entrypoint.Parser = TreeSitter
-  entrypoint.Language = TreeSitter.Language
-}
-
-await initializeTreeSitter()
-await init()
 
 const state = shallowReactive(restoreState())
 let {
@@ -75,12 +67,7 @@ async function doFind() {
 watchEffect(async () => {
   langLoaded.value = false
   parser.value = null
-  const path = parserPaths[lang.value]
-  await setupParser(path)
-  const loadedLang = await globalThis.Language.load(path)
-  const p = new globalThis.Parser()
-  p.setLanguage(loadedLang)
-  parser.value = p
+  parser.value = await setGlobalParser(lang.value)
   langLoaded.value = true
 })
 
