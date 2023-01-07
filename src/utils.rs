@@ -1,7 +1,7 @@
 use ast_grep_core::{meta_var::MetaVarEnv, MetaVariable, Node, NodeMatch};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
-use crate::wasm_lang::WASMLang;
+use crate::wasm_lang::WasmLang;
 
 #[cfg(feature = "console_error_panic_hook")]
 pub fn set_panic_hook() {
@@ -15,34 +15,34 @@ pub fn set_panic_hook() {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct WASMNode {
+pub struct WasmNode {
   pub text: String,
   pub range: (usize, usize, usize, usize),
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct WASMMatch {
-  pub node: WASMNode,
-  pub env: BTreeMap<String, WASMNode>,
+pub struct WasmMatch {
+  pub node: WasmNode,
+  pub env: BTreeMap<String, WasmNode>,
 }
 
-impl From<NodeMatch<'_, WASMLang>> for WASMMatch {
-  fn from(nm: NodeMatch<WASMLang>) -> Self {
+impl From<NodeMatch<'_, WasmLang>> for WasmMatch {
+  fn from(nm: NodeMatch<WasmLang>) -> Self {
     let node = nm.get_node().clone();
-    let node = WASMNode::from(node);
+    let node = WasmNode::from(node);
     let env = nm.get_env().clone();
     let env = env_to_hash_map(env);
     Self { node, env }
   }
 }
 
-fn env_to_hash_map(env: MetaVarEnv<'_, WASMLang>) -> BTreeMap<String, WASMNode> {
+fn env_to_hash_map(env: MetaVarEnv<'_, WasmLang>) -> BTreeMap<String, WasmNode> {
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
       MetaVariable::Named(name) => {
         let node = env.get_match(&name).expect("must exist").clone();
-        map.insert(name, WASMNode::from(node));
+        map.insert(name, WasmNode::from(node));
       }
       MetaVariable::NamedEllipsis(name) => {
         let nodes = env.get_multiple_matches(&name);
@@ -53,7 +53,7 @@ fn env_to_hash_map(env: MetaVarEnv<'_, WASMLang>) -> BTreeMap<String, WASMNode> 
         let end = last.end_pos();
 
         let text = nodes.iter().map(|n| n.text()).collect();
-        let node = WASMNode {
+        let node = WasmNode {
           text,
           range: (start.0, start.1, end.0, end.1),
         };
@@ -66,8 +66,8 @@ fn env_to_hash_map(env: MetaVarEnv<'_, WASMLang>) -> BTreeMap<String, WASMNode> 
   map
 }
 
-impl From<Node<'_, WASMLang>> for WASMNode {
-  fn from(nm: Node<WASMLang>) -> Self {
+impl From<Node<'_, WasmLang>> for WasmNode {
+  fn from(nm: Node<WasmLang>) -> Self {
     let start = nm.start_pos();
     let end = nm.end_pos();
     Self {

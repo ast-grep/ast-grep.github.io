@@ -13,27 +13,14 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-config"
-version = "0.1.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3facbbf1a67fb1ec6c9555f3a36511493817bab8aa17be38474ae4de4c1067f3"
+version = "0.1.14"
 dependencies = [
- "ast-grep-core 0.1.11",
+ "ast-grep-core",
  "bit-set",
  "globset",
  "regex",
  "serde",
  "serde_yaml",
-]
-
-[[package]]
-name = "ast-grep-core"
-version = "0.1.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4bd4930b0a498b2b27c91edc61af355df572ce35d1ed2c5821cec0731210d05f"
-dependencies = [
- "bit-set",
- "regex",
- "tree-sitter-facade-sg",
 ]
 
 [[package]]
@@ -49,7 +36,7 @@ dependencies = [
 name = "ast-grep-language"
 version = "0.1.14"
 dependencies = [
- "ast-grep-core 0.1.14",
+ "ast-grep-core",
  "ignore",
  "serde",
 ]
@@ -59,13 +46,14 @@ name = "ast-grep-wasm"
 version = "0.1.11"
 dependencies = [
  "ast-grep-config",
- "ast-grep-core 0.1.11",
+ "ast-grep-core",
  "ast-grep-language",
  "console_error_panic_hook",
  "once_cell",
  "serde",
  "serde-wasm-bindgen",
  "tree-sitter-facade-sg",
+ "tree-sitter-rust",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-bindgen-test",
@@ -353,9 +341,9 @@ dependencies = [
 
 [[package]]
 name = "serde_yaml"
-version = "0.9.14"
+version = "0.9.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d232d893b10de3eb7258ff01974d6ee20663d8e833263c99409d4b13a0209da"
+checksum = "92b5b431e8907b50339b51223b97d102db8d987ced36f6e4d03621db9316c834"
 dependencies = [
  "indexmap",
  "itoa",
@@ -405,6 +393,16 @@ dependencies = [
  "wasm-bindgen",
  "web-sys",
  "web-tree-sitter-sg",
+]
+
+[[package]]
+name = "tree-sitter-rust"
+version = "0.20.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "797842733e252dc11ae5d403a18060bf337b822fc2ae5ddfaa6ff4d9cc20bda6"
+dependencies = [
+ "cc",
+ "tree-sitter",
 ]
 
 [[package]]

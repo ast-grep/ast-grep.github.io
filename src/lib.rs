@@ -1,7 +1,7 @@
 mod utils;
 mod wasm_lang;
 
-use wasm_lang::WASMLang;
+use wasm_lang::WasmLang;
 
 use ast_grep_config::{
   deserialize_rule, try_deserialize_matchers, RuleWithConstraint, SerializableMetaVarMatcher,
@@ -10,7 +10,7 @@ use ast_grep_config::{
 use ast_grep_core::meta_var::MetaVarMatchers;
 use ast_grep_core::{Node, Pattern};
 use std::collections::HashMap;
-use utils::WASMMatch;
+use utils::WasmMatch;
 use ast_grep_core::language::Language;
 
 use serde::{Deserialize, Serialize};
@@ -29,13 +29,13 @@ pub struct WASMConfig {
 
 #[wasm_bindgen(js_name = setupParser)]
 pub async fn setup_parser(lang_name: String, parser_path: String) -> Result<(), JsError> {
-  WASMLang::set_current(&lang_name, &parser_path).await
+  WasmLang::set_current(&lang_name, &parser_path).await
 }
 
 #[wasm_bindgen(js_name = findNodes)]
 pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
   let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
-  let lang = WASMLang::get_current();
+  let lang = WasmLang::get_current();
   let root = lang.ast_grep(src);
   let rule = deserialize_rule(config.rule, lang.clone())?;
   let matchers = if let Some(c) = config.constraints {
@@ -44,7 +44,7 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
     MetaVarMatchers::default()
   };
   let config = RuleWithConstraint { rule, matchers };
-  let ret: Vec<_> = root.root().find_all(config).map(WASMMatch::from).collect();
+  let ret: Vec<_> = root.root().find_all(config).map(WasmMatch::from).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
 }
@@ -52,7 +52,7 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
 #[wasm_bindgen(js_name = fixErrors)]
 pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
-  let lang = WASMLang::get_current();
+  let lang = WasmLang::get_current();
   let fixer = config.fix.expect_throw("fix is required for rewriting");
   let fixer = Pattern::new(&fixer, lang.clone());
   let root = lang.ast_grep(&src);
@@ -85,7 +85,7 @@ struct DebugNode {
   children: Vec<DebugNode>,
 }
 
-fn convert_to_debug_node(n: Node<WASMLang>) -> DebugNode {
+fn convert_to_debug_node(n: Node<WasmLang>) -> DebugNode {
   let children = n.children().map(convert_to_debug_node).collect();
   DebugNode {
     kind: n.kind().to_string(),
@@ -98,7 +98,7 @@ fn convert_to_debug_node(n: Node<WASMLang>) -> DebugNode {
 
 #[wasm_bindgen(js_name = dumpASTNodes)]
 pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
-  let lang = WASMLang::get_current();
+  let lang = WasmLang::get_current();
   let root = lang.ast_grep(&src);
   let debug_node = convert_to_debug_node(root.root());
   let ret = serde_wasm_bindgen::to_value(&debug_node)?;
