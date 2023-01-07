@@ -1,20 +1,21 @@
 mod utils;
+mod wasm_lang;
+
+use wasm_lang::WASMLang;
 
 use ast_grep_config::{
   deserialize_rule, try_deserialize_matchers, RuleWithConstraint, SerializableMetaVarMatcher,
   SerializableRule,
 };
-use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVarMatchers;
 use ast_grep_core::{Node, Pattern};
 use std::collections::HashMap;
 use utils::WASMMatch;
+use ast_grep_core::language::Language;
 
 use serde::{Deserialize, Serialize};
-use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
 
-use std::sync::Mutex;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
@@ -26,27 +27,15 @@ pub struct WASMConfig {
   pub constraints: Option<HashMap<String, SerializableMetaVarMatcher>>,
 }
 
-static INSTANCE: Mutex<Option<ts::Language>> = Mutex::new(None);
-
 #[wasm_bindgen(js_name = setupParser)]
-pub async fn setup_parser(parser_path: String) -> Result<(), JsError> {
-  ts::TreeSitter::init().await?;
-  let mut parser = ts::Parser::new()?;
-  let lang = get_lang(parser_path).await?;
-  parser.set_language(&lang)?;
-  let mut curr_lang = INSTANCE.lock().expect_throw("set language error");
-  *curr_lang = Some(lang);
-  Ok(())
+pub async fn setup_parser(lang_name: String, parser_path: String) -> Result<(), JsError> {
+  WASMLang::set_current(&lang_name, &parser_path).await
 }
 
 #[wasm_bindgen(js_name = findNodes)]
 pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
   let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
-  let lang = INSTANCE
-    .lock()
-    .expect_throw("get language error")
-    .clone()
-    .expect_throw("current language is not set");
+  let lang = WASMLang::get_current();
   let root = lang.ast_grep(src);
   let rule = deserialize_rule(config.rule, lang.clone())?;
   let matchers = if let Some(c) = config.constraints {
@@ -63,11 +52,7 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
 #[wasm_bindgen(js_name = fixErrors)]
 pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
-  let lang = INSTANCE
-    .lock()
-    .expect_throw("get language error")
-    .clone()
-    .expect_throw("current language is not set");
+  let lang = WASMLang::get_current();
   let fixer = config.fix.expect_throw("fix is required for rewriting");
   let fixer = Pattern::new(&fixer, lang.clone());
   let root = lang.ast_grep(&src);
@@ -100,7 +85,7 @@ struct DebugNode {
   children: Vec<DebugNode>,
 }
 
-fn convert_to_debug_node(n: Node<ts::Language>) -> DebugNode {
+fn convert_to_debug_node(n: Node<WASMLang>) -> DebugNode {
   let children = n.children().map(convert_to_debug_node).collect();
   DebugNode {
     kind: n.kind().to_string(),
@@ -113,26 +98,9 @@ fn convert_to_debug_node(n: Node<ts::Language>) -> DebugNode {
 
 #[wasm_bindgen(js_name = dumpASTNodes)]
 pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
-  let lang = INSTANCE
-    .lock()
-    .expect_throw("get language error")
-    .clone()
-    .expect_throw("current language is not set");
+  let lang = WASMLang::get_current();
   let root = lang.ast_grep(&src);
   let debug_node = convert_to_debug_node(root.root());
   let ret = serde_wasm_bindgen::to_value(&debug_node)?;
   Ok(ret)
-}
-
-#[cfg(target_arch = "wasm32")]
-async fn get_lang(parser_path: String) -> Result<ts::Language, JsError> {
-  let lang = web_tree_sitter_sg::Language::load_path(&parser_path)
-    .await
-    .map_err(ts::LanguageError::from)?;
-  Ok(ts::Language::from(lang))
-}
-
-#[cfg(not(target_arch = "wasm32"))]
-async fn get_lang(_path: String) -> Result<ts::Language, JsError> {
-  unreachable!()
 }

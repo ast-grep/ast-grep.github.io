@@ -1,7 +1,7 @@
 use ast_grep_core::{meta_var::MetaVarEnv, MetaVariable, Node, NodeMatch};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
-use tree_sitter as ts;
+use crate::wasm_lang::WASMLang;
 
 #[cfg(feature = "console_error_panic_hook")]
 pub fn set_panic_hook() {
@@ -26,8 +26,8 @@ pub struct WASMMatch {
   pub env: BTreeMap<String, WASMNode>,
 }
 
-impl From<NodeMatch<'_, ts::Language>> for WASMMatch {
-  fn from(nm: NodeMatch<ts::Language>) -> Self {
+impl From<NodeMatch<'_, WASMLang>> for WASMMatch {
+  fn from(nm: NodeMatch<WASMLang>) -> Self {
     let node = nm.get_node().clone();
     let node = WASMNode::from(node);
     let env = nm.get_env().clone();
@@ -36,7 +36,7 @@ impl From<NodeMatch<'_, ts::Language>> for WASMMatch {
   }
 }
 
-fn env_to_hash_map(env: MetaVarEnv<'_, ts::Language>) -> BTreeMap<String, WASMNode> {
+fn env_to_hash_map(env: MetaVarEnv<'_, WASMLang>) -> BTreeMap<String, WASMNode> {
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
@@ -66,8 +66,8 @@ fn env_to_hash_map(env: MetaVarEnv<'_, ts::Language>) -> BTreeMap<String, WASMNo
   map
 }
 
-impl From<Node<'_, ts::Language>> for WASMNode {
-  fn from(nm: Node<ts::Language>) -> Self {
+impl From<Node<'_, WASMLang>> for WASMNode {
+  fn from(nm: Node<WASMLang>) -> Self {
     let start = nm.start_pos();
     let end = nm.end_pos();
     Self {
