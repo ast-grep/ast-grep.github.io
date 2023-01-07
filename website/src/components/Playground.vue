@@ -3,7 +3,7 @@ import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
-import {findNodes, fixErrors} from 'ast-grep-wasm'
+import { findNodes, fixErrors } from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
@@ -80,6 +80,7 @@ watchEffect(async () => {
     matchedHighlights.value = matches.map(m => m.node.range)
     matchedEnvs.value = matches.map(m => m.env)
   } catch (e) {
+    console.error(e)
     matchedHighlights.value = []
     matchedEnvs.value = []
   }
