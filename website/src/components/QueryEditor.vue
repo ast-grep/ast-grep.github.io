@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watchEffect, provide, PropType } from 'vue'
+import { shallowRef, watchEffect, provide, PropType, computed } from 'vue'
 import TreeNode from './TreeNode.vue'
 import { dumpTree, highlightKey } from './dumpTree'
 import EditorWithPanel from './EditorWithPanel.vue'
+import { preProcessPattern } from 'ast-grep-wasm'
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -22,13 +23,24 @@ const props = defineProps({
 let root = shallowRef(null)
 let highlights = shallowRef([])
 
+const processedSource = computed(() => {
+  const { modelValue } = props
+  // have matches. It is source code panel
+  // do not pre-process source code
+  if (props.matches != null) {
+    return modelValue
+  } else {
+    // do process pattern query
+    return preProcessPattern(modelValue)
+  }
+})
+
 watchEffect(() => {
-  const {modelValue, parser} = props
+  const {parser} = props
   if (!parser) {
     return
   }
-  // TODO implement this in rust
-  const dumped = parser.parse(modelValue).rootNode
+  const dumped = parser.parse(processedSource.value).rootNode
   const cursor = dumped.walk()
   root.value = dumpTree(cursor)[0]
   cursor.delete()
