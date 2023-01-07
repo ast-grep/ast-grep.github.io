@@ -163,6 +163,10 @@ mod test {
   use super::*;
   use tree_sitter_rust;
 
+  // https://github.com/tree-sitter/tree-sitter-rust/issues/82
+  // sadly, this does not test what tree-sitter-wasm actually does
+  // wasm uses UTF16 which counts different "error cost" than utf8
+  // native tree-sitter can use parse_with_utf16 :(
   #[test]
   fn test_process_pattern() {
     let mut curr_lang = TS_LANG.lock().expect_throw("set language error");

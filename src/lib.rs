@@ -104,3 +104,9 @@ pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
   let ret = serde_wasm_bindgen::to_value(&debug_node)?;
   Ok(ret)
 }
+
+#[wasm_bindgen(js_name = preProcessPattern)]
+pub fn pre_process_pattern(query: String) -> Result<String, JsError> {
+  let lang = WasmLang::get_current();
+  Ok(lang.pre_process_pattern(&query).into())
+}
