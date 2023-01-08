@@ -1,10 +1,10 @@
-import {Tree, TreeCursor} from 'web-tree-sitter'
-import type { InjectionKey } from 'vue'
+import type { InjectionKey, Ref } from 'vue'
 
 interface HighlightContext {
   (range: number[]): void
 }
 
+export const langLoadedKey = Symbol.for('lang-loaded') as InjectionKey<Ref<boolean>>
 export const highlightKey = Symbol.for('highlight-node') as InjectionKey<HighlightContext>
 
 export interface Pos {
@@ -12,52 +12,12 @@ export interface Pos {
   column: number
 }
 
+/** stub wasm DumpNode */
 export interface DumpNode {
-  field: string,
+  field: string | undefined,
   kind: string,
   start: Pos,
   end: Pos,
+  isNamed: boolean,
   children: DumpNode[]
-}
-
-export function dumpTree(cursor: TreeCursor | null) {
-  if (!cursor) {
-    return []
-  }
-  return dumpOneNode(cursor, [])
-}
-
-function dumpOneNode(cursor: TreeCursor, target: DumpNode[]) {
-    let displayName: string
-    if (cursor.nodeIsMissing) {
-      displayName = `MISSING ${cursor.nodeType}`
-    } else if (cursor.nodeIsNamed) {
-      displayName = cursor.nodeType
-    }
-    if (!displayName) {
-      // anonymous node
-      return target
-    }
-    const start = cursor.startPosition
-    const end = cursor.endPosition
-    let field = cursor.currentFieldName()
-    let children: DumpNode[] = []
-    if (cursor.gotoFirstChild()) {
-      dumpNodes(cursor, children)
-      cursor.gotoParent()
-    }
-    target.push({
-      field,
-      kind: displayName,
-      start,
-      end,
-      children,
-    })
-    return target
-}
-
-function dumpNodes(cursor: TreeCursor, target: DumpNode[]) {
-  do {
-    dumpOneNode(cursor, target)
-  } while (cursor.gotoNextSibling())
 }

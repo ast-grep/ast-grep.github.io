@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Monaco from './Monaco.vue'
-import { shallowRef, watchEffect, provide, PropType, computed } from 'vue'
+import { shallowRef, watchEffect, provide, PropType, computed, inject } from 'vue'
 import TreeNode from './TreeNode.vue'
-import { dumpTree, highlightKey } from './dumpTree'
+import { highlightKey, langLoadedKey, DumpNode } from './dumpTree'
 import EditorWithPanel from './EditorWithPanel.vue'
 import { preProcessPattern } from 'ast-grep-wasm'
 import { dumpASTNodes } from 'ast-grep-wasm'
@@ -17,11 +17,10 @@ const props = defineProps({
     default: 'javascript'
   },
   modelValue: String,
-  parser: Object,
   matches: Array as PropType<number[][]>,
 })
 
-let root = shallowRef(null)
+let root = shallowRef(null as DumpNode | null)
 let highlights = shallowRef([])
 
 const processedSource = computed(() => {
@@ -35,17 +34,11 @@ const processedSource = computed(() => {
     return preProcessPattern(modelValue)
   }
 })
-
+const langLoaded = inject(langLoadedKey)
 watchEffect(() => {
-  const {parser} = props
-  if (!parser) {
-    return
+  if (langLoaded.value) {
+    root.value = dumpASTNodes(processedSource.value)
   }
-  console.log(dumpASTNodes(processedSource.value))
-  const dumped = parser.parse(processedSource.value).rootNode
-  const cursor = dumped.walk()
-  root.value = dumpTree(cursor)[0]
-  cursor.delete()
 })
 
 let cursorPosition = shallowRef(null)

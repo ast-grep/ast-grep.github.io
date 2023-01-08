@@ -47,8 +47,4 @@ export async function initializeParser() {
 export async function setGlobalParser(lang: string) {
   const path = parserPaths[lang]
   await setupParser(lang, path)
-  const loadedLang = await globalThis.Language.load(path)
-  const p = new globalThis.Parser()
-  p.setLanguage(loadedLang)
-  return p
 }

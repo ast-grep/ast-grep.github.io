@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
+import { shallowRef, shallowReactive, toRefs, provide, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
@@ -11,6 +11,7 @@ import EnvDisplay from './EnvDisplay.vue'
 import EditorWithPanel from './EditorWithPanel.vue'
 import { initializeParser, setGlobalParser } from './lang'
 import { restoreState, Mode as ModeImport } from '../state'
+import { langLoadedKey } from './dumpTree'
 
 // important initialization
 await initializeParser()
@@ -28,7 +29,6 @@ let {
 } = toRefs(state)
 let langLoaded = shallowRef(false)
 let activeEditor = shallowRef('code')
-let parser = shallowRef(null)
 function changeActiveEditor(active) {
   activeEditor.value = active
 }
@@ -66,16 +66,15 @@ async function doFind() {
 
 watchEffect(async () => {
   langLoaded.value = false
-  parser.value = null
-  parser.value = await setGlobalParser(lang.value)
+  await setGlobalParser(lang.value)
   langLoaded.value = true
 })
 
 watchEffect(async () => {
+  if (!langLoaded.value) {
+    return
+  }
   try {
-    if (!langLoaded.value) {
-      return
-    }
     const matches = await doFind()
     matchedHighlights.value = matches.map(m => m.node.range)
     matchedEnvs.value = matches.map(m => m.env)
@@ -98,7 +97,7 @@ let codeText = {
 }
 
 let codeMode = shallowRef('code')
-
+provide(langLoadedKey, langLoaded)
 </script>
 
 <template>
@@ -111,7 +110,7 @@ let codeMode = shallowRef('code')
     <div class="half" :class="activeEditor !== 'code' && 'inactive'">
       <Tabs v-model="codeMode" :modeText="codeText">
       <template #code>
-        <QueryEditor v-model="source" :language="lang" :parser="parser" :matches="matchedHighlights"/>
+        <QueryEditor v-model="source" :language="lang" :matches="matchedHighlights"/>
       </template>
       <template #diff>
         <Diff :source="source" :rewrite="rewrittenCode" :language="lang"/>
@@ -129,7 +128,7 @@ let codeMode = shallowRef('code')
     <div class="half" :class="activeEditor !== 'search' && 'inactive'">
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
-          <QueryEditor v-model="query" :language="lang" :parser="parser"/>
+          <QueryEditor v-model="query" :language="lang"/>
         </template>
         <template #[Mode.Config]>
           <EditorWithPanel panelTitle="Matched Variables">
