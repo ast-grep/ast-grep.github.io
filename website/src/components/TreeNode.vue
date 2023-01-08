@@ -91,7 +91,7 @@ function copyField(name: string) {
   <div v-if="isNamed" class="tree-node" ref="nodeRef" :class="{target: isTarget}">
     <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
-        v-if="children.length > 0"
+        v-if="children.some(n => n.isNamed)"
         class="toggle-sign"
         :class="{expanded}"/>
       <span class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>

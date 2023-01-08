@@ -160,7 +160,7 @@ onBeforeUnmount(() => {
 </style>
 <style>
 .monaco-highlight-span {
-  border-bottom: 1px dotted #747474;
+  border-bottom: 1px dashed var(--brand-color);
   background-color: var(--theme-highlight4);
 }
 .monaco-match-span {
