@@ -5,6 +5,7 @@ import TreeNode from './TreeNode.vue'
 import { dumpTree, highlightKey } from './dumpTree'
 import EditorWithPanel from './EditorWithPanel.vue'
 import { preProcessPattern } from 'ast-grep-wasm'
+import { dumpASTNodes } from 'ast-grep-wasm'
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -40,6 +41,7 @@ watchEffect(() => {
   if (!parser) {
     return
   }
+  console.log(dumpASTNodes(processedSource.value))
   const dumped = parser.parse(processedSource.value).rootNode
   const cursor = dumped.walk()
   root.value = dumpTree(cursor)[0]

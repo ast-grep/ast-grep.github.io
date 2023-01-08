@@ -1,5 +1,6 @@
 mod utils;
 mod wasm_lang;
+mod dump_tree;
 
 use wasm_lang::WasmLang;
 
@@ -11,6 +12,7 @@ use ast_grep_core::meta_var::MetaVarMatchers;
 use ast_grep_core::{Node, Pattern};
 use std::collections::HashMap;
 use utils::WasmMatch;
+use dump_tree::{dump_one_node, DebugNode};
 use ast_grep_core::language::Language;
 
 use serde::{Deserialize, Serialize};
@@ -81,24 +83,11 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   Ok(new_content)
 }
 
-#[derive(Deserialize, Serialize)]
-struct DebugNode {
-  kind: String,
-  start: (usize, usize),
-  end: (usize, usize),
-  is_named: bool,
-  children: Vec<DebugNode>,
-}
-
 fn convert_to_debug_node(n: Node<WasmLang>) -> DebugNode {
-  let children = n.children().map(convert_to_debug_node).collect();
-  DebugNode {
-    kind: n.kind().to_string(),
-    start: n.start_pos(),
-    end: n.end_pos(),
-    is_named: n.is_named(),
-    children,
-  }
+  let mut cursor = n.get_ts_node().walk();
+  let mut target = vec![];
+  dump_one_node(&mut cursor, &mut target);
+  target.pop().expect_throw("found empty node")
 }
 
 #[wasm_bindgen(js_name = dumpASTNodes)]
