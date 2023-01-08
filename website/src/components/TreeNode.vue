@@ -29,6 +29,7 @@ let {
   start,
   end,
   children,
+  isNamed,
 } = deepReactive()
 
 const highlightContext = inject(highlightKey)
@@ -87,7 +88,7 @@ function copyField(name: string) {
 </script>
 
 <template>
-  <div class="tree-node" ref="nodeRef" :class="{target: isTarget}">
+  <div v-if="isNamed" class="tree-node" ref="nodeRef" :class="{target: isTarget}">
     <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
         v-if="children.length > 0"
