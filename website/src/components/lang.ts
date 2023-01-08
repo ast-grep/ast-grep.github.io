@@ -1,6 +1,5 @@
 type SupportedLang = keyof typeof parserPaths
-import init, { setupParser } from 'ast-grep-wasm'
-import TreeSitter from 'web-tree-sitter'
+import init, { setupParser, initializeTreeSitter } from 'ast-grep-wasm'
 
 const parserPaths = {
   javascript: 'tree-sitter-javascript.wasm',
@@ -41,11 +40,8 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
 }
 
 export async function initializeParser() {
-  await TreeSitter.init()
-  let entrypoint = globalThis as any
-  entrypoint.Parser = TreeSitter
-  entrypoint.Language = TreeSitter.Language
   await init()
+  await initializeTreeSitter()
 }
 
 export async function setGlobalParser(lang: string) {

@@ -83,7 +83,6 @@ impl WasmLang {
 }
 
 async fn setup_parser(parser_path: &str) -> Result<(), JsError> {
-  ts::TreeSitter::init().await?;
   let mut parser = ts::Parser::new()?;
   let lang = get_lang(parser_path).await?;
   parser.set_language(&lang)?;

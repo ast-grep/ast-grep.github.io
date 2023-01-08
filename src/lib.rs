@@ -14,6 +14,7 @@ use utils::WasmMatch;
 use ast_grep_core::language::Language;
 
 use serde::{Deserialize, Serialize};
+use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
 
 
@@ -25,6 +26,10 @@ pub struct WASMConfig {
   pub rule: SerializableRule,
   pub fix: Option<String>,
   pub constraints: Option<HashMap<String, SerializableMetaVarMatcher>>,
+}
+#[wasm_bindgen(js_name = initializeTreeSitter)]
+pub async fn initialize_tree_sitter() -> Result<(), JsError> {
+  ts::TreeSitter::init().await
 }
 
 #[wasm_bindgen(js_name = setupParser)]
