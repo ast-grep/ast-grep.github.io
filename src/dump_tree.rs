@@ -3,36 +3,48 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct DebugNode {
+pub struct DumpNode {
   field: Option<String>,
   kind: String,
-  start: (usize, usize),
-  end: (usize, usize),
+  start: Pos,
+  end: Pos,
   is_named: bool,
-  children: Vec<DebugNode>,
+  children: Vec<DumpNode>,
 }
 
-#[inline]
-fn pos_to_tuple(pos: ts::Point) -> (usize, usize) {
-  (pos.row() as usize, pos.column() as usize)
+#[derive(Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Pos {
+  row: u32,
+  column: u32,
 }
 
-pub fn dump_one_node(cursor: &mut ts::TreeCursor, target: &mut Vec<DebugNode>) {
+impl From<ts::Point> for Pos {
+  #[inline]
+  fn from(pt: ts::Point) -> Self {
+    Pos {
+      row: pt.row(),
+      column: pt.column(),
+    }
+  }
+}
+
+pub fn dump_one_node(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
   let node = cursor.node();
   let kind = if node.is_missing() {
     format!("MISSING {}", node.kind())
   } else {
     node.kind().to_string()
   };
-  let start = pos_to_tuple(node.start_position());
-  let end = pos_to_tuple(node.end_position());
+  let start = node.start_position().into();
+  let end = node.end_position().into();
   let field = cursor.field_name().map(|c| c.to_string());
   let mut children = vec![];
   if cursor.goto_first_child() {
     dump_nodes(cursor, &mut children);
     cursor.goto_parent();
   }
-  target.push(DebugNode {
+  target.push(DumpNode {
     field,
     kind,
     start,
@@ -42,7 +54,7 @@ pub fn dump_one_node(cursor: &mut ts::TreeCursor, target: &mut Vec<DebugNode>) {
   })
 }
 
-fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DebugNode>) {
+fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
   loop {
     dump_one_node(cursor, target);
     if !cursor.goto_next_sibling() {

@@ -12,7 +12,7 @@ use ast_grep_core::meta_var::MetaVarMatchers;
 use ast_grep_core::{Node, Pattern};
 use std::collections::HashMap;
 use utils::WasmMatch;
-use dump_tree::{dump_one_node, DebugNode};
+use dump_tree::{dump_one_node, DumpNode};
 use ast_grep_core::language::Language;
 
 use serde::{Deserialize, Serialize};
@@ -83,7 +83,7 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   Ok(new_content)
 }
 
-fn convert_to_debug_node(n: Node<WasmLang>) -> DebugNode {
+fn convert_to_debug_node(n: Node<WasmLang>) -> DumpNode {
   let mut cursor = n.get_ts_node().walk();
   let mut target = vec![];
   dump_one_node(&mut cursor, &mut target);
