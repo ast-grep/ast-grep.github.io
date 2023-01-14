@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use ast_grep_core::language::Language;
-// use ast_grep_core::MetaVariable;
+use ast_grep_core::MetaVariable;
 use ast_grep_language as L;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
@@ -149,26 +149,11 @@ impl Language for WasmLang {
   }
 
   impl_lang_method!(meta_var_char, () => char);
-  // impl_lang_method!(extract_meta_var, (source: &str) => Option<MetaVariable>);
-  // impl_lang_method!(expando_char, () => char);
+  impl_lang_method!(extract_meta_var, (source: &str) => Option<MetaVariable>);
+  impl_lang_method!(expando_char, () => char);
 
-  // fn pre_process_pattern<'q>(&self, query: &'q str) -> Cow<'q, str> {
-  //   execute_lang_method! { self, pre_process_pattern, query }
-  // }
-
-  // TODO revert this ascii hack
-  // expando char can only be ascii for web tree_sitter due to
-  // incompatible text encoding between Rust and DOMString
-  fn expando_char(&self) -> char {
-    'x'
-  }
   fn pre_process_pattern<'q>(&self, query: &'q str) -> Cow<'q, str> {
-    // use stack buffer to reduce allocation
-    let mut buf = [0; 4];
-    let expando = self.expando_char().encode_utf8(&mut buf);
-    // TODO: use more precise replacement
-    let replaced = query.replace(self.meta_var_char(), expando);
-    Cow::Owned(replaced)
+    execute_lang_method! { self, pre_process_pattern, query }
   }
 
 }
