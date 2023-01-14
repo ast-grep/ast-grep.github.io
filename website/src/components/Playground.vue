@@ -42,8 +42,13 @@ async function parseYAML(src: string) {
   return yaml.load(src) as any
 }
 
-async function doFind() {
+async function doFind(): Promise<any[]> {
   if (mode.value === Mode.Patch) {
+    const src = source.value
+    const pattern = query.value
+    if (!src || !pattern) {
+      return []
+    }
     return findNodes(
       source.value,
       {rule: {pattern: query.value}},
@@ -51,6 +56,9 @@ async function doFind() {
   } else {
     const src = source.value
     const val = config.value;
+    if (!src || !val) {
+      return []
+    }
     const json = await parseYAML(val)
     if (json.fix) {
       rewrittenCode.value = fixErrors(src, json)
