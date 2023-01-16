@@ -1,4 +1,4 @@
-use ast_grep_core::{meta_var::MetaVarEnv, MetaVariable, Node, NodeMatch};
+use ast_grep_core::{meta_var::{MetaVarEnv, MetaVariable}, Node, NodeMatch};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use crate::wasm_lang::WasmLang;

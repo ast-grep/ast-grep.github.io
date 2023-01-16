@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use ast_grep_core::language::Language;
-use ast_grep_core::MetaVariable;
+use ast_grep_core::meta_var::MetaVariable;
 use ast_grep_language as L;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
