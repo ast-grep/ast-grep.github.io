@@ -17,6 +17,7 @@ pub enum WasmLang {
   C,
   CSharp,
   Cpp,
+  Dart,
   Go,
   Html,
   Java,
@@ -51,6 +52,7 @@ impl FromStr for WasmLang {
       "c" => C,
       "csharp" => CSharp,
       "cpp" => Cpp,
+      "dart" => Dart,
       "go" => Go,
       "html" => Html,
       "java" => Java,
@@ -118,6 +120,7 @@ macro_rules! execute_lang_method {
     match $me {
       W::C => L::C.$method($($pname,)*),
       W::CSharp => L::CSharp.$method($($pname,)*),
+      W::Dart => L::Dart.$method($($pname,)*),
       W::Go => L::Go.$method($($pname,)*),
       W::Html => L::Html.$method($($pname,)*),
       W::Java => L::Java.$method($($pname,)*),
