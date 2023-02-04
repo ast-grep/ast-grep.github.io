@@ -40,10 +40,10 @@ Specify the language to parse and the file extension to includ in matching.
 
 ## `rule`
 
-* type: `Object`
+* type: `Rule`
 * required: true
 
-The object specify the method to find matching AST nodes. See detailes below.
+The object specify the method to find matching AST nodes. See detailes in [rule object reference](/reference/rule).
 
 ## `fix`
 
