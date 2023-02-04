@@ -52,6 +52,7 @@ export default defineConfig({
         items: [
           { text: 'Command Line Interface', link: '/reference/cli' },
           { text: 'YAML Configuration', link: '/reference/yaml' },
+          { text: 'Rule Object', link: '/reference/rule' },
           { text: 'API Reference', link: '/reference/api' },
         ],
       },
