@@ -19,10 +19,15 @@ cargo install ast-grep
 
 The binary command, `sg`, should be available now. Let's try it with `--help`.
 
-
 ```shell
 sg --help
 ```
+
+:::danger Use `sg` on Linux
+Linux has a default command `sg` for `setgroups`. You must specify `sg` command's path.
+If you installed `ast-grep` via cargo, you can use `~/.cargo/bin/sg` instead of `sg`.
+:::
+
 
 Optionally, you can grab TypeScript source code if you want to follow the tutorial. Or you can apply the magic to your own code.
 
