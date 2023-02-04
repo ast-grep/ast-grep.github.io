@@ -53,6 +53,23 @@ Here are some situations that you can effectively use `kind`:
 2. It is too hard to enumerate all patterns of an AST kind node, e.g. matching all Java/TypeScript class declaration will need including all modifiers, generics, `extends` and `implements`.
 3. Patterns only appear within specific context, e.g. the class property definition.
 
+
+## `regex`
+
+The `regex` atomic rule will match the AST node by its text against a Rust regular expression.
+
+```yaml
+rule:
+  regex: "\w+"
+```
+
+:::tip
+The regular expression is written in [Rust syntax](https://docs.rs/regex/latest/regex/), not the popular [PCRE like syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).
+So some features are not available like arbitrary look-ahead and back references.
+:::
+
+You should almost always combine `regex` with other atomic rules to make sure the regular expression is applied to the correct AST node. Regex matching is quite expensive and cannot be optimized based on AST node kinds. While `kind` and `pattern` rules can be only applied to nodes with specific `kind_id` for optimized performance.
+
 ## Tips for writing rules
 
 Since one rule will have *only one* AST node in one match, it is recommended to first write the atomic rule that matches the desired node.
