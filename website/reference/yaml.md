@@ -73,7 +73,7 @@ Glob patterns that exclude rules from applying to files. It is superseded by `fi
 
 :::warning `ignores` in YAML is different from `--no-ignore` in CLI
 ast-grep respects common ignore files like `.gitignore` and hidden files by default.
-To disable this behavior, use [`--no-ignore`](reference/cli#scan) in CLI.
+To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 
