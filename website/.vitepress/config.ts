@@ -42,6 +42,7 @@ export default defineConfig({
             { text: 'Composite Rule', link: '/guide/rule-config/composite-rule' },
           ]},
           { text: 'Test Your Rule', link: '/guide/test-rule' },
+          { text: 'Tooling Overview', link: '/guide/tooling-overview' },
           { text: 'API Usage', link: '/guide/api-usage' },
           { text: 'Editor Integration', link: '/guide/editor-integration' },
         ],
