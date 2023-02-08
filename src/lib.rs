@@ -50,7 +50,7 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
   } else {
     MetaVarMatchers::default()
   };
-  let config = RuleWithConstraint { rule, matchers };
+  let config = RuleWithConstraint::new(rule, matchers);
   let ret: Vec<_> = root.root().find_all(config).map(WasmMatch::from).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
@@ -69,7 +69,7 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   } else {
     MetaVarMatchers::default()
   };
-  let config = RuleWithConstraint { rule, matchers };
+  let config = RuleWithConstraint::new(rule, matchers);
   let edits: Vec<_> = root.root().replace_all(config, fixer);
   let mut new_content = String::new();
   let mut start = 0;
