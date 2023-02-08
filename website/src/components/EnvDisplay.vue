@@ -2,6 +2,7 @@
 import {computed, shallowRef, PropType} from 'vue'
 const props = defineProps({
   envs: Array as PropType<any>,
+  error: String,
 })
 let currentIndex = shallowRef(0)
 let currentEnv = computed(() => {
@@ -50,6 +51,9 @@ function decrement() {
     &nbsp;
     <button @click="increment">Next Match</button>
   </div>
+  <div v-if="error" class="error-msg">
+    {{error}}
+  </div>
 </div>
 </template>
 
@@ -75,5 +79,12 @@ function decrement() {
 }
 .choose-match {
   margin-top: 1em;
+}
+.error-msg {
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: #f7f7f7;
+  margin-top: 5px;
+  color: #d0312d;
 }
 </style>

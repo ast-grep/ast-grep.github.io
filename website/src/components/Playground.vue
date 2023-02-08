@@ -36,6 +36,7 @@ function changeActiveEditor(active) {
 const matchedHighlights = shallowRef([])
 const matchedEnvs = shallowRef([])
 const rewrittenCode = shallowRef(source.value)
+const ruleErrors = shallowRef(null)
 
 async function parseYAML(src: string) {
   const yaml = await import('js-yaml')
@@ -86,8 +87,10 @@ watchEffect(async () => {
     const matches = await doFind()
     matchedHighlights.value = matches.map(m => m.node.range)
     matchedEnvs.value = matches.map(m => m.env)
+    ruleErrors.value = null
   } catch (e) {
     console.error(e)
+    ruleErrors.value = e.toString()
     matchedHighlights.value = []
     matchedEnvs.value = []
   }
@@ -144,7 +147,7 @@ provide(langLoadedKey, langLoaded)
               <Monaco language="yaml" v-model="config"/>
             </template>
             <template #panel>
-              <EnvDisplay :envs="matchedEnvs"/>
+              <EnvDisplay :envs="matchedEnvs" :error="ruleErrors"/>
             </template>
           </EditorWithPanel>
         </template>
