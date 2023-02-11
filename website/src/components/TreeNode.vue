@@ -88,13 +88,14 @@ function copyField(name: string) {
 </script>
 
 <template>
-  <div v-if="isNamed" class="tree-node" ref="nodeRef" :class="{target: isTarget}">
+  <div v-if="isNamed || field" class="tree-node" ref="nodeRef" :class="{target: isTarget}">
     <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
-        v-if="children.some(n => n.isNamed)"
+        v-if="children.some(n => n.isNamed || n.field)"
         class="toggle-sign"
         :class="{expanded}"/>
-      <span class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>
+      <span v-if="isNamed" class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>
+      <span v-else class="node-text">{{ kind }}</span>
       <span class="node-field" @click.stop="copyField(kind)">{{ field }}</span>
       <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
     </p>
@@ -117,6 +118,7 @@ function copyField(name: string) {
   --red:       #a31515;
   --blue:      #006ab1;
   --green:     #008000;
+  --black:     #002b36;
   transition: background-color ease-out .217s;
 }
 .click-area {
@@ -149,6 +151,11 @@ function copyField(name: string) {
   color: var(--blue);
   padding-left: 0.6em;
   cursor: pointer;
+}
+.node-text {
+  padding-left: 0.6em;
+  cursor: text;
+  color: var(--black);
 }
 .node-kind:hover {
   text-decoration: underline;
