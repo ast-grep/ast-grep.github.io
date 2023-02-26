@@ -37,7 +37,7 @@ Back to our example, we can look up class property's kind from the playground.
 
 ```yaml
 rule:
-  kind: public_field_definition
+  kind: field_definition
 ```
 
 It will match the following code successfully ([playground link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImEgPSAxMjMiLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIGtpbmQ6IHB1YmxpY19maWVsZF9kZWZpbml0aW9uIiwic291cmNlIjoiY2xhc3MgVGVzdCB7XG4gIGEgPSAxMjNcbn0ifQ==)).
