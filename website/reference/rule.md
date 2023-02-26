@@ -32,7 +32,7 @@ A `String` pattern will match one single AST node according to [pattern syntax](
 
 ```yaml
 pattern:
-  kind: public_field_definition
+  kind: field_definition
   context: class { $F }
 ```
 
