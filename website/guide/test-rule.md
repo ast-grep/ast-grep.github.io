@@ -39,7 +39,7 @@ The configuration file should be located at a directory that looks like this.
 
 ```bash
 my-awesome-rules/
-  |- rules/
+  |- rule/
   | |- no-await-in-loop.yml        # test file
   |- rule-test/
   | |- no-await-in-loop-test.yml   # rule file
