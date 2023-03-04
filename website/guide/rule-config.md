@@ -74,7 +74,7 @@ First we will explain some self-descriptive fields. Most of them correspond to t
 ## `rule`
 
 Rule is the most interesting part of ast-grep's configuration. It defines how the rule
-behaves and what code will be reported as issues.
+behaves and what code will be reported as issues. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
 
 The `language` field in the rule configuration will specify how the rule is interpreted.
 For example, with `language: TypeScript`, the rule pattern `'hello world'` is parsed as TypeScript string literal.
@@ -94,6 +94,10 @@ rule:
   pattern: console.log($GREET)
 ```
 And we can get `$GREET` set to `'Hello World'`.
+
+:::tip
+Learn more about how to write a rule in our [detailed guide](/guide/rule-config/atomic-rule).
+:::
 
 ## `files`/`ignores`
 

@@ -43,7 +43,7 @@ Specify the language to parse and the file extension to includ in matching.
 * type: `Rule`
 * required: true
 
-The object specify the method to find matching AST nodes. See detailes in [rule object reference](/reference/rule).
+The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule).
 
 ## `fix`
 

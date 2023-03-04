@@ -15,6 +15,7 @@ A rule object can have these keys grouped in three categories:
   * `all`
   * `any`
   * `not`
+  * `matches`
 
 Atomic rule is the most basic rule to match AST. Relational rules filter matched target according to their position relative to other nodes. Composite rules use logic operation all/any/not to compose the above rules to larger rules.
 
@@ -83,3 +84,8 @@ The meta variables of the matched node only contain those of the matched sub rul
 * type: `Object`
 
 `not` takes a single sub rule and matches a node if the sub rule does not match.
+
+## `matches`
+* type: `String`
+
+`matches` takes a utility rule id and matches a node if the utility rule matches. See [utility rule guide](/guide/rule-config/utility-rule) for more details.
