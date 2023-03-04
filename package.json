@@ -13,7 +13,7 @@
     "js-yaml": "4.1.0",
     "monaco-editor": "0.34.1",
     "monaco-yaml": "4.0.3",
-    "vue": "3.2.45",
+    "vue": "3.2.47",
     "web-tree-sitter": "0.20.7"
   },
   "optionalDependencies": {
