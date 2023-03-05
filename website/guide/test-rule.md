@@ -29,7 +29,7 @@ To write a test, we first need to specify a rule test directory in `sgconfig.yml
 Suppose we have the sgconfig.yml as below.
 ```yaml
 ruleDirs:
-  - rule
+  - rules
 # testConfigs contains a list of test directories for rules.
 testConfigs:
   - testDir: rule-test
@@ -39,7 +39,7 @@ The configuration file should be located at a directory that looks like this.
 
 ```bash
 my-awesome-rules/
-  |- rule/
+  |- rules/
   | |- no-await-in-loop.yml        # test file
   |- rule-test/
   | |- no-await-in-loop-test.yml   # rule file
