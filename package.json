@@ -12,7 +12,7 @@
     "@types/js-yaml": "4.0.5",
     "js-yaml": "4.1.0",
     "monaco-editor": "0.34.1",
-    "monaco-yaml": "4.0.3",
+    "monaco-yaml": "4.0.4",
     "vue": "3.2.47",
     "web-tree-sitter": "0.20.7"
   },
