@@ -1,5 +1,5 @@
 type SupportedLang = keyof typeof parserPaths
-import init, { setupParser, initializeTreeSitter } from 'ast-grep-wasm'
+import init, { setupParser, initializeTreeSitter, WASMConfig } from 'ast-grep-wasm'
 
 const parserPaths = {
   javascript: 'tree-sitter-javascript.wasm',

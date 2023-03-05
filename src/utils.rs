@@ -40,7 +40,7 @@ fn env_to_hash_map(env: MetaVarEnv<'_, WasmLang>) -> BTreeMap<String, WasmNode> 
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
-      MetaVariable::Named(name) => {
+      MetaVariable::Named(name, _) => {
         let node = env.get_match(&name).expect("must exist").clone();
         map.insert(name, WasmNode::from(node));
       }

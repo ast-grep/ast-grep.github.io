@@ -5,19 +5,19 @@ mod dump_tree;
 use wasm_lang::WasmLang;
 
 use ast_grep_config::{
-  deserialize_rule, try_deserialize_matchers, RuleWithConstraint, SerializableMetaVarMatcher,
-  SerializableRule,
+  SerializableRuleCore, RuleWithConstraint
 };
-use ast_grep_core::meta_var::MetaVarMatchers;
 use ast_grep_core::{Node, Pattern};
-use std::collections::HashMap;
 use utils::WasmMatch;
 use dump_tree::{dump_one_node, DumpNode};
 use ast_grep_core::language::Language;
 
-use serde::{Deserialize, Serialize};
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
+use serde_wasm_bindgen::from_value as from_js_val;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use std::convert::TryFrom;
 
 
 #[global_allocator]
@@ -25,10 +25,31 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[derive(Serialize, Deserialize)]
 pub struct WASMConfig {
-  pub rule: SerializableRule,
-  pub fix: Option<String>,
-  pub constraints: Option<HashMap<String, SerializableMetaVarMatcher>>,
+  rule: Value,
+  fix: Option<String>,
+  constraints: Option<Value>,
+  utils: Option<Value>,
 }
+
+impl TryFrom<JsValue> for WASMConfig {
+  type Error = JsError;
+  fn try_from(value: JsValue) -> Result<Self, Self::Error> {
+    Ok(from_js_val(value)?)
+  }
+}
+
+impl WASMConfig {
+  fn into_matcher(self, lang: WasmLang) -> Result<RuleWithConstraint<WasmLang>, JsError> {
+    let config = SerializableRuleCore {
+      language: lang,
+      rule: serde_json::from_value(self.rule)?,
+      constraints: self.constraints.map(serde_json::from_value).transpose()?,
+      utils: self.utils.map(serde_json::from_value).transpose()?,
+    };
+    Ok(config.get_matcher(&Default::default())?)
+  }
+}
+
 #[wasm_bindgen(js_name = initializeTreeSitter)]
 pub async fn initialize_tree_sitter() -> Result<(), JsError> {
   ts::TreeSitter::init().await
@@ -41,36 +62,24 @@ pub async fn setup_parser(lang_name: String, parser_path: String) -> Result<(), 
 
 #[wasm_bindgen(js_name = findNodes)]
 pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
-  let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
   let lang = WasmLang::get_current();
+  let config = WASMConfig::try_from(config)?;
+  let finder = config.into_matcher(lang)?;
   let root = lang.ast_grep(src);
-  let rule = deserialize_rule(config.rule, lang.clone())?;
-  let matchers = if let Some(c) = config.constraints {
-    try_deserialize_matchers(c, lang).unwrap()
-  } else {
-    MetaVarMatchers::default()
-  };
-  let config = RuleWithConstraint::new(rule, matchers);
-  let ret: Vec<_> = root.root().find_all(config).map(WasmMatch::from).collect();
+  let ret: Vec<_> = root.root().find_all(finder).map(WasmMatch::from).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
 }
 
 #[wasm_bindgen(js_name = fixErrors)]
 pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
-  let config: WASMConfig = serde_wasm_bindgen::from_value(config)?;
   let lang = WasmLang::get_current();
-  let fixer = config.fix.expect_throw("fix is required for rewriting");
+  let mut config = WASMConfig::try_from(config)?;
+  let fixer = config.fix.take().expect_throw("fix is required for rewriting");
   let fixer = Pattern::new(&fixer, lang.clone());
   let root = lang.ast_grep(&src);
-  let rule = deserialize_rule(config.rule, lang.clone())?;
-  let matchers = if let Some(c) = config.constraints {
-    try_deserialize_matchers(c, lang).unwrap()
-  } else {
-    MetaVarMatchers::default()
-  };
-  let config = RuleWithConstraint::new(rule, matchers);
-  let edits: Vec<_> = root.root().replace_all(config, fixer);
+  let finder = config.into_matcher(lang)?;
+  let edits: Vec<_> = root.root().replace_all(finder, fixer);
   let mut new_content = String::new();
   let mut start = 0;
   for edit in edits {
