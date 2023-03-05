@@ -57,7 +57,16 @@ A pattern to auto fix the issue. It can reference meta variables appeared in the
 * type: `HashMap<String, Object>`
 * required: false
 
-Addtional meta variables pattern to filter matches.
+Additional meta variables pattern to filter matches.
+
+## `utils`
+
+* type: `HashMap<String, Rule>`
+* required: false
+
+A dictionary of utility rules that can be used in `matches` locally.
+The dictionary key is the utility rule id and the value is the rule object.
+See [utility rule guide](/guide/rule-config/utility-rule).
 
 ## `files`
 * type: `List` of `String`
