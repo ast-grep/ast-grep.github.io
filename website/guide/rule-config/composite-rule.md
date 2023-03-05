@@ -53,7 +53,9 @@ The above rule will match any `console.log` call but not `console.log('Hello Wor
 
 ## `matches`
 
-// TODO....
+`matches` is a special composite rule that takes a rule-id string. The rule-id can refer to a local utility rule defined in the same configuration file or to a global utility rule defined in the global utility rule files under separate directory. The rule will match the same nodes that the utility rule matches.
+
+`matches` rule enable us to reuse rules and even unlock the possibility of recursive rule. It is the most powerful rule in ast-grep and deserves a separate page to explain it. Please see the [dedicated page](/guide/rule-config/utility-rule) for `matches`.
 
 ## Combine different rules as fields
 Sometimes it is necessary to match node nested within other desired nodes. We can use composite rule `all` and relational `inside` to find them, but the result rule is highly nested.
