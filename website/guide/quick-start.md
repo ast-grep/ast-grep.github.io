@@ -15,6 +15,10 @@ npm i @ast-grep/cli -g
 
 # install via cargo
 cargo install ast-grep
+
+# install via brew
+brew tap ast-grep/tap
+brew install ast-grep/tap/ast-grep
 ```
 
 The binary command, `sg`, should be available now. Let's try it with `--help`.
