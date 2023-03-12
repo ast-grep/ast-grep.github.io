@@ -132,4 +132,4 @@ dist
 *.node
 
 .yarn
-website/.vitepress
+website/.vitepress/cache
