@@ -94,3 +94,56 @@ console.log('hello'); // does not match
 console.log('world');
 console.log('hello'); // matches!!
 ```
+
+## Fine tuning relational rule
+
+Relational rule has several options to let you find nodes more precisely.
+
+### `stopBy`
+By default, relational rule will only matches nodes only one level further. For example, ast-grep will only matches the direct children of the target node for the `has` rule.
+
+You can change the behavior by using the `stopBy` field. It accepts three kind of values: string `'end'`, string `'neighbor'`(the default option) and a rule object.
+
+`stopBy: end` will make ast-grep to search surrounding nodes until it reaches end. For example, it stops when the rule hits root node, leaf node or the first/last sibling node.
+
+```yaml
+has:
+  stopBy: end
+  pattern: $MY_PATTERN
+```
+
+`stopBy` can also accept a custom rule object, so the matching will only stop when the rule matches the surrounding node.
+
+```yaml
+# find if a node is inside a function called test. It stops whenever the ancestor node is a function.
+inside:
+  stopBy:
+    kind: function
+  pattern: function test($$$) { $$$ }
+```
+
+Note the `stopBy` rule is inclusive. So when both `stopBy` rule and relational rule hit, the node is considered as a match.
+
+### `field`
+Sometimes it is useful to specify the node by its field. Suppose we want to find a JavaScript object property with the key `prototype` (an outdated practice we should avoid).
+
+```yaml
+kind: pair # key-value pair in JS
+has:
+  field: key # note here
+  regex: 'prototype'
+```
+
+This rule will match the following code
+```js
+var a = {
+  prototype: anotherObject
+}
+```
+but will not match this code
+```js
+var a = {
+  normalKey: prototype
+}
+```
+Though `pair` has a child with text `prototype` in the second example, its relative field is not `key`. That is, `prototype` is not used as key but instead used as value. So it does not match the rule.
