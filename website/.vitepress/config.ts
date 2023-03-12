@@ -19,6 +19,16 @@ export default defineConfig({
   ],
   outDir: './dist',
   appearance: false,
+  vite: {
+    build: {
+      target: 'es2020',
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        target: 'es2020',
+      },
+    },
+  },
   themeConfig: {
     logo: 'logo.svg',
     nav: [
