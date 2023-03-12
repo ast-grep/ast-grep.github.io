@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev website",
+    "dev-force": "vitepress dev website --force",
     "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vitepress build website",
     "serve": "vitepress serve website"
   },
