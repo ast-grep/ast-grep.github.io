@@ -9,7 +9,7 @@ specifiers:
   monaco-yaml: 4.0.4
   typescript: 5.0.2
   vite: 4.2.0
-  vitepress: 1.0.0-alpha.49
+  vitepress: 1.0.0-alpha.60
   vue: 3.2.47
   vue-tsc: 1.2.0
   web-tree-sitter: 0.20.7
@@ -29,7 +29,7 @@ devDependencies:
   '@algolia/client-search': 4.15.0
   typescript: 5.0.2
   vite: 4.2.0
-  vitepress: 1.0.0-alpha.49_2xdflmy6sc2qhwxavtux3g5lt4
+  vitepress: 1.0.0-alpha.60_2xdflmy6sc2qhwxavtux3g5lt4
   vue-tsc: 1.2.0_typescript@5.0.2
 
 packages:
@@ -898,8 +898,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress/1.0.0-alpha.49_2xdflmy6sc2qhwxavtux3g5lt4:
-    resolution: {integrity: sha512-3nUZJow4qL8NHRWYatqqVj45AJDxWst/TuOj+IbQRhxesEswa+Fpwayj9/FxzRzBl665fuiG5y+QeVhOeUm0OA==}
+  /vitepress/1.0.0-alpha.60_2xdflmy6sc2qhwxavtux3g5lt4:
+    resolution: {integrity: sha512-GI5iLDkZRqGEPixbSloT+p6pbKcMh9ykRRxt8vf9AjV1gaPit6Stg/t9WNxTdIhKVCuQMexGs1605DNApSRK2A==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.3.3
