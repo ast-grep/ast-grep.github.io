@@ -21,6 +21,14 @@ rule:
 
 The above rule will match code like `console.log('Hello World')`.
 
+`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub AST node specified by user in contextual pattern. For example, we can select class field in JavaScript by this pattern.
+
+```yaml
+pattern:
+  kind: field_definition
+  context: class { $F }
+```
+
 ## `kind`
 
 Sometimes it is not easy to write a pattern because it is hard to construct one.
