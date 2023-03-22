@@ -9,7 +9,7 @@
 - [x] View node in context
 - [x] implement iterative DFS mode
 - [ ] Investigate perf heuristic (e.g. match fixed-string)
-- [ ] Group matching rules based on root pattern kind id
+- [x] Group matching rules based on root pattern kind id
 - [ ] Remove unwrap usage and implement error handling
 
 ## Metavariable Matcher
@@ -31,8 +31,8 @@
 - [x] interactive mode
 - [x] as dry run mode (listing all rewrite)
 - [x] inplace edit mode
-- [ ] no-color mode
-- [ ] JSON output
+- [x] no-color mode
+- [x] JSON output
 - [ ] execute remote rules
 
 ## Config
@@ -50,8 +50,8 @@
 ## Playground
 - [x] build a playground based on WASM binding
 - [x] build YAML config for WASM playground
-- [ ] URL sharing
-- [ ] add fix/rewrite
+- [x] URL sharing
+- [x] add fix/rewrite
 
 ## LSP
 - [x] Add LSP command
