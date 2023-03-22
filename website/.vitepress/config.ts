@@ -29,6 +29,7 @@ export default defineConfig({
   vite: {
     build: {
       target: 'es2020',
+      ssr: false,
     },
     optimizeDeps: {
       esbuildOptions: {
