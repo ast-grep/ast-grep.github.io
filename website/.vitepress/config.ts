@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { SearchPlugin } from 'vitepress-plugin-search'
 
 const gaScript = `
 window.dataLayer = window.dataLayer || [];
@@ -7,6 +8,12 @@ gtag('js', new Date());
 
 gtag('config', 'G-EZSJ3YF2RG');
 `
+
+const searchOptions = {
+  previewLength: 62,
+  buttonLabel: "Search",
+  placeholder: "Search docs",
+}
 
 export default defineConfig({
   lang: 'en-US',
@@ -28,6 +35,7 @@ export default defineConfig({
         target: 'es2020',
       },
     },
+    plugins: [ SearchPlugin(searchOptions)]
   },
   themeConfig: {
     logo: 'logo.svg',
