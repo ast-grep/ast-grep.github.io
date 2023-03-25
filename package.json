@@ -21,7 +21,7 @@
     "ast-grep-wasm": "file:./pkg/"
   },
   "devDependencies": {
-    "@algolia/client-search": "4.15.0",
+    "@algolia/client-search": "4.16.0",
     "flexsearch": "^0.7.31",
     "markdown-it": "^13.0.1",
     "typescript": "5.0.2",
