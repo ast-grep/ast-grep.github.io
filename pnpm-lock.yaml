@@ -17,8 +17,8 @@ dependencies:
     specifier: 3.2.47
     version: 3.2.47
   web-tree-sitter:
-    specifier: 0.20.7
-    version: 0.20.7
+    specifier: 0.20.8
+    version: 0.20.8
 
 optionalDependencies:
   ast-grep-wasm:
@@ -1088,6 +1088,11 @@ packages:
 
   /web-tree-sitter@0.20.7:
     resolution: {integrity: sha512-flC9JJmTII9uAeeYpWF8hxDJ7bfY+leldQryetll8Nv4WgI+MXc6h7TiyAZASWl9uC9TvmfdgOjZn1DAQecb3A==}
+    dev: false
+    optional: true
+
+  /web-tree-sitter@0.20.8:
+    resolution: {integrity: sha512-weOVgZ3aAARgdnb220GqYuh7+rZU0Ka9k9yfKtGAzEYMa6GgiCzW9JjQRJyCJakvibQW+dfjJdihjInKuuCAUQ==}
     dev: false
 
   /yaml@2.2.1:
