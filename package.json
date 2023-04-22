@@ -28,6 +28,6 @@
     "vite": "4.3.1",
     "vitepress": "1.0.0-alpha.66",
     "vitepress-plugin-search": "1.0.4-alpha.20",
-    "vue-tsc": "1.2.0"
+    "vue-tsc": "1.4.4"
   }
 }
