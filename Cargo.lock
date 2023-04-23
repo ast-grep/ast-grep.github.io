@@ -22,11 +22,11 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-config"
-version = "0.3.3"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "565f0a55abae13b078c279910eb755f6de30865e53c8dfd1cb66419a257f85ef"
+checksum = "6f931ea6e944554b3b93ef2d52f377e80a9f5a643d772ac923a65fe271a17e79"
 dependencies = [
- "ast-grep-core 0.3.3",
+ "ast-grep-core 0.4.0",
  "bit-set",
  "globset",
  "regex",
@@ -362,9 +362,9 @@ dependencies = [
 
 [[package]]
 name = "serde_yaml"
-version = "0.9.19"
+version = "0.9.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f82e6c8c047aa50a7328632d067bcae6ef38772a79e28daf32f735e0e4f3dd10"
+checksum = "d9d684e3ec7de3bf5466b32bd75303ac16f0736426e5a4e0d6e489559ce1249c"
 dependencies = [
  "indexmap",
  "itoa",
