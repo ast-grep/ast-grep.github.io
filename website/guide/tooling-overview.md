@@ -6,6 +6,7 @@ ast-grep's tooling supports multiple stages of your development. Here is a list 
 
 * To run an ad-hoc query and apply rewrite: `sg run`.
 * Routinely check your codebase: `sg scan`.
+* Generate ast-grep's scaffolding files: `sg new`.
 * Develop new ast-grep rules and test them: `sg test`.
 
 We will walk through some important features that are common to these commands.
@@ -20,6 +21,12 @@ Screenshot of interactive mode.
 ![interactive](/image/interactive.jpeg)
 
 Pressing `y` will accept the rewrite, `n` will skip it, `e` will open the file in your editor, and `q` will quit the interactive mode.
+
+Example:
+
+```
+sg scan --interactive
+```
 
 ## JSON Mode
 

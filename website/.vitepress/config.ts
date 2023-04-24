@@ -55,6 +55,7 @@ export default defineConfig({
           { text: 'Introduction', link: '/guide/introduction' },
           { text: 'Quick Start', link: '/guide/quick-start' },
           { text: 'Pattern Syntax', link: '/guide/pattern-syntax' },
+          { text: 'Scan Project', link: '/guide/scan-project.md' },
           { text: 'Rule Configuration', link: '/guide/rule-config', collapsed: true,
             items:[
               { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule' },
