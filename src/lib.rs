@@ -7,7 +7,7 @@ use wasm_lang::WasmLang;
 use ast_grep_config::{
   SerializableRuleCore, RuleWithConstraint
 };
-use ast_grep_core::{Node, Pattern};
+use ast_grep_core::{Node as SgNode, Pattern, StrDoc};
 use utils::WasmMatch;
 use dump_tree::{dump_one_node, DumpNode};
 use ast_grep_core::language::Language;
@@ -19,6 +19,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::convert::TryFrom;
 
+type Node<'a> = SgNode<'a, StrDoc<WasmLang>>;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
@@ -84,7 +85,7 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   let mut start = 0;
   for edit in edits {
     new_content.push_str(&src[start..edit.position]);
-    new_content.push_str(&edit.inserted_text);
+    new_content.push_str(&String::from_utf8_lossy(&edit.inserted_text));
     start = edit.position + edit.deleted_length;
   }
   // add trailing statements
@@ -92,7 +93,7 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   Ok(new_content)
 }
 
-fn convert_to_debug_node(n: Node<WasmLang>) -> DumpNode {
+fn convert_to_debug_node(n: Node) -> DumpNode {
   let mut cursor = n.get_ts_node().walk();
   let mut target = vec![];
   dump_one_node(&mut cursor, &mut target);
