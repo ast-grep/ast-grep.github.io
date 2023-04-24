@@ -2,12 +2,12 @@ mod utils;
 mod wasm_lang;
 mod dump_tree;
 
-use wasm_lang::WasmLang;
+use wasm_lang::{WasmLang, WasmDoc};
 
 use ast_grep_config::{
   SerializableRuleCore, RuleWithConstraint
 };
-use ast_grep_core::{Node as SgNode, Pattern, StrDoc};
+use ast_grep_core::{Node as SgNode, Pattern, AstGrep};
 use utils::WasmMatch;
 use dump_tree::{dump_one_node, DumpNode};
 use ast_grep_core::language::Language;
@@ -19,7 +19,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::convert::TryFrom;
 
-type Node<'a> = SgNode<'a, StrDoc<WasmLang>>;
+type Node<'a> = SgNode<'a, WasmDoc>;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
@@ -78,19 +78,21 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   let mut config = WASMConfig::try_from(config)?;
   let fixer = config.fix.take().expect_throw("fix is required for rewriting");
   let fixer = Pattern::new(&fixer, lang.clone());
-  let root = lang.ast_grep(&src);
+  let doc = WasmDoc::new(src.clone(), lang);
+  let root = AstGrep::doc(doc);
   let finder = config.into_matcher(lang)?;
   let edits: Vec<_> = root.root().replace_all(finder, fixer);
-  let mut new_content = String::new();
+  let mut new_content = Vec::<char>::new();
   let mut start = 0;
+  let src: Vec<_> = src.chars().collect();
   for edit in edits {
-    new_content.push_str(&src[start..edit.position]);
-    new_content.push_str(&String::from_utf8_lossy(&edit.inserted_text));
+    new_content.extend(&src[start..edit.position]);
+    new_content.extend(&edit.inserted_text);
     start = edit.position + edit.deleted_length;
   }
   // add trailing statements
-  new_content.push_str(&src[start..]);
-  Ok(new_content)
+  new_content.extend(&src[start..]);
+  Ok(new_content.into_iter().collect())
 }
 
 fn convert_to_debug_node(n: Node) -> DumpNode {
@@ -103,7 +105,8 @@ fn convert_to_debug_node(n: Node) -> DumpNode {
 #[wasm_bindgen(js_name = dumpASTNodes)]
 pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
   let lang = WasmLang::get_current();
-  let root = lang.ast_grep(&src);
+  let doc = WasmDoc::new(src, lang);
+  let root = AstGrep::doc(doc);
   let debug_node = convert_to_debug_node(root.root());
   let ret = serde_wasm_bindgen::to_value(&debug_node)?;
   Ok(ret)

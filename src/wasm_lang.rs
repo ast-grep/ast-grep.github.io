@@ -6,7 +6,9 @@ use ast_grep_language as L;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
 use std::sync::Mutex;
+use ast_grep_core::source::{Content, Doc, Edit, TSParseError};
 use std::borrow::Cow;
+use tree_sitter::{InputEdit, Node, Parser, ParserError, Point, Tree};
 
 #[derive(Clone, Copy)]
 pub enum WasmLang {
@@ -159,6 +161,104 @@ impl Language for WasmLang {
     execute_lang_method! { self, pre_process_pattern, query }
   }
 
+}
+
+#[derive(Clone)]
+pub struct Wrapper {
+  inner: Vec<char>,
+}
+
+impl Content for Wrapper {
+  type Underlying = char;
+  fn parse_tree_sitter(
+    &self,
+    parser: &mut Parser,
+    tree: Option<&Tree>,
+  ) -> std::result::Result<Option<Tree>, ParserError> {
+    let s: String = self.inner.iter().cloned().collect();
+    parser.parse(&s, tree)
+  }
+  fn as_slice(&self) -> &[Self::Underlying] {
+    self.inner.as_slice()
+  }
+  fn transform_str(s: &str) -> Vec<Self::Underlying> {
+    s.chars().collect()
+  }
+  fn accept_edit(&mut self, edit: &Edit<Self>) -> InputEdit {
+    let start_byte = edit.position;
+    let old_end_byte = edit.position + edit.deleted_length;
+    let new_end_byte = edit.position + edit.inserted_text.len();
+    let mut input = self.inner.to_vec();
+    let start_position = pos_for_char_offset(&input, start_byte);
+    let old_end_position = pos_for_char_offset(&input, old_end_byte);
+    input.splice(start_byte..old_end_byte, edit.inserted_text.clone());
+    let new_end_position = pos_for_char_offset(&input, new_end_byte);
+    InputEdit::new(
+      start_byte as u32,
+      old_end_byte as u32,
+      new_end_byte as u32,
+      &start_position,
+      &old_end_position,
+      &new_end_position,
+    )
+  }
+  fn get_text<'a>(&'a self, node: &Node) -> Cow<'a, str> {
+    // dummy for wasm tree!
+    node.utf8_text(&[]).expect("get_text should work")
+  }
+}
+
+fn pos_for_char_offset(input: &[char], offset: usize) -> Point {
+  debug_assert!(offset <= input.len());
+  let (mut row, mut col) = (0, 0);
+  for &c in input.iter().take(offset) {
+    if '\n' == c {
+      row += 1;
+      col = 0;
+    } else {
+      col += 1;
+    }
+  }
+  Point::new(row, col)
+}
+
+#[derive(Clone)]
+pub struct WasmDoc {
+  lang: WasmLang,
+  source: Wrapper,
+}
+
+impl WasmDoc {
+  pub fn new(src: String, lang: WasmLang) -> Self {
+    let source = Wrapper {
+      inner: src.chars().collect(),
+    };
+    Self { source, lang }
+  }
+}
+
+impl Doc for WasmDoc {
+  type Lang = WasmLang;
+  type Source = Wrapper;
+  fn parse(&self, old_tree: Option<&Tree>) -> std::result::Result<Tree, TSParseError> {
+    let mut parser = Parser::new()?;
+    let ts_lang = self.lang.get_ts_language();
+    parser.set_language(&ts_lang)?;
+    if let Some(tree) = self.source.parse_tree_sitter(&mut parser, old_tree)? {
+      Ok(tree)
+    } else {
+      Err(TSParseError::TreeUnavailable)
+    }
+  }
+  fn get_lang(&self) -> &Self::Lang {
+    &self.lang
+  }
+  fn get_source(&self) -> &Self::Source {
+    &self.source
+  }
+  fn get_source_mut(&mut self) -> &mut Self::Source {
+    &mut self.source
+  }
 }
 
 #[cfg(test)]
