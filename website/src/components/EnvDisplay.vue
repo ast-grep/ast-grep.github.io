@@ -52,7 +52,7 @@ function decrement() {
     <button @click="increment">Next Match</button>
   </div>
   <div v-if="error" class="error-msg">
-    {{error}}
+    ⚠ {{error}}
   </div>
 </div>
 </template>
