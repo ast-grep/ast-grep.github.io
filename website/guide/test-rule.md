@@ -16,7 +16,7 @@ Ideally, a perfect rule will report issues for all invalid code and approve all 
 * If ast-grep reports error for invalid code, it is a correct **reported** match.
 * If ast-grep reports error for valid code, it is called **noisy** match.
 * If ast-grep reports nothing for invalid code, we have a **missing** match.
-* If ast-grep reports nothing for valid code, it is called **noisy** match.
+* If ast-grep reports nothing for valid code, it is called **validated** match.
 
 We will see these four case status in ast-grep's test output.
 
