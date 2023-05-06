@@ -8,11 +8,11 @@ dependencies:
     specifier: 4.1.0
     version: 4.1.0
   monaco-editor:
-    specifier: 0.37.1
-    version: 0.37.1
+    specifier: 0.38.0
+    version: 0.38.0
   monaco-yaml:
     specifier: 4.0.4
-    version: 4.0.4(monaco-editor@0.37.1)
+    version: 4.0.4(monaco-editor@0.38.0)
   vue:
     specifier: 3.2.47
     version: 3.2.47
@@ -880,36 +880,36 @@ packages:
     resolution: {integrity: sha512-Ly1w0nHKnlhAAh6/BF/+9NgzXfoJxaJ8nhopFhQ3NcvFJrFIL+iCg9gw9e9UMBD+XIsp/RyznJ/o5UIe5Kw+kg==}
     dev: true
 
-  /monaco-editor@0.37.1:
-    resolution: {integrity: sha512-jLXEEYSbqMkT/FuJLBZAVWGuhIb4JNwHE9kPTorAVmsdZ4UzHAfgWxLsVtD7pLRFaOwYPhNG9nUCpmFL1t/dIg==}
+  /monaco-editor@0.38.0:
+    resolution: {integrity: sha512-11Fkh6yzEmwx7O0YoLxeae0qEGFwmyPRlVxpg7oF9czOOCB/iCjdJrG5I67da5WiXK3YJCxoz9TJFE8Tfq/v9A==}
     dev: false
 
-  /monaco-marker-data-provider@1.1.1(monaco-editor@0.37.1):
+  /monaco-marker-data-provider@1.1.1(monaco-editor@0.38.0):
     resolution: {integrity: sha512-PGB7TJSZE5tmHzkxv/OEwK2RGNC2A7dcq4JRJnnj31CUAsfmw0Gl+1QTrH0W0deKhcQmQM0YVPaqgQ+0wCt8Mg==}
     peerDependencies:
       monaco-editor: '>=0.30.0'
     dependencies:
-      monaco-editor: 0.37.1
+      monaco-editor: 0.38.0
     dev: false
 
-  /monaco-worker-manager@2.0.1(monaco-editor@0.37.1):
+  /monaco-worker-manager@2.0.1(monaco-editor@0.38.0):
     resolution: {integrity: sha512-kdPL0yvg5qjhKPNVjJoym331PY/5JC11aPJXtCZNwWRvBr6jhkIamvYAyiY5P1AWFmNOy0aRDRoMdZfa71h8kg==}
     peerDependencies:
       monaco-editor: '>=0.30.0'
     dependencies:
-      monaco-editor: 0.37.1
+      monaco-editor: 0.38.0
     dev: false
 
-  /monaco-yaml@4.0.4(monaco-editor@0.37.1):
+  /monaco-yaml@4.0.4(monaco-editor@0.38.0):
     resolution: {integrity: sha512-qbM36fY1twpDUs4lhhxoXDQGUPVyYAFCPJi3E0JKgLioD8wzsD/pawgauFFXSzpMa09z8wbt/DTLXjXEehnVFA==}
     peerDependencies:
       monaco-editor: '>=0.30'
     dependencies:
       '@types/json-schema': 7.0.11
       jsonc-parser: 3.2.0
-      monaco-editor: 0.37.1
-      monaco-marker-data-provider: 1.1.1(monaco-editor@0.37.1)
-      monaco-worker-manager: 2.0.1(monaco-editor@0.37.1)
+      monaco-editor: 0.38.0
+      monaco-marker-data-provider: 1.1.1(monaco-editor@0.38.0)
+      monaco-worker-manager: 2.0.1(monaco-editor@0.38.0)
       path-browserify: 1.0.1
       prettier: 2.8.2
       vscode-languageserver-textdocument: 1.0.8
