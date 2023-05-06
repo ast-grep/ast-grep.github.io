@@ -38,6 +38,8 @@ We can use ast-grep as searcher, linter and rewriter.
 * **Linter**: You can also use ast-grep as a linter. Thanks to the flexible rule configuration, adding a new customized rule is more intuitive and straightforward. It also has a pretty error reporting out of box
 * **Rewrite Library**: ast-grep provide jQuery like utility methods to traverse and manipulate syntax tree. Besides, you can also use operators to compose complex matching from simple patterns.
 
+> Think ast-grep as an integration of [grep](https://www.gnu.org/software/grep/manual/grep.html), [eslint](https://eslint.org/) and [codemod](https://github.com/facebookincubator/fastmod).
+
 
 ## Features
 
