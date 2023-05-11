@@ -1,4 +1,12 @@
-import DefaultTheme from 'vitepress/theme'
+import Theme from 'vitepress/theme'
+import { h } from 'vue'
 import './custom.css'
 
-export default DefaultTheme
+export default {
+  ...Theme,
+  Layout() {
+    return h(Theme.Layout, null, {
+      'home-features-after': () => [], // TODO: add screenshots
+    })
+  },
+}
