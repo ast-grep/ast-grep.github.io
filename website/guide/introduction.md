@@ -1,10 +1,32 @@
 # What is ast-grep?
 
-## Motivation
+## Introduction
 
 ast-grep is a new AST based tool for managing your code, at massive scale.
 
-Developing with AST is tedious and frustrating. Consider this "hello-world" level task: matching `console.log` in JavaScript using Babel. We will need to write code like below.
+Using ast-grep can be as simple as running a single command in your terminal:
+
+```bash
+sg --pattern 'var code = $PATTERN' --rewrite 'let code = $PATTERN' -l js
+```
+
+The command above will replace `var` statement with `let` for all JavaScript files.
+
+---
+
+ast-grep is a versatile tool for searching, linting and rewriting code in various languages.
+
+* **Search**: As a command line tool in your terminal, ast-grep, `sg`, can precisely search code based on AST, running through ten thousand files in sub seconds.
+* **Lint**: You can also use ast-grep as a linter. Thanks to the flexible rule configuration, adding a new customized rule is more intuitive and straightforward. It also has a pretty error reporting out of box
+* **Rewrite**: ast-grep provide jQuery like utility methods to traverse and manipulate syntax tree. Besides, you can also use operators to compose complex matching from simple patterns.
+
+> Think ast-grep as an hybrid of [grep](https://www.gnu.org/software/grep/manual/grep.html), [eslint](https://eslint.org/) and [codemod](https://github.com/facebookincubator/fastmod).
+
+## Motivation
+
+Using text-based tool for searching code is fast but imprecise. We usually prefer to parse the code into [abstract syntax tree](https://www.wikiwand.com/en/Abstract_syntax_tree) for precise matches.
+
+However, developing with AST is tedious and frustrating. Consider this "hello-world" level task: matching `console.log` in JavaScript using Babel. We will need to write code like below.
 
 ```javascript
 path.parentPath.isMemberExpression() &&
@@ -17,10 +39,10 @@ This snippet deserves a detailed explanation for beginners. Even for experienced
 ast-grep solves the problem by providing a simple core mechanism: using code to search code with the same pattern.
 Consider it as same as `grep` but based on AST instead of text.
 
-In comparison to Babel, we can complete this hello-world task in ast-grep
+In comparison to Babel, we can complete this hello-world task in ast-grep trivially
 
 ```javascript
-console.log
+sg -p "console.log"
 ```
 
 See [playground](/playground.html) in action!
@@ -29,17 +51,6 @@ Upon the simple pattern code, we can build a series of operators to compose comp
 
 Though we use JavaScript in our introduction, ast-grep is not language specific. It is a _polyglot_ tool backed by the renowned library [tree-sitter](https://tree-sitter.github.io/).
 The idea of ast-grep can be applied to many other languages!
-
-## Use case
-
-We can use ast-grep as searcher, linter and rewriter.
-
-* **Searcher**: As a command line tool in your terminal, ast-grep, `sg`, can precisely search code based on AST, running through ten thousand files in sub seconds.
-* **Linter**: You can also use ast-grep as a linter. Thanks to the flexible rule configuration, adding a new customized rule is more intuitive and straightforward. It also has a pretty error reporting out of box
-* **Rewrite Library**: ast-grep provide jQuery like utility methods to traverse and manipulate syntax tree. Besides, you can also use operators to compose complex matching from simple patterns.
-
-> Think ast-grep as an integration of [grep](https://www.gnu.org/software/grep/manual/grep.html), [eslint](https://eslint.org/) and [codemod](https://github.com/facebookincubator/fastmod).
-
 
 ## Features
 
