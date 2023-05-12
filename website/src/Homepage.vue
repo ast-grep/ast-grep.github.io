@@ -1,19 +1,25 @@
 <template>
-  <div class="language-section">
-    <h1>Supported Languages</h1>
-  </div>
-  <div class="languages">
-    <img src='/icons/C.svg'/>
-    <img src='/icons/CSharp.svg'/>
-    <img src='/icons/Go.svg'/>
-    <img src='/icons/Java.svg'/>
-    <img src='/icons/JS.svg'/>
-    <img src='/icons/Kotlin.svg'/>
-    <img src='/icons/Python.svg'/>
-    <img src='/icons/Rust.svg'/>
-    <img src='/icons/TS.svg'/>
-  </div>
+  <template v-if="isHomePage">
+    <div class="language-section">
+      <h1>Supported Languages</h1>
+    </div>
+    <div class="languages">
+      <img src='/icons/C.svg'/>
+      <img src='/icons/CSharp.svg'/>
+      <img src='/icons/Go.svg'/>
+      <img src='/icons/Java.svg'/>
+      <img src='/icons/JS.svg'/>
+      <img src='/icons/Kotlin.svg'/>
+      <img src='/icons/Python.svg'/>
+      <img src='/icons/Rust.svg'/>
+      <img src='/icons/TS.svg'/>
+    </div>
+  </template>
 </template>
+<script setup lang="ts">
+import { useRoute } from 'vitepress'
+const isHomePage = useRoute().path === '/'
+</script>
 <style scoped>
   .language-section {
     text-align: center;
