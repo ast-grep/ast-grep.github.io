@@ -22,6 +22,20 @@ ast-grep is a versatile tool for searching, linting and rewriting code in variou
 
 > Think ast-grep as an hybrid of [grep](https://www.gnu.org/software/grep/manual/grep.html), [eslint](https://eslint.org/) and [codemod](https://github.com/facebookincubator/fastmod).
 
+## Supported Languages
+
+ast-grep supports a wide range of programming languages. Here is a list of notable programming languages it supports.
+
+|Language Domain|Supported Languages|
+|:--------------|------------------:|
+|System Programming| `C`, `Rust`|
+|Server Side Programming| `Go`, `Java`, `Python`, `C-sharp`|
+|Web Development| `JS(X)`, `TS(X)`, `HTML`, `CSS`|
+|Mobile App Development| `Dart`, `Kotlin`, `Swift`|
+|Scripting, Protocols, etc.| `Lua`, `Thrift`|
+
+Thanks to [tree-sitter](https://tree-sitter.github.io/tree-sitter/), a popular parser generator library, ast-grep manages to support many community-maintained languages!
+
 ## Motivation
 
 Using text-based tool for searching code is fast but imprecise. We usually prefer to parse the code into [abstract syntax tree](https://www.wikiwand.com/en/Abstract_syntax_tree) for precise matches.
