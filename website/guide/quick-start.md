@@ -31,6 +31,8 @@ ast-grep --help
 
 :::danger Use `sg` on Linux
 Linux has a default command `sg` for `setgroups`. You can use the full command name `ast-grep` instead of `sg`.
+You can also use shorter alias if you want by `alias sg=ast-grep`.
+We will use `sg` in the guide below.
 :::
 
 
