@@ -21,15 +21,16 @@ brew tap ast-grep/tap
 brew install ast-grep/tap/ast-grep
 ```
 
-The binary command, `sg`, should be available now. Let's try it with `--help`.
+The binary command, `sg`, or `ast-grep`, should be available now. Let's try it with `--help`.
 
 ```shell
 sg --help
+# if you are on Linux
+ast-grep --help
 ```
 
 :::danger Use `sg` on Linux
-Linux has a default command `sg` for `setgroups`. You must specify `sg` command's path.
-If you installed `ast-grep` via cargo, you can use `~/.cargo/bin/sg` instead of `sg`.
+Linux has a default command `sg` for `setgroups`. You can use the full command name `ast-grep` instead of `sg`.
 :::
 
 
