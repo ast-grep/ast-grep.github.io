@@ -18,7 +18,8 @@
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vitepress'
-const isHomePage = useRoute().path === '/'
+import { computed } from 'vue'
+let isHomePage = computed(() => useRoute().path === '/')
 </script>
 <style scoped>
   .language-section {
