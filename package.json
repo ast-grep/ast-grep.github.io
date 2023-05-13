@@ -21,13 +21,10 @@
     "ast-grep-wasm": "file:./pkg/"
   },
   "devDependencies": {
-    "@algolia/client-search": "4.17.0",
-    "flexsearch": "^0.7.31",
     "markdown-it": "^13.0.1",
     "typescript": "5.0.4",
     "vite": "4.3.5",
     "vitepress": "1.0.0-alpha.75",
-    "vitepress-plugin-search": "1.0.4-alpha.20",
     "vue-tsc": "1.6.5"
   }
 }

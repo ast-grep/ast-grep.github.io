@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import { SearchPlugin } from 'vitepress-plugin-search'
 
 const gaScript = `
 window.dataLayer = window.dataLayer || [];
@@ -36,7 +35,6 @@ export default defineConfig({
         target: 'es2020',
       },
     },
-    plugins: [ SearchPlugin(searchOptions)]
   },
   themeConfig: {
     logo: 'logo.svg',
@@ -94,6 +92,9 @@ export default defineConfig({
     footer: {
       message: 'Made with ❤️  with Rust',
       copyright: 'Copyright © 2022-present Herrington Darkholme',
-    }
+    },
+    search: {
+      provider: 'local',
+    },
   },
 })
