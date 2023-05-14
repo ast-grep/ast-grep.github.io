@@ -27,7 +27,7 @@ Pattern code must be valid code that tree-sitter can parse.
 ## Meta Variable
 It is usually desirable to write a pattern to match dynamic content.
 
-We can use meta varialbes to match sub expression in pattern.
+We can use meta variables to match sub expression in pattern.
 
 Meta variables starts with `$` sign, followed its name composed by upper case letters `A-Z`, underscore `_` or digits `1-9`.
 `$META_VARIABLE` is a wildcard expression that can match any **single** AST node.

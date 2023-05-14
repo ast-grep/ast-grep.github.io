@@ -127,7 +127,7 @@ Be sure to add `./` to the beginning of your rules. ast-grep will not recognize 
 :::
 
 ## `fix`
-ast-grep can perform automatic rewriting to the codebase. The `fix` field in the rule configuration specifies how to rewrite the code. We can also use meta variables specified in the `rule` in `fix`. ast-grep will replace the meta-varialbes with the content of actual matched AST nodes.
+ast-grep can perform automatic rewriting to the codebase. The `fix` field in the rule configuration specifies how to rewrite the code. We can also use meta variables specified in the `rule` in `fix`. ast-grep will replace the meta-variables with the content of actual matched AST nodes.
 
 Example:
 
