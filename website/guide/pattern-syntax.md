@@ -29,7 +29,7 @@ It is usually desirable to write a pattern to match dynamic content.
 
 We can use meta variables to match sub expression in pattern.
 
-Meta variables starts with `$` sign, followed its name composed by upper case letters `A-Z`, underscore `_` or digits `1-9`.
+Meta variables start with the `$` sign, followed by a name composed of upper case letters `A-Z`, underscore `_` or digits `1-9`.
 `$META_VARIABLE` is a wildcard expression that can match any **single** AST node.
 
 Think it as REGEX dot `.`, except it is not textual.
@@ -70,7 +70,7 @@ Let's see how we can match multiple AST nodes.
 
 ## Multi Meta Variable
 
-We can use `$$$` to match zero or more AST nodes, including function arguments, parameters or statements.
+We can use `$$$` to match zero or more AST nodes, including function arguments, parameters or statements. These variables can also be named, for example: `console.log($$$ARGS)`.
 
 
 ### Function arguments
@@ -114,7 +114,6 @@ a == a
 a == b
 1 + 1 == 2
 ```
-
 
 ## Non capturing match
 
