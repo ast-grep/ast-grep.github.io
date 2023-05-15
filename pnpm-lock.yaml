@@ -26,6 +26,9 @@ optionalDependencies:
     version: file:pkg
 
 devDependencies:
+  '@algolia/client-search':
+    specifier: 4.17.0
+    version: 4.17.0
   markdown-it:
     specifier: ^13.0.1
     version: 13.0.1
