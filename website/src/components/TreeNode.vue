@@ -11,6 +11,10 @@ const props = defineProps({
   cursorPosition: {
     type: Object as PropType<Pos>,
   },
+  showUnnamed: {
+    type: Boolean,
+    default: false,
+  }
 })
 
 type DestructedNode = {
@@ -88,7 +92,7 @@ function copyField(name: string) {
 </script>
 
 <template>
-  <div v-if="isNamed || field" class="tree-node" ref="nodeRef" :class="{target: isTarget}">
+  <div v-if="showUnnamed || isNamed || field" class="tree-node" ref="nodeRef" :class="{target: isTarget}">
     <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
         v-if="children.some(n => n.isNamed || n.field)"
@@ -100,6 +104,7 @@ function copyField(name: string) {
       <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
     </p>
     <TreeNode
+      :showUnnamed="showUnnamed"
       :node="child"
       :cursorPosition="isWithin ? cursorPosition : null"
       v-if="expanded"

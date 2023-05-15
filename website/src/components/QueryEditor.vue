@@ -53,6 +53,8 @@ function changeFocusNode(e: any) {
     column: position.column - 1,
   }
 }
+
+let showFullTree = shallowRef(false)
 </script>
 
 <template>
@@ -68,9 +70,16 @@ function changeFocusNode(e: any) {
         :matches="matches"
         :highlights="highlights"/>
     </template>
+    <template #panelAccessory>
+      <label class="tree-toggle-label">
+        <input class="tree-toggle" type="checkbox" v-model="showFullTree">
+        Show Full Tree
+      </label>
+    </template>
     <template #panel>
       <TreeNode
         v-if="root"
+        :showUnnamed="showFullTree"
         class="pre"
         :node="root"
         :cursorPosition="cursorPosition"/>
@@ -82,5 +91,42 @@ function changeFocusNode(e: any) {
 .pre {
   font-family: monospace;
   line-height: 1.5em;
+}
+.tree-toggle-label {
+  float: left;
+  user-select: none;
+  vertical-align: middle;
+}
+.tree-toggle {
+  height: 0.85em;
+  width: 0.85em;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: white;
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  border: 1px solid currentColor;
+  color: var(--brand-color);
+  border-radius: 0.15em;
+  position: relative;
+  line-height: 1;
+}
+.tree-toggle::before {
+  position: absolute;
+  font-size: 0.7em;
+  content: "✓";
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  transform-origin: center center;
+  transition: 120ms transform ease-in-out;
+  background-color: transparent;
+}
+
+.tree-toggle:checked::before {
+  transform: scale(1);
 }
 </style>

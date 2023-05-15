@@ -19,6 +19,7 @@ const emits = defineEmits<{
     <div class="panel-area" :class="!isCollapsed && 'collapsed'"
       @mouseenter="emits('enterPanel')" @mouseleave="emits('leavePanel')">
       <p @click.self="isCollapsed = !isCollapsed">
+        <slot name="panelAccessory"/>
         <span class="chevron">›</span>
         {{panelTitle}}
       </p>
@@ -47,6 +48,7 @@ const emits = defineEmits<{
   flex: 40% 4 0;
   overflow: auto;
   font-size: 12px;
+  line-height: 2;
   white-space: pre;
   padding: 1em;
   padding-top: 0;
