@@ -7,7 +7,7 @@ Let's try its power of  by rewriting some code in a moderately large codebase: [
 Our task is to rewrite old defensive code that checks nullable nested method calls to the new shiny [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) `?.`.
 
 ## Installation
-First, install `ast-grep`. It is distributed by npm and cargo. You can also build it [from source](https://github.com/ast-grep/ast-grep#installation).
+First, install `ast-grep`. It is distributed by [npm](https://www.npmjs.com/package/@ast-grep/cli), [cargo](https://crates.io/crates/ast-grep) and [homebrew](https://formulae.brew.sh/formula/ast-grep). You can also build it [from source](https://github.com/ast-grep/ast-grep#installation).
 
 ```shell
 # install via npm
@@ -16,9 +16,8 @@ npm i @ast-grep/cli -g
 # install via cargo
 cargo install ast-grep
 
-# install via brew
-brew tap ast-grep/tap
-brew install ast-grep/tap/ast-grep
+# install via homebrew
+brew install ast-grep
 ```
 
 The binary command, `sg`, or `ast-grep`, should be available now. Let's try it with `--help`.
