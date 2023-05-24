@@ -44,9 +44,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-core"
-version = "0.5.2"
+version = "0.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4ec0c483109e53b9d5d00f5f8b380e9b025cb3fec44655aab00070d285a4b96"
+checksum = "6b0ee9060d762163d5bc0e3de1822ec6a7a62d80eb88a02f6d46aa397c648325"
 dependencies = [
  "bit-set",
  "regex",
@@ -431,9 +431,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-facade-sg"
-version = "0.9.1"
+version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "245c234283c641ded4744a7b52c74ac642097f594fa65d578d5a5352fb3f8706"
+checksum = "bf5a4036a699b30bb1360c9883502d8473c5fe5a7f10d4cb0fefb0fbfd97228b"
 dependencies = [
  "js-sys",
  "tree-sitter",
@@ -579,9 +579,9 @@ dependencies = [
 
 [[package]]
 name = "web-tree-sitter-sg"
-version = "1.3.3"
+version = "1.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ddcc674fefbddd4023d2e76aefcff45798f0d050c4c7bddebb8e1d74e612dc13"
+checksum = "b9a450701853b465dddfd9edb45b5ab2ff191cd666d9f54382fad24fe6c5503a"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
