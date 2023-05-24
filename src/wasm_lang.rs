@@ -8,6 +8,7 @@ use wasm_bindgen::prelude::*;
 use std::sync::Mutex;
 use ast_grep_core::source::{Content, Doc, Edit, TSParseError};
 use std::borrow::Cow;
+use std::ops::Range;
 use tree_sitter::{InputEdit, Node, Parser, ParserError, Point, Tree};
 
 #[derive(Clone, Copy)]
@@ -178,12 +179,6 @@ impl Content for Wrapper {
     let s: String = self.inner.iter().cloned().collect();
     parser.parse(&s, tree)
   }
-  fn as_slice(&self) -> &[Self::Underlying] {
-    self.inner.as_slice()
-  }
-  fn transform_str(s: &str) -> Vec<Self::Underlying> {
-    s.chars().collect()
-  }
   fn accept_edit(&mut self, edit: &Edit<Self>) -> InputEdit {
     let start_byte = edit.position;
     let old_end_byte = edit.position + edit.deleted_length;
@@ -205,6 +200,9 @@ impl Content for Wrapper {
   fn get_text<'a>(&'a self, node: &Node) -> Cow<'a, str> {
     // dummy for wasm tree!
     node.utf8_text(&[]).expect("get_text should work")
+  }
+  fn get_range(&self, range: Range<usize>) -> &[char] {
+    &self.inner[range]
   }
 }
 
@@ -258,6 +256,9 @@ impl Doc for WasmDoc {
   }
   fn get_source_mut(&mut self) -> &mut Self::Source {
     &mut self.source
+  }
+  fn from_str(src: &str, lang: Self::Lang) -> Self {
+    Self { lang, source: Wrapper { inner: src.chars().collect() }}
   }
 }
 

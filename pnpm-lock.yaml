@@ -16,9 +16,6 @@ dependencies:
   vue:
     specifier: 3.3.2
     version: 3.3.2
-  web-tree-sitter:
-    specifier: 0.20.8
-    version: 0.20.8
 
 optionalDependencies:
   ast-grep-wasm:
@@ -1021,21 +1018,17 @@ packages:
       '@vue/server-renderer': 3.3.2(vue@3.3.2)
       '@vue/shared': 3.3.2
 
-  /web-tree-sitter-wasm-bindgen@0.20.7:
-    resolution: {integrity: sha512-nhRbRaMs9UzKszwZqAWs+g+j2b9nCLdzC+RrdjZyo9GbkrYb1Jx3SW7cFBYQdE9S0p4c7q5i8TU6Bn+HdU91yw==}
+  /web-tree-sitter-wasm-bindgen@0.20.8:
+    resolution: {integrity: sha512-9FWmmdz+Joj62dKTn+eQVLtFi8s6n7Do4C0D1/NCE4Wai46mwt/MeEVINtgSNHri3321LQdIsp8bYstv/Atpzg==}
     dependencies:
-      web-tree-sitter: 0.20.7
-    dev: false
-    optional: true
-
-  /web-tree-sitter@0.20.7:
-    resolution: {integrity: sha512-flC9JJmTII9uAeeYpWF8hxDJ7bfY+leldQryetll8Nv4WgI+MXc6h7TiyAZASWl9uC9TvmfdgOjZn1DAQecb3A==}
+      web-tree-sitter: 0.20.8
     dev: false
     optional: true
 
   /web-tree-sitter@0.20.8:
     resolution: {integrity: sha512-weOVgZ3aAARgdnb220GqYuh7+rZU0Ka9k9yfKtGAzEYMa6GgiCzW9JjQRJyCJakvibQW+dfjJdihjInKuuCAUQ==}
     dev: false
+    optional: true
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
@@ -1052,6 +1045,6 @@ packages:
     version: 0.2.6
     requiresBuild: true
     dependencies:
-      web-tree-sitter-wasm-bindgen: 0.20.7
+      web-tree-sitter-wasm-bindgen: 0.20.8
     dev: false
     optional: true
