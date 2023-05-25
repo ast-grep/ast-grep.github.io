@@ -80,6 +80,15 @@ export default defineConfig({
         collapsed: false,
       },
       {
+        text: 'Advanced Topics',
+        items: [
+          { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm'},
+          { text: 'Custom Language Support', link: '/advanced/custom-language'},
+          { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison'},
+        ],
+        collapsed: true,
+      },
+      {
         text: 'Links',
         items: [
           { text: 'Playground', link: '/playground' },
