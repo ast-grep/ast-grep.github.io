@@ -82,6 +82,7 @@ export default defineConfig({
       {
         text: 'Advanced Topics',
         items: [
+          { text: 'Core Concepts', link: '/advanced/core-concepts'},
           { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm'},
           { text: 'Custom Language Support', link: '/advanced/custom-language'},
           { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison'},

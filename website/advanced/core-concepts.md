@@ -1,0 +1,73 @@
+# Deep Dive into ast-grep's Pattern
+
+One key highlight of ast-grep is its pattern.
+
+_Pattern is a convenient way to write and read expressions that describe syntax trees_. It resembles code, but with some special syntax and semantics that allow you to match parts of a syntax tree based on their structure, type or content.
+
+While ast-grep's pattern is **easy to learn**, it is **hard to master**. It requires you to know the tree-sitter grammar and meaning of the target language, as well as the rules and conventions of ast-grep.
+
+In this guide, we will help you grasp the core concepts of ast-grep's pattern that are common to all languages. We will also show you how to leverage the full power of ast-grep pattern for your own usage.
+
+## What is Tree-sitter?
+
+ast-grep is using [Tree-sitter](https://tree-sitter.github.io/) as its underlying parsing framework due to its **popularity**, **performance** and **robustness**.
+
+Tree-sitter is a tool that generates parsers and provides an incremental parsing library.
+
+A [parser](https://www.wikiwand.com/en/Parser_(programming_language)) is a program that takes a source code file as input and produces a tree structure that describes the organization of the code. (Contrary to ast-grep's name, the tree structure is not abstract syntax tree, as we will see later).
+
+
+Writing good parsers for various programming languages is a laborious task, if even possible, for one single project like ast-grep. Fortunately, Tree-sitter is a venerable and popular tool that has a wide community support. Many mainstream languages such as C, Java, JavaScript, Python, Rust, and more are supported by Tree-sitter.
+Using Tree-sitter as ast-grep's underlying parsing library allows it to _work with any language that has a well-maintained grammar available_.
+
+Another perk of Tree-sitter is its incremental nature. An incremental parser is a parser that can update the syntax tree efficiently when the source code file is edited, without having to re-parse the entire file. _It can run very fast on every code changes in ast-greps' [interactive editing](https://ast-grep.github.io/guide/tooling-overview.html#interactive-mode)._
+
+Finally, Tree-sitter also handles syntax errors gracefully, and it can parse multiple languages within the same file. _This makes pattern code more robust to parse and easier to write._ In future we can also support multi-language source code like Vue.
+
+## Textual vs Structural
+
+When you use ast-grep to search for patterns in source code, you need to understand the difference between textual and structural matching.
+
+Source code input is text, a sequence of characters that follows certain syntax rules. You can use common search tools like [silver-searcher](https://github.com/ggreer/the_silver_searcher) or [ripgrep](https://github.com/BurntSushi/ripgrep) to search for text patterns in source code.
+
+However, ast-grep does not match patterns against the text directly. Instead, it parses the text into a tree structure that represents the syntax of the code. This allows ast-grep to match patterns based on the semantic meaning of the code, not just its surface appearance. This is known as [structural](https://docs.sourcegraph.com/code_search/reference/structural) [search](https://docs.sourcegraph.com/code_search/reference/structural), which searches for code with a specific structure, not just a specific text.
+
+_Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree._
+
+:::tip Textual Search in ast-grep
+Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule.html#regex) to matches the text of a node by specifying a regular expression. This way, it is possible to combine textual and structural matching in ast-grep.
+:::
+
+
+## AST vs CST
+To represent the syntax and semantics of code, we have two types of tree structures: [AST](https://www.wikiwand.com/en/Abstract_syntax_tree) and [CST](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/).
+
+AST stands for Abstract Syntax Tree, which is a **simplified** representation of the code that _omits some details_ like punctuation and whitespaces.
+CST stands for Concrete Syntax Tree, which is a more **faithful** representation of the code that _includes all the details_.
+
+Tree sitter is a library that can parse code into CSTs for many programming languages. Thusly, _ast-grep, contrary to its name, searches and rewrites code based on CST patterns, instead of AST_.
+
+Let's walk through an example to see why CST makes more sense.
+Consider the JavaScript snippet `1 + 1`. Its AST representation [looks like this](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJE1BVENIKSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiIxICsgMSJ9):
+```
+binary_expression
+  number
+  number
+```
+An astute reader should notice the imporatnt operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical.
+```
+binary_expression
+  number
+  +                # note this + operator!
+  number
+```
+
+You might wonder if using CST will make trivial whitespaces affect your search results.
+Fortunately, ast-grep uses a [smart matching algorithm](/advanced/match-algorithm.html) that can skip trivial nodes in CST when appropriate, which saves you a lot of trouble.
+
+## Named nodes vs Unnamed nodes
+TODO
+## Kind vs Field
+TODO
+## Significant vs Trivial
+TODO
