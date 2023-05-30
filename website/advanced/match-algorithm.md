@@ -29,7 +29,18 @@ Finally, Tree-sitter also handles syntax errors gracefully, and it can parse mul
 A list of ast-grep's concepts
 
 ### Textual vs Structural
-TODO
+
+When you use ast-grep to search for patterns in source code, you need to understand the difference between textual and structural matching.
+
+Source code input is text, a sequence of characters that follows certain syntax rules. You can use common search tools like [silver-searcher](https://github.com/ggreer/the_silver_searcher) or [ripgrep](https://github.com/BurntSushi/ripgrep) to search for text patterns in source code.
+
+However, ast-grep does not match patterns against the text directly. Instead, it parses the text into a tree structure that represents the syntax of the code. This allows ast-grep to match patterns based on the semantic meaning of the code, not just its surface appearance.
+
+Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree.
+
+However, sometimes you may want to match the text of a node instead of its structure. For example, you may want to find all identifiers that start with “foo”. In this case, you can use the atomic rule regex to specify a regular expression that matches the text of a node. This way, you can combine textual and structural matching in ast-grep.
+
+
 ### AST vs CST
 TODO
 ### Named nodes vs Unnamed nodes
