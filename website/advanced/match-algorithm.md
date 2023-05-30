@@ -25,29 +25,57 @@ Another perk of Tree-sitter is its incremental nature. An incremental parser is 
 Finally, Tree-sitter also handles syntax errors gracefully, and it can parse multiple languages within the same file. _This makes pattern code more robust to parse and easier to write._ In future we can also support multi-language source code like Vue.
 
 
-## Core Concepts
-A list of ast-grep's concepts
+# Core Concepts
 
-### Textual vs Structural
+Here is a list of concepts that will help you using ast-grep like a pro.
+
+## Textual vs Structural
 
 When you use ast-grep to search for patterns in source code, you need to understand the difference between textual and structural matching.
 
 Source code input is text, a sequence of characters that follows certain syntax rules. You can use common search tools like [silver-searcher](https://github.com/ggreer/the_silver_searcher) or [ripgrep](https://github.com/BurntSushi/ripgrep) to search for text patterns in source code.
 
-However, ast-grep does not match patterns against the text directly. Instead, it parses the text into a tree structure that represents the syntax of the code. This allows ast-grep to match patterns based on the semantic meaning of the code, not just its surface appearance.
+However, ast-grep does not match patterns against the text directly. Instead, it parses the text into a tree structure that represents the syntax of the code. This allows ast-grep to match patterns based on the semantic meaning of the code, not just its surface appearance. This is known as [structural](https://docs.sourcegraph.com/code_search/reference/structural) [search](https://docs.sourcegraph.com/code_search/reference/structural), which searches for code with a specific structure, not just a specific text.
 
-Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree.
+_Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree._
 
-However, sometimes you may want to match the text of a node instead of its structure. For example, you may want to find all identifiers that start with “foo”. In this case, you can use the atomic rule regex to specify a regular expression that matches the text of a node. This way, you can combine textual and structural matching in ast-grep.
+:::tip Textual Search in ast-grep
+Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule.html#regex) to matches the text of a node by specifying a regular expression. This way, it is possible to combine textual and structural matching in ast-grep.
+:::
 
 
-### AST vs CST
+## AST vs CST
+To represent the syntax and semantics of code, we have two types of tree structures: [AST](https://www.wikiwand.com/en/Abstract_syntax_tree) and [CST](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/).
+
+AST stands for Abstract Syntax Tree, which is a **simplified** representation of the code that _omits some details_ like punctuation and whitespaces.
+CST stands for Concrete Syntax Tree, which is a more **faithful** representation of the code that _includes all the details_.
+
+Tree sitter is a library that can parse code into CSTs for many programming languages. Thusly, _ast-grep, contrary to its name, searches and rewrites code based on CST patterns, instead of AST_.
+
+Let's walk through an example to see why CST makes more sense.
+Consider the JavaScript snippet `1 + 1`. Its AST representation [looks like this](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJE1BVENIKSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiIxICsgMSJ9):
+```
+binary_expression
+  number
+  number
+```
+An astute reader should notice the imporatnt operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical.
+```
+binary_expression
+  number
+  +                # note this + operator!
+  number
+```
+
+You might wonder if using CST will make trivial whitespaces affect your search results. Fortunately, ast-grep uses a smart matching algorithm that can skip trivial nodes in CST when appropriate, which saves you a lot of trouble.
+
+
+
+## Named nodes vs Unnamed nodes
 TODO
-### Named nodes vs Unnamed nodes
+## Kind vs Field
 TODO
-### Kind vs Field
-TODO
-### Significant vs Trivial
+## Significant vs Trivial
 TODO
 
 ## Match Algorithm
