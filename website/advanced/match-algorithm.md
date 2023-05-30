@@ -10,7 +10,7 @@ In this guide, we will help you grasp the core concepts of ast-grep's pattern th
 
 ## What is Tree-sitter
 
-ast-grep is using [Tree-sitter](tree-sitter.github.io/) as its underlying parsing framework due to its **popularity**, **performance** and **robustness**.
+ast-grep is using [Tree-sitter](https://tree-sitter.github.io/) as its underlying parsing framework due to its **popularity**, **performance** and **robustness**.
 
 Tree-sitter is a tool that generates parsers and provides an incremental parsing library.
 
