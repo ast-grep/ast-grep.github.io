@@ -65,14 +65,14 @@ binary_expression
 You might wonder if using CST will make trivial whitespaces affect your search results.
 Fortunately, ast-grep uses a [smart matching algorithm](/advanced/match-algorithm.html) that can skip trivial nodes in CST when appropriate, which saves you a lot of trouble.
 
-## Named nodes vs Unnamed nodes
+## Named vs Unnamed
 
 It is possible to convert CST to AST if we don't care about punctuation and whitespaces.
 Tree-sitter has two types of nodes: named nodes and unnamed nodes(anonymous nodes).
 
 The more important _named nodes_ are defined with a regular name in the grammar rules, such as `binary_expression` or `identifier`. The less important _unnamed nodes_ are defined with literal strings such as `","` or `"+"`.
 
-Named nodes are more important for understanding the code's structure and meaning, while unnamed nodes are less important and can be skipped by ast-grep's matching algorithms.
+Named nodes are more important for understanding the code's structure and meaning, while unnamed nodes are less important and can be sometimes skipped by ast-grep's matching algorithms.
 
 The following example, adapted from [tree-sitter's official guide](https://tree-sitter.github.io/tree-sitter/creating-parsers#the-first-few-rules), shows the difference in grammar definition.
 
@@ -86,7 +86,13 @@ rules: {
                                           // ↑ unnamed node
 }
 ```
-Practically, named nodes have a property called `kind` that indicates their names. You can use ast-grep's [atomic rule `kind`](/guide/rule-config/atomic-rule.html#kind) to find the specific AST node.
+Practically, named nodes have a property called `kind` that indicates their names. You can use ast-grep's [atomic rule `kind`](/guide/rule-config/atomic-rule.html#kind) to find the specific AST node. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOiBcbiAga2luZDogYmluYXJ5X2V4cHJlc3Npb24iLCJzb3VyY2UiOiIxICsgMSAifQ==) for the example below.
+
+```yaml
+rule:
+  kind: binary_expression
+# matches `1 + 1`
+```
 
 Further more, ast-grep's meta variable matches only named nodes by default. `return $A` matches only the first statement below. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICRBIiwiY29uZmlnIjoiIyBDb25maWd1cmUgUnVsZSBpbiBZQU1MXG5ydWxlOlxuICBhbnk6XG4gICAgLSBwYXR0ZXJuOiBpZiAoZmFsc2UpIHsgJCQkIH1cbiAgICAtIHBhdHRlcm46IGlmICh0cnVlKSB7ICQkJCB9XG5jb25zdHJhaW50czpcbiAgIyBNRVRBX1ZBUjogcGF0dGVybiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
 
@@ -98,6 +104,38 @@ return;    // `;` is unnamed and not matched.
 We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiJyZXR1cm4gMTIzXG5yZXR1cm47In0=).
 
 ## Kind vs Field
-TODO
+
+Sometimes, using kind alone is not enough to find the nodes we want. A node may have several children with the same kind, but different roles in the code. For [example](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJ2YXIgYSA9IHtcbiAgJ2tleSc6ICd2YWx1ZSdcbn0ifQ==), in JavaScript, an object may have multiple keys and values, all with the string kind.
+
+To distinguish them, we can use `field` to specify the relation between a node and its parent. In ast-grep, `field` is specified in two [relational rules](/guide/rule-config/relational-rule.html#relational-rule-mnemonics): `has` and `inside`.
+
+`has` and `inside` accept a special configuration item called `field`. The value `field` is the _field name_ of the parent-child relation. For example, the key-value `pair` in JavaScript object has two children: one with field `key` and the other with field `value`. We can use [this rule](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmdcbiAgaW5zaWRlOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBwYWlyIiwic291cmNlIjoidmFyIGEgPSB7XG4gICdrZXknOiAndmFsdWUnXG59In0=) to match the `key` node of kind `string`.
+
+```yaml
+rule:
+  kind: string
+  inside:
+    field: key
+    kind: pair
+```
+`field` can help us to narrow down the search scope and make the pattern more precise.
+
+We can also use `has` to rewrite the rule above, searching the key-value `pair` with `string` key. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBwYWlyXG4gIGhhczpcbiAgICBmaWVsZDoga2V5XG4gICAga2luZDogc3RyaW5nIiwic291cmNlIjoidmFyIG1hdGNoID0geyAna2V5JzogJ3ZhbHVlJyB9XG52YXIgbm9NYXRjaCA9IHsga2V5OiB2YWx1ZX0ifQ==).
+
+```yaml
+rule:
+  kind: pair
+  has:
+    field: key
+    kind: string
+```
+
+:::tip Key Difference between `kind` and `field`
+* `kind` is the property of the node itself. Only named nodes have `kind`s.
+* `field` is the property of the relation between parent and child. Unnamed nodes can also have `field`s.
+:::
+
+It might be confusing to new users that a node has both `kind` and `field`. `kind` belongs to the node itself, represented by blue text in ast-grep's playground. Child node has a `field` only relative to its parent, and vice-versa. `field` is represented by dark yellow text in the playground. Since field is a property of a node relation, unnamed nodes can also have `field`. For example, the `+` in the binary expression `1 + 1` has the field `operator`.
+
 ## Significant vs Trivial
 TODO
