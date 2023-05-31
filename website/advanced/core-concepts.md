@@ -138,4 +138,17 @@ rule:
 It might be confusing to new users that a node has both `kind` and `field`. `kind` belongs to the node itself, represented by blue text in ast-grep's playground. Child node has a `field` only relative to its parent, and vice-versa. `field` is represented by dark yellow text in the playground. Since field is a property of a node relation, unnamed nodes can also have `field`. For example, the `+` in the binary expression `1 + 1` has the field `operator`.
 
 ## Significant vs Trivial
-TODO
+
+ast-grep goes further beyond tree-sitter. It has a concept about the "significance" of a node.
+* If a node is a named node or has a field relative to its parent, it is a **significant** node.
+* Otherwise, the node is a **trivial** node.
+
+:::warning Even significance is not enough
+Most tree-sitter languages do not encode all critical semantics in AST, the tree with named nodes only.
+Even significant nodes are not sufficient to represent the meaning of code.
+We have to preserve some trivial nodes for precise matching.
+:::
+
+Tree-sitter parsers do not encode all semantics with named nodes. For example, `class A { get method() {} }` and `class A { method() {} }` are equivalent in Tree-sitter's AST. The critical token `get` is not named nor has a field name. It is a trivial node!
+
+If you do not care about if the method is a getter method, a static method or an instance method, you can use `class $A { method() {} }` to [match all the three methods at once](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBtZXRob2QoKSB7fSB9IiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIGtpbmQ6IHN0cmluZyIsInNvdXJjZSI6ImNsYXNzIEEgeyBtZXRob2QoKSB7fX1cbmNsYXNzIEIgeyBnZXQgbWV0aG9kKCkge319XG5jbGFzcyBDIHsgc3RhdGljIG1ldGhvZCgpIHt9fSJ9). Alternatively, you can [fully spell out the method modifier](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBnZXQgbWV0aG9kKCkge30gfSIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJjbGFzcyBBIHsgbWV0aG9kKCkge319XG5jbGFzcyBCIHsgZ2V0IG1ldGhvZCgpIHt9fVxuY2xhc3MgQyB7IHN0YXRpYyBtZXRob2QoKSB7fX0ifQ==) if you need to tell getter method from normal method.
