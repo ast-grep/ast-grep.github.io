@@ -4,7 +4,7 @@ One key highlight of ast-grep is its pattern.
 
 _Pattern is a convenient way to write and read expressions that describe syntax trees_. It resembles code, but with some special syntax and semantics that allow you to match parts of a syntax tree based on their structure, type or content.
 
-While ast-grep's pattern is **easy to learn**, it is **hard to master**. It requires you to know the tree-sitter grammar and meaning of the target language, as well as the rules and conventions of ast-grep.
+While ast-grep's pattern is **easy to learn**, it is **hard to master**. It requires you to know the Tree-sitter grammar and meaning of the target language, as well as the rules and conventions of ast-grep.
 
 In this guide, we will help you grasp the core concepts of ast-grep's pattern that are common to all languages. We will also show you how to leverage the full power of ast-grep pattern for your own usage.
 
@@ -74,7 +74,7 @@ The more important _named nodes_ are defined with a regular name in the grammar 
 
 Named nodes are more important for understanding the code's structure and meaning, while unnamed nodes are less important and can be sometimes skipped by ast-grep's matching algorithms.
 
-The following example, adapted from [tree-sitter's official guide](https://tree-sitter.github.io/tree-sitter/creating-parsers#the-first-few-rules), shows the difference in grammar definition.
+The following example, adapted from [Tree-sitter's official guide](https://tree-sitter.github.io/tree-sitter/creating-parsers#the-first-few-rules), shows the difference in grammar definition.
 
 ```javascript
 rules: {
@@ -139,12 +139,12 @@ It might be confusing to new users that a node has both `kind` and `field`. `kin
 
 ## Significant vs Trivial
 
-ast-grep goes further beyond tree-sitter. It has a concept about the "significance" of a node.
+ast-grep goes further beyond Tree-sitter. It has a concept about the "significance" of a node.
 * If a node is a named node or has a field relative to its parent, it is a **significant** node.
 * Otherwise, the node is a **trivial** node.
 
 :::warning Even significance is not enough
-Most tree-sitter languages do not encode all critical semantics in AST, the tree with named nodes only.
+Most Tree-sitter languages do not encode all critical semantics in AST, the tree with named nodes only.
 Even significant nodes are not sufficient to represent the meaning of code.
 We have to preserve some trivial nodes for precise matching.
 :::
@@ -156,4 +156,4 @@ If you do not care about if the method is a getter method, a static method or an
 ## Summary
 Thank you for reading until here! There are many concepts in this article. Let's summarize them in one paragraph.
 
-ast-grep uses tree-sitter to parse _textual_ source code into a detailed tree _structure_ called **CST**. We can get **AST** from CST by only keeping **named nodes**, which have kinds. To search nodes in a syntax tree, you can use both node **kind** and node **field**, which is a special role of a child node relative to its parent node. A node with either a kind or a field is a **significant** node.
+ast-grep uses Tree-sitter to parse _textual_ source code into a detailed tree _structure_ called **CST**. We can get **AST** from CST by only keeping **named nodes**, which have kinds. To search nodes in a syntax tree, you can use both node **kind** and node **field**, which is a special role of a child node relative to its parent node. A node with either a kind or a field is a **significant** node.
