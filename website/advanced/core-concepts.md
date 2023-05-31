@@ -66,7 +66,37 @@ You might wonder if using CST will make trivial whitespaces affect your search r
 Fortunately, ast-grep uses a [smart matching algorithm](/advanced/match-algorithm.html) that can skip trivial nodes in CST when appropriate, which saves you a lot of trouble.
 
 ## Named nodes vs Unnamed nodes
-TODO
+
+It is possible to convert CST to AST if we don't care about punctuation and whitespaces.
+Tree-sitter has two types of nodes: named nodes and unnamed nodes(anonymous nodes).
+
+The more important _named nodes_ are defined with a regular name in the grammar rules, such as `binary_expression` or `identifier`. The less important _unnamed nodes_ are defined with literal strings such as `","` or `"+"`.
+
+Named nodes are more important for understanding the code's structure and meaning, while unnamed nodes are less important and can be skipped by ast-grep's matching algorithms.
+
+The following example, adapted from [tree-sitter's official guide](https://tree-sitter.github.io/tree-sitter/creating-parsers#the-first-few-rules), shows the difference in grammar definition.
+
+```javascript
+rules: {
+  // named nodes are defined with the format `kind: parseRule`
+  identifier: $ => /[a-z]+/,
+  // binary_expression is also a named node,
+  // the `+` operator is defined with a string literal, so it is an unnamed node
+  binary_expression: $ => seq($.identifier, '+', $.identifier),
+                                          // ↑ unnamed node
+}
+```
+Practically, named nodes have a property called `kind` that indicates their names. You can use ast-grep's [atomic rule `kind`](/guide/rule-config/atomic-rule.html#kind) to find the specific AST node.
+
+Further more, ast-grep's meta variable matches only named nodes by default. `return $A` matches only the first statement below. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICRBIiwiY29uZmlnIjoiIyBDb25maWd1cmUgUnVsZSBpbiBZQU1MXG5ydWxlOlxuICBhbnk6XG4gICAgLSBwYXR0ZXJuOiBpZiAoZmFsc2UpIHsgJCQkIH1cbiAgICAtIHBhdHRlcm46IGlmICh0cnVlKSB7ICQkJCB9XG5jb25zdHJhaW50czpcbiAgIyBNRVRBX1ZBUjogcGF0dGVybiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
+
+```js
+return 123 // `123` is named `number` and matched.
+return;    // `;` is unnamed and not matched.
+```
+
+We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiJyZXR1cm4gMTIzXG5yZXR1cm47In0=).
+
 ## Kind vs Field
 TODO
 ## Significant vs Trivial
