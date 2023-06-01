@@ -4,7 +4,7 @@ Relational rules are powerful operators that can filter the _target_ nodes based
 
 ## Relational Rule Example
 
-Suppose we have an `await` expression inside a for loop, it is usually a bad idea because every iteration will have to wait for the previous promise to resolve.
+Suppose we have an `await` expression inside a for loop. It is usually a bad idea because every iteration will have to wait for the previous promise to resolve.
 In this case, we can use the relational rule `inside` to filter out the `await` expression.
 
 
@@ -18,7 +18,7 @@ rule:
 The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule.
 For example, the above rule can be read as "matches a node that is `await` expression and is inside a for loop".
 
-Since relational rules accept other ast-grep rules, we can compose more complex examples by recursively using operators.
+Since relational rules accept another ast-grep rule, we can compose more complex examples by using operators recursively.
 
 ```yaml
 rule:
@@ -32,7 +32,7 @@ rule:
           - kind: do_statement
 ```
 
-The above rule will match different kind of loops, like `for`, `for-in`, `while` and `do-while`.
+The above rule will match different kinds of loops, like `for`, `for-in`, `while` and `do-while`.
 
 So all the code below matches:
 
@@ -100,11 +100,11 @@ console.log('hello'); // matches!!
 Relational rule has several options to let you find nodes more precisely.
 
 ### `stopBy`
-By default, relational rule will only matches nodes only one level further. For example, ast-grep will only matches the direct children of the target node for the `has` rule.
+By default, relational rule will only match nodes one level further. For example, ast-grep will only match the direct children of the target node for the `has` rule.
 
-You can change the behavior by using the `stopBy` field. It accepts three kind of values: string `'end'`, string `'neighbor'`(the default option) and a rule object.
+You can change the behavior by using the `stopBy` field. It accepts three kinds of values: string `'end'`, string `'neighbor'` (the default option), and a rule object.
 
-`stopBy: end` will make ast-grep to search surrounding nodes until it reaches end. For example, it stops when the rule hits root node, leaf node or the first/last sibling node.
+`stopBy: end` will make ast-grep search surrounding nodes until it reaches the end. For example, it stops when the rule hits root node, leaf node or the first/last sibling node.
 
 ```yaml
 has:
@@ -112,7 +112,7 @@ has:
   pattern: $MY_PATTERN
 ```
 
-`stopBy` can also accept a custom rule object, so the matching will only stop when the rule matches the surrounding node.
+`stopBy` can also accept a custom rule object, so the searching will only stop when the rule matches the surrounding node.
 
 ```yaml
 # find if a node is inside a function called test. It stops whenever the ancestor node is a function.
@@ -122,10 +122,10 @@ inside:
   pattern: function test($$$) { $$$ }
 ```
 
-Note the `stopBy` rule is inclusive. So when both `stopBy` rule and relational rule hit, the node is considered as a match.
+Note the `stopBy` rule is inclusive. So when both `stopBy` rule and relational rule hit a node, the node is considered as a match.
 
 ### `field`
-Sometimes it is useful to specify the node by its field. Suppose we want to find a JavaScript object property with the key `prototype` (an outdated practice we should avoid).
+Sometimes it is useful to specify the node by its field. Suppose we want to find a JavaScript object property with the key `prototype`, an outdated practice that we should avoid.
 
 ```yaml
 kind: pair # key-value pair in JS
@@ -146,4 +146,4 @@ var a = {
   normalKey: prototype
 }
 ```
-Though `pair` has a child with text `prototype` in the second example, its relative field is not `key`. That is, `prototype` is not used as key but instead used as value. So it does not match the rule.
+Though `pair` has a child with text `prototype` in the second example, its relative field is not `key`. That is, `prototype` is not used as `key` but instead used as value. So it does not match the rule.

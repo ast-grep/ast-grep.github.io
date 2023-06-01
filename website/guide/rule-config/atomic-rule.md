@@ -8,11 +8,11 @@ In ast-grep, we have three kinds of rules:
 
 These three rules can be composed together to create more complex rules. Let's start with the most basic one: atomic rule.
 
-Atomic rule defines the most basic matching rule that determines whether one AST node matches the rule or not. There are three kinds of atomic rule: `pattern`, `kind` and `regex`.
+Atomic rule defines the most basic matching rule that determines whether one syntax node matches the rule or not. There are three kinds of atomic rule: `pattern`, `kind` and `regex`.
 
 ## `pattern`
 
-Pattern will match one single AST node according to [pattern syntax](/guide/pattern-syntax).
+Pattern will match one single syntax node according to the [pattern syntax](/guide/pattern-syntax).
 
 ```yaml
 rule:
@@ -21,7 +21,7 @@ rule:
 
 The above rule will match code like `console.log('Hello World')`.
 
-`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub AST node specified by user in contextual pattern. For example, we can select class field in JavaScript by this pattern.
+`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub syntax node specified by user in contextual pattern. For example, we can select class field in JavaScript by this pattern.
 
 ```yaml
 pattern:
@@ -31,7 +31,7 @@ pattern:
 
 ## `kind`
 
-Sometimes it is not easy to write a pattern because it is hard to construct one.
+Sometimes it is not easy to write a pattern because it is hard to construct the valid syntax.
 
 For example, if we want to match class property declaration in JavaScript like `class A { a = 1 }`,
 writing `a = 1` will not match the property because it is parsed as assigning to a variable.
