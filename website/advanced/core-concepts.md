@@ -45,7 +45,7 @@ To represent the syntax and semantics of code, we have two types of tree structu
 AST stands for Abstract Syntax Tree, which is a **simplified** representation of the code that _omits some details_ like punctuation and whitespaces.
 CST stands for Concrete Syntax Tree, which is a more **faithful** representation of the code that _includes all the details_.
 
-Tree sitter is a library that can parse code into CSTs for many programming languages. Thusly, _ast-grep, contrary to its name, searches and rewrites code based on CST patterns, instead of AST_.
+Tree-sitter is a library that can parse code into CSTs for many programming languages. Thusly, _ast-grep, contrary to its name, searches and rewrites code based on CST patterns, instead of AST_.
 
 Let's walk through an example to see why CST makes more sense.
 Consider the JavaScript snippet `1 + 1`. Its AST representation [looks like this](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJE1BVENIKSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiIxICsgMSJ9):
@@ -54,7 +54,7 @@ binary_expression
   number
   number
 ```
-An astute reader should notice the imporatnt operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical.
+An astute reader should notice the imporatnt operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical information.
 ```
 binary_expression
   number
