@@ -109,7 +109,7 @@ Sometimes, using kind alone is not enough to find the nodes we want. A node may 
 
 To distinguish them, we can use `field` to specify the relation between a node and its parent. In ast-grep, `field` is specified in two [relational rules](/guide/rule-config/relational-rule.html#relational-rule-mnemonics): `has` and `inside`.
 
-`has` and `inside` accept a special configuration item called `field`. The value `field` is the _field name_ of the parent-child relation. For example, the key-value `pair` in JavaScript object has two children: one with field `key` and the other with field `value`. We can use [this rule](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmdcbiAgaW5zaWRlOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBwYWlyIiwic291cmNlIjoidmFyIGEgPSB7XG4gICdrZXknOiAndmFsdWUnXG59In0=) to match the `key` node of kind `string`.
+`has` and `inside` accept a special configuration item called `field`. The value of `field` is the _field name_ of the parent-child relation. For example, the key-value `pair` in JavaScript object has two children: one with field `key` and the other with field `value`. We can use [this rule](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmdcbiAgaW5zaWRlOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBwYWlyIiwic291cmNlIjoidmFyIGEgPSB7XG4gICdrZXknOiAndmFsdWUnXG59In0=) to match the `key` node of kind `string`.
 
 ```yaml
 rule:
