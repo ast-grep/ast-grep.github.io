@@ -2,6 +2,7 @@ use std::str::FromStr;
 
 use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVariable;
+use ast_grep_core::replacer::IndentSensitive;
 use ast_grep_language as L;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
@@ -203,6 +204,16 @@ impl Content for Wrapper {
   }
   fn get_range(&self, range: Range<usize>) -> &[char] {
     &self.inner[range]
+  }
+}
+
+impl IndentSensitive for Wrapper {
+  const TAB: Self::Underlying = '\t';
+  const SPACE: Self::Underlying = ' ';
+  const NEW_LINE: Self::Underlying = '\n';
+
+  fn decode_str(src: &str) -> Cow<[Self::Underlying]> {
+    Cow::Owned(src.chars().collect())
   }
 }
 

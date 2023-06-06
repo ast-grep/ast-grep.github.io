@@ -7,7 +7,8 @@ use wasm_lang::{WasmLang, WasmDoc};
 use ast_grep_config::{
   SerializableRuleCore, RuleWithConstraint
 };
-use ast_grep_core::{Node as SgNode, Pattern, AstGrep};
+use ast_grep_core::{Node as SgNode, AstGrep};
+use ast_grep_core::replacer::Fixer;
 use utils::WasmMatch;
 use dump_tree::{dump_one_node, DumpNode};
 use ast_grep_core::language::Language;
@@ -77,7 +78,7 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   let lang = WasmLang::get_current();
   let mut config = WASMConfig::try_from(config)?;
   let fixer = config.fix.take().expect_throw("fix is required for rewriting");
-  let fixer = Pattern::new(&fixer, lang.clone());
+  let fixer = Fixer::try_new(&fixer, &lang)?;
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
   let finder = config.into_matcher(lang)?;
