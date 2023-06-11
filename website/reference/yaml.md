@@ -12,7 +12,7 @@ Unique, descriptive identifier, e.g., `no-unused-variable`.
 ## `message`
 
 * type: `String`
-* required: true
+* required: false
 
 Main message highlighting why this rule fired. It should be single line and concise,
 but specific enough to be understood without additional context.
@@ -27,7 +27,7 @@ Additional notes to elaborate the message and provide potential fix to the issue
 ## `severity`
 
 * type: `String`
-* required: true
+* required: false
 
 Specify the level of matched result. Available choice: `Hint`, `Info`, `Warning`, or `Error`.
 
