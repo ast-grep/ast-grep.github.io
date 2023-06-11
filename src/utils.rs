@@ -34,18 +34,25 @@ impl From<NodeMatch<'_>> for WasmMatch {
     let node = nm.get_node().clone();
     let node = WasmNode::from(node);
     let env = nm.get_env().clone();
-    let env = env_to_hash_map(env);
+    let env = env_to_map(env);
     Self { node, env }
   }
 }
 
-fn env_to_hash_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNode> {
+fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNode> {
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
       MetaVariable::Named(name, _) => {
-        let node = env.get_match(&name).expect("must exist").clone();
-        map.insert(name, WasmNode::from(node));
+        if let Some(node) = env.get_match(&name) {
+          map.insert(name, WasmNode::from(node.clone()));
+        } else if let Some(bytes) = env.get_transformed(&name) {
+          let node = WasmNode {
+            text: String::from_utf8_lossy(bytes).to_string(),
+            range: (0, 0, 0, 0),
+          };
+          map.insert(name, WasmNode::from(node));
+        }
       }
       MetaVariable::NamedEllipsis(name) => {
         let nodes = env.get_multiple_matches(&name);
