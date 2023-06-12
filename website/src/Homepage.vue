@@ -1,6 +1,7 @@
 <template>
   <template v-if="isHomePage">
-    <div class="language-section">
+    <Features/>
+    <div class="section-title">
       <h1>Supported Languages</h1>
     </div>
     <div class="languages">
@@ -19,10 +20,12 @@
 <script setup lang="ts">
 import { useRoute } from 'vitepress'
 import { computed } from 'vue'
+import Features from './homepage/Features.vue'
+
 let isHomePage = computed(() => useRoute().path === '/')
 </script>
 <style scoped>
-  .language-section {
+  .section-title {
     text-align: center;
   }
   h1 {
@@ -35,12 +38,18 @@ let isHomePage = computed(() => useRoute().path === '/')
     opacity: 0.5;
     letter-spacing: -0.02em;
   }
+  .feature {
+    flex: 0 0 100vw;
+    scroll-snap-align: start;
+  }
+  .feature > img {
+    width: 60%;
+  }
   .languages {
     width: 100%;
     padding: 0 20px;
     overflow: auto;
     white-space: nowrap;
-    scroll-behavior: smooth;
     text-align: center;
     scroll-snap-type: x mandatory;
     margin-bottom: -50px;
