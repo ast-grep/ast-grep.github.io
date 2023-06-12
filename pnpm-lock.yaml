@@ -33,6 +33,9 @@ devDependencies:
   markdown-it:
     specifier: ^13.0.1
     version: 13.0.1
+  search-insights:
+    specifier: ^2.6.0
+    version: 2.6.0
   typescript:
     specifier: 5.1.3
     version: 5.1.3
