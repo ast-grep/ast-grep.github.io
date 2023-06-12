@@ -46,7 +46,8 @@ const feats = [
   .feature > img {
     flex: 1 0 50%;
     width: 50%;
-    min-width: 480px;
+    min-width: min(480px, 100vw);
+    max-width: 100vw;
   }
   .description {
     flex: 1 0 50%;
