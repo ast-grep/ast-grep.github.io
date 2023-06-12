@@ -8,6 +8,7 @@ export const activeTabs = Object.keys(Mode)
 export type State = {
   mode: Mode,
   query: string,
+  rewrite: string,
   config: string,
   source: string,
   lang: string,
@@ -61,13 +62,17 @@ const defaultState = {
   mode: Mode.Patch,
   lang: 'javascript',
   query,
+  rewrite: '',
   config,
   source,
 }
 
 export function restoreState(): State {
   try {
-    return deserialize(location.hash.slice(1))
+    return {
+      ...defaultState,
+      ...deserialize(location.hash.slice(1)),
+    }
   } catch {
     return defaultState
   }

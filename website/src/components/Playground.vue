@@ -23,6 +23,7 @@ const state = shallowReactive(restoreState())
 let {
   source,
   query,
+  rewrite,
   config,
   mode,
   lang,
@@ -44,33 +45,34 @@ async function parseYAML(src: string) {
 }
 
 async function doFind(): Promise<any[]> {
+  const src = source.value
+  let json
   if (mode.value === Mode.Patch) {
-    const src = source.value
     const pattern = query.value
     if (!src || !pattern) {
       return []
     }
-    return findNodes(
-      source.value,
-      {rule: {pattern: query.value}},
-    )
+    json = {
+      rule: {pattern: query.value},
+      fix: rewrite.value || '',
+    }
   } else {
     const src = source.value
     const val = config.value;
     if (!src || !val) {
       return []
     }
-    const json = await parseYAML(val)
-    if (json.fix) {
-      rewrittenCode.value = fixErrors(src, json)
-    } else {
-      rewrittenCode.value = src
-    }
-    return findNodes(
-      src,
-      json,
-    )
+    json = await parseYAML(val)
   }
+  if (json.fix) {
+    rewrittenCode.value = fixErrors(src, json)
+  } else {
+    rewrittenCode.value = src
+  }
+  return findNodes(
+    source.value,
+    json,
+  )
 }
 
 watchEffect(async () => {
@@ -139,7 +141,15 @@ provide(langLoadedKey, langLoaded)
     <div class="half" :class="activeEditor !== 'search' && 'inactive'">
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
-          <QueryEditor v-model="query" :language="lang"/>
+          <QueryEditor
+            v-model="query"
+            :language="lang">
+            <p class="pattern-separator">Rewrite</p>
+            <Monaco
+               v-model="rewrite"
+              :language="language"
+            />
+          </QueryEditor>
         </template>
         <template #[Mode.Config]>
           <EditorWithPanel panelTitle="Matched Variables">
@@ -191,5 +201,11 @@ provide(langLoadedKey, langLoaded)
     pointer-events: none;
   }
 }
-
+.pattern-separator {
+  border-top: 1px solid #f5f5f5;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+  border-radius: 10px 10px 0 0;
+  padding: 0 1em 0;
+}
 </style>

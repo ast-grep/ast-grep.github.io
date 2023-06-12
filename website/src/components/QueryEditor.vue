@@ -8,7 +8,8 @@ import { preProcessPattern } from 'ast-grep-wasm'
 import { dumpASTNodes } from 'ast-grep-wasm'
 
 const emits = defineEmits<{
-    (e: 'update:modelValue', value: string): void,
+    'update:modelValue': [string],
+    'update:rewrite': [string],
 }>()
 
 const props = defineProps({
@@ -17,6 +18,7 @@ const props = defineProps({
     default: 'javascript'
   },
   modelValue: String,
+  rewrite: String,
   matches: Array as PropType<number[][]>,
 })
 
@@ -62,13 +64,16 @@ let showFullTree = shallowRef(false)
     @enterPanel="cursorPosition = null" @leavePanel="highlights = []"
   >
     <template #editor>
-      <Monaco
-         :modelValue="modelValue"
-         @update:modelValue="emits('update:modelValue', $event)"
-         @changeCursor="changeFocusNode"
-        :language="language"
-        :matches="matches"
-        :highlights="highlights"/>
+      <div class="dual-editor">
+        <Monaco
+           :modelValue="modelValue"
+           @update:modelValue="emits('update:modelValue', $event)"
+           @changeCursor="changeFocusNode"
+          :language="language"
+          :matches="matches"
+          :highlights="highlights"/>
+        <slot/>
+      </div>
     </template>
     <template #panelAccessory>
       <label class="tree-toggle-label">
@@ -128,5 +133,10 @@ let showFullTree = shallowRef(false)
 
 .tree-toggle:checked::before {
   transform: scale(1);
+}
+.dual-editor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>
