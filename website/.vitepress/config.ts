@@ -93,8 +93,8 @@ export default defineConfig({
         text: 'Links',
         items: [
           { text: 'Playground', link: '/playground' },
-          { text: 'Roadmap', link: '/links/roadmap' },
-          { text: 'Docs.rs', link: 'https://docs.rs/ast-grep-core/0.1.2/ast_grep_core/' },
+          { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ'},
+          { text: 'Docs.rs', link: 'https://docs.rs/ast-grep-core/latest/ast_grep_core/' },
         ],
         collapsed: true,
       },
