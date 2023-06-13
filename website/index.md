@@ -4,7 +4,7 @@ layout: home
 hero:
   name: AST-GREP
   text: Write Code to Match Code
-  tagline: ast-grep(sg) is a lightning fast and user-friendly tool for code searching, linting, rewriting at large scale.
+  tagline: ast-grep(sg) is a fast and polyglot tool for code structrual search, lint, rewriting at large scale.
   image:
     src: ./logo.svg
     alt: ast-grep

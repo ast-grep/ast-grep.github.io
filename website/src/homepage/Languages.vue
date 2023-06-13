@@ -49,14 +49,13 @@ let isHomePage = computed(() => useRoute().path === '/')
     overflow: auto;
     white-space: nowrap;
     text-align: center;
-    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
   }
   .languages img {
     display: inline-block;
     padding: 20px;
     width: 120px;
     height: 120px;
-    scroll-snap-align: center;
     transition: 0.2s ease-in-out;
   }
 </style>
