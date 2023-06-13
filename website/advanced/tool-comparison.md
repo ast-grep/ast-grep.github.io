@@ -1,7 +1,9 @@
 # Comparison With Other Frameworks
 
 :::danger Disclaimer
-Disclaimer: This comparison is based on the author’s personal experience and opinion, and it may not be accurate or comprehensive. The author respects and appreciates all the other tools and their developers, and does not intend to criticize or endorse any of them. The author is grateful to these predecessor tools for inspiring ast-grep! The reader is encouraged to try out the tools themselves and form their own judgment.
+This comparison is based on the author's personal experience and opinion, which may not be accurate or comprehensive.
+The author respects and appreciates all the other tools and their developers, and does not intend to criticize or endorse any of them.
+The author is grateful to these predecessor tools for inspiring ast-grep! The reader is encouraged to try out the tools themselves and form their own judgment.
 :::
 
 ## ast-grep
