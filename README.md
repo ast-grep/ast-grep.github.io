@@ -15,6 +15,19 @@ Unfortunately wasm-pack does not support compiling C dependency with stdlib.
 
 We have to use web-tree-sitter
 
+To setup:
+1. Install wasm-pack https://rustwasm.github.io/wasm-pack/, pnpm, cargo
+2. Clone the repo
+3. wasm-pack build --target web, This will build the wasm in `pkg` folder
+4. pnpm install
+5. pnpm dev
+6. visit localhost:5173
+7. `cd` to `website/.vitepress/cache/deps`
+8. `ln -s ../../../../pkg/ast_grep_wasm_bg.wasm`
+
+
+---
+emcc setup is not used any more
 
 ~~
 1. Install [emcc](https://emscripten.org/docs/getting_started/downloads.html)
