@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import Intro from './components/Intro.vue'
 import Toast from './components/Toast.vue'
-import { shallowRef, onMounted } from 'vue'
+import { shallowRef, onMounted, onUnmounted } from 'vue'
 // vitepress SSR does not support Monaco, lazy load on client side
 let playground = shallowRef<unknown>(null)
 onMounted(async () => {
   // apply playground style override, see style.css
   document.body.classList.add('playground')
   playground.value = (await import('./components/Playground.vue')).default
+})
+onUnmounted(() => {
+  // apply playground style override, see style.css
+  document.body.classList.remove('playground')
 })
 </script>
 

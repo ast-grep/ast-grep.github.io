@@ -5,9 +5,5 @@ import './custom.css'
 
 export default {
   ...Theme,
-  Layout() {
-    return h(Theme.Layout, null, {
-      'home-features-after': () => [h(Homepage)],
-    })
-  },
+  Layout: () => h(Homepage),
 }

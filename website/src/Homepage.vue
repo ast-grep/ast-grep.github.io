@@ -1,65 +1,21 @@
 <template>
-  <template v-if="isHomePage">
-    <Features/>
-    <div class="section-title">
-      <h1>Supported Languages</h1>
-    </div>
-    <div class="languages">
-      <img src='/icons/C.svg'/>
-      <img src='/icons/CSharp.svg'/>
-      <img src='/icons/Go.svg'/>
-      <img src='/icons/Java.svg'/>
-      <img src='/icons/JS.svg'/>
-      <img src='/icons/Kotlin.svg'/>
-      <img src='/icons/Python.svg'/>
-      <img src='/icons/Rust.svg'/>
-      <img src='/icons/TS.svg'/>
-    </div>
-  </template>
+  <Theme.Layout>
+    <template #home-features-before>
+      <Features v-if="isHomePage"/>
+    </template>
+    <template #home-features-after>
+      <Languages v-if="isHomePage" />
+    </template>
+  </Theme.Layout>
 </template>
 <script setup lang="ts">
+import Theme from 'vitepress/theme'
 import { useRoute } from 'vitepress'
 import { computed } from 'vue'
 import Features from './homepage/Features.vue'
+import Languages from './homepage/Languages.vue'
 
 let isHomePage = computed(() => useRoute().path === '/')
 </script>
 <style scoped>
-  .section-title {
-    text-align: center;
-  }
-  h1 {
-    display: inline-block;
-    margin: 60px auto 20px;
-    padding-top: 24px;
-    border-top: 1px solid var(--vp-c-divider);
-    text-align: center;
-    font-size: 24px;
-    opacity: 0.5;
-    letter-spacing: -0.02em;
-  }
-  .feature {
-    flex: 0 0 100vw;
-    scroll-snap-align: start;
-  }
-  .feature > img {
-    width: 60%;
-  }
-  .languages {
-    width: 100%;
-    padding: 0 20px;
-    overflow: auto;
-    white-space: nowrap;
-    text-align: center;
-    scroll-snap-type: x mandatory;
-    margin-bottom: -50px;
-  }
-  .languages img {
-    display: inline-block;
-    padding: 20px;
-    width: 120px;
-    height: 120px;
-    scroll-snap-align: center;
-    transition: 0.2s ease-in-out;
-  }
 </style>

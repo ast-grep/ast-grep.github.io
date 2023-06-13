@@ -13,6 +13,7 @@
       </div>
       <img :src='feat.image'/>
     </li>
+    <hr/>
   </ul>
 </template>
 <script setup lang="ts">
@@ -38,6 +39,10 @@ const feats = [
 ]
 </script>
 <style scoped>
+  .features {
+    margin-top: -2em;
+    margin-bottom: 4em;
+  }
   .feature {
     display: flex;
     flex-wrap: wrap;
@@ -54,8 +59,13 @@ const feats = [
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0em 4em 2em;
+    padding: 0em 2em 2em;
     text-align: center;
+  }
+  @media (min-width: 640px) {
+    .description {
+      padding: 0em 4em 2em;
+    }
   }
   h2 {
     font-size: 24px;
