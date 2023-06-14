@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@types/js-yaml':
     specifier: 4.0.5
@@ -1217,3 +1213,7 @@ packages:
       web-tree-sitter-wasm-bindgen: 0.20.8
     dev: false
     optional: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

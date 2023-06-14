@@ -1,7 +1,10 @@
-use ast_grep_core::{meta_var::{MetaVarEnv, MetaVariable}, Node as SgNode, NodeMatch as SgNodeMatch, StrDoc};
+use crate::wasm_lang::WasmLang;
+use ast_grep_core::{
+  meta_var::{MetaVarEnv, MetaVariable},
+  Node as SgNode, NodeMatch as SgNodeMatch, StrDoc,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
-use crate::wasm_lang::WasmLang;
 
 #[cfg(feature = "console_error_panic_hook")]
 pub fn set_panic_hook() {

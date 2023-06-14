@@ -3,19 +3,20 @@ use std::str::FromStr;
 use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVariable;
 use ast_grep_core::replacer::IndentSensitive;
-use ast_grep_language as L;
-use tree_sitter as ts;
-use wasm_bindgen::prelude::*;
-use std::sync::Mutex;
 use ast_grep_core::source::{Content, Doc, Edit, TSParseError};
+use ast_grep_language as L;
 use std::borrow::Cow;
 use std::ops::Range;
+use std::sync::Mutex;
+use tree_sitter as ts;
 use tree_sitter::{InputEdit, Node, Parser, ParserError, Point, Tree};
+use wasm_bindgen::prelude::*;
 
 #[derive(Clone, Copy)]
 pub enum WasmLang {
   JavaScript,
   TypeScript,
+  TSX,
   // not so well supported lang...
   Bash,
   C,
@@ -52,6 +53,7 @@ impl FromStr for WasmLang {
     Ok(match s {
       "javascript" => JavaScript,
       "typescript" => TypeScript,
+      "tsx" => TSX,
       "bash" => Bash,
       "c" => C,
       "csharp" => CSharp,
@@ -66,7 +68,7 @@ impl FromStr for WasmLang {
       "rust" => Rust,
       "toml" => Toml,
       "yaml" => Yaml,
-      _ => return Err(NotSupport(s.to_string()))
+      _ => return Err(NotSupport(s.to_string())),
     })
   }
 }
@@ -162,7 +164,6 @@ impl Language for WasmLang {
   fn pre_process_pattern<'q>(&self, query: &'q str) -> Cow<'q, str> {
     execute_lang_method! { self, pre_process_pattern, query }
   }
-
 }
 
 #[derive(Clone)]
@@ -269,7 +270,12 @@ impl Doc for WasmDoc {
     &mut self.source
   }
   fn from_str(src: &str, lang: Self::Lang) -> Self {
-    Self { lang, source: Wrapper { inner: src.chars().collect() }}
+    Self {
+      lang,
+      source: Wrapper {
+        inner: src.chars().collect(),
+      },
+    }
   }
 }
 

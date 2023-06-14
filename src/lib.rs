@@ -1,24 +1,22 @@
+mod dump_tree;
 mod utils;
 mod wasm_lang;
-mod dump_tree;
 
-use wasm_lang::{WasmLang, WasmDoc};
+use wasm_lang::{WasmDoc, WasmLang};
 
-use ast_grep_config::{
-  SerializableRuleCore, RuleWithConstraint
-};
-use ast_grep_core::{Node as SgNode, AstGrep};
-use ast_grep_core::replacer::Fixer;
-use utils::WasmMatch;
-use dump_tree::{dump_one_node, DumpNode};
+use ast_grep_config::{RuleWithConstraint, SerializableRuleCore};
 use ast_grep_core::language::Language;
+use ast_grep_core::replacer::Fixer;
+use ast_grep_core::{AstGrep, Node as SgNode};
+use dump_tree::{dump_one_node, DumpNode};
+use utils::WasmMatch;
 
-use tree_sitter as ts;
-use wasm_bindgen::prelude::*;
-use serde_wasm_bindgen::from_value as from_js_val;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use serde_wasm_bindgen::from_value as from_js_val;
 use std::convert::TryFrom;
+use tree_sitter as ts;
+use wasm_bindgen::prelude::*;
 
 type Node<'a> = SgNode<'a, WasmDoc>;
 
@@ -77,7 +75,10 @@ pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
 pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
   let lang = WasmLang::get_current();
   let mut config = WASMConfig::try_from(config)?;
-  let fixer = config.fix.take().expect_throw("fix is required for rewriting");
+  let fixer = config
+    .fix
+    .take()
+    .expect_throw("fix is required for rewriting");
   let fixer = Fixer::try_new(&fixer, &lang)?;
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
