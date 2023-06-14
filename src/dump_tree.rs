@@ -1,5 +1,5 @@
-use tree_sitter as ts;
 use serde::{Deserialize, Serialize};
+use tree_sitter as ts;
 
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -58,7 +58,7 @@ fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
   loop {
     dump_one_node(cursor, target);
     if !cursor.goto_next_sibling() {
-      break
+      break;
     }
   }
 }

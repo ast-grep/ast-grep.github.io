@@ -4,6 +4,7 @@ import init, { setupParser, initializeTreeSitter, WASMConfig } from 'ast-grep-wa
 const parserPaths = {
   javascript: 'tree-sitter-javascript.wasm',
   typescript: 'tree-sitter-typescript.wasm',
+  tsx: 'tree-sitter-tsx.wasm',
   // not so well supported lang...
   bash: 'tree-sitter-bash.wasm',
   c: 'tree-sitter-c.wasm',
@@ -24,6 +25,7 @@ const parserPaths = {
 export const languageDisplayNames: Record<SupportedLang, string> = {
   javascript: 'JavaScript',
   typescript: 'TypeScript',
+  tsx: 'TSX',
   // not so well supported lang...
   bash: 'Bash',
   c: 'C',
