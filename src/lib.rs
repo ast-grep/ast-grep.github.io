@@ -28,6 +28,7 @@ pub struct WASMConfig {
   rule: Value,
   fix: Option<String>,
   constraints: Option<Value>,
+  transform: Option<Value>,
   utils: Option<Value>,
 }
 
@@ -44,6 +45,7 @@ impl WASMConfig {
       language: lang,
       rule: serde_json::from_value(self.rule)?,
       constraints: self.constraints.map(serde_json::from_value).transpose()?,
+      transform: self.transform.map(serde_json::from_value).transpose()?,
       utils: self.utils.map(serde_json::from_value).transpose()?,
     };
     Ok(config.get_matcher(&Default::default())?)

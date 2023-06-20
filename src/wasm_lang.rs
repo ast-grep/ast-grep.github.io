@@ -125,6 +125,7 @@ macro_rules! execute_lang_method {
     use WasmLang as W;
     match $me {
       W::C => L::C.$method($($pname,)*),
+      W::Cpp => L::Cpp.$method($($pname,)*),
       W::CSharp => L::CSharp.$method($($pname,)*),
       W::Dart => L::Dart.$method($($pname,)*),
       W::Go => L::Go.$method($($pname,)*),
@@ -206,16 +207,18 @@ impl Content for Wrapper {
   fn get_range(&self, range: Range<usize>) -> &[char] {
     &self.inner[range]
   }
+  fn decode_str(src: &str) -> Cow<[Self::Underlying]> {
+    Cow::Owned(src.chars().collect())
+  }
+  fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str> {
+    Cow::Owned(bytes.iter().collect())
+  }
 }
 
 impl IndentSensitive for Wrapper {
   const TAB: Self::Underlying = '\t';
   const SPACE: Self::Underlying = ' ';
   const NEW_LINE: Self::Underlying = '\n';
-
-  fn decode_str(src: &str) -> Cow<[Self::Underlying]> {
-    Cow::Owned(src.chars().collect())
-  }
 }
 
 fn pos_for_char_offset(input: &[char], offset: usize) -> Point {
