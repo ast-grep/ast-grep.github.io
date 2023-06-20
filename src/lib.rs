@@ -15,6 +15,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::convert::TryFrom;
+use std::collections::HashMap;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
 
@@ -81,7 +82,13 @@ pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
     .fix
     .take()
     .expect_throw("fix is required for rewriting");
-  let fixer = Fixer::try_new(&fixer, &lang)?;
+  let fixer = if let Some(val) = &config.transform {
+    let map: HashMap<String, Value> = serde_json::from_value(val.clone())?;
+    let keys: Vec<_> = map.keys().cloned().collect();
+    Fixer::with_transform(&fixer, &lang, &keys)
+  } else {
+    Fixer::try_new(&fixer, &lang)?
+  };
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
   let finder = config.into_matcher(lang)?;
