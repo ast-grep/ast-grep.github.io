@@ -28,7 +28,7 @@ ast-grep supports a wide range of programming languages. Here is a list of notab
 
 |Language Domain|Supported Languages|
 |:--------------|------------------:|
-|System Programming| `C`, `Rust`|
+|System Programming| `C`, `Cpp`, `Rust`|
 |Server Side Programming| `Go`, `Java`, `Python`, `C-sharp`|
 |Web Development| `JS(X)`, `TS(X)`, `HTML`, `CSS`|
 |Mobile App Development| `Dart`, `Kotlin`, `Swift`|
