@@ -49,20 +49,20 @@ if (true) {
 
 const query = 'console.log($MATCH)'
 const config = `
-# Configure Rule in YAML
+# YAML Rule is more powerful!
 rule:
   any:
-    - pattern: if (false) { $$$ }
-    - pattern: if (true) { $$$ }
-constraints:
-  # META_VAR: pattern
+    - pattern: console.log($A)
+    - pattern: console.debug($A)
+fix:
+  logger.log($A)
 `.trim()
 
 const defaultState = {
   mode: Mode.Patch,
   lang: 'javascript',
   query,
-  rewrite: '',
+  rewrite: 'logger.log($MATCH)',
   config,
   source,
 }
