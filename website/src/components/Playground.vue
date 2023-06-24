@@ -147,7 +147,7 @@ provide(langLoadedKey, langLoaded)
             <p class="pattern-separator">Rewrite</p>
             <Monaco
                v-model="rewrite"
-              :language="language"
+              :language="lang"
             />
           </QueryEditor>
         </template>
