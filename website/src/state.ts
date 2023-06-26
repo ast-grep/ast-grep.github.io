@@ -35,10 +35,11 @@ export function deserialize(str: string): State {
 }
 
 const source =
-`/* All console.log() call will be highlighted!*/
+`// console.log() will be matched by pattern!
+// click diff tab to see rewrite.
 
 function tryAstGrep() {
-  console.log('Hello World')
+  console.log('matched in metavar!')
 }
 
 const multiLineExpression =
@@ -47,17 +48,20 @@ const multiLineExpression =
 
 if (true) {
   const notThis = 'console.log("not me")'
+} else {
+  console.debug('matched by YAML')
 }`
 
 const query = 'console.log($MATCH)'
 const config = `
-# Configure Rule in YAML
+# YAML Rule is more powerful!
+# https://ast-grep.github.io/guide/rule-config.html#rule
 rule:
   any:
-    - pattern: if (false) { $$$ }
-    - pattern: if (true) { $$$ }
-constraints:
-  # META_VAR: pattern
+    - pattern: console.log($A)
+    - pattern: console.debug($A)
+fix:
+  logger.log($A)
 `.trim()
 
 const configJson = `{
@@ -74,7 +78,7 @@ const defaultState = {
   mode: Mode.Patch,
   lang: 'javascript',
   query,
-  rewrite: '',
+  rewrite: 'logger.log($MATCH)',
   config,
   configJson,
   source,

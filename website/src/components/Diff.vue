@@ -2,6 +2,7 @@
 import {
   ref,
   onMounted,
+  onActivated,
   onBeforeUnmount,
   shallowRef,
   watchEffect,
@@ -52,8 +53,24 @@ watchEffect(() => {
     original, modified,
   })
   if (oldModel) {
-    oldModel.original.dispose()
-    oldModel.modified.dispose()
+    oldModel.original?.dispose()
+    oldModel.modified?.dispose()
+  }
+})
+
+// I don't know why but monaco will lose dom lines
+// when it is not dom-visible.
+// We force re-render on onActivate
+onActivated(() => {
+  let oldModel = editor.value?.getModel()
+  const original = monaco.editor.createModel(props.source, props.language)
+  const modified = monaco.editor.createModel(props.rewrite, props.language)
+  editor.value?.setModel({
+    original, modified,
+  })
+  if (oldModel) {
+    oldModel.original?.dispose()
+    oldModel.modified?.dispose()
   }
 })
 
