@@ -68,7 +68,10 @@ const configJson = `{
   "rule": {
     "any": [
       {
-        "pattern": "console.log($MATCH)"
+        "pattern": "console.log($A)"
+      },
+      {
+        "pattern": "console.debug($A)"
       }
     ]
   }
