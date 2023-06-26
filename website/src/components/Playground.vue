@@ -25,6 +25,7 @@ let {
   query,
   rewrite,
   config,
+  configJson,
   mode,
   lang,
 } = toRefs(state)
@@ -42,6 +43,11 @@ const ruleErrors = shallowRef(null)
 async function parseYAML(src: string) {
   const yaml = await import('js-yaml')
   return yaml.load(src) as any
+}
+
+async function parseJSON(src: string) {
+  const yaml = await import('js-yaml')
+  return yaml.load(src, {json: true}) as any
 }
 
 async function doFind(): Promise<any[]> {
@@ -62,7 +68,11 @@ async function doFind(): Promise<any[]> {
     if (!src || !val) {
       return []
     }
-    json = await parseYAML(val)
+    if(modeText[mode.value] === 'YAML'){
+      json = await parseYAML(val)
+    }else {
+      json = await parseJSON(configJson.value)
+    }
   }
   if (json.fix) {
     rewrittenCode.value = fixErrors(src, json)
@@ -102,6 +112,7 @@ watchEffect(async () => {
 const modeText = {
   [Mode.Patch]: 'Pattern',
   [Mode.Config]: 'YAML',
+  [Mode.ConfigJson]: 'JSON',
 }
 
 let codeText = {
@@ -161,6 +172,18 @@ provide(langLoadedKey, langLoaded)
             </template>
           </EditorWithPanel>
         </template>
+
+        <template #[Mode.ConfigJson]>
+          <EditorWithPanel panelTitle="Matched Variables">
+            <template #editor>
+              <Monaco language="json" v-model="configJson"/>
+            </template>
+            <template #panel>
+              <EnvDisplay :envs="matchedEnvs" :error="ruleErrors"/>
+            </template>
+          </EditorWithPanel>
+        </template>
+
         <template #addon>
           <SelectLang v-model="lang"/>
         </template>

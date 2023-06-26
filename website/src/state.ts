@@ -1,6 +1,7 @@
 export enum Mode {
   Patch = 'Patch',
   Config = 'Config',
+  ConfigJson = 'ConfigJson',
 }
 
 export const activeTabs = Object.keys(Mode)
@@ -10,6 +11,7 @@ export type State = {
   query: string,
   rewrite: string,
   config: string,
+  configJson: string,
   source: string,
   lang: string,
 }
@@ -58,12 +60,23 @@ constraints:
   # META_VAR: pattern
 `.trim()
 
+const configJson = `{
+  "rule": {
+    "any": [
+      {
+        "pattern": "console.log($MATCH)"
+      }
+    ]
+  }
+}`.trim()
+
 const defaultState = {
   mode: Mode.Patch,
   lang: 'javascript',
   query,
   rewrite: '',
   config,
+  configJson,
   source,
 }
 
