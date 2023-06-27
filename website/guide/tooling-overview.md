@@ -83,6 +83,49 @@ sg scan -r path/to/your/rule.yml
 ```
 It is useful to test one rule in isolation.
 
+## Parse Code from StdIn
+
+ast-grep's `run` and `scan` commands also support searching and replacing code from standard input (StdIn).
+You can use bash's [pipe operator](https://linuxhint.com/bash_pipe_tutorial/) `|` to instruct ast-grep to read from StdIn.
+
+### Example: Simple Web Crawler
+
+Let's see an example in action. Combining with `curl`, `ast-grep` and `jq`, we can build a [simple web crawler](https://twitter.com/trevmanz/status/1671572111582978049) on command line. The command below uses `curl` to fetch the HTML source of SciPy conference website, and then uses `sg` to parse and extract relevant information as JSON from source, and finally uses `jq` to transform our matching results.
+
+```bash
+curl -s https://schedule2021.scipy.org/2022/conference/  |
+  sg --pattern '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json |
+  jq '
+    .[]
+    | .metaVariables
+    | .single.AUTHORS.text'
+```
+
+The command above will produce a list of authors from the SciPy 2022 conference website.
+
+```json
+"Ben Blaiszik"
+"Qiming Sun"
+"Max Jones"
+"Thomas J. Fan"
+"Sebastian Bichelmaier"
+"Cliff Kerr"
+...
+```
+
+With this feature, even if your preferred language does not have native bindings for ast-grep, you can still parse code from standard input (StdIn) to use ast-grep programmatically from the command line.
+
+You can invoke sg, the command-line interface for ast-grep, as a subprocess to search and replace code.
+
+### Caveats
+
+**StdIn mode has several restrictions**, though:
+
+* It conflicts with `--interactive` mode, which reads user responses from StdIn.
+* For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | sg run --lang python`. This is because ast-grep cannot infer code language without file extension.
+* Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | sg scan --rule "python-rule.yml"`
+
+
 ## Colorful Output
 
 The output of ast-grep is exuberant and beautiful! But it is not always desired for colorful output.
