@@ -51,9 +51,10 @@ do {
 } while (condition)
 ```
 
-## Rules as fields
-Relational rule can be used in a rule object's field as a sub rule. This will create a rule equivalent to a composite `all` rule.
-Please see [the section in composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
+:::tip Pro Tip
+You can also use `pattern` in relational rule! The metavariable matched in relational rule can also be used in `fix`.
+This will effectively let you extract a child node from a match.
+:::
 
 ## Relational Rule Mnemonics
 
@@ -66,17 +67,17 @@ ast-grep now supports four kinds of relational rules:
 
 It is sometimes confusing to remember whether the rule matches target node or surrounding node. Here is the mnemonics to help you read the rule.
 
-:::tip
- All relational rule takes the form of `target` `relates` to `surrounding`.
-:::
-
-First, relational rule usually has a parent rule like `all` or an augmented atomic rule.
+First, relational rule usually has a parent rule like `all` or another atomic rule as field.
 
 That parent rule will match the target node.
 
 The relational rule like `inside` or `follows` will match the surrounding node.
 
 Together, the rule specifies that the target node will `be inside` or `follows` the surrounding node.
+
+:::tip
+ All relational rule takes the form of `target` `relates` to `surrounding`.
+:::
 
 For example, the rule below will match **`hello`(target)** greeting that **follows(relation)** a **`world`(surrounding)** greeting.
 
@@ -93,6 +94,10 @@ console.log('hello'); // does not match
 console.log('world');
 console.log('hello'); // matches!!
 ```
+
+## Rules as fields
+Relational rule can be used in a rule object's field as a sub rule. This will create a rule equivalent to a composite `all` rule.
+Please see [the section in composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
 
 ## Fine tuning relational rule
 
