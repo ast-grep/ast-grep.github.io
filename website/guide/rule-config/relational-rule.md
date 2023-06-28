@@ -1,4 +1,4 @@
-# Relational rules
+# Relational Rules
 
 Relational rules are powerful operators that can filter the _target_ nodes based on their _surrounding_ nodes.
 
@@ -95,11 +95,11 @@ console.log('world');
 console.log('hello'); // matches!!
 ```
 
-## Rules as fields
+## Rules as Fields
 Relational rule can be used in a rule object's field as a sub rule. This will create a rule equivalent to a composite `all` rule.
 Please see [the section in composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
 
-## Fine tuning relational rule
+## Fine Tuning Relational Rule
 
 Relational rule has several options to let you find nodes more precisely.
 
