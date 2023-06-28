@@ -51,10 +51,9 @@ do {
 } while (condition)
 ```
 
-## Embedded rules
-
-Relational rule can be embedded in atomic rule to simulate a composite rule.
-Please see [embedded rule](/guide/rule-config/composite-rule.html#embedded-rules) for more details.
+## Rules as fields
+Relational rule can be used in a rule object's field as a sub rule. This will create a rule equivalent to a composite `all` rule.
+Please see [the section in composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
 
 ## Relational Rule Mnemonics
 
