@@ -21,7 +21,7 @@ const feats = [
   {
     image: '/image/search-replace.png',
     title: 'Search and Rewrite',
-    description: 'ast-grep is a fast and lightweight tool for structural code searching and rewriting. You can write code patterns to locate and modify code in thousands of files, with interactive editing power. Use it like a syntax-aware grep!',
+    description: 'ast-grep is a code tool for structural search and replace. It is like syntax-aware grep/sed! You can write code patterns to locate and modify code, based on AST, in thousands of files, interactively.',
     code: `sg -p '$A && $A()' -r '$A?.()'`
   },
   {
@@ -47,16 +47,18 @@ const feats = [
   .feature {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
   }
   .feature > img {
     flex: 1 0 50%;
     width: 50%;
     min-width: min(480px, 100vw);
-    max-width: 100vw;
+    max-width: min(100vw, 720px);
   }
   .description {
     flex: 1 0 50%;
+    max-width: min(100vw, 720px);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -76,6 +78,12 @@ const feats = [
   }
   p {
     text-align: justify;
+  }
+  @supports (text-wrap: balance) {
+    p {
+      text-align: center;
+      text-wrap: balance;
+    }
   }
   code {
     border: 1px solid var(--vp-c-bg-soft);
