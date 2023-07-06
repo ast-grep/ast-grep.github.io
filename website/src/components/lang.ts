@@ -1,5 +1,5 @@
 type SupportedLang = keyof typeof parserPaths
-import init, { setupParser, initializeTreeSitter, WASMConfig } from 'ast-grep-wasm'
+import init, { setupParser, initializeTreeSitter } from 'ast-grep-wasm'
 
 const parserPaths = {
   javascript: 'tree-sitter-javascript.wasm',
@@ -18,6 +18,7 @@ const parserPaths = {
   python: 'tree-sitter-python.wasm',
   ruby: 'tree-sitter-ruby.wasm',
   rust: 'tree-sitter-rust.wasm',
+  scala: 'tree-sitter-scala.wasm',
   toml: 'tree-sitter-toml.wasm',
   yaml: 'tree-sitter-yaml.wasm',
 }
@@ -39,6 +40,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   python: 'Python',
   ruby: 'Ruby',
   rust: 'Rust',
+  scala: 'Scala',
   toml: 'TOML',
   yaml: 'YAML',
 }
