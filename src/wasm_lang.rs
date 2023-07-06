@@ -16,9 +16,8 @@ use wasm_bindgen::prelude::*;
 pub enum WasmLang {
   JavaScript,
   TypeScript,
-  TSX,
+  Tsx,
   // not so well supported lang...
-  Bash,
   C,
   CSharp,
   Cpp,
@@ -26,13 +25,9 @@ pub enum WasmLang {
   Go,
   Html,
   Java,
-  Php,
   Python,
-  Ruby,
   Rust,
   Scala,
-  Toml,
-  Yaml,
 }
 
 use WasmLang::*;
@@ -54,8 +49,7 @@ impl FromStr for WasmLang {
     Ok(match s {
       "javascript" => JavaScript,
       "typescript" => TypeScript,
-      "tsx" => TSX,
-      "bash" => Bash,
+      "tsx" => Tsx,
       "c" => C,
       "csharp" => CSharp,
       "cpp" => Cpp,
@@ -63,13 +57,9 @@ impl FromStr for WasmLang {
       "go" => Go,
       "html" => Html,
       "java" => Java,
-      "php" => Php,
       "python" => Python,
-      "ruby" => Ruby,
       "rust" => Rust,
       "scala" => Scala,
-      "toml" => Toml,
-      "yaml" => Yaml,
       _ => return Err(NotSupport(s.to_string())),
     })
   }
@@ -114,14 +104,6 @@ async fn get_lang(_path: &str) -> Result<ts::Language, JsError> {
   unreachable!()
 }
 
-#[derive(Clone)]
-struct StubLang;
-impl Language for StubLang {
-  fn get_ts_language(&self) -> tree_sitter::Language {
-    unreachable!("stub should not be called for get_ts_language")
-  }
-}
-
 macro_rules! execute_lang_method {
   ($me: path, $method: ident, $($pname:tt),*) => {
     use WasmLang as W;
@@ -138,7 +120,7 @@ macro_rules! execute_lang_method {
       W::Rust => L::Rust.$method($($pname,)*),
       W::Scala => L::Scala.$method($($pname,)*),
       W::TypeScript => L::TypeScript.$method($($pname,)*),
-      _ => StubLang.$method($($pname,)*),
+      W::Tsx => L::Tsx.$method($($pname,)*),
     }
   }
 }
