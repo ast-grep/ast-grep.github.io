@@ -10,20 +10,20 @@ The table below is all languages that are supported by ast-grep.
 | Language Name | Alias | File Extension |
 |---|---|---|
 |C | `c` | `c`,`h`|
-|Cpp | `cc` `c++` `cpp` `cxx` | `cc`, `hpp`, `cpp`, `c++`, `hh`, `cxx`, `cu`, `ino`|
-|CSharp | `cs` `csharp` | `cs`|
+|Cpp | `cc`, `c++`, `cpp`, `cxx` | `cc`, `hpp`, `cpp`, `c++`, `hh`, `cxx`, `cu`, `ino`|
+|CSharp | `cs`, `csharp` | `cs`|
 |Css | `css` | `css`|
 |Dart | `dart` | `dart`|
-|Go | `go` `golang` | `go`|
+|Go | `go`, `golang` | `go`|
 |Html | `html` | `html`, `htm`, `xhtml`|
 |Java | `java` | `java`|
-|JavaScript | `javascript` `js` `jsx` | `cjs`, `js`, `mjs`, `jsx`|
-|Kotlin | `kotlin` `kt` | `kt`, `ktm`, `kts`|
+|JavaScript | `javascript`, `js`, `jsx` | `cjs`, `js`, `mjs`, `jsx`|
+|Kotlin | `kotlin`, `kt` | `kt`, `ktm`, `kts`|
 |Lua | `lua` | `lua`|
-|Python | `py` `python` | `py`, `py3`, `pyi`, `bzl`|
-|Rust | `rs` `rust` | `rs`|
+|Python | `py`, `python` | `py`, `py3`, `pyi`, `bzl`|
+|Rust | `rs`, `rust` | `rs`|
 |Scala | `scala` | `scala`, `sc`, `sbt`|
 |Swift | `swift` | `swift`|
 |Thrift | `thrift` | `thrift`|
-|TypeScript | `ts` `typescript` | `ts`, `cts`, `mts`|
+|TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
