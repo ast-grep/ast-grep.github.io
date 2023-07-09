@@ -25,11 +25,12 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |   | --debug-query         |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
-|   |  --accept-all         |  Apply all rewrite without confirmation if true. |
+| -A|  --accept-all         |  Apply all rewrite without confirmation if true. |
 |   |  --json               |  Output matches in structured JSON text useful for tools like `jq`. Conflicts with interactive|
 |   |  --heading `<HEADING>` | Print file names before each file's matches. Default is auto: print heading for tty but not for piped output [default: auto] [possible values: always, never, auto] |
 |   |  --color `<COLOR>`     | Controls output color [default: auto] |
 |   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.). You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   |  --no-stdin           | Disable search code from StdIn. See [link](/guide/tooling-overview.html#disable-stdin-mode) |
 |-h | --help                | Print help |
 
 ## scan
@@ -54,8 +55,9 @@ sg scan [OPTIONS] [PATHS]...
 | | --color `<COLOR>`|Controls output color [default: auto]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
 | | --json |Output matches in structured JSON text. This is useful for tools like jq. Conflicts with color and report-style.|
-| | --accept-all | Apply all rewrite without confirmation |
+| -A | --accept-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   |  --no-stdin           | Disable search code from StdIn. See [link](/guide/tooling-overview.html#disable-stdin-mode) |
 | -h| --help|Print help|
 
 ##   test

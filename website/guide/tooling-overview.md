@@ -24,7 +24,7 @@ Pressing `y` will accept the rewrite, `n` will skip it, `e` will open the file i
 
 Example:
 
-```
+```bash
 sg scan --interactive
 ```
 
@@ -125,6 +125,27 @@ You can invoke sg, the command-line interface for ast-grep, as a subprocess to s
 * For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | sg run --lang python`. This is because ast-grep cannot infer code language without file extension.
 * Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | sg scan --rule "python-rule.yml"`
 
+### Disable StdIn Mode
+
+Sometimes ast-grep is launched from another process, but you still need it to search files instead of parsing from StdIn.
+
+You can use ast-grep's command line argument `--no-stdin` to disable StdIn mode.
+The environment variable `AST_GREP_NO_STDIN` will also disable StdIn mode.
+
+
+For example, this shell script will start a live ast-grep session via fzf. Note `--no-stdin` is used here to prevernt ast-grep from searching standard input from fzf.
+
+```bash
+SG_PREFIX="sg run --color=always --no-stdin -p "
+INITIAL_QUERY="${*:-}"
+: | fzf --ansi --disabled --query "$INITIAL_QUERY" \
+    --bind "start:reload:$SG_PREFIX {q}" \
+    --bind "change:reload:sleep 0.1; $SG_PREFIX {q} || true" \
+    --delimiter : \
+    --preview 'bat --color=always {1} --highlight-line {2}' \
+    --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+    --bind 'enter:become(vim {1} +{2})'
+```
 
 ## Colorful Output
 
