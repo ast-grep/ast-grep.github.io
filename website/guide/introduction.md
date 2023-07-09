@@ -34,7 +34,7 @@ ast-grep supports a wide range of programming languages. Here is a list of notab
 |Mobile App Development| `Dart`, `Kotlin`, `Swift`|
 |Scripting, Protocols, etc.| `Lua`, `Thrift`|
 
-Thanks to [tree-sitter](https://tree-sitter.github.io/tree-sitter/), a popular parser generator library, ast-grep manages to support many community-maintained languages!
+Thanks to [tree-sitter](https://tree-sitter.github.io/tree-sitter/), a popular parser generator library, ast-grep manages to support [many languages](/reference/languages) out of the box!
 
 ## Motivation
 

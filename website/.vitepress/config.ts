@@ -8,12 +8,6 @@ gtag('js', new Date());
 gtag('config', 'G-EZSJ3YF2RG');
 `
 
-const searchOptions = {
-  previewLength: 62,
-  buttonLabel: "Search",
-  placeholder: "Search docs",
-}
-
 export default defineConfig({
   lang: 'en-US',
   title: 'ast-grep',
@@ -76,6 +70,7 @@ export default defineConfig({
           { text: 'Rule Config', link: '/reference/yaml' },
           { text: 'Rule Object', link: '/reference/rule' },
           { text: 'API Reference', link: '/reference/api' },
+          { text: 'Language List', link: '/reference/languages' },
         ],
         collapsed: false,
       },
