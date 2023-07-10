@@ -92,5 +92,5 @@ const foo = () => {
 ```
 The first step to compose a rule is to find the target. In this case, we can first use kind: `arrow_function` to find function node. Then we can use other rules to filter candidate nodes that does have return type.
 
-Another trick to write cleaner rule is to use embedded rule to augment atomic rule.
-Please refer to [embedded rule](/guide/rule-config/composite-rule.html#embedded-rules) for more details.
+Another trick to write cleaner rule is to use sub-rules as fields.
+Please refer to [composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
