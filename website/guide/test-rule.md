@@ -6,7 +6,7 @@ To alleviate this pain, ast-grep provides a builtin tool to help you test your r
 
 ## Basic Concepts
 
-Ideally, a perfect rule will report issues for all invalid code and approve all valid code. Testing a rule should also cover two categories of code accordingly. If you are familiar with [detection theory](https://en.wikipedia.org/wiki/Detection_theory), you should recognize that testing rule will involve the four scenarios tabulated below.
+Ideally, a perfect rule will approve all valid code and report issues only for all invalid code. Testing a rule should also cover two categories of code accordingly. If you are familiar with [detection theory](https://en.wikipedia.org/wiki/Detection_theory), you should recognize that testing rule will involve the four scenarios tabulated below.
 
 |Code Validity \ Rule Report | No Report | Has Report |
 |----------------------------|-----------|------------|
@@ -26,8 +26,8 @@ Let's write a test for the rule we wrote in the [previous section](/guide/rule-c
 
 To write a test, we first need to specify a rule test directory in `sgconfig.yml`. This directory will be used to store all test cases for rules.
 
-Suppose we have the sgconfig.yml as below.
-```yaml
+Suppose we have the `sgconfig.yml` as below.
+```yaml{4,5}
 ruleDirs:
   - rules
 # testConfigs contains a list of test directories for rules.
@@ -37,7 +37,7 @@ testConfigs:
 
 The configuration file should be located at a directory that looks like this.
 
-```bash
+```bash{3,5}
 my-awesome-rules/
   |- rules/
   | |- no-await-in-loop.yml        # test file
@@ -50,7 +50,10 @@ my-awesome-rules/
 
 In the example, `no-await-in-loop.yml` contains the rule configuration we wrote before.
 
-```yaml
+Below are all relevant files used in this example.
+
+::: code-group
+```yaml [no-await-in-loop.yml]{1}
 id: no-await-in-loop
 message: Don't use await inside of loops
 severity: warning
@@ -63,6 +66,27 @@ rule:
           - kind: while_statement
     - pattern: await $_
 ```
+
+
+```yaml [no-await-in-loop-test.yml]{1}
+id: no-await-in-loop
+valid:
+  - for (let a of b) { console.log(a) }
+  # .... more valid test cases
+invalid:
+  - async function foo() { for (var bar of baz) await bar; }
+  # .... more invalid test cases
+```
+
+
+```yaml [sgconfig.yml]{4,5}
+ruleDirs:
+  - rules
+# testConfigs contains a list of test directories for rules.
+testConfigs:
+  - testDir: rule-test
+```
+:::
 
 We will delve into `no-await-in-loop-test.yml` in next section.
 
