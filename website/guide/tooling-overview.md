@@ -86,6 +86,7 @@ It is useful to test one rule in isolation.
 ## Parse Code from StdIn
 
 ast-grep's `run` and `scan` commands also support searching and replacing code from standard input (StdIn).
+This mode is enabled by passing command line argument flag `--stdin`.
 You can use bash's [pipe operator](https://linuxhint.com/bash_pipe_tutorial/) `|` to instruct ast-grep to read from StdIn.
 
 ### Example: Simple Web Crawler
@@ -94,7 +95,7 @@ Let's see an example in action. Combining with `curl`, `ast-grep` and `jq`, we c
 
 ```bash
 curl -s https://schedule2021.scipy.org/2022/conference/  |
-  sg -p '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json |
+  sg -p '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json --stdin |
   jq '
     .[]
     | .metaVariables
@@ -127,18 +128,33 @@ You can invoke sg, the command-line interface for ast-grep, as a subprocess to s
 * For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | sg run --lang python`. This is because ast-grep cannot infer code language without file extension.
 * Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | sg scan --rule "python-rule.yml"`
 
-### Disable StdIn Mode
+### Enable StdIn Mode
 
-Sometimes ast-grep is launched from another process, but you still need it to search files instead of parsing from StdIn.
+**All the following conditions** must be met to enable StdIn mode:
 
-You can use ast-grep's command line argument `--no-stdin` to disable StdIn mode.
-The environment variable `AST_GREP_NO_STDIN` will also disable StdIn mode.
+1. The command line argument flag `--stdin` is passed.
+2. The environment variable `AST_GREP_NO_STDIN` is **NOT** set. Otherwise it will disable StdIn mode.
+3. ast-grep is not running inside a [tty](https://github.com/softprops/atty). If you are using a terminal emulator, ast-grep will usually run in a tty if invoked directly from CLI.
 
+The first two conditions are quite self explanatory. However, it should be noted that many cases are not tty, for example:
 
-For example, this shell script will start a live ast-grep session via fzf. Note `--no-stdin` is used here to prevernt ast-grep from searching standard input from fzf.
+* ast-grep is invoked by other program as subprocess.
+* ast-grep is running inside [GitHub Action](https://github.com/actions/runner/issues/241).
+* ast-grep is used as the second program of a bash pipe `|`.
+
+So you have to use `--stdin` to avoid unintentional StdIn mode and unexpected error.
+
+:::danger Breaking Change
+Older ast-grep will detect tty and automatically enable StdIn mode. It turns out to be too easy to break. So parsing code from StdIn becomes an opt-in mode.
+See related [discussion](https://github.com/ast-grep/ast-grep/discussions/500).
+:::
+
+#### Bonus Example
+
+Here is a bonus example to use [fzf](https://github.com/junegunn/fzf/blob/master/ADVANCED.md#using-fzf-as-interactive-ripgrep-launcher) as interactive ast-grep launcher.
 
 ```bash
-SG_PREFIX="sg run --color=always --no-stdin -p "
+SG_PREFIX="sg run --color=always -p "
 INITIAL_QUERY="${*:-}"
 : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload:$SG_PREFIX {q}" \

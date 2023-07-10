@@ -30,7 +30,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |   |  --heading `<HEADING>` | Print file names before each file's matches. Default is auto: print heading for tty but not for piped output [default: auto] [possible values: always, never, auto] |
 |   |  --color `<COLOR>`     | Controls output color [default: auto] |
 |   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.). You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
-|   |  --no-stdin           | Disable search code from StdIn. See [link](/guide/tooling-overview.html#disable-stdin-mode) |
+|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#disable-stdin-mode) |
 |-h | --help                | Print help |
 
 ## scan
@@ -57,7 +57,7 @@ sg scan [OPTIONS] [PATHS]...
 | | --json |Output matches in structured JSON text. This is useful for tools like jq. Conflicts with color and report-style.|
 | -A | --accept-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
-|   |  --no-stdin           | Disable search code from StdIn. See [link](/guide/tooling-overview.html#disable-stdin-mode) |
+|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 | -h| --help|Print help|
 
 ##   test
