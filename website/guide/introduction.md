@@ -7,7 +7,7 @@ ast-grep is a new AST based tool for managing your code, at massive scale.
 Using ast-grep can be as simple as running a single command in your terminal:
 
 ```bash
-sg --pattern 'var code = $PATTERN' --rewrite 'let code = $PATTERN' -l js
+sg --pattern 'var code = $PAT' --rewrite 'let code = $PAT' --lang js
 ```
 
 The command above will replace `var` statement with `let` for all JavaScript files.
@@ -55,7 +55,7 @@ Consider it as same as `grep` but based on AST instead of text.
 
 In comparison to Babel, we can complete this hello-world task in ast-grep trivially
 
-```javascript
+```bash
 sg -p "console.log"
 ```
 
