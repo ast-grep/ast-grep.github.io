@@ -29,7 +29,9 @@ Additional notes to elaborate the message and provide potential fix to the issue
 * type: `String`
 * required: false
 
-Specify the level of matched result. Available choice: `Hint`, `Info`, `Warning`, or `Error`.
+Specify the level of matched result. Available choice: `hint`, `info`, `warning`, `error` or `off`.
+
+When `severity` is `off`, ast-grep will disable the rule in scanning.
 
 ## `language`
 
