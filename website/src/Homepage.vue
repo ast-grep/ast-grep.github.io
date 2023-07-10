@@ -1,21 +1,16 @@
+<script setup lang="ts">
+import Theme from 'vitepress/theme'
+import Features from './homepage/Features.vue'
+import Languages from './homepage/Languages.vue'
+</script>
+
 <template>
   <Theme.Layout>
     <template #home-features-before>
-      <Features v-if="isHomePage"/>
+      <Features />
     </template>
     <template #home-features-after>
-      <Languages v-if="isHomePage" />
+      <Languages />
     </template>
   </Theme.Layout>
 </template>
-<script setup lang="ts">
-import Theme from 'vitepress/theme'
-import { useRoute } from 'vitepress'
-import { computed } from 'vue'
-import Features from './homepage/Features.vue'
-import Languages from './homepage/Languages.vue'
-
-let isHomePage = computed(() => useRoute().path === '/')
-</script>
-<style scoped>
-</style>

@@ -1,5 +1,6 @@
 ---
-layout: home
+layout: page
+sidebar: false
 ---
 
 <script setup>
