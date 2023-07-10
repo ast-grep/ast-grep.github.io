@@ -4,7 +4,6 @@ const gaScript = `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'G-EZSJ3YF2RG');
 `
 
@@ -40,6 +39,9 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ast-grep/ast-grep' },
     ],
+    editLink: {
+      pattern: 'https://github.com/ast-grep/ast-grep.github.io/edit/main/website/:path'
+    },
     sidebar: [
       {
         text: 'Guide',
