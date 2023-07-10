@@ -72,6 +72,20 @@ A dictionary of utility rules that can be used in `matches` locally.
 The dictionary key is the utility rule id and the value is the rule object.
 See [utility rule guide](/guide/rule-config/utility-rule).
 
+## `transform`
+
+* type: `HashMap<String, Transformation>`
+* required: false
+* status: **Experimental**
+
+A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
+The dictionary value is a transformation that specifies how meta var is processed.
+
+:::danger This is experimental.
+This is an experimental option. Please see https://github.com/ast-grep/ast-grep/issues/436
+for context and usage.
+:::
+
 ## `files`
 * type: `List` of `String`
 * required: false
