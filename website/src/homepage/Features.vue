@@ -11,7 +11,7 @@
           {{ feat.code }}
         </code>
       </div>
-      <img :src='feat.image'/>
+      <img :src='feat.image' width="2004" height="1462"/>
     </li>
     <hr/>
   </ul>
