@@ -13,7 +13,7 @@ Then, import the language object from the napi package. Every language object ha
 
 `parse` transforms string to a `SgRoot`. Example:
 
-```js
+```js{4}
 import { js } from '@ast-grep/napi';
 
 const source = `console.log("hello world")`
@@ -113,22 +113,24 @@ The return value of `findInFiles` is a `Promise` object. The promise resolves to
 See https://github.com/ast-grep/ast-grep/issues/206.
 :::
 
-If you have a lot of files and `findInFiles` prematurely returns, you can use the total files returned by `findInFiles` as a check point. Maintain a counter outside of `findInFiles` and increment it in callback. If the counter equals the total number, we can conclude all files are processed. The following code is an example.
+If you have a lot of files and `findInFiles` prematurely returns, you can use the total files returned by `findInFiles` as a check point. Maintain a counter outside of `findInFiles` and increment it in callback. If the counter equals the total number, we can conclude all files are processed. The following code is an example, with core logic highlighted.
 
-```ts
-function countedPromise<F extends (t: any, cb: any) => Promise<number>>(func: F) {
+```ts:line-numbers {11,16-18}
+type Callback = (t: any, cb: any) => Promise<number>
+function countedPromise<F extends Callback>(func: F) {
   type P = Parameters<F>
   return async (t: P[0], cb: P[1]) => {
     let i = 0
     let fileCount: number | undefined = undefined
-    let resolve = () => {} // will be called after all files are processed
+    // resolve will be called after all files are processed
+    let resolve = () => {}
     function wrapped(...args: any[]) {
       let ret = cb(...args)
       if (++i === fileCount) resolve()
       return ret
     }
     fileCount = await func(t, wrapped as P[1])
-    // all files are not processed, wait the resolve function to be called
+    // not all files are processed, await `resolve` to be called
     if (fileCount > i) {
       await new Promise<void>(r => resolve = r)
     }

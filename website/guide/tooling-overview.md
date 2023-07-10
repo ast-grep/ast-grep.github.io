@@ -94,7 +94,7 @@ Let's see an example in action. Combining with `curl`, `ast-grep` and `jq`, we c
 
 ```bash
 curl -s https://schedule2021.scipy.org/2022/conference/  |
-  sg --pattern '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json |
+  sg -p '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json |
   jq '
     .[]
     | .metaVariables
@@ -103,6 +103,7 @@ curl -s https://schedule2021.scipy.org/2022/conference/  |
 
 The command above will produce a list of authors from the SciPy 2022 conference website.
 
+:::details JSON output of the author list
 ```json
 "Ben Blaiszik"
 "Qiming Sun"
@@ -112,6 +113,7 @@ The command above will produce a list of authors from the SciPy 2022 conference 
 "Cliff Kerr"
 ...
 ```
+:::
 
 With this feature, even if your preferred language does not have native bindings for ast-grep, you can still parse code from standard input (StdIn) to use ast-grep programmatically from the command line.
 

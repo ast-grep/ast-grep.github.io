@@ -77,15 +77,15 @@ We can use `$$$` to match zero or more AST nodes, including function arguments, 
 For example, `console.log($$$)` can match
 
 ```javascript
-console.log()
-console.log('hello world')
-console.log('debug: ', key, value)
-console.log(...args) // it also matches spread
+console.log()                       // matches zero AST node
+console.log('hello world')          // matches one node
+console.log('debug: ', key, value)  // matches multiple nodes
+console.log(...args)                // it also matches spread
 ```
 
 ### Function parameters
 
-`function $FUNC($$$) { $$$ }` will match
+`function $FUNC($$$ARGS) { $$$ }` will match
 
 ```javascript
 function foo(bar) {
@@ -98,6 +98,14 @@ function add(a, b, c) {
   return a + b + c
 }
 ```
+
+:::details `ARGS` will be populated with a list of AST nodes. Click to see details.
+|Code|Match|
+|---|----|
+|`function foo(bar) { ... }` | [`bar`] |
+|`function noop() {}` | [] |
+|`function add(a, b, c) { ... }` | [`a`, `b`, `c`] |
+:::
 
 ## Meta Variable Capturing
 

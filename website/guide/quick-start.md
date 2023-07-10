@@ -12,10 +12,10 @@ First, install `ast-grep`. It is distributed by [npm](https://www.npmjs.com/pack
 ```shell
 # install via npm
 npm i @ast-grep/cli -g
-
 # install via cargo
 cargo install ast-grep
-
+# install via pip
+pip install ast-grep-cli
 # install via homebrew
 brew install ast-grep
 ```
@@ -77,7 +77,7 @@ It is a valid `ast-grep` pattern! We can use it in command line! Use `pattern` a
 and also `lang` is needed to tell ast-grep our target code language.
 
 ```shell
-sg --pattern '$PROP && $PROP()' --lang ts TypeScript/src # path to TypeScript source
+sg --pattern '$PROP && $PROP()' --lang ts TypeScript/src # path to TS source
 ```
 
 ## Rewrite

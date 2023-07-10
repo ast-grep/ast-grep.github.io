@@ -29,6 +29,6 @@ Please see [coc-ast-grep](https://github.com/yaegassy/coc-ast-grep)
 
 You need to have coc.nvim installed for this extension to work. e.g. vim-plug:
 
-```
+```vim
 Plug 'yaegassy/coc-ast-grep', {'do': 'yarn install --frozen-lockfile'}
 ```
