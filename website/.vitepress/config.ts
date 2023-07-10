@@ -14,7 +14,7 @@ export default defineConfig({
   titleTemplate: 'lightning fast code tool',
   description: 'ast-grep(sg) is a lightning fast and user friendly tool for code searching, linting, rewriting at large scale.',
   head: [
-    ['script', {async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-EZSJ3YF2RG'}],
+    ['script', {async: true, src: 'https://www.googletagmanager.com/gtag/js?id=G-EZSJ3YF2RG'}],
     ['script', {}, gaScript],
   ],
   outDir: './dist',
