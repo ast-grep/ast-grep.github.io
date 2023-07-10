@@ -25,7 +25,7 @@ ruleDirs:
 Note, all items under `ruleDirs` are resolved relative to the location of `sgconfig.yml`.
 
 ## `testConfigs`
-* type: `Object` of `TestConfig`
+* type: `List` of `TestConfig`
 * required: No
 
 A list of object to configure ast-grep's test cases.
@@ -46,6 +46,7 @@ You can think it like `__snapshots___` in popular test framework like jest.
 If this option is not specified, ast-grep will store the snapshot under the `__snapshots__` folder undert the `testDir`.
 
 Example:
+
 ```yaml
 testConfigs:
 - testDir: test
@@ -57,4 +58,42 @@ testConfigs:
 * type: `String`
 * required: No
 
-A list of string instructing where to discover ast-grep's global utility rules.
+A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules).
+
+
+## `customLanguages`
+
+* type: `HashMap<String, CustomLang>`
+* required: No
+* status: **Experimental**
+
+A dictionary of custom languages in the project. This is an experimental feature.
+
+The key of the dictionary is the custom language name. The value of the dictionary is the custom language configuration.
+
+Please see the [guide](/advanced/custom-language.html) for detailed instructions.
+
+### `CustomLang` Configuration
+
+A custom language configuration has the following options.
+
+#### `libraryPath`
+* type: `String`
+* required: Yes
+
+The path to the tree-sitter dynamic library of the language.
+
+#### `extensions`
+
+* type: `List` of `String`
+* required: Yes
+
+The file extensions for this language.
+
+
+#### `expandoChar`
+
+* type: `String`
+* required: No
+
+An optional char to replace $ in your pattern.
