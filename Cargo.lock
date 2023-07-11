@@ -33,7 +33,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ce14fb202017fe6e2efe1472f2d6a8e406e9607598def37a2fa5961e6a58874d"
 dependencies = [
  "anyhow",
- "ast-grep-core",
+ "ast-grep-core 0.7.2",
  "bit-set",
  "globset",
  "regex",
@@ -55,12 +55,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "ast-grep-core"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "da5d6230ea4140dc59e78a264c338ae131ad8e7eabdeda9cb099448492d480f8"
+dependencies = [
+ "bit-set",
+ "regex",
+ "thiserror",
+ "tree-sitter-facade-sg",
+]
+
+[[package]]
 name = "ast-grep-language"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e852ac1601811866b963b0651be5e409e0842f45925b0ac2500c11645c423442"
 dependencies = [
- "ast-grep-core",
+ "ast-grep-core 0.7.2",
  "ignore",
  "serde",
 ]
@@ -70,7 +82,7 @@ name = "ast-grep-wasm"
 version = "0.2.6"
 dependencies = [
  "ast-grep-config",
- "ast-grep-core",
+ "ast-grep-core 0.8.0",
  "ast-grep-language",
  "console_error_panic_hook",
  "once_cell",
