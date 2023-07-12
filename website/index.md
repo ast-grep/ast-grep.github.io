@@ -1,10 +1,17 @@
 ---
 layout: home
+title: ast-grep | structural search/rewrite tool for many languages
+titleTemplate: 'ast-grep'
+description: ast-grep is a fast and polyglot tool for code structural search, lint, rewriting at large scale.
+head:
+  - - meta
+    - name: keywords
+      content: structural search, abstract syntax tree, linting, refactor
 
 hero:
   name: AST-GREP
   text: Write Code to Match Code
-  tagline: ast-grep(sg) is a fast and polyglot tool for code structrual search, lint, rewriting at large scale.
+  tagline: ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.
   image:
     src: ./logo.svg
     alt: ast-grep
