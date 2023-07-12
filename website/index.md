@@ -6,7 +6,7 @@ description: ast-grep is a fast and polyglot tool for code structural search, li
 head:
   - - meta
     - name: keywords
-      content: structural search, abstract syntax tree, linting, refactor
+      content: structural search, abstract syntax tree, linting, refactor, command line tool, tree-sitter, multiple programming languages, Rust
 
 hero:
   name: AST-GREP
