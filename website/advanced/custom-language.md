@@ -64,16 +64,20 @@ tree-sitter test
 Another way is to use the following [commands](https://github.com/tree-sitter/tree-sitter/blob/a62bac5370dc5c76c75935834ef083457a6dd0e1/cli/loader/src/lib.rs#L380-L410) to compile the parser manually:
 
 ```shell
-gcc -shared -fPIC -fno-exceptions -g -I {header_path} -o {lib_path} -O2
+gcc -shared -fPIC -fno-exceptions -g -I {header_path} -o {lib_path} -O2 {scanner_path} -xc {parser_path} {other_flags}
 ```
 
-where `{header_path}` is the path to the header file of your custom language parser (usually `src/tree_sitter/parser.h`) and `{lib_path}` is the path where you want to store the dynamic library (in this case `mojo.so`).
+where `{header_path}` is the path to the folder of header file of your custom language parser (usually `src`) and `{lib_path}` is the path where you want to store the dynamic library (in this case `mojo.so`). `{scanner_path}` and `{parser_path}` are the `c` or `cc` files of your parser. You also need to include other gcc flags if needed.
 
-For example:
+For example, in mojo's case, the full command will be:
 
 ```shell
-gcc -shared -fPIC -fno-exceptions -g -I src/tree_sitter/parser.h -o mojo.so -O2
+gcc -shared -fPIC -fno-exceptions -g -I 'src' -o mojo.so -O2 src/scanner.cc -xc src/parser.c -lstdc++
 ```
+
+:::warning
+`tree-sitter-cli` is the preferred way to compile dynamic library.
+:::
 
 ## Register the language in sgconfig.yml
 
