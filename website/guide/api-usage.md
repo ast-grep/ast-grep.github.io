@@ -67,10 +67,12 @@ For the `find` method and `findAll` method, the argument is a matcher which can 
 
 ## `findInFiles`
 
-If you have a lot of files to parse and want to maximize your programs' performance, ast-grep's language object provides a `findInFiles` function that parses multiple files in parallel Rust threads.
+If you have a lot of files to parse and want to maximize your programs' performance, ast-grep's language object provides a `findInFiles` function that parses multiple files and searches relevant nodes in parallel Rust threads.
 
+APIs we showed above all require parsing code in Rust and pass the `SgRoot` back to JavaScript.
+This incurs foreign function communication overhead and only utilizes the single main JavaScript thread.
 By avoiding Rust-JS communication overhead and utilizing multiple core computing,
-it is much faster than finding files in JavaScript and then passing them to Rust as string.
+`findInFiles` is much faster than finding files in JavaScript and then passing them to Rust as string.
 
 The function signature of `findInFiles` is as follows:
 
@@ -84,6 +86,10 @@ export function findInFiles(
 ```
 
 `findInFiles` accepts a `FindConfig` object and a callback function.
+
+`FindConfig` specifies both what file path to _parse_ and what nodes to _search_.
+
+`findInFiles` will parse all files matching paths and will call back the function with nodes matching the `matcher` found in the files as arguments.
 
 ### `FindConfig`
 
