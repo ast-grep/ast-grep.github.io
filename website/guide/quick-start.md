@@ -9,16 +9,28 @@ Our task is to rewrite old defensive code that checks nullable nested method cal
 ## Installation
 First, install `ast-grep`. It is distributed by [npm](https://www.npmjs.com/package/@ast-grep/cli), [cargo](https://crates.io/crates/ast-grep) and [homebrew](https://formulae.brew.sh/formula/ast-grep). You can also build it [from source](https://github.com/ast-grep/ast-grep#installation).
 
-```shell
-# install via npm
-npm i @ast-grep/cli -g
-# install via cargo
-cargo install ast-grep
-# install via pip
-pip install ast-grep-cli
+::: code-group
+
+```shell [homebrew]
 # install via homebrew
 brew install ast-grep
 ```
+
+```shell [cargo]
+# install via cargo
+cargo install ast-grep
+```
+
+```shell [npm]
+# install via npm
+npm i @ast-grep/cli -g
+```
+
+```shell [pip]
+# install via pip
+pip install ast-grep-cli
+```
+:::
 
 The binary command, `sg`, or `ast-grep`, should be available now. Let's try it with `--help`.
 
