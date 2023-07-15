@@ -1,4 +1,4 @@
-# Atomic rule
+# Atomic Rule
 
 In ast-grep, we have three kinds of rules:
 
@@ -78,7 +78,7 @@ So some features are not available like arbitrary look-ahead and back references
 
 You should almost always combine `regex` with other atomic rules to make sure the regular expression is applied to the correct AST node. Regex matching is quite expensive and cannot be optimized based on AST node kinds. While `kind` and `pattern` rules can be only applied to nodes with specific `kind_id` for optimized performance.
 
-## Tips for writing rules
+## Tips for Writing Rules
 
 Since one rule will have *only one* AST node in one match, it is recommended to first write the atomic rule that matches the desired node.
 

@@ -1,4 +1,4 @@
-# `sgconfig.yml` reference
+# `sgconfig.yml` Reference
 
 ## Overview
 

@@ -1,4 +1,4 @@
-# Composite rule
+# Composite Rule
 
 Composite rule can accept another rule or a list of rules recursively.
 It provides a way to compose atomic rules into a bigger rule for more complex matching.
@@ -57,7 +57,7 @@ The above rule will match any `console.log` call but not `console.log('Hello Wor
 
 `matches` rule enable us to reuse rules and even unlock the possibility of recursive rule. It is the most powerful rule in ast-grep and deserves a separate page to explain it. Please see the [dedicated page](/guide/rule-config/utility-rule) for `matches`.
 
-## Combine different rules as fields
+## Combine Different Rules as Fields
 Sometimes it is necessary to match node nested within other desired nodes. We can use composite rule `all` and relational `inside` to find them, but the result rule is highly nested.
 
 For example, we want to find the usage of `this.foo` in a class getter, we can write the following rule:

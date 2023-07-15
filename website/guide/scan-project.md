@@ -7,7 +7,7 @@ Let's explore its power to run scan on your code repository in a scalable way!
 
 However, to ast-grep's scan need some scaffolding for project setup. We will walk through the process in this guide.
 
-## Create scaffolding...
+## Create Scaffolding
 
 To set up ast-grep's scanning, you can simply run the command `sg new` in the root directory of your repository. You will be guided with a series of interactive questions, like the following:
 
@@ -31,7 +31,7 @@ my-awesome-project
   |- sgconfig.yml    # root configuration file
 ```
 
-## Create the rule!
+## Create the Rule
 
 Now you can start creating a rule! Continue using `sg new`, it will ask you what to create. But you can also use `sg new rule` to create a rule directly!
 
@@ -77,9 +77,9 @@ rule:
 
 Okay! The pattern syntax works just like what we have learnt before.
 
-## `sg scan` the code
+## Scan the Code
 
-Now you can try scannning the code! You can create a JavaScript file containing `eval` to test it.
+Now you can try scanning the code! You can create a JavaScript file containing `eval` to test it.
 
 Run `sg scan` in your project, ast-grep will give you some beautiful scan report!
 

@@ -2,7 +2,7 @@
 
 ast-grep's API design is still in flux, but the following is a rough sketch of how it will work.
 
-## napi
+## `napi`
 
 First, install ast-grep's napi package.
 ```bash
@@ -108,7 +108,7 @@ The `path` field is an array of strings. You can specify multiple paths to searc
 
 The `matcher` is the same as `NapiConfig` stated above.
 
-### callback function and termination
+### Callback Function and Termination
 
 The `callback` function is called for every file that have nodes that match the rule. The callback function is a standard node-style callback with the first argment as `Error` and second argument as an array of `SgNode` objects that match the rule.
 

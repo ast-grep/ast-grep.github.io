@@ -3,7 +3,7 @@
 You can always see up-to-date command line options using `sg --help`.
 ast-grep has five subcommands as listed below.
 
-## run
+## `sg run`
 Run one time search or rewrite in command line. This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`.
 
 ### Usage
@@ -33,7 +33,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 |-h | --help                | Print help |
 
-## scan
+## `sg scan`
 Scan and rewrite code by configuration.
 
 ### Usage
@@ -60,7 +60,7 @@ sg scan [OPTIONS] [PATHS]...
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 | -h| --help|Print help|
 
-##   test
+## `sg test`
 Test ast-grep rules. See [testing guide](/guide/test-rule.html) for more details.
 
 ### Usage
@@ -81,7 +81,7 @@ sg test [OPTIONS]
 | -i| --interactive                   |start an interactive review to update snapshots selectively.|
 | -h| --help                          |Print help.|
 
-##   lsp
+## `sg lsp`
 
 Start a language server. This is useful for editor integration. See [editor integration](/guide/editor-integration.html) for more details.
 
@@ -91,5 +91,5 @@ Start a language server. This is useful for editor integration. See [editor inte
 sg lsp
 ```
 
-##   help
+## `sg help`
 Print help message or the help of the given subcommand(s).

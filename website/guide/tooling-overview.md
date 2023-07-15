@@ -65,7 +65,7 @@ The format of the JSON output is an array of match objects.
 ]
 ```
 
-## Run one single query or one single rule
+## Run One Single Query or One Single Rule
 
 You can also use ast-grep to explore a proper pattern for your query. There are two ways to try your pattern or rule.
 For testing one pattern, you can use `sg run` command.

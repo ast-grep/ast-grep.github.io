@@ -21,7 +21,7 @@ There will be three steps to achieve this:
 2. Compile the custom language as a dynamic library.
 3. Register the custom language in ast-grep project config.
 
-## Prepare Tree-sitter tool and parser.
+## Prepare Tree-sitter Tool and Parser
 
 Before you can compile a custom language as a dynamic library, you need to install the Tree-sitter CLI tool and get the Tree-sitter grammar for your custom language.
 
@@ -43,7 +43,7 @@ You can clone it for the tutorial sake. It is forked from Python and barely cont
 git clone https://github.com/HerringtonDarkholme/tree-sitter-mojo.git
 ```
 
-## Compile the parser as dynamic library.
+## Compile the Parser as Dynamic Library
 
 Once we have prepared the tool and the grammar, we can compile the parser as dynamic library.
 
@@ -79,7 +79,7 @@ gcc -shared -fPIC -fno-exceptions -g -I 'src' -o mojo.so -O2 src/scanner.cc -xc 
 `tree-sitter-cli` is the preferred way to compile dynamic library.
 :::
 
-## Register the language in sgconfig.yml
+## Register Language in `sgconfig.yml`
 
 Once you have compiled the dynamic library for your custom language, you need to register it in the `sgconfig.yml` file.
 You can use the command [`sg new`](/guide/scan-project.html#create-scaffolding) to create a project and find the configuration file in the project root.
@@ -109,7 +109,7 @@ ast-grep requires pattern to be a valid syntactical construct, but `$VAR` might 
 For example, `$VAR` is not valid in ~~[Python](https://github.com/ast-grep/ast-grep/blob/1b999b249110c157ae5026e546a3112cd64344f7/crates/language/src/python.rs#L15)~~ Mojo. So we need to replace it with `_VAR`.
 You can check the `expandoChar` of ast-grep's built-in languages [here](https://github.com/ast-grep/ast-grep/tree/main/crates/language/src).
 
-## Use it!
+## Use It!
 
 Now you are ready to use your custom language with ast-grep! You can use it as any other supported language with the `-l` flag or the `language` property in your rule.
 

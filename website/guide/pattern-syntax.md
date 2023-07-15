@@ -3,7 +3,7 @@
 In this guide we will walk through ast-grep's pattern syntax. The example will be written in JavaScript, but the basic principle will
 apply to other languages as well.
 
-## Pattern matching
+## Pattern Matching
 
 ast-grep uses pattern code to construct AST tree and match that against target code. The pattern code can search
 through the full syntax tree, so pattern can also match nested expression. For example, the pattern `a + 1` can match all the following
@@ -73,7 +73,7 @@ Let's see how we can match multiple AST nodes.
 We can use `$$$` to match zero or more AST nodes, including function arguments, parameters or statements. These variables can also be named, for example: `console.log($$$ARGS)`.
 
 
-### Function arguments
+### Function Arguments
 For example, `console.log($$$)` can match
 
 ```javascript
@@ -83,7 +83,7 @@ console.log('debug: ', key, value)  // matches multiple nodes
 console.log(...args)                // it also matches spread
 ```
 
-### Function parameters
+### Function Parameters
 
 `function $FUNC($$$ARGS) { $$$ }` will match
 
@@ -123,7 +123,7 @@ a == b
 1 + 1 == 2
 ```
 
-## Non capturing match
+## Non Capturing Match
 
 You can also suppress meta variable capturing. All meta variables with name starting with underscore `_` will not be captured.
 
@@ -144,7 +144,7 @@ Note in the example above, even if two meta variables have the same name `$_FUNC
 This is a useful trick to micro-optimize pattern matching speed, since we don't need to create a [HashMap](https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html) for bookkeeping.
 :::
 
-## Capture unnamed node
+## Capture Unnamed Nodes
 A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
 To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
 
