@@ -47,7 +47,7 @@ jobs:
       - name: Vite Build 🔧
         run: pnpm build
       - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./website/dist
 
