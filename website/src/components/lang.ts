@@ -14,6 +14,7 @@ const parserPaths = {
   html: 'tree-sitter-html.wasm',
   java: 'tree-sitter-java.wasm',
   python: 'tree-sitter-python.wasm',
+  ruby: 'tree-sitter-ruby.wasm',
   rust: 'tree-sitter-rust.wasm',
   scala: 'tree-sitter-scala.wasm',
 }
@@ -31,6 +32,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   html: 'HTML',
   java: 'Java',
   python: 'Python',
+  ruby: 'Ruby',
   rust: 'Rust',
   scala: 'Scala',
 }

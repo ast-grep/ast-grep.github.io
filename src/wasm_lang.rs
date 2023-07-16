@@ -26,6 +26,7 @@ pub enum WasmLang {
   Html,
   Java,
   Python,
+  Ruby,
   Rust,
   Scala,
 }
@@ -58,6 +59,7 @@ impl FromStr for WasmLang {
       "html" => Html,
       "java" => Java,
       "python" => Python,
+      "ruby" => Ruby,
       "rust" => Rust,
       "scala" => Scala,
       _ => return Err(NotSupport(s.to_string())),
@@ -117,6 +119,7 @@ macro_rules! execute_lang_method {
       W::Java => L::Java.$method($($pname,)*),
       W::JavaScript => L::JavaScript.$method($($pname,)*),
       W::Python => L::Python.$method($($pname,)*),
+      W::Ruby => L::Ruby.$method($($pname,)*),
       W::Rust => L::Rust.$method($($pname,)*),
       W::Scala => L::Scala.$method($($pname,)*),
       W::TypeScript => L::TypeScript.$method($($pname,)*),
