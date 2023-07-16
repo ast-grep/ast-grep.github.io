@@ -21,6 +21,7 @@ The table below is all languages that are supported by ast-grep.
 |Kotlin | `kotlin`, `kt` | `kt`, `ktm`, `kts`|
 |Lua | `lua` | `lua`|
 |Python | `py`, `python` | `py`, `py3`, `pyi`, `bzl`|
+|Ruby | `rb`, `ruby` | `rb`, `rbw`, `gemspec`|
 |Rust | `rs`, `rust` | `rs`|
 |Scala | `scala` | `scala`, `sc`, `sbt`|
 |Swift | `swift` | `swift`|
