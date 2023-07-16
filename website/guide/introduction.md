@@ -1,3 +1,11 @@
+---
+description: "ast-grep is a tool to search and transform code. Discover its core features: easy syntax, flexible interface, and multi-language support."
+head:
+  - - meta
+    - name: keywords
+      content: abstract syntax tree, AST, structural search, eslint, grep, codemod, introduction, high performance, linting
+---
+
 # What is ast-grep?
 
 ## Introduction
@@ -50,6 +58,12 @@ path.parentPath.get('property').isIdentifier({ name: 'log' })
 
 This snippet deserves a detailed explanation for beginners. Even for experienced developers, authoring this snippet also requires a lot of looking up references.
 
+The pain is not language specific. The [quotation](https://portswigger.net/daily-swig/semgrep-static-code-analysis-tool-helps-eliminate-entire-classes-of-vulnerabilities) from Jobert Abma, co-founder of HackerOne, manifests the universal pain across many languages.
+
+> The internal AST query interfaces those tools offer are often poorly documented and difficult to write, understand, and maintain.
+
+----
+
 ast-grep solves the problem by providing a simple core mechanism: using code to search code with the same pattern.
 Consider it as same as `grep` but based on AST instead of text.
 
@@ -70,15 +84,15 @@ The idea of ast-grep can be applied to many other languages!
 
 There are a lot of existing tools that looks like ast-grep, notable predecessor including [Semgrep](https://semgrep.dev/), comby, shisho, gogocode.
 
-What makes astgrep stands out is:
+What makes ast-grep stands out is:
 
 ### Performance
 
-It is written in Rust, a native language and utilize multiple cores. (It can even beat ag when searching simple pattern). Astgrep can handle tens of thousands files in seconds.
+It is written in Rust, a native language and utilize multiple cores. (It can even beat ag when searching simple pattern). ast-grep can handle tens of thousands files in seconds.
 
 ### Progressiveness
-You can start from writing a oneliner to rewrite code at command line with minimal investment. Later if you see some code smell recurrently appear in your projects, you can write a linter rule in YAML with a few patterns combined. Finally if you are a library author or framework designer, astgrep provide programmatic interface to rewrite or transpile code efficiently.
+You can start from creating a one-liner to rewrite code at command line with minimal investment. Later if you see some code smell recurrently appear in your projects, you can write a linting rule in YAML with a few patterns combined. Finally if you are a library author or framework designer, ast-grep provide programmatic interface to rewrite or transpile code efficiently.
 
 ### Pragmatism
-ast-grep comes with batteries included. Interactive code modification is available. Linter and language server work out of box when you install the command line tool. Astgrep is also shipped with test à for rule authors.
+ast-grep comes with batteries included. Interactive code modification is available. Linter and language server work out of box when you install the command line tool. ast-grep is also shipped with test à for rule authors.
 
