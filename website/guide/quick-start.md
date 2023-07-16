@@ -1,3 +1,11 @@
+---
+description: Learn how to install ast-grep and use it to quickly find and refactor code in your codebase. This powerful tool can help you save time and improve the quality of your code.
+head:
+  - - meta
+    - name: keywords
+      content: code refactoring, code search, code linting, guide, ast-grep quick start, structural search, pattern matching
+---
+
 # Quick Start
 
 You can unleash `ast-grep`'s power at your finger tips within few keystrokes in command line!
