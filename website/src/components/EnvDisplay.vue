@@ -13,7 +13,7 @@ let currentEnv = computed(() => {
   const keys = [...map.keys()]
   return Object.fromEntries(
     keys
-      .filter(k => /^[A-Z]+$/.test(k)) // remove internal labels
+      .filter(k => /^[A-Z_1-9]+$/.test(k)) // remove internal labels
       .map(k => [k, map.get(k)])
   )
 })
