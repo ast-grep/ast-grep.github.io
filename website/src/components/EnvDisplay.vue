@@ -31,7 +31,7 @@ function decrement() {
   <table class="metavar-table" v-if="currentEnv">
     <thead>
       <tr>
-        <td>Metavariable Name</td>
+        <td>MetaVar Name</td>
         <td>Matched Node(s)</td>
       </tr>
     </thead>
