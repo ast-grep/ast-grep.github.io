@@ -25,7 +25,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |   | --debug-query         |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
-| -A|  --accept-all         |  Apply all rewrite without confirmation if true. |
+| -U|  --update-all         |  Apply all rewrite without confirmation if true. |
 |   |  --json               |  Output matches in structured JSON text useful for tools like `jq`. Conflicts with interactive|
 |   |  --heading `<HEADING>` | Print file names before each file's matches. Default is auto: print heading for tty but not for piped output [default: auto] [possible values: always, never, auto] |
 |   |  --color `<COLOR>`     | Controls output color [default: auto] |
@@ -55,7 +55,7 @@ sg scan [OPTIONS] [PATHS]...
 | | --color `<COLOR>`|Controls output color [default: auto]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
 | | --json |Output matches in structured JSON text. This is useful for tools like jq. Conflicts with color and report-style.|
-| -A | --accept-all | Apply all rewrite without confirmation |
+| -U | --update-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 | -h| --help|Print help|
@@ -77,7 +77,7 @@ sg test [OPTIONS]
 | -t| --test-dir `<TEST_DIR>`         |the directories to search test YAML files.|
 |   | --snapshot-dir `<SNAPSHOT_DIR>` |Specify the directory name storing snapshots. Default to `__snapshots__`.|
 |   | --skip-snapshot-tests           |Only check if the test code is valid, without checking rule output. Turn it on when you want to ignore the output of rules|
-| -u| --update-snapshots              |Update the content of all snapshots that have changed in test.|
+| -U| --update-all                   |Update the content of all snapshots that have changed in test.|
 | -i| --interactive                   |start an interactive review to update snapshots selectively.|
 | -h| --help                          |Print help.|
 
