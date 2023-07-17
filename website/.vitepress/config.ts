@@ -65,9 +65,9 @@ export default defineConfig({
         collapsed: false,
       },
       {
-        text: 'Example Catalog',
-        link: '/catalog/',
+        text: 'Examples',
         items: [
+          { text: 'Catalog', link: '/catalog/'},
           { text: 'TypeScript', link: '/catalog/typescript/'},
         ],
         collapsed: true,
