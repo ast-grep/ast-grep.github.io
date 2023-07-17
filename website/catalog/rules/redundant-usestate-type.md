@@ -8,7 +8,8 @@ ruleType: 'pattern' # 'pattern' or 'yaml'
 ---
 -->
 
-## Unnecessary `useState` Type
+## Unnecessary `useState` Type <Badge type="tip" text="Has Fix" /> <Badge type="info" text="TypeScript" />
+
 
 ### Description
 
@@ -20,31 +21,25 @@ We can usually skip annotating if the generic type argument is a single primitiv
 ### Pattern
 
 ::: code-group
-```ts [number]
-useState<number>($A)
+```bash [number]
+sg -p 'useState<number>($A)' -r 'useState($A)' -l ts
 ```
 
-```ts [string]
-useState<string>($A)
+```bash [string]
+sg -p 'useState<string>($A)' -r 'useState($A)'
 ```
 
-```ts [boolean]
-useState<boolean>($A)
+```bash [boolean]
+sg -p 'useState<boolean>($A)' -r 'useState($A)'
 ```
 :::
 
-<!-- Optional Fix. Delete this section if no fix available -->
-### Fix
-
-```ts
-useState($A)
-```
-
 ### Example
 
-```ts
+<!-- highlight matched code in curly-brace {lineNum} -->
+```ts {2}
 function Component() {
-  const [name, setName] = useState<string>('Dan')
+  const [name, setName] = useState<string>('React')
 }
 ```
 
@@ -52,8 +47,8 @@ function Component() {
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
 ```ts
 function Component() {
-  const [name, setName] = useState<string>('Dan') // [!code --]
-  const [name, setName] = useState('Dan') // [!code ++]
+  const [name, setName] = useState<string>('React') // [!code --]
+  const [name, setName] = useState('React') // [!code ++]
 }
 ```
 

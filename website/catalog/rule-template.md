@@ -35,6 +35,7 @@ let i = 123
 
 ### Example
 
+<!-- highlight matched code in curly-brace {lineNum} -->
 ```js
 var a = 123
 ```
