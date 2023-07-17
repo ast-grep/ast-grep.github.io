@@ -4,4 +4,4 @@ Get confused what ast-grep is? This is a list of rewriting rule to inspire you!
 
 Explore the power of ast-grep with these rewriting rules that can transform your code in seconds!
 
-<!--@include: ./rule-template.md-->
+<!--@include: ./rules/redundant-usestate-type.md-->
