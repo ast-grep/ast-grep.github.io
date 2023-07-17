@@ -120,3 +120,11 @@ Press `y` to accept the change!
 That's it! You have refactored TypeScript's repository in minutes. Congratulation!
 
 Hope you enjoy the power of AST editing in plain programming language pattern. Our next step is to know more about the pattern code.
+
+<!--
+
+## More Complicate Example
+
+Links to catalog pages...
+
+-->

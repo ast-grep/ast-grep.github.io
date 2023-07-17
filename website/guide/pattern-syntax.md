@@ -123,7 +123,7 @@ a == b
 1 + 1 == 2
 ```
 
-## Non Capturing Match
+### Non Capturing Match
 
 You can also suppress meta variable capturing. All meta variables with name starting with underscore `_` will not be captured.
 
@@ -144,8 +144,19 @@ Note in the example above, even if two meta variables have the same name `$_FUNC
 This is a useful trick to micro-optimize pattern matching speed, since we don't need to create a [HashMap](https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html) for bookkeeping.
 :::
 
-## Capture Unnamed Nodes
+### Capture Unnamed Nodes
 A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
 To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
 
 Namedness is an advanced topic in [Tree-sitter](https://tree-sitter.github.io/tree-sitter/using-parsers#named-vs-anonymous-nodes). You can read this [in-depth guide](/advanced/core-concepts.html) for more background.
+
+## More Powerful Rule
+
+Pattern is a fast and easy way to match code. But it is not as powerful as [rule](/guide/rule-config.html#rule-file) which can match code with more [precise selector](/guide/rule-config/atomic-rule.html#kind) or [more context](/guide/rule-config/relational-rule.html).
+
+:::tip Pro Tip
+You can write a standalone [rule file](/reference/rule.html) and the command `sg scan -r rule.yml` to perform an [ad-hoc search](/guide/tooling-overview.html#run-one-single-query-or-one-single-rule).
+
+We will cover using rules in next chapter.
+
+:::
