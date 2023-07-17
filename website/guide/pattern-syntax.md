@@ -154,9 +154,8 @@ Namedness is an advanced topic in [Tree-sitter](https://tree-sitter.github.io/tr
 
 Pattern is a fast and easy way to match code. But it is not as powerful as [rule](/guide/rule-config.html#rule-file) which can match code with more [precise selector](/guide/rule-config/atomic-rule.html#kind) or [more context](/guide/rule-config/relational-rule.html).
 
-:::tip Pro Tip
-You can write a standalone [rule file](/reference/rule.html) and the command `sg scan -r rule.yml` to perform an [ad-hoc search](/guide/tooling-overview.html#run-one-single-query-or-one-single-rule).
-
 We will cover using rules in next chapter.
 
+:::tip Pro Tip
+You can write a standalone [rule file](/reference/rule.html) and the command `sg scan -r rule.yml` to perform an [ad-hoc search](/guide/tooling-overview.html#run-one-single-query-or-one-single-rule).
 :::
