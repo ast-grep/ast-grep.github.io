@@ -8,8 +8,7 @@ ruleType: 'pattern' # 'pattern' or 'yaml'
 ---
 -->
 
-## Unnecessary `useState` Type <Badge type="tip" text="Has Fix" /> <Badge type="info" text="TypeScript" />
-
+## Unnecessary `useState` Type <Badge type="tip" text="Has Fix" />
 
 ### Description
 

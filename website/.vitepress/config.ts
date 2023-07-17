@@ -33,6 +33,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/introduction.html' },
       { text: 'Reference', link: '/reference/cli.html' },
+      { text: 'Examples', link: '/catalog/' },
       { text: 'Playground', link: '/playground.html' },
     ],
     socialLinks: [
@@ -62,6 +63,14 @@ export default defineConfig({
           { text: 'Editor Integration', link: '/guide/editor-integration.html' },
         ],
         collapsed: false,
+      },
+      {
+        text: 'Example Catalog',
+        link: '/catalog/',
+        items: [
+          { text: 'TypeScript', link: '/catalog/typescript/'},
+        ],
+        collapsed: true,
       },
       {
         text: 'Reference',
