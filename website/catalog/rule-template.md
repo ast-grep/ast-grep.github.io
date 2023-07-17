@@ -8,25 +8,20 @@ ruleType: 'pattern' # 'pattern' or 'yaml'
 
 ## Your Rule Name
 
+* [Playground Link](/playground.html#)
+
 ### Description
 
 Some Description for your rule!
 
-
 <!-- Use pattern in the example. Delete this section if use YAML. -->
 ### Pattern
 
-```js
-var i = 123
+```shell
+sg -p pattern -r rewrite -l js
+# or without fixer
+sg -p pattern -l js
 ```
-
-<!-- Optional Fix. Delete this section if no fix available -->
-### Fix
-
-```js
-let i = 123
-```
-
 
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
@@ -36,7 +31,7 @@ let i = 123
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-```js
+```js {1}
 var a = 123
 ```
 

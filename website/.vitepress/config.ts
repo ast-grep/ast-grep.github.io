@@ -68,6 +68,7 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Catalog', link: '/catalog/'},
+          { text: 'Ruby', link: '/catalog/ruby/'},
           { text: 'TypeScript', link: '/catalog/typescript/'},
         ],
         collapsed: true,
