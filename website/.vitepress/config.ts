@@ -17,6 +17,7 @@ export default defineConfig({
   ],
   outDir: './dist',
   appearance: false,
+  lastUpdated: true,
   vite: {
     build: {
       target: 'es2020',
