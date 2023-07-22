@@ -15,7 +15,7 @@ To set up ast-grep's scanning, you can simply run the command `sg new` in the ro
 No sgconfig.yml found. Creating a new ast-grep project...
 > Where do you want to have your rules? rules
 > Do you want to create rule tests? Yes
-> Where do you want to have your tests? rule-test
+> Where do you want to have your tests? rule-tests
 > Do you want to create folder for utility rules? Yes
 > Where do you want to have your utilities? utils
 Your new ast-grep project has been created!
@@ -26,7 +26,7 @@ After you answering these questions, you will get a folder structure like the be
 ```bash
 my-awesome-project
   |- rules           # where rules go
-  |- rule-test       # test cases for rules
+  |- rule-tests       # test cases for rules
   |- utils           # global utility rules for reusing
   |- sgconfig.yml    # root configuration file
 ```
@@ -42,7 +42,7 @@ You will be asked several questions about the rule going to be created. Suppose 
 > Choose rule's language JavaScript
 Created rules at ./rules/no-eval.yml
 > Do you also need to create a test for the rule? Yes
-Created test at rule-test/no-eval-test.yml
+Created test at rule-tests/no-eval-test.yml
 ```
 
 Now you can see open the new rule created in the `rules/no-eval.yml`. File path might vary depending on your choice on the first step.

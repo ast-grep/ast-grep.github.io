@@ -32,7 +32,7 @@ ruleDirs:
   - rules
 # testConfigs contains a list of test directories for rules.
 testConfigs:
-  - testDir: rule-test
+  - testDir: rule-tests
 ```
 
 The configuration file should be located at a directory that looks like this.
@@ -41,12 +41,12 @@ The configuration file should be located at a directory that looks like this.
 my-awesome-rules/
   |- rules/
   | |- no-await-in-loop.yml        # test file
-  |- rule-test/
+  |- rule-tests/
   | |- no-await-in-loop-test.yml   # rule file
   |- sgconfig.yml
 ```
 
-`rules` folder contains all rule files, while `rule-test` folder contains all test cases for rules.
+`rules` folder contains all rule files, while `rule-tests` folder contains all test cases for rules.
 
 In the example, `no-await-in-loop.yml` contains the rule configuration we wrote before.
 
@@ -84,7 +84,7 @@ ruleDirs:
   - rules
 # testConfigs contains a list of test directories for rules.
 testConfigs:
-  - testDir: rule-test
+  - testDir: rule-tests
 ```
 :::
 
@@ -152,7 +152,7 @@ The `--update-snapshots` or `-u` will generate a snapshot directory for us.
 my-awesome-rules/
   |- rules/
   | |- no-await-in-loop.yml               # test file
-  |- rule-test/
+  |- rule-tests/
   | |- no-await-in-loop-test.yml          # rule file
   | |- __snapshots__/                     # snapshots folder
   | |  |- no-await-in-loop-snapshot.yml   # generated snapshot file!
