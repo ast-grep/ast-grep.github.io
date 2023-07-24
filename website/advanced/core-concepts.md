@@ -54,7 +54,7 @@ binary_expression
   number
   number
 ```
-An astute reader should notice the imporatnt operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical information.
+An astute reader should notice the important operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical information.
 ```
 binary_expression
   number
