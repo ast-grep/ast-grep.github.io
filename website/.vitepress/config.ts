@@ -70,6 +70,7 @@ export default defineConfig({
         items: [
           { text: 'Catalog', link: '/catalog/'},
           { text: 'Ruby', link: '/catalog/ruby/'},
+          { text: 'Rust', link: '/catalog/rust/'},
           { text: 'TypeScript', link: '/catalog/typescript/'},
         ],
         collapsed: true,

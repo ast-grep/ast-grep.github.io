@@ -4,7 +4,11 @@
 
 ### Description
 
-This rule is used to migrate `{before,after,around}_filter` to `{before,after,around}_action` in Ruby on Rails controllers. These are methods that run before, after or around an action is executed, and they can be used to check permissions, set variables, redirect requests, log events, etc. However, these methods are [deprecated](https://stackoverflow.com/questions/16519828/rails-4-before-filter-vs-before-action) in Rails 5.0 and will be removed in Rails 5.1. `{before,after,around}_action` are the new syntax for the same functionality. This rule will replace all occurrences of `{before,after,around}_filter` with `{before,after,around}_action` in the controller code.
+This rule is used to migrate `{before,after,around}_filter` to `{before,after,around}_action` in Ruby on Rails controllers.
+
+These are methods that run before, after or around an action is executed, and they can be used to check permissions, set variables, redirect requests, log events, etc. However, these methods are [deprecated](https://stackoverflow.com/questions/16519828/rails-4-before-filter-vs-before-action) in Rails 5.0 and will be removed in Rails 5.1. `{before,after,around}_action` are the new syntax for the same functionality.
+
+This rule will replace all occurrences of `{before,after,around}_filter` with `{before,after,around}_action` in the controller code.
 
 
 ### YAML
