@@ -61,7 +61,7 @@ testConfigs:
 A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules).
 
 
-## `customLanguages`
+## `customLanguages` <Badge type="warning" text="Experimental" />
 
 * type: `HashMap<String, CustomLang>`
 * required: No

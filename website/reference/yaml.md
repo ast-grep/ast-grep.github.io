@@ -72,7 +72,7 @@ A dictionary of utility rules that can be used in `matches` locally.
 The dictionary key is the utility rule id and the value is the rule object.
 See [utility rule guide](/guide/rule-config/utility-rule).
 
-## `transform`
+## `transform` <Badge type="warning" text="Experimental" />
 
 * type: `HashMap<String, Transformation>`
 * required: false
