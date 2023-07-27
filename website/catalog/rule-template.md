@@ -6,7 +6,9 @@ hasFix: true
 ruleType: 'pattern' # 'pattern' or 'yaml'
 ---
 
-## Your Rule Name
+<!-- Remove Badge if it does not have fix-->
+## Your Rule Name <Badge type="tip" text="Has Fix" />
+
 
 * [Playground Link](/playground.html#)
 
