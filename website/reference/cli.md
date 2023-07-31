@@ -22,15 +22,18 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |-------|------|-------------|
 | -p| --pattern `<PATTERN>` |  AST pattern to match. |
 | -r| --rewrite `<REWRITE>` |  String to replace the matched AST node. |
-|   | --debug-query         |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
+|   | --debug-query         |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
-|   |  --json               |  Output matches in structured JSON text useful for tools like `jq`. Conflicts with interactive|
-|   |  --heading `<HEADING>` | Print file names before each file's matches. Default is auto: print heading for tty but not for piped output [default: auto] [possible values: always, never, auto] |
-|   |  --color `<COLOR>`     | Controls output color [default: auto] |
-|   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.). You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   | --json`[=<style>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
+|   |   --heading `<WHEN>`  | Controls whether to print the file name as heading [default: auto] [possible values: auto, always, never] |
+|   |  --color `<WHEN>`     | Controls output color [default: auto] |
+|   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
+| -A| --after `<NUM>`      | Show NUM lines after each match [default: 0] |
+| -B| --before `<NUM>`     | Show NUM lines before each match [default: 0] |
+| -C| --context `<NUM>`    | Show NUM lines around each match [default: 0] |
 |-h | --help                | Print help |
 
 ## `sg scan`
