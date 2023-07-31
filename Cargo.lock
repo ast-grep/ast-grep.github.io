@@ -19,12 +19,12 @@ checksum = "9c7d0618f0e0b7e8ff11427422b64564d5fb0be1940354bfe2e0529b18a9d9b8"
 
 [[package]]
 name = "ast-grep-config"
-version = "0.9.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "622f288833a85a4e28074befee142b8ca74b6aee48b82a6b12b10e14abf5aa26"
+checksum = "00388064e0782a79161027ace89df248fd43058d9e2436da3ab470748ed11f7a"
 dependencies = [
  "anyhow",
- "ast-grep-core",
+ "ast-grep-core 0.10.0",
  "bit-set",
  "globset",
  "regex",
@@ -46,12 +46,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "ast-grep-core"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b243af217c26f21d01f19d36a6cf234a9f9e3941fb8b9f3c699073e0c6ee06e"
+dependencies = [
+ "bit-set",
+ "regex",
+ "thiserror",
+ "tree-sitter-facade-sg",
+]
+
+[[package]]
 name = "ast-grep-language"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1cfc9aeba93aa6741d749d50a0d22787094f02dc764e2ff342cf2de7895c9188"
 dependencies = [
- "ast-grep-core",
+ "ast-grep-core 0.9.3",
  "ignore",
  "serde",
 ]
@@ -61,7 +73,7 @@ name = "ast-grep-wasm"
 version = "0.2.6"
 dependencies = [
  "ast-grep-config",
- "ast-grep-core",
+ "ast-grep-core 0.9.3",
  "ast-grep-language",
  "console_error_panic_hook",
  "once_cell",
@@ -150,9 +162,9 @@ checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 
 [[package]]
 name = "globset"
-version = "0.4.11"
+version = "0.4.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1391ab1f92ffcc08911957149833e682aa3fe252b9f45f966d2ef972274c97df"
+checksum = "aca8bbd8e0707c1887a8bbb7e6b40e228f251ff5d62c8220a4a7a53c73aff006"
 dependencies = [
  "aho-corasick",
  "bstr",
@@ -357,9 +369,9 @@ dependencies = [
 
 [[package]]
 name = "serde_yaml"
-version = "0.9.23"
+version = "0.9.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da6075b41c7e3b079e5f246eb6094a44850d3a4c25a67c581c80796c80134012"
+checksum = "1a49e178e4452f45cb61d0cd8cebc1b0fafd3e41929e996cef79aa3aca91f574"
 dependencies = [
  "indexmap",
  "itoa",
