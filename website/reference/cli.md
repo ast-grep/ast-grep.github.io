@@ -52,14 +52,14 @@ sg scan [OPTIONS] [PATHS]...
 
 | Short | Long | Description |
 |-------|------|-------------|
-| -c | --config `<CONFIG>`| Path to ast-grep root config, default is `sgconfig.yml` |
-| -r | --rule `<RULE>`| Scan the codebase with one specified rule, without project config setup.|
-| -i | --interactive|Start interactive edit session. Code rewrite only happens inside a session.|
-| | --color `<COLOR>`|Controls output color [default: auto]|
+| -c | --config `<CONFIG_FILE>`| Path to ast-grep root config, default is `sgconfig.yml` |
+| -r | --rule `<RULE_FILE>`| Scan the codebase with the single rule located at the path `RULE_FILE`.|
+| -i | --interactive|Start interactive edit session.|
+| | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
-| | --json |Output matches in structured JSON text. This is useful for tools like jq. Conflicts with color and report-style.|
+| | --json`[=<style>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
 | -U | --update-all | Apply all rewrite without confirmation |
-| | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. You can suppress multiple ignore files by passing `no-ignore` multiple times [possible values: hidden, dot, exclude, global, parent, vcs] |
+| | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 | -h| --help|Print help|
 
