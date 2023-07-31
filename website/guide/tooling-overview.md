@@ -65,6 +65,21 @@ The format of the JSON output is an array of match objects.
 ]
 ```
 
+By default, ast-grep prints the matches in a JSON array that is formatted with indentation and line breaks.
+`--json` is equivalent to `--json=pretty`. This makes it easy to read the output by humans.
+However, this might not be suitable for other programs that need to process the output from ast-grep. For example, if there are too many matches, the JSON array might be [too large to fit in memory](https://www.wikiwand.com/en/Out_of_memory).
+
+To avoid this problem, you can use the `--json=stream` option when running ast-grep. This option will make ast-grep print each match as a separate JSON object, followed by a newline character. This way, you can stream the output to other programs that can read one object per line and parse it accordingly.
+
+`--json` accepts one of the following values: `pretty`, `stream`, or `compact`.
+
+:::danger `--json=stream` requires the equal sign
+You have to use `--json=<STYLE>` syntax when passing value to the json flag.
+A common gotcha is missing the equal sign.
+`--json stream` is parsed as `--json=pretty stream` and `stream` is parsed as a directory.
+Only `--json=stream` will work as a key-value pair.
+:::
+
 ## Run One Single Query or One Single Rule
 
 You can also use ast-grep to explore a proper pattern for your query. There are two ways to try your pattern or rule.
