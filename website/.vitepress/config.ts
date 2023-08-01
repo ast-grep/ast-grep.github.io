@@ -85,7 +85,14 @@ export default defineConfig({
           { text: 'API Reference', link: '/reference/api.html' },
           { text: 'Language List', link: '/reference/languages.html' },
         ],
-        collapsed: false,
+        collapsed: true,
+      },
+      {
+        text: 'Contributing',
+        items: [
+          { text: 'Guide', link: '/contributing/how-to.html' },
+        ],
+        collapsed: true,
       },
       {
         text: 'Advanced Topics',

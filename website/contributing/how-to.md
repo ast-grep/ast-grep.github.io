@@ -62,18 +62,17 @@ We appreciate your kind words and support for the project. You can help us grow 
 
 Thank you for your interest in contributing to the ast-grep project. We are grateful for your help and support. We hope you enjoy using and improving ast-grep as much as we do. If you have any questions or issues, please feel free to contact us on [GitHub](https://github.com/ast-grep/ast-grep) or [Discord](https://discord.gg/4YZjf6htSQ). We look forward to hearing from you soon! 😊
 
+<br/>
+
 ---
 
 <br/>
 
-<blockquote>
-
-You don’t have to contribute code
+:::tip You don’t have to contribute code
 
 A common misconception about contributing to open source is that you need to contribute code. In fact, it’s often the other parts of a project that are most neglected or overlooked. You’ll do the project a huge favor by offering to pitch in with these types of contributions!
 <div style="text-align: right">
 
   _[GitHub Open Source Guide](https://opensource.guide/)_
 </div>
-
-</blockquote>
+:::
