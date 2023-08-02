@@ -19,7 +19,7 @@ We appreciate your feedback on the project. Whether you have a feature request, 
 
 We welcome your code contributions to the project. Whether you want to fix a bug, implement a feature, improve the documentation, or add a new integration, we are grateful for your help. You can use the following repositories to contribute your code:
 
-- **CLI Main Repo**: The [main repository for ast-grep](https://github.com/ast-grep/ast-grep) command-line interface (CLI). It contains the core logic and functionality of ast-grep. For small features or typo fixes, you can fork this repository and submit pull requests with your changes. _For larger features or big changes, please make an issue for discussion before jumping into it._
+- **CLI Main Repo**: The [main repository for ast-grep](https://github.com/ast-grep/ast-grep) command-line interface (CLI). It contains the core logic and functionality of ast-grep. For small features or typo fixes, you can fork this repository and submit pull requests with your changes. [This guide](/contributing/development.html) may help you set up essential tools for development. _For larger features or big changes, please make an issue for discussion before jumping into it._
 
 <!-- Please follow the [code style guide] and the [testing guide] before submitting your pull requests. -->
 

@@ -91,6 +91,7 @@ export default defineConfig({
         text: 'Contributing',
         items: [
           { text: 'Guide', link: '/contributing/how-to.html' },
+          { text: 'Development', link: '/contributing/development.html' },
         ],
         collapsed: true,
       },
