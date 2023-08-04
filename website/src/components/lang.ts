@@ -17,6 +17,7 @@ const parserPaths = {
   ruby: 'tree-sitter-ruby.wasm',
   rust: 'tree-sitter-rust.wasm',
   scala: 'tree-sitter-scala.wasm',
+  swift: 'tree-sitter-swift.wasm',
 }
 
 export const languageDisplayNames: Record<SupportedLang, string> = {
@@ -35,6 +36,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   ruby: 'Ruby',
   rust: 'Rust',
   scala: 'Scala',
+  swift: 'Swift',
 }
 
 export async function initializeParser() {
