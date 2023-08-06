@@ -143,7 +143,7 @@ The playground has a standalone [repository](https://github.com/ast-grep/ast-gre
 
 1. Set up Tree-sitter
 
-First, we need to set up Tree-sitter development tools like. You can refer to the Tree-sitter setup section in this [link](advanced/custom-language.html#prepare-tree-sitter-tool-and-parser).
+First, we need to set up Tree-sitter development tools like. You can refer to the Tree-sitter setup section in this [link](/advanced/custom-language.html#prepare-tree-sitter-tool-and-parser).
 
 2. Build WASM file
 
