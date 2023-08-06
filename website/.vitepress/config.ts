@@ -88,20 +88,21 @@ export default defineConfig({
         collapsed: true,
       },
       {
-        text: 'Contributing',
-        items: [
-          { text: 'Guide', link: '/contributing/how-to.html' },
-          { text: 'Development', link: '/contributing/development.html' },
-        ],
-        collapsed: true,
-      },
-      {
         text: 'Advanced Topics',
         items: [
           { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
           { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
           { text: 'Custom Language Support', link: '/advanced/custom-language.html'},
           { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison.html'},
+        ],
+        collapsed: true,
+      },
+      {
+        text: 'Contributing',
+        items: [
+          { text: 'Guide', link: '/contributing/how-to.html' },
+          { text: 'Development', link: '/contributing/development.html' },
+          { text: 'Add New Language', link: '/contributing/add-lang.html' },
         ],
         collapsed: true,
       },
