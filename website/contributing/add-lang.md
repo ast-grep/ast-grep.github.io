@@ -134,3 +134,83 @@ Then add your new language by searching and following the existing language.
 :::
 
 ## Add to ast-grep Playground
+
+Adding new language to web playground is a little bit more complex.
+
+The playground has a standalone [repository](https://github.com/ast-grep/ast-grep.github.io) and we need to change code there.
+
+### Prepare WASM
+
+1. Set up Tree-sitter
+
+First, we need to set up Tree-sitter development tools like. You can refer to the Tree-sitter setup section in this [link](advanced/custom-language.html#prepare-tree-sitter-tool-and-parser).
+
+2. Build WASM file
+
+Then, in your parser repository, use this command to build a WASM file.
+
+```bash
+tree-sitter generate # if grammar is not generated before
+tree-sitter build-wasm
+```
+
+Note you may need to install [docker](https://www.docker.com/) when building WASM files.
+
+3. Move WASM file to the website [`public`](https://github.com/ast-grep/ast-grep.github.io/tree/main/website/public) folder.
+
+You can also see other languages' WASM files in the public directory.
+The file name is in the format of `tree-sitter-[lang].wasm`. The name will be used later in [`paserPaths`](https://github.com/ast-grep/ast-grep.github.io/blob/a2dce64dda67e1c0842b757fc692ffe05639e407/website/src/components/lang.ts#L4).
+
+### Add language in Rust
+
+You need to add the language in the [wasm_lang.rs](https://github.com/ast-grep/ast-grep.github.io/blob/main/src/wasm_lang.rs).
+More specifically, you need to add a new enum variant in [`WasmLang`](https://github.com/ast-grep/ast-grep.github.io/blob/a2dce64dda67e1c0842b757fc692ffe05639e407/src/wasm_lang.rs#L16), handle the new variant in [`execute_lang_method`](https://github.com/ast-grep/ast-grep.github.io/blob/a2dce64dda67e1c0842b757fc692ffe05639e407/src/wasm_lang.rs#L111) and implement [`FromStr`](https://github.com/ast-grep/ast-grep.github.io/blob/a2dce64dda67e1c0842b757fc692ffe05639e407/src/wasm_lang.rs#L48).
+
+```rust
+// new variant
+pub enum WasmLang {
+  // ...
+  Swift, // [!code ++]
+}
+
+// handle variant in macro
+macro_rules! execute_lang_method {
+  ($me: path, $method: ident, $($pname:tt),*) => {
+    use WasmLang as W;
+    match $me {
+      W::Swift => L::Swift.$method($($pname,)*), // [!code ++]
+    }
+  }
+}
+
+// impl FromStr
+impl FromStr for WasmLang {
+  // ...
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    Ok(match s {
+      "swift" => Swift, // [!code ++]
+    })
+  }
+}
+```
+
+### Add language in TypeScript
+
+Finally you need to add the language in TypeScript to make it available in playground.
+The file is [lang.ts](https://github.com/ast-grep/ast-grep.github.io/blob/main/website/src/components/lang.ts). There are two changes need to make.
+
+```typescript
+// Add language parserPaths
+const parserPaths = {
+  // ...
+  swift: 'tree-sitter-swift.wasm', // [!code ++]
+}
+
+// Add language display name
+export const languageDisplayNames: Record<SupportedLang, string> = {
+  // ...
+  swift: 'Swift',
+}
+```
+
+You can see Swift's support as the [reference commit](https://github.com/ast-grep/ast-grep.github.io/commit/55a546535dee989ce5ee2582080e771d006d165e).
