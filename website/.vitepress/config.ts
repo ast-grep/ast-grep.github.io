@@ -78,7 +78,11 @@ export default defineConfig({
       {
         text: 'Reference',
         items: [
-          { text: 'Command Line Interface', link: '/reference/cli.html' },
+          { text: 'Command Line Interface', link: '/reference/cli.html', collapsed: true,
+            items: [
+              { text: 'sg run', link: '/reference/cli/run.html' },
+            ],
+          },
           { text: 'Project Config', link: '/reference/sgconfig.html' },
           { text: 'Rule Config', link: '/reference/yaml.html' },
           { text: 'Rule Object', link: '/reference/rule.html' },
