@@ -19,7 +19,7 @@ The paths to search. You can provide multiple paths separated by spaces
 
 [default: .]
 
-## Options
+## Scan Specific Options
 
 ### `-c, --config <CONFIG_FILE>`
 Path to ast-grep root config, default is sgconfig.yml
@@ -29,20 +29,7 @@ Scan the codebase with the single rule located at the path RULE_FILE.
 
 This flags conflicts with --config. It is useful to run single rule without project setup.
 
-### `-f, --format <FORMAT>`
-Output warning/error messages in GitHub Action format.
-
-Currently, only GitHub is supported.
-
-[possible values: github]
-
-### `--report-style <REPORT_STYLE>`
-[default: rich]
-
-Possible values:
-- rich:   Output a richly formatted diagnostic, with source code previews
-- medium: Output a condensed diagnostic, with a line number, severity, message and notes (if any)
-- short:  Output a short diagnostic, with a line number, severity, and message
+## Input Options
 
 ### `--no-ignore <FILE_TYPE>`
 Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.).
@@ -62,6 +49,8 @@ Possible values:
 Enable search code from StdIn.
 
 Use this if you need to take code stream from standard input. If the environment variable `AST_GREP_NO_STDIN` exist, ast-grep will disable StdIn mode.
+
+## Output Options
 
 ### `-i, --interactive`
 Start interactive edit session.
@@ -94,6 +83,21 @@ Possible values:
 - always: Try very hard to emit colors. This includes emitting ANSI colors on Windows if the console API is unavailable (not implemented yet)
 - ansi:   Ansi is like Always, except it never tries to use anything other than emitting ANSI color codes
 - never:  Never emit colors
+
+### `-f, --format <FORMAT>`
+Output warning/error messages in GitHub Action format.
+
+Currently, only GitHub is supported.
+
+[possible values: github]
+
+### `--report-style <REPORT_STYLE>`
+[default: rich]
+
+Possible values:
+- rich:   Output a richly formatted diagnostic, with source code previews
+- medium: Output a condensed diagnostic, with a line number, severity, message and notes (if any)
+- short:  Output a short diagnostic, with a line number, severity, and message
 
 ### `-h, --help`
   Print help (see a summary with '-h')

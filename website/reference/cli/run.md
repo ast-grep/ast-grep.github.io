@@ -22,8 +22,7 @@ The paths to search. You can provide multiple paths separated by spaces
 [default: .]
 
 
-
-## Options
+## Run Specific Options
 
 ### `-p, --pattern <PATTERN>`
 
@@ -40,6 +39,8 @@ The language of the pattern. For full language list, visit https://ast-grep.gith
 ### `--debug-query`
 
 Print query pattern's tree-sitter AST. Requires lang be set explicitly
+
+## Input Options
 
 ### `--no-ignore <FILE_TYPE>`
 
@@ -60,6 +61,8 @@ Possible values:
 Enable search code from StdIn.
 
 Use this if you need to take code stream from standard input. If the environment variable `AST_GREP_NO_STDIN` exist, ast-grep will disable StdIn mode.
+
+## Output Options
 
 ### `-i, --interactive`
 
@@ -106,6 +109,8 @@ Possible values:
 - auto:   Print heading for terminal tty but not for piped output
 - always: Always print heading regardless of output type
 - never:  Never print heading regardless of output type
+
+## Context Options
 
 ### `-A, --after <NUM>`
 Show NUM lines after each match.
