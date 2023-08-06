@@ -134,5 +134,3 @@ Then add your new language by searching and following the existing language.
 :::
 
 ## Add to ast-grep Playground
-
-TODO...
