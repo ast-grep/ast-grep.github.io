@@ -12,7 +12,7 @@ sg new [COMMAND] [OPTIONS] [NAME]
 
 ## Commands
 
-### project
+### `project`
 
 Create an new project by scaffolding.
 
@@ -21,7 +21,7 @@ a rule folder `rules`, a test case folder `rule-tests` and a utility rule folder
 You can customize the folder names during the creation.
 
 
-### rule
+### `rule`
 
 Create a new rule.
 
@@ -30,7 +30,7 @@ You need to provide `name` and `language` either by interactive input or via com
 ast-grep will ask you which `rule_dir` to use if multiple ones are configured in the `sgconfig.yml`.
 If `-y, --yes` flag is true, ast-grep will choose the first `rule_dir` to create the new rule.
 
-### test
+### `test`
 
 Create a new test case.
 
@@ -39,7 +39,7 @@ You need to provide `name` either by interactive input or via command line argum
 ast-grep will ask you which `test_dir` to use if multiple ones are configured in the `sgconfig.yml`.
 If `-y, --yes` flag is true, ast-grep will choose the first `test_dir` to create the new test.
 
-### util
+### `util`
 Create a new global utility rule.
 
 This command will create a new global utility rule in one of the `utils` folders.
@@ -47,7 +47,7 @@ You need to provide `name` and `language` either by interactive input or via com
 ast-grep will ask you which `util_dir` to use if multiple ones are configured in the `sgconfig.yml`.
 If `-y, --yes` flag is true, ast-grep will choose the first `util_dir` to create the new item.
 
-### help
+### `help`
 
 Print this message or the help of the given subcommand(s)
 
