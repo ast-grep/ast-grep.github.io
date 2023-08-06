@@ -3,7 +3,7 @@ outline: [2, 3]
 ---
 # `sg scan`
 
-Scan and rewrite code by configuration
+Scan and rewrite code by configuration.
 
 ## Usage
 
