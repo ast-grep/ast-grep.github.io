@@ -58,6 +58,7 @@ sg scan [OPTIONS] [PATHS]...
 | | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
 | | --json`[=<style>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
+|-f| --format `<FORMAT>` | Output warning/error messages in GitHub Action format [possible values: github] |
 | -U | --update-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
