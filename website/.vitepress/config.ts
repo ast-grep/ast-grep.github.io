@@ -81,6 +81,7 @@ export default defineConfig({
           { text: 'Command Line Interface', link: '/reference/cli.html', collapsed: true,
             items: [
               { text: 'sg run', link: '/reference/cli/run.html' },
+              { text: 'sg scan', link: '/reference/cli/scan.html' },
             ],
           },
           { text: 'Project Config', link: '/reference/sgconfig.html' },

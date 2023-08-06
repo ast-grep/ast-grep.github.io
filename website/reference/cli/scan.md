@@ -1,16 +1,14 @@
 ---
 outline: [2, 3]
 ---
+# `sg scan`
 
-# `sg run`
-
-Run one time search or rewrite in command line.
-This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`.
+Scan and rewrite code by configuration
 
 ## Usage
 
 ```shell
-sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
+sg scan [OPTIONS] [PATHS]...
 ```
 
 ## Arguments
@@ -21,28 +19,32 @@ The paths to search. You can provide multiple paths separated by spaces
 
 [default: .]
 
-
-
 ## Options
 
-### `-p, --pattern <PATTERN>`
+### `-c, --config <CONFIG_FILE>`
+Path to ast-grep root config, default is sgconfig.yml
 
-AST pattern to match
+### `-r, --rule <RULE_FILE>`
+Scan the codebase with the single rule located at the path RULE_FILE.
 
-### `-r, --rewrite <FIX>`
+This flags conflicts with --config. It is useful to run single rule without project setup.
 
-String to replace the matched AST node
+### `-f, --format <FORMAT>`
+Output warning/error messages in GitHub Action format.
 
-### `-l, --lang <LANG>`
+Currently, only GitHub is supported.
 
-The language of the pattern. For full language list, visit https://ast-grep.github.io/reference/languages.html
+[possible values: github]
 
-### `--debug-query`
+### `--report-style <REPORT_STYLE>`
+[default: rich]
 
-Print query pattern's tree-sitter AST. Requires lang be set explicitly
+Possible values:
+- rich:   Output a richly formatted diagnostic, with source code previews
+- medium: Output a condensed diagnostic, with a line number, severity, message and notes (if any)
+- short:  Output a short diagnostic, with a line number, severity, and message
 
 ### `--no-ignore <FILE_TYPE>`
-
 Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.).
 
 You can suppress multiple ignore files by passing `no-ignore` multiple times.
@@ -62,16 +64,15 @@ Enable search code from StdIn.
 Use this if you need to take code stream from standard input. If the environment variable `AST_GREP_NO_STDIN` exist, ast-grep will disable StdIn mode.
 
 ### `-i, --interactive`
-
 Start interactive edit session.
 
 You can confirm the code change and apply it to files selectively, or you can open text editor to tweak the matched code. Note that code rewrite only happens inside a session.
 
 ### `-U, --update-all`
-
 Apply all rewrite without confirmation if true
 
 ### `--json[=<style>]`
+
 Output matches in structured JSON .
 
 If this flag is set, ast-grep will output matches in JSON format. You can pass optional value to this flag by using `--json=<style>` syntax to further control how JSON object is formatted and printed. ast-grep will `pretty`-print JSON if no value is passed. Note, the json flag must use `=` to specify its value. It conflicts with interactive.
@@ -94,39 +95,5 @@ Possible values:
 - ansi:   Ansi is like Always, except it never tries to use anything other than emitting ANSI color codes
 - never:  Never emit colors
 
-### `--heading <WHEN>`
-
-Controls whether to print the file name as heading.
-
-If heading is used, the file name will be printed as heading before all matches of that file. If heading is not used, ast-grep will print the file path before each match as prefix. The default value `auto` is to use heading when printing to a terminal and to disable heading when piping to another program or redirected to files.
-
-[default: auto]
-
-Possible values:
-- auto:   Print heading for terminal tty but not for piped output
-- always: Always print heading regardless of output type
-- never:  Never print heading regardless of output type
-
-### `-A, --after <NUM>`
-Show NUM lines after each match.
-
-It conflicts with both the -C/--context flag.
-
-[default: 0]
-
-### `-B, --before <NUM>`
-Show NUM lines before each match.
-
-It conflicts with both the -C/--context flag.
-
-[default: 0]
-
-### `-C, --context <NUM>`
-Show NUM lines around each match.
-
-This is equivalent to providing both the -B/--before and -A/--after flags with the same value. It conflicts with both the -B/--before and -A/--after flags.
-
-[default: 0]
-
 ### `-h, --help`
-Print help (see a summary with '-h')
+  Print help (see a summary with '-h')
