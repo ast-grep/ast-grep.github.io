@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # `sgconfig.yml` Reference
 
 ## Overview
@@ -69,21 +73,19 @@ A list of string instructing where to discover ast-grep's [global utility rules]
 
 A dictionary of custom languages in the project. This is an experimental feature.
 
-The key of the dictionary is the custom language name. The value of the dictionary is the custom language configuration.
+The key of the dictionary is the custom language name. The value of the dictionary is the custom language configuration object.
 
 Please see the [guide](/advanced/custom-language.html) for detailed instructions.
 
-### `CustomLang` Configuration
+A custom language configuration object has the following options.
 
-A custom language configuration has the following options.
-
-#### `libraryPath`
+### `libraryPath`
 * type: `String`
 * required: Yes
 
 The path to the tree-sitter dynamic library of the language.
 
-#### `extensions`
+### `extensions`
 
 * type: `List` of `String`
 * required: Yes
@@ -91,7 +93,7 @@ The path to the tree-sitter dynamic library of the language.
 The file extensions for this language.
 
 
-#### `expandoChar`
+### `expandoChar`
 
 * type: `String`
 * required: No
