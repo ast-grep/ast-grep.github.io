@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # `sg test`
 
-Test ast-grep rule.
+Test ast-grep rules.
 
 ## Usage
 

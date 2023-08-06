@@ -83,6 +83,7 @@ export default defineConfig({
               { text: 'sg run', link: '/reference/cli/run.html' },
               { text: 'sg scan', link: '/reference/cli/scan.html' },
               { text: 'sg test', link: '/reference/cli/test.html' },
+              { text: 'sg new', link: '/reference/cli/new.html' },
             ],
           },
           { text: 'Project Config', link: '/reference/sgconfig.html' },
