@@ -52,6 +52,33 @@ yarn build # Build the binding
 yarn test # Run test
 ```
 
+## Commit Conventions
+
+ast-grep loosely follows the [commit conventions](https://www.conventionalcommits.org/en/v1.0.0/).
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+To quote the conventional commits doc:
+
+> The commit contains the following structural elements, to communicate intent to the consumers of your library:
+>
+> * `fix:` a commit of the type fix patches a bug in your codebase.
+> * `feat:` a commit of the type feat introduces a new feature to the codebase.
+> * types other than `fix:` and `feat:` are allowed, for example, `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, and `test:`.
+> * `BREAKING CHANGE`: a commit that has a footer `BREAKING CHANGE:` introduces a breaking API change. A `BREAKING CHANGE` can be part of commits of any type.
+> * footers other than `BREAKING CHANGE: <description>` may be provided and follow a convention similar to git trailer format.
+
+:::tip
+`BREAKING CHANGE` will be picked up and written in `CHANGELOG` by [`cargo xtask`](https://github.com/ast-grep/ast-grep/blob/86afc5865b42285106f232f01c0eb45708d134c3/xtask/src/main.rs#L162-L171).
+:::
+
+
 ## Run Benchmark
 ast-grep's Benchmark is not included in the default cargo test. You need to run the benchmark command in `benches` folder.
 
