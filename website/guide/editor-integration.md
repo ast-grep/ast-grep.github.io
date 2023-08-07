@@ -32,3 +32,13 @@ You need to have coc.nvim installed for this extension to work. e.g. vim-plug:
 ```vim
 Plug 'yaegassy/coc-ast-grep', {'do': 'yarn install --frozen-lockfile'}
 ```
+
+### telescope.nvim
+
+[telescope-sg](https://github.com/Marskey/telescope-sg) is the ast-grep picker for telescope.nvim.
+
+Usage:
+
+```vim
+Telescope ast_grep
+```
