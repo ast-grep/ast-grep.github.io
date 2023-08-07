@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # `sg new`
 
+Create new ast-grep project or items like rules/tests. Also see the step by step [guide](/guide/scan-project.html).
+
 ## Usage
 
 ```shell

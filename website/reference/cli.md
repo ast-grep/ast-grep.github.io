@@ -4,7 +4,7 @@ You can always see up-to-date command line options using `sg --help`.
 ast-grep has five subcommands as listed below.
 
 ## `sg run`
-Run one time search or rewrite in command line. This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`.
+Run one time search or rewrite in command line. This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`. [View detailed reference.](/reference/cli/run.html)
 
 ### Usage
 
@@ -37,7 +37,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |-h | --help                | Print help |
 
 ## `sg scan`
-Scan and rewrite code by configuration.
+Scan and rewrite code by configuration. [View detailed reference.](/reference/cli/scan.html)
 
 ### Usage
 
@@ -65,7 +65,7 @@ sg scan [OPTIONS] [PATHS]...
 | -h| --help|Print help|
 
 ## `sg test`
-Test ast-grep rules. See [testing guide](/guide/test-rule.html) for more details.
+Test ast-grep rules. See [testing guide](/guide/test-rule.html) for more details. [View detailed reference.](/reference/cli/test.html)
 
 ### Usage
 
@@ -85,6 +85,39 @@ sg test [OPTIONS]
 | -f| --filter                        |Filter rule test cases to execute using a glob pattern.|
 | -i| --interactive                   |start an interactive review to update snapshots selectively.|
 | -h| --help                          |Print help.|
+
+## `sg new`
+
+Create new ast-grep project or items like rules/tests. [View detailed reference.](/reference/cli/new.html)
+
+
+### Usage
+
+```shell
+sg new [COMMAND] [OPTIONS] [NAME]
+```
+
+### Commands
+|Sub Command| Description|
+|--|--|
+| project | Create an new project by scaffolding. |
+| rule    | Create a new rule. |
+| test    | Create a new test case. |
+| util    | Create a new global utility rule. |
+| help    | Print this message or the help of the given subcommand(s). |
+
+### Arguments
+
+`[NAME]`  The id of the item to create.
+
+### Options
+
+| Short | Long | Description |
+|-------|------|-------------|
+| -l| `--lang <LANG>`         | The language of the item to create. |
+| -y| `--yes`                 | Accept all default options without interactive input during creation. |
+| -b| `--base-dir <BASE_DIR>` | Create new project/items in the folder specified by this argument `[default: .]` |
+| -h| `--help`                | Print help (see more with '--help') |
 
 ## `sg lsp`
 
