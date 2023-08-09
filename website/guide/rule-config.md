@@ -155,7 +155,7 @@ We can constrain what kind of meta variables we should match.
 rule:
   pattern: console.log($GREET)
 constraints:
-  $GREET:
+  GREET:
     kind: identifier
 ```
 
