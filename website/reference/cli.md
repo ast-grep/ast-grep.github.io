@@ -1,7 +1,7 @@
 # Command Line Reference
 
 You can always see up-to-date command line options using `sg --help`.
-ast-grep has five subcommands as listed below.
+ast-grep has several subcommands as listed below.
 
 ## `sg run`
 Run one time search or rewrite in command line. This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`. [View detailed reference.](/reference/cli/run.html)
@@ -129,6 +129,25 @@ Start a language server. This is useful for editor integration. See [editor inte
 ```shell
 sg lsp
 ```
+
+## `sg completions`
+
+Generate shell completion script.
+
+### Usage
+
+```shell
+sg completions [SHELL]
+```
+
+### Arguments
+
+`[SHELL]`
+
+Output the completion file for given shell.
+If not provided, shell flavor will be inferred from environment.
+
+[possible values: bash, elvish, fish, powershell, zsh]
 
 ## `sg help`
 Print help message or the help of the given subcommand(s).
