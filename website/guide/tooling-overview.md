@@ -180,10 +180,29 @@ INITIAL_QUERY="${*:-}"
     --bind 'enter:become(vim {1} +{2})'
 ```
 
-## Colorful Output
+## Shell Completions
+ast-grep comes with shell autocompletion scripts. You can generate a shell script and eval it when your shell starts up.
+The script will enable you to smoothly complete `sg` command's options by `tab`bing.
 
-The output of ast-grep is exuberant and beautiful! But it is not always desired for colorful output.
-You can use `--color never` to disable ANSI color in the command line output.
+This command will instruct ast-grep  to generate shell completion script:
+
+```shell
+sg completions <SHELL>
+```
+
+`<SHELL>` is an optional argument and can be one of the `bash`, `elvish`, `fish`, `powershell` and `zsh`. If shell is not specified, ast-grep will infer the correct shell from environment variable like `$SHELL`.
+
+The exact steps required to enable autocompletion will vary by shell. For instructions, see the [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) or [ripgrep](https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#complete) documentation.
+
+### Example
+
+If you are using zsh, add this line to your `~/.zshrc`.
+
+```shell
+eval "$(sg completions)"
+```
+
+<video src="https://github-production-user-asset-6210df.s3.amazonaws.com/38807139/260303710-ef8b969e-2eb5-4345-932a-be4093466a48.mp4" controls/>
 
 ## Use ast-grep in GitHub Action
 
@@ -217,3 +236,8 @@ That's it! You have successfully set up ast-grep linting in GitHub Action. Now, 
 ![image](https://github.com/ast-grep/action/assets/2883231/52fe5914-5e43-4478-a7b2-fb0399f61dee)
 
 For more information, you can refer to the [ast-grep/action](https://github.com/ast-grep/action) repository, where you can find more details and options for using ast-grep in GitHub Action.
+
+## Colorful Output
+
+The output of ast-grep is exuberant and beautiful! But it is not always desired for colorful output.
+You can use `--color never` to disable ANSI color in the command line output.
