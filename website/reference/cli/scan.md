@@ -29,6 +29,11 @@ Scan the codebase with the single rule located at the path RULE_FILE.
 
 This flags conflicts with --config. It is useful to run single rule without project setup.
 
+### `--filter <REGEX>`
+Scan the codebase with rules with ids matching REGEX.
+
+This flags conflicts with --rule. It is useful to scan with a subset of rules from a large set of rule definitions within a project.
+
 ## Input Options
 
 ### `--no-ignore <FILE_TYPE>`
@@ -71,6 +76,15 @@ Possible values:
 - stream:  Prints each match as a separate JSON object, followed by a newline character. This is useful for streaming the output to other programs that can read one object per line
 - compact: Prints the matches as a single-line JSON array, without any whitespace. This is useful for saving space and minimizing the output size
 
+### `--format <FORMAT>`
+Output warning/error messages in GitHub Action format.
+
+Currently, only GitHub is supported.
+
+[possible values: github]
+
+## Style Options
+
 ### `--color <WHEN>`
 Controls output color.
 
@@ -83,13 +97,6 @@ Possible values:
 - always: Try very hard to emit colors. This includes emitting ANSI colors on Windows if the console API is unavailable (not implemented yet)
 - ansi:   Ansi is like Always, except it never tries to use anything other than emitting ANSI color codes
 - never:  Never emit colors
-
-### `-f, --format <FORMAT>`
-Output warning/error messages in GitHub Action format.
-
-Currently, only GitHub is supported.
-
-[possible values: github]
 
 ### `--report-style <REPORT_STYLE>`
 [default: rich]
