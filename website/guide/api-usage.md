@@ -5,9 +5,16 @@ ast-grep's API design is still in flux, but the following is a rough sketch of h
 ## `napi`
 
 First, install ast-grep's napi package.
-```bash
+
+::: code-group
+```bash[npm]
 npm install --save @ast-grep/napi
 ```
+
+```bash[pnpm]
+pnpm add @ast-grep/napi
+```
+:::
 
 Then, import the language object from the napi package. Every language object has similar APIs.
 
@@ -18,7 +25,7 @@ import { js } from '@ast-grep/napi';
 
 const source = `console.log("hello world")`
 const ast = js.parse(source)
-const node = ast.root().find('console.log'))
+const node = ast.root().find('console.log')
 ```
 
 The `SgRoot` object has a `root` method that returns the root `SgNode` of the AST.
