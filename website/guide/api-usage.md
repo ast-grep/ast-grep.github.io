@@ -10,6 +10,7 @@ First, install ast-grep's napi package.
 ```bash[npm]
 npm install --save @ast-grep/napi
 ```
+
 ```bash[pnpm]
 pnpm add @ast-grep/napi
 ```
