@@ -38,7 +38,7 @@ serde_json = "1.0.104"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.37"
-tree-sitter-rust = "0.20.3"
+tree-sitter-rust = "0.20.4"
 
 [profile.release]
 panic = "abort"
