@@ -94,6 +94,9 @@ We will delve into `no-await-in-loop-test.yml` in next section.
 
 Test configuration file is very straightforward. It contains a list of `valid` and `invalid` cases with an `id` field to specify which rule will be tested against.
 
+`valid` is a list of source code that we **do not** expect the rule to report any issue.
+`invalid` is a list of source code that we **do** expect the rule to report some issues.
+
 ```yaml
 id: no-await-in-loop
 valid:
