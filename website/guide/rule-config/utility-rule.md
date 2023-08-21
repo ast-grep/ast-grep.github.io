@@ -158,7 +158,7 @@ utils:
         has:
           matches: is-number 
 rule:
-    matches: is-number
+  matches: is-number
 ```
 If we matches `(123)` with this rule, we will first match the `kind: parenthesized_expression` with a direct child that also matches `is-number` rule. This will make us match `123` with `is-number` which will succeed because `kind: number` matches the number literal.
 
