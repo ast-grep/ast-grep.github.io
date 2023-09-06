@@ -15,8 +15,8 @@ dependencies:
     specifier: 0.41.0
     version: 0.41.0
   monaco-yaml:
-    specifier: 4.0.4
-    version: 4.0.4(monaco-editor@0.41.0)
+    specifier: 5.1.0
+    version: 5.1.0(monaco-editor@0.41.0)
   vue:
     specifier: 3.3.4
     version: 3.3.4
@@ -872,12 +872,23 @@ packages:
     resolution: {integrity: sha512-1o4olnZJsiLmv5pwLEAmzHTE/5geLKQ07BrGxlF4Ri/AXAc2yyDGZwHjiTqD8D/ROKUZmwMA28A+yEowLNOEcA==}
     dev: false
 
+  /monaco-languageserver-types@0.2.3:
+    resolution: {integrity: sha512-QyV5R7s+rJ87bX1sRioMJZULWiTnMp0Vm+RLILgMEL0SqWuBsQBSW0EZunr4xMZhv6Qun3UZNCN4JrCCLURcgQ==}
+    dependencies:
+      monaco-types: 0.1.0
+      vscode-languageserver-protocol: 3.17.3
+    dev: false
+
   /monaco-marker-data-provider@1.1.1(monaco-editor@0.41.0):
     resolution: {integrity: sha512-PGB7TJSZE5tmHzkxv/OEwK2RGNC2A7dcq4JRJnnj31CUAsfmw0Gl+1QTrH0W0deKhcQmQM0YVPaqgQ+0wCt8Mg==}
     peerDependencies:
       monaco-editor: '>=0.30.0'
     dependencies:
       monaco-editor: 0.41.0
+    dev: false
+
+  /monaco-types@0.1.0:
+    resolution: {integrity: sha512-aWK7SN9hAqNYi0WosPoMjenMeXJjwCxDibOqWffyQ/qXdzB/86xshGQobRferfmNz7BSNQ8GB0MD0oby9/5fTQ==}
     dev: false
 
   /monaco-worker-manager@2.0.1(monaco-editor@0.41.0):
@@ -888,15 +899,17 @@ packages:
       monaco-editor: 0.41.0
     dev: false
 
-  /monaco-yaml@4.0.4(monaco-editor@0.41.0):
-    resolution: {integrity: sha512-qbM36fY1twpDUs4lhhxoXDQGUPVyYAFCPJi3E0JKgLioD8wzsD/pawgauFFXSzpMa09z8wbt/DTLXjXEehnVFA==}
+  /monaco-yaml@5.1.0(monaco-editor@0.41.0):
+    resolution: {integrity: sha512-DU+cgXSJdOFKQ4I4oLg0V+mHKq1dJX+7hbIE4fJsgegUf1zEHW3PNlGj6qabUU2HZIPJ5NmXEf005GU9YDzTYQ==}
     peerDependencies:
-      monaco-editor: '>=0.30'
+      monaco-editor: '>=0.36'
     dependencies:
       '@types/json-schema': 7.0.11
       jsonc-parser: 3.2.0
       monaco-editor: 0.41.0
+      monaco-languageserver-types: 0.2.3
       monaco-marker-data-provider: 1.1.1(monaco-editor@0.41.0)
+      monaco-types: 0.1.0
       monaco-worker-manager: 2.0.1(monaco-editor@0.41.0)
       path-browserify: 1.0.1
       prettier: 2.8.2
@@ -1071,12 +1084,28 @@ packages:
       - universal-cookie
     dev: true
 
+  /vscode-jsonrpc@8.1.0:
+    resolution: {integrity: sha512-6TDy/abTQk+zDGYazgbIPc+4JoXdwC8NHU9Pbn4UJP1fehUyZmM4RHp5IthX7A6L5KS30PRui+j+tbbMMMafdw==}
+    engines: {node: '>=14.0.0'}
+    dev: false
+
+  /vscode-languageserver-protocol@3.17.3:
+    resolution: {integrity: sha512-924/h0AqsMtA5yK22GgMtCYiMdCOtWTSGgUOkgEDX+wk2b0x4sAfLiO4NxBxqbiVtz7K7/1/RgVrVI0NClZwqA==}
+    dependencies:
+      vscode-jsonrpc: 8.1.0
+      vscode-languageserver-types: 3.17.3
+    dev: false
+
   /vscode-languageserver-textdocument@1.0.8:
     resolution: {integrity: sha512-1bonkGqQs5/fxGT5UchTgjGVnfysL0O8v1AYMBjqTbWQTFn721zaPGDYFkOKtfDgFiSgXM3KwaG3FMGfW4Ed9Q==}
     dev: false
 
   /vscode-languageserver-types@3.17.2:
     resolution: {integrity: sha512-zHhCWatviizPIq9B7Vh9uvrH6x3sK8itC84HkamnBWoDFJtzBf7SWlpLCZUit72b3os45h6RWQNC9xHRDF8dRA==}
+    dev: false
+
+  /vscode-languageserver-types@3.17.3:
+    resolution: {integrity: sha512-SYU4z1dL0PyIMd4Vj8YOqFvHu7Hz/enbWtpfnVbJHU4Nd1YNYx8u0ennumc6h48GQNeOLxmwySmnADouT/AuZA==}
     dev: false
 
   /vscode-oniguruma@1.7.0:
