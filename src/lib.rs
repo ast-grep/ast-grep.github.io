@@ -106,7 +106,7 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
   let mut new_content = Vec::<char>::new();
   for (nm, idx) in diffs {
     let range = nm.range();
-    if start < range.start {
+    if start > range.start {
       continue;
     }
     let rule = combined.get_rule(idx);

@@ -42,7 +42,7 @@ const ruleErrors = shallowRef(null)
 
 async function parseYAML(src: string) {
   const yaml = await import('js-yaml')
-  return yaml.load(src) as any
+  return yaml.loadAll(src) as any[]
 }
 
 async function doFind(): Promise<any[]> {
@@ -53,10 +53,12 @@ async function doFind(): Promise<any[]> {
     if (!src || !pattern) {
       return []
     }
-    json = {
+    json = [{
+      id: 'test-rule',
+      language: lang.value,
       rule: {pattern: query.value},
       fix: rewrite.value || '',
-    }
+    }]
   } else {
     const src = source.value
     const val = config.value;
@@ -64,12 +66,15 @@ async function doFind(): Promise<any[]> {
       return []
     }
     json = await parseYAML(val)
+    let i = 0
+    for (let rule of json) {
+      if (!rule.id) {
+        rule.id = `test-rule-${i++}`
+      }
+      rule.language = lang.value
+    }
   }
-  if (json.fix) {
-    rewrittenCode.value = fixErrors(src, json)
-  } else {
-    rewrittenCode.value = src
-  }
+  rewrittenCode.value = fixErrors(src, json)
   return findNodes(
     source.value,
     json,
@@ -87,7 +92,8 @@ watchEffect(async () => {
     return
   }
   try {
-    const matches = await doFind()
+    const result = await doFind()
+    const matches = [...result.values()].flat()
     matchedHighlights.value = matches.map(m => m.node.range)
     matchedEnvs.value = matches.map(m => m.env)
     ruleErrors.value = null
