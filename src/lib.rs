@@ -4,7 +4,7 @@ mod wasm_lang;
 
 use wasm_lang::{WasmDoc, WasmLang};
 
-use ast_grep_config::{RuleWithConstraint, SerializableRuleCore};
+use ast_grep_config::{RuleConfig, SerializableRuleCore, SerializableRuleConfig, CombinedScan,RuleWithConstraint};
 use ast_grep_core::language::Language;
 use ast_grep_core::replacer::Fixer;
 use ast_grep_core::{AstGrep, Node as SgNode};
@@ -64,12 +64,22 @@ pub async fn setup_parser(lang_name: String, parser_path: String) -> Result<(), 
 }
 
 #[wasm_bindgen(js_name = findNodes)]
-pub fn find_nodes(src: String, config: JsValue) -> Result<JsValue, JsError> {
+pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError> {
   let lang = WasmLang::get_current();
-  let config = WASMConfig::try_from(config)?;
-  let finder = config.into_matcher(lang)?;
+  let mut rules = vec![];
+  for config in configs {
+    let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
+    let finder = RuleConfig::try_from(config, &Default::default())?;
+    rules.push(finder);
+  }
+  let combined = CombinedScan::new(rules.iter().collect());
   let root = lang.ast_grep(src);
-  let ret: Vec<_> = root.root().find_all(finder).map(WasmMatch::from).collect();
+  let sets = combined.find(&root);
+  let ret: HashMap<_, _> = combined.scan(&root, sets, false).into_iter().map(|(id, matches)| {
+    let rule = combined.get_rule(id).id.clone();
+    let matches: Vec<_> = matches.into_iter().map(WasmMatch::from).collect();
+    (rule, matches)
+  }).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
 }

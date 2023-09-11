@@ -11,6 +11,7 @@ use std::sync::Mutex;
 use tree_sitter as ts;
 use tree_sitter::{InputEdit, Node, Parser, ParserError, Point, Tree};
 use wasm_bindgen::prelude::*;
+use serde::{Deserialize, Deserializer, de};
 
 #[derive(Clone, Copy)]
 pub enum WasmLang {
@@ -67,6 +68,15 @@ impl FromStr for WasmLang {
       _ => return Err(NotSupport(s.to_string())),
     })
   }
+}
+
+impl<'de> Deserialize<'de> for WasmLang {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where D: Deserializer<'de>
+    {
+        let s = String::deserialize(deserializer)?;
+        FromStr::from_str(&s).map_err(de::Error::custom)
+    }
 }
 
 static TS_LANG: Mutex<Option<ts::Language>> = Mutex::new(None);
