@@ -85,28 +85,39 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
 }
 
 #[wasm_bindgen(js_name = fixErrors)]
-pub fn fix_errors(src: String, config: JsValue) -> Result<String, JsError> {
+pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError> {
   let lang = WasmLang::get_current();
-  let mut config = WASMConfig::try_from(config)?;
-  let fixer = config
-    .fix
-    .take()
-    .expect_throw("fix is required for rewriting");
-  let fixer = if let Some(val) = &config.transform {
-    let map: HashMap<String, Value> = serde_json::from_value(val.clone())?;
-    let keys: Vec<_> = map.keys().cloned().collect();
-    Fixer::with_transform(&fixer, &lang, &keys)
-  } else {
-    Fixer::try_new(&fixer, &lang)?
-  };
+  let mut rules = vec![];
+  for config in configs {
+    let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
+    let finder = RuleConfig::try_from(config, &Default::default())?;
+    rules.push(finder);
+  }
+  let combined = CombinedScan::new(rules.iter().collect());
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
-  let finder = config.into_matcher(lang)?;
-  let edits: Vec<_> = root.root().replace_all(finder, fixer);
-  let mut new_content = Vec::<char>::new();
+  let sets = combined.find(&root);
+  let diffs = combined.diffs(&root, sets);
+  if diffs.is_empty() {
+    return Ok(src);
+  }
   let mut start = 0;
   let src: Vec<_> = src.chars().collect();
-  for edit in edits {
+  let mut new_content = Vec::<char>::new();
+  for (nm, idx) in diffs {
+    let range = nm.range();
+    if start < range.start {
+      continue;
+    }
+    let rule = combined.get_rule(idx);
+    let fixer = rule.fix.as_ref().unwrap();
+    let fixer = if let Some(val) = &rule.transform {
+      let keys: Vec<_> = val.keys().cloned().collect();
+      Fixer::with_transform(&fixer, &lang, &keys)
+    } else {
+      Fixer::try_new(&fixer, &lang)?
+    };
+    let edit = nm.make_edit(&rule.matcher, &fixer);
     new_content.extend(&src[start..edit.position]);
     new_content.extend(&edit.inserted_text);
     start = edit.position + edit.deleted_length;
