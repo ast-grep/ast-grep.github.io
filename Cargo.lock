@@ -35,9 +35,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-core"
-version = "0.12.0"
+version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5898b2d23fe39b4642f1e3746ef4c9ae871151d9443c4926730536fcbdc5eaa4"
+checksum = "d15e9e4a030b7bfa90f0dd47145937ff894392216edc25287cef6ad392e60268"
 dependencies = [
  "bit-set",
  "regex",
@@ -47,9 +47,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-language"
-version = "0.12.0"
+version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "010469aa8afcbe1878cc9ffefd5911efb435ba972371a6c7dcba3fb0c342fe79"
+checksum = "79927fc56e18e2af70fb196c3f214f19624fc5514aa700435f54d950e7a5df56"
 dependencies = [
  "ast-grep-core",
  "ignore",
