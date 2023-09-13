@@ -3,18 +3,14 @@ mod utils;
 mod wasm_lang;
 
 use wasm_lang::{WasmDoc, WasmLang};
-
-use ast_grep_config::{RuleConfig, SerializableRuleCore, SerializableRuleConfig, CombinedScan,RuleWithConstraint};
-use ast_grep_core::language::Language;
-use ast_grep_core::replacer::Fixer;
-use ast_grep_core::{AstGrep, Node as SgNode};
 use dump_tree::{dump_one_node, DumpNode};
 use utils::WasmMatch;
 
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use ast_grep_config::{RuleConfig, SerializableRuleConfig, CombinedScan};
+use ast_grep_core::language::Language;
+use ast_grep_core::replacer::Fixer;
+use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
-use std::convert::TryFrom;
 use std::collections::HashMap;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
@@ -23,35 +19,6 @@ type Node<'a> = SgNode<'a, WasmDoc>;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-#[derive(Serialize, Deserialize)]
-pub struct WASMConfig {
-  rule: Value,
-  fix: Option<String>,
-  constraints: Option<Value>,
-  transform: Option<Value>,
-  utils: Option<Value>,
-}
-
-impl TryFrom<JsValue> for WASMConfig {
-  type Error = JsError;
-  fn try_from(value: JsValue) -> Result<Self, Self::Error> {
-    Ok(from_js_val(value)?)
-  }
-}
-
-impl WASMConfig {
-  fn into_matcher(self, lang: WasmLang) -> Result<RuleWithConstraint<WasmLang>, JsError> {
-    let config = SerializableRuleCore {
-      language: lang,
-      rule: serde_json::from_value(self.rule)?,
-      constraints: self.constraints.map(serde_json::from_value).transpose()?,
-      transform: self.transform.map(serde_json::from_value).transpose()?,
-      utils: self.utils.map(serde_json::from_value).transpose()?,
-    };
-    Ok(config.get_matcher(&Default::default())?)
-  }
-}
 
 #[wasm_bindgen(js_name = initializeTreeSitter)]
 pub async fn initialize_tree_sitter() -> Result<(), JsError> {
