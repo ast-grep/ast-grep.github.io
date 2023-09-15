@@ -35,7 +35,7 @@ my-awesome-project
 
 Now you can start creating a rule! Continue using `sg new`, it will ask you what to create. But you can also use `sg new rule` to create a rule directly!
 
-You will be asked several questions about the rule going to be created. Suppose we want to create a rule to disable no-eval in JavaScript.
+You will be asked several questions about the rule going to be created. Suppose we want to create a rule to ensure no eval in JavaScript.
 
 ```markdown
 > What is your rule's name? no-eval
