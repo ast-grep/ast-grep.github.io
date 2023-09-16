@@ -40,6 +40,7 @@ import {
   watch,
   PropType,
 } from 'vue'
+import { Match } from './lang'
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -60,7 +61,7 @@ const props = defineProps({
     type: Array as PropType<number[][]>,
   },
   matches: {
-    type: Array as PropType<number[][]>,
+    type: Array as PropType<Match>,
   },
 })
 
@@ -72,10 +73,19 @@ const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 let highlights: monaco.editor.IEditorDecorationsCollection | null = null
 let matches: monaco.editor.IEditorDecorationsCollection | null = null
 
+// code fragment usually does not type check
+function disableTypeScriptCheck() {
+  monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+    noSemanticValidation: true,
+    noSyntaxValidation: false,
+  })
+}
+
 onMounted(() => {
   if (!containerRef.value) {
     return
   }
+  disableTypeScriptCheck()
   const editorInstance = monaco.editor.create(containerRef.value, {
     value: props.modelValue,
     language: props.language,
@@ -112,14 +122,17 @@ const transformHighlight = (match: number[]) => {
     }
 }
 
-const transformMatch = (match: number[]) => {
-    const [sr, sc, er, ec] = match
-    return {
-      range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
-      options: {
-        inlineClassName: 'monaco-match-span'
-      }
+const transformMatch = (match: Match) => {
+  if (match.type !== 'simple') {
+    return null
+  }
+  const [sr, sc, er, ec] = match.range
+  return {
+    range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
+    options: {
+      inlineClassName: 'monaco-match-span'
     }
+  }
 }
 
 watch(() => props.highlights, (matched) => {
@@ -128,7 +141,7 @@ watch(() => props.highlights, (matched) => {
 })
 
 watch(() => props.matches, (matched) => {
-  const ranges = matched!.map(transformMatch)
+  const ranges = matched!.map(transformMatch).filter(Boolean)
   matches?.set(ranges)
   // let oldModel = editor.value?.getModel()
   // monaco.editor.setModelMarkers(oldModel, 'owner', matched!.map(m => ({

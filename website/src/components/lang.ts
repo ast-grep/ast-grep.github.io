@@ -49,11 +49,39 @@ export async function setGlobalParser(lang: string) {
   await setupParser(lang, path)
 }
 
-export function doFind(src: string, json: any[]) {
+export type Match = {
+  type: 'rule',
+  message: string,
+  rule: string,
+  env: any,
+  range: [number, number, number, number],
+} | {
+  type: 'simple',
+  env: any,
+  range: [number, number, number, number],
+}
+
+export async function doFind(src: string, json: any[]) {
   if (!src || !json) {
     return [[], src]
   }
-  const matched = findNodes(src, json)
+  const result = await findNodes(src, json)
+  let matches: Match[] = []
+  for (let [ruleId, nodes] of result.entries()) {
+    for (let rule of json) {
+      if (rule.id !== ruleId) {
+        continue;
+      }
+      for (let nm of nodes) {
+        matches.push({
+          type: 'simple',
+          range: nm.node.range,
+          env: nm.env,
+        })
+      }
+      break;
+    }
+  }
   const fixed = fixErrors(src, json)
-  return [matched, fixed]
+  return [matches, fixed]
 }

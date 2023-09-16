@@ -84,10 +84,9 @@ watchEffect(async () => {
   // before async
   const [src, json] = [source.value, buildRules()]
   try {
-    const [result, fixed] = await doFind(src, json)
+    const [matches, fixed] = await doFind(src, json)
     rewrittenCode.value = fixed
-    const matches = [...result.values()].flat()
-    matchedHighlights.value = matches.map(m => m.node.range)
+    matchedHighlights.value = matches
     matchedEnvs.value = matches.map(m => m.env)
     ruleErrors.value = null
   } catch (e) {
