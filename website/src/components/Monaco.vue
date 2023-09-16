@@ -130,9 +130,18 @@ watch(() => props.highlights, (matched) => {
 watch(() => props.matches, (matched) => {
   const ranges = matched!.map(transformMatch)
   matches?.set(ranges)
+  // let oldModel = editor.value?.getModel()
+  // monaco.editor.setModelMarkers(oldModel, 'owner', matched!.map(m => ({
+  //     message: "Test Message",
+  //     severity: monaco.MarkerSeverity.Hint,
+  //     startLineNumber: m[0] + 1,
+  //     startColumn: m[1] + 1,
+  //     endLineNumber: m[2] + 1,
+  //     endColumn: m[3] + 1,
+  // })))
 })
 
-watch(() => props.language, (lang) => {
+watch(() => props.language, lang => {
   let oldModel = editor.value?.getModel()
   let newModel = monaco.editor.createModel(props.modelValue || '', lang)
   editor.value?.setModel(newModel)

@@ -3,14 +3,13 @@ import { shallowRef, shallowReactive, toRefs, provide, watchEffect } from 'vue'
 import Monaco from './Monaco.vue'
 import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
-import { findNodes, fixErrors } from 'ast-grep-wasm'
 import SelectLang from './SelectLang.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
 import EditorWithPanel from './EditorWithPanel.vue'
 import '../style.css'
-import { initializeParser, setGlobalParser } from './lang'
+import { initializeParser, setGlobalParser, doFind } from './lang'
 import { restoreState, Mode as ModeImport } from '../state'
 import { langLoadedKey } from './dumpTree'
 
@@ -35,37 +34,32 @@ function changeActiveEditor(active) {
   activeEditor.value = active
 }
 
+let yaml = shallowRef(null)
+import('js-yaml').then(yml => {
+  yaml.value = yml
+})
+
 const matchedHighlights = shallowRef([])
 const matchedEnvs = shallowRef([])
 const rewrittenCode = shallowRef(source.value)
 const ruleErrors = shallowRef(null)
 
-async function parseYAML(src: string) {
-  const yaml = await import('js-yaml')
-  return yaml.loadAll(src) as any[]
+function parseYAML(src: string) {
+  return yaml.value!.loadAll(src) as any[]
 }
 
-async function doFind(): Promise<any[]> {
-  const src = source.value
+function buildRules() {
   let json
-  if (mode.value === Mode.Patch) {
-    const pattern = query.value
-    if (!src || !pattern) {
-      return []
-    }
+  if (mode.value === Mode.Patch && query.value) {
     json = [{
       id: 'test-rule',
       language: lang.value,
       rule: {pattern: query.value},
       fix: rewrite.value || '',
     }]
-  } else {
-    const src = source.value
-    const val = config.value;
-    if (!src || !val) {
-      return []
-    }
-    json = await parseYAML(val)
+  } else if (config.value) {
+    const ruleStr = config.value // make sync access
+    json = parseYAML(ruleStr) as unknown[]
     let i = 0
     for (let rule of json) {
       if (!rule.id) {
@@ -74,11 +68,7 @@ async function doFind(): Promise<any[]> {
       rule.language = lang.value
     }
   }
-  rewrittenCode.value = fixErrors(src, json)
-  return findNodes(
-    source.value,
-    json,
-  )
+  return json
 }
 
 watchEffect(async () => {
@@ -88,11 +78,14 @@ watchEffect(async () => {
 })
 
 watchEffect(async () => {
-  if (!langLoaded.value) {
+  if (!langLoaded.value || !yaml.value) {
     return
   }
+  // before async
+  const [src, json] = [source.value, buildRules()]
   try {
-    const result = await doFind()
+    const [result, fixed] = await doFind(src, json)
+    rewrittenCode.value = fixed
     const matches = [...result.values()].flat()
     matchedHighlights.value = matches.map(m => m.node.range)
     matchedEnvs.value = matches.map(m => m.env)
