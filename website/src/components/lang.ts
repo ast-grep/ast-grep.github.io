@@ -51,6 +51,7 @@ export async function setGlobalParser(lang: string) {
 
 export type Match = {
   type: 'rule',
+  severity: string,
   message: string,
   rule: string,
   env: any,
@@ -72,12 +73,25 @@ export async function doFind(src: string, json: any[]) {
       if (rule.id !== ruleId) {
         continue;
       }
-      for (let nm of nodes) {
-        matches.push({
-          type: 'simple',
-          range: nm.node.range,
-          env: nm.env,
-        })
+      if (rule.message && ['info', 'warning', 'error'].includes(rule.severity)) {
+        for (let nm of nodes) {
+          matches.push({
+            type: 'rule',
+            rule: rule.id,
+            severity: rule.severity,
+            message: rule.message,
+            range: nm.node.range,
+            env: nm.env,
+          })
+        }
+      } else {
+        for (let nm of nodes) {
+          matches.push({
+            type: 'simple',
+            range: nm.node.range,
+            env: nm.env,
+          })
+        }
       }
       break;
     }

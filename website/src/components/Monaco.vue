@@ -135,6 +135,29 @@ const transformMatch = (match: Match) => {
   }
 }
 
+const mapping = {
+  info: monaco.MarkerSeverity.Info,
+  warning: monaco.MarkerSeverity.Warning,
+  error: monaco.MarkerSeverity.Error,
+}
+
+function toModelMark(match: Match) {
+  if (match.type !== 'rule') {
+    return null
+  }
+  const m = match.range
+  console.log(match)
+  return {
+    code: match.rule,
+    message: match.message,
+    severity: mapping[match.severity],
+    startLineNumber: m[0] + 1,
+    startColumn: m[1] + 1,
+    endLineNumber: m[2] + 1,
+    endColumn: m[3] + 1,
+  }
+}
+
 watch(() => props.highlights, (matched) => {
   const ranges = matched!.map(transformHighlight)
   highlights?.set(ranges)
@@ -143,15 +166,9 @@ watch(() => props.highlights, (matched) => {
 watch(() => props.matches, (matched) => {
   const ranges = matched!.map(transformMatch).filter(Boolean)
   matches?.set(ranges)
-  // let oldModel = editor.value?.getModel()
-  // monaco.editor.setModelMarkers(oldModel, 'owner', matched!.map(m => ({
-  //     message: "Test Message",
-  //     severity: monaco.MarkerSeverity.Hint,
-  //     startLineNumber: m[0] + 1,
-  //     startColumn: m[1] + 1,
-  //     endLineNumber: m[2] + 1,
-  //     endColumn: m[3] + 1,
-  // })))
+  const modelMarks = matched!.map(toModelMark).filter(Boolean)
+  let oldModel = editor.value?.getModel()
+  monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
 })
 
 watch(() => props.language, lang => {
