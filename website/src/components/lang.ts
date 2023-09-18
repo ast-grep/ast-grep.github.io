@@ -62,6 +62,14 @@ export type Match = {
   range: [number, number, number, number],
 }
 
+function shouldDisplayDiagnostic(rule: any) {
+  return (
+    !/test-rule-\d+/.test(rule.id) &&
+    rule.message &&
+    ['info', 'warning', 'error'].includes(rule.severity)
+  )
+}
+
 export async function doFind(src: string, json: any[]) {
   if (!src || !json) {
     return [[], src]
@@ -73,7 +81,7 @@ export async function doFind(src: string, json: any[]) {
       if (rule.id !== ruleId) {
         continue;
       }
-      if (rule.message && ['info', 'warning', 'error'].includes(rule.severity)) {
+      if (shouldDisplayDiagnostic(rule)) {
         for (let nm of nodes) {
           matches.push({
             type: 'rule',
