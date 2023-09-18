@@ -51,7 +51,7 @@ The object specify the method to find matching AST nodes. See details in [rule o
 
 ## `fix`
 
-* type: `Object`
+* type: `String`
 * required: false
 
 A pattern to auto fix the issue. It can reference meta variables appeared in the rule.
