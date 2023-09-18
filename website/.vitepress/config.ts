@@ -91,6 +91,7 @@ export default defineConfig({
           { text: 'Rule Object', link: '/reference/rule.html' },
           { text: 'API Reference', link: '/reference/api.html' },
           { text: 'Language List', link: '/reference/languages.html' },
+          { text: 'Playground Manual', link: '/reference/playground.html' },
         ],
         collapsed: true,
       },
