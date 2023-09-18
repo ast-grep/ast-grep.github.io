@@ -21,6 +21,10 @@ There will be three steps to achieve this:
 2. Compile the custom language as a dynamic library.
 3. Register the custom language in ast-grep project config.
 
+:::tip Pro Tip
+You can also reuse the dynamic library compiled by neovim. See [this link](https://github.com/nvim-treesitter/nvim-treesitter/#changing-the-parser-install-directory) to find where the parsers are.
+:::
+
 ## Prepare Tree-sitter Tool and Parser
 
 Before you can compile a custom language as a dynamic library, you need to install the Tree-sitter CLI tool and get the Tree-sitter grammar for your custom language.
