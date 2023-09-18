@@ -1,7 +1,10 @@
 <template>
   <header>
     <details>
-      <summary class="description">SG playground: Write Code to Match Code</summary>
+      <summary class="description">
+        SG playground: Write Code to Match Code.
+        <a href="/reference/playground" target="_blank">Manual 🔗</a>
+      </summary>
       <hr/>
         <ul>
           <li>
