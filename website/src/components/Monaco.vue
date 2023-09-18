@@ -109,7 +109,10 @@ onMounted(() => {
       emits('changeCursor', e)
   })
   highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformHighlight) || [])
-  matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch) || [])
+  matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch).filter(Boolean) || [])
+  const modelMarks = props.matches?.map(toModelMark).filter(Boolean)
+  let oldModel = editorInstance.getModel()
+  monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
 })
 
 const transformHighlight = (match: number[]) => {
