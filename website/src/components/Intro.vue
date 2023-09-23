@@ -1,7 +1,7 @@
 <template>
   <header>
     <details>
-      <summary class="description">
+      <summary class="description vp-doc">
         SG playground: Write Code to Match Code.
         <a href="/reference/playground" target="_blank">Manual 🔗</a>
       </summary>
