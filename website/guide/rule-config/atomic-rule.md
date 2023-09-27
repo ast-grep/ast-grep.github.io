@@ -25,7 +25,7 @@ The above rule will match code like `console.log('Hello World')`.
 
 ```yaml
 pattern:
-  kind: field_definition
+  selector: field_definition
   context: class { $F }
 ```
 
