@@ -21,13 +21,19 @@ rule:
 
 The above rule will match code like `console.log('Hello World')`.
 
-`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub syntax node specified by user in contextual pattern. For example, we can select class field in JavaScript by this pattern.
+`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub syntax node specified by user in contextual pattern.
+
+Object style pattern is pretty useful for ambiguous code snippet.
+For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`.
+
+However, we can provide more code to avoid the ambiguity, and instruct ast-grep to select the `field_definition` node as pattern.
 
 ```yaml
 pattern:
   selector: field_definition
-  context: class { $F }
+  context: class A { $FIELD = $INIT }
 ```
+Other examples are [function call in Go](https://github.com/ast-grep/ast-grep/issues/646) and [function parameter in Rust](https://github.com/ast-grep/ast-grep/issues/648).
 
 ## `kind`
 

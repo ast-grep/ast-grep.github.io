@@ -22,6 +22,10 @@ deeplyNested({
 
 ::: warning
 Pattern code must be valid code that tree-sitter can parse.
+
+[ast-grep playground](/playground.html) is a useful tool to confirm pattern is parsed correctly.
+
+If ast-grep fails to parse code as expected, you can try give it more context by using [object-style pattern](/reference/rule.html#pattern).
 :::
 
 ## Meta Variable
@@ -157,5 +161,7 @@ Pattern is a fast and easy way to match code. But it is not as powerful as [rule
 We will cover using rules in next chapter.
 
 :::tip Pro Tip
-You can write a standalone [rule file](/reference/rule.html) and the command `sg scan -r rule.yml` to perform an [ad-hoc search](/guide/tooling-overview.html#run-one-single-query-or-one-single-rule).
+Pattern can also be an object instead of string in YAML rule.
+
+It is very useful to avoid ambiguity in code snippet. See [here](/guide/rule-config/atomic-rule.html#pattern) for more details.
 :::

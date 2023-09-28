@@ -167,3 +167,7 @@ See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcH
 
 After you have written your rule, you can test it with ast-grep's builtin `test` command.
 Let's see it in [next section](/guide/test-rule).
+
+:::tip Pro Tip
+You can write a standalone [rule file](/reference/rule.html) and the command `sg scan -r rule.yml` to perform an [ad-hoc search](/guide/tooling-overview.html#run-one-single-query-or-one-single-rule).
+:::
