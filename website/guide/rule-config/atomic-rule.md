@@ -21,12 +21,16 @@ rule:
 
 The above rule will match code like `console.log('Hello World')`.
 
-`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub syntax node specified by user in contextual pattern.
+By default, a _string_ `pattern` is parsed and matched as a whole.
 
-Object style pattern is pretty useful for ambiguous code snippet.
+We can also use an _object_ to specify a sub-syntax node to match within a larger context. It consists of an object with two properties: `context` and `selector`.
+
+* `context`: defines the surrounding code that helps to resolve any ambiguity in the syntax.
+* `selector`: defines the sub-syntax node kind that is the actual matcher of the pattern.
+
 For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`.
 
-However, we can provide more code to avoid the ambiguity, and instruct ast-grep to select the `field_definition` node as pattern.
+However, we can provide more code to avoid the ambiguity, and instruct ast-grep to select the `field_definition` node as the pattern target.
 
 ```yaml
 pattern:

@@ -21,7 +21,10 @@ A rule is called **positive** if it only matches nodes with specific kinds. For 
 
 A `String` pattern will match one single AST node according to [pattern syntax](/guide/pattern-syntax).
 
-`pattern` also accepts an `Object` with `context` and `selector`. Such object-style pattern is used to match sub AST node specified by user in contextual pattern. For example, we can select class field in JavaScript by this pattern.
+`pattern` also accepts an `Object` with `context` and `selector`.
+
+By default `pattern` parses code as a standalone file. You can use the `selector` field  to pull out the specific part to match.
+For example, we can select class field in JavaScript by this pattern.
 
 ```yaml
 pattern:
