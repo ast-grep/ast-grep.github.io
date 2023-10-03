@@ -8,6 +8,7 @@ ast-grep's tooling supports multiple stages of your development. Here is a list 
 * Routinely check your codebase: `sg scan`.
 * Generate ast-grep's scaffolding files: `sg new`.
 * Develop new ast-grep rules and test them: `sg test`.
+* Start Language Server for editor integration: `sg lsp`.
 
 We will walk through some important features that are common to these commands.
 
@@ -178,6 +179,51 @@ INITIAL_QUERY="${*:-}"
     --preview 'bat --color=always {1} --highlight-line {2}' \
     --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
     --bind 'enter:become(vim {1} +{2})'
+```
+
+## Editor Integration
+
+### VSCode
+
+We have a preview version of [VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode&ssr=false#overview) in the market place.
+
+
+### Neovim
+
+#### nvim-lspconfig
+
+The recommended setup is using [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig).
+
+```lua
+local configs = require 'lspconfig.configs'
+configs.ast_grep = {
+  default_config = {
+    cmd = {'sg', 'lsp'};
+    filetypes = {'typescript'};
+    single_file_support = true;
+    root_dir = nvim_lsp.util.root_pattern('.git', 'sgconfig.yml');
+  };
+}
+```
+
+#### coc.nvim
+
+Please see [coc-ast-grep](https://github.com/yaegassy/coc-ast-grep)
+
+You need to have coc.nvim installed for this extension to work. e.g. vim-plug:
+
+```vim
+Plug 'yaegassy/coc-ast-grep', {'do': 'yarn install --frozen-lockfile'}
+```
+
+#### telescope.nvim
+
+[telescope-sg](https://github.com/Marskey/telescope-sg) is the ast-grep picker for telescope.nvim.
+
+Usage:
+
+```vim
+Telescope ast_grep
 ```
 
 ## Shell Completions
