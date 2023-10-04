@@ -217,4 +217,4 @@ Later transformations can use the variables that were transformed before. This a
 
 ## See More in Example Catalog
 
-If you want to see more examples of using ast-grep to rewrite code, you can check out our [example catalog]. There you can find various use cases and scenarios where ast-grep can help you refactor and improve your code. You can also contribute your own examples and share them with other users.
+If you want to see more examples of using ast-grep to rewrite code, you can check out our [example catalog](/catalog/). There you can find various use cases and scenarios where ast-grep can help you refactor and improve your code. You can also contribute your own examples and share them with other users.
