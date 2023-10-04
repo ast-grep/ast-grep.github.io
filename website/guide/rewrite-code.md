@@ -34,9 +34,9 @@ y = foo(2)
 print(y)
 ```
 
-We want to change the name of the function `foo` to `baz`, and also change its parameter name from `x` to `n`. We can write a YAML rule file named `change_name.yml` with the following content:
+We want to only change the name of the function `foo` to `baz`, but not variable/method/class. We can write a YAML rule file named `change_func.yml` with the following content:
 
-```yaml
+```yaml{7-9,16}
 id: change_def
 language: Python
 rule:
@@ -52,30 +52,25 @@ fix: |-
 id: change_param
 rule:
   pattern: foo($X)
-fix: baz(n)
+fix: baz($X)
 ```
 
-The first rule matches the definition of the function `foo`, and replaces it with `baz`. The second rule matches the calls of the function `foo`, and replaces them with `baz(n)`. Note that we use `$X` and `$$$S` as [meta](/guide/pattern-syntax.html#meta-variable) [variables](/guide/pattern-syntax.html#multi-meta-variable), which can match any expression and any statement, respectively. We can run:
+The first rule matches the definition of the function `foo`, and replaces it with `baz`. The second rule matches the calls of the function `foo`, and replaces them with `baz`. Note that we use `$X` and `$$$S` as [meta](/guide/pattern-syntax.html#meta-variable) [variables](/guide/pattern-syntax.html#multi-meta-variable), which can match any expression and any statement, respectively. We can run:
 
 ```bash
-sg scan -r change_name.yml test.py
+sg scan -r change_func.yml test.py
 ```
 
 This will show us the following diff:
 
-```diff
---- test.py
-+++ test.py
-@@ -1,7 +1,7 @@
--def foo(x):
--    return x + 1
-+def baz(n):
-+    return n + 1
+```python
+def foo(x): // [!code --]
+def baz(n): // [!code ++]
+    return n + 1
 
--y = foo(2)
--print(y)
-+y = baz(n)
-+print(n)
+y = foo(2) // [!code --]
+y = baz(2) // [!code ++]
+print(y)
 ```
 
 We can see that the function name and parameter name are changed as we expected.
@@ -169,33 +164,56 @@ Note that the `return 456` line has an indentation of four spaces.
 This is because it has two spaces indentation as a part of the fix string, and two additional spaces because the fix string as a whole is inside the `if` statement in the original code.
 
 
-## Use `transform` in Rewrite
+## Use `transform` in Rewrite <Badge type="warning" text="Experimental" />
 
-Sometimes, we may want to apply some transformations to the meta variables in the fix part of a YAML rule. For example, we may want to change the case, add or remove prefixes or suffixes, or perform some arithmetic operations. ast-grep provides a `transform` key that allows us to specify such transformations. For example, if we have a rule like this:
+Sometimes, we may want to apply some transformations to the meta variables in the fix part of a YAML rule. For example, we may want to change the case, add or remove prefixes or suffixes. ast-grep provides a `transform` key that allows us to specify such transformations.
 
-```yaml
-id: change_case
+`transform` accepts a **dictionary** of which:
+* the _key_ is the **new variable name** to be introduced and
+* the _value_ is a **transformation object** that specifies which meta-variable is transformed and how.
+
+A transformation object has a key indicating which string operation will be performed on the meta variable, and the value of that key is another object (usually with the source key). Different string operation keys expect different object values.
+
+[Converting generator expression](https://github.com/ast-grep/ast-grep/discussions/430) to list comprehension in Python is a good example to illustrate `transform`.
+
+More concretely, we want to achieve diffs like below:
+
+```python
+"".join(i for i in iterable) // [!code --]
+"".join([i for i in iterable]) // [!code ++]
+```
+
+This rule will convert the generator inside `join` to a list.
+
+```yaml{5-11}
+id: convert_generator
 rule:
-  pattern: $X = $Y.upper()
-fix: $X.lower() = $Y
-transform: lower($X)
+  kind: generator_expression
+  pattern: $GEN
+transform:            # 1. the transform option
+  LIST:               # 2. New variable name
+    substring:        # 3. the transform operation name
+      source: $GEN    # 4.1 transformation source
+      startChar: 1    # 4.2 transformation argument
+      endChar: -1
+fix: '([$LIST])'      # 5. use the new variable in fix
 ```
 
-This rule will change the case of both sides of an assignment statement that involves calling the `upper` method on the right-hand side. For example, if we have a code like this:
+Let's discuss the API step by step:
 
-```python
-name = "Alice".upper()
-greeting = "Hello".upper()
-```
+1. The `transform` key is used to define one or more transformations that we want to apply to the meta variables in the pattern part of the rule.
+2. The `LIST` key is the new variable name that we can use in `fix` or later transformation. We can choose any name as long as it does not conflict with any existing meta variable names. **Note, the new variable name does not start with `$`.**
+3. The `substring` key is the transform operation name that we want to use. This operation will extract a substring from the source string based on the given start and end characters.
+4. `substring` accepts an object
+    1. The `source` key specifies which meta variable we want to transform. **It should have `$` prefix.** In this case, it is `$GEN` that which matches the generator expression in the code.
+    2. The `startChar` and `endChar` keys specify the indices of the start and end characters of the substring that we want to extract. In this case, we want to extract everything except the wrapping parentheses, which are the first and last characters: `(` and `)`.
+5. The `fix` key specifies the new code that we want to replace the matched pattern with. We use the new variable `$LIST` in the fix part, and wrap it with `[` and `]` to make it a list comprehension.
 
-The rule will rewrite it as:
+We have several different transformations avialable now. Please check out [ast-grep#436](https://github.com/ast-grep/ast-grep/issues/436) for more details.
 
-```python
-alice = "Alice"
-hello = "Hello"
-```
-
-Note that we use the `transform` key to specify that we want to apply the `lower` function to the meta variable `$X`. This function will convert any string to lowercase. ast-grep provides several built-in functions for common transformations, such as `upper`, `lower`, `capitalize`, `snake_case`, `camel_case`, etc. We can also define our own custom functions using Python syntax.
+:::tip Pro Tips
+Later transformations can use the variables that were transformed before. This allows you to stack string operations and achieve complex transformations.
+:::
 
 ## See More in Example Catalog
 
