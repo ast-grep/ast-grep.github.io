@@ -82,7 +82,7 @@ The idea of ast-grep can be applied to many other languages!
 
 ## Features
 
-There are a lot of existing tools that looks like ast-grep, notable predecessor including [Semgrep](https://semgrep.dev/), comby, shisho, gogocode.
+There are a lot of existing tools that looks like ast-grep, notable predecessor including [Semgrep](https://semgrep.dev/), [comby](https://comby.dev/), [shisho](https://shisho.dev/), [gogocode](https://gogocode.io/).
 
 What makes ast-grep stands out is:
 
@@ -95,4 +95,3 @@ You can start from creating a one-liner to rewrite code at command line with min
 
 ### Pragmatism
 ast-grep comes with batteries included. Interactive code modification is available. Linter and language server work out of box when you install the command line tool. ast-grep is also shipped with test à for rule authors.
-

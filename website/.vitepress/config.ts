@@ -46,8 +46,8 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Guide',
+        link: '/guide/introduction.html',
         items: [
-          { text: 'Introduction', link: '/guide/introduction.html' },
           { text: 'Quick Start', link: '/guide/quick-start.html' },
           { text: 'Pattern Syntax', link: '/guide/pattern-syntax.html' },
           { text: 'Scan Project', link: '/guide/scan-project.html' },
