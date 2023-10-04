@@ -122,7 +122,7 @@ sg new [COMMAND] [OPTIONS] [NAME]
 
 ## `sg lsp`
 
-Start a language server. This is useful for editor integration. See [editor integration](/guide/editor-integration.html) for more details.
+Start a language server. This is useful for editor integration. See [editor integration](/guide/tooling-overview.html#editor-integration) for more details.
 
 ### Usage
 
