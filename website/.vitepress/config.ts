@@ -7,6 +7,8 @@ gtag('js', new Date());
 gtag('config', 'G-EZSJ3YF2RG');
 `
 
+const monacoPrefix = 'monaco-editor/esm/vs'
+
 export default defineConfig({
   lang: 'en-US',
   title: 'ast-grep',

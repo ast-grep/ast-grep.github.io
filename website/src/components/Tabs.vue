@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { defineComponent, defineProps, defineEmits, PropType, h } from 'vue'
+import { defineComponent, PropType, h } from 'vue'
 
-const props = defineProps({
+defineProps({
   modelValue: String,
   modeText: Object as PropType<Record<string, string>>,
 })
@@ -83,7 +83,7 @@ const Wrapper = defineComponent({
   background: var(--vp-c-bg);
   border: 1px solid #eee;
   border-radius: 0 5px 5px 5px;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
 }
 .content-wrapper {

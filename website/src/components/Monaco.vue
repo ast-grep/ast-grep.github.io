@@ -1,34 +1,6 @@
 <script lang="ts">
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
-import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-import yamlWorker from 'monaco-yaml/yaml.worker?worker'
 // LOL vue sfc compiler does not allow type alias and dynamic import co-exist
 import type monaco from 'monaco-editor'
-
-// @ts-ignore
-self.MonacoEnvironment = {
-	getWorker(_: any, label: string) {
-		if (label === 'json') {
-			return new jsonWorker()
-		}
-		if (label === 'css' || label === 'scss' || label === 'less') {
-			return new cssWorker()
-		}
-		if (label === 'html' || label === 'handlebars' || label === 'razor') {
-			return new htmlWorker()
-		}
-		if (label === 'typescript' || label === 'javascript') {
-			return new tsWorker()
-		}
-    if (label === 'yaml') {
-      return new yamlWorker()
-    }
-		return new editorWorker()
-	}
-}
 </script>
 
 <script lang="ts" setup>
@@ -41,6 +13,9 @@ import {
   PropType,
 } from 'vue'
 import { Match } from './lang'
+import { setup } from './monaco'
+
+const monaco = await setup()
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void,
@@ -65,27 +40,16 @@ const props = defineProps({
   },
 })
 
-const monaco = await import('monaco-editor')
-
 const containerRef = ref<HTMLDivElement | null>(null)
 const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
 let highlights: monaco.editor.IEditorDecorationsCollection | null = null
 let matches: monaco.editor.IEditorDecorationsCollection | null = null
 
-// code fragment usually does not type check
-function disableTypeScriptCheck() {
-  monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-    noSemanticValidation: true,
-    noSyntaxValidation: false,
-  })
-}
-
 onMounted(() => {
   if (!containerRef.value) {
     return
   }
-  disableTypeScriptCheck()
   const editorInstance = monaco.editor.create(containerRef.value, {
     value: props.modelValue,
     language: props.language,
