@@ -14,6 +14,7 @@ rule:
     - pattern: await $PROMISE
     - inside:
         kind: for_in_statement
+        stopBy: end
 ```
 The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule.
 For example, the above rule can be read as "matches a node that is `await` expression and is inside a for loop".
@@ -30,6 +31,7 @@ rule:
           - kind: for_statement
           - kind: while_statement
           - kind: do_statement
+        stopBy: end
 ```
 
 The above rule will match different kinds of loops, like `for`, `for-in`, `while` and `do-while`.
