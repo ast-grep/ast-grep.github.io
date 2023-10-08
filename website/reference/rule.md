@@ -51,6 +51,8 @@ A [Rust regular expression](https://docs.rs/regex/latest/regex/) to match the no
 
 A relational rule object, which is a rule object with two additional fields `stopBy` and `field`.
 
+The target node must appear inside of another node matching the `inside` sub-rule.
+
 Example:
 ```yaml
 inside:
@@ -65,6 +67,8 @@ Please refer to [relational rule guide](/guide/rule-config/relational-rule) for 
 * type: `Object`
 
 A relational rule object, which is a rule object with two additional fields `stopBy` and `field`.
+
+The target node must has a descendant node matching the `has` sub-rule.
 
 Example:
 ```yaml
@@ -81,12 +85,16 @@ Please refer to [relational rule guide](/guide/rule-config/relational-rule) for 
 
 A relational rule object, which is a rule object with one additional field `stopBy`.
 
+The target node must appear before another node matching the `precedes` sub-rule.
+
 Note `precedes` does not have `field` option.
 
 ### `follows`
 * type: `Object`
 
 A relational rule object, which is a rule object with one additional field `stopBy`.
+
+The target node must appear after another node matching the `follows` sub-rule.
 
 Note `follows` does not have `field` option.
 
