@@ -78,7 +78,7 @@
       ]
     },
     "rule": {
-      "description": "A rule object to find matching AST nodes",
+      "description": "A rule object to find matching AST nodes. We have three categories of rules in ast-grep.\n\n* Atomic: the most basic rule to match AST. We have two variants: Pattern and Kind.\n\n* Relational: filter matched target according to their position relative to other nodes.\n\n* Composite: use logic operation all/any/not to compose the above rules to larger rules.\n\nEvery rule has it's unique name so we can combine several rules in one object.",
       "allOf": [
         {
           "$ref": "#/definitions/SerializableRule"
@@ -124,6 +124,7 @@
   },
   "definitions": {
     "Convert": {
+      "description": "Converts the source meta variable's text content to a specified case format.",
       "type": "object",
       "required": [
         "source",
@@ -131,6 +132,7 @@
       ],
       "properties": {
         "separatedBy": {
+          "description": "optional separators to specify how to separate word",
           "type": [
             "array",
             "null"
@@ -140,10 +142,16 @@
           }
         },
         "source": {
+          "description": "source meta variable to be transformed",
           "type": "string"
         },
         "toCase": {
-          "$ref": "#/definitions/StringCase"
+          "description": "the target case format to convert the text content to",
+          "allOf": [
+            {
+              "$ref": "#/definitions/StringCase"
+            }
+          ]
         }
       }
     },
@@ -169,6 +177,7 @@
       "type": "string"
     },
     "PatternStyle": {
+      "description": "A String pattern will match one single AST node according to pattern syntax. Or an object with field `context` and `selector`.",
       "anyOf": [
         {
           "type": "string"
@@ -181,9 +190,11 @@
           ],
           "properties": {
             "context": {
+              "description": "The surrounding code that helps to resolve any ambiguity in the syntax.",
               "type": "string"
             },
             "selector": {
+              "description": "The sub-syntax node kind that is the actual matcher of the pattern.",
               "type": "string"
             }
           }
@@ -191,14 +202,23 @@
       ]
     },
     "Relation": {
-      "description": "A relational rule object, which is a rule object with two additional fields stopBy and field.",
       "type": "object",
       "properties": {
         "all": {
-          "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+          "description": "A list of sub rules and matches a node if all of sub rules match. The meta variables of the matched node contain all variables from the sub-rules.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+            }
+          ]
         },
         "any": {
-          "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+          "description": "A list of sub rules and matches a node if any of sub rules match. The meta variables of the matched node only contain those of the matched sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+            }
+          ]
         },
         "field": {
           "type": [
@@ -207,13 +227,28 @@
           ]
         },
         "follows": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`follows` accepts a relational rule object. the target node must appear after another node matching the `follows` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "has": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`has` accepts a relational rule object. the target node must has a descendant node matching the `has` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "inside": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`inside` accepts a relational rule object. the target node must appear inside of another node matching the `inside` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "kind": {
           "description": "The kind name of the node to match. You can look up code's kind names in playground.",
@@ -224,16 +259,36 @@
           ]
         },
         "matches": {
-          "$ref": "#/definitions/Maybe_String"
+          "description": "A utility rule id and matches a node if the utility rule matches.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_String"
+            }
+          ]
         },
         "not": {
-          "$ref": "#/definitions/Maybe_SerializableRule"
+          "description": "A single sub-rule and matches a node if the sub rule does not match.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_SerializableRule"
+            }
+          ]
         },
         "pattern": {
-          "$ref": "#/definitions/Maybe_PatternStyle"
+          "description": "A pattern string or a pattern object.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_PatternStyle"
+            }
+          ]
         },
         "precedes": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`precedes` accepts a relational rule object. the target node must appear before another node matching the `precedes` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "regex": {
           "description": "A Rust regular expression to match the node's text. https://docs.rs/regex/latest/regex/#syntax",
@@ -254,6 +309,7 @@
       }
     },
     "Replace": {
+      "description": "Replaces a substring in the meta variable's text content with another string.",
       "type": "object",
       "required": [
         "by",
@@ -262,12 +318,15 @@
       ],
       "properties": {
         "by": {
+          "description": "the replacement string",
           "type": "string"
         },
         "replace": {
+          "description": "a regex to find substring to be replaced",
           "type": "string"
         },
         "source": {
+          "description": "source meta variable to be transformed",
           "type": "string"
         }
       }
@@ -327,23 +386,47 @@
       ]
     },
     "SerializableRule": {
-      "description": "We have three kinds of rules in ast-grep.\n\n* Atomic: the most basic rule to match AST. We have two variants: Pattern and Kind.\n\n* Relational: filter matched target according to their position relative to other nodes.\n\n* Composite: use logic operation all/any/not to compose the above rules to larger rules.\n\nEvery rule has it's unique name so we can combine several rules in one object.",
       "type": "object",
       "properties": {
         "all": {
-          "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+          "description": "A list of sub rules and matches a node if all of sub rules match. The meta variables of the matched node contain all variables from the sub-rules.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+            }
+          ]
         },
         "any": {
-          "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+          "description": "A list of sub rules and matches a node if any of sub rules match. The meta variables of the matched node only contain those of the matched sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Array_of_SerializableRule"
+            }
+          ]
         },
         "follows": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`follows` accepts a relational rule object. the target node must appear after another node matching the `follows` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "has": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`has` accepts a relational rule object. the target node must has a descendant node matching the `has` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "inside": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`inside` accepts a relational rule object. the target node must appear inside of another node matching the `inside` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "kind": {
           "description": "The kind name of the node to match. You can look up code's kind names in playground.",
@@ -354,16 +437,36 @@
           ]
         },
         "matches": {
-          "$ref": "#/definitions/Maybe_String"
+          "description": "A utility rule id and matches a node if the utility rule matches.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_String"
+            }
+          ]
         },
         "not": {
-          "$ref": "#/definitions/Maybe_SerializableRule"
+          "description": "A single sub-rule and matches a node if the sub rule does not match.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_SerializableRule"
+            }
+          ]
         },
         "pattern": {
-          "$ref": "#/definitions/Maybe_PatternStyle"
+          "description": "A pattern string or a pattern object.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_PatternStyle"
+            }
+          ]
         },
         "precedes": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "description": "`precedes` accepts a relational rule object. the target node must appear before another node matching the `precedes` sub-rule.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Maybe_Relation"
+            }
+          ]
         },
         "regex": {
           "description": "A Rust regular expression to match the node's text. https://docs.rs/regex/latest/regex/#syntax",
@@ -451,12 +554,14 @@
       ]
     },
     "Substring": {
+      "description": "Extracts a substring from the meta variable's text content.\n\nBoth `start_char` and `end_char` support negative indexing, which counts character from the end of an array, moving backwards.",
       "type": "object",
       "required": [
         "source"
       ],
       "properties": {
         "endChar": {
+          "description": "optional ending character index of the substring, defaults to the end of the string.",
           "type": [
             "integer",
             "null"
@@ -464,9 +569,11 @@
           "format": "int32"
         },
         "source": {
+          "description": "source meta variable to be transformed",
           "type": "string"
         },
         "startChar": {
+          "description": "optional starting character index of the substring, defaults to 0.",
           "type": [
             "integer",
             "null"
@@ -476,6 +583,7 @@
       }
     },
     "Transformation": {
+      "description": "Represents a transformation that can be applied to a matched AST node. Available transformations are `substring`, `replace` and `convert`.",
       "oneOf": [
         {
           "type": "object",
