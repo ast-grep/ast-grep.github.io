@@ -24,7 +24,7 @@
     "@algolia/client-search": "4.20.0",
     "markdown-it": "^13.0.1",
     "typescript": "5.2.2",
-    "vite": "4.4.9",
+    "vite": "4.4.11",
     "vitepress": "1.0.0-rc.20",
     "vue-tsc": "1.8.18"
   }
