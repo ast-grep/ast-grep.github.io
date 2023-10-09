@@ -40,8 +40,8 @@ devDependencies:
     specifier: 5.2.2
     version: 5.2.2
   vite:
-    specifier: 4.4.9
-    version: 4.4.9
+    specifier: 4.4.11
+    version: 4.4.11
   vitepress:
     specifier: 1.0.0-rc.20
     version: 1.0.0-rc.20(@algolia/client-search@4.20.0)(search-insights@2.6.0)
@@ -1008,8 +1008,8 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: true
 
-  /vite@4.4.9:
-    resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
+  /vite@4.4.11:
+    resolution: {integrity: sha512-ksNZJlkcU9b0lBwAGZGGaZHCMqHsc8OpgtoYhsQ4/I2v5cnpmmmqe5pM4nv/4Hn6G/2GhTdj0DhZh2e+Er1q5A==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -1065,7 +1065,7 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.1.0
       shiki: 0.14.4
-      vite: 4.4.9
+      vite: 4.4.11
       vue: 3.3.4
     transitivePeerDependencies:
       - '@algolia/client-search'
