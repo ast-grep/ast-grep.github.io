@@ -70,7 +70,7 @@ function shouldDisplayDiagnostic(rule: any) {
   )
 }
 
-export async function doFind(src: string, json: any[]) {
+export async function doFind(src: string, json: any[]): Promise<[Match[], string]> {
   if (!src || !json) {
     return [[], src]
   }

@@ -73,11 +73,29 @@ const defaultState = {
 
 export function restoreState(): State {
   try {
-    return {
-      ...defaultState,
-      ...deserialize(location.hash.slice(1)),
+    if (location.hash.length > 1) {
+      return {
+        ...defaultState,
+        ...deserialize(location.hash.slice(1)),
+      }
     }
+    const stateStr = localStorage.getItem(LOCAL_STORAGE_KEY)
+    if (stateStr) {
+      return {
+        ...defaultState,
+        ...JSON.parse(stateStr),
+      }
+    }
+    return defaultState
   } catch {
     return defaultState
+  }
+}
+const LOCAL_STORAGE_KEY = 'ast-grep-playground-state'
+export function storeStateInLocalStorage(state: State) {
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state))
+  } catch {
+    // pass
   }
 }

@@ -1,10 +1,11 @@
-<script setup>
+<script lang="ts" setup>
+import { PropType, watch } from 'vue';
 import Share from '../icons/Share.vue'
-import {serialize} from '../state'
+import { serialize, State, storeStateInLocalStorage } from '../state'
 import { showToast } from './Toast.vue'
 
 const props = defineProps({
-  state: Object,
+  state: Object as PropType<State>,
   active: String,
 })
 
@@ -13,6 +14,10 @@ async function onShare() {
   await navigator.clipboard.writeText(location.href)
   showToast('Sharable URL has been copied to clipboard!')
 }
+
+watch(() => props.state, state => {
+  storeStateInLocalStorage(state)
+}, { deep: true })
 
 </script>
 
