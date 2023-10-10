@@ -16,24 +16,30 @@ Unfortunately wasm-pack does not support compiling C dependency with stdlib.
 We have to use web-tree-sitter
 
 To setup:
+
 1. Install wasm-pack https://rustwasm.github.io/wasm-pack/, pnpm, cargo
 2. Clone the repo
 3. `wasm-pack build --target web`. This will build the wasm in `pkg` folder
 4. `pnpm install`
 5. `pnpm dev`
 6. visit localhost:5173. This will make vitepress cache the dependency.
-7. `cd` to `website/.vitepress/cache/deps`
-8. `ln -s ../../../../pkg/ast_grep_wasm_bg.wasm`. This is needed for dev-time wasm bundling.
-
+7. Run the following script, which is needed for dev-time wasm bundling:
+   ```sh
+   cd website/.vitepress/cache/deps
+   ln -s ../../../../pkg/ast_grep_wasm_bg.wasm
+   cd ../../../..
+   ```
 
 ---
+
 emcc setup is not used any more
 
 ~~
+
 1. Install [emcc](https://emscripten.org/docs/getting_started/downloads.html)
 2. `rustup target add wasm32-unknown-emscripten`
 3. cargo install -f wasm-bindgen-cli
-4. EMCC_CFLAGS="-s ERROR_ON_UNDEFINED_SYMBOLS=0 --no-entry"  cargo build --target wasm32-unknown-emscripten
+4. EMCC_CFLAGS="-s ERROR_ON_UNDEFINED_SYMBOLS=0 --no-entry" cargo build --target wasm32-unknown-emscripten
 5. wasm-bindgen --target web ../../target/wasm32-unknown-emscripten/debug/ast_grep_wasm.wasm --out-dir pkg
 
 ## Reference
@@ -55,5 +61,6 @@ Language specific wasm must be built with the same emcc version of the tree-sitt
 Mismatching emcc version will raise RuntimeError.
 
 ## Reference
-* https://github.com/tree-sitter/tree-sitter/issues/1593
-* https://github.com/tree-sitter/tree-sitter/issues/1829
+
+- https://github.com/tree-sitter/tree-sitter/issues/1593
+- https://github.com/tree-sitter/tree-sitter/issues/1829
