@@ -24,7 +24,7 @@ const BaseExample = () => {…}
 const Example = observer(BaseExample)
 ```
 
-ow ESLint can see that `BaseExample` is a React component, and it can check the hooks inside it.
+Now ESLint can see that `BaseExample` is a React component, and it can check the hooks inside it.
 
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
