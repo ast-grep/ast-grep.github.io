@@ -5,7 +5,7 @@
 ### Description
 
 In [React](https://react.dev/learn/conditional-rendering), you can conditionally render JSX using JavaScript syntax like `if` statements, `&&`, and `? :` operators.
-However, you should almost never put numbers on the left side of `&&`. This is because React will render the number if it is falsy (such as 0), instead of the JSX element on the right side.
+However, you should almost never put numbers on the left side of `&&`. This is because React will render the number `0`, instead of the JSX element on the right side. A concrete example will be conditionally rendering a list when the list is not empty.
 
 This rule will find and fix any short-circuit rendering in JSX and rewrite it to a ternary operator.
 
@@ -29,14 +29,14 @@ fix: "{$A ? $B : null}"
 
 <!-- highlight matched code in curly-brace {lineNum} -->
 ```tsx {1}
-<div>{ num && <div/> }</div>
+<div>{ list.length && list.map(i => <p/>) }</div>
 ```
 
 ### Diff
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
 ```tsx
-<div>{ num && <div/> }</div> // [!code --]
-<div>{ num ? <div/> : null }</div> // [!code ++]
+<div>{ list.length && list.map(i => <p/>) }</div> // [!code --]
+<div>{ list.length ?  list.map(i => <p/>) : null }</div> // [!code ++]
 ```
 
 ### Contributed by
