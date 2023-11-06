@@ -13,4 +13,5 @@ Explore the power of ast-grep with these rewriting rules that can transform your
 * [TypeScript](/catalog/typescript/)
   * [Unnecessary `useState` Type](/catalog/typescript/#unnecessary-usestate-type)
   * [Avoid `&&` short circuit in JSX](/catalog/typescript/#avoid-short-circuit-in-jsx)
-  * [Rewrite MobX Component Style](/catalog/typescript/##rewrite-mobx-component-style)
+  * [Rewrite MobX Component Style](/catalog/typescript/#rewrite-mobx-component-style)
+  * [No `await` in `Promise.all`](/catalog/typescript/#no-await-in-promise-all-array)
