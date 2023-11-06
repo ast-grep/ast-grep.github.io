@@ -15,3 +15,4 @@ Explore the power of ast-grep with these rewriting rules that can transform your
   * [Avoid `&&` short circuit in JSX](/catalog/typescript/#avoid-short-circuit-in-jsx)
   * [Rewrite MobX Component Style](/catalog/typescript/#rewrite-mobx-component-style)
   * [No `await` in `Promise.all`](/catalog/typescript/#no-await-in-promise-all-array)
+  * [No `console` except in `catch` block](/catalog/typescript/#no-console-except-in-catch-block)
