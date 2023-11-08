@@ -7,3 +7,4 @@ This page curates a list of example ast-grep rules to check and to rewrite TypeS
 <!--@include: ./rewrite-mobx-component.md-->
 <!--@include: ./no-await-in-promise-all.md-->
 <!--@include: ./no-console-except-catch.md-->
+<!--@include: ./find-import-path-without-extension.md-->
