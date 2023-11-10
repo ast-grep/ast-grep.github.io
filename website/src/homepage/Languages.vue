@@ -14,13 +14,6 @@
     <img src='/icons/TS.svg'/>
   </div>
 </template>
-<script setup lang="ts">
-import { useRoute } from 'vitepress'
-import { computed } from 'vue'
-import Features from './homepage/Features.vue'
-
-let isHomePage = computed(() => useRoute().path === '/')
-</script>
 <style scoped>
   .section-title {
     margin-top: 1em;
