@@ -10,7 +10,7 @@
     "serve": "vitepress serve website"
   },
   "dependencies": {
-    "@types/js-yaml": "4.0.8",
+    "@types/js-yaml": "4.0.9",
     "js-yaml": "4.1.0",
     "monaco-editor": "0.44.0",
     "monaco-yaml": "5.1.0",
