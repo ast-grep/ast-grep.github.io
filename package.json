@@ -10,14 +10,7 @@
     "serve": "vitepress serve website"
   },
   "dependencies": {
-    "@types/js-yaml": "4.0.9",
-    "js-yaml": "4.1.0",
-    "monaco-editor": "0.44.0",
-    "monaco-yaml": "5.1.0",
     "vue": "3.3.7"
-  },
-  "optionalDependencies": {
-    "ast-grep-wasm": "file:./pkg/"
   },
   "devDependencies": {
     "search-insights": "^2.6.0",
