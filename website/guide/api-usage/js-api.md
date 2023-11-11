@@ -1,7 +1,6 @@
 # JavaScript API
 
-ast-grep's API design is still in flux, but the following is a rough sketch of how it will work.
-
+ast-grep's JavaScript API design is pretty stable now. No major breaking changes are expected in the future.
 
 ## Installation
 

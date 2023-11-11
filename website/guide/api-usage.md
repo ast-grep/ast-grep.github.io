@@ -1,35 +1,37 @@
 # API Usage
 
-* While it is possible to write sophisticated ast-grep rule to match AST, programmatic usage can push the limits of ast programming further.
-* Currently, ast-grep supports two programming language bindings:
-  * [JavaScript](#javascript)
-  * [Python](#python)
-* You can also use ast-grep-core directly as a Rust library.
+## ast-grep as Library
 
-## Introduction to ast-grep Programmatic API Documentation
+ast-grep allows you to craft complicated rules, but it is not easy to do arbitrary AST manipulation.
 
-While ast-grep offers the ability to craft complicated rules, it is hard to do arbitrary AST manipulation. More specifically, you may find it hard to:
-* replace a list of nodes respectively, based on their content
-* conditionally replace a node based on its content and surrounding nodes
-* count the number/order of nodes that match a certain pattern
+For example, you may struggle to:
+
+* replace a list of nodes individually, based on their content
+* replace a node conditionally, based on its content and surrounding nodes
+* count the number or order of nodes that match a certain pattern
 * compute the replacement string based on the matched nodes
 
-ast-grep's programmatic API is designed to solve these problems! You can do arbitrary AST manipulation in popular programming languages!
+To solve these problems, you can use ast-grep's programmatic API! You can freely inspect and chagne syntax trees in popular programming languages!
 
 ## Language Bindings
 
-Currently, ast-grep provides seamless integration with two programming languages:
+ast-grep supports two programming languages:
 
-- **JavaScript:** Dive into the world of AST manipulation with the JavaScript binding. [Explore JavaScript API](#javascript)
+- **JavaScript:** Powered by napi.rs, ast-grep's JavaScript API is the most robust and reliable. [Explore JavaScript API](/guide/api-usage/js-api.html)
 
-- **Python:** Leverage the power of ast-grep through the Python binding. [Discover Python API](#python)
+- **Python:** ast-grep's PyO3 interface is the latest addition to climb the syntax tree! [Discover Python API](/guide/api-usage/py-api.html)
 
-## Rust Library Integration
+- **Rust:** ast-grep's Rust API is the most efficient way, but also the most challenging way, to use ast-grep. You can refer to [ast_grep_core](https://docs.rs/ast-grep-core/latest/ast_grep_core/) if you are familiar with Rust.
 
-For those who prefer the robustness of Rust, ast-grep-core can be used directly as a Rust library. This option offers a direct and efficient way to incorporate ast-grep into your Rust projects.
 
-## Getting Started
+## Why and When to use API?
 
-Whether you are a seasoned developer or a newcomer to AST programming, this documentation is designed to guide you through every step. From setting up your environment to advanced usage scenarios, we've got you covered.
+ast-grep's API is designed to solve the problems that are hard to express in ast-grep's rule language.
 
-Let's embark on a journey of unlocking the full potential of AST manipulation with ast-grep's Programmatic API!
+ast-grep's rule system is deliberately simple and not as powerful as a programming language.
+Other similar rewriting/query tools have complex features like conditional, loop, filter or function call.
+These features are hard to learn and use, and they cannot perform computation as well as a general purpose programming language.
+
+So ast-grep chooses to have a simple rule system that is easy to learn and use. But it also has its limitations. API is created to overcome these limitations.
+
+If your code transformation requires complex logic, or if you need to change code that has no parser library in JavaScript or Python, ast-grep API is a good option to achieve your goal without writing a lot of complicated rules.
