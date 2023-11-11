@@ -63,7 +63,11 @@ export default defineConfig({
           { text: 'Rewrite Code', link: '/guide/rewrite-code.html' },
           { text: 'Test Your Rule', link: '/guide/test-rule.html' },
           { text: 'Tooling Overview', link: '/guide/tooling-overview.html' },
-          { text: 'API Usage', link: '/guide/api-usage.html' },
+          { text: 'API Usage', link: '/guide/api-usage.html', collapsed: true,
+            items:[
+              { text: 'JavaScript API', link: '/guide/api-usage/js-api.html' },
+              { text: 'Python API', link: '/guide/api-usage/py-api.html' },
+            ]},
         ],
         collapsed: false,
       },
