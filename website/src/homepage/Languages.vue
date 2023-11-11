@@ -1,27 +1,25 @@
 <template>
-  <div>
-    <div class="section-title">
-      <h1>Supported Languages</h1>
-    </div>
-    <div class="languages">
-      <a href="/catalog/c/">
-        <img src='/icons/C.svg'/>
-      </a>
-      <img src='/icons/CSharp.svg'/>
-      <img src='/icons/Go.svg'/>
-      <img src='/icons/Java.svg'/>
-      <img src='/icons/JS.svg'/>
-      <img src='/icons/Kotlin.svg'/>
-      <a href="/catalog/python/">
-        <img src='/icons/Python.svg'/>
-      </a>
-      <a href="/catalog/rust/">
-        <img src='/icons/Rust.svg'/>
-      </a>
-      <a href="/catalog/typescript/">
-        <img src='/icons/TS.svg'/>
-      </a>
-    </div>
+  <div class="section-title">
+    <h1>Supported Languages</h1>
+  </div>
+  <div class="languages">
+    <a href="/catalog/c/">
+      <img src='/icons/C.svg'/>
+    </a>
+    <img src='/icons/CSharp.svg'/>
+    <img src='/icons/Go.svg'/>
+    <img src='/icons/Java.svg'/>
+    <img src='/icons/JS.svg'/>
+    <img src='/icons/Kotlin.svg'/>
+    <a href="/catalog/python/">
+      <img src='/icons/Python.svg'/>
+    </a>
+    <a href="/catalog/rust/">
+      <img src='/icons/Rust.svg'/>
+    </a>
+    <a href="/catalog/typescript/">
+      <img src='/icons/TS.svg'/>
+    </a>
   </div>
 </template>
 <style scoped>
