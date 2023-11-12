@@ -200,7 +200,7 @@ class Relation(Rule, total=False):
 
 ### Config
 
-The Config object is similar to the [YAML rule config](/guide/rule-config.html) in the CLI. See the [reference](reference/yaml.html).
+The Config object is similar to the [YAML rule config](/guide/rule-config.html) in the CLI. See the [reference](/reference/yaml.html).
 
 ```python
 class Config(TypedDict, total=False):

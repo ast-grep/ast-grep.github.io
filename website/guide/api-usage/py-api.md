@@ -234,6 +234,10 @@ rng.end.index # 17, index starts with 0
 
 ## Refinement
 
+You can also filter nodes after matching by using the following methods.
+
+This is dubbed as "refinement" in the documentation. Note these refinement methods only support using `Rule`.
+
 ```python
 # Search Refinement
 class SgNode:
@@ -242,4 +246,12 @@ class SgNode:
     def has(self, **rule: Unpack[Rule]) -> bool: ...
     def precedes(self, **rule: Unpack[Rule]) -> bool: ...
     def follows(self, **rule: Unpack[Rule]) -> bool: ...
+```
+
+**Example:**
+
+```python
+node = root.find(pattern="print($A)")
+if node["A"].matches(kind="string"):
+  print("A is a string")
 ```
