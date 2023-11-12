@@ -161,6 +161,55 @@ interface FindConfig {
 * [Test Case Source](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/index.spec.ts) for `@ast-grep/napi`
 * ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
 
+## Python API
+
+### Rule
+
+The `Rule` object is a Python representation of the [YAML rule object](/guide/rule-config/atomic-rule.html) in the CLI. See the [reference](/reference/rule.html).
+
+```python
+class Pattern(TypedDict):
+    selector: str
+    context: str
+
+class Rule(TypedDict, total=False):
+    # atomic rule
+    pattern: str | Pattern
+    kind: str
+    regex: str
+
+    # relational rule
+    inside: Relation
+    has: Relation
+    precedes: Relation
+    follows: Relation
+
+    # composite rule
+    all: List[Rule]
+    any: List[Rule]
+    # pseudo code below for demo.
+    "not": Rule # Python does not allow "not" keyword as attribute
+    matches: str
+
+# Relational Rule Related
+StopBy = Union[Literal["neighbor"], Literal["end"], Rule]
+class Relation(Rule, total=False):
+    stopBy: StopBy
+    field: str
+```
+
+### Config
+
+The Config object is similar to the [YAML rule config](/guide/rule-config.html) in the CLI. See the [reference](reference/yaml.html).
+
+```python
+class Config(TypedDict, total=False):
+    rule: Rule
+    constraints: Dict[str, Mapping]
+    utils: Dict[str, Rule]
+    transform: Dict[str, Mapping]
+```
+
 ## Rust API
 
 Rust API is not stable yet. The following link is only for those who are interested in modifying ast-grep's source.
