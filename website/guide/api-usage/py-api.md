@@ -31,7 +31,7 @@ A common workflow to use ast-grep's Python API is:
 
 **Example:**
 
-```python
+```python{3-6}
 from ast_grep_py import SgRoot
 
 root = SgRoot("print('hello world')", "python") # 1. parse
@@ -155,22 +155,21 @@ Once we find a node, we can use the following methods to get meta variables from
 
 The `get_match` method returns the single node that matches the [single meta variable](/guide/pattern-syntax.html#meta-variable).
 
-And th `get_multiple_matches` returns a list of nodes that match the [multi meta variable](/guide/pattern-syntax.html#multi-meta-variable).
+And the `get_multiple_matches` returns a list of nodes that match the [multi meta variable](/guide/pattern-syntax.html#multi-meta-variable).
 
 ```python
 class SgNode:
     def get_match(self, meta_var: str) -> Optional[SgNode]: ...
     def get_multiple_matches(self, meta_var: str) -> List[SgNode]: ...
-    def get_transformed(self, meta_var: str) -> Optional[str]: ...
     def __getitem__(self, meta_var: str) -> SgNode: ...
 ```
 
 **Example:**
 
-```python
+```python{7,11,15,16}
 src = """
 print('hello')
-print('hello', 'world', '!')
+logger('hello', 'world', '!')
 """
 root = SgRoot(src, "python").root()
 node = root.find(pattern="print($A)")
@@ -180,7 +179,7 @@ arg.text() # returns 'hello'
 # returns [] because $A and $$$A are different
 node.get_multiple_matches("A")
 
-node = root.find(pattern="print($$$ARGS)")
+node = root.find(pattern="logger($$$ARGS)")
 # returns [SgNode('hello'), SgNode('world'), SgNode('!')]
 node.get_multiple_matches("ARGS")
 node.get_match("A") # returns None
@@ -230,7 +229,7 @@ You can use the range information to locate the source and modify the source cod
 rng = node.range()
 pos = rng.start # or rng.end, both are `Pos` objects
 pos.line # 0, line starts with 0
-pos.column # 0, line starts with 0
+pos.column # 0, column starts with 0
 rng.end.index # 17, index starts with 0
 ```
 

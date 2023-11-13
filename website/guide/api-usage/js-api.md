@@ -20,41 +20,225 @@ pnpm add @ast-grep/napi
 ```
 :::
 
-Then, import the language object from the napi package. Every language object has similar APIs.
+Now let's explore ast-grep's API!
 
-`parse` transforms string to a `SgRoot`. Example:
+## Core Concepts
+
+The core concepts in ast-grep's JavaScript API are:
+* `SgRoot`: a class representing the whole syntax tree
+* `SgNode`: a node in the syntax tree
+
+:::tip Make AST like a DOM tree!
+Using ast-grep's API is like using [jQuery](https://jquery.com/). You can use `SgNode` to traverse the syntax tree and collect information from the nodes.
+
+Remember your old time web programming?
+:::
+
+A common workflow to use ast-grep's JavaScript API is:
+
+1. Get a syntax tree object `SgRoot` from string by calling a language's `parse` method
+2. Get the root node of the syntax tree by calling `root.root()`
+3. `find` relevant nodes by using patterns or rules
+4. Collect information from the nodes
+
+**Example:**
+
+```js{4-7}
+import { js } from '@ast-grep/napi';
+
+let source = `console.log("hello world")`
+const ast = js.parse(source)                // 1. parse the source
+const root = ast.root()                     // 2. get the root
+const node = root.find('console.log($A)')   // 3. find the node
+node.getMatch('A').text()                   // 4. collect the info
+// "hello world"
+```
+
+### `SgRoot`
+
+`SgRoot` represents the syntax tree of a source string.
+
+We can import a language object from the `@ast-grep/napi` package and call the  `parse` to transform string.
 
 ```js{4}
 import { js } from '@ast-grep/napi';
 
 const source = `console.log("hello world")`
 const ast = js.parse(source)
-const node = ast.root().find('console.log')
 ```
 
 The `SgRoot` object has a `root` method that returns the root `SgNode` of the AST.
-The `find` method returns the first node that matches the given selector. In this case, the selector is a string that matches the `console.log` expression.
 
+```js
+const root = ast.root() // root is an instance of SgNode
+```
 
-## `SgNode`
-`SgNode` has following jQuery like methods to inspect and traverse the AST:
+### `SgNode`
+
+`SgNode` is the main interface to view and manipulate the syntax tree.
+
+It has several jQuery like methods for us to search, filter and inspect the AST nodes we are interested in.
+
+```js
+const log = root.find('console.log($A)') // search node
+const arg = log.getMatch('A') // get matched variable
+log.text() // "hello world"
+```
+
+Let's see its details in the following sections!
+
+## Search
+
+You can use `find` and `findAll` to search for nodes in the syntax tree.
+
+* `find` returns the first node that matches the pattern or rule.
+* `findAll` returns an array of nodes that match the pattern or rule.
 
 ```ts
+// search
+class SgNode {
+  find(matcher: string): SgNode | null
+  find(matcher: number): SgNode | null
+  find(matcher: NapiConfig): SgNode | null
+  findAll(matcher: string): Array<SgNode>
+  findAll(matcher: number): Array<SgNode>
+  findAll(matcher: NapiConfig): Array<SgNode>
+}
+```
+
+Both `find` and `findAll` are overloaded functions. They can accept either string, number or a config object.
+The argument is called `Matcher` in ast-grep JS.
+
+### Matcher
+
+A `Matcher` can be one of the three types: `string`, `number` or `object`.
+
+* `string` is parsed as a [pattern](/guide/pattern-syntax.html). e.g. `'console.log($A)'`
+
+* `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function on the language object. e.g. `js.kind('function')`.
+
+* A `NapiConfig` has a similar type of [config object](/reference/yaml.html). See details below.
+
+```ts
+// basic find example
+root.find('console.log($A)')   // returns SgNode of call_expression
+const kind = js.kind('string') // convert kind name to kind id number
+root.find(kind)                // returns SgNode of string
+root.find('notExist')          // returns null if not found
+
+// basic find all example
+const nodes = root.findAll('function $A($$$) {$$$}')
+Array.isArray(nodes)     // true, findAll returns SgNode
+nodes.map(n => n.text()) // string array of function source
+const empty = root.findAll('not exist') // returns []
+empty.length === 0 // true
+```
+
+Note, `find` returns `null` if no node is found. `findAll` returns an empty array if nothing matches.
+
+## Match
+
+Once we find a node, we can use the following methods to get meta variables from the search.
+
+The `getMatch` method returns the single node that matches the [single meta variable](/guide/pattern-syntax.html#meta-variable).
+
+And the `getMultipleMatches` returns an array of nodes that match the [multi meta variable](/guide/pattern-syntax.html#multi-meta-variable).
+
+```ts
+// search
+export class SgNode {
+  getMatch(m: string): SgNode | null
+  getMultipleMatches(m: string): Array<SgNode>
+}
+```
+
+**Example:**
+
+```ts{7,11,15,16}
+const src = `
+console.log('hello')
+logger('hello', 'world', '!')
+`
+const root = js.parse(src).root()
+const node = root.find('console.log($A)')
+const arg = node.getMatch("A") // returns SgNode('hello')
+arg !== null // true, node is found
+arg.text() // returns 'hello'
+// returns [] because $A and $$$A are different
+node.getMultipleMatches('A')
+
+const logs = root.find('logger($$$ARGS)')
+// returns [SgNode('hello'), SgNode('world'), SgNode('!')]
+node.getMultipleMatches("ARGS")
+node.getMatch("A") // returns null
+```
+
+## Inspection
+
+The following methods are used to inspect the node.
+
+```ts
+// node inspection
 export class SgNode {
   range(): Range
   isLeaf(): boolean
   kind(): string
   text(): string
+}
+```
+
+**Example:**
+
+```ts{3}
+const ast = js.parse("console.log('hello world')")
+root = root.root()
+root.text() // will return "console.log('hello world')"
+```
+
+Another important method is `range`, which returns two `Pos` object representing the start and end of the node.
+
+One `Pos` contains the line, column, and offset of that position. All of them are 0-indexed.
+
+You can use the range information to locate the source and modify the source code.
+
+```ts{1}
+const rng = node.range()
+const pos = rng.start // or rng.end, both are `Pos` objects
+pos.line // 0, line starts with 0
+pos.column // 0, column starts with 0
+rng.end.index // 17, index starts with 0
+```
+
+## Refinement
+
+You can also filter nodes after matching by using the following methods.
+
+This is dubbed as "refinement" in the documentation. Note these refinement methods only support using `pattern` at the moment.
+
+```ts
+export class SgNode {
   matches(m: string): boolean
   inside(m: string): boolean
   has(m: string): boolean
   precedes(m: string): boolean
   follows(m: string): boolean
-  getMatch(m: string): SgNode | null
-  getMultipleMatches(m: string): Array<SgNode>
+}
+```
+
+**Example:**
+
+```ts
+const node = root.find('console.log($A)')
+node.matches('console.$METHOD($B)') // true
+```
+
+## Traversal
+
+You can traverse the tree using the following methods, like using jQuery.
+
+```ts
+export class SgNode {
   children(): Array<SgNode>
-  find(matcher: string | number | NapiConfig): SgNode | null
-  findAll(matcher: string | number | NapiConfig): Array<SgNode>
   field(name: string): SgNode | null
   parent(): SgNode | null
   child(nth: number): SgNode | null
@@ -65,16 +249,6 @@ export class SgNode {
   prevAll(): Array<SgNode>
 }
 ```
-
-## Matcher
-
-For the `find` method and `findAll` method, the argument is a matcher which can be a string, a number, or a `NapiConfig` object.
-
-* `string` is parsed as [pattern](/guide/pattern-syntax). e.g. `'console.log($A)'`
-
-* `number` is a u16 number that represents a node's kind. You can convert the kind name like `function` to a numeric representation by calling the `kind` function on the language object. e.g. `js.kind('function')`.
-
-* A `NapiConfig` has the same type of [rule object](/reference/rule).
 
 ## `findInFiles`
 
