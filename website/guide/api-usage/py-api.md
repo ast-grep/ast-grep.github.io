@@ -3,6 +3,8 @@
 ast-grep's Python API is powered by [PyO3](https://pyo3.rs/).
 You can write Python to programmatically inspect and change syntax trees.
 
+To try out ast-grep's Python API, you can use the [online colab notebook](https://colab.research.google.com/drive/1nVT6rQKRIPv0TsKpCv5uD-Zuw-lUC67A?usp=sharing).
+
 ## Installation
 
 ast-grep's Python library is distributed on PyPI. You can install it with pip.

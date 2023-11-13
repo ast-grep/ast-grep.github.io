@@ -1,6 +1,10 @@
 # JavaScript API
 
+Powered by [napi.rs](https://napi.rs/), ast-grep's JavaScript API enables you to write JavaScript to programmatically inspect and change syntax trees.
+
 ast-grep's JavaScript API design is pretty stable now. No major breaking changes are expected in the future.
+
+To try out the JavaScript API, you can use the [code sandbox](https://codesandbox.io/p/sandbox/ast-grep-napi-hhx3tj) here.
 
 ## Installation
 
