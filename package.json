@@ -25,7 +25,7 @@
     "markdown-it": "^13.0.1",
     "typescript": "5.2.2",
     "vite": "5.0.2",
-    "vitepress": "1.0.0-rc.25",
+    "vitepress": "1.0.0-rc.30",
     "vue-tsc": "1.8.22"
   }
 }
