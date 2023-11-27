@@ -8,6 +8,7 @@ Explore the power of ast-grep with these rewriting rules that can transform your
   * [Rewrite Method to Function Call](/catalog/c/#rewrite-method-to-function-call)
 * [Python](/catalog/python/)
   * [Migrate OpenAi SDK](/catalog/python/#migrate-openai-sdk)
+  * [Use Walrus Operator in `if` statement](/catalog/python/#use-walrus-operator-in-if-statement)
 * [Ruby](/catalog/ruby/)
   * [Prefer Symbol over Proc](/catalog/ruby/#prefer-symbol-over-proc)
   * [Migrate action_filter in Ruby on Rails](/catalog/ruby/#migrate-action-filter-in-ruby-on-rails)
