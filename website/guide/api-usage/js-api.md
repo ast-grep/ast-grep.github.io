@@ -295,7 +295,7 @@ The `matcher` is the same as `NapiConfig` stated above.
 
 ### Callback Function and Termination
 
-The `callback` function is called for every file that have nodes that match the rule. The callback function is a standard node-style callback with the first argment as `Error` and second argument as an array of `SgNode` objects that match the rule.
+The `callback` function is called for every file that have nodes that match the rule. The callback function is a standard node-style callback with the first argument as `Error` and second argument as an array of `SgNode` objects that match the rule.
 
 The return value of `findInFiles` is a `Promise` object. The promise resolves to the number of files that have nodes that match the rule.
 

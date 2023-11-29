@@ -1,7 +1,7 @@
 # Reusing Rule as Utility
 
-ast-grep chooses to use YAML for rule representation. While this decision makes writing rule easier, it does impose some limitation on the rule authoring.
-One of the limitation is that rule object cannot be reused. Let's see an example.
+ast-grep chooses to use YAML for rule representation. While this decision makes writing rules easier, it does impose some limitations on the rule authoring.
+One of the limitations is that rule objects cannot be reused. Let's see an example.
 
 Suppose we want to match all literal values in JavaScript. We will need to match these kinds:
 
@@ -16,7 +16,7 @@ any:
   - kind: string
 ```
 
-If we want to match functions in different places using only the plain YAML file, we will have copy and paste the rule above for several times. Say, we want to match either literal values or an array of literal values:
+If we want to match functions in different places using only the plain YAML file, we will have to copy and paste the rule above several times. Say, we want to match either literal values or an array of literal values:
 
 ```yaml
 rule:
@@ -34,7 +34,7 @@ rule:
           # ...
 ```
 
-ast-grep provides a mechanism to reuse common rules: `utils`. A utility rule is a rule defined in the `utils` section of the config file, or defined in a separate global rule file. It can be referenced in other rules using the composite rule `matches`. So the above example can be rewritten to:
+ast-grep provides a mechanism to reuse common rules: `utils`. A utility rule is a rule defined in the `utils` section of the config file, or in a separate global rule file. It can be referenced in other rules using the composite rule `matches`. So, the above example can be rewritten as:
 
 ```yaml
 # define util rules using utils field
@@ -57,7 +57,7 @@ rule:
         matches: is-literal # reference it again!
 ```
 
-There are two ways to define utility rules in ast-grep: _Local utility rules_ and _ Global Utility Rules_. They are both used in the `matches` composite rules by their ids.
+There are two ways to define utility rules in ast-grep: _Local utility rules_ and _Global Utility Rules_. They are both used in the `matches` composite rules by their ids.
 
 ## Local Utility Rules
 
@@ -156,7 +156,7 @@ utils:
       - kind: number
       - kind: parenthesized_expression
         has:
-          matches: is-number 
+          matches: is-number
 rule:
   matches: is-number
 ```

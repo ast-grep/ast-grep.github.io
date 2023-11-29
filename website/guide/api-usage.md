@@ -11,11 +11,11 @@ For example, you may struggle to:
 * count the number or order of nodes that match a certain pattern
 * compute the replacement string based on the matched nodes
 
-To solve these problems, you can use ast-grep's programmatic API! You can freely inspect and chagne syntax trees in popular programming languages!
+To solve these problems, you can use ast-grep's programmatic API! You can freely inspect and change syntax trees in popular programming languages!
 
 ## Language Bindings
 
-ast-grep supports two programming languages:
+ast-grep provides support for these programming languages:
 
 - **JavaScript:** Powered by napi.rs, ast-grep's JavaScript API is the most robust and reliable. [Explore JavaScript API](/guide/api-usage/js-api.html)
 
@@ -32,6 +32,6 @@ ast-grep's rule system is deliberately simple and not as powerful as a programmi
 Other similar rewriting/query tools have complex features like conditional, loop, filter or function call.
 These features are hard to learn and use, and they cannot perform computation as well as a general purpose programming language.
 
-So ast-grep chooses to have a simple rule system that is easy to learn and use. But it also has its limitations. API is created to overcome these limitations.
+So ast-grep chooses to have a simple rule system that is easy to learn and use. But it also has its limitations. The API is created to overcome these limitations.
 
 If your code transformation requires complex logic, or if you need to change code that has no parser library in JavaScript or Python, ast-grep API is a good option to achieve your goal without writing a lot of complicated rules.

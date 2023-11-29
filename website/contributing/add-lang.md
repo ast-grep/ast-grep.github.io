@@ -159,7 +159,7 @@ Note you may need to install [docker](https://www.docker.com/) when building WAS
 3. Move WASM file to the website [`public`](https://github.com/ast-grep/ast-grep.github.io/tree/main/website/public) folder.
 
 You can also see other languages' WASM files in the public directory.
-The file name is in the format of `tree-sitter-[lang].wasm`. The name will be used later in [`paserPaths`](https://github.com/ast-grep/ast-grep.github.io/blob/a2dce64dda67e1c0842b757fc692ffe05639e407/website/src/components/lang.ts#L4).
+The file name is in the format of `tree-sitter-[lang].wasm`. The name will be used later in [`parserPaths`](https://github.com/ast-grep/ast-grep.github.io/blob/a2dce64dda67e1c0842b757fc692ffe05639e407/website/src/components/lang.ts#L4).
 
 ### Add language in Rust
 
