@@ -209,7 +209,7 @@ Let's discuss the API step by step:
     2. The `startChar` and `endChar` keys specify the indices of the start and end characters of the substring that we want to extract. In this case, we want to extract everything except the wrapping parentheses, which are the first and last characters: `(` and `)`.
 5. The `fix` key specifies the new code that we want to replace the matched pattern with. We use the new variable `$LIST` in the fix part, and wrap it with `[` and `]` to make it a list comprehension.
 
-We have several different transformations avialable now. Please check out [ast-grep#436](https://github.com/ast-grep/ast-grep/issues/436) for more details.
+We have several different transformations available now. Please check out [ast-grep#436](https://github.com/ast-grep/ast-grep/issues/436) for more details.
 
 :::tip Pro Tips
 Later transformations can use the variables that were transformed before. This allows you to stack string operations and achieve complex transformations.
