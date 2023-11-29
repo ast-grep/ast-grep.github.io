@@ -68,7 +68,7 @@ The `builtin-parser` feature is used for command line tool. Web playground is no
 
 ```rust
 #[cfg(feature = "builtin-parser")]
-mod parser_implmentation {
+mod parser_implementation  {
   ...
   pub fn language_ruby() -> TSLanguage { // [!code ++]
     tree_sitter_ruby::language().into()  // [!code ++]
@@ -77,7 +77,7 @@ mod parser_implmentation {
 }
 
 #[cfg(not(feature = "builtin-parser"))]
-mod parser_implmentation {
+mod parser_implementation  {
   impl_parsers!(
     ...
     language_ruby, // [!code ++]
