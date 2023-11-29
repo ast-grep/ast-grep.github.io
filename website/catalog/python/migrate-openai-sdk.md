@@ -13,14 +13,20 @@ The rules and patterns in the example are simple and self-explanatory, so we wil
 ### YAML
 
 ```yaml
+id: import-openai
+language: python
 rule:
   pattern: import openai
 fix: from openai import Client
 ---
+id: rewrite-client
+language: python
 rule:
   pattern: openai.api_key = $KEY
 fix: client = Client($KEY)
 ---
+id: rewrite-chat-completion
+language: python
 rule:
   pattern: openai.Completion.create($$$ARGS)
 fix: |-

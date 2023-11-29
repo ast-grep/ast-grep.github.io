@@ -15,6 +15,7 @@ A possible alternative is to use a plain function call with the struct pointer a
 ### YAML
 ```yaml
 id: method_receiver
+language: c
 rule:
   pattern: $R.$METHOD($$$ARGS)
 transform:

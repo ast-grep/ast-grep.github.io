@@ -11,7 +11,8 @@ The rule finds all imports (static and dynamic) for files without a file extensi
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
 ```yaml
-language: "js"
+id: find-import-file
+language: js
 rule:
   regex: "/[^.]+[^/]$"
   kind: string_fragment

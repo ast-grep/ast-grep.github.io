@@ -13,6 +13,7 @@ This example is inspired by this [dev.to article](https://dev.to/baweaver/future
 ### YAML
 ```yaml
 id: prefer-symbol-over-proc
+language: ruby
 rule:
   pattern: $LIST.$ITER { |$V| $V.$METHOD }
 language: Ruby

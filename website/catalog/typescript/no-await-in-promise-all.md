@@ -20,6 +20,7 @@ Using `await` inside an inline `Promise.all` array is usually a mistake, as it d
 ### YAML
 ```yaml
 id: no-await-in-promise-all
+language: typescript
 rule:
   pattern: await $A
   inside:

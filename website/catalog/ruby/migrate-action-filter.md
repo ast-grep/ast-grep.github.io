@@ -13,6 +13,8 @@ This rule will replace all occurrences of `{before,after,around}_filter` with `{
 
 ### YAML
 ```yaml
+id: migration-action-filter
+language: ruby
 rule:
   any:
     - pattern: before_filter $$$ACTION

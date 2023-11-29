@@ -10,6 +10,7 @@ This first part of the rule identifies cases where a variable is assigned a valu
 
 ```yaml
 id: use-walrus-operator
+language: python
 rule:
   pattern: "if $VAR: $$$B"
   follows:
@@ -45,6 +46,7 @@ By applying these rules, you can refactor your Python code to be more concise an
 
 ```yaml
 id: use-walrus-operator
+language: python
 rule:
   follows:
     pattern:
@@ -56,6 +58,7 @@ fix: |-
     $$$B
 ---
 id: remove-declaration
+language: python
 rule:
   pattern:
     context: $VAR = $$$EXPR

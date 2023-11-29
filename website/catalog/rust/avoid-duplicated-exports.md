@@ -25,6 +25,8 @@ Instead, ensure you export only once with `pub`.
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
 ```yaml
+id: avoid-duplicate-export
+language: rust
 rule:
   all:
      - pattern: pub use $B::$C;

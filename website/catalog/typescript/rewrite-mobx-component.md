@@ -29,6 +29,8 @@ Now ESLint can see that `BaseExample` is a React component, and it can check the
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
 ```yaml
+id: rewrite-mobx-component
+language: typescript
 rule:
   pattern: export const $COMP = observer($FUNC)
 fix: |-

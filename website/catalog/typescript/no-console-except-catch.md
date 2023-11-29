@@ -22,6 +22,8 @@ The only exception is using `console.error` to log errors in the catch block, wh
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
 ```yaml
+id: no-console-except-error
+language: typescript
 rule:
   any:
     - pattern: console.error($$$)
