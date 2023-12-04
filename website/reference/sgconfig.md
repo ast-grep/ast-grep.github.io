@@ -10,8 +10,12 @@ To scan a project with multiple rules, you need to specify the root of a project
 The file is similar to `tsconfig.json` in TypeScript or `.eslintrc.js` in eslint.
 You can also create the `sgconfig.yml` and related file scaffoldings by the `sg new` command.
 
+::: tip sgconfig.yml is not `rule.yml`
+ast-grep has several kinds of yaml files. `sgconfig.yml` is for configuring ast-grep, like how to find rule directories or to register custom languages.
+While `rule.yml` is to specify one single rule logic to find problematic code.
+:::
 
-`sgconfig.yml` has these three options.
+`sgconfig.yml` has these options.
 
 ## `ruleDirs`
 * type: `String`
@@ -19,7 +23,8 @@ You can also create the `sgconfig.yml` and related file scaffoldings by the `sg 
 
 A list of string instructing where to discover ast-grep's YAML rules.
 
-Example:
+**Example:**
+
 ```yaml
 ruleDirs:
 - rules
@@ -64,6 +69,25 @@ testConfigs:
 
 A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules).
 
+## `languageGlobs`
+* type: `HashMap<String, List>`
+* required: No
+
+A mapping to associate a language to files that have non-standard extensions or syntaxes.
+
+ast-grep uses file extensions to discover and parse files in certain languages. You can use this option to support files if their extensions are not in the default mapping.
+
+The key of this option is the language name. The values are a list of [glob patterns](https://www.wikiwand.com/en/Glob_(programming)) that match the files you want to process.
+
+**Example:**
+
+The following configuration tells ast-grep to treat the files with `.vue`, `.svelte`, and `.astro` extensions as HTML files, and the extension-less file `.eslintrc` as JSON files.
+
+```yml
+languageGlobs:
+  html: ['*.vue', '*.svelte', '*.astro']
+  json: ['.eslintrc']
+```
 
 ## `customLanguages` <Badge type="warning" text="Experimental" />
 

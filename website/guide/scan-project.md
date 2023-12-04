@@ -7,6 +7,12 @@ Let's explore its power to run scan on your code repository in a scalable way!
 
 However, to ast-grep's scan need some scaffolding for project setup. We will walk through the process in this guide.
 
+:::tip
+`sg scan` requires at least one file and one directory to work:
+* `sgconfig.yml`, the [project configuration](/reference/sgconfig.html) file
+* a directory storing rule files, usually `rules/`
+:::
+
 ## Create Scaffolding
 
 To set up ast-grep's scanning, you can simply run the command `sg new` in the root directory of your repository. You will be guided with a series of interactive questions, like the following:
