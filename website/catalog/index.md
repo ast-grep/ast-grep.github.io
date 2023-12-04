@@ -15,6 +15,7 @@ Explore the power of ast-grep with these rewriting rules that can transform your
 * [Rust](/catalog/rust/)
   * [Avoid Duplicated Exports](/catalog/rust/#avoid-duplicated-exports)
   * [Get number of digits in a `usize`](/catalog/rust/#get-number-of-digits-in-a-usize)
+  * [Beware of char offset when iterate over a string](/catalog/rust/#beware-of-char-offset-when-iterate-over-a-string)
 * [TypeScript](/catalog/typescript/)
   * [Unnecessary `useState` Type](/catalog/typescript/#unnecessary-usestate-type)
   * [Avoid `&&` short circuit in JSX](/catalog/typescript/#avoid-short-circuit-in-jsx)

@@ -32,7 +32,7 @@ let width = (lines + num).to_string().chars().count();
 
 ### Diff
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
-```tsx
+```rs
 let width = (lines + num).to_string().chars().count(); // [!code --]
 let width = (lines + num).checked_ilog10().unwrap_or(0) + 1; // [!code ++]
 ```
