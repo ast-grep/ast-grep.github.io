@@ -123,3 +123,10 @@ The file extensions for this language.
 * required: No
 
 An optional char to replace $ in your pattern.
+
+### `languageSymbol`
+
+* type: `String`
+* required: No
+
+The dylib symbol to load ts-language, default is tree_sitter_{name}
