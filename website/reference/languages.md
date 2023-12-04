@@ -1,11 +1,12 @@
 # List of Languages with Built-in Support
 
-The table below is all languages that are supported by ast-grep.
+The table below lists all languages that are supported by ast-grep.
 
 **Alias** is the name you can use as an argument in `sg run --lang [alias]` or as a value in YAML rule with `language: [alias]`.
 
-**Extension** specifies the file extensions that ast-grep will look for when scanning the file system.
+**Extension** specifies the file extensions that ast-grep will look for when scanning the file system. By default, ast-grep uses the file extensions to determine the language.
 
+----
 
 | Language Name | Alias | File Extension |
 |---|---|---|
@@ -28,3 +29,9 @@ The table below is all languages that are supported by ast-grep.
 |Thrift | `thrift` | `thrift`|
 |TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
+
+----
+
+:::tip Pro Tips
+You can use [`languageGlobs`](/reference/sgconfig.html#languageglobs) to customize languages' extension mapping.
+:::
