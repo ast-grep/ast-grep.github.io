@@ -2,6 +2,7 @@
 import Theme from 'vitepress/theme'
 import Features from './homepage/Features.vue'
 import Languages from './homepage/Languages.vue'
+import Ecosystem from './homepage/Ecosystem.vue'
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import Languages from './homepage/Languages.vue'
     </template>
     <template #home-features-after>
       <Languages />
+      <Ecosystem />
     </template>
   </Theme.Layout>
 </template>
