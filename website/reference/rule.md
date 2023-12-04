@@ -21,12 +21,21 @@ A rule is called **positive** if it only matches nodes with specific kinds. For 
 
 A `String` pattern will match one single AST node according to [pattern syntax](/guide/pattern-syntax).
 
+Example:
+
+```yml
+pattern: console.log($ARG)
+```
+
 `pattern` also accepts an `Object` with `context` and `selector`.
 
 By default `pattern` parses code as a standalone file. You can use the `selector` field  to pull out the specific part to match.
-For example, we can select class field in JavaScript by this pattern.
 
-```yaml
+Example:
+
+We can select class field in JavaScript by this pattern.
+
+```yml
 pattern:
   selector: field_definition
   context: class { $F }
@@ -37,12 +46,34 @@ pattern:
 
 The kind name of the node to match. You can look up code's kind names in [playground](/playground).
 
+Example:
+
+```yml
+kind: call_expression
+```
+
 ### `regex`
 * type: `String`
 
 A [Rust regular expression](https://docs.rs/regex/latest/regex/) to match the node's text. The regex must match the whole text of the node.
 
 >  Its syntax is similar to Perl-style regular expressions, but lacks a few features like look around and backreferences.
+
+Example:
+
+::: code-group
+```yml [Literal]
+regex: console
+```
+
+```yml [Character Class]
+regex: ^[a-z]+$
+```
+
+```yml [Flag]
+regex: (?i)a(?-i)b+
+```
+:::
 
 ## Relational Rules
 
@@ -89,6 +120,13 @@ The target node must appear before another node matching the `precedes` sub-rule
 
 Note `precedes` does not have `field` option.
 
+Example:
+```yml
+precedes:
+  kind: function_declaration   # a sub rule object
+  stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
+```
+
 ### `follows`
 * type: `Object`
 
@@ -97,6 +135,13 @@ A relational rule object, which is a rule object with one additional field `stop
 The target node must appear after another node matching the `follows` sub-rule.
 
 Note `follows` does not have `field` option.
+
+Example:
+```yml
+follows:
+  kind: function_declaration   # a sub rule object
+  stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
+```
 
 
 ## Composite Rules
@@ -107,18 +152,51 @@ Note `follows` does not have `field` option.
 `all` takes a list of sub rules and matches a node if all of sub rules match.
 The meta variables of the matched node contain all variables from the sub rules.
 
+Example:
+```yml
+all:
+  - kind: call_expression
+  - pattern: console.log($ARG)
+```
+
 ### `any`
 * type: `Array<Rule>`
 
 `any` takes a list of sub rules and matches a node if any of sub rules match.
 The meta variables of the matched node only contain those of the matched sub rule.
 
+Example:
+```yml
+any:
+  - pattern: console.log($ARG)
+  - pattern: console.warn($ARG)
+  - pattern: console.error($ARG)
+```
+
 ### `not`
 * type: `Object`
 
 `not` takes a single sub rule and matches a node if the sub rule does not match.
 
+Example:
+```yml
+not:
+  pattern: console.log($ARG)
+```
+
 ### `matches`
 * type: `String`
 
 `matches` takes a utility rule id and matches a node if the utility rule matches. See [utility rule guide](/guide/rule-config/utility-rule) for more details.
+
+Example:
+
+```yml
+utils:
+  isFunction:
+    any:
+      - kind: function_declaration
+      - kind: function
+rule:
+  matches: isFunction
+```
