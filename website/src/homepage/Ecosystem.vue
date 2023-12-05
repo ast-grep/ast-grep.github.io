@@ -16,8 +16,11 @@
       <a target="_blank" href="https://hydrogen.shopify.dev/" title="Hydrogen">
         <img src='https://camo.githubusercontent.com/5d9fcd60d8176292176f0552fb28cb52e510d67afc010705fb0619d18a79f468/68747470733a2f2f63646e2e73686f706966792e636f6d2f6f787967656e2f35393834383232383838362f393833303432322f3978623538777864792f66617669636f6e2e737667'/>
       </a>
-      <a target="_blank" href="https://github.com/vue-macros/vue-macros-cli" title="vue-macros">
+      <a target="_blank" href="https://github.com/vue-macros/vue-macros-cli" title="vue-macros" class="sponsor">
         <img src='https://avatars.githubusercontent.com/u/120662729?s=200&v=4'/>
+      </a>
+      <a target="_blank" href="https://modernjs.dev/" title="Modern.js">
+        <img src='https://avatars.githubusercontent.com/u/126793605?s=200&v=4'/>
       </a>
     </div>
   </div>
