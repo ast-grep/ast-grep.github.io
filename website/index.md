@@ -10,7 +10,7 @@ head:
 
 hero:
   name: AST-GREP
-  text: Write Code to Match Code
+  text: Find Code by Syntax
   tagline: ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.
   image:
     src: ./logo.svg
