@@ -93,12 +93,21 @@ We can write this pattern to find all property checking code.
 $PROP && $PROP()
 ```
 
-It is a valid `ast-grep` pattern! We can use it in command line! Use `pattern` argument to specify our target
-and also `lang` is needed to tell ast-grep our target code language.
+It is a valid `ast-grep` pattern! We can use it in command line! Use `pattern` argument to specify our target.
+Optionally, we can use `lang` to tell ast-grep our target code language.
 
-```shell
-sg --pattern '$PROP && $PROP()' --lang ts TypeScript/src # path to TS source
+:::code-group
+```shell [Full Command]
+sg --pattern '$PROP && $PROP()' --lang ts TypeScript/src
 ```
+```shell [Short Form]
+sg -p '$PROP && $PROP()' -l ts TypeScript/src
+```
+```shell [Without Lang]
+# ast-grep will infer languages based on file extensions
+sg -p '$PROP && $PROP()' TypeScript/src
+```
+:::
 
 ## Rewrite
 

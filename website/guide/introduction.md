@@ -18,7 +18,7 @@ Using ast-grep can be as simple as running a single command in your terminal:
 sg --pattern 'var code = $PAT' --rewrite 'let code = $PAT' --lang js
 ```
 
-The command above will replace `var` statement with `let` for all JavaScript files.
+The command above will replace `var` statement with `let` for all <abbr title="ast-grep will also infer the language if you omit --lang">JavaScript</abbr> files.
 
 ---
 
