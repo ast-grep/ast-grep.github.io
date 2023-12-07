@@ -101,7 +101,7 @@ It is useful to test one rule in isolation.
 
 ## Parse Code from StdIn
 
-ast-grep's `run` and `scan` commands also support searching and replacing code from standard input (StdIn).
+ast-grep's `run` and `scan` commands also support searching and replacing code from [standard input (StdIn)](https://www.wikiwand.com/en/Standard_streams).
 This mode is enabled by passing command line argument flag `--stdin`.
 You can use bash's [pipe operator](https://linuxhint.com/bash_pipe_tutorial/) `|` to instruct ast-grep to read from StdIn.
 
