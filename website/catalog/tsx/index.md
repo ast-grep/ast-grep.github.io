@@ -1,6 +1,6 @@
-# TypeScript
+# TSX
 
-This page curates a list of example ast-grep rules to check and to rewrite TypeScript applications.
+This page curates a list of example ast-grep rules to check and to rewrite TypeScript with JSX syntax.
 
 :::danger TypeScript and TSX are different.
 TypeScript is a typed JavaScript extension and TSX is a further extension that allows JSX elements.
@@ -9,7 +9,5 @@ They need different parsers because of [conflicting syntax](https://www.typescri
 TS allows both the `as` operator and angle brackets (`<>`). While TSX only allows the `as` operator for type assertions because it interprets angle brackets as JSX elements.
 :::
 
-<!--@include: ./redundant-usestate-type.md-->
-<!--@include: ./no-await-in-promise-all.md-->
-<!--@include: ./no-console-except-catch.md-->
-<!--@include: ./find-import-file-without-extension.md-->
+<!--@include: ./avoid-jsx-short-circuit.md-->
+<!--@include: ./rewrite-mobx-component.md-->

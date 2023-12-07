@@ -79,6 +79,7 @@ export default defineConfig({
           { text: 'Ruby', link: '/catalog/ruby/'},
           { text: 'Rust', link: '/catalog/rust/'},
           { text: 'TypeScript', link: '/catalog/typescript/'},
+          { text: 'TSX', link: '/catalog/tsx/'},
         ],
         collapsed: true,
       },
