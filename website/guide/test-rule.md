@@ -149,7 +149,7 @@ Let's rerun `sg test` without `--skip-snapshot-tests` option.
 This time we will get test failure that invalid code error does not have a matching snapshot.
 Previously we use the `skip-snapshot-tests` option to suppress snapshot test, which is useful when you are still working on your rule. But after the rule is polished, we can create snapshot to capture the desired output of the rule.
 
-The `--update-snapshots` or `-u` will generate a snapshot directory for us.
+The `--update-all` or `-U` will generate a snapshot directory for us.
 
 ```bash
 my-awesome-rules/
