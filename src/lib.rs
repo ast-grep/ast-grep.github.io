@@ -8,7 +8,6 @@ use utils::WasmMatch;
 
 use ast_grep_config::{RuleConfig, SerializableRuleConfig, CombinedScan};
 use ast_grep_core::language::Language;
-use ast_grep_core::replacer::Fixer;
 use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::collections::HashMap;
@@ -61,37 +60,30 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
-  let doc = WasmDoc::new(src.clone(), lang);
-  let root = AstGrep::doc(doc);
+  let root = lang.ast_grep(&src);
   let sets = combined.find(&root);
   let diffs = combined.diffs(&root, sets);
   if diffs.is_empty() {
     return Ok(src);
   }
   let mut start = 0;
-  let src: Vec<_> = src.chars().collect();
-  let mut new_content = Vec::<char>::new();
+  let src = src.as_bytes();
+  let mut new_content = Vec::new();
   for (nm, idx) in diffs {
     let range = nm.range();
     if start > range.start {
       continue;
     }
     let rule = combined.get_rule(idx);
-    let fixer = rule.fix.as_ref().unwrap();
-    let fixer = if let Some(val) = &rule.transform {
-      let keys: Vec<_> = val.keys().cloned().collect();
-      Fixer::with_transform(&fixer, &lang, &keys)
-    } else {
-      Fixer::try_new(&fixer, &lang)?
-    };
-    let edit = nm.make_edit(&rule.matcher, &fixer);
+    let fixer = rule.fixer.as_ref().unwrap();
+    let edit = nm.make_edit(&rule.matcher, fixer);
     new_content.extend(&src[start..edit.position]);
     new_content.extend(&edit.inserted_text);
     start = edit.position + edit.deleted_length;
   }
   // add trailing statements
   new_content.extend(&src[start..]);
-  Ok(new_content.into_iter().collect())
+  Ok(String::from_utf8(new_content)?)
 }
 
 fn convert_to_debug_node(n: Node) -> DumpNode {
