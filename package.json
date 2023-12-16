@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "search-insights": "^2.6.0",
-    "@algolia/client-search": "4.20.0",
+    "@algolia/client-search": "4.22.0",
     "markdown-it": "^13.0.1",
     "typescript": "5.3.3",
     "vite": "5.0.5",
