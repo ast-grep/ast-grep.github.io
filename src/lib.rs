@@ -60,30 +60,31 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
-  let root = lang.ast_grep(&src);
+  let doc = WasmDoc::new(src.clone(), lang);
+  let root = AstGrep::doc(doc);
   let sets = combined.find(&root);
   let diffs = combined.diffs(&root, sets);
   if diffs.is_empty() {
     return Ok(src);
   }
   let mut start = 0;
-  let src = src.as_bytes();
-  let mut new_content = Vec::new();
+  let src: Vec<_> = src.chars().collect();
+  let mut new_content = Vec::<char>::new();
   for (nm, idx) in diffs {
     let range = nm.range();
     if start > range.start {
       continue;
     }
     let rule = combined.get_rule(idx);
-    let fixer = rule.fixer.as_ref().unwrap();
-    let edit = nm.make_edit(&rule.matcher, fixer);
+    let fixer = rule.get_fixer()?.expect("rule returned by diff must have fixer");
+    let edit = nm.make_edit(&rule.matcher, &fixer);
     new_content.extend(&src[start..edit.position]);
     new_content.extend(&edit.inserted_text);
     start = edit.position + edit.deleted_length;
   }
   // add trailing statements
   new_content.extend(&src[start..]);
-  Ok(String::from_utf8(new_content)?)
+  Ok(new_content.into_iter().collect())
 }
 
 fn convert_to_debug_node(n: Node) -> DumpNode {
