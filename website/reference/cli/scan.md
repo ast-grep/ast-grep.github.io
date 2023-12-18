@@ -29,6 +29,12 @@ Scan the codebase with the single rule located at the path RULE_FILE.
 
 This flags conflicts with --config. It is useful to run single rule without project setup.
 
+
+### `--inline-rules <RULE_TEXT>`
+Scan the codebase with a rule defined by the provided RULE_TEXT.
+
+Use this argument if you want to test a rule without creating a YAML file on disk. You can run multiple rules by separating them with `---` in the RULE_TEXT. --inline-rules is incompatible with --rule.
+
 ### `--filter <REGEX>`
 Scan the codebase with rules with ids matching REGEX.
 

@@ -54,7 +54,8 @@ sg scan [OPTIONS] [PATHS]...
 |-------|------|-------------|
 | -c | --config `<CONFIG_FILE>`| Path to ast-grep root config, default is `sgconfig.yml` |
 | -r | --rule `<RULE_FILE>`| Scan the codebase with the single rule located at the path `RULE_FILE`.|
-|    | --filter `<REGEX>` |Scan the codebase with rules with ids matching REGEX |
+|    | --inline-rules `<RULE_TEXT>` | Scan the codebase with a rule defined by the provided `RULE_TEXT` |
+|    | --filter `<REGEX>` |Scan the codebase with rules with ids matching `REGEX` |
 | -i | --interactive|Start interactive edit session.|
 | | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
