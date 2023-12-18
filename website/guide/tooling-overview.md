@@ -149,10 +149,9 @@ You can invoke sg, the command-line interface for ast-grep, as a subprocess to s
 **All the following conditions** must be met to enable StdIn mode:
 
 1. The command line argument flag `--stdin` is passed.
-2. The environment variable `AST_GREP_NO_STDIN` is **NOT** set. Otherwise it will disable StdIn mode.
-3. ast-grep is not running inside a [tty](https://github.com/softprops/atty). If you are using a terminal emulator, ast-grep will usually run in a tty if invoked directly from CLI.
+2. ast-grep is **NOT** running inside a [tty](https://github.com/softprops/atty). If you are using a terminal emulator, ast-grep will usually run in a tty if invoked directly from CLI.
 
-The first two conditions are quite self explanatory. However, it should be noted that many cases are not tty, for example:
+The first condition is quite self explanatory. However, it should be noted that many cases are not tty, for example:
 
 * ast-grep is invoked by other program as subprocess.
 * ast-grep is running inside [GitHub Action](https://github.com/actions/runner/issues/241).
@@ -160,9 +159,8 @@ The first two conditions are quite self explanatory. However, it should be noted
 
 So you have to use `--stdin` to avoid unintentional StdIn mode and unexpected error.
 
-:::danger Breaking Change
-Older ast-grep will detect tty and automatically enable StdIn mode. It turns out to be too easy to break. So parsing code from StdIn becomes an opt-in mode.
-See related [discussion](https://github.com/ast-grep/ast-grep/discussions/500).
+:::danger Running ast-grep in tty with --stdin
+ast-grep will hang there if you run it in a tty terminal session with `--stdin` flag, until you type in some text and send EOF signal (usually `Ctrl-D`).
 :::
 
 #### Bonus Example

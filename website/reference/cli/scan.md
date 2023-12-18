@@ -59,7 +59,7 @@ Possible values:
 
 Enable search code from StdIn.
 
-Use this if you need to take code stream from standard input. If the environment variable `AST_GREP_NO_STDIN` exist, ast-grep will disable StdIn mode.
+Use this if you need to take code stream from standard input.
 
 ## Output Options
 
