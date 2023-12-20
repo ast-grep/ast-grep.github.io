@@ -299,11 +299,6 @@ The `callback` function is called for every file that have nodes that match the 
 
 The return value of `findInFiles` is a `Promise` object. The promise resolves to the number of files that have nodes that match the rule.
 
-:::danger
-`findInFiles` can return before all file callbacks are called due to NodeJS limitation.
-See https://github.com/ast-grep/ast-grep/issues/206.
-:::
-
 If you have a lot of files and `findInFiles` prematurely returns, you can use the total files returned by `findInFiles` as a check point. Maintain a counter outside of `findInFiles` and increment it in callback. If the counter equals the total number, we can conclude all files are processed. The following code is an example, with core logic highlighted.
 
 ```ts:line-numbers {11,16-18}
