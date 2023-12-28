@@ -64,6 +64,11 @@ onMounted(() => {
     inlineSuggest: {
       enabled: true,
     },
+    quickSuggestions: {
+      other: true,
+      comments: false,
+      strings: true,
+    }
   })
   editor.value = editorInstance
   editorInstance.onDidChangeModelContent(() => {
