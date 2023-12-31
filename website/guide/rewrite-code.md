@@ -215,7 +215,7 @@ Later transformations can use the variables that were transformed before. This a
 :::
 
 ## Supported `transformation`
-We have several different transformations available now. Please check out [ast-grep#436](https://github.com/ast-grep/ast-grep/issues/436) for more details.
+We have several different transformations available now. Please check out [transformation reference](/reference/yaml/transformation.html) for more details.
 
 * `replace`: Use a regular expression to replace the text in a meta-variable with a new text.
 * `substring`: Create a new string by cutting off leading and trailing characters.
