@@ -61,8 +61,8 @@ onMounted(() => {
     minimap: {
       enabled: false,
     },
-    inlineSuggest: {
-      enabled: true,
+    suggest: {
+      preview: true,
     },
     quickSuggestions: {
       other: true,
