@@ -182,9 +182,11 @@ provide(langLoadedKey, langLoaded)
   flex: 1 0 30%;
   display: flex;
   flex-direction: column;
+  /* drop-shadow is causing Monaco suggestion misplaced */
   filter: drop-shadow(0 0 8px #00000010);
 }
 .half:focus-within {
+  /* keep here since monaco suggestion details are not expanded by default */
   filter: drop-shadow(0 0 16px #00000020);
 }
 
