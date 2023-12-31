@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # Transformation Object
 
 A transformation object is used to manipulate meta variables. It is a dictionary with the following structure:
@@ -110,19 +114,21 @@ Ideally, the source string should be an identifier in the rule language.
 
 The target case to convert to.
 
-Some string cases will first split the source string into words, then convert each word's case, and finally join the words back together. These string cases are separator-sensitive and will be influenced by the `separatedBy` option.
+Some string cases will first split the source string into words, then convert each word's case, and finally join the words back together. You can fine-tune the behavior of these separator-sensitive string cases by the `separatedBy` option.
 
 ast-grep supports the following cases:
 
 #### `StringCase`
 
-* `lowerCase`
-* `upperCase`
-* `capitalize`
-* `camelCase`
-* `snakeCase`
-* `kebabCase`
-* `pascalCase`
+|Name|Example input|Example output|Separator sensitive?|
+|---|---:|---:|--:|
+|`lowerCase`| astGrep| astgrep| No|
+|`upperCase`| astGrep| ASTGREP| No|
+|`capitalize`| astGrep| AstGrep| No|
+|`camelCase`| ast_grep| astGrep| Yes|
+|`snakeCase`| astGrep| ast_grep| Yes|
+|`kebabCase`| astGrep| ast-grep| Yes|
+|`pascalCase`| astGrep| AstGrep| Yes|
 
 ### `separatedBy`
 
@@ -136,12 +142,30 @@ ast-grep supports the following separators:
 
 #### `Separator`
 
-* `CaseChange`
-* `Dash`
-* `Dot`
-* `Slash`
-* `Space`
-* `Underscore`
+|Name|Separator character |Example input|Example output|
+|---|:---:|:---:|:---:|
+|`Dash`|`-`| ast-grep| [ast, grep]|
+|`Dot`|`.`| ast.grep| [ast, grep]|
+|`Space`|` `| ast grep| [ast, grep]|
+|`Slash`|`/`| ast/grep| [ast, grep]|
+|`Underscore`|`_`| ast_grep| [ast, grep]|
+|`CaseChange`|Described below| astGrep| [ast, grep]|
+
+`CaseChange` separator is a special separator that splits the string when two consecutive characters' case changed.
+More specifically, it splits the string in the following two scenarios.
+
+* At the position between a lowercase letter and an uppercase letter, e.g. `astGrep` -> `[ast, Grep]`
+* Before an uppercase letter that is not the first character and is followed by a lowercase letter, e.g. `ASTGrep` -> `[AST, Grep]`
+
+More examples are shown below. You can also inspect [the equivalent regular expression examples](https://regexr.com/7prq5) to see how `CaseChange` works in action
+
+```
+RegExp -> [Reg, Exp]
+XMLHttpRequest -> [XML, Http, Request]
+regExp -> [reg, Exp]
+writeHTML -> [write, HTML]
+```
+
 
 ### `source`
 
@@ -158,9 +182,14 @@ _The meta-variable name must be prefixed with `$`._
 transform:
   NEW_VAR:
     convert:
-      toCase: upperCase
+      toCase: kebabCase
       separatedBy: [underscore]
       source: $VAR
 ```
+
+Suppose we have a string `ast_Grep` as the input `$VAR`, The example above will convert the string as following:
+* split the string by `_` into `[ast, Grep]`
+* convert the words to lowercase words `[ast, grep]`
+* join the words by `-` into the target string `ast-grep`
 
 Thank [Aarni Koskela](https://github.com/akx) for proposing and implementing the first version of this feature!
