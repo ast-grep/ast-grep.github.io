@@ -95,7 +95,11 @@ export default defineConfig({
             ],
           },
           { text: 'Project Config', link: '/reference/sgconfig.html' },
-          { text: 'Rule Config', link: '/reference/yaml.html' },
+          { text: 'Rule Config', link: '/reference/yaml.html', collapsed: true,
+            items: [
+              { text: 'transformation', link: '/reference/yaml/transformation.html' },
+            ],
+          },
           { text: 'Rule Object', link: '/reference/rule.html' },
           { text: 'API Reference', link: '/reference/api.html' },
           { text: 'Language List', link: '/reference/languages.html' },
