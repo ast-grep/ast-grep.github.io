@@ -209,10 +209,52 @@ Let's discuss the API step by step:
     2. The `startChar` and `endChar` keys specify the indices of the start and end characters of the substring that we want to extract. In this case, we want to extract everything except the wrapping parentheses, which are the first and last characters: `(` and `)`.
 5. The `fix` key specifies the new code that we want to replace the matched pattern with. We use the new variable `$LIST` in the fix part, and wrap it with `[` and `]` to make it a list comprehension.
 
-We have several different transformations available now. Please check out [ast-grep#436](https://github.com/ast-grep/ast-grep/issues/436) for more details.
 
 :::tip Pro Tips
 Later transformations can use the variables that were transformed before. This allows you to stack string operations and achieve complex transformations.
+:::
+
+## Supported `transformation`
+We have several different transformations available now. Please check out [ast-grep#436](https://github.com/ast-grep/ast-grep/issues/436) for more details.
+
+* `replace`: Use a regular expression to replace the text in a meta-variable with a new text.
+* `substring`: Create a new string by cutting off leading and trailing characters.
+* `convert`: Change the string case of a meta-variable, such as from `camelCase` to `underscore_case`.
+
+## Add conditional text
+
+Occasionally we may want to add extra text, such as punctuations and newlines, to our fixer string. But whether we should add the new text depends on the presence of absence of other syntax nodes.
+
+A typical scenario is adding a comma between two arguments or list items. We only want to add a comma when the item we are adding is not the last one in the argument list.
+
+We can use `replace` transformation to create a new meta-variable that only contains text when another meta-variable matches something.
+
+For example, suppose we want to add a new argument to existing function call. We need to add a comma `,` after the new argument only when the existing call already has some arguments.
+
+
+```yaml
+id: add-leading-argument
+language: python
+rule:
+  pattern: $FUNC($$$ARGS)
+transform:
+  MAYBE_COMMA:
+    replace:
+      source: $$$ARGS
+      replace: '^.+'
+      by: ', '
+fix:
+  $FUNC(new_argument$MAYBE_COMMA$$$ARGS)
+```
+
+In the above example, if `$$$ARGS` matches nothing, it will be an empty string and the `replace` transformation will take no effect. The final fix string will be instantiated to `$FUNC(new_argument)`.
+
+If `$$$ARGS` does match nodes, then the replacement regular expression will replace the text with `,`, so the final fix string will be
+`$FUNC(new_argument, $$$ARGS)`
+
+
+:::tip DasSurma Trick
+This method is invented by [Surma](https://surma.dev/) in a [tweet](https://twitter.com/DasSurma/status/1706086320051794217), so the useful trick is named after him.
 :::
 
 ## See More in Example Catalog
