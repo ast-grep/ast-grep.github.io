@@ -9,6 +9,11 @@ An ast-grep rule is a YAML file with the following keys:
 
 Unique, descriptive identifier, e.g., `no-unused-variable`.
 
+Example:
+```yaml
+id: no-console-log
+```
+
 ## `message`
 
 * type: `String`
@@ -17,12 +22,22 @@ Unique, descriptive identifier, e.g., `no-unused-variable`.
 Main message highlighting why this rule fired. It should be single line and concise,
 but specific enough to be understood without additional context.
 
+Example:
+```yaml
+message: "console.log should not be used in production code"
+```
+
 ## `note`
 
 * type: `String`
 * required: false
 
 Additional notes to elaborate the message and provide potential fix to the issue.
+
+Example:
+```yaml
+note: "Use a logger instead"
+```
 
 ## `severity`
 
@@ -33,6 +48,11 @@ Specify the level of matched result. Available choice: `hint`, `info`, `warning`
 
 When `severity` is `off`, ast-grep will disable the rule in scanning.
 
+Example:
+```yaml
+severity: warning
+```
+
 ## `language`
 
 * type: `String`
@@ -42,12 +62,22 @@ Specify the language to parse and the file extension to includ in matching.
 
 Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Dart`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
 
+Example:
+```yaml
+language: JavaScript
+```
+
 ## `rule`
 
 * type: `Rule`
 * required: true
 
 The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule).
+
+```yaml
+rule:
+  pattern: console.log($$$args)
+```
 
 ## `fix`
 
@@ -56,12 +86,32 @@ The object specify the method to find matching AST nodes. See details in [rule o
 
 A pattern to auto fix the issue. It can reference meta variables appeared in the rule.
 
+```yaml
+fix: logger.log($$$args)
+
+# you can also use empty string to delete match
+fix: ""
+```
+
 ## `constraints`
 
 * type: `HashMap<String, Object>`
 * required: false
 
-Additional meta variables pattern to filter matches.
+Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value
+is a simplified rule object. Currently, the simplified supports `pattern`, `kind` and `regex`.
+
+Example:
+
+```yaml
+rule:
+  pattern: console.log($ARG)
+constraints:
+  ARG:
+    kind: number
+    # pattern: $A + $B
+    # regex: '[a-zA-Z]+'
+```
 
 ## `utils`
 
@@ -71,6 +121,17 @@ Additional meta variables pattern to filter matches.
 A dictionary of utility rules that can be used in `matches` locally.
 The dictionary key is the utility rule id and the value is the rule object.
 See [utility rule guide](/guide/rule-config/utility-rule).
+
+Example:
+
+```yaml
+utils:
+  match-function:
+    any:
+      - kind: function
+      - kind: function_declaration
+      - kind: arrow_function
+```
 
 ## `transform` <Badge type="warning" text="Experimental" />
 
@@ -92,9 +153,22 @@ for context and usage.
 
 Glob patterns to specify that the rule only applies to matching files. It takes priority over `ignores`.
 
+Example:
+```yaml
+files:
+  - ./src/**/*.js
+  - ./src/**/*.ts
+```
+
 ## `ignores`
 * type: `List` of `String`
 * required: false
+
+```yaml
+ignores:
+  - ./test/**/*.js
+  - ./test/**/*.ts
+```
 
 Glob patterns that exclude rules from applying to files. It is superseded by `files` if both are specified.
 
@@ -111,8 +185,21 @@ To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 
 Documentation link to this rule. It will be displayed in editor extension if supported.
 
+Example:
+
+```yaml
+url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
+```
+
 ## `metadata`
 * type: `HashMap<String, String>`
 * required: false
 
 Extra information for the rule.
+
+Example:
+
+```yaml
+metadata:
+  extraField: 'Extra information for other usages'
+```
