@@ -133,19 +133,25 @@ utils:
       - kind: arrow_function
 ```
 
-## `transform` <Badge type="warning" text="Experimental" />
+## `transform`
 
 * type: `HashMap<String, Transformation>`
 * required: false
-* status: **Experimental**
 
 A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
-The dictionary value is a transformation that specifies how meta var is processed.
+The dictionary value is a transformation object that specifies how meta var is processed.
 
-:::danger This is experimental.
-This is an experimental option. Please see https://github.com/ast-grep/ast-grep/issues/436
-for context and usage.
-:::
+Please also see [transformation reference](/reference/yaml/transformation) for details.
+
+Example:
+```yaml
+transform:
+  NEW_VAR_NAME:      # new variable name
+    replace:         # transform operation
+      source: $ARGS
+      replace: '^.+'
+      by: ', '
+```
 
 ## `files`
 * type: `List` of `String`
