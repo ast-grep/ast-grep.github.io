@@ -46,7 +46,7 @@ fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNod
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
-      MetaVariable::Named(name, _) => {
+      MetaVariable::Capture(name, _) => {
         if let Some(node) = env.get_match(&name) {
           map.insert(name, WasmNode::from(node.clone()));
         } else if let Some(bytes) = env.get_transformed(&name) {
@@ -57,7 +57,7 @@ fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNod
           map.insert(name, WasmNode::from(node));
         }
       }
-      MetaVariable::NamedEllipsis(name) => {
+      MetaVariable::MultiCapture(name) => {
         let nodes = env.get_multiple_matches(&name);
         let (Some(first), Some(last)) = (nodes.first(), nodes.last()) else {
           continue

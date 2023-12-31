@@ -13,15 +13,15 @@ dependencies = [
 
 [[package]]
 name = "anyhow"
-version = "1.0.75"
+version = "1.0.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
+checksum = "ca87830a3e3fb156dc96cfbd31cb620265dd053be734723f22b760d6cc3c3051"
 
 [[package]]
 name = "ast-grep-config"
-version = "0.15.1"
+version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "03af9c066a8da893b7befc6c31bd33f1454b7615f508b459c4697a32d1c8f095"
+checksum = "ff9d4f9f218a7c0b3ac09fc55fb4f3abdefffd1ddab1151727a1dbca124ad589"
 dependencies = [
  "anyhow",
  "ast-grep-core",
@@ -36,9 +36,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-core"
-version = "0.15.1"
+version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0a30b9206096187d7eed7cd6840a7f3b62e02f3e7b643c05a425afb80675363d"
+checksum = "454bd5347849679c81b6ac5302fcae15e672748f324adb79759097bb32c0c878"
 dependencies = [
  "bit-set",
  "regex",
@@ -48,9 +48,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-language"
-version = "0.15.1"
+version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "579e0ae5267b160000d5626df33879ee02ec4663a08142406f3595e76cafa965"
+checksum = "5d468a41b57f620dba7760ef57a58d2b52471f8f07d4bf47c381ecf28c59f6bb"
 dependencies = [
  "ast-grep-core",
  "ignore",
@@ -436,9 +436,9 @@ dependencies = [
 
 [[package]]
 name = "serde_yaml"
-version = "0.9.27"
+version = "0.9.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3cc7a1570e38322cfe4154732e5110f887ea57e22b76f4bfd32b5bdd3368666c"
+checksum = "a15e0ef66bf939a7c890a0bf6d5a733c70202225f9888a89ed5c62298b019129"
 dependencies = [
  "indexmap",
  "itoa",
@@ -530,9 +530,9 @@ checksum = "b15811caf2415fb889178633e7724bad2509101cde276048e013b9def5e51fa0"
 
 [[package]]
 name = "unsafe-libyaml"
-version = "0.2.8"
+version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1865806a559042e51ab5414598446a5871b561d21b6764f2eabb0dd481d880a6"
+checksum = "ab4c90930b95a82d00dc9e9ac071b4991924390d46cbd0dfe566148667605e4b"
 
 [[package]]
 name = "walkdir"
