@@ -164,7 +164,7 @@ Note that the `return 456` line has an indentation of four spaces.
 This is because it has two spaces indentation as a part of the fix string, and two additional spaces because the fix string as a whole is inside the `if` statement in the original code.
 
 
-## Use `transform` in Rewrite <Badge type="warning" text="Experimental" />
+## Use `transform` in Rewrite
 
 Sometimes, we may want to apply some transformations to the meta variables in the fix part of a YAML rule. For example, we may want to change the case, add or remove prefixes or suffixes. ast-grep provides a `transform` key that allows us to specify such transformations.
 
