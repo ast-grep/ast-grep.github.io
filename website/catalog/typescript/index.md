@@ -13,3 +13,4 @@ TS allows both the `as` operator and angle brackets (`<>`) for type assertions. 
 <!--@include: ./no-await-in-promise-all.md-->
 <!--@include: ./no-console-except-catch.md-->
 <!--@include: ./find-import-file-without-extension.md-->
+<!--@include: ./migrate-xstate-v5.md-->
