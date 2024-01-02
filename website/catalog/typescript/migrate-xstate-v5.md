@@ -18,7 +18,7 @@ The following example picks up some migration items and demonstrates the power o
 
 The rules below correspond to XState v5's [`createMachine`](https://stately.ai/docs/migration#use-createmachine-not-machine), [`createActor`](https://stately.ai/docs/migration#use-createactor-not-interpret), and [`machine.provide`](https://stately.ai/docs/migration#use-machineprovide-not-machinewithconfig).
 
-The example shows how ast-grep can use various features like [utility rule](/guide/rule-config/utility-rule.html), [transformation](/reference/yaml/transformation.html) and [multiple rule in single file](reference/playground.html#test-multiple-rules) to automate the migration. Each rule has a clear and descriptive `id` field that explains its purpose.
+The example shows how ast-grep can use various features like [utility rule](/guide/rule-config/utility-rule.html), [transformation](/reference/yaml/transformation.html) and [multiple rule in single file](/reference/playground.html#test-multiple-rules) to automate the migration. Each rule has a clear and descriptive `id` field that explains its purpose.
 
 For more information, you can use [@ast-grep-bot](https://discord.gg/4YZjf6htSQ) to provide more detailed explanation for each rule.
 
