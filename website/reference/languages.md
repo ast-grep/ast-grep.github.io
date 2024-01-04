@@ -15,10 +15,12 @@ The table below lists all languages that are supported by ast-grep.
 |CSharp | `cs`, `csharp` | `cs`|
 |Css | `css` | `css`|
 |Dart | `dart` | `dart`|
+|Elixir | `ex`, `elixir` | `ex`, `exs`|
 |Go | `go`, `golang` | `go`|
 |Html | `html` | `html`, `htm`, `xhtml`|
 |Java | `java` | `java`|
 |JavaScript | `javascript`, `js`, `jsx` | `cjs`, `js`, `mjs`, `jsx`|
+|Json | `json` | `json` |
 |Kotlin | `kotlin`, `kt` | `kt`, `ktm`, `kts`|
 |Lua | `lua` | `lua`|
 |Python | `py`, `python` | `py`, `py3`, `pyi`, `bzl`|
@@ -26,7 +28,6 @@ The table below lists all languages that are supported by ast-grep.
 |Rust | `rs`, `rust` | `rs`|
 |Scala | `scala` | `scala`, `sc`, `sbt`|
 |Swift | `swift` | `swift`|
-|Thrift | `thrift` | `thrift`|
 |TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
 
