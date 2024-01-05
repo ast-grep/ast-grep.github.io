@@ -40,12 +40,12 @@ Think it as REGEX dot `.`, except it is not textual.
 
 
 :::tip Valid meta variables
-`$META`, `$META_VARIABLE`, `$META_VAR1`
+`$META`, `$META_VAR`, `$META_VAR1`, `$_`, `$_123`
 :::
 
 
 :::danger Invalid meta variables
-`$invalid`, `$Svalue`, `$123`
+`$invalid`, `$Svalue`, `$123`, `$KEBAB-CASE`， `$`
 :::
 
 The pattern `console.log($GREETING)` will match all the following.
