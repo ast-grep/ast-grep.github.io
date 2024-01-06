@@ -24,6 +24,15 @@ const parserPaths = {
   swift: 'tree-sitter-swift.wasm',
 }
 
+// monaco does not realize bash is shell but shell is not bash.
+// use this mapping to highlight bash
+const monacoLangMapping = {
+  bash: 'shell'
+}
+export function normalizeMonacoLang(lang: SupportedLang) {
+  return monacoLangMapping[lang] || lang
+}
+
 export const languageDisplayNames: Record<SupportedLang, string> = {
   javascript: 'JavaScript',
   typescript: 'TypeScript',

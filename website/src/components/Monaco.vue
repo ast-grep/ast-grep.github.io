@@ -12,7 +12,7 @@ import {
   watch,
   PropType,
 } from 'vue'
-import { Match } from './lang'
+import { Match, normalizeMonacoLang } from './lang'
 import { setup } from './monaco'
 
 const monaco = await setup()
@@ -52,7 +52,7 @@ onMounted(() => {
   }
   const editorInstance = monaco.editor.create(containerRef.value, {
     value: props.modelValue,
-    language: props.language,
+    language: normalizeMonacoLang(props.language),
     readOnly: props.readonly,
     automaticLayout: false,
     scrollBeyondLastLine: false,
@@ -145,7 +145,7 @@ watch(() => props.matches, (matched) => {
 
 watch(() => props.language, lang => {
   let oldModel = editor.value?.getModel()
-  let newModel = monaco.editor.createModel(props.modelValue || '', lang)
+  let newModel = monaco.editor.createModel(props.modelValue || '', normalizeMonacoLang(lang))
   editor.value?.setModel(newModel)
   if (oldModel) {
     oldModel.dispose()
