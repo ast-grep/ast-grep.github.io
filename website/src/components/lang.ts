@@ -6,6 +6,7 @@ const parserPaths = {
   typescript: 'tree-sitter-typescript.wasm',
   tsx: 'tree-sitter-tsx.wasm',
   // not so well supported lang...
+  bash: 'tree-sitter-bash.wasm',
   c: 'tree-sitter-c.wasm',
   csharp: 'tree-sitter-c_sharp.wasm',
   cpp: 'tree-sitter-cpp.wasm',
@@ -15,6 +16,7 @@ const parserPaths = {
   html: 'tree-sitter-html.wasm',
   java: 'tree-sitter-java.wasm',
   kotlin: 'tree-sitter-kotlin.wasm',
+  php: 'tree-sitter-php.wasm',
   python: 'tree-sitter-python.wasm',
   ruby: 'tree-sitter-ruby.wasm',
   rust: 'tree-sitter-rust.wasm',
@@ -27,6 +29,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   typescript: 'TypeScript',
   tsx: 'TSX',
   // not so well supported lang...
+  bash: 'Bash(beta)',
   c: 'C',
   csharp: 'C#',
   cpp: 'C++',
@@ -36,6 +39,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   html: 'HTML',
   java: 'Java',
   kotlin: 'Kotlin',
+  php: 'PHP(alpha)',
   python: 'Python',
   ruby: 'Ruby',
   rust: 'Rust',

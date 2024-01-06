@@ -19,6 +19,7 @@ pub enum WasmLang {
   TypeScript,
   Tsx,
   // not so well supported lang...
+  Bash,
   C,
   CSharp,
   Cpp,
@@ -28,6 +29,7 @@ pub enum WasmLang {
   Html,
   Java,
   Kotlin,
+  Php,
   Python,
   Ruby,
   Rust,
@@ -55,6 +57,7 @@ impl FromStr for WasmLang {
       "javascript" => JavaScript,
       "typescript" => TypeScript,
       "tsx" => Tsx,
+      "bash" => Bash,
       "c" => C,
       "csharp" => CSharp,
       "cpp" => Cpp,
@@ -64,6 +67,7 @@ impl FromStr for WasmLang {
       "html" => Html,
       "java" => Java,
       "kotlin" => Kotlin,
+      "php" => Php,
       "python" => Python,
       "ruby" => Ruby,
       "rust" => Rust,
@@ -126,6 +130,7 @@ macro_rules! execute_lang_method {
   ($me: path, $method: ident, $($pname:tt),*) => {
     use WasmLang as W;
     match $me {
+      W::Bash => L::Bash.$method($($pname,)*),
       W::C => L::C.$method($($pname,)*),
       W::Cpp => L::Cpp.$method($($pname,)*),
       W::CSharp => L::CSharp.$method($($pname,)*),
@@ -136,6 +141,7 @@ macro_rules! execute_lang_method {
       W::Java => L::Java.$method($($pname,)*),
       W::Kotlin => L::Kotlin.$method($($pname,)*),
       W::JavaScript => L::JavaScript.$method($($pname,)*),
+      W::Php => L::Php.$method($($pname,)*),
       W::Python => L::Python.$method($($pname,)*),
       W::Ruby => L::Ruby.$method($($pname,)*),
       W::Rust => L::Rust.$method($($pname,)*),
