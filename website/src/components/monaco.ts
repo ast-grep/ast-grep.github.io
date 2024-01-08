@@ -3,7 +3,7 @@ import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-https://github.com/remcohaszing/monaco-yaml/issues/150#issuecomment-1048599960
+// https://github.com/remcohaszing/monaco-yaml/issues/150#issuecomment-1048599960
 import yamlWorker from './workaround?worker'
 
 type Monaco = typeof import('monaco-editor');
