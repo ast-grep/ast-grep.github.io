@@ -15,7 +15,7 @@ rule:
   pattern: "if $VAR: $$$B"
   follows:
     pattern:
-      context: $VAR = $$$EXPR\n
+      context: $VAR = $$$EXPR
       selector: expression_statement
 fix: |-
   if $VAR := $$$EXPR:
