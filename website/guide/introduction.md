@@ -94,7 +94,7 @@ It is written in Rust, a native language and utilize multiple cores. (It can eve
 You can start from creating a one-liner to rewrite code at command line with minimal investment. Later if you see some code smell recurrently appear in your projects, you can write a linting rule in YAML with a few patterns combined. Finally if you are a library author or framework designer, ast-grep provide programmatic interface to rewrite or transpile code efficiently.
 
 ### Pragmatism
-ast-grep comes with batteries included. Interactive code modification is available. Linter and language server work out of box when you install the command line tool. ast-grep is also shipped with test à for rule authors.
+ast-grep comes with batteries included. Interactive code modification is available. Linter and language server work out of box when you install the command line tool. ast-grep is also shipped with test framework for rule authors.
 
 ## Check out Discord Bot
 
