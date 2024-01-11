@@ -135,6 +135,16 @@ rule:
 
 And that's it! You have successfully used a custom language with ast-grep!
 
+## Inspect Parser Output
+
+Due to limited bandwidth, ast-grep does not support pretty print Concrete Syntax Trees.
+
+However, you can use [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/tree/master/cli#commands) to dump the AST tree for your file.
+
+```bash
+tree-sitter parse [file_path]
+```
+
 :::warning Quiz Time
 Can you support parse `main.ʕ◔ϖ◔ʔ` as [Golang](https://github.com/golang/go/issues/59968)?
 
