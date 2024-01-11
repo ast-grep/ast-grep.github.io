@@ -28,10 +28,9 @@
     },
     "fix": {
       "description": "A pattern to auto fix the issue. It can reference metavariables appeared in rule.",
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": {
+        "$ref": "#/definitions/SerializableFixer"
+      }
     },
     "id": {
       "description": "Unique, descriptive identifier, e.g., no-unused-variable",
@@ -284,6 +283,34 @@
         "slash",
         "space",
         "underscore"
+      ]
+    },
+    "SerializableFixConfig": {
+      "type": "object",
+      "required": [
+        "template"
+      ],
+      "properties": {
+        "expandEnd": {
+          "$ref": "#/definitions/Maybe_Relation"
+        },
+        "expandStart": {
+          "$ref": "#/definitions/Maybe_Relation"
+        },
+        "template": {
+          "type": "string"
+        }
+      }
+    },
+    "SerializableFixer": {
+      "description": "A pattern string or fix object to auto fix the issue. It can reference metavariables appeared in rule.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/SerializableFixConfig"
+        }
       ]
     },
     "SerializableMetaVarMatcher": {
