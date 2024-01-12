@@ -29,9 +29,9 @@ We can read the rule as "matches code that is both an expression statement and h
 ```yaml
 rule:
   any:
-    - pattern: var a = $
-    - pattern: const a = $
-    - pattern: let a = $
+    - pattern: var a = $A
+    - pattern: const a = $A
+    - pattern: let a = $A
 ```
 
 The above rule will match any variable declaration statement, like `var a = 1`, `const a = 1` and `let a = 1`.
