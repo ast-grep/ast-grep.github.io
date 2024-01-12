@@ -292,10 +292,10 @@
       ],
       "properties": {
         "expandEnd": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "$ref": "#/definitions/Relation"
         },
         "expandStart": {
-          "$ref": "#/definitions/Maybe_Relation"
+          "$ref": "#/definitions/Relation"
         },
         "template": {
           "type": "string"
