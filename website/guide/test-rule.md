@@ -64,6 +64,8 @@ rule:
         any:
           - kind: for_in_statement
           - kind: while_statement
+        stopBy:
+          end
     - pattern: await $_
 ```
 
