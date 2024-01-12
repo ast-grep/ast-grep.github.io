@@ -8,6 +8,8 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
 
 * [C](/catalog/c/)
   * [Rewrite Method to Function Call](/catalog/c/#rewrite-method-to-function-call)
+* [Go](/catalog/go/)
+  * [Match Function Call](/catalog/go/#match-function-call)
 * [Python](/catalog/python/)
   * [Migrate OpenAi SDK](/catalog/python/#migrate-openai-sdk)
   * [Use Walrus Operator in `if` statement](/catalog/python/#use-walrus-operator-in-if-statement)

@@ -76,6 +76,7 @@ export default defineConfig({
         link: '/catalog/',
         items: [
           { text: 'C', link: '/catalog/c/'},
+          { text: 'Go', link: '/catalog/go/'},
           { text: 'Python', link: '/catalog/python/'},
           { text: 'Ruby', link: '/catalog/ruby/'},
           { text: 'Rust', link: '/catalog/rust/'},
