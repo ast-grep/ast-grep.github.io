@@ -1,6 +1,10 @@
 # Configuration Reference
 
-An ast-grep rule is a YAML file with the following keys:
+ast-grep's rules are written in YAML files.
+
+One YAML file can contain multiple rules, separated by `---`.
+
+An ast-grep rule is a YAML object with the following keys:
 
 ## `id`
 
@@ -72,22 +76,24 @@ language: JavaScript
 * type: `Rule`
 * required: true
 
-The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule).
+The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule.html).
 
 ```yaml
 rule:
-  pattern: console.log($$$args)
+  pattern: console.log($$$ARGS)
 ```
 
 ## `fix`
 
-* type: `String`
+* type: `String` or `FixConfig`
 * required: false
 
-A pattern to auto fix the issue. It can reference meta variables appeared in the rule.
+A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
+
+It can reference meta variables appeared in the rule.
 
 ```yaml
-fix: logger.log($$$args)
+fix: logger.log($$$ARGS)
 
 # you can also use empty string to delete match
 fix: ""
