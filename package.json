@@ -13,7 +13,7 @@
     "@types/js-yaml": "4.0.9",
     "js-yaml": "4.1.0",
     "monaco-editor": "0.45.0",
-    "monaco-yaml": "5.1.0",
+    "monaco-yaml": "5.1.1",
     "vue": "3.4.5"
   },
   "optionalDependencies": {
