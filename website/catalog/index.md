@@ -10,6 +10,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Rewrite Method to Function Call](/catalog/c/#rewrite-method-to-function-call)
 * [Go](/catalog/go/)
   * [Match Function Call](/catalog/go/#match-function-call)
+  * [Find function declarations with names of certain pattern](/catalog/go/#find-function-declarations-with-names-of-certain-pattern)
 * [Python](/catalog/python/)
   * [Migrate OpenAi SDK](/catalog/python/#migrate-openai-sdk)
   * [Use Walrus Operator in `if` statement](/catalog/python/#use-walrus-operator-in-if-statement)
