@@ -267,9 +267,9 @@ jobs:
     name: Run ast-grep lint
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: ast-grep lint step
-        uses: ast-grep/action@v1.2
+        uses: ast-grep/action@v1.4
 ```
 
 This workflow file tells GitHub Action to run ast-grep linting on every push event, using the latest Ubuntu image and the official ast-grep action.
