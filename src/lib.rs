@@ -2,7 +2,7 @@ mod dump_tree;
 mod utils;
 mod wasm_lang;
 
-use wasm_lang::{WasmDoc, WasmLang};
+use wasm_lang::{WasmDoc, WasmLang, Wrapper};
 use dump_tree::{dump_one_node, DumpNode};
 use utils::WasmMatch;
 
@@ -76,7 +76,7 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
       continue;
     }
     let rule = combined.get_rule(idx);
-    let fixer = rule.get_fixer()?.expect("rule returned by diff must have fixer");
+    let fixer = rule.get_fixer::<Wrapper>()?.expect("rule returned by diff must have fixer");
     let edit = nm.make_edit(&rule.matcher, &fixer);
     new_content.extend(&src[start..edit.position]);
     new_content.extend(&edit.inserted_text);

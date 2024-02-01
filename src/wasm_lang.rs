@@ -2,7 +2,6 @@ use std::str::FromStr;
 
 use ast_grep_core::language::Language;
 use ast_grep_core::meta_var::MetaVariable;
-use ast_grep_core::replacer::IndentSensitive;
 use ast_grep_core::source::{Content, Doc, Edit, TSParseError};
 use ast_grep_language as L;
 use std::borrow::Cow;
@@ -226,12 +225,6 @@ impl Content for Wrapper {
   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str> {
     Cow::Owned(bytes.iter().collect())
   }
-}
-
-impl IndentSensitive for Wrapper {
-  const TAB: Self::Underlying = '\t';
-  const SPACE: Self::Underlying = ' ';
-  const NEW_LINE: Self::Underlying = '\n';
 }
 
 fn pos_for_char_offset(input: &[char], offset: usize) -> Point {
