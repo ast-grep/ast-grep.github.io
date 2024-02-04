@@ -172,7 +172,7 @@ writeHTML -> [write, HTML]
 * type: `String`
 * required: true
 
-A meta-variable name to be truncated.
+A meta-variable name to convert.
 
 _The meta-variable name must be prefixed with `$`._
 
@@ -193,3 +193,57 @@ Suppose we have a string `ast_Grep` as the input `$VAR`, The example above will 
 * join the words by `-` into the target string `ast-grep`
 
 Thank [Aarni Koskela](https://github.com/akx) for proposing and implementing the first version of this feature!
+
+## `rewrite` <Badge type="warning" text="Experimental" />
+
+`rewrite` is an experimental transformation that allows you to selectively transform a meta variable by `rewriter` rules.
+Instead of rewriting the single target node which matches the rule, `rewrite` can rewrite a subset of AST captured by a meta-variable.
+
+Currently, it is an experimental feature. Please see the [issue](https://github.com/ast-grep/ast-grep/issues/723)
+
+`rewrite` transformation expects an object value with the following properties:
+
+### `source`
+* type: `String`
+* required: true
+
+The meta-variable name to be rewritten.
+
+_The meta-variable can be single meta-variable, prefixed with `$`, or multiple prefixed with `$$$$`._
+
+ast-grep will find matched descendants nodes of the source meta-variable for single meta-variable and apply the rewriter rules to them.
+For multiple meta-variables, ast-grep will find matched descendants nodes of each node in the meta-variable list.
+
+### `rewriters`
+* type: `Array<String>`
+* required: true
+
+A list of rewriter rules to apply to the source meta-variable. The rewrite rules work like ast-grep's fix mode.
+
+`rewriters` can only refer to the rules specified in `rewriters` section.
+
+ast-grep will find nodes in the meta-variable's AST that match the rewriter rules, and rewrite them to the `fix` string/object in the matched rule.
+
+`rewriter` rules will not have overlapping matches. Nodes on the higher level of AST, or closer to the root node, will be matched first.
+
+For one single node, `rewriters` are matched in order, and only the first match will be applied. Subsequent rules will be ignored.
+
+
+### `joinBy`
+* type: `String`
+* required: false
+
+By default, the rewritten nodes will be put back to the original syntax tree.
+
+If you want to aggregate the rewrite in other fashion, you can specify a string to join the rewritten nodes. For example, you can join generated statements using new line.
+
+**Example**:
+
+```yaml
+transform:
+  NEW_VAR:
+    rewrite:
+      source: $VAR
+      rewriters: [rule1, rule2]
+      joinBy: "\n"
+```
