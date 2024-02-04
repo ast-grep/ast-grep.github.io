@@ -101,6 +101,7 @@ export default defineConfig({
             items: [
               { text: 'fix', link: '/reference/yaml/fix.html' },
               { text: 'transformation', link: '/reference/yaml/transformation.html' },
+              { text: 'rewriter', link: '/reference/yaml/rewriter.html' },
             ],
           },
           { text: 'Rule Object', link: '/reference/rule.html' },

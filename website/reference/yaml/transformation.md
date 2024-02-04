@@ -132,7 +132,7 @@ ast-grep supports the following cases:
 
 ### `separatedBy`
 
-* type: `List` of `Separator`
+* type: `Array<Separator>`
 * required: false
 * default: all separators
 
@@ -220,7 +220,7 @@ For multiple meta-variables, ast-grep will find matched descendants nodes of eac
 
 A list of rewriter rules to apply to the source meta-variable. The rewrite rules work like ast-grep's fix mode.
 
-`rewriters` can only refer to the rules specified in `rewriters` section.
+`rewriters` can only refer to the rules specified in [`rewriters`](/reference/yaml/rewriter.html) [section](/reference/yaml.html#rewriters).
 
 ast-grep will find nodes in the meta-variable's AST that match the rewriter rules, and rewrite them to the `fix` string/object in the matched rule.
 

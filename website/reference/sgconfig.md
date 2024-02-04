@@ -70,7 +70,7 @@ testConfigs:
 A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules).
 
 ## `languageGlobs`
-* type: `HashMap<String, List>`
+* type: `HashMap<String, Array<String>>`
 * required: No
 
 A mapping to associate a language to files that have non-standard extensions or syntaxes.
@@ -111,7 +111,7 @@ The path to the tree-sitter dynamic library of the language.
 
 ### `extensions`
 
-* type: `List` of `String`
+* type: `Array<String>`
 * required: Yes
 
 The file extensions for this language.

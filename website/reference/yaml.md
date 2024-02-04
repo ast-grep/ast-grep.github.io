@@ -123,11 +123,32 @@ A pattern or a `FixConfig` object to auto fix the issue. See details in [fix obj
 
 It can reference meta variables appeared in the rule.
 
+Example:
 ```yaml
 fix: logger.log($$$ARGS)
 
 # you can also use empty string to delete match
 fix: ""
+```
+
+### `rewriters` <Badge type="warning" text="Experimental" />
+* type: `Array<Rewriter>`
+* required: false
+
+A list of rewriter rules that can be used in [`rewrite` transformation](/reference/yaml/transformation.html#rewrite).
+
+A rewriter rule is similar to ordinary YAML rule, but it ony contains _finding_ fields, _patching_ fields and `id`.
+
+Please also see [rewriter reference](/reference/yaml/rewriter.html) for details.
+
+Example:
+```yaml
+rewriters:
+- id: stringify
+  rule: { pattern: "'' + $A" }
+  fix: "String($A)"
+  # you can also use these fields
+  # transform, utils, constraints
 ```
 
 ## Linting
@@ -174,7 +195,7 @@ note: "Use a logger instead"
 ## Globbing
 
 ### `files`
-* type: `List` of `String`
+* type: `Array<String>`
 * required: false
 
 Glob patterns to specify that the rule only applies to matching files. It takes priority over `ignores`.
@@ -187,7 +208,7 @@ files:
 ```
 
 ### `ignores`
-* type: `List` of `String`
+* type: `Array<String>`
 * required: false
 
 ```yaml
