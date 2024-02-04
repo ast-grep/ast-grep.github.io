@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # Configuration Reference
 
 ast-grep's rules are written in YAML files.
@@ -6,7 +10,9 @@ One YAML file can contain multiple rules, separated by `---`.
 
 An ast-grep rule is a YAML object with the following keys:
 
-## `id`
+## Basic Rule Information
+
+### `id`
 
 * type: `String`
 * required: true
@@ -18,7 +24,7 @@ Example:
 id: no-console-log
 ```
 
-## `language`
+### `language`
 
 * type: `String`
 * required: true
@@ -32,7 +38,9 @@ Example:
 language: JavaScript
 ```
 
-## `rule`
+## _Finding_
+
+### `rule`
 
 * type: `Rule`
 * required: true
@@ -44,7 +52,7 @@ rule:
   pattern: console.log($$$ARGS)
 ```
 
-## `constraints`
+### `constraints`
 
 * type: `HashMap<String, Rule>`
 * required: false
@@ -64,43 +72,7 @@ constraints:
     # regex: '[a-zA-Z]+'
 ```
 
-## `transform`
-
-* type: `HashMap<String, Transformation>`
-* required: false
-
-A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
-The dictionary value is a transformation object that specifies how meta var is processed.
-
-Please also see [transformation reference](/reference/yaml/transformation) for details.
-
-Example:
-```yaml
-transform:
-  NEW_VAR_NAME:      # new variable name
-    replace:         # transform operation
-      source: $ARGS
-      replace: '^.+'
-      by: ', '
-```
-
-## `fix`
-
-* type: `String` or `FixConfig`
-* required: false
-
-A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
-
-It can reference meta variables appeared in the rule.
-
-```yaml
-fix: logger.log($$$ARGS)
-
-# you can also use empty string to delete match
-fix: ""
-```
-
-## `utils`
+### `utils`
 
 * type: `HashMap<String, Rule>`
 * required: false
@@ -120,33 +92,47 @@ utils:
       - kind: arrow_function
 ```
 
+## _Patching_
 
-## `message`
+### `transform`
 
-* type: `String`
+* type: `HashMap<String, Transformation>`
 * required: false
 
-Main message highlighting why this rule fired. It should be single line and concise,
-but specific enough to be understood without additional context.
+A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
+The dictionary value is a transformation object that specifies how meta var is processed.
+
+Please also see [transformation reference](/reference/yaml/transformation) for details.
 
 Example:
 ```yaml
-message: "console.log should not be used in production code"
+transform:
+  NEW_VAR_NAME:      # new variable name
+    replace:         # transform operation
+      source: $ARGS
+      replace: '^.+'
+      by: ', '
 ```
 
-## `note`
+### `fix`
 
-* type: `String`
+* type: `String` or `FixConfig`
 * required: false
 
-Additional notes to elaborate the message and provide potential fix to the issue.
+A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
 
-Example:
+It can reference meta variables appeared in the rule.
+
 ```yaml
-note: "Use a logger instead"
+fix: logger.log($$$ARGS)
+
+# you can also use empty string to delete match
+fix: ""
 ```
 
-## `severity`
+## Linting
+
+### `severity`
 
 * type: `String`
 * required: false
@@ -160,7 +146,34 @@ Example:
 severity: warning
 ```
 
-## `files`
+### `message`
+
+* type: `String`
+* required: false
+
+Main message highlighting why this rule fired. It should be single line and concise,
+but specific enough to be understood without additional context.
+
+Example:
+```yaml
+message: "console.log should not be used in production code"
+```
+
+### `note`
+
+* type: `String`
+* required: false
+
+Additional notes to elaborate the message and provide potential fix to the issue.
+
+Example:
+```yaml
+note: "Use a logger instead"
+```
+
+## Globbing
+
+### `files`
 * type: `List` of `String`
 * required: false
 
@@ -173,7 +186,7 @@ files:
   - ./src/**/*.ts
 ```
 
-## `ignores`
+### `ignores`
 * type: `List` of `String`
 * required: false
 
@@ -191,7 +204,9 @@ To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 
-## `url`
+## Supplementary Information
+
+### `url`
 
 * type: `String`
 * required: false
@@ -204,7 +219,7 @@ Example:
 url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
 ```
 
-## `metadata`
+### `metadata`
 * type: `HashMap<String, String>`
 * required: false
 
