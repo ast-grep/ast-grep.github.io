@@ -114,6 +114,7 @@ export default defineConfig({
         text: 'Advanced Topics',
         items: [
           { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
+          { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
           { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
           { text: 'Custom Language Support', link: '/advanced/custom-language.html'},
           { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison.html'},
