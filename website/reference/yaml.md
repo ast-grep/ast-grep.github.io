@@ -18,6 +18,109 @@ Example:
 id: no-console-log
 ```
 
+## `language`
+
+* type: `String`
+* required: true
+
+Specify the language to parse and the file extension to includ in matching.
+
+Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Dart`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
+
+Example:
+```yaml
+language: JavaScript
+```
+
+## `rule`
+
+* type: `Rule`
+* required: true
+
+The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule.html).
+
+```yaml
+rule:
+  pattern: console.log($$$ARGS)
+```
+
+## `constraints`
+
+* type: `HashMap<String, Rule>`
+* required: false
+
+Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value
+is a [rule object](/reference/rule.html).
+
+Example:
+
+```yaml
+rule:
+  pattern: console.log($ARG)
+constraints:
+  ARG:
+    kind: number
+    # pattern: $A + $B
+    # regex: '[a-zA-Z]+'
+```
+
+## `transform`
+
+* type: `HashMap<String, Transformation>`
+* required: false
+
+A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
+The dictionary value is a transformation object that specifies how meta var is processed.
+
+Please also see [transformation reference](/reference/yaml/transformation) for details.
+
+Example:
+```yaml
+transform:
+  NEW_VAR_NAME:      # new variable name
+    replace:         # transform operation
+      source: $ARGS
+      replace: '^.+'
+      by: ', '
+```
+
+## `fix`
+
+* type: `String` or `FixConfig`
+* required: false
+
+A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
+
+It can reference meta variables appeared in the rule.
+
+```yaml
+fix: logger.log($$$ARGS)
+
+# you can also use empty string to delete match
+fix: ""
+```
+
+## `utils`
+
+* type: `HashMap<String, Rule>`
+* required: false
+
+A dictionary of utility rules that can be used in `matches` locally.
+The dictionary key is the utility rule id and the value is the rule object.
+See [utility rule guide](/guide/rule-config/utility-rule).
+
+Example:
+
+```yaml
+utils:
+  match-function:
+    any:
+      - kind: function
+      - kind: function_declaration
+      - kind: arrow_function
+```
+
+
 ## `message`
 
 * type: `String`
@@ -55,108 +158,6 @@ When `severity` is `off`, ast-grep will disable the rule in scanning.
 Example:
 ```yaml
 severity: warning
-```
-
-## `language`
-
-* type: `String`
-* required: true
-
-Specify the language to parse and the file extension to includ in matching.
-
-Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Dart`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
-
-Example:
-```yaml
-language: JavaScript
-```
-
-## `rule`
-
-* type: `Rule`
-* required: true
-
-The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule.html).
-
-```yaml
-rule:
-  pattern: console.log($$$ARGS)
-```
-
-## `fix`
-
-* type: `String` or `FixConfig`
-* required: false
-
-A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
-
-It can reference meta variables appeared in the rule.
-
-```yaml
-fix: logger.log($$$ARGS)
-
-# you can also use empty string to delete match
-fix: ""
-```
-
-## `constraints`
-
-* type: `HashMap<String, Object>`
-* required: false
-
-Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value
-is a simplified rule object. Currently, the simplified supports `pattern`, `kind` and `regex`.
-
-Example:
-
-```yaml
-rule:
-  pattern: console.log($ARG)
-constraints:
-  ARG:
-    kind: number
-    # pattern: $A + $B
-    # regex: '[a-zA-Z]+'
-```
-
-## `utils`
-
-* type: `HashMap<String, Rule>`
-* required: false
-
-A dictionary of utility rules that can be used in `matches` locally.
-The dictionary key is the utility rule id and the value is the rule object.
-See [utility rule guide](/guide/rule-config/utility-rule).
-
-Example:
-
-```yaml
-utils:
-  match-function:
-    any:
-      - kind: function
-      - kind: function_declaration
-      - kind: arrow_function
-```
-
-## `transform`
-
-* type: `HashMap<String, Transformation>`
-* required: false
-
-A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
-The dictionary value is a transformation object that specifies how meta var is processed.
-
-Please also see [transformation reference](/reference/yaml/transformation) for details.
-
-Example:
-```yaml
-transform:
-  NEW_VAR_NAME:      # new variable name
-    replace:         # transform operation
-      source: $ARGS
-      replace: '^.+'
-      by: ', '
 ```
 
 ## `files`
