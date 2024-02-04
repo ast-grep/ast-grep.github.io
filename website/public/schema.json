@@ -28,9 +28,7 @@
     },
     "fix": {
       "description": "A pattern to auto fix the issue. It can reference metavariables appeared in rule.",
-      "type": {
-        "$ref": "#/definitions/SerializableFixer"
-      }
+      "$ref": "#/definitions/SerializableFixer"
     },
     "id": {
       "description": "Unique, descriptive identifier, e.g., no-unused-variable",
@@ -544,8 +542,44 @@
             }
           },
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "rewrite"
+          ],
+          "properties": {
+            "rewrite": {
+              "$ref": "#/definitions/Rewrite"
+            }
+          },
+          "additionalProperties": false
         }
       ]
+    },
+    "Rewrite": {
+      "type": "object",
+      "required": [
+        "rewriters",
+        "source"
+      ],
+      "properties": {
+        "joinBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rewriters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "string"
+        }
+      }
     }
   }
 }
