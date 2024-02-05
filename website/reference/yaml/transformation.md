@@ -247,3 +247,5 @@ transform:
       rewriters: [rule1, rule2]
       joinBy: "\n"
 ```
+
+Thank [Eitan Mosenkis](https://github.com/emosenkis) for proposing this idea!
