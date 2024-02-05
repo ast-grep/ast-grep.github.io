@@ -129,4 +129,15 @@ An optional char to replace $ in your pattern.
 * type: `String`
 * required: No
 
-The dylib symbol to load ts-language, default is tree_sitter_{name}
+The dylib symbol to load ts-language, default is `tree_sitter_{name}`, e.g. `tree_sitter_mojo`.
+
+
+**Example:**
+
+```yaml
+customLanguages:
+  mojo:
+      libraryPath: mojo.so     # path to dynamic library
+      extensions: [mojo, 🔥]   # file extensions for this language
+      expandoChar: _           # optional char to replace $ in your pattern
+```

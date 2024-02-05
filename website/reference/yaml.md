@@ -10,7 +10,7 @@ One YAML file can contain multiple rules, separated by `---`.
 
 An ast-grep rule is a YAML object with the following keys:
 
-## Basic Rule Information
+## Basic Information
 
 ### `id`
 
@@ -57,8 +57,7 @@ rule:
 * type: `HashMap<String, Rule>`
 * required: false
 
-Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value
-is a [rule object](/reference/rule.html).
+Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value is a [rule object](/reference/rule.html).
 
 Example:
 
@@ -225,7 +224,7 @@ To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 
-## Supplementary Information
+## Other
 
 ### `url`
 
