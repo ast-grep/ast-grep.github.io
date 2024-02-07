@@ -31,10 +31,10 @@ devDependencies:
     specifier: 4.22.1
     version: 4.22.1
   markdown-it:
-    specifier: ^14.0.0
+    specifier: 14.0.0
     version: 14.0.0
   search-insights:
-    specifier: ^2.6.0
+    specifier: 2.6.0
     version: 2.6.0
   typescript:
     specifier: 5.3.3
@@ -1341,6 +1341,7 @@ packages:
 
   /web-tree-sitter-wasm-bindgen@0.20.8:
     resolution: {integrity: sha512-9FWmmdz+Joj62dKTn+eQVLtFi8s6n7Do4C0D1/NCE4Wai46mwt/MeEVINtgSNHri3321LQdIsp8bYstv/Atpzg==}
+    requiresBuild: true
     dependencies:
       web-tree-sitter: 0.20.8
     dev: false
@@ -1348,6 +1349,7 @@ packages:
 
   /web-tree-sitter@0.20.8:
     resolution: {integrity: sha512-weOVgZ3aAARgdnb220GqYuh7+rZU0Ka9k9yfKtGAzEYMa6GgiCzW9JjQRJyCJakvibQW+dfjJdihjInKuuCAUQ==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -1363,7 +1365,6 @@ packages:
   file:pkg:
     resolution: {directory: pkg, type: directory}
     name: ast-grep-wasm
-    version: 0.2.6
     requiresBuild: true
     dependencies:
       web-tree-sitter-wasm-bindgen: 0.20.8
