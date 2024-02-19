@@ -19,12 +19,12 @@ checksum = "080e9890a082662b09c1ad45f567faeeb47f22b5fb23895fbe1e651e718e25ca"
 
 [[package]]
 name = "ast-grep-config"
-version = "0.18.1"
+version = "0.19.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cd37e52f9a3efaa6680171624c8b4117132b904c9d3727ad84ef8db4d079867f"
+checksum = "0b3e91a7a689d26a5d72388e85532d3b23a837cb79c312c7e083053d3e594a6c"
 dependencies = [
  "anyhow",
- "ast-grep-core",
+ "ast-grep-core 0.19.1",
  "bit-set",
  "globset",
  "regex",
@@ -47,12 +47,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "ast-grep-core"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fa9712623e5c65efdb81c4cb6bb5aed2b1c138b66b39e6e6cf27e658fe8f5029"
+dependencies = [
+ "bit-set",
+ "regex",
+ "thiserror",
+ "tree-sitter-facade-sg",
+]
+
+[[package]]
 name = "ast-grep-language"
 version = "0.18.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "654c55b8c52c51253b7e56d44e0ff90f54b1167b260e2604dbe95d280887531b"
 dependencies = [
- "ast-grep-core",
+ "ast-grep-core 0.18.1",
  "ignore",
  "serde",
 ]
@@ -62,7 +74,7 @@ name = "ast-grep-wasm"
 version = "0.2.6"
 dependencies = [
  "ast-grep-config",
- "ast-grep-core",
+ "ast-grep-core 0.18.1",
  "ast-grep-language",
  "console_error_panic_hook",
  "once_cell",
@@ -205,9 +217,9 @@ dependencies = [
 
 [[package]]
 name = "hashbrown"
-version = "0.14.0"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c6201b9ff9fd90a5a3bac2e56a830d0caa509576f0e503818ee82c181b3437a"
+checksum = "290f1a1d9242c78d09ce40a5e87e7554ee637af1351968159f4952f028f75604"
 
 [[package]]
 name = "ignore"
@@ -227,9 +239,9 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.0.0"
+version = "2.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5477fe2230a79769d8dc68e0eabf5437907c0457a5614a9e8dddb67f65eb65d"
+checksum = "233cf39063f058ea2caae4091bf4a3ef70a653afbc026f5c4a4135d114e3c177"
 dependencies = [
  "equivalent",
  "hashbrown",
@@ -436,9 +448,9 @@ dependencies = [
 
 [[package]]
 name = "serde_yaml"
-version = "0.9.30"
+version = "0.9.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1bf28c79a99f70ee1f1d83d10c875d2e70618417fda01ad1785e027579d9d38"
+checksum = "8fd075d994154d4a774f95b51fb96bdc2832b0ea48425c92546073816cda1f2f"
 dependencies = [
  "indexmap",
  "itoa",
@@ -471,18 +483,18 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.56"
+version = "1.0.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d54378c645627613241d077a3a79db965db602882668f9136ac42af9ecb730ad"
+checksum = "1e45bcbe8ed29775f228095caf2cd67af7a4ccf756ebff23a306bf3e8b47b24b"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.56"
+version = "1.0.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fa0faa943b50f3db30a20aa7e265dbc66076993efed8463e8de414e5d06d3471"
+checksum = "a953cb265bef375dae3de6663da4d3804eee9682ea80d8e2542529b73c531c81"
 dependencies = [
  "proc-macro2",
  "quote",
