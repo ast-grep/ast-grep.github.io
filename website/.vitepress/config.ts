@@ -52,7 +52,6 @@ export default defineConfig({
         items: [
           { text: 'Quick Start', link: '/guide/quick-start.html' },
           { text: 'Pattern Syntax', link: '/guide/pattern-syntax.html' },
-          { text: 'Scan Project', link: '/guide/scan-project.html' },
           { text: 'Rule Configuration', link: '/guide/rule-config.html', collapsed: true,
             items:[
               { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule.html' },
@@ -60,8 +59,14 @@ export default defineConfig({
               { text: 'Composite Rule', link: '/guide/rule-config/composite-rule.html' },
               { text: 'Utility Rule', link: '/guide/rule-config/utility-rule.html' },
           ],},
+          {
+            text: 'Project Setup', collapsed: true,
+            items: [
+              { text: 'Scan Project', link: '/guide/scan-project.html' },
+              { text: 'Test Your Rule', link: '/guide/test-rule.html' },
+            ],
+          },
           { text: 'Rewrite Code', link: '/guide/rewrite-code.html' },
-          { text: 'Test Your Rule', link: '/guide/test-rule.html' },
           { text: 'Tooling Overview', link: '/guide/tooling-overview.html' },
           { text: 'API Usage', link: '/guide/api-usage.html', collapsed: true,
             items:[
