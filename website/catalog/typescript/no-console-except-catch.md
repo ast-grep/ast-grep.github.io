@@ -1,13 +1,3 @@
-<!--
----
-language: TypeScript
-playgroundLink: '[TODO]'
-command:  'sg -p [TODO] -r [TODO]'
-hasFix: true
-ruleType: 'pattern' # 'pattern' or 'yaml'
----
--->
-
 ## No `console` except in `catch` block <Badge type="tip" text="Has Fix" />
 
 * [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImlmICRBLmhhc19mZWF0dXJlP1xuICAgICQkJEJcbmVsc2UgXG4gICAgJCQkQyBcbmVuZCAiLCJyZXdyaXRlIjoiJCQkQiIsImNvbmZpZyI6InJ1bGU6XG4gIGFueTpcbiAgICAtIHBhdHRlcm46IGNvbnNvbGUuZXJyb3IoJCQkKVxuICAgICAgbm90OlxuICAgICAgICBpbnNpZGU6XG4gICAgICAgICAga2luZDogY2F0Y2hfY2xhdXNlXG4gICAgICAgICAgc3RvcEJ5OiBlbmRcbiAgICAtIHBhdHRlcm46IGNvbnNvbGUuJE1FVEhPRCgkJCQpXG5jb25zdHJhaW50czpcbiAgTUVUSE9EOlxuICAgIHJlZ2V4OiAnbG9nfGRlYnVnfHdhcm4nXG5maXg6ICcnIiwic291cmNlIjoiY29uc29sZS5kZWJ1ZygnJylcbnRyeSB7XG4gICAgY29uc29sZS5sb2coJ2hlbGxvJylcbn0gY2F0Y2ggKGUpIHtcbiAgICBjb25zb2xlLmVycm9yKGUpXG59In0=)

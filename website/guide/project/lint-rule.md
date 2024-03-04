@@ -1,5 +1,7 @@
 # Lint Rule
 
+<!-- TODO: add a general introduction to Find & Patch. -->
+
 ## Rule Example
 A typical ast-grep rule file looks like this. It reports error when using `await` inside a loop since the loop can proceed _only after_ the awaited Promise resolves first. See the [eslint rule](https://eslint.org/docs/latest/rules/no-await-in-loop).
 
@@ -32,9 +34,8 @@ Let's explain some self-descriptive linter fields. Most of them correspond to th
 
 `language`  and `rule` are the same as in the rule essentials.
 
-## `rule`
-
-TODO
+<!-- ## `rule` -->
+<!-- TODO -->
 
 ## `constraints`
 We can constrain what kind of meta variables we should match.
@@ -62,7 +63,12 @@ You can write a standalone [rule file](/reference/rule.html) and the command `sg
 
 ## `transform`
 
-TODO
+`transform` is an advanced feature that allows you to transform the matched AST nodes into another string.
+
+It is useful when you combine `transform` and `fix` to rewrite the codebase.
+For example, you may want to capitalize the matched variable name, or extract a substring from the matched node.
+
+See the [transform](/guide/rewrite-code.html#use-transform-in-rewrite) section in rewriting guide for more details.
 
 ## `fix`
 ast-grep can perform automatic rewriting to the codebase. The `fix` field in the rule configuration specifies how to rewrite the code. We can also use meta variables specified in the `rule` in `fix`. ast-grep will replace the meta-variables with the content of actual matched AST nodes.

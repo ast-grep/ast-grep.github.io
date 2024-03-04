@@ -1,13 +1,3 @@
-<!--
----
-language: TypeScript
-playgroundLink: '[TODO]'
-command:  'sg -p [TODO] -r [TODO]'
-hasFix: true
-ruleType: 'pattern' # 'pattern' or 'yaml'
----
--->
-
 ## No `await` in `Promise.all` array <Badge type="tip" text="Has Fix" />
 
 * [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiaWQ6IG5vLWF3YWl0LWluLXByb21pc2UtYWxsXG5zZXZlcml0eTogZXJyb3Jcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5tZXNzYWdlOiBObyBhd2FpdCBpbiBQcm9taXNlLmFsbFxucnVsZTpcbiAgcGF0dGVybjogYXdhaXQgJEFcbiAgaW5zaWRlOlxuICAgIHBhdHRlcm46IFByb21pc2UuYWxsKCRfKVxuICAgIHN0b3BCeTpcbiAgICAgIG5vdDogeyBhbnk6IFt7a2luZDogYXJyYXl9LCB7a2luZDogYXJndW1lbnRzfV0gfVxuZml4OiAkQSIsInNvdXJjZSI6ImNvbnN0IFtmb28sIGJhcl0gPSBhd2FpdCBQcm9taXNlLmFsbChbXG4gIGF3YWl0IGdldEZvbygpLFxuICBnZXRCYXIoKSxcbiAgKGFzeW5jICgpID0+IHsgYXdhaXQgZ2V0QmF6KCl9KSgpLFxuXSkifQ==)

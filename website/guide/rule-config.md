@@ -13,9 +13,10 @@ A minimal ast-grep rule looks like this. It reports error when using `await` ins
 id: no-await-in-promise-all
 language: TypeScript
 rule:
-  pattern: await $_
-  inside:
-    pattern: Promise.all($$$)
+  pattern: Promise.all($A)
+  has:
+    pattern: await $_
+    stopBy: end
 ```
 
 Let's walk through the main fields in this configuration.
@@ -24,14 +25,17 @@ Let's walk through the main fields in this configuration.
 
 `language` is the programming language that the rule is intended to check. It specifies what files will be checked against this rule, based on the file extensions.
 
-`rule` is the most interesting part of ast-grep's configuration. It defines how the rule
-behaves and what code will be reported as issues. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
+`rule` is the most interesting part of ast-grep's configuration.
 
-## Run the Rule
+It accpets a [rule object](/reference/rule.html) and defines how the rule behaves and what code will be matched. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
 
-TODO
+<!-- ## Run the Rule -->
+
+<!-- TODO -->
 
 ## Rule Object
+
+<!-- TODO: add rule object definition -->
 
 In ast-grep, we have three categories of rules:
 
