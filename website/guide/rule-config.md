@@ -78,15 +78,69 @@ You can paste the rule configuration into the playground and see the matched cod
 
 ## Rule Object
 
-<!-- TODO: add rule object definition -->
+_Rule object is the core concept of ast-grep's rule system and every other features are built on top of it._
 
-In ast-grep, we have three categories of rules:
+Below is the full list of fields in a rule object. Every rule field is optional and can be omitted but at least one field should be present in a rule. A node will match a rule if and only if it satisfies all fields in the rule object.
 
-* Atomic rule
-* Relational rule
-* Composite rule
+The equivalent rule object interface in TypeScript is also provided for reference.
 
-These three rules can be composed together to create more complex rules.
+:::code-group
+
+```yaml [Full Rule Object]
+rule:
+  # atomic rule
+  pattern: 'search.pattern'
+  kind: 'tree_sitter_node_kind'
+  regex: 'rust|regex'
+  # relational rule
+  inside: { pattern: 'sub.rule' }
+  has: { kind: 'sub_rule' }
+  follows: { regex: 'can|use|any' }
+  precedes: { kind: 'multi_keys', pattern: 'in.sub' }
+  # composite rule
+  all: [ {pattern: 'match.all'}, {kind: 'match_all'} ]
+  any: [ {pattern: 'match.any'}, {kind: 'match_any'} ]
+  not: { pattern: 'not.this' }
+  matches: 'utility-rule'
+```
+
+```typescript [TS Interface]
+interface RuleObject {
+  // atomic rule
+  pattern?: string
+  kind?: string
+  regex?: string
+  // relational rule
+  inside?: RuleObject
+  has?: RuleObject
+  follows?: RuleObject
+  precedes?: RuleObject
+  // composite rule
+  all?: RuleObject[]
+  any?: RuleObject[]
+  not?: RuleObject
+  matches?: string
+}
+```
+:::
+
+A node must **satisfies all fields** in the rule object to be considered as a match. So the rule object can be seen as an abbreviated `all` rule.
+
+## Three Rule Categories
+
+To summarize the rule object fields above, we have three categories of rules:
+
+* **Atomic Rule**: the most basic rule that checks if AST nodes matches.
+* **Relational Rule**: rules that check if a node is surrounded by another node.
+* **Composite Rule**: rules that combine sub-rules together using logical operators.
+
+These three categories of rules can be composed together to create more complex rules.
+
+The _rule object is inspired by the CSS selectors_ but with more composability and expressiveness. Think about how selectors in CSS works can help you understand the rule object!
+
+:::tip
+Don't be daunted! Learn more about how to write a rule in our [detailed guide](/guide/rule-config/atomic-rule).
+:::
 
 ## Target Node
 
@@ -104,10 +158,6 @@ rule:
   pattern: console.log($GREET)
 ```
 And we can get `$GREET` set to `'Hello World'`.
-
-:::tip
-Learn more about how to write a rule in our [detailed guide](/guide/rule-config/atomic-rule).
-:::
 
 
 ## `language` specifies `rule` interpretation
