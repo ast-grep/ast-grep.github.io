@@ -52,7 +52,7 @@ export default defineConfig({
         items: [
           { text: 'Quick Start', link: '/guide/quick-start.html' },
           { text: 'Pattern Syntax', link: '/guide/pattern-syntax.html' },
-          { text: 'Rule Configuration', link: '/guide/rule-config.html', collapsed: true,
+          { text: 'Rule Essentials', link: '/guide/rule-config.html', collapsed: true,
             items:[
               { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule.html' },
               { text: 'Relational Rule', link: '/guide/rule-config/relational-rule.html' },
@@ -60,10 +60,10 @@ export default defineConfig({
               { text: 'Utility Rule', link: '/guide/rule-config/utility-rule.html' },
           ],},
           {
-            text: 'Project Setup', collapsed: true,
+            text: 'Project Setup', collapsed: true, link: '/guide/scan-project.html',
             items: [
-              { text: 'Scan Project', link: '/guide/scan-project.html' },
               { text: 'Project Configuration', link: '/guide/project/project-config.html' },
+              { text: 'Lint Rule', link: '/guide/project/lint-rule.html' },
               { text: 'Test Your Rule', link: '/guide/test-rule.html' },
             ],
           },
