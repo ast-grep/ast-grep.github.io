@@ -1,43 +1,9 @@
 # Rule Configuration
 
-## Root Configuration File
+Now you have learnt the basic of ast-grep's pattern syntax and searching.
+Pattern is a handy feature for simple search. But it is not expressive enough for more complicated cases.
 
-ast-grep supports using [YAML](https://yaml.org/) to configure its linting rules to scan your code repository.
-We need a root configuration file `sgconfig.yml` to specify directories where `sg` can find all rules.
-
-In your project root, add `sgconfig.yml` with content as below.
-
-```yaml
-ruleDirs:
-  - rules
-```
-
-This instructs ast-grep to use all files _recursively_ inside the `rules` folder as rule files.
-
-For example, suppose we have the following file structures.
-
-```
-my-awesome-project
-  |- rules
-  | |- no-var.yml
-  | |- no-bit-operation.yml
-  | |- my_custom_rules
-  |   |- custom-rule.yml
-  |   |- fancy-rule.yml
-  |- sgconfig.yml
-  |- not-a-rule.yml
-```
-
-All the YAML files under `rules` folder will be treated as rule files by `sg`, while`not-a-rule.yml` is ignored by ast-grep.
-
-
-**Note, the [`sg scan`](/reference/cli.html#scan) command requires you have an `sgconfig.yml` in your project root.**
-
-:::tip Pro tip
-We can also use directories in `node_modules` to reuse preconfigured rules published on npm!
-
-More broadly speaking, any git hosted projects can be imported as rule sets by using [`git submodule`](https://www.git-scm.com/book/en/v2/Git-Tools-Submodules).
-:::
+ast-grep provides a more sophisticated way to find your code: Rule.
 
 ## Rule File
 
@@ -45,8 +11,6 @@ A typical ast-grep rule file looks like this. It reports error when using `await
 
 ```yaml
 id: no-await-in-loop
-message: Don't use await inside of loops
-severity: warning
 language: TypeScript
 rule:
   all:
@@ -55,6 +19,10 @@ rule:
           - kind: for_in_statement
           - kind: while_statement
     - pattern: await $_
+
+# Other linting related fields
+message: Don't use await inside of loops
+severity: warning
 note: |
   Performing an await as part of each operation is an indication that
   the program is not taking full advantage of the parallelization benefits of async/await.
@@ -72,6 +40,14 @@ First we will explain some self-descriptive fields. Most of them correspond to t
 `language` also specifies how `rule` is interpreted. More details below.
 
 ## `rule`
+
+In ast-grep, we have three kinds of rules:
+
+* Atomic rule
+* Relational rule
+* Composite rule
+
+These three rules can be composed together to create more complex rules.
 
 Rule is the most interesting part of ast-grep's configuration. It defines how the rule
 behaves and what code will be reported as issues. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).

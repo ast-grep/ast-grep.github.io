@@ -63,6 +63,7 @@ export default defineConfig({
             text: 'Project Setup', collapsed: true,
             items: [
               { text: 'Scan Project', link: '/guide/scan-project.html' },
+              { text: 'Project Configuration', link: '/guide/project/project-config.html' },
               { text: 'Test Your Rule', link: '/guide/test-rule.html' },
             ],
           },

@@ -1,6 +1,5 @@
 # Scan Your Project!
 
-Now you have learnt the basic of ast-grep's pattern syntax and searching.
 Let's explore its power to run scan on your code repository in a scalable way!
 
 `sg scan` is the command you can use to run multiple rules against your repository so that you don't need to pass pattern query to your command line every time.
