@@ -141,6 +141,7 @@ export default defineConfig({
         text: 'Links',
         items: [
           { text: 'Playground', link: '/playground.html' },
+          { text: 'VSCode', link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode'},
           { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ'},
           { text: 'Docs.rs', link: 'https://docs.rs/ast-grep-core/latest/ast_grep_core/' },
         ],
