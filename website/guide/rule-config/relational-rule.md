@@ -10,11 +10,10 @@ In this case, we can use the relational rule `inside` to filter out the `await` 
 
 ```yaml
 rule:
-  all:
-    - pattern: await $PROMISE
-    - inside:
-        kind: for_in_statement
-        stopBy: end
+  pattern: await $PROMISE
+  inside:
+    kind: for_in_statement
+    stopBy: end
 ```
 The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule.
 For example, the above rule can be read as "matches a node that is `await` expression and is inside a for loop".
@@ -23,15 +22,14 @@ Since relational rules accept another ast-grep rule, we can compose more complex
 
 ```yaml
 rule:
-  all:
-    - pattern: await $PROMISE
-    - inside:
-        any:
-          - kind: for_in_statement
-          - kind: for_statement
-          - kind: while_statement
-          - kind: do_statement
-        stopBy: end
+  pattern: await $PROMISE
+  inside:
+    any:
+      - kind: for_in_statement
+      - kind: for_statement
+      - kind: while_statement
+      - kind: do_statement
+    stopBy: end
 ```
 
 The above rule will match different kinds of loops, like `for`, `for-in`, `while` and `do-while`.
@@ -84,10 +82,9 @@ Together, the rule specifies that the target node will `be inside` or `follows` 
 For example, the rule below will match **`hello`(target)** greeting that **follows(relation)** a **`world`(surrounding)** greeting.
 
 ```yaml
-all:
-  - pattern: console.log('hello');
-  - follows:
-      pattern: console.log('world');
+pattern: console.log('hello');
+follows:
+  pattern: console.log('world');
 ```
 
 Consider the [input source code](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBhbGw6XG4gICAgLSBwYXR0ZXJuOiBjb25zb2xlLmxvZygnaGVsbG8nKTtcbiAgICAtIGZvbGxvd3M6XG4gICAgICAgIHBhdHRlcm46IGNvbnNvbGUubG9nKCd3b3JsZCcpOyIsInNvdXJjZSI6ImNvbnNvbGUubG9nKCdoZWxsbycpOyAvLyBkb2VzIG5vdCBtYXRjaFxuY29uc29sZS5sb2coJ3dvcmxkJyk7XG5jb25zb2xlLmxvZygnaGVsbG8nKTsgLy8gbWF0Y2hlcyEhIn0=). Only the second `console.log('hello')` will match the rule.
