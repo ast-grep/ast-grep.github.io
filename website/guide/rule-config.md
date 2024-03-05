@@ -107,19 +107,31 @@ rule:
 ```typescript [TS Interface]
 interface RuleObject {
   // atomic rule
-  pattern?: string
+  pattern?: string | Pattern
   kind?: string
   regex?: string
   // relational rule
-  inside?: RuleObject
-  has?: RuleObject
-  follows?: RuleObject
-  precedes?: RuleObject
+  inside?: RuleObject & Relation
+  has?: RuleObject & Relation
+  follows?: RuleObject & Relation
+  precedes?: RuleObject & Relation
   // composite rule
   all?: RuleObject[]
   any?: RuleObject[]
   not?: RuleObject
   matches?: string
+}
+
+// See Atomic rule for explanation
+interface Pattern {
+  context: string
+  selector: string
+}
+
+// See Relation rule for explanation
+interface Relation {
+  stopBy?: 'neighbor' | 'end' | RuleObject
+  field?: string
 }
 ```
 :::
