@@ -23,6 +23,8 @@ note: |
   the program is not taking full advantage of the parallelization benefits of async/await.
 ```
 
+The _TypeScript_ rule, `no-await-in-loop`, will report a warning when it finds `await` **inside** a `for-in` or `while` loop.
+
 Let's walk through the main fields in this configuration.
 
 The linter rule file is a YAML file. It has fields identical to the [rule essentials](/guide/rule-config.html) plus some linter specific fields.

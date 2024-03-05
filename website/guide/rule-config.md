@@ -7,7 +7,8 @@ ast-grep provides a more sophisticated way to find your code: Rule.
 
 ## A Minimal Example
 
-A minimal ast-grep rule looks like this. It reports error when using `await` inside a `Promise.all` since the `Promise.all` will be called _only after_ the awaited Promise resolves first. See [the repo](https://github.com/hugo-vrijswijk/eslint-plugin-no-await-in-promise/) for more [context](https://twitter.com/hd_nvim/status/1560108625460355073).
+A minimal ast-grep rule looks like this.
+
 
 ```yaml
 id: no-await-in-promise-all
@@ -18,6 +19,10 @@ rule:
     pattern: await $_
     stopBy: end
 ```
+
+The _TypeScript_ rule, _no-await-in-promise-all_, will find `Promise.all` that **has** `await` expression in it.
+
+It is [suboptimal](https://github.com/hugo-vrijswijk/eslint-plugin-no-await-in-promise/) because `Promise.all` will be called [only after](https://twitter.com/hd_nvim/status/1560108625460355073) the awaited Promise resolves first.
 
 Let's walk through the main fields in this configuration.
 
