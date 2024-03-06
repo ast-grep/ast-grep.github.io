@@ -1,12 +1,21 @@
 # Relational Rules
 
+Atomic rule can only match the target node directly. But sometimes we want to match a node based on its surrounding nodes. For example, we want to find `await` expression inside a `for` loop.
+
 Relational rules are powerful operators that can filter the _target_ nodes based on their _surrounding_ nodes.
+
+ast-grep now supports four kinds of relational rules:
+
+`inside`, `has`, `follows`, and `precedes`.
+
+All four relational rules accept a sub rule object as their value. The sub rule will match the surrounding node while the relational rule itself will match the target node.
+
 
 ## Relational Rule Example
 
-Suppose we have an `await` expression inside a for loop. It is usually a bad idea because every iteration will have to wait for the previous promise to resolve.
-In this case, we can use the relational rule `inside` to filter out the `await` expression.
+Having an `await` expression inside a for loop is usually a bad idea because every iteration will have to wait for the previous promise to resolve.
 
+We can use the relational rule `inside` to filter out the `await` expression.
 
 ```yaml
 rule:
@@ -15,8 +24,14 @@ rule:
     kind: for_in_statement
     stopBy: end
 ```
-The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule.
-For example, the above rule can be read as "matches a node that is `await` expression and is inside a for loop".
+
+The rule reads as "matches an `await` expression that is `inside` a `for_in_statement`".
+See [Playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoiaWQ6IG5vLWF3YWl0LWluLWxvb3Bcbmxhbmd1YWdlOiBUeXBlU2NyaXB0XG5ydWxlOlxuICBwYXR0ZXJuOiBhd2FpdCAkUFJPTUlTRVxuICBpbnNpZGU6XG4gICAga2luZDogZm9yX2luX3N0YXRlbWVudFxuICAgIHN0b3BCeTogZW5kIiwic291cmNlIjoiZm9yIChsZXQgaSBvZiBbMSwgMiwzXSkge1xuICAgIGF3YWl0IFByb21pc2UucmVzb2x2ZShpKVxufSJ9).
+
+The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule. The `inside` rule itself matches `await` and its sub rule `kind` matches the surrounding loop.
+
+
+## Relational Rule's Sub Rule
 
 Since relational rules accept another ast-grep rule, we can compose more complex examples by using operators recursively.
 
@@ -34,7 +49,7 @@ rule:
 
 The above rule will match different kinds of loops, like `for`, `for-in`, `while` and `do-while`.
 
-So all the code below matches:
+So all the code below matches the rule:
 
 ```js
 while (foo) {
@@ -51,6 +66,8 @@ do {
 } while (condition)
 ```
 
+See in [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoiaWQ6IG5vLWF3YWl0LWluLWxvb3Bcbmxhbmd1YWdlOiBUeXBlU2NyaXB0XG5ydWxlOlxuICBwYXR0ZXJuOiBhd2FpdCAkUFJPTUlTRVxuICBpbnNpZGU6XG4gICAgYW55OlxuICAgICAgLSBraW5kOiBmb3JfaW5fc3RhdGVtZW50XG4gICAgICAtIGtpbmQ6IGZvcl9zdGF0ZW1lbnRcbiAgICAgIC0ga2luZDogd2hpbGVfc3RhdGVtZW50XG4gICAgICAtIGtpbmQ6IGRvX3N0YXRlbWVudFxuICAgIHN0b3BCeTogZW5kIiwic291cmNlIjoid2hpbGUgKGZvbykge1xuICBhd2FpdCBiYXIoKVxufVxuZm9yIChsZXQgaSA9IDA7IGkgPCAxMDsgaSsrKSB7XG4gIGF3YWl0IGJhcigpXG59XG5mb3IgKGxldCBrZXkgaW4gb2JqKSB7XG4gIGF3YWl0IGJhcigpXG59XG5kbyB7XG4gIGF3YWl0IGJhcigpXG59IHdoaWxlIChjb25kaXRpb24pIn0=).
+
 :::tip Pro Tip
 You can also use `pattern` in relational rule! The metavariable matched in relational rule can also be used in `fix`.
 This will effectively let you extract a child node from a match.
@@ -58,20 +75,20 @@ This will effectively let you extract a child node from a match.
 
 ## Relational Rule Mnemonics
 
-ast-grep now supports four kinds of relational rules:
+The four relational rules can read as:
 
-* `inside`: the target node must be inside a node that matches the sub rule.
-* `has`: the target node must have a child node specified by the sub rule.
-* `follows`: the target node must follow a node specified by the sub rule. (target after surrounding)
-* `precedes`: the target node must precede a node specified by the sub rule. (target before surrounding).
+* `inside`: the _target_ node must be **inside** a node that matches the sub rule.
+* `has`: the _target_ node must **have** a child node specified by the sub rule.
+* `follows`: the _target_ node must **follow** a node specified by the sub rule. (target after surrounding)
+* `precedes`: the _target_ node must **precede** a node specified by the sub rule. (target before surrounding).
 
 It is sometimes confusing to remember whether the rule matches target node or surrounding node. Here is the mnemonics to help you read the rule.
 
-First, relational rule usually has a parent rule like `all` or another atomic rule as field.
+First, relational rule is usually used along with another rule.
 
-That parent rule will match the target node.
+Second, the other rule will match the target node.
 
-The relational rule like `inside` or `follows` will match the surrounding node.
+Finally, the relational rule's sub rule will match the surrounding node.
 
 Together, the rule specifies that the target node will `be inside` or `follows` the surrounding node.
 
@@ -93,10 +110,6 @@ console.log('hello'); // does not match
 console.log('world');
 console.log('hello'); // matches!!
 ```
-
-## Rules as Fields
-Relational rule can be used in a rule object's field as a sub rule. This will create a rule equivalent to a composite `all` rule.
-Please see [the section in composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
 
 ## Fine Tuning Relational Rule
 
