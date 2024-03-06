@@ -2,13 +2,16 @@
 
 Composite rule can accept another rule or a list of rules recursively.
 It provides a way to compose atomic rules into a bigger rule for more complex matching.
-Here are some composite rule operators you can use in ast-grep.
+
+Below are the four composite rule operators available in ast-grep:
+
+`all`, `any`, `not`, and `matches`.
 
 ## `all`
 
 `all` accepts a list of rules and will match AST nodes that satisfy all the rules.
 
-Example:
+Example([playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoiaWQ6IG5vLWF3YWl0LWluLWxvb3Bcbmxhbmd1YWdlOiBUeXBlU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gICAgLSBwYXR0ZXJuOiBjb25zb2xlLmxvZygnSGVsbG8gV29ybGQnKTtcbiAgICAtIGtpbmQ6IGV4cHJlc3Npb25fc3RhdGVtZW50Iiwic291cmNlIjoiY29uc29sZS5sb2coJ0hlbGxvIFdvcmxkJyk7IC8vIG1hdGNoXG52YXIgcmV0ID0gY29uc29sZS5sb2coJ0hlbGxvIFdvcmxkJyk7IC8vIG5vIG1hdGNoIn0=)):
 
 ```yaml
 rule:
@@ -22,9 +25,16 @@ But not `var ret = console.log('Hello World');` because the `console.log` call i
 
 We can read the rule as "matches code that is both an expression statement and has content `console.log('Hello World')`".
 
+:::tip Pro Tip
+`all` rule guarantees the order of rule matching. If you use pattern with metavaraibles, make sure to use `all` array to guarantee rule execution order.
+:::
+
 ## `any`
 
 `any` accepts a list of rules and will match AST nodes as long as they satisfy any one of the rules.
+
+
+Example([playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoibGFuZ3VhZ2U6IFR5cGVTY3JpcHRcbnJ1bGU6XG4gIGFueTpcbiAgICAtIHBhdHRlcm46IHZhciBhID0gJEFcbiAgICAtIHBhdHRlcm46IGNvbnN0IGEgPSAkQVxuICAgIC0gcGF0dGVybjogbGV0IGEgPSAkQSIsInNvdXJjZSI6InZhciBhID0gMVxuY29uc3QgYSA9IDEgXG5sZXQgYSA9IDFcblxuIn0=)):
 
 ```yaml
 rule:
@@ -41,12 +51,13 @@ The above rule will match any variable declaration statement, like `var a = 1`, 
 `not` accepts a single rule and will match AST nodes that do not satisfy the rule.
 Combining `not` rule and `all` can help us to filter out some unwanted matches.
 
+Example([playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoibGFuZ3VhZ2U6IFR5cGVTY3JpcHRcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRHUkVFVElORylcbiAgbm90OlxuICAgIHBhdHRlcm46IGNvbnNvbGUubG9nKCdIZWxsbyBXb3JsZCcpIiwic291cmNlIjoiY29uc29sZS5sb2coJ2hpJylcbmNvbnNvbGUubG9nKCdIZWxsbyBXb3JsZCcpIn0=)):
+
 ```yaml
 rule:
-  all:
-    - pattern: console.log($GREETING)
-    - not:
-        pattern: console.log('Hello World')
+  pattern: console.log($GREETING)
+  not:
+    pattern: console.log('Hello World')
 ```
 
 The above rule will match any `console.log` call but not `console.log('Hello World')`.
@@ -91,7 +102,7 @@ inside:
   kind: class_body
 ```
 
-It is equivalent to the `all` rule.
+It is equivalent to the `all` rule, regardless of the rule order.
 
 ```yaml
 all:

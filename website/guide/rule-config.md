@@ -141,7 +141,7 @@ interface Relation {
 ```
 :::
 
-A node must **satisfies all fields** in the rule object to be considered as a match. So the rule object can be seen as an abbreviated `all` rule.
+A node must **satisfies all fields** in the rule object to be considered as a match. So the rule object can be seen as an abbreviated and **unordered** `all` rule.
 
 ## Three Rule Categories
 
