@@ -63,8 +63,10 @@ const emits = defineEmits<{
   overflow: hidden;
 }
 .panel-area p {
+  --bg-start: color-mix(in srgb, var(--vp-c-bg), transparent 0%);
+  --bg-end: color-mix(in srgb, var(--vp-c-bg), transparent 40%);
   text-align: right;
-  background: linear-gradient(to bottom, #fff, #fff7);
+  background: linear-gradient(to bottom, var(--bg-start), var(--bg-end));
   z-index: 0;
   cursor: pointer;
 }
