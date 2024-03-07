@@ -16,6 +16,7 @@ import { Match, normalizeMonacoLang } from './lang'
 import { setup } from './monaco'
 import { useData } from 'vitepress'
 
+// https://vitepress.dev/reference/runtime-api
 const { isDark } = useData()
 const monaco = await setup()
 

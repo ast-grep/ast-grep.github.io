@@ -62,6 +62,7 @@ const emits = defineEmits<{
   flex: 2em 0 0;
   overflow: hidden;
 }
+/* https://stackoverflow.com/questions/40010597/how-do-i-apply-opacity-to-a-css-color-variable */
 .panel-area p {
   --bg-start: color-mix(in srgb, var(--vp-c-bg), transparent 0%);
   --bg-end: color-mix(in srgb, var(--vp-c-bg), transparent 40%);
