@@ -61,20 +61,22 @@ function decrement() {
 .metavar-table {
   width: 100%;
   table-layout: fixed;
-  border-bottom: 1px solid #eee;
   flex: 1 0 auto;
 }
 .metavar-table thead {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--vp-c-divider);
 }
-.metavar-table tbody tr:hover {
-  background-color: #f7f7f7;
+.metavar-table tbody tr {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+.metavar-table tbody tr:nth-child(2n+1) {
+  background-color: var(--vp-c-bg-soft);
 }
 .metavar-table td {
   padding: 0.2em 1em;
 }
 .metavar-table td:nth-child(2n) {
-  border-left: 1px solid #eee;
+  border-left: 1px solid var(--vp-c-divider);
   width: 75%;
 }
 .choose-match {
