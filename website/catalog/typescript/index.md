@@ -9,8 +9,8 @@ They need different parsers because of [conflicting syntax](https://www.typescri
 TS allows both the `as` operator and angle brackets (`<>`) for type assertions. While TSX only allows the `as` operator because it interprets angle brackets as JSX elements.
 :::
 
-<!--@include: ./redundant-usestate-type.md-->
-<!--@include: ./no-await-in-promise-all.md-->
-<!--@include: ./no-console-except-catch.md-->
 <!--@include: ./find-import-file-without-extension.md-->
 <!--@include: ./migrate-xstate-v5.md-->
+<!--@include: ./no-await-in-promise-all.md-->
+<!--@include: ./no-console-except-catch.md-->
+<!--@include: ./redundant-usestate-type.md-->

@@ -8,6 +8,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
 
 * [C](/catalog/c/)
   * [Rewrite Method to Function Call](/catalog/c/#rewrite-method-to-function-call)
+  * [Rewrite Check to Yoda Condition](/catalog/c/#rewrite-check-to-yoda-condition)
 * [Go](/catalog/go/)
   * [Match Function Call](/catalog/go/#match-function-call)
   * [Find function declarations with names of certain pattern](/catalog/go/#find-function-declarations-with-names-of-certain-pattern)
