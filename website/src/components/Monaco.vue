@@ -14,7 +14,9 @@ import {
 } from 'vue'
 import { Match, normalizeMonacoLang } from './lang'
 import { setup } from './monaco'
+import { useData } from 'vitepress'
 
+const { isDark } = useData()
 const monaco = await setup()
 
 const emits = defineEmits<{
@@ -58,6 +60,7 @@ onMounted(() => {
     scrollBeyondLastLine: false,
     wordWrap: 'on',
     lineNumbersMinChars: 3,
+    theme: isDark.value ? 'vs-dark' : 'vs',
     minimap: {
       enabled: false,
     },
@@ -82,6 +85,10 @@ onMounted(() => {
   const modelMarks = props.matches?.map(toModelMark).filter(Boolean)
   let oldModel = editorInstance.getModel()
   monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
+})
+
+watch(isDark, () => {
+  monaco.editor.setTheme(isDark.value ? 'vs-dark' : 'vs')
 })
 
 const transformHighlight = (match: number[]) => {

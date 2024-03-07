@@ -18,7 +18,7 @@ export default defineConfig({
     ['script', {}, gaScript],
   ],
   outDir: './dist',
-  appearance: false,
+  // appearance: false,
   lastUpdated: true,
   vite: {
     build: {
