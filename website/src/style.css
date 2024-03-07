@@ -90,7 +90,6 @@ meter {
 
   color-scheme: light;
   color: #213547;
-  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -99,6 +98,14 @@ meter {
   --theme-highlight2: #baac2d;
   --theme-highlight3: #ffe91091;
   --theme-highlight4: #fcf1ab30;
+}
+
+html.dark {
+  --brand-color: #918623;
+  --theme-highlight1: #3e6991;
+  --theme-highlight2: #baac2d;
+  --theme-highlight3: #bfb01f47;
+  --theme-highlight4: #a8a17024;
 }
 
 a {
