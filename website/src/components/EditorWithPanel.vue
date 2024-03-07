@@ -53,7 +53,7 @@ const emits = defineEmits<{
   padding: 1em;
   padding-top: 0;
   z-index: 1; /* prevent being covered by monaco */
-  border-top: 1px solid #f5f5f5;
+  border-top: 1px solid var(--vp-c-bg-soft);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
   transition: flex 0.2s;

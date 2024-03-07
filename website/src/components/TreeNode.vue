@@ -117,7 +117,7 @@ function copyField(name: string) {
 .tree-node {
   margin: 0 0 0 1em;
   padding: 0 0 0 0.5em;
-  border-left: 1px dashed #eee;
+  border-left: 1px dashed var(--vp-c-divider);
   user-select: none;
   --yellow:    #bf8803;
   --red:       #a31515;

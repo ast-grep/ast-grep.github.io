@@ -203,7 +203,7 @@ provide(langLoadedKey, langLoaded)
   }
 }
 .pattern-separator {
-  border-top: 1px solid #f5f5f5;
+  border-top: 1px solid var(--vp-c-bg-soft);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   font-size: 12px;
   border-radius: 10px 10px 0 0;
