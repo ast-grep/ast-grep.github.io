@@ -49,6 +49,6 @@ ul {
 }
 hr {
   margin: 0.5em 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--vp-c-divider);
 }
 </style>

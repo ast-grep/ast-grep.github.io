@@ -61,7 +61,7 @@ const Wrapper = defineComponent({
 .tab {
   margin-right: 0.2em;
   border-radius: 5px 5px 0 0;
-  border: 1px solid #eee;
+  border: 1px solid var(--vp-c-divider);
   padding: 8px 16px;
   cursor: pointer;
   z-index: 2;
@@ -81,7 +81,7 @@ const Wrapper = defineComponent({
 .tab-content {
   flex: 1 0 auto;
   background: var(--vp-c-bg);
-  border: 1px solid #eee;
+  border: 1px solid var(--vp-c-divider);
   border-radius: 0 5px 5px 5px;
   /* overflow: hidden; */
   position: relative;
