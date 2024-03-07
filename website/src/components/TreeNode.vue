@@ -113,17 +113,29 @@ function copyField(name: string) {
   </div>
 </template>
 
+<style>
+.tree-node {
+  --yellow:    #bf8803;
+  --red:       #a31515;
+  --blue:      #006ab1;
+  --green:     #008000;
+  --black:     #002b36;
+}
+html.dark .tree-node {
+  --yellow:    #ce9178;
+  --red:       #f48771;
+  --blue:      #569cd6;
+  --green:     #608b4e;
+  --black:     #d4d4d4;
+}
+</style>
+
 <style scoped>
 .tree-node {
   margin: 0 0 0 1em;
   padding: 0 0 0 0.5em;
   border-left: 1px dashed var(--vp-c-divider);
   user-select: none;
-  --yellow:    #bf8803;
-  --red:       #a31515;
-  --blue:      #006ab1;
-  --green:     #008000;
-  --black:     #002b36;
   transition: background-color ease-out .217s;
 }
 .click-area {
