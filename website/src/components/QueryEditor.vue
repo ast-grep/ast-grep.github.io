@@ -108,7 +108,7 @@ let showFullTree = shallowRef(false)
   /* Remove most all native input styles */
   appearance: none;
   /* For iOS < 15 */
-  background-color: white;
+  background-color: transparent;
   /* Not removed via appearance */
   margin: 0;
 
