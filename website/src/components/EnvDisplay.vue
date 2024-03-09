@@ -85,8 +85,8 @@ function decrement() {
 .error-msg {
   border-radius: 5px;
   padding: 5px 10px;
-  background: #f7f7f7;
+  background: var(--vp-custom-block-danger-bg);
   margin-top: 5px;
-  color: #d0312d;
+  color: var(--vp-c-danger-1);
 }
 </style>
