@@ -12,11 +12,11 @@ dependencies:
     specifier: 4.1.0
     version: 4.1.0
   monaco-editor:
-    specifier: 0.46.0
-    version: 0.46.0
+    specifier: 0.47.0
+    version: 0.47.0
   monaco-yaml:
     specifier: 5.1.1
-    version: 5.1.1(monaco-editor@0.46.0)
+    version: 5.1.1(monaco-editor@0.47.0)
   vue:
     specifier: 3.4.21
     version: 3.4.21(typescript@5.3.3)
@@ -1023,8 +1023,8 @@ packages:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
     dev: true
 
-  /monaco-editor@0.46.0:
-    resolution: {integrity: sha512-ADwtLIIww+9FKybWscd7OCfm9odsFYHImBRI1v9AviGce55QY8raT+9ihH8jX/E/e6QVSGM+pKj4jSUSRmALNQ==}
+  /monaco-editor@0.47.0:
+    resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
     dev: false
 
   /monaco-languageserver-types@0.3.2:
@@ -1035,38 +1035,38 @@ packages:
       vscode-uri: 3.0.7
     dev: false
 
-  /monaco-marker-data-provider@1.1.1(monaco-editor@0.46.0):
+  /monaco-marker-data-provider@1.1.1(monaco-editor@0.47.0):
     resolution: {integrity: sha512-PGB7TJSZE5tmHzkxv/OEwK2RGNC2A7dcq4JRJnnj31CUAsfmw0Gl+1QTrH0W0deKhcQmQM0YVPaqgQ+0wCt8Mg==}
     peerDependencies:
       monaco-editor: '>=0.30.0'
     dependencies:
-      monaco-editor: 0.46.0
+      monaco-editor: 0.47.0
     dev: false
 
   /monaco-types@0.1.0:
     resolution: {integrity: sha512-aWK7SN9hAqNYi0WosPoMjenMeXJjwCxDibOqWffyQ/qXdzB/86xshGQobRferfmNz7BSNQ8GB0MD0oby9/5fTQ==}
     dev: false
 
-  /monaco-worker-manager@2.0.1(monaco-editor@0.46.0):
+  /monaco-worker-manager@2.0.1(monaco-editor@0.47.0):
     resolution: {integrity: sha512-kdPL0yvg5qjhKPNVjJoym331PY/5JC11aPJXtCZNwWRvBr6jhkIamvYAyiY5P1AWFmNOy0aRDRoMdZfa71h8kg==}
     peerDependencies:
       monaco-editor: '>=0.30.0'
     dependencies:
-      monaco-editor: 0.46.0
+      monaco-editor: 0.47.0
     dev: false
 
-  /monaco-yaml@5.1.1(monaco-editor@0.46.0):
+  /monaco-yaml@5.1.1(monaco-editor@0.47.0):
     resolution: {integrity: sha512-BuZ0/ZCGjrPNRzYMZ/MoxH8F/SdM+mATENXnpOhDYABi1Eh+QvxSszEct+ACSCarZiwLvy7m6yEF/pvW8XJkyQ==}
     peerDependencies:
       monaco-editor: '>=0.36'
     dependencies:
       '@types/json-schema': 7.0.11
       jsonc-parser: 3.2.0
-      monaco-editor: 0.46.0
+      monaco-editor: 0.47.0
       monaco-languageserver-types: 0.3.2
-      monaco-marker-data-provider: 1.1.1(monaco-editor@0.46.0)
+      monaco-marker-data-provider: 1.1.1(monaco-editor@0.47.0)
       monaco-types: 0.1.0
-      monaco-worker-manager: 2.0.1(monaco-editor@0.46.0)
+      monaco-worker-manager: 2.0.1(monaco-editor@0.47.0)
       path-browserify: 1.0.1
       prettier: 2.8.2
       vscode-languageserver-textdocument: 1.0.8
