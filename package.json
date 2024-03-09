@@ -23,7 +23,7 @@
     "search-insights": "2.13.0",
     "@algolia/client-search": "4.22.1",
     "markdown-it": "14.0.0",
-    "typescript": "5.3.3",
+    "typescript": "5.4.2",
     "vite": "5.1.5",
     "vitepress": "1.0.0-rc.44",
     "vue-tsc": "2.0.5"
