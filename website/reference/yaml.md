@@ -120,7 +120,7 @@ transform:
 
 A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
 
-It can reference meta variables appeared in the rule.
+It can reference meta variables that appeared in the rule.
 
 Example:
 ```yaml
@@ -173,6 +173,8 @@ severity: warning
 
 Main message highlighting why this rule fired. It should be single line and concise,
 but specific enough to be understood without additional context.
+
+It can reference meta-variables that appeared in the rule.
 
 Example:
 ```yaml
