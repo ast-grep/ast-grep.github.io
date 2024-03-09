@@ -23,6 +23,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Get number of digits in a `usize`](/catalog/rust/#get-number-of-digits-in-a-usize)
   * [Beware of char offset when iterate over a string](/catalog/rust/#beware-of-char-offset-when-iterate-over-a-string)
 * [TypeScript](/catalog/typescript/)
+  * [Repository of ESLint rules 🔗](https://github.com/ast-grep/eslint/)
   * [Unnecessary `useState` Type](/catalog/typescript/#unnecessary-usestate-type)
   * [No `await` in `Promise.all`](/catalog/typescript/#no-await-in-promise-all-array)
   * [No `console` except in `catch` block](/catalog/typescript/#no-console-except-in-catch-block)
