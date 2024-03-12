@@ -4,3 +4,4 @@ This page curates a list of example ast-grep rules to check and to rewrite Pytho
 
 <!--@include: ./migrate-openai-sdk.md-->
 <!--@include: ./use-walrus-operator-in-if.md-->
+<!--@include: ./prefer-generator-expressions.md-->
