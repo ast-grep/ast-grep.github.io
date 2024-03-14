@@ -22,7 +22,7 @@
       <a target="_blank" href="https://modernjs.dev/" title="Modern.js">
         <img src='https://avatars.githubusercontent.com/u/126793605?s=200&v=4'/>
       </a>
-      <a target="_blank" href="https://coderabbit.ai/" title="CodeRabbit">
+      <a target="_blank" href="https://coderabbit.ai/" title="CodeRabbit" class="sponsor">
         <img src='https://avatars.githubusercontent.com/in/347564?s=200&v=4' style="padding: 23px"/>
       </a>
     </div>
