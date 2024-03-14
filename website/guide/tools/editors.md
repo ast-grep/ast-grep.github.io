@@ -6,7 +6,7 @@ This page introduces several **editors** that has ast-grep support.
 
 ## VSCode
 
-ast-grep has an official [VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode&ssr=false#overview) in the market place.
+ast-grep has an official [VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode#overview) in the market place.
 
 To get a feel of what it can do, see the introduction on YouTube!
 
@@ -19,6 +19,10 @@ It includes two parts:
 
 * a UI for ast-grep CLI and
 * a client for ast-grep LSP.
+
+:::tip Requirement
+You need to [install ast-grep CLI](/guide/quick-start.html#installation) locally and optionally [set up a linting project](/guide/scan-project.html).
+:::
 
 ### Structural Search
 
@@ -94,4 +98,3 @@ Telescope ast_grep
 
 More ast-grep editor integration will be supported by the community!
 Your contribution is warmly welcome.
-
