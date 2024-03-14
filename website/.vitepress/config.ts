@@ -69,7 +69,7 @@ export default defineConfig({
           },
           { text: 'Rewrite Code', link: '/guide/rewrite-code.html' },
           {
-            text: 'Tooling Overview', link: '/guide/tooling-overview.html',
+            text: 'Tooling Overview', link: '/guide/tooling-overview.html', collapsed: true,
             items: [
               { text: 'Editor Integration', link: '/guide/tools/editors.html' },
             ],
