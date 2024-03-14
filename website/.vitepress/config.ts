@@ -68,7 +68,12 @@ export default defineConfig({
             ],
           },
           { text: 'Rewrite Code', link: '/guide/rewrite-code.html' },
-          { text: 'Tooling Overview', link: '/guide/tooling-overview.html' },
+          {
+            text: 'Tooling Overview', link: '/guide/tooling-overview.html',
+            items: [
+              { text: 'Editor Integration', link: '/guide/tools/editors.html' },
+            ],
+          },
           { text: 'API Usage', link: '/guide/api-usage.html', collapsed: true,
             items:[
               { text: 'JavaScript API', link: '/guide/api-usage/js-api.html' },
