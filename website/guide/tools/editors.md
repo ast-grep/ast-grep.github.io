@@ -63,10 +63,9 @@ The recommended setup is using [nvim-lspconfig](https://github.com/neovim/nvim-l
 local configs = require 'lspconfig.configs'
 configs.ast_grep = {
   default_config = {
-    cmd = {'sg', 'lsp'};
-    filetypes = {'typescript'};
-    single_file_support = true;
-    root_dir = nvim_lsp.util.root_pattern('.git', 'sgconfig.yml');
+    cmd = {'ast-grep', 'lsp'};
+    single_file_support = false;
+    root_dir = nvim_lsp.util.root_pattern('sgconfig.yml');
   };
 }
 ```
