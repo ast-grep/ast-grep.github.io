@@ -109,6 +109,13 @@ sg -p '$PROP && $PROP()' TypeScript/src
 ```
 :::
 
+:::tip Pro Tip
+Pattern must be quoted by single quote `'` to prevent shell from interpreting `$` sign.
+`sg -p '$PROP && $PROP()'` is okay.
+
+But `sg -p "$PROP && $PROP()"` will be interpreted as `sg -p " && ()"` after shell expansion.
+:::
+
 ## Rewrite
 
 Cool? Now we can use this pattern to refactor TypeScript source!
