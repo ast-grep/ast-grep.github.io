@@ -52,6 +52,31 @@ Code linting and code actions require [setting up `sgconfig.yml`](https://ast-gr
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
 | Code Linting    | <img src="https://github.com/ast-grep/ast-grep-vscode/blob/main/readme/linter.png?raw=true">               |
 
+### FAQs
+
+<br/>
+
+#### Why LSP diagnostics are not working?
+
+You need several things to set up LSP diagnostics:
+1. [Install](/guide/quick-start.html#installation) ast-grep CLI. Make sure it is accessible in VSCode editor.
+2. [Set up a linting project](/guide/scan-project.html) in your workspace root. The `sgconfig.yml` file is required for LSP diagnostics.
+3. The LSP server by default is started in the workspace root. Make sure the `sgconfig.yml` is in the workspace root.
+
+
+#### Why ast-grep VSCode cannot find the CLI?
+
+The extension has a different environment from the terminal. You need to make sure the CLI is accessible in the extension environment. For example, if the CLI is installed in a virtual environment, you need to activate the virtual environment in the terminal where you start VSCode.
+
+Here are a few ways to make the CLI accessible:
+
+1. Install the CLI globally.
+2. Specify the CLI path in the extension settings `astGrep.serverPath`.
+3. Check if VSCode has the same `PATH` as the terminal.
+
+#### Project Root Detection
+By default, ast-grep will only start in the workspace root. If you want to start ast-grep in a subfolder, you can specify the `configPath` in the extension settings.
+The `configPath` is the path to the `sgconfig.yml` file and is relative to the workspace root.
 
 ## Neovim
 
