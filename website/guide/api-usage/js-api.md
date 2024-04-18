@@ -37,7 +37,7 @@ Remember your old time web programming?
 A common workflow to use ast-grep's JavaScript API is:
 
 1. Get a syntax tree object `SgRoot` from string by calling a language's `parse` method
-2. Get the root node of the syntax tree by calling `root.root()`
+2. Get the root node of the syntax tree by calling `ast.root()`
 3. `find` relevant nodes by using patterns or rules
 4. Collect information from the nodes
 
@@ -191,7 +191,7 @@ export class SgNode {
 
 ```ts{3}
 const ast = js.parse("console.log('hello world')")
-root = root.root()
+root = ast.root()
 root.text() // will return "console.log('hello world')"
 ```
 
