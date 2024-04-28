@@ -60,11 +60,11 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-language"
-version = "0.20.5"
+version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d846b9ba70fd60806cdf8f0891374310976c7110bd9372d50a18810292b2d005"
+checksum = "297b610ca8dee41ed4ae9d4b21b541fdf3314b7fbb9fe810b3327506cd0649cd"
 dependencies = [
- "ast-grep-core 0.20.5",
+ "ast-grep-core 0.21.1",
  "ignore",
  "serde",
 ]
