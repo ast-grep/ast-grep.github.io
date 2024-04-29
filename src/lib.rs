@@ -11,6 +11,7 @@ use ast_grep_core::language::Language;
 use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::collections::HashMap;
+use std::error::Error;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
 
@@ -34,8 +35,7 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
   let lang = WasmLang::get_current();
   let mut rules = vec![];
   for config in configs {
-    let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
-    let finder = RuleConfig::try_from(config, &Default::default())?;
+    let finder = try_get_rule_config(config)?;
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
@@ -55,8 +55,7 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
   let lang = WasmLang::get_current();
   let mut rules = vec![];
   for config in configs {
-    let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
-    let finder = RuleConfig::try_from(config, &Default::default())?;
+    let finder = try_get_rule_config(config)?;
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
@@ -108,4 +107,19 @@ pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
 pub fn pre_process_pattern(query: String) -> Result<String, JsError> {
   let lang = WasmLang::get_current();
   Ok(lang.pre_process_pattern(&query).into())
+}
+
+fn try_get_rule_config(config: JsValue) -> Result<RuleConfig<WasmLang>, JsError> {
+  let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
+  RuleConfig::try_from(config, &Default::default()).map_err(dump_error)
+}
+
+fn dump_error(err: impl Error) -> JsError {
+  let mut errors = vec![err.to_string()];
+  let mut err: &dyn Error = &err;
+  while let Some(e) = err.source() {
+    errors.push(e.to_string());
+    err = e;
+  }
+  JsError::new(&format!("{}", errors.join("\n")))
 }

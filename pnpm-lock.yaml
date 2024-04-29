@@ -525,6 +525,9 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
+  ast-grep-wasm@file:pkg:
+    resolution: {directory: pkg, type: directory}
+
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -786,6 +789,12 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  web-tree-sitter-wasm-bindgen@0.20.8:
+    resolution: {integrity: sha512-9FWmmdz+Joj62dKTn+eQVLtFi8s6n7Do4C0D1/NCE4Wai46mwt/MeEVINtgSNHri3321LQdIsp8bYstv/Atpzg==}
+
+  web-tree-sitter@0.20.8:
+    resolution: {integrity: sha512-weOVgZ3aAARgdnb220GqYuh7+rZU0Ka9k9yfKtGAzEYMa6GgiCzW9JjQRJyCJakvibQW+dfjJdihjInKuuCAUQ==}
 
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
@@ -1231,6 +1240,11 @@ snapshots:
 
   argparse@2.0.1: {}
 
+  ast-grep-wasm@file:pkg:
+    dependencies:
+      web-tree-sitter-wasm-bindgen: 0.20.8
+    optional: true
+
   balanced-match@1.0.2: {}
 
   brace-expansion@2.0.1:
@@ -1514,6 +1528,14 @@ snapshots:
       '@vue/shared': 3.4.25
     optionalDependencies:
       typescript: 5.4.5
+
+  web-tree-sitter-wasm-bindgen@0.20.8:
+    dependencies:
+      web-tree-sitter: 0.20.8
+    optional: true
+
+  web-tree-sitter@0.20.8:
+    optional: true
 
   yallist@4.0.0: {}
 
