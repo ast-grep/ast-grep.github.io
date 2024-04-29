@@ -24,7 +24,16 @@ function increment() {
 function decrement() {
   currentIndex.value = (currentIndex.value + props.envs.length - 1) % props.envs.length
 }
-</script>>
+let prettyError = computed(() => {
+  if (!props.error) {
+    return ''
+  }
+  // remove leading `Error: ` inject by serde-json
+  return props.error
+    .replace(/^(Error: )*/, '')
+    .split('\n').filter(Boolean).join('\n╰▻ ') // add line break
+})
+</script>
 
 <template>
 <div class="var-debugger">
@@ -52,7 +61,7 @@ function decrement() {
     <button @click="increment">Next Match</button>
   </div>
   <div v-if="error" class="error-msg">
-    ⚠ {{error}}
+    ⚠ {{prettyError}}
   </div>
 </div>
 </template>
@@ -88,5 +97,6 @@ function decrement() {
   background: var(--vp-custom-block-danger-bg);
   margin-top: 5px;
   color: var(--vp-c-danger-1);
+  white-space: pre-wrap;
 }
 </style>
