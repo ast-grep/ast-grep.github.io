@@ -13,7 +13,7 @@
         "null"
       ],
       "additionalProperties": {
-        "$ref": "#/definitions/SerializableMetaVarMatcher"
+        "$ref": "#/definitions/SerializableRule"
       }
     },
     "files": {
@@ -308,49 +308,6 @@
         },
         {
           "$ref": "#/definitions/SerializableFixConfig"
-        }
-      ]
-    },
-    "SerializableMetaVarMatcher": {
-      "oneOf": [
-        {
-          "description": "A regex to filter metavar based on its textual content.",
-          "type": "object",
-          "required": [
-            "regex"
-          ],
-          "properties": {
-            "regex": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "description": "A pattern to filter matched metavar based on its AST tree shape.",
-          "type": "object",
-          "required": [
-            "pattern"
-          ],
-          "properties": {
-            "pattern": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "description": "A kind_id to filter matched metavar based on its ts-node kind",
-          "type": "object",
-          "required": [
-            "kind"
-          ],
-          "properties": {
-            "kind": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         }
       ]
     },
