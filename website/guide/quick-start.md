@@ -26,7 +26,7 @@ brew install ast-grep
 
 ```shell [cargo]
 # install via cargo
-cargo install ast-grep
+cargo install ast-grep --locked
 ```
 
 ```shell [npm]
