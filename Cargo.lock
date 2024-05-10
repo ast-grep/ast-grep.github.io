@@ -74,7 +74,7 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-bindgen-test",
- "web-tree-sitter-sg 1.3.4",
+ "web-tree-sitter-sg",
  "wee_alloc",
 ]
 
@@ -505,7 +505,7 @@ dependencies = [
  "tree-sitter 0.21.0",
  "wasm-bindgen",
  "web-sys",
- "web-tree-sitter-sg 0.21.3",
+ "web-tree-sitter-sg",
 ]
 
 [[package]]
@@ -648,17 +648,6 @@ name = "web-tree-sitter-sg"
 version = "0.21.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0034bb138c1702be373eb798c308c1ca4d7d4cfc7b60cfda9b4052cf1d41f634"
-dependencies = [
- "js-sys",
- "wasm-bindgen",
- "wasm-bindgen-futures",
-]
-
-[[package]]
-name = "web-tree-sitter-sg"
-version = "1.3.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b9a450701853b465dddfd9edb45b5ab2ff191cd666d9f54382fad24fe6c5503a"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
