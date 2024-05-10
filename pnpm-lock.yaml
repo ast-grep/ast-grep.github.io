@@ -799,11 +799,11 @@ packages:
       typescript:
         optional: true
 
-  web-tree-sitter-wasm-bindgen@0.20.8:
-    resolution: {integrity: sha512-9FWmmdz+Joj62dKTn+eQVLtFi8s6n7Do4C0D1/NCE4Wai46mwt/MeEVINtgSNHri3321LQdIsp8bYstv/Atpzg==}
+  web-tree-sitter-sg@0.21.0:
+    resolution: {integrity: sha512-S/I6J3/Y9YsmpSxZDWPjRf0E8InvP7n3ytBqyp7NQE/xo6G2i3gFppynRGoTAixbHMjvpDNCxyGOsYWOWzzm4A==}
 
-  web-tree-sitter@0.20.8:
-    resolution: {integrity: sha512-weOVgZ3aAARgdnb220GqYuh7+rZU0Ka9k9yfKtGAzEYMa6GgiCzW9JjQRJyCJakvibQW+dfjJdihjInKuuCAUQ==}
+  web-tree-sitter@0.21.0:
+    resolution: {integrity: sha512-iJ+QJ6ikN9D9cG7Kh6q3KtAstYFUQbYZ8OjuPEJYWfj2kLrmp5I3C2n6WjE1Y3jvj7nJbkcrJytJGWUEhCxn+g==}
 
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
@@ -1266,7 +1266,7 @@ snapshots:
 
   ast-grep-wasm@file:pkg:
     dependencies:
-      web-tree-sitter-wasm-bindgen: 0.20.8
+      web-tree-sitter-sg: 0.21.0
     optional: true
 
   balanced-match@1.0.2: {}
@@ -1553,12 +1553,12 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  web-tree-sitter-wasm-bindgen@0.20.8:
+  web-tree-sitter-sg@0.21.0:
     dependencies:
-      web-tree-sitter: 0.20.8
+      web-tree-sitter: 0.21.0
     optional: true
 
-  web-tree-sitter@0.20.8:
+  web-tree-sitter@0.21.0:
     optional: true
 
   yallist@4.0.0: {}
