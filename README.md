@@ -30,6 +30,15 @@ To setup:
    cd ../../../..
    ```
 
+## Upgrate tree-sitter Guide
+You need to upgrade tree-sitter to the latest version.
+
+You also need to copy the tree-sitter.wasm to the public directory because vite's building convention.
+
+
+You will usually have weird error messages like `tree-sitter.wasm` is not found
+or having wrong `LinkError` of undefined methods like `exit`.
+
 ---
 
 emcc setup is not used any more
@@ -64,3 +73,4 @@ Mismatching emcc version will raise RuntimeError.
 
 - https://github.com/tree-sitter/tree-sitter/issues/1593
 - https://github.com/tree-sitter/tree-sitter/issues/1829
+- https://github.com/tree-sitter/tree-sitter/pull/2830/files
