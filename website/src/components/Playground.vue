@@ -77,19 +77,23 @@ watchEffect(async () => {
   langLoaded.value = true
 })
 
-watchEffect(async () => {
+watchEffect(async (onInvalidate) => {
   if (!langLoaded.value || !yaml.value) {
     return
   }
+  let invalidated = false
   // before async
   const [src, json] = [source.value, buildRules()]
+  onInvalidate(() => invalidated = true)
   try {
     const [matches, fixed] = await doFind(src, json)
+    if (invalidated) { return }
     rewrittenCode.value = fixed
     matchedHighlights.value = matches
     matchedEnvs.value = matches.map(m => m.env)
     ruleErrors.value = null
   } catch (e) {
+    if (invalidated) { return }
     console.error(e)
     ruleErrors.value = e.toString()
     matchedHighlights.value = []
