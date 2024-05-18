@@ -128,9 +128,9 @@ Currently ast-grep support these LSP capabilities:
 
 ### Client requirements
 
-* textDocument/didOpen
-* textDocument/didChange
-* textDocument/didClose
+* [textDocument/didOpen](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didOpen)
+* [textDocument/didChange](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didChange)
+* [textDocument/didClose](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didClose)
 
 ### Configuration
 
