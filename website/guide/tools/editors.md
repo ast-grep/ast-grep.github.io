@@ -117,6 +117,30 @@ Telescope ast_grep
 
 [telescope-ast-grep.nvim](https://github.com/ray-x/telescope-ast-grep.nvim) is an alternative plugin that provides ast-grep functionality enhancements.
 
+## LSP Server
+
+Currently ast-grep support these LSP capabilities:
+
+### Server capability
+
+* [publish diagnostics](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishDiagnostics)
+* [Fix diagnostic code action](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishCodeAction)
+
+### Client requirements
+
+* textDocument/didOpen
+* textDocument/didChange
+* textDocument/didClose
+
+### Configuration
+
+ast-grep does not have LSP configuration, except that ast-grep LSP requires `sgconfig.yml` in the project root.
+
+You can also specify the configuration file path via command line:
+
+```bash
+sg lsp -c <configPath>
+```
 
 ## More Editors...
 
