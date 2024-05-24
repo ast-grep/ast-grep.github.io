@@ -58,22 +58,22 @@ def index():
 ```
 
 ### Diff
-<!-- use // [!code --] and // [!code ++] to annotate diff -->
+<!-- use # [!code --] and # [!code ++] to annotate diff -->
 ```python
 import os
-import openai // [!code --]
-from openai import Client // [!code ++]
+import openai # [!code --]
+from openai import Client # [!code ++]
 from flask import Flask, jsonify
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY") // [!code --]
-client = Client(os.getenv("OPENAI_API_KEY")) // [!code ++]
+openai.api_key = os.getenv("OPENAI_API_KEY") # [!code --]
+client = Client(os.getenv("OPENAI_API_KEY")) # [!code ++]
 
 @app.route("/chat", methods=("POST"))
 def index():
     animal = request.form["animal"]
-    response = openai.Completion.create( // [!code --]
-    response = client.completions.create( // [!code ++]
+    response = openai.Completion.create( # [!code --]
+    response = client.completions.create( # [!code ++]
       model="text-davinci-003",
       prompt=generate_prompt(animal),
       temperature=0.6,

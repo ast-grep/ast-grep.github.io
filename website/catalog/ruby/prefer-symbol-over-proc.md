@@ -33,12 +33,12 @@ not_list.no_match { |v| v.even? }
 ```
 
 ### Diff
-<!-- use // [!code --] and // [!code ++] to annotate diff -->
+<!-- use # [!code --] and # [!code ++] to annotate diff -->
 ```rb
-[1, 2, 3].select { |v| v.even? } // [!code --]
-[1, 2, 3].select(&:even?) // [!code ++]
-(1..100).each { |i| i.to_s } // [!code --]
-(1..100).each(&:to_s) // [!code ++]
+[1, 2, 3].select { |v| v.even? } # [!code --]
+[1, 2, 3].select(&:even?) # [!code ++]
+(1..100).each { |i| i.to_s } # [!code --]
+(1..100).each(&:to_s) # [!code ++]
 
 not_list.no_match { |v| v.even? }
 ```

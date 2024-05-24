@@ -64,12 +64,12 @@ sg scan -r change_func.yml test.py
 This will show us the following diff:
 
 ```python
-def foo(x): // [!code --]
-def baz(n): // [!code ++]
+def foo(x): # [!code --]
+def baz(n): # [!code ++]
     return n + 1
 
-y = foo(2) // [!code --]
-y = baz(2) // [!code ++]
+y = foo(2) # [!code --]
+y = baz(2) # [!code ++]
 print(y)
 ```
 
@@ -155,9 +155,9 @@ Note that the indentation level of `return $R` is preserved as two spaces in the
 
 ```python
 if True:
-    c = lambda: 456 // [!code --]
-    def c():     // [!code ++]
-      return 456 // [!code ++]
+    c = lambda: 456 # [!code --]
+    def c():     # [!code ++]
+      return 456 # [!code ++]
 ```
 
 Note that the `return 456` line has an indentation of four spaces.
@@ -179,8 +179,8 @@ A transformation object has a key indicating which string operation will be perf
 More concretely, we want to achieve diffs like below:
 
 ```python
-"".join(i for i in iterable) // [!code --]
-"".join([i for i in iterable]) // [!code ++]
+"".join(i for i in iterable) # [!code --]
+"".join([i for i in iterable]) # [!code ++]
 ```
 
 This rule will convert the generator inside `join` to a list.

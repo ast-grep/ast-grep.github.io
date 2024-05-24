@@ -51,7 +51,7 @@ any([x for x in range(10)])
 ```
 
 ### Diff
-<!-- use // [!code --] and // [!code ++] to annotate diff -->
+<!-- use # [!code --] and # [!code ++] to annotate diff -->
 ```python
 any([x for x in range(10)]) # [!code --]
 any(x for x in range(10)) # [!code ++]
