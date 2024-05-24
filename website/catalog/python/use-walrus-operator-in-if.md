@@ -79,12 +79,12 @@ if a:
 ```
 
 ### Diff
-<!-- use // [!code --] and // [!code ++] to annotate diff -->
+<!-- use # [!code --] and # [!code ++] to annotate diff -->
 ```python
-a = foo() // [!code --]
+a = foo() # [!code --]
 
-if a: // [!code --]
-if a := foo(): // [!code ++]
+if a: # [!code --]
+if a := foo(): # [!code ++]
     do_bar()
 ```
 
