@@ -11,7 +11,11 @@ For example, you may struggle to:
 * count the number or order of nodes that match a certain pattern
 * compute the replacement string based on the matched nodes
 
-To solve these problems, you can use ast-grep's programmatic API! You can freely inspect and change syntax trees in popular programming languages!
+To solve these problems, you can use ast-grep's programmatic API! You can freely inspect and generate text patches based on syntax trees, using popular programming languages!
+
+:::tip
+Applying ast-grep's `fix` using JS/Python API is still experimental. See [this issue](https://github.com/ast-grep/ast-grep/issues/1172) for more information.
+:::
 
 ## Language Bindings
 
