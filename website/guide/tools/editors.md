@@ -78,6 +78,17 @@ Here are a few ways to make the CLI accessible:
 By default, ast-grep will only start in the workspace root. If you want to start ast-grep in a subfolder, you can specify the `configPath` in the extension settings.
 The `configPath` is the path to the `sgconfig.yml` file and is relative to the workspace root.
 
+#### Schema Validation
+When writing your own `rule.yml` file, you can use schema validation to get quick feedback on whether your file is structured properly.
+1. Add the following line to the top of your file:
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+```
+2. Install a VSCode extension that supports schema validation for yaml files. For example, [YAML by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml).
+
+![Schema Validation](/image/schema-validation.png)
+After reloading the VSCode window, you should see red underlines for any errors in your `rule.yml` file, along with autocompletions and tooltips on hover. In VSCode you can typically use [Ctrl] + [Space] to see the available autocompletions.
+
 ## Neovim
 
 ### nvim-lspconfig
