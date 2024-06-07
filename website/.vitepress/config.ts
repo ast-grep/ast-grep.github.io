@@ -125,6 +125,7 @@ export default defineConfig({
       {
         text: 'Advanced Topics',
         items: [
+          { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html'},
           { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
           { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
           { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
