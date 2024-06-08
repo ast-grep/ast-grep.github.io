@@ -18,8 +18,8 @@ importers:
         specifier: 0.49.0
         version: 0.49.0
       monaco-yaml:
-        specifier: 5.1.1
-        version: 5.1.1(monaco-editor@0.49.0)
+        specifier: 5.2.0
+        version: 5.2.0(monaco-editor@0.49.0)
       vue:
         specifier: 3.4.27
         version: 3.4.27(typescript@5.4.5)
@@ -626,8 +626,8 @@ packages:
     peerDependencies:
       monaco-editor: '>=0.30.0'
 
-  monaco-yaml@5.1.1:
-    resolution: {integrity: sha512-BuZ0/ZCGjrPNRzYMZ/MoxH8F/SdM+mATENXnpOhDYABi1Eh+QvxSszEct+ACSCarZiwLvy7m6yEF/pvW8XJkyQ==}
+  monaco-yaml@5.2.0:
+    resolution: {integrity: sha512-BK9qeabDtxNlKppGrbU4yd8WTcKbk9ODqQwWy8Pb27FHtHwCQ1lTssRuB9XM2+Z4HQf6uhj3P5vFi3nsRrerGw==}
     peerDependencies:
       monaco-editor: '>=0.36'
 
@@ -1359,7 +1359,7 @@ snapshots:
     dependencies:
       monaco-editor: 0.49.0
 
-  monaco-yaml@5.1.1(monaco-editor@0.49.0):
+  monaco-yaml@5.2.0(monaco-editor@0.49.0):
     dependencies:
       '@types/json-schema': 7.0.11
       jsonc-parser: 3.2.0
