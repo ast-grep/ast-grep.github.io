@@ -72,6 +72,7 @@ export default defineConfig({
             text: 'Tooling Overview', link: '/guide/tooling-overview.html', collapsed: true,
             items: [
               { text: 'Editor Integration', link: '/guide/tools/editors.html' },
+              { text: 'JSON mode', link: '/guide/tools/json.html' },
             ],
           },
           { text: 'API Usage', link: '/guide/api-usage.html', collapsed: true,
