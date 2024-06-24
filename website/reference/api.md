@@ -120,6 +120,9 @@ class SgNode {
   nextAll(): Array<SgNode>
   prev(): SgNode | null
   prevAll(): Array<SgNode>
+  // Edit
+  replace(text: string): Edit
+  commitEdits(edits: Edit[]): string
 }
 ```
 
@@ -157,11 +160,86 @@ interface FindConfig {
 }
 ```
 
+### Edit
+
+`Edit` is used in `replace` and `commitEdits`.
+
+```ts
+interface Edit {
+  startPos: number
+  endPos: number
+  insertedText: string
+}
+```
+
 ### Useful Examples
 * [Test Case Source](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/index.spec.ts) for `@ast-grep/napi`
 * ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
 
 ## Python API
+
+### SgRoot
+
+The entry point object of ast-grep. You can use SgRoot to parse a string into a syntax tree.
+
+```python
+class SgRoot:
+    def __init__(self, src: str, language: str) -> None: ...
+    def root(self) -> SgNode: ...
+```
+
+
+### SgNode
+
+Most methods are self-explanatory. Please submit a new [issue](https://github.com/ast-grep/ast-grep/issues/new/choose) if you find something confusing.
+
+```python
+class SgNode:
+    # Node Inspection
+    def range(self) -> Range: ...
+    def is_leaf(self) -> bool: ...
+    def is_named(self) -> bool: ...
+    def is_named_leaf(self) -> bool: ...
+    def kind(self) -> str: ...
+    def text(self) -> str: ...
+
+    # Refinement
+    def matches(self, **rule: Unpack[Rule]) -> bool: ...
+    def inside(self, **rule: Unpack[Rule]) -> bool: ...
+    def has(self, **rule: Unpack[Rule]) -> bool: ...
+    def precedes(self, **rule: Unpack[Rule]) -> bool: ...
+    def follows(self, **rule: Unpack[Rule]) -> bool: ...
+    def get_match(self, meta_var: str) -> Optional[SgNode]: ...
+    def get_multiple_matches(self, meta_var: str) -> List[SgNode]: ...
+    def get_transformed(self, meta_var: str) -> Optional[str]: ...
+    def __getitem__(self, meta_var: str) -> SgNode: ...
+
+    # Search
+    @overload
+    def find(self, config: Config) -> Optional[SgNode]: ...
+    @overload
+    def find(self, **kwargs: Unpack[Rule]) -> Optional[SgNode]: ...
+    @overload
+    def find_all(self, config: Config) -> List[SgNode]: ...
+    @overload
+    def find_all(self, **kwargs: Unpack[Rule]) -> List[SgNode]: ...
+
+    # Tree Traversal
+    def get_root(self) -> SgRoot: ...
+    def field(self, name: str) -> Optional[SgNode]: ...
+    def parent(self) -> Optional[SgNode]: ...
+    def child(self, nth: int) -> Optional[SgNode]: ...
+    def children(self) -> List[SgNode]: ...
+    def ancestors(self) -> List[SgNode]: ...
+    def next(self) -> Optional[SgNode]: ...
+    def next_all(self) -> List[SgNode]: ...
+    def prev(self) -> Optional[SgNode]: ...
+    def prev_all(self) -> List[SgNode]: ...
+
+    # Edit
+    def replace(self, new_text: str) -> Edit: ...
+    def commit_edits(self, edits: List[Edit]) -> str: ...
+```
 
 ### Rule
 
@@ -208,6 +286,20 @@ class Config(TypedDict, total=False):
     constraints: Dict[str, Mapping]
     utils: Dict[str, Rule]
     transform: Dict[str, Mapping]
+```
+
+### Edit
+
+`Edit` is used in `replace` and `commitEdits`.
+
+```python
+class Edit:
+    # The start position of the edit
+    start_pos: int
+    # The end position of the edit
+    end_pos: int
+    # The text to be inserted
+    inserted_text: str
 ```
 
 ## Rust API
