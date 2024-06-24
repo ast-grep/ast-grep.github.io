@@ -282,3 +282,18 @@ const newSource = node.commitEdits([edit])
 ```
 
 See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)
+
+## Use Other Language
+
+To access other languages, you can use the `parse`/`parseAsync` function and the `Lang` enum.
+
+
+**Example**
+
+```js
+import { parse, Lang } from '@ast-grep/napi'
+
+const sg = parse('def test(): pass', Lang.Python)
+
+console.log(sg.root().has('function_definition'))
+```
