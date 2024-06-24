@@ -302,9 +302,15 @@ class SgNode:
 ```python
 root = SgRoot("print('hello world')", "python").root()
 node = root.find(pattern="print($A)")
-edit = node.replace("logger.log($A)")
+edit = node.replace("logger.log('bye world')")
 new_src = node.commit_edits([edit])
-# "logger.log('hello world')"
+# "logger.log('bye world')"
 ```
+
+Note, `logger.log($A)` will not generate `logger.log('hello world')` in Python API unlike the CLI. This is because using the host language to generate the replacement string is more flexible.
+
+:::warning
+Metavariable will not be replaced in the `replace` method. You need to create a string using `get_match(var_name)` by using Python.
+:::
 
 See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)

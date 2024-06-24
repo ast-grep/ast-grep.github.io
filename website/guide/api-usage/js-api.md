@@ -276,10 +276,16 @@ class SgNode {
 ```ts{3,4}
 const root = js.parse("console.log('hello world')").root()
 const node = root.find('console.log($A)')
-const edit = node.replace('console.error($A)')
+const edit = node.replace("console.error('bye world')")
 const newSource = node.commitEdits([edit])
-// "console.error('hello world')"
+// "console.error('bye world')"
 ```
+
+Note, `console.error($A)` will not generate `console.error('hello world')` in JavaScript API unlike the CLI. This is because using the host language to generate the replacement string is more flexible.
+
+:::warning
+Metavariable will not be replaced in the `replace` method. You need to create a string using `get_match(var_name)` by using JavaScript.
+:::
 
 See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)
 
