@@ -17,21 +17,73 @@ The above rule will match code like `console.log('Hello World')`.
 
 By default, a _string_ `pattern` is parsed and matched as a whole.
 
-We can also use an _object_ to specify a sub-syntax node to match within a larger context. It consists of an object with two properties: `context` and `selector`.
+
+### Pattern Object
+
+It is not always possible to select certain code with a simple string pattern. A pattern code can be ambiguous for the parser since it lacks context.
+
+For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiJEZJRUxEID0gJElOSVQiLCJyZXdyaXRlIjoiRGVidWcuYXNzZXJ0IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjogXG4gICAgY29udGV4dDogJ3sgJE06ICgkJCRBKSA9PiAkTUFUQ0ggfSdcbiAgICBzZWxlY3RvcjogcGFpclxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==).
+
+----
+
+We can also use an _object_ to specify a sub-syntax node to match within a larger context. It consists of an object with three properties: `context`, `selector` and `strictness`.
 
 * `context`: defines the surrounding code that helps to resolve any ambiguity in the syntax.
 * `selector`: defines the sub-syntax node kind that is the actual matcher of the pattern.
+* `strictness`: optional. defines how strictly pattern will match against nodes.
 
-For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`.
+Let's see how pattern object can solve the ambiguity in the class field example above.
 
-However, we can provide more code to avoid the ambiguity, and instruct ast-grep to select the `field_definition` node as the pattern target.
+The pattern object below instructs ast-grep to select the `field_definition` node as the pattern target.
 
 ```yaml
 pattern:
   selector: field_definition
   context: class A { $FIELD = $INIT }
 ```
+
+ast-grep works like this:
+1. First, the code in `context`, `class A { $FIELD = $INIT }`, is parsed as a class declaration.
+2. Then, it looks for the `field_definition` node, specified by `selector`, in the parsed tree.
+3. The selected `$FIELD = $INIT` is matched against code as the pattern.
+
+In this way, the pattern is parsed as `field_definition` instead of  `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46XG4gICAgc2VsZWN0b3I6IGZpZWxkX2RlZmluaXRpb25cbiAgICBjb250ZXh0OiBjbGFzcyBBIHsgJEZJRUxEID0gJElOSVQgfVxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==) in action.
+
 Other examples are [function call in Go](https://github.com/ast-grep/ast-grep/issues/646) and [function parameter in Rust](https://github.com/ast-grep/ast-grep/issues/648).
+
+### `strictness`
+
+You can also use pattern object to control the matching strategy with `strictness` field.
+
+By default, ast-grep uses a smart strategy to match pattern against the AST node. All nodes in the pattern must be matched, but it will skip unnamed nodes in target code.
+
+For the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
+
+For example, the following pattern `function $A() {}` will match both plain function and async function in JavaScript. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJEZWJ1Zy5hc3NlcnQiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAneyAkTTogKCQkJEEpID0+ICRNQVRDSCB9J1xuICAgIHNlbGVjdG9yOiBwYWlyXG4iLCJzb3VyY2UiOiJmdW5jdGlvbiBhKCkge31cbmFzeW5jIGZ1bmN0aW9uIGEoKSB7fSJ9)
+
+```js
+// function $A() {}
+function foo() {}    // matched
+async function bar() {} // matched
+```
+
+This is because the keyword `async` is an unnamed node in the AST, so the `async` in the code to search is skipped. As long as `function`, `$A` and `{}` are matched, the pattern is considered matched.
+
+However, this is not always the desired behavior. ast-grep provides `strictness` to control the matching strategy. At the moment, it provides these options, ordered from the most strict to the least strict:
+
+* `cst`: All nodes in the pattern and target code must be matched. No node is skipped.
+* `smart`: All nodes in the pattern must be matched, but it will skip unnamed nodes in target code. This is the default behavior.
+* `ast`: Only named AST nodes in both pattern and target code are matched. All unnamed nodes are skipped.
+* `relaxed`: Named AST nodes in both pattern and target code are matched. Comments and unnamed nodes are ignored.
+* `signature`: Only named AST nodes' kinds are matched. Comments, unnamed nodes and text are ignored.
+
+:::tip Deep Dive and More Examples
+
+`strictness` is an advanced feature that you may not need in most cases.
+
+If you are interested in more examples and details, please refer to the [deep dive](/advanced/match-algorithm.html) doc on ast-grep's match algorithm.
+
+:::
 
 ## `kind`
 
