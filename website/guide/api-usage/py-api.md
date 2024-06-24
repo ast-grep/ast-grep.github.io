@@ -275,3 +275,36 @@ class SgNode:
     def prev(self) -> Optional[SgNode]: ...
     def prev_all(self) -> List[SgNode]: ...
 ```
+
+## Fix code
+
+`SgNode` is immutable so it is impossible to change the code directly.
+
+However, `SgNode` has a `replace` method to generate an `Edit` object. You can then use the `commitEdits` method to apply the changes and generate new source string.
+
+```python
+class Edit:
+    # The start position of the edit
+    start_pos: int
+    # The end position of the edit
+    end_pos: int
+    # The text to be inserted
+    inserted_text: str
+
+class SgNode:
+    # Edit
+    def replace(self, new_text: str) -> Edit: ...
+    def commit_edits(self, edits: List[Edit]) -> str: ...
+```
+
+**Example**
+
+```python
+root = SgRoot("print('hello world')", "python").root()
+node = root.find(pattern="print($A)")
+edit = node.replace("logger.log($A)")
+new_src = node.commit_edits([edit])
+# "logger.log('hello world')"
+```
+
+See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)

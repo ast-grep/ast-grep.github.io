@@ -79,6 +79,7 @@ export default defineConfig({
             items:[
               { text: 'JavaScript API', link: '/guide/api-usage/js-api.html' },
               { text: 'Python API', link: '/guide/api-usage/py-api.html' },
+              { text: 'Performance Tip', link: '/guide/api-usage/performance-tip.html' },
             ]},
         ],
         collapsed: false,
