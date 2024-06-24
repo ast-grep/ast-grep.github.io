@@ -280,3 +280,5 @@ const edit = node.replace('console.error($A)')
 const newSource = node.commitEdits([edit])
 // "console.error('hello world')"
 ```
+
+See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)
