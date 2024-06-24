@@ -23,7 +23,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 | -p| --pattern `<PATTERN>` |  AST pattern to match. |
 | -r| --rewrite `<REWRITE>` |  String to replace the matched AST node. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
-|   | --debug-query         |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
+|   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
 |   | --json`[=<style>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
