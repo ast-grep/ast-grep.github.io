@@ -131,7 +131,16 @@ interface RuleObject {
 interface Pattern {
   context: string
   selector: string
+  strictness?: Strictness
 }
+
+// See https://ast-grep.github.io/advanced/match-algorithm.html
+type Strictness =
+  | 'cst'
+  | 'smart'
+  | 'ast'
+  | 'relaxed'
+  | 'signature'
 
 // See Relation rule for explanation
 interface Relation {
