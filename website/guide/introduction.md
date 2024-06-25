@@ -96,10 +96,10 @@ You can start from creating a one-liner to rewrite code at command line with min
 ### Pragmatism
 ast-grep comes with batteries included. Interactive code modification is available. Linter and language server work out of box when you install the command line tool. ast-grep is also shipped with test framework for rule authors.
 
-## Check out Discord Bot
+## Check out Discord and StackOverflow
 
 <!-- TODO: move this to FAQ-->
 
-Still got questions? Join our [Discord](https://discord.gg/4YZjf6htSQ) and ask @ast-grep-bot anything!
+Still got questions? Join our [Discord](https://discord.gg/4YZjf6htSQ) and discuss with other users!
 
-@ast-grep-bot is fluent in many natural languages. It can help you to quickly find the relevant information for your task and even write a pattern or YAML rule for you!
+You can also ask questions under the [ast-grep](https://stackoverflow.com/questions/tagged/ast-grep) tag on [StackOverflow](https://stackoverflow.com/questions/ask).

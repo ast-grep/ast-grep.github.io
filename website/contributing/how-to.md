@@ -50,6 +50,8 @@ We encourage you to share your knowledge and experience with ast-grep with other
 
 - **Write introductions to ast-grep**: You can write blog posts, articles, or tutorials that introduce ast-grep to new users. You can explain what ast-grep is, how it works, what problems it solves, and how to install and use it. You can also share some examples of how you use ast-grep in your own projects or workflows.
 
+- **Answer questions about ast-grep**: Help answering people's questions on [StackOverflow](https://stackoverflow.com/questions/tagged/ast-grep) or [Discord](https://discord.gg/4YZjf6htSQ). Your answers will be appreciated!
+
 - **Write ast-grep's tutorial**: You can write more advanced tutorials that show how to use ast-grep for specific tasks or scenarios. You can demonstrate how to use ast-grep's features and options, how to write complex queries and transformations, how to integrate ast-grep with other tools or platforms, and how to optimize ast-grep's performance and efficiency.
 
 - **Translate documentation**: You can help us make ast-grep more accessible to users from different regions and languages by translating its documentation into other languages. Reach out [@Shenqingchuan](https://twitter.com/Shenqingchuan), translation team member of [Rollup](https://github.com/rollup/rollup-docs-cn), [Vite](https://github.com/vitejs/docs-cn) and ast-grep, for more ideas about translation!

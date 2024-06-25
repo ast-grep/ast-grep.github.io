@@ -17,7 +17,7 @@ A rewriter rule is similar to ordinary ast-grep rule, except that:
 Rewriters are an advanced feature and should be used with caution, and it is experimental at the moment. If possible, you can use ast-grep's [API](/guide/api-usage.html) as an alternative.
 :::
 
-Please ask questions in [GitHub Discussions](https://github.com/ast-grep/ast-grep/discussions) or [discord](https://discord.com/invite/4YZjf6htSQ) for help.
+Please ask questions on [StackOverflow](https://stackoverflow.com/questions/tagged/ast-grep), [GitHub Discussions](https://github.com/ast-grep/ast-grep/discussions) or [discord](https://discord.com/invite/4YZjf6htSQ) for help.
 
 ## `id`
 * type: `String`
