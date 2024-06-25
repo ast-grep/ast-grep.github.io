@@ -27,11 +27,11 @@ Example:
 pattern: console.log($ARG)
 ```
 
-`pattern` also accepts an `Object` with `context` and `selector`.
+`pattern` also accepts an `Object` with `context`,`selector` and optionally `strictness`.
 
 By default `pattern` parses code as a standalone file. You can use the `selector` field  to pull out the specific part to match.
 
-Example:
+**Example**:
 
 We can select class field in JavaScript by this pattern.
 
@@ -40,6 +40,21 @@ pattern:
   selector: field_definition
   context: class { $F }
 ```
+
+---
+
+You can also use `strictness` to change the matching algorithm of pattern. See the [deep div doc](/advanced/match-algorithm.html) for more detailed explanation for strictness.
+
+**Example**:
+
+```yml
+pattern:
+  context: foo($BAR)
+  strictness: relaxed
+```
+
+`strictness` accepts these options: `cst`, `smart`, `ast`, `relaxed` and `signature`.
+
 
 ### `kind`
 * type: `String`
