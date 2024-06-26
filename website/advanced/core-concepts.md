@@ -2,7 +2,7 @@
 
 One key highlight of ast-grep is its pattern.
 
-_Pattern is a convenient way to write and read expressions that describe syntax trees_. It resembles code, but with some special syntax and semantics that allow you to match parts of a syntax tree based on their structure, type or content.
+_Pattern is a convenient way to write and read expressions that describe syntax trees_. It resembles code, but with some special syntax and structure that allow you to match parts of a syntax tree based on their structure, type or content.
 
 While ast-grep's pattern is **easy to learn**, it is **hard to master**. It requires you to know the Tree-sitter grammar and meaning of the target language, as well as the rules and conventions of ast-grep.
 
@@ -30,7 +30,7 @@ When you use ast-grep to search for patterns in source code, you need to underst
 
 Source code input is text, a sequence of characters that follows certain syntax rules. You can use common search tools like [silver-searcher](https://github.com/ggreer/the_silver_searcher) or [ripgrep](https://github.com/BurntSushi/ripgrep) to search for text patterns in source code.
 
-However, ast-grep does not match patterns against the text directly. Instead, it parses the text into a tree structure that represents the syntax of the code. This allows ast-grep to match patterns based on the semantic meaning of the code, not just its surface appearance. This is known as [structural](https://docs.sourcegraph.com/code_search/reference/structural) [search](https://docs.sourcegraph.com/code_search/reference/structural), which searches for code with a specific structure, not just a specific text.
+However, ast-grep does not match patterns against the text directly. Instead, it parses the text into a tree structure that represents the syntax of the code. This allows ast-grep to match patterns based on the structure of the code, not just its surface appearance. This is known as [structural](https://docs.sourcegraph.com/code_search/reference/structural) [search](https://docs.sourcegraph.com/code_search/reference/structural), which searches for code with a specific structure, not just a specific text.
 
 _Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree._
 
@@ -40,7 +40,7 @@ Though `pattern` structurally matches code, you can use [the atomic rule `regex`
 
 
 ## AST vs CST
-To represent the syntax and semantics of code, we have two types of tree structures: [AST](https://www.wikiwand.com/en/Abstract_syntax_tree) and [CST](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/).
+To represent the syntax and structure of code, we have two types of tree structures: [AST](https://www.wikiwand.com/en/Abstract_syntax_tree) and [CST](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/).
 
 AST stands for Abstract Syntax Tree, which is a **simplified** representation of the code that _omits some details_ like punctuation and whitespaces.
 CST stands for Concrete Syntax Tree, which is a more **faithful** representation of the code that _includes all the details_.
@@ -144,7 +144,7 @@ ast-grep goes further beyond Tree-sitter. It has a concept about the "significan
 * Otherwise, the node is a **trivial** node.
 
 :::warning Even significance is not enough
-Most Tree-sitter languages do not encode all critical semantics in AST, the tree with named nodes only.
+Most Tree-sitter languages do not encode all critical structures in AST, the tree with named nodes only.
 Even significant nodes are not sufficient to represent the meaning of code.
 We have to preserve some trivial nodes for precise matching.
 :::

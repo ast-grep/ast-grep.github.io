@@ -33,7 +33,7 @@ The **matcher editor** is where you can write the code patterns and rewrite rule
 The **matcher info** is where you can see the information for the matcher section. The matcher info shows different information depending on which tab you are using in the matcher editor: **Pattern** or **YAML**.
 
 - If you are using the **Pattern** tab, the matcher info shows the AST dump of your code pattern like the source AST dump.
-- If you are using the **YAML** tab, the matcher info shows the matched meta-variables and errors if your rule is not valid. You can use the matched meta-variables to see which nodes in the source AST are bound to which variables in your pattern and rewrite expression. You can also use the errors to fix any syntax or semantic issues in your rule.
+- If you are using the **YAML** tab, the matcher info shows the matched meta-variables and errors if your rule is not valid. You can use the matched meta-variables to see which nodes in the source AST are bound to which variables in your pattern and rewrite expression. You can also use the errors to fix any issues in your rule.
 
 ---
 
