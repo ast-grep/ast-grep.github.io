@@ -227,6 +227,10 @@
           "description": "A single sub-rule and matches a node if the sub rule does not match.",
           "$ref": "#/definitions/SerializableRule"
         },
+        "nthChild": {
+          "description": "`nth_child` accepts number, string or object. It specifies the position in nodes' sibling list.",
+          "$ref": "#/definitions/SerializableNthChild"
+        },
         "pattern": {
           "description": "A pattern string or a pattern object.",
           "$ref": "#/definitions/PatternStyle"
@@ -352,6 +356,10 @@
           "description": "A single sub-rule and matches a node if the sub rule does not match.",
           "$ref": "#/definitions/SerializableRule"
         },
+        "nthChild": {
+          "description": "`nth_child` accepts number, string or object. It specifies the position in nodes' sibling list.",
+          "$ref": "#/definitions/SerializableNthChild"
+        },
         "pattern": {
           "description": "A pattern string or a pattern object.",
           "$ref": "#/definitions/PatternStyle"
@@ -378,6 +386,52 @@
         },
         {
           "$ref": "#/definitions/SerializableRule"
+        }
+      ]
+    },
+    "SerializableNthChild": {
+      "description": "`nthChild` accepts either a number, a string or an object.",
+      "anyOf": [
+        {
+          "description": "Simple syntax",
+          "$ref": "#/definitions/NthChildSimple"
+        },
+        {
+          "description": "Object style syntax",
+          "type": "object",
+          "required": [
+            "position"
+          ],
+          "properties": {
+            "ofRule": {
+              "description": "select the nth node that matches the rule, like CSS's of syntax",
+              "$ref": "#/definitions/SerializableRule"
+            },
+            "position": {
+              "description": "nth-child syntax",
+              "$ref": "#/definitions/NthChildSimple"
+            },
+            "reverse": {
+              "description": "matches from the end instead like CSS's nth-last-child",
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "NthChildSimple": {
+      "description": "A string or number describing the indices of matching nodes in a list of siblings.",
+      "anyOf": [
+        {
+          "description": "A number indicating the precise element index",
+          "type": "integer",
+          "format": "uint",
+          "minimum": 0.0
+        },
+        {
+          "description": "Functional notation like CSS's An + B",
+          "type": "string"
         }
       ]
     },
