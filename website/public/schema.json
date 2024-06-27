@@ -164,8 +164,7 @@
         {
           "type": "object",
           "required": [
-            "context",
-            "selector"
+            "context"
           ],
           "properties": {
             "context": {
@@ -176,7 +175,50 @@
               "description": "The sub-syntax node kind that is the actual matcher of the pattern.",
               "type": "string"
             }
+            "strictness": {
+              "description": "Strictness of the pattern. More strict pattern matches fewer nodes.",
+              "$ref": "#/definitions/Strictness"
+            }
           }
+        }
+      ]
+    },
+    "Strictness": {
+      "oneOf": [
+        {
+          "description": "all nodes are matched",
+          "type": "string",
+          "enum": [
+            "cst"
+          ]
+        },
+        {
+          "description": "all nodes except source trivial nodes are matched.",
+          "type": "string",
+          "enum": [
+            "smart"
+          ]
+        },
+        {
+          "description": "only ast nodes are matched",
+          "type": "string",
+          "enum": [
+            "ast"
+          ]
+        },
+        {
+          "description": "ast-nodes excluding comments are matched",
+          "type": "string",
+          "enum": [
+            "relaxed"
+          ]
+        },
+        {
+          "description": "ast-nodes excluding comments, without text",
+          "type": "string",
+          "enum": [
+            "signature"
+          ]
         }
       ]
     },
