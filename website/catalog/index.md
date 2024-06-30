@@ -20,6 +20,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
 * [Ruby](/catalog/ruby/)
   * [Prefer Symbol over Proc](/catalog/ruby/#prefer-symbol-over-proc)
   * [Migrate action_filter in Ruby on Rails](/catalog/ruby/#migrate-action-filter-in-ruby-on-rails)
+  * [Refactor pytest fixtures](/catalog/python/#refactor-pytest-fixtures)
 * [Rust](/catalog/rust/)
   * [Avoid Duplicated Exports](/catalog/rust/#avoid-duplicated-exports)
   * [Get number of digits in a `usize`](/catalog/rust/#get-number-of-digits-in-a-usize)
