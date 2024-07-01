@@ -7,6 +7,7 @@ Explore the power of ast-grep with these rewriting rules that can transform your
 Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @ast-grep-bot to explain the rules for you line by line!
 
 * [C](/catalog/c/)
+  * [Match Function Call](/catalog/c/#match-function-call)
   * [Rewrite Method to Function Call](/catalog/c/#rewrite-method-to-function-call)
   * [Rewrite Check to Yoda Condition](/catalog/c/#rewrite-check-to-yoda-condition)
 * [Go](/catalog/go/)
