@@ -65,6 +65,31 @@ watch(() => props.state, state => {
 .floating:active {
   color: var(--vp-c-brand);
 }
+
+@media only screen and (min-width: 780px) {
+  [title] {
+    position: relative;
+  }
+
+  [title]:after {
+    content: attr(title);
+    position: absolute;
+    left: -10%;
+    bottom: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.25em 0.5em;
+    font-size: 10px;
+    width: max-content;
+    opacity: 0;
+    transform: translate(-100%, 50%);
+    transition: 0.2s;
+    border-radius: 5px;
+  }
+
+  [title]:hover:after {
+    opacity: 1;
+  }
+}
 .switch {
   display: none;
   border-radius: 5px 5px 0px 0px;
