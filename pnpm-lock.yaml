@@ -18,8 +18,8 @@ importers:
         specifier: 0.50.0
         version: 0.50.0
       monaco-yaml:
-        specifier: 5.2.0
-        version: 5.2.0(monaco-editor@0.50.0)
+        specifier: 5.2.1
+        version: 5.2.1(monaco-editor@0.50.0)
       vue:
         specifier: 3.4.31
         version: 3.4.31(typescript@5.5.3)
@@ -390,9 +390,6 @@ packages:
   '@types/js-yaml@4.0.9':
     resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
 
-  '@types/json-schema@7.0.11':
-    resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
-
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
@@ -629,8 +626,8 @@ packages:
     peerDependencies:
       monaco-editor: '>=0.30.0'
 
-  monaco-yaml@5.2.0:
-    resolution: {integrity: sha512-BK9qeabDtxNlKppGrbU4yd8WTcKbk9ODqQwWy8Pb27FHtHwCQ1lTssRuB9XM2+Z4HQf6uhj3P5vFi3nsRrerGw==}
+  monaco-yaml@5.2.1:
+    resolution: {integrity: sha512-hquqqJSOf1y+rDX5FbvynsMck5OG/x2wFGac8eRNcE9jfcczodHprYwqYylDfsH6+OtNl5FuENB24UmPzk7waQ==}
     peerDependencies:
       monaco-editor: '>=0.36'
 
@@ -768,9 +765,6 @@ packages:
 
   vscode-languageserver-types@3.17.3:
     resolution: {integrity: sha512-SYU4z1dL0PyIMd4Vj8YOqFvHu7Hz/enbWtpfnVbJHU4Nd1YNYx8u0ennumc6h48GQNeOLxmwySmnADouT/AuZA==}
-
-  vscode-uri@3.0.7:
-    resolution: {integrity: sha512-eOpPHogvorZRobNqJGhapa0JdwaxpjVvyBp0QIUMRMSf8ZAlqOdEquKuRmw9Qwu0qXtJIWqFtMkmvJjUZmMjVA==}
 
   vscode-uri@3.0.8:
     resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
@@ -1089,8 +1083,6 @@ snapshots:
 
   '@types/js-yaml@4.0.9': {}
 
-  '@types/json-schema@7.0.11': {}
-
   '@types/linkify-it@5.0.0': {}
 
   '@types/markdown-it@14.1.1':
@@ -1371,9 +1363,8 @@ snapshots:
     dependencies:
       monaco-editor: 0.50.0
 
-  monaco-yaml@5.2.0(monaco-editor@0.50.0):
+  monaco-yaml@5.2.1(monaco-editor@0.50.0):
     dependencies:
-      '@types/json-schema': 7.0.11
       jsonc-parser: 3.2.0
       monaco-editor: 0.50.0
       monaco-languageserver-types: 0.3.2
@@ -1384,7 +1375,7 @@ snapshots:
       prettier: 2.8.2
       vscode-languageserver-textdocument: 1.0.8
       vscode-languageserver-types: 3.17.3
-      vscode-uri: 3.0.7
+      vscode-uri: 3.0.8
       yaml: 2.2.1
 
   muggle-string@0.4.1: {}
@@ -1525,8 +1516,6 @@ snapshots:
   vscode-languageserver-textdocument@1.0.8: {}
 
   vscode-languageserver-types@3.17.3: {}
-
-  vscode-uri@3.0.7: {}
 
   vscode-uri@3.0.8: {}
 
