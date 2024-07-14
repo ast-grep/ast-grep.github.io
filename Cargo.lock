@@ -19,13 +19,13 @@ checksum = "f538837af36e6f6a9be0faa67f9a314f8119e4e4b5867c6ab40ed60360142519"
 
 [[package]]
 name = "ast-grep-config"
-version = "0.24.1"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4821519538c0b86dbb0a5522d4b2008838394ecf75962fc368eac69bc8e80257"
+checksum = "32d0ceb0b8ccb2145ec624fc216ca85b2eacafd1aaee44c26db883a2de113ee8"
 dependencies = [
  "anyhow",
- "ast-grep-core",
- "bit-set",
+ "ast-grep-core 0.25.0",
+ "bit-set 0.6.0",
  "globset",
  "regex",
  "schemars",
@@ -40,7 +40,19 @@ version = "0.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e64667e2620b8406c5e24cbe8c8a76791b2d88713016aafc7bdff00e224fbc38"
 dependencies = [
- "bit-set",
+ "bit-set 0.5.3",
+ "regex",
+ "thiserror",
+ "tree-sitter-facade-sg",
+]
+
+[[package]]
+name = "ast-grep-core"
+version = "0.25.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "437cf5b0163ced5572aa984304fdd20ca796d6bece5d95576a73316217fb089b"
+dependencies = [
+ "bit-set 0.6.0",
  "regex",
  "thiserror",
  "tree-sitter-facade-sg",
@@ -52,7 +64,7 @@ version = "0.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "61933ea8ba69eb285e6f00267f42dc5225267cb925974616469bcd97df2ac2d7"
 dependencies = [
- "ast-grep-core",
+ "ast-grep-core 0.24.1",
  "ignore",
  "serde",
 ]
@@ -62,7 +74,7 @@ name = "ast-grep-wasm"
 version = "0.2.6"
 dependencies = [
  "ast-grep-config",
- "ast-grep-core",
+ "ast-grep-core 0.24.1",
  "ast-grep-language",
  "console_error_panic_hook",
  "once_cell",
@@ -90,7 +102,16 @@ version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0700ddab506f33b20a03b13996eccd309a48e5ff77d0d95926aa0210fb4e95f1"
 dependencies = [
- "bit-vec",
+ "bit-vec 0.6.3",
+]
+
+[[package]]
+name = "bit-set"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f0481a0e032742109b1133a095184ee93d88f3dc9e0d28a5d033dc77a073f44f"
+dependencies = [
+ "bit-vec 0.7.0",
 ]
 
 [[package]]
@@ -98,6 +119,12 @@ name = "bit-vec"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "349f9b6a179ed607305526ca489b34ad0a41aed5f7980fa90eb03160b69598fb"
+
+[[package]]
+name = "bit-vec"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d2c54ff287cfc0a34f38a6b832ea1bd8e448a330b3e40a50859e6488bee07f22"
 
 [[package]]
 name = "bstr"
