@@ -1,6 +1,6 @@
 # Frequently Asked Questions
 
-## My pattern does not work
+## My pattern does not work, why?
 
 1. **Use the Playground**: Test your pattern in the [ast-grep playground](https://ast-grep.github.io/playground.html).
 2. **Check for Valid Code**: Make sure your pattern is valid code that tree-sitter can parse.
@@ -27,7 +27,7 @@ The idea is that you can write full an valid code in the `context` field and use
 
 This trick can be used in other languages as well, like [C](https://ast-grep.github.io/catalog/c/#match-function-call) and [Go](https://ast-grep.github.io/catalog/go/#match-function-call-in-golang).
 
-## MetaVariable does not work
+## MetaVariable does not work, why?
 
 1. **Correct Naming**: Start meta variables with the `$` sign, followed by uppercase letters (A-Z), underscores (`_`), or digits (1-9).
 2. **Single AST Node**: A meta variable should be a single AST node. Avoid mixing meta variables with other text in one AST node. For example, `mix$OTHER_VAR` or `use$HOOK` will not work.
@@ -41,6 +41,31 @@ For example, `foo($$$A, b, $$$C)` matches `foo(a, c, b, b, c)`. `$$$A` stops bef
 
 This design follows TypeScript's template literal types (`${infer VAR}Literal`) to ensure multiple meta variables always produce a match or non-match in linear time.
 
-## Pattern cannot match my use case
+## Pattern cannot match my use case, how?
 
 Patterns are a quick and easy way to match code in ast-grep, but they might not handle complex code. YAML rules are much more expressive and make it easier to specify complex code.
+
+## I want to pattern match function call starts with some prefix string, how can I do that?
+
+It is common to find function name or variable name following some naming convention like a function must starts with specific prefix.
+
+For example, [React Hook](https://react.dev/learn/reusing-logic-with-custom-hooks#hook-names-always-start-with-use) in JavaScript requires function names start with `use`. Another example will be using `io_uring` in [Linux asynchronous programming](https://unixism.net/loti/genindex.html).
+
+You may start with pattern like `use$HOOK` or `io_uring_$FUNC`. However, they are not valid meta variable names since the AST node text does not start with the dollar sign.
+
+The workaround is using [`constraints`](https://ast-grep.github.io/guide/project/lint-rule.html#constraints) in [YAML rule](https://ast-grep.github.io/guide/project/lint-rule.html) and [`regex`](https://ast-grep.github.io/guide/rule-config/atomic-rule.html#regex) rule.
+
+```yaml
+rule:
+  pattern: $HOOK($$$ARGS)
+constraints:
+  HOOK: { regex: '^use' }
+```
+
+[Example usage](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiAkSE9PSygkJCRBUkdTKVxuY29uc3RyYWludHM6XG4gIEhPT0s6IHsgcmVnZXg6IF51c2UgfSIsInNvdXJjZSI6ImZ1bmN0aW9uIFJlYWN0Q29tcG9uZW50KCkge1xuICAgIGNvbnN0IGRhdGEgPSBub3RIb28oKVxuICAgIGNvbnN0IFtmb28sIHNldEZvb10gPSB1c2VTdGF0ZSgnJylcbn0ifQ==).
+
+
+:::danger MetaVariable must be one single AST node
+Meta variables cannot be mixed with prefix/suffix string . `use$HOOK` and `io_uring_$FUNC` are not valid meta variables. They are parsed as one AST node as whole, and
+ast-grep will not treat them as valid meta variable name.
+:::
