@@ -127,6 +127,7 @@ export default defineConfig({
       {
         text: 'Advanced Topics',
         items: [
+          { text: 'Frequently Asked Questions', link: '/advanced/faq.html'},
           { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html'},
           { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
           { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
