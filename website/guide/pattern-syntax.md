@@ -164,4 +164,6 @@ We will cover using rules in next chapter.
 Pattern can also be an object instead of string in YAML rule.
 
 It is very useful to avoid ambiguity in code snippet. See [here](/guide/rule-config/atomic-rule.html#pattern) for more details.
+
+Also see our FAQ for more [guidance](/advanced/faq.html) on writing patterns.
 :::

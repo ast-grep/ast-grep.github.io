@@ -142,6 +142,10 @@ That's it! You have refactored TypeScript's repository in minutes. Congratulatio
 
 Hope you enjoy the power of AST editing in plain programming language pattern. Our next step is to know more about the pattern code.
 
+:::tip Pattern does not work?
+See our FAQ for more [guidance](/advanced/faq.html) on writing patterns.
+:::
+
 <!--
 
 ## More Complicate Example
