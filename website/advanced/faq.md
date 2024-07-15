@@ -69,3 +69,59 @@ constraints:
 Meta variables cannot be mixed with prefix/suffix string . `use$HOOK` and `io_uring_$FUNC` are not valid meta variables. They are parsed as one AST node as whole, and
 ast-grep will not treat them as valid meta variable name.
 :::
+
+## Why is rule matching order sensitive?
+
+ast-grep's rule matching is a step-by-step process. It matches one atomic rule at a time, stores the matched meta-variable, and proceeds to the next rule until all rules are matched.
+
+**Rule matching is ordered** because previous rules' matched meta-variables can affect later rules. Only the first rule can specify what a `$META_VAR` matches, and later rules can only match the content captured by the first rule without modifying it.
+
+Let's see an example. Suppose we want to find a recursive function in JavaScript. [This rule](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gcGF0dGVybjogZnVuY3Rpb24gJEYoKSB7ICQkJCB9XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==) can do the trick.
+
+:::code-group
+
+```yml [rule.yml]
+id: recursive-call
+language: JavaScript
+rule:
+  all:
+  - pattern: function $F() { $$$ }
+  - has:
+      pattern: $F()
+      stopBy: end
+```
+
+```js [match.js]
+function recurse() {
+  foo()
+  recurse()
+}
+```
+:::
+
+The rule works because the pattern `function $F() { $$$ }` matches first, capturing `$F` as `recurse`. The later `has` rule then looks for a `recurse()` call based on the matched `$F`.
+
+If we [swap the order of rules](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiAgLSBwYXR0ZXJuOiBmdW5jdGlvbiAkRigpIHsgJCQkIH1cbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==), it will produce no match.
+
+```yml [rule.yml]
+id: recursive-call
+language: JavaScript
+rule:
+  all:
+  - has:  # N.B. has is the first rule
+      pattern: $F()
+      stopBy: end
+  - pattern: function $F() { $$$ }
+```
+
+In this case, the `has` rule matches first and captures `$F` as `foo` since `foo()` is the first function call matching the pattern `$F()`. The later rule `function $F() { $$$ }` will only find the `foo` declaration instead of `recurse`.
+
+:::tip
+Using `all` to specify the order of rule matching can be helpful when debugging YAML rules.
+:::
+
+## What does unordered rule object imply?
+
+A rule object in ast-grep is an unordered dictionary. The order of rule application is implementation-defined. Currently, ast-grep applies atomic rules first, then composite rules, and finally relational rules.
+
+If your rule depends on using meta variables in later rules, the best way is to use the `all` rule to specify the order of rules.

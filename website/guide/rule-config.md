@@ -5,6 +5,8 @@ Pattern is a handy feature for simple search. But it is not expressive enough fo
 
 ast-grep provides a more sophisticated way to find your code: Rule.
 
+Rules are like [CSS selectors](https://www.w3schools.com/cssref/css_selectors.php) that can compose together to filter AST nodes based on certain criteria.
+
 ## A Minimal Example
 
 A minimal ast-grep rule looks like this.
@@ -151,6 +153,14 @@ interface Relation {
 :::
 
 A node must **satisfies all fields** in the rule object to be considered as a match. So the rule object can be seen as an abbreviated and **unordered** `all` rule.
+
+:::warning Rule object is unordered!!
+
+Unordered rule object means that certain rules may be applied before others, even if they appear later in the YAML.
+Whether a node matches or not may depend on the order of rule being applied, especially when using `has`/`inside` rules.
+
+If a rule object does not work, you can try using `all` rule to specify the order of rules. See [FAQ](/advanced/faq.html#why-is-rule-matching-order-sensitive) for more details.
+:::
 
 ## Three Rule Categories
 
