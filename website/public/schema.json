@@ -174,7 +174,7 @@
             "selector": {
               "description": "The sub-syntax node kind that is the actual matcher of the pattern.",
               "type": "string"
-            }
+            },
             "strictness": {
               "description": "Strictness of the pattern. More strict pattern matches fewer nodes.",
               "$ref": "#/definitions/Strictness"
