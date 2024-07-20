@@ -14,7 +14,7 @@
     "js-yaml": "4.1.0",
     "monaco-editor": "0.50.0",
     "monaco-yaml": "5.2.1",
-    "vue": "3.4.31"
+    "vue": "3.4.33"
   },
   "optionalDependencies": {
     "ast-grep-wasm": "file:./pkg/"
