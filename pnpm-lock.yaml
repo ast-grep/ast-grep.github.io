@@ -18,8 +18,8 @@ importers:
         specifier: 0.50.0
         version: 0.50.0
       monaco-yaml:
-        specifier: 5.2.1
-        version: 5.2.1(monaco-editor@0.50.0)
+        specifier: 5.2.2
+        version: 5.2.2(monaco-editor@0.50.0)
       vue:
         specifier: 3.4.33
         version: 3.4.33(typescript@5.5.3)
@@ -631,8 +631,8 @@ packages:
   monaco-editor@0.50.0:
     resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
 
-  monaco-languageserver-types@0.3.2:
-    resolution: {integrity: sha512-KiGVYK/DiX1pnacnOjGNlM85bhV3ZTyFlM+ce7B8+KpWCbF1XJVovu51YyuGfm+K7+K54mIpT4DFX16xmi+tYA==}
+  monaco-languageserver-types@0.4.0:
+    resolution: {integrity: sha512-QQ3BZiU5LYkJElGncSNb5AKoJ/LCs6YBMCJMAz9EA7v+JaOdn3kx2cXpPTcZfKA5AEsR0vc97sAw+5mdNhVBmw==}
 
   monaco-marker-data-provider@1.1.1:
     resolution: {integrity: sha512-PGB7TJSZE5tmHzkxv/OEwK2RGNC2A7dcq4JRJnnj31CUAsfmw0Gl+1QTrH0W0deKhcQmQM0YVPaqgQ+0wCt8Mg==}
@@ -647,8 +647,8 @@ packages:
     peerDependencies:
       monaco-editor: '>=0.30.0'
 
-  monaco-yaml@5.2.1:
-    resolution: {integrity: sha512-hquqqJSOf1y+rDX5FbvynsMck5OG/x2wFGac8eRNcE9jfcczodHprYwqYylDfsH6+OtNl5FuENB24UmPzk7waQ==}
+  monaco-yaml@5.2.2:
+    resolution: {integrity: sha512-NWO/UhtJATlIsqwWPzK7YfbcIvPo3riFGsUkaGxNJoGiNPOvHD8vZ83ecqMQGkHPOpgHtSbe94uokE1AJvpbyQ==}
     peerDependencies:
       monaco-editor: '>=0.36'
 
@@ -1393,7 +1393,7 @@ snapshots:
 
   monaco-editor@0.50.0: {}
 
-  monaco-languageserver-types@0.3.2:
+  monaco-languageserver-types@0.4.0:
     dependencies:
       monaco-types: 0.1.0
       vscode-languageserver-protocol: 3.17.3
@@ -1409,11 +1409,11 @@ snapshots:
     dependencies:
       monaco-editor: 0.50.0
 
-  monaco-yaml@5.2.1(monaco-editor@0.50.0):
+  monaco-yaml@5.2.2(monaco-editor@0.50.0):
     dependencies:
       jsonc-parser: 3.2.0
       monaco-editor: 0.50.0
-      monaco-languageserver-types: 0.3.2
+      monaco-languageserver-types: 0.4.0
       monaco-marker-data-provider: 1.1.1(monaco-editor@0.50.0)
       monaco-types: 0.1.0
       monaco-worker-manager: 2.0.1(monaco-editor@0.50.0)
