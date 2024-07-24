@@ -133,6 +133,7 @@ export default defineConfig({
           { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
           { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
           { text: 'Custom Language Support', link: '/advanced/custom-language.html'},
+          { text: 'Multi-Language Documents', link: '/advanced/language-injection.html'},
           { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison.html'},
         ],
         collapsed: true,
