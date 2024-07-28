@@ -90,12 +90,52 @@ regex: (?i)a(?-i)b+
 ```
 :::
 
+### `nthChild`
+* type: `number | string | Object`
+
+`nthChild` finds nodes based on their indexes in the parent node's children list.
+
+It can accept either a number, a string or an object:
+
+* number: match the exact nth child
+* string: `An+B` style string to match position based on formula
+* object: nthChild object has several options to tweak the behavior of the rule
+  * `position`: a number or an An+B style string
+  * `reverse`: boolean indicating if count index from the end of sibling list
+  * `ofRule`: object to filter the sibling node list based on rule
+
+**Example:**
+
+```yaml
+# a number to match the exact nth child
+nthChild: 3
+
+# An+B style string to match position based on formula
+nthChild: 2n+1
+
+# object style nthChild rule
+nthChild:
+  # accepts number or An+B style string
+  position: 2n+1
+  # optional, count index from the end of sibling list
+  reverse: true # default is false
+  # optional, filter the sibling node list based on rule
+  ofRule:
+    kind: function_declaration # accepts ast-grep rule
+```
+
+**Note:**
+
+* nthChild is inspired the [nth-child CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child).
+* nthChild's index is 1-based, not 0-based, as in the CSS selector.
+* nthChild's node list only includes named nodes, not unnamed nodes.
+
 ## Relational Rules
 
 ### `inside`
 * type: `Object`
 
-A relational rule object, which is a rule object with two additional fields `stopBy` and `field`.
+A relational rule object, which is a `Rule` object with two additional fields `stopBy` and `field`.
 
 The target node must appear inside of another node matching the `inside` sub-rule.
 
@@ -112,7 +152,7 @@ Please refer to [relational rule guide](/guide/rule-config/relational-rule) for 
 ### `has`
 * type: `Object`
 
-A relational rule object, which is a rule object with two additional fields `stopBy` and `field`.
+A relational rule object, which is a `Rule` object with two additional fields `stopBy` and `field`.
 
 The target node must has a descendant node matching the `has` sub-rule.
 
@@ -129,7 +169,7 @@ Please refer to [relational rule guide](/guide/rule-config/relational-rule) for 
 ### `precedes`
 * type: `Object`
 
-A relational rule object, which is a rule object with one additional field `stopBy`.
+A relational rule object, which is a `Rule` object with one additional field `stopBy`.
 
 The target node must appear before another node matching the `precedes` sub-rule.
 
@@ -145,7 +185,7 @@ precedes:
 ### `follows`
 * type: `Object`
 
-A relational rule object, which is a rule object with one additional field `stopBy`.
+A relational rule object, which is a `Rule` object with one additional field `stopBy`.
 
 The target node must appear after another node matching the `follows` sub-rule.
 
@@ -157,6 +197,10 @@ follows:
   kind: function_declaration   # a sub rule object
   stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
 ```
+
+:::tip
+Only relational rules have `stopBy` and `field` options.
+:::
 
 
 ## Composite Rules
