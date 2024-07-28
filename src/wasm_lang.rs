@@ -289,6 +289,12 @@ impl Doc for WasmDoc {
       },
     }
   }
+  fn clone_with_lang(&self, lang: Self::Lang) -> Self {
+    Self {
+      lang,
+      source: self.source.clone(),
+    }
+  }
 }
 
 #[cfg(test)]
