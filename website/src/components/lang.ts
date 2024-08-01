@@ -108,7 +108,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
             type: 'rule',
             rule: rule.id,
             severity: rule.severity,
-            message: rule.message,
+            message: nm.message,
             range: nm.node.range,
             env: nm.env,
           })

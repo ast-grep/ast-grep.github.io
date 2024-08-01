@@ -3,6 +3,7 @@ use ast_grep_core::{
   meta_var::{MetaVarEnv, MetaVariable},
   Node as SgNode, NodeMatch as SgNodeMatch, StrDoc,
 };
+use ast_grep_config::RuleConfig;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -30,15 +31,17 @@ pub struct WasmNode {
 pub struct WasmMatch {
   pub node: WasmNode,
   pub env: BTreeMap<String, WasmNode>,
+  pub message: String,
 }
 
-impl From<NodeMatch<'_>> for WasmMatch {
-  fn from(nm: NodeMatch) -> Self {
+impl WasmMatch {
+  pub fn from_match(nm: NodeMatch, rule: &RuleConfig<WasmLang>) -> Self {
     let node = nm.get_node().clone();
     let node = WasmNode::from(node);
     let env = nm.get_env().clone();
     let env = env_to_map(env);
-    Self { node, env }
+    let message = rule.get_message(&nm);
+    Self { node, env, message }
   }
 }
 

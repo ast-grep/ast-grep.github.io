@@ -42,9 +42,11 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
   let root = lang.ast_grep(src);
   let sets = combined.find(&root);
   let ret: HashMap<_, _> = combined.scan(&root, sets, false).matches.into_iter().map(|(id, matches)| {
-    let rule = combined.get_rule(id).id.clone();
-    let matches: Vec<_> = matches.into_iter().map(WasmMatch::from).collect();
-    (rule, matches)
+    let rule = combined.get_rule(id);
+    let matches: Vec<_> = matches.into_iter().map(|m| {
+      WasmMatch::from_match(m, rule)
+    }).collect();
+    (id, matches)
   }).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
