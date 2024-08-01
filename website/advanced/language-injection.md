@@ -126,8 +126,8 @@ Let's break the configuration down.
 
 2. `rule`: Defines the ast-grep rule to identify the injected language region within the host language.
 
-    - `pattern`: The pattern matches styled components syntax where `styled` is followed by a tag (e.g., `button`, `div`) and a template literal containing CSS.
-    - the rule should have a meta variable `$CONTENT` to specify the subregion of injected language. In this case, it is the content inside the template string.
+    * `pattern`: The pattern matches styled components syntax where `styled` is followed by a tag (e.g., `button`, `div`) and a template literal containing CSS.
+    * the rule should have a meta variable `$CONTENT` to specify the subregion of injected language. In this case, it is the content inside the template string.
 
 3. `injected`: Specifies the injected language within the identified regions. In this case, it is `css`.
 
