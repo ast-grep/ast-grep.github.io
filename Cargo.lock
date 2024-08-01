@@ -19,9 +19,9 @@ checksum = "f538837af36e6f6a9be0faa67f9a314f8119e4e4b5867c6ab40ed60360142519"
 
 [[package]]
 name = "ast-grep-config"
-version = "0.25.4"
+version = "0.25.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6bad61fde1168f11813adc9db11c5ba3c8806fb2debe42ba26867020cac86fdb"
+checksum = "6f833bf96517e53b75cc253fe1ce46682577549a2e216fd20b6f84b6148ab91a"
 dependencies = [
  "anyhow",
  "ast-grep-core",
@@ -36,9 +36,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-core"
-version = "0.25.4"
+version = "0.25.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "624f575766495025effd15f8125f51ccf11d96f22d0f8c257bf4b8cd09fa26bb"
+checksum = "72ac94ace3c423ba4ff2cd0579c801d989cc7624867cd8b69320d0fe7be1fd34"
 dependencies = [
  "bit-set",
  "regex",
@@ -48,9 +48,9 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-language"
-version = "0.25.4"
+version = "0.25.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d67cb12eed2d42535b61ed224d0ce4448b3a7304e0f028f1adf12a64041e0a61"
+checksum = "76e669aca1eb36d8430afb32de1cff2ab6758a080cf50fd221e087450419824d"
 dependencies = [
  "ast-grep-core",
  "ignore",
@@ -249,9 +249,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.146"
+version = "0.2.155"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f92be4933c13fd498862a9e02a3055f8a8d9c039ce33db97306fd5a6caa7f29b"
+checksum = "97b3888a4aecf77e811145cadf6eef5901f4782c53886191b2f693f24761847c"
 
 [[package]]
 name = "log"
@@ -477,9 +477,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter"
-version = "0.21.0"
+version = "0.22.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "705bf7c0958d0171dd7d3a6542f2f4f21d87ed5f1dc8db52919d3a6bed9a359a"
+checksum = "df7cc499ceadd4dcdf7ec6d4cbc34ece92c3fa07821e287aedecd4416c516dca"
 dependencies = [
  "cc",
  "regex",
@@ -487,9 +487,9 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-facade-sg"
-version = "0.21.5"
+version = "0.22.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "906493dd94525dbb0cc38af596432245bede875810a4804dccd72433f450d223"
+checksum = "dd61195e2ff046b232da116521697f4aadb99221c0afaae9cc5b491bae82d6ab"
 dependencies = [
  "js-sys",
  "tree-sitter",
@@ -635,9 +635,9 @@ dependencies = [
 
 [[package]]
 name = "web-tree-sitter-sg"
-version = "0.21.5"
+version = "0.22.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "65322f84b51c9f73698738e9d76fd3badea7c4ce584e7e19531face4c2b92acc"
+checksum = "95c730606d55f4635802e65d47e91dc08f0f46f886ef5c29f571e0e6c685330a"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
