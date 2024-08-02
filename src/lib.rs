@@ -46,7 +46,7 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
     let matches: Vec<_> = matches.into_iter().map(|m| {
       WasmMatch::from_match(m, rule)
     }).collect();
-    (id, matches)
+    (rule.id.clone(), matches)
   }).collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
   Ok(ret)
