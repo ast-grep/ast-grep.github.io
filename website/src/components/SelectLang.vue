@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {languageDisplayNames} from './lang'
+import IconDown from './IconDown.vue'
 
 defineProps({
   modelValue: {
@@ -23,8 +24,9 @@ function onChange(event: Event) {
     Language:
     <select :value="modelValue" @change="onChange">
       <option class="selector-option-text" v-for="val, key in languageDisplayNames" :value="key">{{val}}</option>
-    </select> ▿
-    </div>
+    </select>
+    <IconDown/>
+  </div>
 </template>
 
 <style scoped>

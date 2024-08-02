@@ -4,6 +4,7 @@ import Monaco from './Monaco.vue'
 import QueryEditor from './QueryEditor.vue'
 import Diff from './Diff.vue'
 import SelectLang from './SelectLang.vue'
+import PatternConfig from './PatternConfig.vue'
 import Tabs from './Tabs.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
@@ -147,6 +148,7 @@ provide(langLoadedKey, langLoaded)
           <QueryEditor
             v-model="query"
             :language="lang">
+            <PatternConfig/>
             <p class="pattern-separator">Rewrite</p>
             <Monaco
                v-model="rewrite"
