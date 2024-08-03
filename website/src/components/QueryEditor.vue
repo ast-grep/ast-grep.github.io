@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import Monaco from './Monaco.vue'
+import { Monaco, EditorWithPanel } from './editors'
 import { shallowRef, watchEffect, provide, PropType, computed, inject } from 'vue'
 import TreeNode from './TreeNode.vue'
 import { highlightKey, langLoadedKey, DumpNode } from './dumpTree'
-import EditorWithPanel from './EditorWithPanel.vue'
 import { preProcessPattern } from 'ast-grep-wasm'
 import { dumpASTNodes } from 'ast-grep-wasm'
 
