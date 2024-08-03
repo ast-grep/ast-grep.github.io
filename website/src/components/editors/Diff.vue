@@ -6,7 +6,6 @@ import {
   onBeforeUnmount,
   shallowRef,
   watchEffect,
-  PropType,
 } from 'vue'
 
 const props = defineProps({

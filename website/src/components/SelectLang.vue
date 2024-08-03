@@ -2,27 +2,13 @@
 import {languageDisplayNames} from './lang'
 import IconDown from './utils/IconDown.vue'
 
-defineProps({
-  modelValue: {
-    type: String,
-    default: 'javascript',
-  },
-})
-
-const emits = defineEmits<{
-  (e: 'update:modelValue', val: string): void
-}>()
-
-function onChange(event: Event) {
-  const target = event.target as HTMLSelectElement
-  emits('update:modelValue', String(target.value))
-}
-
+const lang = defineModel()
 </script>
+
 <template>
   <div class="selector">
     Language:
-    <select :value="modelValue" @change="onChange">
+    <select v-model="lang">
       <option class="selector-option-text" v-for="val, key in languageDisplayNames" :value="key">{{val}}</option>
     </select>
     <IconDown/>

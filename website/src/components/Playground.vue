@@ -23,6 +23,8 @@ let {
   source,
   query,
   rewrite,
+  strictness,
+  selector,
   config,
   mode,
   lang,
@@ -53,7 +55,13 @@ function buildRules() {
     json = [{
       id: 'test-rule',
       language: lang.value,
-      rule: {pattern: query.value},
+      rule: {
+        pattern: {
+          context: query.value,
+          strictness: strictness.value || undefined,
+          selector: selector.value || undefined,
+        },
+      },
       fix: rewrite.value || '',
     }]
   } else if (config.value) {
@@ -146,11 +154,14 @@ provide(langLoadedKey, langLoaded)
           <QueryEditor
             v-model="query"
             :language="lang">
-            <PatternConfig/>
             <p class="pattern-separator">Rewrite</p>
             <Monaco
                v-model="rewrite"
               :language="lang"
+            />
+            <PatternConfig
+              v-model:strictness="strictness"
+              v-model:selector="selector"
             />
           </QueryEditor>
         </template>

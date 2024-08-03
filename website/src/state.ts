@@ -11,6 +11,8 @@ export type State = {
   rewrite: string,
   config: string,
   source: string,
+  strictness: string,
+  selector: string,
   lang: string,
 }
 
@@ -67,6 +69,8 @@ const defaultState = {
   lang: 'javascript',
   query,
   rewrite: 'logger.log($MATCH)',
+  strictness: 'smart',
+  selector: '',
   config,
   source,
 }

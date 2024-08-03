@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import IconDown from './utils/IconDown.vue'
+
+const strictness = defineModel('strictness')
+const selector = defineModel('selector')
 </script>
 
 <template>
   <div class="pattern-config">
     <label>
-      Strictness
-      <a target="_blank" href=""></a>:
-      <select class="strictness-select">
+      Strictness:
+      <select class="strictness-select" v-model="strictness">
         <option value="smart">Smart</option>
         <option value="ast">Ast</option>
         <option value="cst">Cst</option>
@@ -15,10 +17,12 @@ import IconDown from './utils/IconDown.vue'
         <option value="signature">Signature</option>
       </select>
       <IconDown/>
+      <a class="info" target="_blank" href="https://ast-grep.github.io/advanced/match-algorithm.html">ⓘ</a>
     </label>
     <label>
       Selector:
-      <input class="selector-input" type="text"/>
+      <input class="selector-input" type="text" v-model="selector"/>
+      <a class="info" target="_blank" href="https://ast-grep.github.io/guide/rule-config/atomic-rule.html#pattern-object">ⓘ</a>
     </label>
   </div>
 </template>
@@ -43,5 +47,9 @@ import IconDown from './utils/IconDown.vue'
   border-radius: 5px;
   height: 25px;
   padding: 8px;
+}
+
+.info {
+  margin-left: 0.5em;
 }
 </style>
