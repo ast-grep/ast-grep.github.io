@@ -132,20 +132,20 @@ provide(langLoadedKey, langLoaded)
   <main class="playground">
     <div class="half" :class="activeEditor !== 'code' && 'inactive'">
       <Tabs v-model="codeMode" :modeText="codeText">
-      <template #code>
-        <QueryEditor v-model="source" :language="lang" :matches="matchedHighlights"/>
-      </template>
-      <template #diff>
-        <Diff :source="source" :rewrite="rewrittenCode" :language="lang"/>
-      </template>
-      <template #addon>
-        <p class="match-result">
-          <span  v-if="matchedHighlights.length > 0">
-            Found {{ matchedHighlights.length }} match(es).
-          </span>
-          <span v-else>No match found.</span>
-        </p>
-      </template>
+        <template #code>
+          <QueryEditor v-model="source" :language="lang" :matches="matchedHighlights"/>
+        </template>
+        <template #diff>
+          <Diff :source="source" :rewrite="rewrittenCode" :language="lang"/>
+        </template>
+        <template #addon>
+          <p class="match-result">
+            <span  v-if="matchedHighlights.length > 0">
+              Found {{ matchedHighlights.length }} match(es).
+            </span>
+            <span v-else>No match found.</span>
+          </p>
+        </template>
       </Tabs>
     </div>
     <div class="half" :class="activeEditor !== 'search' && 'inactive'">
@@ -154,12 +154,16 @@ provide(langLoadedKey, langLoaded)
           <QueryEditor
             v-model="query"
             :language="lang">
-            <p class="pattern-separator">Rewrite</p>
+            <p class="pattern-separator">
+              <a target="_blank" href="https://ast-grep.github.io/guide/rewrite-code.html">ⓘ</a>
+              Rewrite
+            </p>
             <Monaco
                v-model="rewrite"
               :language="lang"
             />
             <PatternConfig
+              :error="ruleErrors"
               v-model:strictness="strictness"
               v-model:selector="selector"
             />

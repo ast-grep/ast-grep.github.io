@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import {computed, shallowRef, PropType} from 'vue'
+import Error from './utils/Error.vue'
+
 const props = defineProps({
   envs: Array as PropType<any>,
   error: String,
@@ -24,15 +26,6 @@ function increment() {
 function decrement() {
   currentIndex.value = (currentIndex.value + props.envs.length - 1) % props.envs.length
 }
-let prettyError = computed(() => {
-  if (!props.error) {
-    return ''
-  }
-  // remove leading `Error: ` inject by serde-json
-  return props.error
-    .replace(/^(Error: )*/, '')
-    .split('\n').filter(Boolean).join('\n╰▻ ') // add line break
-})
 </script>
 
 <template>
@@ -60,9 +53,7 @@ let prettyError = computed(() => {
     &nbsp;
     <button @click="increment">Next Match</button>
   </div>
-  <div v-if="error" class="error-msg">
-    ⚠ {{prettyError}}
-  </div>
+  <Error :error="error"/>
 </div>
 </template>
 
@@ -90,13 +81,5 @@ let prettyError = computed(() => {
 }
 .choose-match {
   margin-top: 1em;
-}
-.error-msg {
-  border-radius: 5px;
-  padding: 5px 10px;
-  background: var(--vp-custom-block-danger-bg);
-  margin-top: 5px;
-  color: var(--vp-c-danger-1);
-  white-space: pre-wrap;
 }
 </style>
