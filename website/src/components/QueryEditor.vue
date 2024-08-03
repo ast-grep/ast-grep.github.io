@@ -72,6 +72,7 @@ let showFullTree = shallowRef(false)
       <label class="tree-toggle-label">
         <input class="tree-toggle" type="checkbox" v-model="showFullTree">
         Show Full Tree
+        <a target="_blank" href="https://ast-grep.github.io/advanced/core-concepts.html">ⓘ</a>
       </label>
     </template>
     <template #panel>
