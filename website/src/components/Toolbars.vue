@@ -2,7 +2,7 @@
 import { PropType, watch } from 'vue';
 import Share from '../icons/Share.vue'
 import { serialize, State, storeStateInLocalStorage } from '../state'
-import { showToast } from './Toast.vue'
+import { showToast } from './utils/Toast.vue'
 
 const props = defineProps({
   state: Object as PropType<State>,

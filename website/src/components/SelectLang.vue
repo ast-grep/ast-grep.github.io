@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {languageDisplayNames} from './lang'
-import IconDown from './IconDown.vue'
+import IconDown from './utils/IconDown.vue'
 
 defineProps({
   modelValue: {
