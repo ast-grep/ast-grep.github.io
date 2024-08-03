@@ -14,7 +14,8 @@ const props = defineProps({
   showUnnamed: {
     type: Boolean,
     default: false,
-  }
+  },
+  clickKind: Function as PropType<(k: string) => void>,
 })
 
 type DestructedNode = {
@@ -82,6 +83,10 @@ watchEffect(() => {
 });
 
 function copyKind(kind: string) {
+  if (props.clickKind) {
+    props.clickKind(kind)
+    return
+  }
   navigator.clipboard.writeText(kind)
   showToast('Node kind copied!')
 }
@@ -107,6 +112,7 @@ function copyField(name: string) {
       :showUnnamed="showUnnamed"
       :node="child"
       :cursorPosition="isWithin ? cursorPosition : null"
+      :clickKind="clickKind"
       v-if="expanded"
       v-for="child in children"
     />

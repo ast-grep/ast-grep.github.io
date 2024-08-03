@@ -6,33 +6,28 @@ import { highlightKey, langLoadedKey, DumpNode } from './dumpTree'
 import { preProcessPattern } from 'ast-grep-wasm'
 import { dumpASTNodes } from 'ast-grep-wasm'
 
-const emits = defineEmits<{
-    'update:modelValue': [string],
-    'update:rewrite': [string],
-}>()
+const modelValue = defineModel<string>()
 
 const props = defineProps({
   language: {
     type: String,
     default: 'javascript'
   },
-  modelValue: String,
-  rewrite: String,
   matches: Array as PropType<number[][]>,
+  clickKind: Function as PropType<(k: string) => void>,
 })
 
 let root = shallowRef(null as DumpNode | null)
 let highlights = shallowRef([])
 
 const processedSource = computed(() => {
-  const { modelValue } = props
   // have matches. It is source code panel
   // do not pre-process source code
   if (props.matches != null) {
-    return modelValue
+    return modelValue.value
   } else {
     // do process pattern query
-    return preProcessPattern(modelValue)
+    return preProcessPattern(modelValue.value)
   }
 })
 const langLoaded = inject(langLoadedKey)
@@ -65,9 +60,8 @@ let showFullTree = shallowRef(false)
     <template #editor>
       <div class="dual-editor">
         <Monaco
-           :modelValue="modelValue"
-           @update:modelValue="emits('update:modelValue', $event)"
-           @changeCursor="changeFocusNode"
+          v-model="modelValue"
+          @changeCursor="changeFocusNode"
           :language="language"
           :matches="matches"
           :highlights="highlights"/>
@@ -83,6 +77,7 @@ let showFullTree = shallowRef(false)
     <template #panel>
       <TreeNode
         v-if="root"
+        :clickKind="clickKind"
         :showUnnamed="showFullTree"
         class="pre"
         :node="root"

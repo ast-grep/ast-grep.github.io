@@ -5,6 +5,7 @@ import QueryEditor from './QueryEditor.vue'
 import SelectLang from './SelectLang.vue'
 import PatternConfig from './PatternConfig.vue'
 import Tabs from './utils/Tabs.vue'
+import { showToast } from './utils/Toast.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
 import '../style.css'
@@ -119,6 +120,11 @@ let codeText = {
   diff: 'Diff',
 }
 
+function setSelector(kind: string) {
+  selector.value = kind
+  showToast('Selected Sub-node in Pattern!')
+}
+
 let codeMode = shallowRef('code')
 provide(langLoadedKey, langLoaded)
 </script>
@@ -152,6 +158,7 @@ provide(langLoadedKey, langLoaded)
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
           <QueryEditor
+            :clickKind="setSelector"
             v-model="query"
             :language="lang">
             <p class="pattern-separator">
