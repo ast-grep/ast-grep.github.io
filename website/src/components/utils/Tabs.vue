@@ -2,16 +2,13 @@
 import { defineComponent, PropType, h } from 'vue'
 
 defineProps({
-  modelValue: String,
   modeText: Object as PropType<Record<string, string>>,
 })
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: string): void,
-}>()
+const modelValue = defineModel<string>()
 
 function switchTab(m: string) {
-  emits('update:modelValue', m)
+  modelValue.value = m
 }
 
 const Wrapper = defineComponent({

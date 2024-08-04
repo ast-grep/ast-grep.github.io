@@ -1,4 +1,4 @@
-type SupportedLang = keyof typeof parserPaths
+export type SupportedLang = keyof typeof parserPaths
 import init, { setupParser, initializeTreeSitter, findNodes, fixErrors } from 'ast-grep-wasm'
 
 const parserPaths = {
