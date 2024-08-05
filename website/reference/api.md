@@ -14,40 +14,60 @@ https://github.com/ast-grep/ast-grep/blob/main/crates/napi/index.d.ts
 
 ### Supported Languages
 
-`@ast-grep/napi` supports `html`, `js`, `jsx`, `ts` and `tsx`.
+`@ast-grep/napi` supports all builtin languages listed [here](/reference/languages.html).
 
 #### Type
 
-A language object has following methods.
+```ts
+export const enum Lang {
+  Html = 'Html',
+  JavaScript = 'JavaScript',
+  Tsx = 'Tsx',
+  Css = 'Css',
+  TypeScript = 'TypeScript',
+  Bash = 'Bash',
+  C = 'C',
+  Cpp = 'Cpp',
+  CSharp = 'CSharp',
+  Dart = 'Dart',
+  Go = 'Go',
+  Elixir = 'Elixir',
+  Haskell = 'Haskell',
+  Java = 'Java',
+  Json = 'Json',
+  Kotlin = 'Kotlin',
+  Lua = 'Lua',
+  Php = 'Php',
+  Python = 'Python',
+  Ruby = 'Ruby',
+  Rust = 'Rust',
+  Scala = 'Scala',
+  Swift = 'Swift'
+}
+```
+
+### Main functions
+
+You can use `parse` to transform a string to ast-grep's main object `SgRoot`.
+ast-grep also provides other utility for parse kind string and construct pattern.
 
 ```ts
-export namespace js {
-  /** Parse a string to an ast-grep instance */
-  export function parse(src: string): SgRoot
-  /** Get the `kind` number from its string name. */
-  export function kind(kindName: string): number
-  /** Compile a string to ast-grep Pattern. */
-  export function pattern(pattern: string): NapiConfig
-  /**
-   * Discover and parse multiple files in Rust.
-   * `config` specifies the file path and matcher.
-   * `callback` will receive matching nodes found in a file.
-   * returns the number of matched files.
-   */
-  export function findInFiles(
-    config: FindConfig,
-    callback: (err: null | Error, result: SgNode[]) => void
-  ): Promise<number>
-}
+/** Parse a string to an ast-grep instance */
+export function parse(src: string, lang: Lang): SgRoot
+/** Get the `kind` number from its string name. */
+export function kind(kindName: string, lang: Lang): number
+/** Compile a string to ast-grep Pattern. */
+export function pattern(pattern: string, lang: Lang): NapiConfig
 ```
 
 #### Example
 
 ```ts
-import { js } from '@ast-grep/napi'
+import { parse, Lang } from '@ast-grep/napi'
 
-const source = `console.log("hello world")`
-const ast = js.parse(source)
+const ast = parse(source, Lang.JavaScript)
+const root = ast.root()
+root.find("console.log")
 ```
 
 ### SgRoot
@@ -76,7 +96,9 @@ class SgRoot {
 #### Example
 
 ```ts
-const ast = js.parse(source)
+import { parse, Lang } from '@ast-grep/napi'
+
+const ast = parse(source, Lang.JavaScript)
 const root = ast.root()
 root.find("console.log")
 ```
@@ -175,6 +197,43 @@ interface Edit {
 ### Useful Examples
 * [Test Case Source](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/index.spec.ts) for `@ast-grep/napi`
 * ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
+
+
+### Language Object (deprecated)
+
+`ast-grep/napi` also has special language objects for `html`, `js` and `css`.
+
+A language object has following methods.
+
+```ts
+export namespace js {
+  /** Parse a string to an ast-grep instance */
+  export function parse(src: string): SgRoot
+  /** Get the `kind` number from its string name. */
+  export function kind(kindName: string): number
+  /** Compile a string to ast-grep Pattern. */
+  export function pattern(pattern: string): NapiConfig
+  /**
+   * Discover and parse multiple files in Rust.
+   * `config` specifies the file path and matcher.
+   * `callback` will receive matching nodes found in a file.
+   * returns the number of matched files.
+   */
+  export function findInFiles(
+    config: FindConfig,
+    callback: (err: null | Error, result: SgNode[]) => void
+  ): Promise<number>
+}
+```
+
+#### Example
+
+```ts
+import { js } from '@ast-grep/napi'
+
+const source = `console.log("hello world")`
+const ast = js.parse(source)
+```
 
 ## Python API
 
