@@ -44,10 +44,10 @@ A common workflow to use ast-grep's JavaScript API is:
 **Example:**
 
 ```js{4-7}
-import { js } from '@ast-grep/napi';
+import { parse, Lang } from '@ast-grep/napi';
 
 let source = `console.log("hello world")`
-const ast = js.parse(source)                // 1. parse the source
+const ast = parse(source, Lang.JavaScript)  // 1. parse the source
 const root = ast.root()                     // 2. get the root
 const node = root.find('console.log($A)')   // 3. find the node
 node.getMatch('A').text()                   // 4. collect the info
@@ -58,13 +58,13 @@ node.getMatch('A').text()                   // 4. collect the info
 
 `SgRoot` represents the syntax tree of a source string.
 
-We can import a language object from the `@ast-grep/napi` package and call the  `parse` to transform string.
+We can import the `Lang` enum from the `@ast-grep/napi` package and call the  `parse` function to transform string.
 
 ```js{4}
-import { js } from '@ast-grep/napi';
+import { Lang, parse } from '@ast-grep/napi';
 
 const source = `console.log("hello world")`
-const ast = js.parse(source)
+const ast = parse(source, Lang.JavaScript)
 ```
 
 The `SgRoot` object has a `root` method that returns the root `SgNode` of the AST.
@@ -115,16 +115,17 @@ A `Matcher` can be one of the three types: `string`, `number` or `object`.
 
 * `string` is parsed as a [pattern](/guide/pattern-syntax.html). e.g. `'console.log($A)'`
 
-* `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function on the language object. e.g. `js.kind('function')`.
+* `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function. e.g. `kind('function', Lang.JavaScript)`.
 
 * A `NapiConfig` has a similar type of [config object](/reference/yaml.html). See details below.
 
 ```ts
 // basic find example
-root.find('console.log($A)')   // returns SgNode of call_expression
-const kind = js.kind('string') // convert kind name to kind id number
-root.find(kind)                // returns SgNode of string
-root.find('notExist')          // returns null if not found
+root.find('console.log($A)')    // returns SgNode of call_expression
+let l = Lang.JavaScript         // calling kind function requires Lang
+const kind = kind('string', l)  // convert kind name to kind id number
+root.find(kind)                 // returns SgNode of string
+root.find('notExist')           // returns null if not found
 
 // basic find all example
 const nodes = root.findAll('function $A($$$) {$$$}')
@@ -159,7 +160,7 @@ const src = `
 console.log('hello')
 logger('hello', 'world', '!')
 `
-const root = js.parse(src).root()
+const root = parse(src, Lang.JavaScript).root()
 const node = root.find('console.log($A)')
 const arg = node.getMatch("A") // returns SgNode('hello')
 arg !== null // true, node is found
@@ -190,7 +191,7 @@ export class SgNode {
 **Example:**
 
 ```ts{3}
-const ast = js.parse("console.log('hello world')")
+const ast = parse("console.log('hello world')", Lang.JavaScript)
 root = ast.root()
 root.text() // will return "console.log('hello world')"
 ```
@@ -274,7 +275,7 @@ class SgNode {
 **Example**
 
 ```ts{3,4}
-const root = js.parse("console.log('hello world')").root()
+const root = parse("console.log('hello world')", Lang.JavaScript).root()
 const node = root.find('console.log($A)')
 const edit = node.replace("console.error('bye world')")
 const newSource = node.commitEdits([edit])
