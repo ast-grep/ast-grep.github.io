@@ -128,6 +128,17 @@ Telescope ast_grep
 
 [telescope-ast-grep.nvim](https://github.com/ray-x/telescope-ast-grep.nvim) is an alternative plugin that provides ast-grep functionality enhancements.
 
+### grug-far.nvim
+
+[grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) has ast-grep search engine support. It allows for both live searching as you type and replacing.
+
+Usage:
+
+```vim
+:lua require('grug-far').grug_far({ engine = 'astgrep' })
+```
+or swap to `astgrep` engine while running with the `Swap Engine` action.
+
 ## LSP Server
 
 Currently ast-grep support these LSP capabilities:
