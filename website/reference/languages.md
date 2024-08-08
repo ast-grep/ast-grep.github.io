@@ -10,7 +10,7 @@ The table below lists all languages that are supported by ast-grep.
 
 | Language Name | Alias | File Extension |
 |---|---|---|
-|Bash | `bash-exp` | `bash`, `bats`, `cgi`, `command`, `env`, `fcgi`, `ksh`, `sh`, `sh.in`, `tmux`, `tool`, `zsh` |
+|Bash | `bash` | `bash`, `bats`, `cgi`, `command`, `env`, `fcgi`, `ksh`, `sh`, `sh.in`, `tmux`, `tool`, `zsh` |
 |C | `c` | `c`,`h`|
 |Cpp | `cc`, `c++`, `cpp`, `cxx` | `cc`, `hpp`, `cpp`, `c++`, `hh`, `cxx`, `cu`, `ino`|
 |CSharp | `cs`, `csharp` | `cs`|
@@ -24,7 +24,7 @@ The table below lists all languages that are supported by ast-grep.
 |Json | `json` | `json` |
 |Kotlin | `kotlin`, `kt` | `kt`, `ktm`, `kts`|
 |Lua | `lua` | `lua`|
-|Php | `php-exp` | `php` |
+|Php | `php` | `php` |
 |Python | `py`, `python` | `py`, `py3`, `pyi`, `bzl`|
 |Ruby | `rb`, `ruby` | `rb`, `rbw`, `gemspec`|
 |Rust | `rs`, `rust` | `rs`|
@@ -32,9 +32,6 @@ The table below lists all languages that are supported by ast-grep.
 |Swift | `swift` | `swift`|
 |TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
-
-
-Note: bash and php has only experimental support at the moment.
 
 ----
 
