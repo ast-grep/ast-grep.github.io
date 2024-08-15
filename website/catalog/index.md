@@ -36,3 +36,5 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
 * [TSX](/catalog/tsx/)
   * [Avoid `&&` short circuit in JSX](/catalog/typescript/#avoid-short-circuit-in-jsx)
   * [Rewrite MobX Component Style](/catalog/typescript/#rewrite-mobx-component-style)
+* [Java](/catalog/java/)
+  * [No Unused Vars](/catalog/java/#no-unused-vars)
