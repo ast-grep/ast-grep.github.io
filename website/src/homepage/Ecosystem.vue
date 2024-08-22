@@ -4,9 +4,6 @@
       <h1>Who is using ast-grep</h1>
     </div>
     <div class="ecosystem">
-      <a target="_blank" href="https://vue-vine.dev/" title="vue-vine" class="sponsor">
-        <img src='https://vue-vine.dev/vine-logo.png'/>
-      </a>
       <a target="_blank" href="https://swc.rs" title="SWC" class="sponsor">
         <img src='https://avatars.githubusercontent.com/u/26715726?s=200&v=4'/>
       </a>
