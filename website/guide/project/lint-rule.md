@@ -73,6 +73,20 @@ So `console.log(name)` will match the above rule, but `console.log('Rem')` will 
 
 See [playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRHUkVFVClcbmNvbnN0cmFpbnRzOlxuICBHUkVFVDpcbiAgICBraW5kOiBpZGVudGlmaWVyIiwic291cmNlIjoiY29uc29sZS5sb2coJ0hlbGxvIFdvcmxkJylcbmNvbnNvbGUubG9nKGdyZWV0aW5nKVxuIn0=) in action.
 
+:::details `constraints` is applied after `rule` and does not work inside `not`
+`constraints` is a filter to further refine the matched nodes and is applied after the `rule` is matched.
+So the `constraints` field cannot be used inside `not`, for example
+```yml
+rule:
+  pattern: console.log($GREET)
+  not: { pattern: console.log($STR) }
+constraints:
+  STR: { kind: string}
+```
+The intent of the above rule is to match all `console.log` call except the one with string argument.
+But it will match nothing because `console.log($STR)` is exactly the same as `console.log($GREET)` before the `constraints` is applied.
+The `not` and `pattern` will conflict with each other.
+:::
 
 ### `transform`
 

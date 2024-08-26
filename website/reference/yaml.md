@@ -71,6 +71,12 @@ constraints:
     # regex: '[a-zA-Z]+'
 ```
 
+:::tip `constraints` is applied after `rule`
+ast-grep will first match the `rule` while ignoring `constraints`, and then apply `constraints` to filter the matched nodes.
+
+Constrained meta-variables usually do not work inside `not`.
+:::
+
 ### `utils`
 
 * type: `HashMap<String, Rule>`
