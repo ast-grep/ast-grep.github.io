@@ -68,7 +68,7 @@ fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
   }
 }
 
-pub fn dump_pattern(query: String, selector: Option<String>) -> DumpPattern {
+pub fn dump_pattern(query: String, selector: Option<String>) -> PatternTree {
   let lang = WasmLang::get_current();
   let processed = lang.pre_process_pattern(&query);
   let root = lang.ast_grep(processed);
@@ -78,43 +78,69 @@ pub fn dump_pattern(query: String, selector: Option<String>) -> DumpPattern {
     Pattern::new(&query, lang)
   };
   let found = root.root().find(&pattern).expect("FOUND");
-  dump_pattern_impl(pattern.node, found.into())
+  dump_pattern_tree(root.root(), found.node_id(), &pattern.node)
 }
 
-fn dump_pattern_impl(pattern: PatternNode, node: Node<StrDoc<WasmLang>>) -> DumpPattern {
+fn dump_pattern_tree(node: Node<StrDoc<WasmLang>>, node_id: usize, pattern: &PatternNode) -> PatternTree {
+  if node.node_id() == node_id {
+    return dump_pattern_impl(node, pattern)
+  }
+  let children: Vec<_> = node.children().map(|n| dump_pattern_tree(n, node_id, pattern)).collect();
+  let ts = node.get_ts_node();
+  let text = if children.is_empty() {
+    Some(node.text().into())
+  } else {
+    None
+  };
+  PatternTree {
+    kind: node.kind().to_string(),
+    start: ts.start_position().into(),
+    end: ts.end_position().into(),
+    is_named: node.is_named(),
+    children,
+    text,
+    pattern: None,
+  }
+}
+
+fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> PatternTree {
   use PatternNode as PN;
   let ts = node.get_ts_node();
   match pattern {
     PN::MetaVar { meta_var: _ } => {
-      DumpPattern {
-        kind: None,
-        meta_var: Some(node.text().into()),
+      PatternTree {
+        kind: node.kind().to_string(),
         start: ts.start_position().into(),
         end: ts.end_position().into(),
         is_named: true,
         children: vec![],
+        text: Some(node.text().into()),
+        pattern: Some(PatternKind::MetaVar),
       }
     }
     PN::Terminal { is_named, .. } => {
-      DumpPattern {
-        kind: Some(node.kind().into()),
-        meta_var: None,
+      PatternTree {
+        kind: node.kind().to_string(),
         start: ts.start_position().into(),
         end: ts.end_position().into(),
-        is_named,
+        is_named: *is_named,
         children: vec![],
+        text: Some(node.text().into()),
+        pattern: Some(PatternKind::Terminal),
       }
     }
     PN::Internal { children, .. } => {
-      DumpPattern {
-        kind: Some(node.kind().into()),
-        meta_var: None,
+      let children = children.iter().zip(node.children()).map(|(pn, n)| {
+        dump_pattern_impl(n, pn)
+      }).collect();
+      PatternTree {
+        kind: node.kind().to_string(),
         start: ts.start_position().into(),
         end: ts.end_position().into(),
-        is_named: node.is_named(),
-        children: children.into_iter().zip(node.children()).map(|(pn, n)| {
-          dump_pattern_impl(pn, n)
-        }).collect(),
+        is_named: true,
+        children,
+        text: None,
+        pattern: Some(PatternKind::Internal),
       }
     }
   }
@@ -122,11 +148,21 @@ fn dump_pattern_impl(pattern: PatternNode, node: Node<StrDoc<WasmLang>>) -> Dump
 
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct DumpPattern {
-  kind: Option<String>,
-  meta_var: Option<String>,
+enum PatternKind {
+  Terminal,
+  MetaVar,
+  Internal,
+}
+
+
+#[derive(Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PatternTree {
+  kind: String,
   start: Pos,
   end: Pos,
   is_named: bool,
-  children: Vec<DumpPattern>,
+  children: Vec<PatternTree>,
+  text: Option<String>,
+  pattern: Option<PatternKind>,
 }
