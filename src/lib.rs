@@ -3,7 +3,7 @@ mod utils;
 mod wasm_lang;
 
 use wasm_lang::{WasmDoc, WasmLang};
-use dump_tree::{dump_one_node, DumpNode};
+use dump_tree::{dump_one_node, DumpNode, dump_pattern as dump_pattern_impl};
 use utils::WasmMatch;
 
 use ast_grep_config::{RuleConfig, SerializableRuleConfig, CombinedScan};
@@ -105,10 +105,11 @@ pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
   Ok(ret)
 }
 
-#[wasm_bindgen(js_name = preProcessPattern)]
-pub fn pre_process_pattern(query: String) -> Result<String, JsError> {
-  let lang = WasmLang::get_current();
-  Ok(lang.pre_process_pattern(&query).into())
+#[wasm_bindgen(js_name = dumpPattern)]
+pub fn dump_pattern(src: String, selector: Option<String>) -> Result<JsValue, JsError> {
+  let dumped = dump_pattern_impl(src, selector);
+  let ret = serde_wasm_bindgen::to_value(&dumped)?;
+  Ok(ret)
 }
 
 fn try_get_rule_config(config: JsValue) -> Result<RuleConfig<WasmLang>, JsError> {
