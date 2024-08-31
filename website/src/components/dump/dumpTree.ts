@@ -14,10 +14,20 @@ export interface Pos {
 
 /** stub wasm DumpNode */
 export interface DumpNode {
-  field: string | undefined,
-  kind: string,
-  start: Pos,
-  end: Pos,
-  isNamed: boolean,
+  field: string | undefined
+  kind: string
+  start: Pos
+  end: Pos
+  isNamed: boolean
   children: DumpNode[]
+}
+
+/** stub wasm DumpPattern */
+export interface DumpPattern {
+  kind: string | undefined
+  metaVar: string | undefined
+  start: Pos
+  end: Pos
+  isNamed: boolean
+  children: DumpPattern[]
 }

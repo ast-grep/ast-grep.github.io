@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType, ref, ComputedRef, computed, inject, watchEffect } from 'vue'
 import { DumpNode, highlightKey, Pos } from './dumpTree'
-import { showToast } from './utils/Toast.vue'
+import { showToast } from '../utils/Toast.vue'
 
 const props = defineProps({
   node: {

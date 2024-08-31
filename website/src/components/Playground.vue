@@ -11,7 +11,7 @@ import EnvDisplay from './EnvDisplay.vue'
 import '../style.css'
 import { initializeParser, setGlobalParser, doFind } from './lang'
 import { restoreState, Mode as ModeImport } from '../state'
-import { langLoadedKey } from './dumpTree'
+import { langLoadedKey } from './dump/dumpTree'
 
 // important initialization
 await initializeParser()
