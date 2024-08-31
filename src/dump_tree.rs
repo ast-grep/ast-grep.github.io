@@ -107,14 +107,18 @@ fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> Pat
   use PatternNode as PN;
   let ts = node.get_ts_node();
   match pattern {
-    PN::MetaVar { meta_var: _ } => {
+    PN::MetaVar { .. } => {
+      let lang = node.lang();
+      let expando = lang.expando_char();
+      let text = node.text().to_string();
+      let text = text.replace(expando, "$");
       PatternTree {
         kind: node.kind().to_string(),
         start: ts.start_position().into(),
         end: ts.end_position().into(),
         is_named: true,
         children: vec![],
-        text: Some(node.text().into()),
+        text: Some(text),
         pattern: Some(PatternKind::MetaVar),
       }
     }

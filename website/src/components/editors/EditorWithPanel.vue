@@ -18,11 +18,13 @@ const emits = defineEmits<{
     </div>
     <div class="panel-area" :class="!isCollapsed && 'collapsed'"
       @mouseenter="emits('enterPanel')" @mouseleave="emits('leavePanel')">
-      <p @click.self="isCollapsed = !isCollapsed">
+      <p v-if="panelTitle" @click.self="isCollapsed = !isCollapsed">
         <slot name="panelAccessory"/>
         <span class="chevron">›</span>
         {{panelTitle}}
       </p>
+      <slot v-else name="panelAccessory"/>
+
       <div class="scrollable">
         <slot name="panel"/>
       </div>

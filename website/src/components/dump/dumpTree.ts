@@ -22,12 +22,13 @@ export interface DumpNode {
   children: DumpNode[]
 }
 
-/** stub wasm DumpPattern */
-export interface DumpPattern {
-  kind: string | undefined
-  metaVar: string | undefined
+/** stub wasm PatternTree */
+export interface PatternTree {
+  kind: string
   start: Pos
   end: Pos
   isNamed: boolean
-  children: DumpPattern[]
+  children: PatternTree[]
+  text: string | undefined
+  pattern?: 'metaVar' | 'terminal' | 'internal'
 }

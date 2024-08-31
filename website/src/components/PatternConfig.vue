@@ -43,11 +43,8 @@ function selectAll(e: FocusEvent) {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  border-top: 1px solid var(--vp-c-bg-soft);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   font-size: 12px;
-  border-radius: 10px 10px 0 0;
-  padding: 0.5em 1em;
+  padding: 0.5em 0;
 }
 .strictness-select {
   cursor: pointer;

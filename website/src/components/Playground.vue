@@ -2,8 +2,8 @@
 import { shallowRef, shallowReactive, toRefs, provide, watchEffect } from 'vue'
 import { Monaco, Diff, EditorWithPanel } from './editors'
 import QueryEditor from './QueryEditor.vue'
+import PatternEditor from './PatternEditor.vue'
 import SelectLang from './SelectLang.vue'
-import PatternConfig from './PatternConfig.vue'
 import Tabs from './utils/Tabs.vue'
 import { showToast } from './utils/Toast.vue'
 import Toolbars from './Toolbars.vue'
@@ -32,7 +32,7 @@ let {
 } = toRefs(state)
 let langLoaded = shallowRef(false)
 let activeEditor = shallowRef('code')
-function changeActiveEditor(active) {
+function changeActiveEditor(active: string) {
   activeEditor.value = active
 }
 
@@ -44,7 +44,7 @@ import('js-yaml').then(yml => {
 const matchedHighlights = shallowRef([])
 const matchedEnvs = shallowRef([])
 const rewrittenCode = shallowRef(source.value)
-const ruleErrors = shallowRef(null)
+const ruleErrors = shallowRef<string | null>(null)
 
 function parseYAML(src: string) {
   return yaml.value!.loadAll(src) as any[]
@@ -157,24 +157,14 @@ provide(langLoadedKey, langLoaded)
     <div class="half" :class="activeEditor !== 'search' && 'inactive'">
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
-          <QueryEditor
+          <PatternEditor
             :clickKind="setSelector"
+            :ruleErrors="ruleErrors"
             v-model="query"
-            :language="lang">
-            <p class="pattern-separator">
-              <a target="_blank" href="https://ast-grep.github.io/guide/rewrite-code.html">ⓘ</a>
-              Rewrite
-            </p>
-            <Monaco
-               v-model="rewrite"
-              :language="lang"
-            />
-            <PatternConfig
-              :error="ruleErrors"
-              v-model:strictness="strictness"
-              v-model:selector="selector"
-            />
-          </QueryEditor>
+            v-model:rewrite="rewrite"
+            v-model:strictness="strictness"
+            v-model:selector="selector"
+            :language="lang"/>
         </template>
         <template #[Mode.Config]>
           <EditorWithPanel panelTitle="Matched Variables">
@@ -227,12 +217,5 @@ provide(langLoadedKey, langLoaded)
     opacity: 0;
     pointer-events: none;
   }
-}
-.pattern-separator {
-  border-top: 1px solid var(--vp-c-bg-soft);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  font-size: 12px;
-  border-radius: 10px 10px 0 0;
-  padding: 0 1em 0;
 }
 </style>

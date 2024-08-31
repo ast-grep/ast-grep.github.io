@@ -3,7 +3,7 @@ import { Monaco, EditorWithPanel } from './editors'
 import { shallowRef, watchEffect, provide, PropType, computed, inject } from 'vue'
 import TreeNode from './dump/TreeNode.vue'
 import { highlightKey, langLoadedKey, DumpNode } from './dump/dumpTree'
-import { dumpASTNodes, dumpPattern } from 'ast-grep-wasm'
+import { dumpASTNodes } from 'ast-grep-wasm'
 
 const modelValue = defineModel<string>()
 
@@ -20,7 +20,6 @@ let root = shallowRef(null as DumpNode | null)
 let highlights = shallowRef([])
 
 const processedSource = computed(() => {
-  console.log(dumpPattern(modelValue.value))
   // have matches. It is source code panel
   // do not pre-process source code
   if (props.matches != null) {
