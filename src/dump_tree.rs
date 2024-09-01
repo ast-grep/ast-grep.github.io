@@ -76,7 +76,7 @@ pub fn dump_pattern(query: String, selector: Option<String>) -> Result<PatternTr
   let pattern = if let Some(sel) = selector {
     Pattern::contextual(&query, &sel, lang)?
   } else {
-    Pattern::new(&query, lang)
+    Pattern::try_new(&query, lang)?
   };
   let found = root.root().find(&pattern).ok_or_else(|| JsError::new("pattern node not found"))?;
   let ret = dump_pattern_tree(root.root(), found.node_id(), &pattern.node);
