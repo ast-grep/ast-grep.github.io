@@ -7,10 +7,11 @@ import { showToast } from '../utils/Toast.vue'
 const props = defineProps({
   node: {
     type: Object as PropType<PatternTree>,
-    required: true
+    required: true,
   },
   cursorPosition: {
-    type: Object as PropType<Pos>,
+    type: Object as PropType<Pos | null>,
+    required: true,
   },
   showUnnamed: {
     type: Boolean,
@@ -61,7 +62,7 @@ function copyKind(kind: string) {
     <PatternNode
       :showUnnamed="showUnnamed"
       :node="child"
-      :cursorPosition="isWithin ? cursorPosition : undefined"
+      :cursorPosition="isWithin ? cursorPosition : null"
       :clickKind="clickKind"
       v-if="expanded"
       v-for="child in children"

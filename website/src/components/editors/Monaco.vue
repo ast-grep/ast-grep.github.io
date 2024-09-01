@@ -39,7 +39,7 @@ const props = defineProps({
     type: Array as PropType<number[][]>,
   },
   matches: {
-    type: Array as PropType<Match>,
+    type: Array as PropType<Match[]>,
   },
 })
 

@@ -4,7 +4,7 @@ import { highlightKey, Pos, GeneralNode } from './dumpTree'
 
 interface Props {
   node: GeneralNode
-  cursorPosition?: Pos
+  cursorPosition: Pos | null
 }
 
 export function useHighlightNode(props: Props) {
@@ -21,7 +21,7 @@ export function useHighlightNode(props: Props) {
     ])
   }
 
-  function withinPos({start, end}: GeneralNode, pos: Pos | undefined) {
+  function withinPos({start, end}: GeneralNode, pos: Pos | null) {
     if (!pos) {
       return false
     }

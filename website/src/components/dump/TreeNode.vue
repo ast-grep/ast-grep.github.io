@@ -10,7 +10,8 @@ const props = defineProps({
     required: true
   },
   cursorPosition: {
-    type: Object as PropType<Pos>,
+    type: Object as PropType<Pos | null>,
+    required: true,
   },
   showUnnamed: {
     type: Boolean,

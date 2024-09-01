@@ -4,15 +4,16 @@ import { shallowRef, watchEffect, provide, PropType, computed, inject } from 'vu
 import TreeNode from './dump/TreeNode.vue'
 import { highlightKey, langLoadedKey, DumpNode } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
+import type { Match, SupportedLang } from './lang'
 
 const modelValue = defineModel<string>()
 
 const props = defineProps({
   language: {
-    type: String,
+    type: String as PropType<SupportedLang>,
     default: 'javascript'
   },
-  matches: Array as PropType<number[][]>,
+  matches: Array as PropType<Match[]>,
   clickKind: Function as PropType<(k: string) => void>,
 })
 
