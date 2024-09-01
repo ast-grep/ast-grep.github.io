@@ -1,6 +1,10 @@
 <script lang="ts">
 // LOL vue sfc compiler does not allow type alias and dynamic import co-exist
 import type monaco from 'monaco-editor'
+
+function truthy<T>(v: T | null | undefined): v is T {
+  return Boolean(v)
+}
 </script>
 
 <script lang="ts" setup>
@@ -12,7 +16,7 @@ import {
   watch,
   PropType,
 } from 'vue'
-import { Match, normalizeMonacoLang, type SupportedLang } from '../lang'
+import { Match, normalizeMonacoLang } from '../lang'
 import { setup } from './monaco'
 import { useData } from 'vitepress'
 
@@ -82,10 +86,12 @@ onMounted(() => {
       emits('changeCursor', e)
   })
   highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformHighlight) || [])
-  matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch).filter(Boolean) || [])
-  const modelMarks = props.matches?.map(toModelMark).filter(Boolean)
+  matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch).filter(truthy) || [])
+  const modelMarks = props.matches?.map(toModelMark).filter(truthy) || []
   let oldModel = editorInstance.getModel()
-  monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
+  if (oldModel) {
+    monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
+  }
 })
 
 watch(isDark, () => {
@@ -115,7 +121,7 @@ const transformMatch = (match: Match) => {
   }
 }
 
-const mapping = {
+const mapping: Record<string, monaco.MarkerSeverity> = {
   info: monaco.MarkerSeverity.Info,
   warning: monaco.MarkerSeverity.Warning,
   error: monaco.MarkerSeverity.Error,
@@ -144,11 +150,13 @@ watch(() => props.highlights, (matched) => {
 })
 
 watch(() => props.matches, (matched) => {
-  const ranges = matched!.map(transformMatch).filter(Boolean)
+  const ranges = matched!.map(transformMatch).filter(truthy)
   matches?.set(ranges)
-  const modelMarks = matched!.map(toModelMark).filter(Boolean)
+  const modelMarks = matched!.map(toModelMark).filter(truthy)
   let oldModel = editor.value?.getModel()
-  monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
+  if (oldModel) {
+    monaco.editor.setModelMarkers(oldModel, 'owner', modelMarks)
+  }
 })
 
 watch(() => props.language, lang => {
