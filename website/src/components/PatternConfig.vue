@@ -2,11 +2,11 @@
 import IconDown from './utils/IconDown.vue'
 import Error from './utils/Error.vue'
 
-const props = defineProps({
+defineProps({
   error: String,
 })
-const strictness = defineModel('strictness')
-const selector = defineModel('selector')
+const strictness = defineModel<string>('strictness')
+const selector = defineModel<string>('selector')
 
 function selectAll(e: FocusEvent) {
   const input = e.target as HTMLInputElement

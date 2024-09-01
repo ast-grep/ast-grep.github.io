@@ -2,16 +2,16 @@
 import { Monaco, EditorWithPanel } from './editors'
 import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
 import PatternNode from './dump/PatternNode.vue'
-import { highlightKey, langLoadedKey, PatternTree } from './dump/dumpTree'
+import { highlightKey, langLoadedKey, PatternTree, Pos } from './dump/dumpTree'
 import { dumpPattern } from 'ast-grep-wasm'
 import PatternConfig from './PatternConfig.vue'
 
 const modelValue = defineModel<string>()
 const rewrite = defineModel<string>('rewrite')
-const strictness = defineModel('strictness')
-const selector = defineModel('selector')
+const strictness = defineModel<string>('strictness')
+const selector = defineModel<string>('selector')
 
-const props = defineProps({
+defineProps({
   language: {
     type: String,
     default: 'javascript'
@@ -23,16 +23,16 @@ const props = defineProps({
 })
 
 let root = shallowRef(null as PatternTree | null)
-let highlights = shallowRef([])
+let highlights = shallowRef([] as number[][])
 
-const langLoaded = inject(langLoadedKey)
+const langLoaded = inject(langLoadedKey)!
 watchEffect(() => {
   if (langLoaded.value) {
-    root.value = dumpPattern(modelValue.value)
+    root.value = dumpPattern(modelValue.value || '')
   }
 })
 
-let cursorPosition = shallowRef(null)
+let cursorPosition = shallowRef<Pos | null>(null)
 provide(highlightKey, e => {
   highlights.value = [e]
 })
