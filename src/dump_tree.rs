@@ -5,6 +5,7 @@ use ast_grep_core::{
   Language, Pattern, Node, StrDoc,
   matcher::PatternNode
 };
+use wasm_bindgen::prelude::JsError;
 
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -68,17 +69,18 @@ fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
   }
 }
 
-pub fn dump_pattern(query: String, selector: Option<String>) -> PatternTree {
+pub fn dump_pattern(query: String, selector: Option<String>) -> Result<PatternTree, JsError> {
   let lang = WasmLang::get_current();
   let processed = lang.pre_process_pattern(&query);
   let root = lang.ast_grep(processed);
   let pattern = if let Some(sel) = selector {
-    Pattern::contextual(&query, &sel, lang).expect("TODO")
+    Pattern::contextual(&query, &sel, lang)?
   } else {
     Pattern::new(&query, lang)
   };
-  let found = root.root().find(&pattern).expect("FOUND");
-  dump_pattern_tree(root.root(), found.node_id(), &pattern.node)
+  let found = root.root().find(&pattern).ok_or_else(|| JsError::new("pattern node not found"))?;
+  let ret = dump_pattern_tree(root.root(), found.node_id(), &pattern.node);
+  Ok(ret)
 }
 
 fn dump_pattern_tree(node: Node<StrDoc<WasmLang>>, node_id: usize, pattern: &PatternNode) -> PatternTree {

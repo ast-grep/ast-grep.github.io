@@ -107,7 +107,7 @@ pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
 
 #[wasm_bindgen(js_name = dumpPattern)]
 pub fn dump_pattern(src: String, selector: Option<String>) -> Result<JsValue, JsError> {
-  let dumped = dump_pattern_impl(src, selector);
+  let dumped = dump_pattern_impl(src, selector)?;
   let ret = serde_wasm_bindgen::to_value(&dumped)?;
   Ok(ret)
 }
