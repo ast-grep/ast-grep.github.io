@@ -45,7 +45,6 @@ function changeFocusNode(e: any) {
   }
 }
 
-let showFullTree = shallowRef(false)
 </script>
 
 <template>
@@ -80,7 +79,7 @@ let showFullTree = shallowRef(false)
       <PatternNode
         v-if="root"
         :clickKind="clickKind"
-        :showUnnamed="showFullTree"
+        :showUnnamed="true"
         class="pre"
         :node="root"
         :cursorPosition="cursorPosition"/>

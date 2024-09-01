@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { PropType, ref, ComputedRef, computed, inject, watchEffect } from 'vue'
-import { PatternTree, highlightKey, Pos } from './dumpTree'
+import { PropType, ComputedRef, computed, } from 'vue'
+import { PatternTree, Pos } from './dumpTree'
+import { useHighlightNode } from './highlightNode'
 import { showToast } from '../utils/Toast.vue'
 
 const props = defineProps({
@@ -27,7 +28,6 @@ function deepReactive(): DestructedNode {
   return Object.fromEntries(entries)
 }
 
-let expanded = ref(true)
 let {
   kind,
   start,
@@ -37,50 +37,14 @@ let {
   text,
 } = deepReactive()
 
-const highlightContext = inject(highlightKey)
+const {
+  isWithin,
+  isTarget,
+  highlightNode,
+  expanded,
+  nodeRef,
+} = useHighlightNode(props)
 
-function highlightNode() {
-  const { start, end } = props.node
-  highlightContext?.([
-    start.row,
-    start.column,
-    end.row,
-    end.column,
-  ])
-}
-
-function withinPos({start, end}: PatternTree, {row, column}: Pos) {
-  let withinStart = (start.row < row) || (start.row === row && start.column <= column)
-  let withinEnd = (end.row > row) || (end.row === row && end.column >= column)
-  return withinStart && withinEnd
-}
-
-let isWithin = computed(() => {
-  const {cursorPosition} = props
-  if (!cursorPosition) {
-    return false
-  }
-  return withinPos(props.node, cursorPosition)
-})
-let isTarget = computed(() => {
-  if (!isWithin.value) {
-    return false
-  }
-  const {node, cursorPosition} = props
-  const isTarget =
-    !expanded.value || // children not expanded, current target is the target
-    !node.children.some(n => withinPos(n, cursorPosition)) // no children within node
-  return isTarget
-})
-
-let nodeRef = ref(null)
-watchEffect(() => {
-  if (isTarget.value) {
-    nodeRef.value?.scrollIntoView({
-      block: 'center',
-    })
-  }
-});
 
 function copyKind(kind: string) {
   if (props.clickKind) {
@@ -106,7 +70,7 @@ function copyKind(kind: string) {
     <PatternNode
       :showUnnamed="showUnnamed"
       :node="child"
-      :cursorPosition="isWithin ? cursorPosition : null"
+      :cursorPosition="isWithin ? cursorPosition : undefined"
       :clickKind="clickKind"
       v-if="expanded"
       v-for="child in children"

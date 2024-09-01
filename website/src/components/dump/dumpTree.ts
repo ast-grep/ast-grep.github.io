@@ -12,23 +12,23 @@ export interface Pos {
   column: number
 }
 
-/** stub wasm DumpNode */
-export interface DumpNode {
-  field: string | undefined
-  kind: string
+export interface GeneralNode {
   start: Pos
   end: Pos
+  children: this[]
+}
+
+/** stub wasm DumpNode */
+export interface DumpNode extends GeneralNode {
+  field: string | undefined
+  kind: string
   isNamed: boolean
-  children: DumpNode[]
 }
 
 /** stub wasm PatternTree */
-export interface PatternTree {
+export interface PatternTree extends GeneralNode {
   kind: string
-  start: Pos
-  end: Pos
   isNamed: boolean
-  children: PatternTree[]
   text: string | undefined
   pattern?: 'metaVar' | 'terminal' | 'internal'
 }
