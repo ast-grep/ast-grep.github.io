@@ -5,7 +5,10 @@ import { serialize, State, storeStateInLocalStorage } from '../state'
 import { showToast } from './utils/Toast.vue'
 
 const props = defineProps({
-  state: Object as PropType<State>,
+  state: {
+    type: Object as PropType<State>,
+    required: true,
+  },
   active: String,
 })
 

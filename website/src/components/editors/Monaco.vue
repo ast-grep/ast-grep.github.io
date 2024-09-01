@@ -12,7 +12,7 @@ import {
   watch,
   PropType,
 } from 'vue'
-import { Match, normalizeMonacoLang } from '../lang'
+import { Match, normalizeMonacoLang, type SupportedLang } from '../lang'
 import { setup } from './monaco'
 import { useData } from 'vitepress'
 
@@ -27,7 +27,7 @@ const emits = defineEmits<{
 
 const props = defineProps({
   language: {
-    type: String,
+    type: String as PropType<SupportedLang>,
     default: 'javascript'
   },
   modelValue: String,
