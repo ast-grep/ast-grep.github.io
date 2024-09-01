@@ -9,9 +9,9 @@ const props = defineProps({
     required: true,
   },
   cursorPosition: Object as PropType<Pos>,
-  showUnnamed: {
-    type: Boolean,
-    default: false,
+  strictness: {
+    type: String,
+    required: true,
   },
   clickKind: Function as PropType<(k: string) => void>,
 })
@@ -27,7 +27,7 @@ let {
 } = deepReactiveNode(props)
 
 let showText = computed(() => {
-  if (pattern?.value === 'metaVar') {
+  if (pattern?.value === 'metaVar' || props.strictness === 'signature') {
     return ''
   } else if (text.value) {
     return text.value
@@ -51,10 +51,21 @@ let metaVarClass = computed(() => {
   return metaVarText.startsWith('$_') ? 'meta-var non-capture' : 'meta-var'
 })
 
+const shouldShow = computed(() => {
+  const { strictness } = props
+  if (strictness === 'cst' || strictness === 'smart') {
+    return true
+  } else if (strictness === 'relaxed' || strictness === 'signature') {
+    return isNamed.value && !kind.value.includes('comment')
+  } else {
+    return isNamed.value
+  }
+})
+
 </script>
 
 <template>
-  <GeneralNode v-if="showUnnamed || isNamed"
+  <GeneralNode v-if="shouldShow"
     :showToggle="children.some(n => n.isNamed)"
     :node="node"
     :cursorPosition="cursorPosition"
@@ -64,12 +75,14 @@ let metaVarClass = computed(() => {
         <span :class="metaVarClass" v-if="metaVarClass">{{ text }}</span>
         <span v-else-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
         <span v-if="showText" class="node-text">{{ showText }}</span>
-        <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
+        <span class="node-range">
+          ({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})
+        </span>
       </span>
     </template>
     <template #children={cursorPosition}>
       <PatternNode
-        :showUnnamed="showUnnamed"
+        :strictness="strictness"
         :node="child"
         :cursorPosition="cursorPosition"
         :clickKind="clickKind"

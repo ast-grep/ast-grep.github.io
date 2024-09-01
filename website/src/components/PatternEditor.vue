@@ -87,7 +87,7 @@ function changeFocusNode(e: any) {
       <PatternNode
         v-if="root"
         :clickKind="k => selector = k"
-        :showUnnamed="strictness === 'smart' || strictness === 'cst'"
+        :strictness="strictness"
         class="pre"
         :node="root"
         :cursorPosition="cursorPosition"/>
