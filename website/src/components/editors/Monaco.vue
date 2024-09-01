@@ -16,7 +16,7 @@ import {
   watch,
   PropType,
 } from 'vue'
-import { Match, normalizeMonacoLang } from '../lang'
+import { Match, normalizeMonacoLang } from '../astGrep/lang'
 import { setup } from './monaco'
 import { useData } from 'vitepress'
 

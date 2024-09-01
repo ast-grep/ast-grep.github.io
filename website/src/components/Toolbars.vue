@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { PropType, watch } from 'vue';
 import Share from '../icons/Share.vue'
-import { serialize, State, storeStateInLocalStorage } from '../state'
+import { serialize, State, storeStateInLocalStorage } from './astGrep/state'
 import { showToast } from './utils/Toast.vue'
 
 const props = defineProps({

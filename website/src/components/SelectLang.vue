@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {languageDisplayNames} from './lang'
+import { languageDisplayNames } from './astGrep/lang'
 import IconDown from './utils/IconDown.vue'
 
 const lang = defineModel()
@@ -9,7 +9,13 @@ const lang = defineModel()
   <div class="selector">
     Language:
     <select v-model="lang">
-      <option class="selector-option-text" v-for="val, key in languageDisplayNames" :value="key">{{val}}</option>
+      <option
+        class="selector-option-text"
+        v-for="val, key in languageDisplayNames"
+        :value="key"
+      >
+        {{val}}
+      </option>
     </select>
     <IconDown/>
   </div>

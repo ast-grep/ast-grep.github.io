@@ -1,4 +1,4 @@
-import type { SupportedLang } from "./components/lang"
+import type { SupportedLang } from "./lang"
 
 export enum Mode {
   Patch = 'Patch',

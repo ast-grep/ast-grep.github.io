@@ -9,8 +9,8 @@ import { showToast } from './utils/Toast.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
 import '../style.css'
-import { initializeParser, setGlobalParser, doFind, Match } from './lang'
-import { restoreState, Mode as ModeImport } from '../state'
+import { initializeParser, setGlobalParser, doFind, Match } from './astGrep/lang'
+import { restoreState, Mode as ModeImport } from './astGrep'
 import { langLoadedKey } from './dump/dumpTree'
 
 // important initialization

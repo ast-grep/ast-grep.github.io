@@ -4,7 +4,7 @@ import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
 import TreeNode from './dump/TreeNode.vue'
 import { highlightKey, langLoadedKey, DumpNode, Pos } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
-import type { Match, SupportedLang } from './lang'
+import type { Match, SupportedLang } from './astGrep/lang'
 
 const modelValue = defineModel<string>()
 
