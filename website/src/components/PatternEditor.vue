@@ -29,11 +29,10 @@ const langLoaded = inject(langLoadedKey)!
 watchEffect(() => {
   if (langLoaded.value) {
     root.value = dumpPattern(modelValue.value || '')
-    console.log(root.value)
   }
 })
 
-let cursorPosition = shallowRef<Pos | null>(null)
+let cursorPosition = shallowRef<Pos>()
 provide(highlightKey, e => {
   highlights.value = [e]
 })
@@ -50,7 +49,7 @@ function changeFocusNode(e: any) {
 
 <template>
   <EditorWithPanel
-    @enterPanel="cursorPosition = null" @leavePanel="highlights = []"
+    @enterPanel="cursorPosition = undefined" @leavePanel="highlights = []"
   >
     <template #editor>
       <div class="dual-editor">

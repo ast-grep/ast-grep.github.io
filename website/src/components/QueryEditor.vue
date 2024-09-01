@@ -26,7 +26,7 @@ watchEffect(() => {
   }
 })
 
-let cursorPosition = shallowRef<Pos | null>(null)
+let cursorPosition = shallowRef<Pos>()
 provide(highlightKey, e => {
   highlights.value = [e]
 })
@@ -44,7 +44,7 @@ let showFullTree = shallowRef(false)
 
 <template>
   <EditorWithPanel panelTitle="TreeSitter Output"
-    @enterPanel="cursorPosition = null" @leavePanel="highlights = []"
+    @enterPanel="cursorPosition = undefined" @leavePanel="highlights = []"
   >
     <template #editor>
       <div class="dual-editor">

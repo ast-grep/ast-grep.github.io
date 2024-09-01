@@ -9,10 +9,7 @@ const props = defineProps({
     required: true
   },
   showToggle: Boolean,
-  cursorPosition: {
-    type: Object as PropType<Pos | null>,
-    required: true,
-  },
+  cursorPosition: Object as PropType<Pos>,
   clickKind: Function as PropType<(k: string) => void>,
 })
 
@@ -35,7 +32,7 @@ const {
         :class="{expanded}"/>
       <slot name="info"/>
     </p>
-    <slot v-if="expanded" name="children" :cursorPosition="isWithin ? cursorPosition : null"/>
+    <slot v-if="expanded" name="children" :cursorPosition="isWithin ? cursorPosition : undefined"/>
   </div>
 </template>
 

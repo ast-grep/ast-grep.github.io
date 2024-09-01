@@ -8,10 +8,7 @@ const props = defineProps({
     type: Object as PropType<PatternTree>,
     required: true,
   },
-  cursorPosition: {
-    type: Object as PropType<Pos | null>,
-    required: true,
-  },
+  cursorPosition: Object as PropType<Pos>,
   showUnnamed: {
     type: Boolean,
     default: false,
