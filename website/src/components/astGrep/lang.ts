@@ -1,5 +1,8 @@
-export type SupportedLang = keyof typeof parserPaths
 import init, { setupParser, initializeTreeSitter, findNodes, fixErrors } from 'ast-grep-wasm'
+import type { InjectionKey, Ref } from 'vue'
+import { shallowRef, watchEffect, provide } from 'vue'
+
+export type SupportedLang = keyof typeof parserPaths
 
 const parserPaths = {
   javascript: 'tree-sitter-javascript.wasm',
@@ -127,4 +130,21 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
   }
   const fixed = fixErrors(src, json)
   return [matches, fixed]
+}
+
+export const langLoadedKey = Symbol.for('lang-loaded') as InjectionKey<Ref<boolean>>
+
+export function useSetupParser(lang: Ref<SupportedLang>) {
+  let langLoaded = shallowRef(false)
+  watchEffect(async () => {
+    langLoaded.value = false
+    try {
+      await setGlobalParser(lang.value)
+    } catch (e) {
+      console.error(e)
+    }
+    langLoaded.value = true
+  })
+  provide(langLoadedKey, langLoaded)
+  return langLoaded
 }

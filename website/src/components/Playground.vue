@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, shallowReactive, toRefs, provide, watchEffect } from 'vue'
+import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
 import { Monaco, Diff, EditorWithPanel } from './editors'
 import QueryEditor from './QueryEditor.vue'
 import PatternEditor from './PatternEditor.vue'
@@ -9,12 +9,12 @@ import { showToast } from './utils/Toast.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
 import '../style.css'
-import { initializeParser, setGlobalParser, doFind, Match } from './astGrep/lang'
-import { restoreState, Mode as ModeImport } from './astGrep'
-import { langLoadedKey } from './dump/dumpTree'
+import { initializeParser, doFind, Match } from './astGrep/lang'
+import { useSetupParser, restoreState, Mode as ModeImport } from './astGrep'
 
 // important initialization
 await initializeParser()
+
 
 // this re-aliasing is critical for template usage
 const Mode = ModeImport
@@ -30,7 +30,9 @@ let {
   mode,
   lang,
 } = toRefs(state)
-let langLoaded = shallowRef(false)
+
+let langLoaded = useSetupParser(lang)
+
 let activeEditor = shallowRef('code')
 function changeActiveEditor(active: string) {
   activeEditor.value = active
@@ -80,12 +82,6 @@ function buildRules() {
   return json
 }
 
-watchEffect(async () => {
-  langLoaded.value = false
-  await setGlobalParser(lang.value)
-  langLoaded.value = true
-})
-
 watchEffect(async (onInvalidate) => {
   if (!langLoaded.value || !yaml.value) {
     return
@@ -127,7 +123,6 @@ function setSelector(kind: string) {
 }
 
 let codeMode = shallowRef('code')
-provide(langLoadedKey, langLoaded)
 </script>
 
 <template>

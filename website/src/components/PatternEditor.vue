@@ -2,7 +2,8 @@
 import { Monaco, EditorWithPanel } from './editors'
 import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
 import PatternNode from './dump/PatternNode.vue'
-import { highlightKey, langLoadedKey, PatternTree, Pos } from './dump/dumpTree'
+import { highlightKey, PatternTree, Pos } from './dump/dumpTree'
+import { langLoadedKey } from './astGrep'
 import { dumpPattern } from 'ast-grep-wasm'
 import PatternConfig from './PatternConfig.vue'
 

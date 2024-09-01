@@ -2,8 +2,9 @@
 import { Monaco, EditorWithPanel } from './editors'
 import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
 import TreeNode from './dump/TreeNode.vue'
-import { highlightKey, langLoadedKey, DumpNode, Pos } from './dump/dumpTree'
+import { highlightKey, DumpNode, Pos } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
+import { langLoadedKey } from './astGrep'
 import type { Match, SupportedLang } from './astGrep/lang'
 
 const modelValue = defineModel<string>()
