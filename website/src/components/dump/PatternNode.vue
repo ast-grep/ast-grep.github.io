@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { PropType, ComputedRef, computed, } from 'vue'
-import { PatternTree, Pos } from './dumpTree'
+import { PropType } from 'vue'
+import { PatternTree, Pos, deepReactive } from './dumpTree'
 import { useHighlightNode } from './highlightNode'
 import { showToast } from '../utils/Toast.vue'
 
@@ -19,15 +19,6 @@ const props = defineProps({
   clickKind: Function as PropType<(k: string) => void>,
 })
 
-type DestructedNode = {
-  [K in keyof PatternTree]: ComputedRef<PatternTree[K]>
-}
-function deepReactive(): DestructedNode {
-  const keys = Object.keys(props.node)
-  const entries = keys.map(k => [k, computed(() => props.node[k])])
-  return Object.fromEntries(entries)
-}
-
 let {
   kind,
   start,
@@ -35,7 +26,7 @@ let {
   children,
   isNamed,
   text,
-} = deepReactive()
+} = deepReactive(props.node)
 
 const {
   isWithin,

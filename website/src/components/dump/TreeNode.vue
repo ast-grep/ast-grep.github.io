@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { PropType, ComputedRef, computed } from 'vue'
-import { DumpNode, Pos } from './dumpTree'
+import { PropType } from 'vue'
+import { DumpNode, Pos, deepReactive } from './dumpTree'
 import { showToast } from '../utils/Toast.vue'
 import { useHighlightNode } from './highlightNode'
 
@@ -19,15 +19,6 @@ const props = defineProps({
   clickKind: Function as PropType<(k: string) => void>,
 })
 
-type DestructedNode = {
-  [K in keyof DumpNode]: ComputedRef<DumpNode[K]>
-}
-function deepReactive(): DestructedNode {
-  const keys = Object.keys(props.node)
-  const entries = keys.map(k => [k, computed(() => props.node[k])])
-  return Object.fromEntries(entries)
-}
-
 let {
   field,
   kind,
@@ -35,7 +26,7 @@ let {
   end,
   children,
   isNamed,
-} = deepReactive()
+} = deepReactive(props.node)
 
 const {
   isWithin,

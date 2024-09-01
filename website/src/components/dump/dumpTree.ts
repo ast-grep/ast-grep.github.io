@@ -1,4 +1,5 @@
-import type { InjectionKey, Ref } from 'vue'
+import type { InjectionKey, Ref, ComputedRef } from 'vue'
+import { computed } from 'vue'
 
 interface HighlightContext {
   (range: number[]): void
@@ -31,4 +32,14 @@ export interface PatternTree extends GeneralNode {
   isNamed: boolean
   text: string | undefined
   pattern?: 'metaVar' | 'terminal' | 'internal'
+}
+
+type DestructedNode<T> = {
+  [K in keyof T]: ComputedRef<T[K]>
+}
+
+export function deepReactive<T extends object>(node: T): DestructedNode<T> {
+  const keys = Object.keys(node) as (keyof T)[]
+  const entries = keys.map(k => [k, computed(() => node[k])])
+  return Object.fromEntries(entries)
 }
