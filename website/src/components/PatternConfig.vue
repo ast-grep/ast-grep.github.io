@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import IconDown from './utils/IconDown.vue'
-import Error from './utils/Error.vue'
 
-defineProps({
-  error: String,
-})
 const strictness = defineModel<string>('strictness')
 const selector = defineModel<string>('selector')
 
@@ -33,7 +29,6 @@ function selectAll(e: FocusEvent) {
       Selector:
       <input @focus="selectAll" class="selector-input" type="text" v-model="selector"/>
     </label>
-    <Error class="error" :error="error"/>
   </div>
 </template>
 
@@ -55,9 +50,5 @@ function selectAll(e: FocusEvent) {
   border-radius: 5px;
   height: 25px;
   padding: 8px;
-}
-.error {
-  width: 100%;
-  margin: 0.5em 0 0.25em;
 }
 </style>

@@ -6,13 +6,7 @@ import { highlightKey, PatternTree, Pos } from './dump/dumpTree'
 import { langLoadedKey, usePattern } from './astGrep'
 import { dumpPattern } from 'ast-grep-wasm'
 import PatternConfig from './PatternConfig.vue'
-
-const {
-  query,
-  rewrite,
-  strictness,
-  selector,
-} = usePattern()
+import Error from './utils/Error.vue'
 
 defineProps({
   language: {
@@ -23,6 +17,13 @@ defineProps({
     type: String,
   },
 })
+
+const {
+  query,
+  rewrite,
+  strictness,
+  selector,
+} = usePattern()
 
 let root = shallowRef(null as PatternTree | null)
 let highlights = shallowRef([] as number[][])
@@ -77,12 +78,12 @@ function changeFocusNode(e: any) {
     </template>
     <template #panelAccessory>
       <PatternConfig
-        :error="ruleErrors"
         v-model:strictness="strictness"
         v-model:selector="selector"
       />
     </template>
     <template #panel>
+      <Error class="error" :error="ruleErrors"/>
       <PatternNode
         v-if="root"
         :clickKind="k => selector = k"
@@ -113,5 +114,10 @@ function changeFocusNode(e: any) {
   border-radius: 10px 10px 0 0;
   padding: 0 1em 0;
   z-index: 0;
+}
+
+.error {
+  width: 100%;
+  margin: 0.5em 0 0.25em;
 }
 </style>
