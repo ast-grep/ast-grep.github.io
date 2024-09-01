@@ -66,7 +66,7 @@ function copyField(name: string) {
     <TreeNode
       :showUnnamed="showUnnamed"
       :node="child"
-      :cursorPosition="isWithin ? cursorPosition : undefined"
+      :cursorPosition="isWithin ? cursorPosition : null"
       :clickKind="clickKind"
       v-if="expanded"
       v-for="child in children"

@@ -1,3 +1,8 @@
+<script lang="ts">
+// LOL vue sfc compiler does not allow type alias and dynamic import co-exist
+import type monaco from 'monaco-editor'
+</script>
+
 <script lang="ts" setup>
 import {
   ref,
@@ -11,16 +16,22 @@ import {
 const props = defineProps({
   language: {
     type: String,
-    default: 'javascript'
+    default: 'javascript',
   },
-  source: String,
-  rewrite: String,
+  source: {
+    type: String,
+    required: true,
+  },
+  rewrite: {
+    type: String,
+    default: '',
+  },
 })
 
 const monaco = await import('monaco-editor')
 
 const containerRef = ref<HTMLDivElement | null>(null)
-const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+const editor = shallowRef<monaco.editor.IStandaloneDiffEditor | null>(null);
 
 onMounted(() => {
   if (!containerRef.value) {
