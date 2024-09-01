@@ -26,15 +26,10 @@ let {
   children,
   isNamed,
   text,
+  pattern,
 } = deepReactiveNode(props)
 
 
-function copyKind(kind: string) {
-  if (props.clickKind) {
-    props.clickKind(kind)
-    return
-  }
-}
 </script>
 
 <template>
@@ -44,9 +39,12 @@ function copyKind(kind: string) {
     :cursorPosition="cursorPosition"
   >
     <template #info>
-      <span v-if="isNamed" class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>
-      <span v-if="text" class="node-text">{{ text }}</span>
-      <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
+      <span :class="!pattern && 'inactive'">
+        <span v-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
+        <span v-else class="node-text">{{ kind }}</span>
+        <span v-if="text" class="node-text">{{ text }}</span>
+        <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
+      </span>
     </template>
     <template #children={cursorPosition}>
       <PatternNode
@@ -61,6 +59,12 @@ function copyKind(kind: string) {
 </template>
 
 <style scoped>
+.inactive {
+  opacity: 0.5;
+  font-weight: 100;
+  filter: grayscale(0.5);
+  font-style: italic;
+}
 .node-kind {
   color: var(--blue);
   padding-left: 0.6em;

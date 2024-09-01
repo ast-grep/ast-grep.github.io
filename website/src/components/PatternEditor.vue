@@ -29,6 +29,7 @@ const langLoaded = inject(langLoadedKey)!
 watchEffect(() => {
   if (langLoaded.value) {
     root.value = dumpPattern(modelValue.value || '')
+    console.log(root.value)
   }
 })
 
@@ -79,7 +80,7 @@ function changeFocusNode(e: any) {
       <PatternNode
         v-if="root"
         :clickKind="clickKind"
-        :showUnnamed="true"
+        :showUnnamed="strictness === 'smart' || strictness === 'cst'"
         class="pre"
         :node="root"
         :cursorPosition="cursorPosition"/>

@@ -92,8 +92,13 @@ fn dump_pattern_tree(node: Node<StrDoc<WasmLang>>, node_id: usize, pattern: &Pat
   } else {
     None
   };
+  let kind =  if ts.is_missing() {
+    format!("MISSING {}", node.kind())
+  } else {
+    node.kind().to_string()
+  };
   PatternTree {
-    kind: node.kind().to_string(),
+    kind,
     start: ts.start_position().into(),
     end: ts.end_position().into(),
     is_named: node.is_named(),
@@ -106,6 +111,11 @@ fn dump_pattern_tree(node: Node<StrDoc<WasmLang>>, node_id: usize, pattern: &Pat
 fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> PatternTree {
   use PatternNode as PN;
   let ts = node.get_ts_node();
+  let kind =  if ts.is_missing() {
+    format!("MISSING {}", node.kind())
+  } else {
+    node.kind().to_string()
+  };
   match pattern {
     PN::MetaVar { .. } => {
       let lang = node.lang();
@@ -113,7 +123,7 @@ fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> Pat
       let text = node.text().to_string();
       let text = text.replace(expando, "$");
       PatternTree {
-        kind: node.kind().to_string(),
+        kind,
         start: ts.start_position().into(),
         end: ts.end_position().into(),
         is_named: true,
@@ -124,7 +134,7 @@ fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> Pat
     }
     PN::Terminal { is_named, .. } => {
       PatternTree {
-        kind: node.kind().to_string(),
+        kind,
         start: ts.start_position().into(),
         end: ts.end_position().into(),
         is_named: *is_named,
@@ -138,7 +148,7 @@ fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> Pat
         dump_pattern_impl(n, pn)
       }).collect();
       PatternTree {
-        kind: node.kind().to_string(),
+        kind,
         start: ts.start_position().into(),
         end: ts.end_position().into(),
         is_named: true,
