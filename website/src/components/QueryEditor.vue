@@ -14,7 +14,6 @@ defineProps({
     default: 'javascript'
   },
   matches: Array as PropType<Match[]>,
-  clickKind: Function as PropType<(k: string) => void>,
 })
 
 let root = shallowRef(null as DumpNode | null)
@@ -68,7 +67,6 @@ let showFullTree = shallowRef(false)
     <template #panel>
       <TreeNode
         v-if="root"
-        :clickKind="clickKind"
         :showUnnamed="showFullTree"
         class="pre"
         :node="root"

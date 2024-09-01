@@ -17,7 +17,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  clickKind: Function as PropType<(k: string) => void>,
 })
 
 let {
@@ -30,10 +29,6 @@ let {
 } = deepReactiveNode(props)
 
 function copyKind(kind: string) {
-  if (props.clickKind) {
-    props.clickKind(kind)
-    return
-  }
   navigator.clipboard.writeText(kind)
   showToast('Node kind copied!')
 }
@@ -60,7 +55,6 @@ function copyField(name: string) {
         :showUnnamed="showUnnamed"
         :node="child"
         :cursorPosition="cursorPosition"
-        :clickKind="clickKind"
         v-for="child in children"
       />
     </template>
