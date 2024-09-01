@@ -21,11 +21,6 @@ const {
   lang,
   // source code
   source,
-  // pattern
-  query,
-  rewrite,
-  strictness,
-  selector,
   // config
   config,
   // match result
@@ -52,10 +47,6 @@ const modeText = {
 let codeText = {
   code: 'Source',
   diff: 'Diff',
-}
-
-function setSelector(kind: string) {
-  selector.value = kind
 }
 
 let codeMode = shallowRef('code')
@@ -90,12 +81,7 @@ let codeMode = shallowRef('code')
       <Tabs v-model="mode" :modeText="modeText">
         <template #[Mode.Patch]>
           <PatternEditor
-            :clickKind="setSelector"
             :ruleErrors="ruleErrors"
-            v-model="query"
-            v-model:rewrite="rewrite"
-            v-model:strictness="strictness"
-            v-model:selector="selector"
             :language="lang"/>
         </template>
         <template #[Mode.Config]>

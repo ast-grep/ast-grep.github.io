@@ -1,6 +1,6 @@
-import { shallowRef, watchEffect, Ref } from 'vue'
+import { shallowRef, watchEffect, inject, Ref } from 'vue'
 import { doFind, Match, useSetupParser } from './lang'
-import { Mode, State, useSgState } from './state'
+import { Mode, State, useSgState, astGrepStateKey } from './state'
 
 export type { SupportedLang, Match } from './lang'
 export { initializeParser, langLoadedKey } from './lang'
@@ -92,5 +92,20 @@ export function useAstGrep() {
     lang,
     ...results,
     ...refs,
+  }
+}
+
+export function usePattern() {
+  const {
+    query,
+    rewrite,
+    selector,
+    strictness,
+  } = inject(astGrepStateKey)!
+  return {
+    query,
+    rewrite,
+    selector,
+    strictness,
   }
 }

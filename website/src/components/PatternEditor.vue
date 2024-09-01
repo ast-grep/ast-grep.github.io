@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { Monaco, EditorWithPanel } from './editors'
-import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
+import { shallowRef, watchEffect, provide, inject } from 'vue'
 import PatternNode from './dump/PatternNode.vue'
 import { highlightKey, PatternTree, Pos } from './dump/dumpTree'
-import { langLoadedKey } from './astGrep'
+import { langLoadedKey, usePattern } from './astGrep'
 import { dumpPattern } from 'ast-grep-wasm'
 import PatternConfig from './PatternConfig.vue'
 
-const modelValue = defineModel<string>()
-const rewrite = defineModel<string>('rewrite')
-const strictness = defineModel<string>('strictness')
-const selector = defineModel<string>('selector')
+const {
+  query,
+  rewrite,
+  strictness,
+  selector,
+} = usePattern()
 
 defineProps({
   language: {
@@ -20,7 +22,6 @@ defineProps({
   ruleErrors: {
     type: String,
   },
-  clickKind: Function as PropType<(k: string) => void>,
 })
 
 let root = shallowRef(null as PatternTree | null)
@@ -32,7 +33,7 @@ watchEffect(() => {
     return
   }
   try {
-    root.value = dumpPattern(modelValue.value || '', selector.value || undefined)
+    root.value = dumpPattern(query.value || '', selector.value || undefined)
   } catch (e) {
     console.error(e)
   }
@@ -60,7 +61,7 @@ function changeFocusNode(e: any) {
     <template #editor>
       <div class="dual-editor">
         <Monaco
-          v-model="modelValue"
+          v-model="query"
           @changeCursor="changeFocusNode"
           :language="language"
           :highlights="highlights"/>
@@ -84,7 +85,7 @@ function changeFocusNode(e: any) {
     <template #panel>
       <PatternNode
         v-if="root"
-        :clickKind="clickKind"
+        :clickKind="k => selector = k"
         :showUnnamed="strictness === 'smart' || strictness === 'cst'"
         class="pre"
         :node="root"

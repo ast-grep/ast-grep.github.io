@@ -1,5 +1,6 @@
 import type { SupportedLang } from "./lang"
-import { shallowReactive, toRefs, watch } from 'vue'
+import { shallowReactive, toRefs, watch, provide } from 'vue'
+import type { InjectionKey, ToRefs, ShallowReactive } from 'vue'
 
 export enum Mode {
   Patch = 'Patch',
@@ -106,13 +107,17 @@ function storeStateInLocalStorage(state: State) {
   }
 }
 
+export const astGrepStateKey = Symbol.for('ast-grep-state') as InjectionKey<ToRefs<ShallowReactive<State>>>
+
 export function useSgState() {
   const state = shallowReactive(restoreState())
+  const refs = toRefs(state)
+  provide(astGrepStateKey, refs)
   watch(() => state, state => {
     storeStateInLocalStorage(state)
   }, { deep: true })
   return {
     state,
-    ...toRefs(state),
+    ...refs,
   }
 }
