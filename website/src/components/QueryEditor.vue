@@ -5,7 +5,7 @@ import TreeNode from './dump/TreeNode.vue'
 import { highlightKey, DumpNode, Pos } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
 import { langLoadedKey } from './astGrep'
-import type { Match, SupportedLang } from './astGrep/lang'
+import type { Match, SupportedLang } from './astGrep'
 
 const modelValue = defineModel<string>()
 

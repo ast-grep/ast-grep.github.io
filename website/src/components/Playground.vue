@@ -7,25 +7,32 @@ import SelectLang from './SelectLang.vue'
 import Tabs from './utils/Tabs.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
-import '../style.css'
 import { initializeParser, useAstGrep, Mode as ModeImport } from './astGrep'
+
+// setup global style
+import '../style.css'
 
 // important initialization
 await initializeParser()
 
 const {
   state,
+  mode,
+  lang,
+  // source code
   source,
+  // pattern
   query,
   rewrite,
   strictness,
   selector,
+  // config
   config,
-  mode,
-  lang,
-  matchedHighlights,
+  // match result
   matchedEnvs,
+  matchedHighlights,
   rewrittenCode,
+  // error
   ruleErrors,
 } = useAstGrep()
 

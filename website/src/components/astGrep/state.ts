@@ -6,8 +6,6 @@ export enum Mode {
   Config = 'Config',
 }
 
-export const activeTabs = Object.keys(Mode)
-
 export type State = {
   mode: Mode,
   query: string,
