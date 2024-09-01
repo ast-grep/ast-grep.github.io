@@ -1,10 +1,10 @@
-import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
+import { shallowRef, watchEffect } from 'vue'
 import { doFind, Match, useSetupParser } from './lang'
-import { restoreState, Mode } from './state'
+import { Mode, useSgState } from './state'
 
 export type { SupportedLang } from './lang'
 export { initializeParser, useSetupParser, langLoadedKey } from './lang'
-export { restoreState, Mode, } from './state'
+export { Mode } from './state'
 
 type YAML = typeof import('js-yaml')
 
@@ -12,8 +12,9 @@ const yamlImport = import('js-yaml')
 
 // NB: this hook cannot be async since it sets up `provide`
 export function useAstGrep() {
-  const state = shallowReactive(restoreState())
+
   const {
+    state,
     source,
     query,
     rewrite,
@@ -22,7 +23,7 @@ export function useAstGrep() {
     config,
     mode,
     lang,
-  } = toRefs(state)
+  } = useSgState()
 
   const langLoaded = useSetupParser(lang)
 

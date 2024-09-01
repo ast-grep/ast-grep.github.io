@@ -1,4 +1,5 @@
 import type { SupportedLang } from "./lang"
+import { shallowReactive, toRefs, watch } from 'vue'
 
 export enum Mode {
   Patch = 'Patch',
@@ -77,7 +78,7 @@ const defaultState = {
   source,
 }
 
-export function restoreState(): State {
+function restoreState(): State {
   try {
     if (location.hash.length > 1) {
       return {
@@ -98,10 +99,22 @@ export function restoreState(): State {
   }
 }
 const LOCAL_STORAGE_KEY = 'ast-grep-playground-state'
-export function storeStateInLocalStorage(state: State) {
+
+function storeStateInLocalStorage(state: State) {
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state))
   } catch {
     // pass
+  }
+}
+
+export function useSgState() {
+  const state = shallowReactive(restoreState())
+  watch(() => state, state => {
+    storeStateInLocalStorage(state)
+  }, { deep: true })
+  return {
+    state,
+    ...toRefs(state),
   }
 }
