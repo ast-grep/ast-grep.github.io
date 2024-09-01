@@ -43,6 +43,7 @@ const {
   --blue:      #006ab1;
   --green:     #008000;
   --black:     #002b36;
+  --gray:      #5a6169;
 }
 html.dark .tree-node {
   --yellow:    #ce9178;
@@ -50,6 +51,7 @@ html.dark .tree-node {
   --blue:      #569cd6;
   --green:     #608b4e;
   --black:     #d4d4d4;
+  --gray:      #8e949a;
 }
 </style>
 

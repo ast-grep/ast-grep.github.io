@@ -37,6 +37,18 @@ let showText = computed(() => {
   }
 })
 
+let metaVarClass = computed(() => {
+  if (pattern?.value !== 'metaVar') {
+    return ''
+  }
+  let metaVarText = text.value || ''
+  if (metaVarText.startsWith('$$$')) {
+    return metaVarText.startsWith('$$$_') || metaVarText === '$$$'
+      ? 'multi meta-var non-capture' : 'multi meta-var'
+  }
+  return metaVarText.startsWith('$_') ? 'meta-var non-capture' : 'meta-var'
+})
+
 </script>
 
 <template>
@@ -47,8 +59,9 @@ let showText = computed(() => {
   >
     <template #info>
       <span :class="!pattern && 'inactive'">
-        <span v-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
-        <span v-if="showText" class="node-text">{{ showText }}</span>
+        <span :class="metaVarClass" v-if="metaVarClass">{{ text }}</span>
+        <span v-else-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
+        <span v-else-if="showText" class="node-text">{{ showText }}</span>
         <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
       </span>
     </template>
@@ -71,13 +84,27 @@ let showText = computed(() => {
   filter: grayscale(0.5);
   font-style: italic;
 }
+.meta-var {
+  background: var(--red);
+  color: var(--vp-c-bg);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  margin-left: 7px;
+  font-size: 0.9em;
+}
+.multi {
+  background: var(--blue);
+}
+.non-capture {
+  background: var(--gray);
+}
 .node-kind {
   color: var(--blue);
-  padding-left: 0.6em;
+  padding-left: 7px;
   cursor: pointer;
 }
 .node-text {
-  padding-left: 0.6em;
+  padding-left: 7px;
   cursor: text;
   color: var(--black);
 }
