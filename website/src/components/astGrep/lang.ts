@@ -68,7 +68,7 @@ export async function initializeParser() {
   await initializeTreeSitter()
 }
 
-export async function setGlobalParser(lang: SupportedLang) {
+async function setGlobalParser(lang: SupportedLang) {
   const path = parserPaths[lang]
   await setupParser(lang, path)
 }

@@ -1,18 +1,19 @@
-import { shallowRef, shallowReactive, toRefs, watchEffect, inject } from 'vue'
-import { initializeParser, doFind, Match, langLoadedKey } from './lang'
+import { shallowRef, shallowReactive, toRefs, watchEffect } from 'vue'
+import { doFind, Match, useSetupParser } from './lang'
 import { restoreState, Mode } from './state'
 
 export type { SupportedLang } from './lang'
-export { useSetupParser, langLoadedKey } from './lang'
+export { initializeParser, useSetupParser, langLoadedKey } from './lang'
 export { restoreState, Mode, } from './state'
 
-export async function useSetup() {
-  // important initialization
-  await initializeParser()
+type YAML = typeof import('js-yaml')
 
-  const langLoaded = inject(langLoadedKey)!
+const yamlImport = import('js-yaml')
+
+// NB: this hook cannot be async since it sets up `provide`
+export function useAstGrep() {
   const state = shallowReactive(restoreState())
-  let {
+  const {
     source,
     query,
     rewrite,
@@ -23,10 +24,10 @@ export async function useSetup() {
     lang,
   } = toRefs(state)
 
+  const langLoaded = useSetupParser(lang)
 
-  type YAML = typeof import('js-yaml')
   let yaml = shallowRef<YAML | null>(null)
-  import('js-yaml').then(yml => {
+  yamlImport.then(yml => {
     yaml.value = yml
   })
 
@@ -92,4 +93,20 @@ export async function useSetup() {
     }
     return
   })
+
+  return {
+    state,
+    source,
+    query,
+    rewrite,
+    strictness,
+    selector,
+    config,
+    mode,
+    lang,
+    matchedHighlights,
+    matchedEnvs,
+    rewrittenCode,
+    ruleErrors,
+  }
 }
