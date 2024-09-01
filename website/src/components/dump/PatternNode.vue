@@ -27,7 +27,9 @@ let {
 } = deepReactiveNode(props)
 
 let showText = computed(() => {
-  if (text.value) {
+  if (pattern?.value === 'metaVar') {
+    return ''
+  } else if (text.value) {
     return text.value
   } else if (!isNamed.value && kind.value) {
     // MISSING node
@@ -61,7 +63,7 @@ let metaVarClass = computed(() => {
       <span :class="!pattern && 'inactive'">
         <span :class="metaVarClass" v-if="metaVarClass">{{ text }}</span>
         <span v-else-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
-        <span v-else-if="showText" class="node-text">{{ showText }}</span>
+        <span v-if="showText" class="node-text">{{ showText }}</span>
         <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
       </span>
     </template>
@@ -85,18 +87,18 @@ let metaVarClass = computed(() => {
   font-style: italic;
 }
 .meta-var {
-  background: var(--red);
-  color: var(--vp-c-bg);
-  padding: 0.1em 0.3em;
-  border-radius: 4px;
-  margin-left: 7px;
+  border: 1px solid currentColor;
+  color: var(--red);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  margin: 0 4px 7px;
   font-size: 0.9em;
 }
 .multi {
-  background: var(--blue);
+  color: var(--green);
 }
 .non-capture {
-  background: var(--gray);
+  color: var(--gray);
 }
 .node-kind {
   color: var(--blue);
@@ -104,7 +106,7 @@ let metaVarClass = computed(() => {
   cursor: pointer;
 }
 .node-text {
-  padding-left: 7px;
+  padding: 7px;
   cursor: text;
   color: var(--black);
 }
