@@ -1,3 +1,5 @@
+import type { SupportedLang } from "./components/lang"
+
 export enum Mode {
   Patch = 'Patch',
   Config = 'Config',
@@ -13,7 +15,7 @@ export type State = {
   source: string,
   strictness: string,
   selector: string,
-  lang: string,
+  lang: SupportedLang,
 }
 
 // prefer old unicode hacks for backward compatibility
@@ -66,7 +68,7 @@ fix:
 
 const defaultState = {
   mode: Mode.Patch,
-  lang: 'javascript',
+  lang: 'javascript' as const,
   query,
   rewrite: 'logger.log($MATCH)',
   strictness: 'smart',

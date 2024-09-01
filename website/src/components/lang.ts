@@ -28,10 +28,10 @@ const parserPaths = {
 
 // monaco does not realize bash is shell but shell is not bash.
 // use this mapping to highlight bash
-const monacoLangMapping: Partial<Record<SupportedLang, string>> = {
+const monacoLangMapping: Record<string, string> = {
   bash: 'shell'
 }
-export function normalizeMonacoLang(lang: SupportedLang) {
+export function normalizeMonacoLang(lang: string) {
   return monacoLangMapping[lang] || lang
 }
 

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { Monaco, EditorWithPanel } from './editors'
-import { shallowRef, watchEffect, provide, PropType, computed, inject } from 'vue'
+import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
 import TreeNode from './dump/TreeNode.vue'
-import { highlightKey, langLoadedKey, DumpNode } from './dump/dumpTree'
+import { highlightKey, langLoadedKey, DumpNode, Pos } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
 import type { Match, SupportedLang } from './lang'
 
 const modelValue = defineModel<string>()
 
-const props = defineProps({
+defineProps({
   language: {
     type: String as PropType<SupportedLang>,
     default: 'javascript'
@@ -18,25 +18,16 @@ const props = defineProps({
 })
 
 let root = shallowRef(null as DumpNode | null)
-let highlights = shallowRef([])
+let highlights = shallowRef([] as number[][])
 
-const processedSource = computed(() => {
-  // have matches. It is source code panel
-  // do not pre-process source code
-  if (props.matches != null) {
-    return modelValue.value
-  } else {
-    return modelValue.value
-  }
-})
-const langLoaded = inject(langLoadedKey)
+const langLoaded = inject(langLoadedKey)!
 watchEffect(() => {
   if (langLoaded.value) {
-    root.value = dumpASTNodes(processedSource.value)
+    root.value = dumpASTNodes(modelValue.value || '')
   }
 })
 
-let cursorPosition = shallowRef(null)
+let cursorPosition = shallowRef<Pos | null>(null)
 provide(highlightKey, e => {
   highlights.value = [e]
 })

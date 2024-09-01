@@ -27,7 +27,7 @@ const emits = defineEmits<{
 
 const props = defineProps({
   language: {
-    type: String as PropType<SupportedLang>,
+    type: String as PropType<string>,
     default: 'javascript'
   },
   modelValue: String,
