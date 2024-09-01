@@ -14,14 +14,8 @@ const yamlImport = import('js-yaml')
 export function useAstGrep() {
   const {
     state,
-    source,
-    query,
-    rewrite,
-    strictness,
-    selector,
-    config,
-    mode,
     lang,
+    ...refs
   } = useSgState()
 
   const langLoaded = useSetupParser(lang)
@@ -33,7 +27,7 @@ export function useAstGrep() {
 
   const matchedHighlights = shallowRef([] as Match[])
   const matchedEnvs = shallowRef([] as unknown[])
-  const rewrittenCode = shallowRef(source.value)
+  const rewrittenCode = shallowRef(state.source)
   const ruleErrors = shallowRef<string>()
 
   function parseYAML(src: string) {
@@ -42,21 +36,21 @@ export function useAstGrep() {
 
   function buildRules() {
     let json = []
-    if (mode.value === Mode.Patch && query.value) {
+    if (state.mode === Mode.Patch && state.query) {
       json = [{
         id: 'test-rule',
         language: lang.value,
         rule: {
           pattern: {
-            context: query.value,
-            strictness: strictness.value || undefined,
-            selector: selector.value || undefined,
+            context: state.query,
+            strictness: state.rewrite || undefined,
+            selector: state.selector || undefined,
           },
         },
-        fix: rewrite.value || '',
+        fix: state.rewrite || '',
       }]
-    } else if (config.value) {
-      const ruleStr = config.value // make sync access
+    } else if (state.config) {
+      const ruleStr = state.config // make sync access
       json = parseYAML(ruleStr)
       let i = 0
       for (let rule of json) {
@@ -75,7 +69,7 @@ export function useAstGrep() {
     }
     let invalidated = false
     // before async
-    const [src, json] = [source.value, buildRules()]
+    const [src, json] = [state.source, buildRules()]
     onInvalidate(() => invalidated = true)
     try {
       const [matches, fixed] = await doFind(src, json)
@@ -96,17 +90,11 @@ export function useAstGrep() {
 
   return {
     state,
-    source,
-    query,
-    rewrite,
-    strictness,
-    selector,
-    config,
-    mode,
     lang,
     matchedHighlights,
     matchedEnvs,
     rewrittenCode,
     ruleErrors,
+    ...refs,
   }
 }
