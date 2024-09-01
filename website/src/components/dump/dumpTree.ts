@@ -38,8 +38,8 @@ type DestructedNode<T> = {
   [K in keyof T]: ComputedRef<T[K]>
 }
 
-export function deepReactive<T extends object>(node: T): DestructedNode<T> {
-  const keys = Object.keys(node) as (keyof T)[]
-  const entries = keys.map(k => [k, computed(() => node[k])])
+export function deepReactiveNode<T extends object>(props: {node: T}): DestructedNode<T> {
+  const keys = Object.keys(props.node) as (keyof T)[]
+  const entries = keys.map(k => [k, computed(() => props.node[k])])
   return Object.fromEntries(entries)
 }

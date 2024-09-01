@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { PatternTree, Pos, deepReactive } from './dumpTree'
+import { PatternTree, Pos, deepReactiveNode } from './dumpTree'
 import { useHighlightNode } from './highlightNode'
 import { showToast } from '../utils/Toast.vue'
 
@@ -27,7 +27,7 @@ let {
   children,
   isNamed,
   text,
-} = deepReactive(props.node)
+} = deepReactiveNode(props)
 
 const {
   isWithin,
