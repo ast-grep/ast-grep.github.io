@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { computed, PropType } from 'vue'
 import { PatternTree, Pos, deepReactiveNode } from './dumpTree'
 import GeneralNode from './GeneralNode.vue';
 
@@ -26,6 +26,16 @@ let {
   pattern,
 } = deepReactiveNode(props)
 
+let showText = computed(() => {
+  if (text.value) {
+    return text.value
+  } else if (!isNamed.value && kind.value) {
+    // MISSING node
+    return kind.value
+  } else {
+    return ''
+  }
+})
 
 </script>
 
@@ -38,8 +48,7 @@ let {
     <template #info>
       <span :class="!pattern && 'inactive'">
         <span v-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
-        <span v-else class="node-text">{{ kind }}</span>
-        <span v-if="text" class="node-text">{{ text }}</span>
+        <span v-if="showText" class="node-text">{{ showText }}</span>
         <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
       </span>
     </template>

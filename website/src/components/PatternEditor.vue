@@ -27,8 +27,13 @@ let highlights = shallowRef([] as number[][])
 
 const langLoaded = inject(langLoadedKey)!
 watchEffect(() => {
-  if (langLoaded.value) {
-    root.value = dumpPattern(modelValue.value || '')
+  if (!langLoaded.value) {
+    return
+  }
+  try {
+    root.value = dumpPattern(modelValue.value || '', selector.value || undefined)
+  } catch (e) {
+    console.error(e)
   }
 })
 
