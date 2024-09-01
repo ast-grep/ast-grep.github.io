@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { DumpNode, Pos } from './dumpTree'
+import { GeneralNode, Pos } from './dumpTree'
 import { useHighlightNode } from './highlightNode'
 
 const props = defineProps({
   node: {
-    type: Object as PropType<DumpNode>,
+    type: Object as PropType<GeneralNode>,
     required: true
   },
   showToggle: Boolean,

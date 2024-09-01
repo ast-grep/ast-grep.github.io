@@ -32,11 +32,7 @@ export function useHighlightNode(props: Props) {
   }
 
   let isWithin = computed(() => {
-    const {cursorPosition} = props
-    if (!cursorPosition) {
-      return false
-    }
-    return withinPos(props.node, cursorPosition)
+    return withinPos(props.node, props.cursorPosition)
   })
   let isTarget = computed(() => {
     if (!isWithin.value) {
