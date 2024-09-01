@@ -47,7 +47,7 @@ function copyField(name: string) {
     <template #info>
       <span v-if="isNamed" class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>
       <span v-else class="node-text">{{ kind }}</span>
-      <span v-if="field" class="node-field" @click.stop="copyField(field)">{{ field }}</span>
+      <span class="node-field" @click.stop="copyField(field || '')">{{ field }}</span>
       <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
     </template>
     <template #children="{cursorPosition}">

@@ -105,5 +105,6 @@ function changeFocusNode(e: any) {
   font-size: 12px;
   border-radius: 10px 10px 0 0;
   padding: 0 1em 0;
+  z-index: 0;
 }
 </style>
