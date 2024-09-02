@@ -129,10 +129,14 @@ export default defineConfig({
         text: 'Advanced Topics',
         items: [
           { text: 'Frequently Asked Questions', link: '/advanced/faq.html'},
-          { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html'},
-          { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
-          { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
-          { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
+          { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html',
+            items: [
+              { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
+              { text: 'Pattern Syntax', link: '/advanced/pattern-parse.html'},
+              { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
+              { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
+            ] ,
+          },
           { text: 'Custom Language Support', link: '/advanced/custom-language.html'},
           { text: 'Multi-Language Documents', link: '/advanced/language-injection.html'},
           { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison.html'},

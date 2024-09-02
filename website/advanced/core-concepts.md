@@ -1,4 +1,4 @@
-# Deep Dive into ast-grep's Pattern
+# Core Concepts in ast-grep's Pattern
 
 One key highlight of ast-grep is its pattern.
 
