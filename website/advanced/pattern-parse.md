@@ -194,6 +194,9 @@ pattern:
   selector: expression_statement
 ```
 
+Using `selector` is especially helpful when you are also using relational rules like `follows` and `precedes`.
+You want to match the statement instead of the default inner expression node, and [match other statements around it](https://github.com/ast-grep/ast-grep/issues/1427).
+
 :::tip
 When in doubt, try pattern object first.
 :::
