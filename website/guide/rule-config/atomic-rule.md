@@ -20,7 +20,7 @@ By default, a _string_ `pattern` is parsed and matched as a whole.
 
 ### Pattern Object
 
-It is not always possible to select certain code with a simple string pattern. A pattern code can be ambiguous for the parser since it lacks context.
+It is not always possible to select certain code with a simple string pattern. A pattern code can be invalid, incomplete or ambiguous for the parser since it lacks context.
 
 For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiJEZJRUxEID0gJElOSVQiLCJyZXdyaXRlIjoiRGVidWcuYXNzZXJ0IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjogXG4gICAgY29udGV4dDogJ3sgJE06ICgkJCRBKSA9PiAkTUFUQ0ggfSdcbiAgICBzZWxlY3RvcjogcGFpclxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==).
 
