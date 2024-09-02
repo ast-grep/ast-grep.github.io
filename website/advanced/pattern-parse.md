@@ -88,36 +88,48 @@ For example, the pattern `foo(bar)` in Java cannot be parsed as valid code. Howe
 
 ### Ambiguous Pattern Code
 
-Pattern code can be Ambiguous or Incomplete.
+Just as programming languages have ambiguous grammar, so ast-grep patterns can be ambiguous.
 
-In JavaScript, the following code can be parsed as a variable assignment or a class field initialization.
+Let's consider the JavaScript code snippet below:
 
 ```js
-a = 123
+a: 123
 ```
 
-The difference is the context.
-```
-// variable assignment
-if (someCondition) {
-  a = 123
-}
-// class field initialization
-class A {
-  a = 123
-}
+It can be interpreted as an object key-value pair or a labeled statement.
+
+Without other hints, ast-grep will parse it as labeled statement by default. To match object key-value pair, we need to provide more context by [using pattern object](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoieyBhOiAxMjMgfSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6InBhaXIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1wiYVwiOiAxMjN9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoiYSA9IHsgYTogIDEyMyB9In0=).
+
+```yaml
+pattern:
+  context: '{ a: 123 }'
+  selector: pair
 ```
 
+Other examples of ambiguous patterns include:
+* Match function call in [Golang](/catalog/go/#match-function-call-in-golang) and [C](/catalog/c/#match-function-call)
+* Match [class field](/guide/rule-config/atomic-rule.html#pattern-object) in JavaScript
 
-### How to handle code snippet?
+### How ast-grep Handles Pattern Code?
 
 ast-grep uses best efforts to parse pattern code for best user experience.
 
-* replace `$` with expando_char
-* ignore missing nodes or errors
-* if all above fails, users should provide more code via pattern object
+Here are some strategies ast-grep uses to handle code snippet:
+
+* **Replace `$` with expando_char**:
+some languages use `$` as a special character, so ast-grep replace it with [expando_char](/advanced/custom-language.html#register-language-in-sgconfig-yml) in order to make the pattern code parsable.
+
+* **Ignore missing nodes**: ast-grep will ignore missing nodes in pattern like trailing semicolon in Java/C/C++.
+
+* **Treat root error as normal node**: if the parser error has no siblings, ast-grep will treat it as a normal node.
+
+* If all above fails, users should provide more code via pattern object
 
 :::warning Pattern Error Recovery is useful, but not guaranteed
+
+ast-grep's recovery mechanism heavily depends on tree-sitter's behavior. We cannot guarantee invalid patterns will be parsed consistently between different versions. So using invalid pattern may lead to unexpected results after upgrading ast-grep.
+
+When in doubt, always use valid code snippets with pattern object.
 :::
 
 ## Extract Effective AST for Pattern
