@@ -203,12 +203,58 @@ When in doubt, try pattern object first.
 
 ## Meta Variable Deep Dive
 
+ast-grep's meta variables are also AST based and are detected in the effective nodes extracted from the pattern code.
+
 ### Meta Variable Detection in Pattern
 
--  working $A, $A.$B, $A.method($B)
--  non working $A$B, "$A$B", $A
+Not all `$` prefixed strings will be detected as meta variables.
 
-### Named Match and Unnamed Match
+Only AST nodes that match meta variable syntax will be detected.
+If meta variable text is not the only text in the node or it spans multiple nodes, it will not be detected as a meta variable.
+
+**Working meta variable examples:**
+
+* `$A` works
+  * `$A` is one single `identifier`
+* `$A.$B` works
+  * `$A` is `identifier` inside `member_expression`
+  * `$B` is the `property_identifier`.
+* `$A.method($B)` works
+  * `$A` is `identifier` inside `member_expression`
+  * `$B` is `identifier` inside `arguments`
+
+**Non working meta variable examples:**
+
+* `obj.on$EVENT` does not work
+  * `on$EVENT` is `property_identifier` but `$EVENT` is not the only text
+* `"Hello $WORLD"` does not work
+  * `$WORLD` is inside `string_content` and is not the only text
+* `a $OP b` does not work
+  * the whole pattern does not parse
+* `$jq` does not work
+  * meta variable does not accept lower case letters
+
+See all examples in [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzaWduYXR1cmUiLCJzZWxlY3RvciI6ImNhbGxfZXhwcmVzc2lvbiIsImNvbmZpZyI6IiIsInNvdXJjZSI6Ii8vIHdvcmtpbmdcbiRBXG4kQS4kQlxuJEEubWV0aG9kKCRCKVxuXG4vLyBub24gd29ya2luZ1xub2JqLm9uJEVWRU5UXG5cIkhlbGxvICRXT1JMRFwiXG5hICRPUCBiIn0=).
+
+### Matching Unnamed Nodes
+
+A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
+To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
+
+Let's go back to the binary expression example. It is impossible to match arbitrary binary expression in one single pattern. But we can combine `kind` and `has` to match the operator in  binary expressions.
+
+Note, `$OP` cannot match the operator because operator is not a named node. We need to use `$$OP` instead.
+
+```yaml
+rule:
+  kind: binary_expression
+  has:
+    field: operator
+    pattern: $$OP
+    # pattern: $OP
+```
+
+See the above rule to match all arithmetic expressions in [action](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCQkJCkiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNpZ25hdHVyZSIsInNlbGVjdG9yIjoiY2FsbF9leHByZXNzaW9uIiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBjb25zb2xlLmxvZygkJCQpXG4gICAgc2VsZWN0b3I6IGV4cHJlc3Npb25fc3RhdGVtZW50XG5maXg6ICcnIiwic291cmNlIjoiY29uc29sZS5sb2coZm9vKVxuY29uc29sZS5sb2coYmFyKTsifQ==).
 
 ### How Multi Meta Variables Match Code
 
