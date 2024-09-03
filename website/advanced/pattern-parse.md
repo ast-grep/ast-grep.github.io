@@ -258,8 +258,16 @@ See the above rule to match all arithmetic expressions in [action](/playground.h
 
 ### How Multi Meta Variables Match Code
 
+Multiple meta variables like `$$$ARGS` has special matching behavior. It will match multiple nodes in the AST.
+
+`$$$ARGS` will match multiple nodes in source code when the meta variable starts to match. It will match as many nodes as possible until the first AST node after the meta var in pattern is matched.
+
+The behavior is like [non-greedy](https://stackoverflow.com/questions/11898998/how-can-i-write-a-regex-which-matches-non-greedy) matching in regex and template string literal `infer` in [TypeScript](https://github.com/microsoft/TypeScript/pull/40336).
+
 ## Use ast-grep playground to debug pattern
 
-## Conclusion
+ast-grep playground is a great tool to debug pattern code. The pattern tab and pattern panel can help you visualize the AST tree, effective nodes and meta variables.
+
+![playground](/image/pattern-debugger.jpg)
 
 In next article, we will explain how ast-grep's pattern is used to match code, the pattern matching algorithm.
