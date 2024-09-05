@@ -51,31 +51,6 @@ transform:
       source: $VAR
 ```
 
-:::tip Pro Tip
-We can use _regex capture groups_ in the `replace` field and reference them in the `by` field. For example, to replace `debug` with `release` in a function name, we can use the following transformation:
-
-```yaml
-id: debug-to-release
-language: js
-rule: {pattern: $OLD_FN($$$ARGS)}   # Capture OLD_FN
-constraints: {FN: {regex: ^debug}}  # Only match OLD_FN that start with 'debug'
-transform:
-  NEW_FN:
-    replace:
-      replace: debug(?<REG>.*)      # Capture everything following 'debug' as REG
-      by: release$REG               # Refer to REG just like a meta-variable
-      source: $OLD_FN
-fix: $NEW_FN($$$ARGS)
-```
-which will result in the following change:
-```js
-debugFunction(arg1, arg2)  // [!code --]
-releaseFunction(arg1, arg2)  // [!code ++]
-```
-Alternatively, replacing `fooDebug` with `fooRelease`, is difficult because you can't concatenate a meta-variable with a capitalized string literal. `release$REG` is fine, but `$REGRelease` will be interpreted as a single meta-variable and not a concatenation. Check [this discord post](https://discord.com/channels/1107749847722889217/1280989850891452518) for more information.
-
-:::
-
 ## `substring`
 
 Create a new string by cutting off leading and trailing characters.

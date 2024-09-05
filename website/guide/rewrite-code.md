@@ -209,11 +209,6 @@ Let's discuss the API step by step:
     2. The `startChar` and `endChar` keys specify the indices of the start and end characters of the substring that we want to extract. In this case, we want to extract everything except the wrapping parentheses, which are the first and last characters: `(` and `)`.
 5. The `fix` key specifies the new code that we want to replace the matched pattern with. We use the new variable `$LIST` in the fix part, and wrap it with `[` and `]` to make it a list comprehension.
 
-
-:::tip Pro Tips
-Later transformations can use the variables that were transformed before. This allows you to stack string operations and achieve complex transformations.
-:::
-
 ## Supported `transformation`
 We have several different transformations available now. Please check out [transformation reference](/reference/yaml/transformation.html) for more details.
 
@@ -256,6 +251,59 @@ If `$$$ARGS` does match nodes, then the replacement regular expression will repl
 :::tip DasSurma Trick
 This method is invented by [Surma](https://surma.dev/) in a [tweet](https://twitter.com/DasSurma/status/1706086320051794217), so the useful trick is named after him.
 :::
+
+## Rewrite with Regex Capture Groups
+The `replace` transformation allows us to use Rust regex capture groups like `(?<NAME>.*)` to capture meta-variables and reference them in the `by` field.  For example, to replace `debug` with `release` in a function name, we can use the following transformation:
+
+```yaml
+id: debug-to-release
+language: js
+rule: {pattern: $OLD_FN($$$ARGS)}   # Capture OLD_FN
+constraints: {FN: {regex: ^debug}}  # Only match if it starts with 'debug'
+transform:
+  NEW_FN:
+    replace:
+      source: $OLD_FN
+      replace: debug(?<REG>.*)      # Capture everything following 'debug' as REG
+      by: release$REG               # Refer to REG just like a meta-variable
+fix: $NEW_FN($$$ARGS)
+```
+which will result in the following change:
+```js
+debugFoo(arg1, arg2)  // [!code --]
+releaseFoo(arg1, arg2)  // [!code ++]
+```
+Alternatively, replacing `fooDebug` with `fooRelease`, is difficult because you can't concatenate a meta-variable with a capitalized string literal. `release$REG` is fine, but `$REGRelease` will be interpreted as a single meta-variable and not a concatenation. One workaround is to use multiple sequential transformations, as shown below.
+
+:::warning Limitation
+You can only extract regex capture groups in the `replace` field of the `replace` transformation and you can only reference them in the `by` field of the same transformation. The regular `regex` rule does not support capture groups.
+:::
+
+##  Multiple Sequential Transformations
+
+Each transformation outputs a meta-variable that can be used as the input to later transformations. Chaining transformations like this allows us to build up complex behaviors.
+
+Here we can see an example that transforms `fooDebug` into `fooRelease` by using `convert`, `replace`, and `convert` transformations.
+
+```yaml
+rule: {pattern: $OLD_FN($$$ARGS)}      # Capture OLD_FN
+constraints: {OLD_FN: {regex: Debug$}} # Only match if it ends with 'Debug'
+transform:
+  KEBABED:                             # 1. Convert to 'foo-debug'
+    convert:
+      source: $OLD_FN
+      toCase: kebabCase
+  RELEASED:                            # 2. Replace with 'foo-release'
+    replace:
+      source: $KEBABED
+      replace: (?<ROOT>)-debug
+      by: $ROOT-release
+  UNKEBABED:                           # 3. Convert to 'fooRelease'
+    convert:
+      source: $RELEASED
+      toCase: camelCase
+fix: $UNKEBABED($$$ARGS)
+```
 
 ## See More in Example Catalog
 
