@@ -36,6 +36,7 @@ pub enum WasmLang {
   Rust,
   Scala,
   Swift,
+  Yaml,
 }
 
 use WasmLang::*;
@@ -76,6 +77,7 @@ impl FromStr for WasmLang {
       "rust" => Rust,
       "scala" => Scala,
       "swift" => Swift,
+      "yaml" => Yaml,
       _ => return Err(NotSupport(s.to_string())),
     })
   }
@@ -154,6 +156,7 @@ macro_rules! execute_lang_method {
       W::Swift => L::Swift.$method($($pname,)*),
       W::TypeScript => L::TypeScript.$method($($pname,)*),
       W::Tsx => L::Tsx.$method($($pname,)*),
+      W::Yaml => L::Yaml.$method($($pname,)*),
     }
   }
 }

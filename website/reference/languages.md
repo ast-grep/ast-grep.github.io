@@ -32,6 +32,7 @@ The table below lists all languages that are supported by ast-grep.
 |Swift | `swift` | `swift`|
 |TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
+|Yaml | `yml` | `yml`, `yaml`|
 
 ----
 

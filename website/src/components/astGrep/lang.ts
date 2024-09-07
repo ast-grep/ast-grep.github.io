@@ -27,6 +27,7 @@ const parserPaths = {
   rust: 'tree-sitter-rust.wasm',
   scala: 'tree-sitter-scala.wasm',
   swift: 'tree-sitter-swift.wasm',
+  yaml: 'tree-sitter-yaml.wasm',
 }
 
 // monaco does not realize bash is shell but shell is not bash.
@@ -61,6 +62,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   rust: 'Rust',
   scala: 'Scala',
   swift: 'Swift',
+  yaml: 'YAML',
 }
 
 export async function initializeParser() {

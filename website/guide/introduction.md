@@ -40,6 +40,7 @@ ast-grep supports a wide range of programming languages. Here is a list of notab
 |Server Side Programming| `Go`, `Java`, `Python`, `C-sharp`|
 |Web Development| `JS(X)`, `TS(X)`, `HTML`, `CSS`|
 |Mobile App Development| `Dart`, `Kotlin`, `Swift`|
+|Configuration | `Json`, `YAML`|
 |Scripting, Protocols, etc.| `Lua`, `Thrift`|
 
 Thanks to [tree-sitter](https://tree-sitter.github.io/tree-sitter/), a popular parser generator library, ast-grep manages to support [many languages](/reference/languages) out of the box!
