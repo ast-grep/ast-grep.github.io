@@ -67,7 +67,12 @@ export default defineConfig({
               { text: 'Test Your Rule', link: '/guide/test-rule.html' },
             ],
           },
-          { text: 'Rewrite Code', link: '/guide/rewrite-code.html' },
+          { text: 'Rewrite Code', link: '/guide/rewrite-code.html', collapsed: true,
+            items: [
+              { text: 'Transform Code', link: '/guide/rewrite/transform.html' },
+              { text: 'Rewriter Rule', link: '/guide/rewrite/rewriter.html' },
+            ],
+          },
           {
             text: 'Tooling Overview', link: '/guide/tooling-overview.html', collapsed: true,
             items: [

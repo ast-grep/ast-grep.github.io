@@ -51,6 +51,10 @@ transform:
       source: $VAR
 ```
 
+:::tip Pro tip
+You can use regular expression capture groups in the `replace` field and refer to them in the `by` field. See [replace guide](/guide/rewrite-code.html#rewrite-with-regex-capture-groups)
+:::
+
 ## `substring`
 
 Create a new string by cutting off leading and trailing characters.
