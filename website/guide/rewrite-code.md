@@ -163,7 +163,7 @@ if True:
 Note that the `return 456` line has an indentation of four spaces.
 This is because it has two spaces indentation as a part of the fix string, and two additional spaces because the fix string as a whole is inside the `if` statement in the original code.
 
-## Expand the Matching Node Range
+## Expand the Matching Range
 
 **ast-grep rule can only fix one target node at one time by replacing the target node text with a new string.**
 
