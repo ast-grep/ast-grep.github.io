@@ -10,6 +10,8 @@ One YAML file can contain multiple rules, separated by `---`.
 
 An ast-grep rule is a YAML object with the following keys:
 
+[[toc]]
+
 ## Basic Information
 
 ### `id`

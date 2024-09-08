@@ -116,7 +116,7 @@ export default defineConfig({
             ],
           },
           { text: 'Project Config', link: '/reference/sgconfig.html' },
-          { text: 'Rule Config', link: '/reference/yaml.html', collapsed: true,
+          { text: 'Rule Config', link: '/reference/yaml.html', collapsed: false,
             items: [
               { text: 'fix', link: '/reference/yaml/fix.html' },
               { text: 'transformation', link: '/reference/yaml/transformation.html' },
@@ -134,7 +134,7 @@ export default defineConfig({
         text: 'Advanced Topics',
         items: [
           { text: 'Frequently Asked Questions', link: '/advanced/faq.html'},
-          { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html',
+          { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html', collapsed: false,
             items: [
               { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
               { text: 'Pattern Syntax', link: '/advanced/pattern-parse.html'},
