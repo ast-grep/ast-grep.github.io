@@ -163,3 +163,7 @@ If `$$$ARGS` does match nodes, then the replacement regular expression will repl
 :::tip DasSurma Trick
 This method is invented by [Surma](https://surma.dev/) in a [tweet](https://twitter.com/DasSurma/status/1706086320051794217), so the useful trick is named after him.
 :::
+
+## Even More Advanced Transformations
+
+We can use rewriters in the [`rewrite`](/guide/rewrite/rewriter.html) transformation to apply dynamic transformations to the AST. We will cover it in next section.

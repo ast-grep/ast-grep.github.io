@@ -209,3 +209,22 @@ Using multiple rewriters can make you dynamically apply different rewriting logi
 :::
 
 In case multiple rewriters match the same sub node, the rewriter that appears first in the `rewriters` list will be applied first. Therefore, _**the order of rewriters in the `rewriters` list matters.**_
+
+## Use Alternative Joiner
+
+By default, ast-grep will generate the new rewritten string by replacing the text in the matched sub nodes. But you can also specify an alternative joiner to join the transformed sub nodes via `joinBy` field.
+
+```yaml
+transform:
+  NEW_VAR:
+    rewrite:
+      rewriters: [rewrite-num, rewrite-str]
+      source: $$$LIST
+      joinBy: ' + '
+```
+
+This will transform `1, 2, 3` to `integer + integer + integer`.
+
+## Philosophy behind Rewriters
+
+You can see a more detailed design philosophy, _Find and Patch_, behind rewriters in [this page](/advanced/find-n-patch.html).
