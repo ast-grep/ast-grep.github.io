@@ -198,10 +198,34 @@ follows:
   stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
 ```
 
+-----
+
+There are two additional fields in relational rules:
+
+#### `stopBy`
+* type: `"neighbor"` or `"end"` or `Rule` object
+* default: `"neighbor"`
+
+`stopBy` is an option to control how the search should stop when looking for the target node.
+
+It can have three types of value:
+
+* `"neighbor"`: stop when the target node's immediate surrounding node does not match the relational rule. This is the default behavior.
+* `"end"`: search all the way to the end of the search direction. i.e. to the root node for `inside`, to the leaf node for `has`, to the first sibling for `follows`, and to the last sibling for `precedes`.
+* `Rule` object: stop when the target node's surrounding node does match the rule. `stopBy` is inclusive. If the matching surrounding node also match the relational rule, the target node is still considered as matched.
+
+#### `field`
+* type: `String`
+* required: No
+* Only available in `inside` and `has` relational rules
+
+`field` is an option to specify the sub-node in the target node to match the relational rule.
+
+Note `field` and `kind` are two different concepts.
+
 :::tip
 Only relational rules have `stopBy` and `field` options.
 :::
-
 
 ## Composite Rules
 
