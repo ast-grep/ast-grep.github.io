@@ -10,6 +10,22 @@ Sometimes, we may want to apply some transformations to the meta variables in th
 
 A transformation object has a key indicating which string operation will be performed on the meta variable, and the value of that key is another object (usually with the source key). Different string operation keys expect different object values.
 
+The following is an example illustring the syntax of a transformation object:
+
+```yaml
+transform:
+  NEW_VAR:
+    replace:
+      source: $VAR_NAME
+      replace: regex
+      by: replacement
+  ANOTHER_NEW_VAR:
+    substring:
+      source: $NEW_VAR
+      startChar: 1
+      endChar: -1
+```
+
 
 ## Example of Converting Generator in Python
 
@@ -58,6 +74,7 @@ We have several different transformations available now. Please check out [trans
 * `replace`: Use a regular expression to replace the text in a meta-variable with a new text.
 * `substring`: Create a new string by cutting off leading and trailing characters.
 * `convert`: Change the string case of a meta-variable, such as from `camelCase` to `underscore_case`.
+* `rewrite`: Apply rewriter rules to a meta-variable AST and generate a new string. It is like rewriting a sub node recursively.
 
 ## Rewrite with Regex Capture Groups
 The `replace` transformation allows us to use Rust regex capture groups like `(?<NAME>.*)` to capture meta-variables and reference them in the `by` field.  For example, to replace `debug` with `release` in a function name, we can use the following transformation:
