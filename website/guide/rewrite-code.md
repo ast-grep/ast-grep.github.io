@@ -85,10 +85,6 @@ This allows you to group related rules together!
 
 As we saw in the previous example, we can use [meta variables](/guide/pattern-syntax.html#meta-variable-capturing) in both the pattern and the fix parts of a YAML rule. They are like regular expression [capture groups](https://regexone.com/lesson/capturing_groups). Meta variables are identifiers that start with `$`, and they can match any syntactic element in the code, such as expressions, statements, types, etc. When we use a meta variable in the fix part of a rule, it will be replaced by whatever it matched in the pattern part.
 
-:::warning
-non-matched meta-variable will be replaced by empty string in the `fix`.
-:::
-
 For example, if we have a [rule](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBzd2FwXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWCA9ICRZXG5maXg6ICRZID0gJFgiLCJzb3VyY2UiOiJhID0gYlxuYyA9IGQgKyBlXG5mID0gZyAqIGgifQ==) like this:
 
 ```yaml
@@ -118,6 +114,16 @@ g * h = f
 [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBzd2FwXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWCA9ICRZXG5maXg6ICRZID0gJFgiLCJzb3VyY2UiOiJhID0gYlxuYyA9IGQgKyBlXG5mID0gZyAqIGgifQ==)
 
 Note that this may **not** be a valid or sensible code transformation, but it illustrates how meta variables work.
+
+:::warning Append Uppercase String to Meta Variable
+It will not work if you want to append a string starting with uppercase letters to a meta variable because it will be parsed as an undefined meta variable.
+:::
+
+Suppose we want to append `Name` to the meta variable `$VAR`, the fix string `$VARName` will be parsed as `$VARN` + `ame` instead. You can instead use [replace transformation](/guide/rewrite/transform.html#rewrite-with-regex-capture-groups) to create a new variable whose content is `$VAR` plus `Name`.
+
+:::danger Non-matched meta-variable
+non-matched meta-variable will be replaced by empty string in the `fix`.
+:::
 
 ### Rewrite is Indentation Sensitive
 
