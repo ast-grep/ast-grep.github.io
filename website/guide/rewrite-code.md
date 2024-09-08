@@ -263,7 +263,7 @@ The `replace` transformation allows us to use Rust regex capture groups like `(?
 id: debug-to-release
 language: js
 rule: {pattern: $OLD_FN($$$ARGS)}   # Capture OLD_FN
-constraints: {FN: {regex: ^debug}}  # Only match if it starts with 'debug'
+constraints: {OLD_FN: {regex: ^debug}}  # Only match if it starts with 'debug'
 transform:
   NEW_FN:
     replace:
@@ -272,7 +272,7 @@ transform:
       by: release$REG               # Refer to REG just like a meta-variable
 fix: $NEW_FN($$$ARGS)
 ```
-which will result in the following change:
+which will result in [the following change](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoiaWQ6IGRlYnVnLXRvLXJlbGVhc2Vcbmxhbmd1YWdlOiBqc1xucnVsZToge3BhdHRlcm46ICRPTERfRk4oJCQkQVJHUyl9ICAgIyBDYXB0dXJlIE9MRF9GTlxuY29uc3RyYWludHM6IHtPTERfRk46IHtyZWdleDogXmRlYnVnfX0gICMgT25seSBtYXRjaCBpZiBpdCBzdGFydHMgd2l0aCAnZGVidWcnXG50cmFuc2Zvcm06XG4gIE5FV19GTjpcbiAgICByZXBsYWNlOlxuICAgICAgc291cmNlOiAkT0xEX0ZOXG4gICAgICByZXBsYWNlOiBkZWJ1Zyg/PFJFRz4uKikgICAgICAjIENhcHR1cmUgZXZlcnl0aGluZyBmb2xsb3dpbmcgJ2RlYnVnJyBhcyBSRUdcbiAgICAgIGJ5OiByZWxlYXNlJFJFRyAgICAgICAgICAgICAgICMgUmVmZXIgdG8gUkVHIGp1c3QgbGlrZSBhIG1ldGEtdmFyaWFibGVcbmZpeDogJE5FV19GTigkJCRBUkdTKSIsInNvdXJjZSI6ImRlYnVnRm9vKGFyZzEsIGFyZzIpICAifQ==):
 ```js
 debugFoo(arg1, arg2)  // [!code --]
 releaseFoo(arg1, arg2)  // [!code ++]
