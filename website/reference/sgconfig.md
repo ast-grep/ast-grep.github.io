@@ -141,3 +141,57 @@ customLanguages:
       extensions: [mojo, 🔥]   # file extensions for this language
       expandoChar: _           # optional char to replace $ in your pattern
 ```
+
+## `languageInjections` <Badge type="warning" text="Experimental" />
+* type: `List<LanguageInjection>`
+* required: No
+* status: **Experimental**
+
+A list of language injections to support embedded languages in the project like JS/CSS in HTML.
+This is an experimental feature.
+
+Please see the [guide](/advanced/language-injection.html) for detailed instructions.
+
+A language injection object has the following options.
+
+### `hostLanguage`
+* type: `String`
+* required: Yes
+
+The host language name, e.g. `html`. This is the language of documents that contains the embedded language code.
+
+### `rule`
+* type: `Rule` object
+* required: Yes
+
+Defines the ast-grep rule to identify the injected language region within the host language documents.
+
+### `injected`
+* type: `String` or `List<String>`
+* required: Yes
+
+The injected language name, e.g. `js`. This is the language of the embedded code.
+
+It can be a static string or a list of strings. If it is a list, ast-grep will use the `$LANG` meta variable captured in the rule to dynamically determine the injected language. The list of strings is the candidate language names to match the `$LANG` meta variable.
+
+**Example:**
+
+This is a configuration to support styled-components in JS files with static `injected` language.
+
+```yaml
+languageInjections:
+- hostLanguage: js
+  rule:
+    pattern: styled.$TAG`$CONTENT`
+  injected: css
+```
+
+This is a configuration to support CSS in JS style in JS files with dynamic `injected` language.
+
+```yaml
+languageInjections:
+- hostLanguage: js
+  rule:
+    pattern: styled.$LANG`$CONTENT`
+  injected: [css, scss, less]
+```
