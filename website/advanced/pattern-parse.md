@@ -30,7 +30,7 @@ There are several common pitfalls to avoid when creating patterns.
 
 ast-grep pattern must be parsable valid code. While this may seem obvious, newcomers sometimes make mistakes when creating patterns with meta-variables.
 
-_**Meta-variable is usually parsed as identifier in most language.**_
+_**Meta-variable is usually parsed as identifier in most languages.**_
 
 When using meta-variables, make sure they are placed in a valid context and not used as a keyword or an operator.
 For example, you may want to use `$OP` to match binary expressions like `a + b`.
