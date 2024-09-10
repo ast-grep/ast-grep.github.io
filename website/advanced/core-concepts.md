@@ -101,11 +101,11 @@ return 123 // `123` is named `number` and matched.
 return;    // `;` is unnamed and not matched.
 ```
 
-We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiJyZXR1cm4gMTIzXG5yZXR1cm47In0=).
+We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
 
 ## Kind vs Field
 
-Sometimes, using kind alone is not enough to find the nodes we want. A node may have several children with the same kind, but different roles in the code. For [example](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJ2YXIgYSA9IHtcbiAgJ2tleSc6ICd2YWx1ZSdcbn0ifQ==), in JavaScript, an object may have multiple keys and values, all with the string kind.
+Sometimes, using kind alone is not enough to find the nodes we want. A node may have several children with the same kind, but different roles in the code. For [example](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJ2YXIgYSA9IHtcbiAgJ2tleSc6ICd2YWx1ZSdcbn0ifQ==), in JavaScript, an object may have multiple keys and values, all with the string kind.
 
 To distinguish them, we can use `field` to specify the relation between a node and its parent. In ast-grep, `field` can be specified in two [relational rules](/guide/rule-config/relational-rule.html#relational-rule-mnemonics): `has` and `inside`.
 
