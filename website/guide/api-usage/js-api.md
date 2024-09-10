@@ -47,7 +47,7 @@ A common workflow to use ast-grep's JavaScript API is:
 import { parse, Lang } from '@ast-grep/napi';
 
 let source = `console.log("hello world")`
-const ast = parse(source, Lang.JavaScript)  // 1. parse the source
+const ast = parse(Lang.JavaScript, source)  // 1. parse the source
 const root = ast.root()                     // 2. get the root
 const node = root.find('console.log($A)')   // 3. find the node
 node.getMatch('A').text()                   // 4. collect the info
@@ -64,7 +64,7 @@ We can import the `Lang` enum from the `@ast-grep/napi` package and call the  `p
 import { Lang, parse } from '@ast-grep/napi';
 
 const source = `console.log("hello world")`
-const ast = parse(source, Lang.JavaScript)
+const ast = parse(Lang.JavaScript, source)
 ```
 
 The `SgRoot` object has a `root` method that returns the root `SgNode` of the AST.
@@ -123,7 +123,7 @@ A `Matcher` can be one of the three types: `string`, `number` or `object`.
 // basic find example
 root.find('console.log($A)')    // returns SgNode of call_expression
 let l = Lang.JavaScript         // calling kind function requires Lang
-const kind = kind('string', l)  // convert kind name to kind id number
+const kind = kind(l, 'string')  // convert kind name to kind id number
 root.find(kind)                 // returns SgNode of string
 root.find('notExist')           // returns null if not found
 
@@ -160,7 +160,7 @@ const src = `
 console.log('hello')
 logger('hello', 'world', '!')
 `
-const root = parse(src, Lang.JavaScript).root()
+const root = parse(Lang.JavaScript, src).root()
 const node = root.find('console.log($A)')
 const arg = node.getMatch("A") // returns SgNode('hello')
 arg !== null // true, node is found
@@ -191,7 +191,7 @@ export class SgNode {
 **Example:**
 
 ```ts{3}
-const ast = parse("console.log('hello world')", Lang.JavaScript)
+const ast = parse(Lang.JavaScript, "console.log('hello world')")
 root = ast.root()
 root.text() // will return "console.log('hello world')"
 ```
@@ -275,7 +275,7 @@ class SgNode {
 **Example**
 
 ```ts{3,4}
-const root = parse("console.log('hello world')", Lang.JavaScript).root()
+const root = parse(Lang.JavaScript, "console.log('hello world')").root()
 const node = root.find('console.log($A)')
 const edit = node.replace("console.error('bye world')")
 const newSource = node.commitEdits([edit])
@@ -300,7 +300,7 @@ To access other languages, you can use the `parse`/`parseAsync` function and the
 ```js
 import { parse, Lang } from '@ast-grep/napi'
 
-const sg = parse('def test(): pass', Lang.Python)
+const sg = parse(Lang.Python, 'def test(): pass')
 
 console.log(sg.root().has('function_definition'))
 ```

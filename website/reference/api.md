@@ -53,11 +53,11 @@ ast-grep also provides other utility for parse kind string and construct pattern
 
 ```ts
 /** Parse a string to an ast-grep instance */
-export function parse(src: string, lang: Lang): SgRoot
+export function parse(lang: Lang, src: string): SgRoot
 /** Get the `kind` number from its string name. */
-export function kind(kindName: string, lang: Lang): number
+export function kind(lang: Lang, kindName: string): number
 /** Compile a string to ast-grep Pattern. */
-export function pattern(pattern: string, lang: Lang): NapiConfig
+export function pattern(lang: Lang, pattern: string): NapiConfig
 ```
 
 #### Example
@@ -65,14 +65,14 @@ export function pattern(pattern: string, lang: Lang): NapiConfig
 ```ts
 import { parse, Lang } from '@ast-grep/napi'
 
-const ast = parse(source, Lang.JavaScript)
+const ast = parse(Lang.JavaScript, source)
 const root = ast.root()
 root.find("console.log")
 ```
 
 ### SgRoot
 
-You will get an `SgRoot` instance when you `lang.parse(string)`.
+You will get an `SgRoot` instance when you `parse(lang, string)`.
 
 `SgRoot` can also be accessed in `lang.findInFiles`'s callback by calling `node.getRoot()`.
 
@@ -87,7 +87,7 @@ class SgRoot {
   root(): SgNode
   /**
    * Returns the path of the file if it is discovered by ast-grep's `findInFiles`.
-   * Returns `"anonymous"` if the instance is created by `lang.parse(source)`.
+   * Returns `"anonymous"` if the instance is created by `parse(lang, source)`.
    */
   filename(): string
 }
@@ -98,7 +98,7 @@ class SgRoot {
 ```ts
 import { parse, Lang } from '@ast-grep/napi'
 
-const ast = parse(source, Lang.JavaScript)
+const ast = parse(Lang.JavaScript, source)
 const root = ast.root()
 root.find("console.log")
 ```
