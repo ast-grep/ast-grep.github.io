@@ -94,7 +94,7 @@ rule:
 # matches `1 + 1`
 ```
 
-Further more, ast-grep's meta variable matches only named nodes by default. `return $A` matches only the first statement below. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICRBIiwiY29uZmlnIjoiIyBDb25maWd1cmUgUnVsZSBpbiBZQU1MXG5ydWxlOlxuICBhbnk6XG4gICAgLSBwYXR0ZXJuOiBpZiAoZmFsc2UpIHsgJCQkIH1cbiAgICAtIHBhdHRlcm46IGlmICh0cnVlKSB7ICQkJCB9XG5jb25zdHJhaW50czpcbiAgIyBNRVRBX1ZBUjogcGF0dGVybiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
+Further more, ast-grep's meta variable matches only named nodes by default. `return $A` matches only the first statement below. [Playground link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICRBIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoicmV0dXJuIDEyM1xucmV0dXJuOyJ9).
 
 ```js
 return 123 // `123` is named `number` and matched.
