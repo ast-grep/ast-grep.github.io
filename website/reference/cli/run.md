@@ -46,6 +46,12 @@ Possible values:
 - **cst**: Print the query in tree-sitter CST format, both named and unnamed nodes are shown
 - **sexp**: Print the query in S-expression format
 
+#### `--selector <KIND>`
+
+AST kind to extract sub-part of pattern to match.
+
+selector defines the sub-syntax node kind that is the actual matcher of the pattern. See https://ast-grep.github.io/guide/rule-config/atomic-rule.html#pattern-object.
+
 ### `--strictness <STRICTNESS>`
 
 The strictness of the pattern. More strict algorithm will match less code. See [match algorithm deep dive](/advanced/match-algorithm.html) for more details.
@@ -80,6 +86,12 @@ Possible values:
 Enable search code from StdIn.
 
 Use this if you need to take code stream from standard input.
+
+### `--follow`
+
+Follow symbolic links.
+
+This flag instructs ast-grep to follow symbolic links while traversing directories. This behavior is disabled by default. Note that ast-grep will check for symbolic link loops and report errors if it finds one. ast-grep will also report errors for broken links.
 
 ## Output Options
 

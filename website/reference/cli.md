@@ -21,9 +21,12 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 | Short | Long | Description |
 |-------|------|-------------|
 | -p| --pattern `<PATTERN>` |  AST pattern to match. |
+|   | --selector `<KIND>`   |  AST kind to extract sub-part of pattern to match. |
 | -r| --rewrite `<REWRITE>` |  String to replace the matched AST node. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
 |   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
+|   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature] |
+|   | --follow   |  Follow symbolic links |
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
 |   | --json`[=<style>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
@@ -59,6 +62,7 @@ sg scan [OPTIONS] [PATHS]...
 | -i | --interactive|Start interactive edit session.|
 | | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
+|   | --follow   |  Follow symbolic links |
 | | --json`[=<style>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
 | | --format `<FORMAT>` | Output warning/error messages in GitHub Action format [possible values: github] |
 | -U | --update-all | Apply all rewrite without confirmation |

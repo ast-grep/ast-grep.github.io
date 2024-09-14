@@ -61,6 +61,12 @@ Enable search code from StdIn.
 
 Use this if you need to take code stream from standard input.
 
+### `--follow`
+
+Follow symbolic links.
+
+This flag instructs ast-grep to follow symbolic links while traversing directories. This behavior is disabled by default. Note that ast-grep will check for symbolic link loops and report errors if it finds one. ast-grep will also report errors for broken links.
+
 ## Output Options
 
 ### `-i, --interactive`
