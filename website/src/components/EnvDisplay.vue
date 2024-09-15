@@ -30,30 +30,48 @@ function decrement() {
 
 <template>
 <div class="var-debugger">
-  <table class="metavar-table" v-if="currentEnv">
-    <thead>
-      <tr>
-        <td>MetaVar Name</td>
-        <td>Matched Node(s)</td>
-      </tr>
-    </thead>
-    <tbody v-if="currentEnv">
-      <tr v-for="(val, key) in currentEnv">
-        <td>{{key}}</td>
-        <td>
-          <code>
-            {{val.text}}
-          </code>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="choose-match">
-    <button @click="decrement">Prev Match</button>
-    &nbsp;
-    <button @click="increment">Next Match</button>
+  <template v-if="currentEnv">
+    <table class="metavar-table">
+      <thead>
+        <tr>
+          <td>MetaVar Name</td>
+          <td>Matched Node(s)</td>
+        </tr>
+      </thead>
+      <tbody v-if="currentEnv">
+        <tr v-for="(val, key) in currentEnv">
+          <td>{{key}}</td>
+          <td>
+            <code>
+              {{val.text}}
+            </code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="choose-match">
+      <button @click="decrement">Prev Match</button>
+      &nbsp;
+      <button @click="increment">Next Match</button>
+    </div>
+  </template>
+  <Error v-else-if="error" :error="error"/>
+  <div v-else class="vp-doc">
+    <div class="custom-block warning no-match-tip">
+      <p class="custom-block-title">No match found? Some tips:</p>
+      <ul>
+        <li>Simplify the rule and start from a minimal one.</li>
+        <li>
+          <code>pattern</code> may <a href="/advanced/pattern-parse.html#extract-effective-ast-for-pattern">not match a whole statement</a> but the expression inside.
+        </li>
+        <li>
+          <a href="/advanced/faq.html#why-is-rule-matching-order-sensitive">Rule order</a> can be important. Try using <code>all</code>.
+        </li>
+        <li>Deep dive into <a href="/advanced/pattern-parse.html" target="_blank">Pattern Syntax</a></li>
+        <li>See ast-grep's <a href="/advanced/faq.html" target="_blank">FAQs</a> for more info.</li>
+      </ul>
+    </div>
   </div>
-  <Error :error="error"/>
 </div>
 </template>
 
@@ -81,5 +99,21 @@ function decrement() {
 }
 .choose-match {
   margin-top: 1em;
+}
+
+.no-match-tip {
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: unset;
+  line-height: unset;
+}
+.no-match-tip ul {
+  margin: 0;
+  padding-left: 1em;
+  padding-top: 0.5em;
+}
+.no-match-tip ul > li {
+  margin-top: 4px;
 }
 </style>

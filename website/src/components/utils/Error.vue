@@ -28,4 +28,8 @@ let prettyError = computed(() => {
   color: var(--vp-c-danger-1);
   white-space: pre-wrap;
 }
+.error-msg::first-line {
+  font-weight: 600;
+  line-height: 24px;
+}
 </style>
