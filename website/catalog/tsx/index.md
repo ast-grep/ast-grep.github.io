@@ -11,3 +11,4 @@ TS allows both the `as` operator and angle brackets (`<>`) for type assertions. 
 
 <!--@include: ./avoid-jsx-short-circuit.md-->
 <!--@include: ./rewrite-mobx-component.md-->
+<!--@include: ./unnecessary-react-hook.md-->
