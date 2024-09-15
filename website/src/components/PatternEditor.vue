@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Monaco, EditorWithPanel } from './editors'
-import { shallowRef, watchEffect, provide, inject } from 'vue'
+import { shallowRef, watchEffect, provide, inject, watch } from 'vue'
 import PatternNode from './dump/PatternNode.vue'
 import { highlightKey, PatternTree, Pos } from './dump/dumpTree'
 import { langLoadedKey, usePattern } from './astGrep'
@@ -8,7 +8,7 @@ import { dumpPattern } from 'ast-grep-wasm'
 import PatternConfig from './PatternConfig.vue'
 import Error from './utils/Error.vue'
 
-defineProps({
+const props = defineProps({
   language: {
     type: String,
     default: 'javascript'
@@ -38,6 +38,10 @@ watchEffect(() => {
   } catch (e) {
     console.error(e)
   }
+})
+
+watch(() => [query.value, props.language], () => {
+  selector.value = ''
 })
 
 let cursorPosition = shallowRef<Pos>()
