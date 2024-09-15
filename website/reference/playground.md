@@ -2,6 +2,10 @@
 
 The [ast-grep playground](/playground.html) is an online tool that allows you to try out ast-grep without installing anything on your machine. You can write code patterns and see how they match your code in real time. You can also apply rewrite rules to modify your code based on the patterns.
 
+<iframe style="width:100%;aspect-ratio:16/9;" src="https://www.youtube.com/embed/eQSbypFjXQs?si=NL8AUX9VS_egBMuF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+See the video for a quick overview of the playground.
+
 The playground is a great way to _learn_ ast-grep, _debug_ patterns/rules, _report bugs_ and _showcase_ ast-grep's capabilities.
 
 ## Basic Usage
