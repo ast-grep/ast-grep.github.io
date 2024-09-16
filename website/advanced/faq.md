@@ -27,6 +27,13 @@ The idea is that you can write full an valid code in the `context` field and use
 
 This trick can be used in other languages as well, like [C](https://ast-grep.github.io/catalog/c/#match-function-call) and [Go](https://ast-grep.github.io/catalog/go/#match-function-call-in-golang).
 
+## My Rule does not work, why?
+Here are some tips to debug your rule:
+* Use the [ast-grep playground](/playground.html) to test your rule.
+* Simplify your rule to the minimal possible code that reproduces the issue.
+* Confirm pattern's matched AST nodes are expected. e.g. statement and expression are [different matches](/advanced/pattern-parse.html#extract-effective-ast-for-pattern). This usually happens when you use `follows` or `precedes` in the rule.
+* Check the [rule order](/faq.html#rule-matching-order-sensitive). The order of rules matters in ast-grep especially when using meta variables with relational rules.
+
 ## MetaVariable does not work, why?
 
 1. **Correct Naming**: Start meta variables with the `$` sign, followed by uppercase letters (A-Z), underscores (`_`), or digits (1-9).
