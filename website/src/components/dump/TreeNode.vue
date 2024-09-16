@@ -5,6 +5,10 @@ import { showToast } from '../utils/Toast.vue'
 import GeneralNode from './GeneralNode.vue'
 
 const props = defineProps({
+  matchedIds: {
+    type: Set as PropType<Set<number>>,
+    required: true,
+  },
   node: {
     type: Object as PropType<DumpNode>,
     required: true
@@ -17,6 +21,7 @@ const props = defineProps({
 })
 
 let {
+  id,
   field,
   kind,
   start,
@@ -46,9 +51,11 @@ function copyField(name: string) {
       <span v-else class="node-text">{{ kind }}</span>
       <span class="node-field" @click.stop="copyField(field || '')">{{ field }}</span>
       <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
+      <span class="matched" v-if="matchedIds.has(id)">Matched</span>
     </template>
     <template #children="{cursorPosition}">
       <TreeNode
+        :matchedIds="matchedIds"
         :showUnnamed="showUnnamed"
         :node="child"
         :cursorPosition="cursorPosition"
@@ -84,5 +91,13 @@ function copyField(name: string) {
 }
 .node-range {
   color: #999;
+}
+.matched {
+  border: 1px solid currentColor;
+  color: var(--cyan);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  margin: 0 4px 7px;
+  font-size: 0.9em;
 }
 </style>

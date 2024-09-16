@@ -16,6 +16,7 @@ export interface GeneralNode {
   start: Pos
   end: Pos
   children: this[]
+  id: number
 }
 
 /** stub wasm DumpNode */

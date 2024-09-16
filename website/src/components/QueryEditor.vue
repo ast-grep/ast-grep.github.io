@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Monaco, EditorWithPanel } from './editors'
-import { shallowRef, watchEffect, provide, PropType, inject } from 'vue'
+import { shallowRef, watchEffect, provide, PropType, inject, computed } from 'vue'
 import TreeNode from './dump/TreeNode.vue'
 import { highlightKey, DumpNode, Pos } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
@@ -9,7 +9,7 @@ import type { Match, SupportedLang } from './astGrep'
 
 const modelValue = defineModel<string>()
 
-defineProps({
+const props = defineProps({
   language: {
     type: String as PropType<SupportedLang>,
     default: 'javascript'
@@ -25,6 +25,11 @@ watchEffect(() => {
   if (langLoaded.value) {
     root.value = dumpASTNodes(modelValue.value || '')
   }
+})
+
+const matchedIds = computed(() => {
+  const matches = props.matches || []
+  return new Set(matches.map(m => m.id))
 })
 
 let cursorPosition = shallowRef<Pos>()
@@ -71,6 +76,7 @@ let showFullTree = shallowRef(false)
         :showUnnamed="showFullTree"
         class="pre"
         :node="root"
+        :matchedIds="matchedIds"
         :cursorPosition="cursorPosition"/>
     </template>
   </EditorWithPanel>

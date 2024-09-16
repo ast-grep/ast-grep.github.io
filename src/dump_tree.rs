@@ -10,6 +10,7 @@ use wasm_bindgen::prelude::JsError;
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DumpNode {
+  id: usize,
   field: Option<String>,
   kind: String,
   start: Pos,
@@ -51,6 +52,7 @@ pub fn dump_one_node(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
     cursor.goto_parent();
   }
   target.push(DumpNode {
+    id: node.id(),
     field,
     kind,
     start,

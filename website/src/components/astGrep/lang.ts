@@ -81,10 +81,12 @@ export type Match = {
   message: string,
   rule: string,
   env: any,
+  id: number,
   range: [number, number, number, number],
 } | {
   type: 'simple',
   env: any,
+  id: number,
   range: [number, number, number, number],
 }
 
@@ -116,6 +118,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
             message: nm.message,
             range: nm.node.range,
             env: nm.env,
+            id: nm.id,
           })
         }
       } else {
@@ -124,6 +127,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
             type: 'simple',
             range: nm.node.range,
             env: nm.env,
+            id: nm.id,
           })
         }
       }

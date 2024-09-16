@@ -21,7 +21,6 @@ provide('toggle-appearance', async () => {
   if (!enableTransitions()) {
     return toggle()
   }
-  // @ts-expect-error
   return document.startViewTransition(toggle).ready
 })
 </script>
