@@ -61,6 +61,9 @@ rule:
 
 Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value is a [rule object](/reference/rule.html).
 
+**Note, constraints only applies to the single meta variable like `$ARG`,** not multiple meta variable like `$$$ARGS`.
+So the key name must only refer to a single meta variable.
+
 Example:
 
 ```yaml

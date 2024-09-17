@@ -73,6 +73,10 @@ So `console.log(name)` will match the above rule, but `console.log('Rem')` will 
 
 See [playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRHUkVFVClcbmNvbnN0cmFpbnRzOlxuICBHUkVFVDpcbiAgICBraW5kOiBpZGVudGlmaWVyIiwic291cmNlIjoiY29uc29sZS5sb2coJ0hlbGxvIFdvcmxkJylcbmNvbnNvbGUubG9nKGdyZWV0aW5nKVxuIn0=) in action.
 
+:::warning
+Note, constraints only applies to the single meta variable like `$ARG`, not multiple meta variable like `$$$ARGS`.
+:::
+
 :::details `constraints` is applied after `rule` and does not work inside `not`
 `constraints` is a filter to further refine the matched nodes and is applied after the `rule` is matched.
 So the `constraints` field cannot be used inside `not`, for example
