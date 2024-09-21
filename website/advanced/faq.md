@@ -49,7 +49,7 @@ To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#de
 sg run -p <PATTERN> --debug-query ast
 ```
 
-The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground.html).
+The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground.html). You can also use different debug formats like `cst` or `pattern`.
 
 If you find there are different results, it is usually caused by incomplete code snippet in the pattern. To fix the issue, you can provide a complete context code via the [pattern object](/reference/rule.html#atomic-rules).
 
@@ -62,12 +62,16 @@ rule:
 
 See [Pattern Deep Dive](/advanced/pattern-parse.html) for more context.
 
-:::tip What is tree-sitter error recovery?
+:::details Text encoding impacts tree-sitter error recovery.
 Tree-sitter is a robust parser that can recover from syntax errors and continue parsing the rest of the code.
 The exact strategy for error recovery is implementation-defined and uses a heuristic to determine the best recovery strategy.
 See [tree-sitter issue](https://github.com/tree-sitter/tree-sitter/issues/224) for more details.
 
 Text-encoding will affect the error recovery because it changed the cost of different recovery strategies.
+:::
+
+:::tip Found inconsistency?
+If you find the inconsistency between CLI and Playground, please [open an issue in the Playground repository](https://github.com/ast-grep/ast-grep.github.io/issues).
 :::
 
 
