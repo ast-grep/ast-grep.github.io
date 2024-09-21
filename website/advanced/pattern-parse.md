@@ -13,6 +13,8 @@ Parsing a pattern in ast-grep involves these keys steps:
 3. Extract effective AST nodes based on builtin heuristics or user provided [selector](/reference/rule.html#pattern).
 4. Detect AST with wildcard text and convert them into [meta variables](/guide/pattern-syntax.html#meta-variable).
 
+![image](/image/parse-pattern.jpg)
+
 Let's dive deep into each of these steps.
 
 ## Pattern is AST based
