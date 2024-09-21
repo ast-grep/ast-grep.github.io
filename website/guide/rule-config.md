@@ -60,7 +60,7 @@ await Promise.all([
 
 ### `ast-grep scan --inline-rules`
 
-You can also run the rule directly from the command line without saving the rule to a file. The `--inline-rules` option is useful for ad-hoc search or calling ast-grpe from another program.
+You can also run the rule directly from the command line without saving the rule to a file. The `--inline-rules` option is useful for ad-hoc search or calling ast-grep from another program.
 
 :::details The full inline-rules command
 ```bash
