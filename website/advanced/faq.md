@@ -34,6 +34,43 @@ Here are some tips to debug your rule:
 * Confirm pattern's matched AST nodes are expected. e.g. statement and expression are [different matches](/advanced/pattern-parse.html#extract-effective-ast-for-pattern). This usually happens when you use `follows` or `precedes` in the rule.
 * Check the [rule order](/advanced/faq.html#why-is-rule-matching-order-sensitive). The order of rules matters in ast-grep especially when using meta variables with relational rules.
 
+## CLI and Playground produce different results, why?
+
+The CLI and Playground may use different tree-sitter parsers. There are two main reasons why the results may differ:
+
+* **Parser Version**: The CLI may use a different version of the tree-sitter parser than the Playground.
+Playground parsers are updated less frequently than the CLI, so there may be differences in the results.
+* **Text Encoding**: The CLI and Playground may use different text encodings. CLI uses utf-8, while the Playground uses utf-16.
+The encoding difference may cause different fallback parsing during [error recovery](https://github.com/tree-sitter/tree-sitter/issues/224).
+
+To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#debug-query-format) flag in the CLI to see the parsed AST nodes and meta variables.
+
+```sh
+sg run -p <PATTERN> --debug-query ast
+```
+
+The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground.html).
+
+If you find there are different results, it is usually caused by incomplete code snippet in the pattern. To fix the issue, you can provide a complete context code via the [pattern object](/reference/rule.html#atomic-rules).
+
+```yaml
+rule:
+  pattern:
+    context: 'int main() { return 0; }'
+    selector: function
+```
+
+See [Pattern Deep Dive](/advanced/pattern-parse.html) for more context.
+
+:::tip What is tree-sitter error recovery?
+Tree-sitter is a robust parser that can recover from syntax errors and continue parsing the rest of the code.
+The exact strategy for error recovery is implementation-defined and uses a heuristic to determine the best recovery strategy.
+See [tree-sitter issue](https://github.com/tree-sitter/tree-sitter/issues/224) for more details.
+
+Text-encoding will affect the error recovery because it changed the cost of different recovery strategies.
+:::
+
+
 ## MetaVariable does not work, why?
 
 1. **Correct Naming**: Start meta variables with the `$` sign, followed by uppercase letters (A-Z), underscores (`_`), or digits (1-9).
