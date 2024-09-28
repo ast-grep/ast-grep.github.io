@@ -2,7 +2,7 @@
 
 ast-grep has three categories of rules. Let's start with the most basic one: atomic rule.
 
-Atomic rule defines the most basic matching rule that determines whether one syntax node matches the rule or not. There are three kinds of atomic rule: `pattern`, `kind` and `regex`.
+Atomic rule defines the most basic matching rule that determines whether one syntax node matches the rule or not. There are four kinds of atomic rule: `pattern`, `kind`, `regex` and `nthChild`.
 
 ## `pattern`
 

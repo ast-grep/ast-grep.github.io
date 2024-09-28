@@ -256,6 +256,13 @@ any:
   - pattern: console.error($ARG)
 ```
 
+:::warning all/any refers to rules, not nodes
+`all` will match a node only if all sub rules must match.
+
+It will never match multiple nodes at once. Use it with other rules like `has`/`inside` will not alter this behavior.
+See the [composite rule guide](/guide/rule-config/composite-rule.html#all-and-any-refers-to-rules-not-nodes) for more details and examples.
+:::
+
 ### `not`
 * type: `Object`
 

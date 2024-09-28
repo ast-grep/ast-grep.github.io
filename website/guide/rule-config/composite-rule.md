@@ -68,6 +68,36 @@ The above rule will match any `console.log` call but not `console.log('Hello Wor
 
 `matches` rule enable us to reuse rules and even unlock the possibility of recursive rule. It is the most powerful rule in ast-grep and deserves a separate page to explain it. Please see the [dedicated page](/guide/rule-config/utility-rule) for `matches`.
 
+## `all` and `any` Refers to Rules, Not Nodes
+`all` mean that a node should **satisfy all the rules**. `any` means that a node should **satisfy any one of the rules**.
+It does not mean `all` or `any` nodes matching the rules.
+
+For example, the rule `all: [kind: number, kind: string]` will never match any node because a node cannot be both a number and a string at the same time. New ast-grep users may think this rule should all nodes that are either a number or a string, but it is not the case.
+The correct rule should be `any: [kind: number, kind: string]`.
+
+Another example is to match a node that has both `number` child and `string` child. It is extremely easy to [write a rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImE6IExpc3RbJEJdIiwicmV3cml0ZSI6Imxpc3RbJEJdIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJnZW5lcmljX3R5cGUiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBhcmd1bWVudHNcbiAgaGFzOlxuICAgIGFsbDogW3traW5kOiBudW1iZXJ9LCB7IGtpbmQ6IHN0cmluZ31dIiwic291cmNlIjoibG9nKCdzdHInLCAxMjMpIn0=) like below
+
+```yaml
+has:
+  all: [kind: number, kind: string]
+```
+
+It is very tempting to think that this rule will work. However, `all` rule works independently and does not rely on its containing rule `has`. Since the `all` rule matches no node, the `has` rule will also match no node.
+
+**An ast-grep rule tests one node at a time, independently.** A rule can never test multiple nodes at once.
+So the rule above means _"match a node has a child that is both a number and a string at the same time"_, which is impossible.
+Instead we should search _"a node that has a number child and has a string child"_.
+
+Here is [the correct rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImE6IExpc3RbJEJdIiwicmV3cml0ZSI6Imxpc3RbJEJdIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJnZW5lcmljX3R5cGUiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBhcmd1bWVudHNcbiAgYWxsOlxuICAtIGhhczogeyBraW5kOiBudW1iZXIgfVxuICAtIGhhczogeyBraW5kOiBzdHJpbmcgfSIsInNvdXJjZSI6ImxvZygnc3RyJywgMTIzKSJ9). Note `all` is used before `has`.
+```yaml
+all:
+- has: {kind: number}
+- has: {kind: string}
+```
+
+Composite rule is inspired by logical operator `and`/`or` and related list method like [`all`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.all)/[`any`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.any). It tests whether a node matches all/any of the rules in the list.
+
+
 ## Combine Different Rules as Fields
 Sometimes it is necessary to match node nested within other desired nodes. We can use composite rule `all` and relational `inside` to find them, but the result rule is highly nested.
 
