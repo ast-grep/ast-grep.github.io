@@ -18,6 +18,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Use Walrus Operator in `if` statement](/catalog/python/#use-walrus-operator-in-if-statement)
   * [Prefer Generator Expressions](/catalog/python/#prefer-generator-expressions)
   * [Remove `async` function](/catalog/python/#remove-async-function)
+  * [Rewrite `Optional[Type]` to `Type | None`](/catalog/python/#rewrite-optional-type-to-type-none)
 * [Ruby](/catalog/ruby/)
   * [Prefer Symbol over Proc](/catalog/ruby/#prefer-symbol-over-proc)
   * [Migrate action_filter in Ruby on Rails](/catalog/ruby/#migrate-action-filter-in-ruby-on-rails)

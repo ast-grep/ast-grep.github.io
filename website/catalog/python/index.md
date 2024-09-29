@@ -7,3 +7,4 @@ This page curates a list of example ast-grep rules to check and to rewrite Pytho
 <!--@include: ./use-walrus-operator-in-if.md-->
 <!--@include: ./remove-async-await.md-->
 <!--@include: ./refactor-pytest-fixtures.md-->
+<!--@include: ./optional-to-none-union.md-->
