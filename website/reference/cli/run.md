@@ -87,6 +87,12 @@ Enable search code from StdIn.
 
 Use this if you need to take code stream from standard input.
 
+### `--globs <GLOBS>`
+
+Include or exclude file paths.
+
+Include or exclude files and directories for searching that match the given glob. This always overrides any other ignore logic. Multiple glob flags may be used. Globbing rules match .gitignore globs. Precede a glob with a `!` to exclude it. If multiple globs match a file or directory, the glob given later in the command line takes precedence.
+
 ### `--follow`
 
 Follow symbolic links.
@@ -140,6 +146,18 @@ Possible values:
 - **auto**:   Print heading for terminal tty but not for piped output
 - **always**: Always print heading regardless of output type
 - **never**:  Never print heading regardless of output type
+
+### `--tracing <LEVEL>`
+
+Show tracing information for file/rule discovery and scanning.
+
+This flag helps user to inspect ast-grep's internal filtering of files and rules. tracing will output how many and why files and rules are scanned and skipped. tracing information outputs to stderr and does not affect the result of the search.
+
+[default: nothing]
+
+Possible values:
+- **nothing**: Do not show any tracing information
+- **summary**: Show summary about how many files are scanned and skipped
 
 ## Context Options
 

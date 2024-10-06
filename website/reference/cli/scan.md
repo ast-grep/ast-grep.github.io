@@ -67,6 +67,12 @@ Follow symbolic links.
 
 This flag instructs ast-grep to follow symbolic links while traversing directories. This behavior is disabled by default. Note that ast-grep will check for symbolic link loops and report errors if it finds one. ast-grep will also report errors for broken links.
 
+### `--globs <GLOBS>`
+
+Include or exclude file paths.
+
+Include or exclude files and directories for searching that match the given glob. This always overrides any other ignore logic. Multiple glob flags may be used. Globbing rules match .gitignore globs. Precede a glob with a `!` to exclude it. If multiple globs match a file or directory, the glob given later in the command line takes precedence.
+
 ## Output Options
 
 ### `-i, --interactive`
@@ -87,6 +93,18 @@ Possible values:
 - pretty:  Prints the matches as a pretty-printed JSON array, with indentation and line breaks. This is useful for human readability, but not for parsing by other programs. This is the default value for the `--json` option
 - stream:  Prints each match as a separate JSON object, followed by a newline character. This is useful for streaming the output to other programs that can read one object per line
 - compact: Prints the matches as a single-line JSON array, without any whitespace. This is useful for saving space and minimizing the output size
+
+### `--tracing <LEVEL>`
+
+Show tracing information for file/rule discovery and scanning.
+
+This flag helps user to inspect ast-grep's internal filtering of files and rules. tracing will output how many and why files and rules are scanned and skipped. tracing information outputs to stderr and does not affect the result of the search.
+
+[default: nothing]
+
+Possible values:
+- **nothing**: Do not show any tracing information
+- **summary**: Show summary about how many files are scanned and skipped
 
 ### `--format <FORMAT>`
 Output warning/error messages in GitHub Action format.

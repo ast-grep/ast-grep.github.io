@@ -27,13 +27,15 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 |   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature] |
 |   | --follow   |  Follow symbolic links |
+|   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
+|   | --globs `<GLOBS>`   | Include or exclude file paths
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
 |   | --json`[=<style>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
-|   |   --heading `<WHEN>`  | Controls whether to print the file name as heading [default: auto] [possible values: auto, always, never] |
 |   |  --color `<WHEN>`     | Controls output color [default: auto] |
-|   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
-|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
+|   |  --tracing `<LEVEL>`  | Show tracing information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary]
+|   | --heading `<WHEN>`    | Controls whether to print the file name as heading [default: auto] [possible values: auto, always, never] |
 | -A| --after `<NUM>`      | Show NUM lines after each match [default: 0] |
 | -B| --before `<NUM>`     | Show NUM lines before each match [default: 0] |
 | -C| --context `<NUM>`    | Show NUM lines around each match [default: 0] |
@@ -68,6 +70,8 @@ sg scan [OPTIONS] [PATHS]...
 | -U | --update-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
+|   | --globs `<GLOBS>`   | Include or exclude file paths
+|   |  --tracing `<LEVEL>`  | Show tracing information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary]
 | -h| --help|Print help|
 
 ## `sg test`
@@ -134,6 +138,13 @@ Start a language server to [report diagnostics](/guide/scan-project.html) in you
 ```shell
 sg lsp
 ```
+
+### Options
+
+| Short | Long | Description |
+|-------|------|-------------|
+| -c | --config `<CONFIG_FILE>`| Path to ast-grep root config, default is `sgconfig.yml` |
+| -h| `--help`                | Print help (see more with '--help') |
 
 ## `sg completions`
 
