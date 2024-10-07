@@ -173,3 +173,32 @@ Using `all` to specify the order of rule matching can be helpful when debugging 
 A rule object in ast-grep is an unordered dictionary. The order of rule application is implementation-defined. Currently, ast-grep applies atomic rules first, then composite rules, and finally relational rules.
 
 If your rule depends on using meta variables in later rules, the best way is to use the `all` rule to specify the order of rules.
+
+## `kind` and `pattern` rules are not working together, why?
+
+The most common scneario is that your pattern is parsed as a different AST node than you expected. And you may use `kind` rule to filter out the AST node you want to match. This does not work in ast-grep for two reasons:
+1. tree-sitter, the underlying parser library, does not offer a way to parse a string of a specific kind. So `kind` rule cannot be used to change the parsing outcome of a `pattern`.
+2. ast-grep rules are independent of each other. `pattern` will behave the same regardless of another `kind` rule.
+
+To specify the `kind` of a `pattern`, you need to use [pattern](http://localhost:5173/guide/rule-config/atomic-rule.html#pattern-object) [object](/advanced/pattern-parse.html#incomplete-pattern-code).
+
+For example, to match class field in JavaScript, a kind + pattern rule [will not work](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IGEgPSAxMjNcbiAga2luZDogZmllbGRfZGVmaW5pdGlvbiIsInNvdXJjZSI6ImNsYXNzIEEge1xuICAgIGEgPSAxMjNcbn0ifQ==):
+
+```yaml
+# these are two separate rules
+pattern: a = 123          # rule 1
+kind: field_definition    # rule 2
+```
+
+This is because pattern `a = 123` is parsed as [`assignment_expression`](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYSA9IDEyMyIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6IiJ9). Pattern and kind are two independent rules. And using them together will match nothing because no AST will have both `assignment_expression` and `field_definition` kind at once.
+
+Instead, you need to use pattern object to provide enough context code for the parser to parse the code snippet as `field_definition`:
+
+```yaml
+# this is one single pattern rule!
+pattern:
+  context: 'class A { a = 123 }' # provide full context code
+  selector: field_definition     # select the effective pattern
+```
+
+Note the rule above is one single pattern rule, instead of two. The `context` field provides the full unambiguous code snippet of `class`. So the `a = 123` will be parsed as `field_definition`. The `selector` field then selects the `field_definition` node as the [effective pattern](/advanced/pattern-parse.html#steps-to-create-a-pattern) matcher.
