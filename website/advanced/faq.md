@@ -180,7 +180,7 @@ The most common scneario is that your pattern is parsed as a different AST node 
 1. tree-sitter, the underlying parser library, does not offer a way to parse a string of a specific kind. So `kind` rule cannot be used to change the parsing outcome of a `pattern`.
 2. ast-grep rules are mostly independent of each other, except sharing meta-variables during a match. `pattern` will behave the same regardless of another `kind` rule.
 
-To specify the `kind` of a `pattern`, you need to use [pattern](http://localhost:5173/guide/rule-config/atomic-rule.html#pattern-object) [object](/advanced/pattern-parse.html#incomplete-pattern-code).
+To specify the `kind` of a `pattern`, you need to use [pattern](/guide/rule-config/atomic-rule.html#pattern-object) [object](/advanced/pattern-parse.html#incomplete-pattern-code).
 
 For example, to match class field in JavaScript, a kind + pattern rule [will not work](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IGEgPSAxMjNcbiAga2luZDogZmllbGRfZGVmaW5pdGlvbiIsInNvdXJjZSI6ImNsYXNzIEEge1xuICAgIGEgPSAxMjNcbn0ifQ==):
 
