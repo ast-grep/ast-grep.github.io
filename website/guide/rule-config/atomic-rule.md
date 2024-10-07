@@ -118,6 +118,13 @@ Here are some situations that you can effectively use `kind`:
 3. Patterns only appear within specific context, e.g. the class property definition.
 
 
+:::warning `kind` + `pattern` is different from pattern object
+You may want to use `kind` to change how `pattern` is parsed. However, ast-grep rules are independent of each other.
+
+To change the parsing behavior of `pattern`, you should use pattern object with `context` and `selector` field.
+See [this FAQ](/advanced/faq.html#kind-and-pattern-rules-are-not-working-together-why).
+:::
+
 ## `regex`
 
 The `regex` atomic rule will match the AST node by its text against a Rust regular expression.

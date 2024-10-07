@@ -178,7 +178,7 @@ If your rule depends on using meta variables in later rules, the best way is to 
 
 The most common scneario is that your pattern is parsed as a different AST node than you expected. And you may use `kind` rule to filter out the AST node you want to match. This does not work in ast-grep for two reasons:
 1. tree-sitter, the underlying parser library, does not offer a way to parse a string of a specific kind. So `kind` rule cannot be used to change the parsing outcome of a `pattern`.
-2. ast-grep rules are independent of each other. `pattern` will behave the same regardless of another `kind` rule.
+2. ast-grep rules are mostly independent of each other, except sharing meta-variables during a match. `pattern` will behave the same regardless of another `kind` rule.
 
 To specify the `kind` of a `pattern`, you need to use [pattern](http://localhost:5173/guide/rule-config/atomic-rule.html#pattern-object) [object](/advanced/pattern-parse.html#incomplete-pattern-code).
 
@@ -190,7 +190,7 @@ pattern: a = 123          # rule 1
 kind: field_definition    # rule 2
 ```
 
-This is because pattern `a = 123` is parsed as [`assignment_expression`](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYSA9IDEyMyIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6IiJ9). Pattern and kind are two independent rules. And using them together will match nothing because no AST will have both `assignment_expression` and `field_definition` kind at once.
+This is because pattern `a = 123` is parsed as [`assignment_expression`](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYSA9IDEyMyIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6IiJ9). Pattern and kind are two separate rules. And using them together will match nothing because no AST will have both `assignment_expression` and `field_definition` kind at once.
 
 Instead, you need to use pattern object to provide enough context code for the parser to parse the code snippet as `field_definition`:
 
