@@ -31,7 +31,7 @@ rewriters:
 transform:
   NEW_VAR:
     rewrite:
-    - rewriters: [sub-rule]
+      rewriters: [sub-rule]
       source: $OLD_VAR
 ```
 
@@ -152,7 +152,7 @@ rule:
 transform:
   LITERAL:
     rewrite:
-    - rewriters: [dict-rewrite]
+      rewriters: [dict-rewrite]
       source: $$$ARGS
 # combine and replace
 fix: '{ $LITERAL }'
