@@ -32,7 +32,7 @@ Let's walk through the main fields in this configuration.
 
 * `language` is the programming language that the rule is intended to check. It specifies what files will be checked against this rule, based on the file extensions. See the list of [supported languages](/reference/languages.html).
 
-* `rule` is the most interesting part of ast-grep's configuration. It accpets a [rule object](/reference/rule.html) and defines how the rule behaves and what code will be matched. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
+* `rule` is the most interesting part of ast-grep's configuration. It accepts a [rule object](/reference/rule.html) and defines how the rule behaves and what code will be matched. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
 
 ## Run the Rule
 
