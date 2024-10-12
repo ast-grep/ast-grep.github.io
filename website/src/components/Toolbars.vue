@@ -75,6 +75,7 @@ async function onShare() {
     position: absolute;
     left: -10%;
     bottom: 50%;
+    color: var(--vp-c-white);
     background-color: rgba(0, 0, 0, 0.5);
     padding: 0.25em 0.5em;
     font-size: 10px;
@@ -83,6 +84,10 @@ async function onShare() {
     transform: translate(-100%, 50%);
     transition: 0.2s;
     border-radius: 5px;
+  }
+  
+  .dark [title]:after {
+    color: var(--vp-c-brand-1);
   }
 
   [title]:hover:after {
