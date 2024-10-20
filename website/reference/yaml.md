@@ -215,8 +215,8 @@ Glob patterns to specify that the rule only applies to matching files. It takes 
 Example:
 ```yaml
 files:
-  - ./src/**/*.js
-  - ./src/**/*.ts
+  - src/**/*.js
+  - src/**/*.ts
 ```
 
 ### `ignores`
@@ -225,8 +225,8 @@ files:
 
 ```yaml
 ignores:
-  - ./test/**/*.js
-  - ./test/**/*.ts
+  - test/**/*.js
+  - test/**/*.ts
 ```
 
 Glob patterns that exclude rules from applying to files. It is superseded by `files` if both are specified.

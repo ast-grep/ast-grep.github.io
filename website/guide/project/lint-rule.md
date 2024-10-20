@@ -135,24 +135,24 @@ Rules can be applied to only certain files in a codebase with `files`. `files` s
 
 ```yaml
 files:
-- "./tests/**"
-- "./integration_tests/test.py"
+- "tests/**"
+- "integration_tests/test.py"
 ```
 
 Similarly, you can use `ignores` to ignore applying a rule to certain files. `ignores` supports a list of glob patterns:
 
 ```yaml
 ignores:
-- "./tests/config/**"
+- "tests/config/**"
 ```
 
 :::tip They work together!
 `ignores` and `files` can be used together.
 :::
 
-:::warning Don't forget `./`
+:::warning Don't add `./`
 
-Be sure to add `./` to the beginning of your rules. ast-grep will not recognize the paths if you omit `./`.
+Be sure to remove `./` to the beginning of your rules. ast-grep will not recognize the paths if you add `./`.
 
 :::
 

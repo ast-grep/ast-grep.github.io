@@ -59,7 +59,7 @@ The format of the JSON output is an array of match objects.
         "column": 8
       }
     },
-    "file": "./website/src/vite-env.d.ts",
+    "file": "website/src/vite-env.d.ts",
     "replacement": "require",
     "language": "TypeScript"
   }

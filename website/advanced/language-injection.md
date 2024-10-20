@@ -48,7 +48,7 @@ sg run -p 'color: $COLOR'
 
 ast-grep outputs this beautiful CLI report.
 ```shell
-./test.html
+test.html
 2│  h1 { color: red; }
 ```
 
@@ -80,7 +80,7 @@ The command leverages built-in behaviors in ast-grep to handle language injectio
 
 ```sh
 warning[no-alert]: Prefer use appropriate custom UI instead of obtrusive alert call.
-  ┌─ ./test.html:8:3
+  ┌─ test.html:8:3
   │
 8 │   alert('hello world!')
   │   ^^^^^^^^^^^^^^^^^^^^^
@@ -165,7 +165,7 @@ sg -p 'background: $COLOR' -C 2
 It will produce the match result:
 
 ```shell
-./styled.js
+styled.js
 2│
 3│const Button = styled.button`
 4│  background: red;
@@ -230,7 +230,7 @@ Output
 
 ```sh
 help[test]:
-  ┌─ ./relay.js:8:7
+  ┌─ relay.js:8:7
   │
 8 │       ...ArtistDescription_artist
   │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^

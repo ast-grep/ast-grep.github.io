@@ -23,7 +23,7 @@ The format of the JSON output is an array of match objects. Below is an example 
       "start": { "line": 303, "column": 2 },
       "end": { "line": 303, "column": 15 }
     },
-    "file": "./crates/config/src/rule/mod.rs",
+    "file": "crates/config/src/rule/mod.rs",
     "lines": "  Some(matched)",
     "replacement": "None",
     "replacementOffsets": { "start": 10828, "end": 10841 },

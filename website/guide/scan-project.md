@@ -90,7 +90,7 @@ Run `sg scan` in your project, ast-grep will give you some beautiful scan report
 
 ```bash
 error[no-eval]: Add your rule message here....
-  ┌─ ./test.js:1:1
+  ┌─ test.js:1:1
   │
 1 │ eval('hello')
   │ ^^^^^^^^^^^^^
