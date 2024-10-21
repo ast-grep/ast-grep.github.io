@@ -169,9 +169,9 @@ arg.text() // returns 'hello'
 node.getMultipleMatches('A')
 
 const logs = root.find('logger($$$ARGS)')
-// returns [SgNode('hello'), SgNode('world'), SgNode('!')]
-node.getMultipleMatches("ARGS")
-node.getMatch("A") // returns null
+// returns [SgNode('hello'), SgNode(','), SgNode('world'), SgNode(','), SgNode('!')]
+logs.getMultipleMatches("ARGS")
+logs.getMatch("A") // returns null
 ```
 
 ## Inspection

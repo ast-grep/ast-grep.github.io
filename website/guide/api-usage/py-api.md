@@ -179,10 +179,10 @@ arg.text() # returns 'hello'
 # returns [] because $A and $$$A are different
 node.get_multiple_matches("A")
 
-node = root.find(pattern="logger($$$ARGS)")
-# returns [SgNode('hello'), SgNode('world'), SgNode('!')]
-node.get_multiple_matches("ARGS")
-node.get_match("A") # returns None
+logs = root.find(pattern="logger($$$ARGS)")
+# returns [SgNode('hello'), SgNode(','), SgNode('world'), SgNode(','), SgNode('!')]
+logs.get_multiple_matches("ARGS")
+logs.get_match("A") # returns None
 ```
 
 `SgNode` also supports `__getitem__` to get the match of single meta variable.
