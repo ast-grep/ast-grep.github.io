@@ -80,6 +80,14 @@ Start interactive edit session.
 
 You can confirm the code change and apply it to files selectively, or you can open text editor to tweak the matched code. Note that code rewrite only happens inside a session.
 
+### `-j, --threads <NUM>`
+
+Set the approximate number of threads to use.
+
+This flag sets the approximate number of threads to use. A value of 0 (which is the default) causes ast-grep to choose the thread count using heuristics.
+
+[default: 0]
+
 ### `-U, --update-all`
 Apply all rewrite without confirmation if true
 

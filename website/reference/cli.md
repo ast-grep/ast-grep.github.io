@@ -30,6 +30,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
+| -j| --threads <NUM>     | Set the approximate number of threads to use [default: heuristic]
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
 |   | --json`[=<style>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
@@ -61,6 +62,7 @@ sg scan [OPTIONS] [PATHS]...
 | -r | --rule `<RULE_FILE>`| Scan the codebase with the single rule located at the path `RULE_FILE`.|
 |    | --inline-rules `<RULE_TEXT>` | Scan the codebase with a rule defined by the provided `RULE_TEXT` |
 |    | --filter `<REGEX>` |Scan the codebase with rules with ids matching `REGEX` |
+| -j| --threads <NUM>     | Set the approximate number of threads to use [default: heuristic]
 | -i | --interactive|Start interactive edit session.|
 | | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
