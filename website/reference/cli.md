@@ -33,7 +33,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 | -j| --threads `<NUM>`     | Set the approximate number of threads to use [default: heuristic]
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
-|   | --json`[=<style>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
+|   | --json`[=<STYLE>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
 |   |  --color `<WHEN>`     | Controls output color [default: auto] |
 |   |  --tracing `<LEVEL>`  | Show tracing information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary]
 |   | --heading `<WHEN>`    | Controls whether to print the file name as heading [default: auto] [possible values: auto, always, never] |
@@ -67,7 +67,7 @@ sg scan [OPTIONS] [PATHS]...
 | | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
 |   | --follow   |  Follow symbolic links |
-| | --json`[=<style>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
+| | --json`[=<STYLE>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
 | | --format `<FORMAT>` | Output warning/error messages in GitHub Action format [possible values: github] |
 | -U | --update-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |

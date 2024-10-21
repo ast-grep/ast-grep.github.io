@@ -91,11 +91,11 @@ This flag sets the approximate number of threads to use. A value of 0 (which is 
 ### `-U, --update-all`
 Apply all rewrite without confirmation if true
 
-### `--json[=<style>]`
+### `--json[=<STYLE>]`
 
 Output matches in structured JSON .
 
-If this flag is set, ast-grep will output matches in JSON format. You can pass optional value to this flag by using `--json=<style>` syntax to further control how JSON object is formatted and printed. ast-grep will `pretty`-print JSON if no value is passed. Note, the json flag must use `=` to specify its value. It conflicts with interactive.
+If this flag is set, ast-grep will output matches in JSON format. You can pass optional value to this flag by using `--json=<STYLE>` syntax to further control how JSON object is formatted and printed. ast-grep will `pretty`-print JSON if no value is passed. Note, the json flag must use `=` to specify its value. It conflicts with interactive.
 
 Possible values:
 - pretty:  Prints the matches as a pretty-printed JSON array, with indentation and line breaks. This is useful for human readability, but not for parsing by other programs. This is the default value for the `--json` option
