@@ -72,10 +72,8 @@ Accept all default options without interactive input during creation.
 
 You need to provide all required arguments via command line if this flag is true. Please see the command description for the what arguments are required.
 
-### `-b, --base-dir <BASE_DIR>`
-Create new project/items in the folder specified by this argument
-
-[default: .]
+### `-c, --config <CONFIG_FILE>`
+Path to ast-grep root config, default is sgconfig.yml
 
 ### `-h, --help`
 Print help (see a summary with '-h')

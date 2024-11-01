@@ -121,6 +121,29 @@ Currently, only GitHub is supported.
 
 [possible values: github]
 
+## Context Options
+
+### `-A, --after <NUM>`
+Show NUM lines after each match.
+
+It conflicts with both the -C/--context flag.
+
+[default: 0]
+
+### `-B, --before <NUM>`
+Show NUM lines before each match.
+
+It conflicts with both the -C/--context flag.
+
+[default: 0]
+
+### `-C, --context <NUM>`
+Show NUM lines around each match.
+
+This is equivalent to providing both the -B/--before and -A/--after flags with the same value. It conflicts with both the -B/--before and -A/--after flags.
+
+[default: 0]
+
 ## Style Options
 
 ### `--color <WHEN>`
@@ -143,6 +166,35 @@ Possible values:
 - rich:   Output a richly formatted diagnostic, with source code previews
 - medium: Output a condensed diagnostic, with a line number, severity, message and notes (if any)
 - short:  Output a short diagnostic, with a line number, severity, and message
+
+## Rule Options
+
+These rule option flags set the specified RULE_ID's severity to a specific level. You can specify multiple rules by using the flag multiple times, e.g., `--error=RULE_1 --error=RULE_2`. If no RULE_ID is provided, all rules will be set to the specified level, e.g., `--error`. Note, these flags must use `=` to specify its value.
+
+### `--error[=<RULE_ID>...]`
+Set rule severity to error
+
+This flag sets the specified RULE_ID's severity to error. You can specify multiple rules by using the flag multiple times. If no RULE_ID is provided, all rules will be set to error. Note, this flag must use `=` to specify its value.
+
+### `--warning[=<RULE_ID>...]`
+Set rule severity to warning
+
+This flag sets the specified RULE_ID's severity to warning. You can specify multiple rules by using the flag multiple times. If no RULE_ID is provided, all rules will be set to warning. Note, this flag must use `=` to specify its value.
+
+### `--info[=<RULE_ID>...]`
+Set rule severity to info
+
+This flag sets the specified RULE_ID's severity to info. You can specify multiple rules by using the flag multiple times. If no RULE_ID is provided, all rules will be set to info. Note, this flag must use `=` to specify its value.
+
+### `--hint[=<RULE_ID>...]`
+Set rule severity to hint
+
+This flag sets the specified RULE_ID's severity to hint. You can specify multiple rules by using the flag multiple times. If no RULE_ID is provided, all rules will be set to hint. Note, this flag must use `=` to specify its value.
+
+### `--off[=<RULE_ID>...]`
+Turn off rule
+
+This flag turns off the specified RULE_ID. You can disable multiple rules by using the flag multiple times. If no RULE_ID is provided, all rules will be turned off. Note, this flag must use `=` to specify its value.
 
 ### `-h, --help`
   Print help (see a summary with '-h')

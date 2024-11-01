@@ -74,6 +74,17 @@ sg scan [OPTIONS] [PATHS]...
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
 |   |  --tracing `<LEVEL>`  | Show tracing information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary]
+|   | --error`[=<RULE_ID>...]`| Set rule severity to error
+|   | --warning`[=<RULE_ID>...]`| Set rule severity to warning
+|   | --info`[=<RULE_ID>...]`| Set rule severity to info
+|   | --hint`[=<RULE_ID>...]`| Set rule severity to hint
+|   | --off`[=<RULE_ID>...]`| Turn off the rule
+|   | --after `<NUM>`      | Show NUM lines after each match [default: 0] |
+|   | --before `<NUM>`     | Show NUM lines before each match [default: 0] |
+|   | --context `<NUM>`    | Show NUM lines around each match [default: 0] |
+| -A| --after `<NUM>`      | Show NUM lines after each match [default: 0] |
+| -B| --before `<NUM>`     | Show NUM lines before each match [default: 0] |
+| -C| --context `<NUM>`    | Show NUM lines around each match [default: 0] |
 | -h| --help|Print help|
 
 ## `sg test`

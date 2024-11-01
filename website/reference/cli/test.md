@@ -15,8 +15,7 @@ sg test [OPTIONS]
 ## Options
 
 ### `-c, --config <CONFIG>`
-
-Path to the root ast-grep config YAML
+Path to ast-grep root config, default is sgconfig.yml
 
 ### `-t, --test-dir <TEST_DIR>`
 
