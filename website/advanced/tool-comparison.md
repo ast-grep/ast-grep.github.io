@@ -17,6 +17,12 @@ The author is grateful to these predecessor tools for inspiring ast-grep! The re
 **Cons**:
 * It is still young and under development. It may have some bugs or limitations that need to be fixed or improved.
 * It does not have deep semantic information or comparison equivalence. It only operates on the syntactic level of the code, which may miss some matches or may be too cumbersome to match certain code.
+* More specifically, ast-grep at the moment does not support the following information:
+  * [type information](https://semgrep.dev/docs/writing-rules/pattern-syntax#typed-metavariables)
+  * [control flow analysis](https://en.wikipedia.org/wiki/Control-flow_analysis)
+  * [data flow analysis](https://en.wikipedia.org/wiki/Data-flow_analysis)
+  * [taint analysis](https://semgrep.dev/docs/writing-rules/data-flow/taint-mode)
+  * [constant propagation](https://semgrep.dev/docs/writing-rules/data-flow/constant-propagation)
 
 ## [Semgrep](https://semgrep.dev/)
 

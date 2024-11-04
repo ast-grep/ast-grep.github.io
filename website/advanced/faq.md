@@ -202,3 +202,25 @@ pattern:
 ```
 
 Note the rule above is one single pattern rule, instead of two. The `context` field provides the full unambiguous code snippet of `class`. So the `a = 123` will be parsed as `field_definition`. The `selector` field then selects the `field_definition` node as the [effective pattern](/advanced/pattern-parse.html#steps-to-create-a-pattern) matcher.
+
+## Does ast-grep support some advanced static analysis?
+
+Short answer: **NO**.
+
+Long answer: ast-grep at the moment does not support the following information:
+* [scope analysis](https://eslint.org/docs/latest/extend/scope-manager-interface)
+* [type information](https://semgrep.dev/docs/writing-rules/pattern-syntax#typed-metavariables)
+* [control flow analysis](https://en.wikipedia.org/wiki/Control-flow_analysis)
+* [data flow analysis](https://en.wikipedia.org/wiki/Data-flow_analysis)
+* [taint analysis](https://semgrep.dev/docs/writing-rules/data-flow/taint-mode)
+* [constant propagation](https://semgrep.dev/docs/writing-rules/data-flow/constant-propagation)
+
+More concretely, it is not easy, or even possible, to achieve the following tasks in ast-grep:
+
+* Find variables that are not defined/used in the current scope.
+* Find variables of a specific type.
+* Find code that is unreachable.
+* Find code that is always executed.
+* Identify the flow of user input.
+
+Also see [tool comparison](/tool-comparison.html) for more information.
