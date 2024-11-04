@@ -223,4 +223,4 @@ More concretely, it is not easy, or even possible, to achieve the following task
 * Find code that is always executed.
 * Identify the flow of user input.
 
-Also see [tool comparison](/tool-comparison.html) for more information.
+Also see [tool comparison](/advanced/tool-comparison.html) for more information.
