@@ -60,7 +60,7 @@ function decrement() {
     <div class="custom-block warning no-match-tip">
       <p class="custom-block-title">No match found? Some tips:</p>
       <ul>
-        <li>Simplify the rule and start from a minimal one.</li>
+        <li>Simplify the rule and code. Start from a minimal example.</li>
         <li>
           <code>pattern</code> may <a href="/advanced/pattern-parse.html#extract-effective-ast-for-pattern">not match a whole statement</a> but the expression inside.
         </li>
