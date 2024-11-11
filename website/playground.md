@@ -6,7 +6,7 @@ description: ast-grep playground is an online tool that lets you explore AST, de
 head:
   - - meta
     - name: keywords
-      content: pattern, abstract syntax tree, online playground, debug, refactor, dart, javascript, python, rust, go, scala, ruby
+      content: pattern, abstract syntax tree, online playground, debug, refactor, javascript, python, rust, go, scala, ruby
 ---
 
 <script setup>

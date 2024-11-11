@@ -15,7 +15,6 @@ The table below lists all languages that are supported by ast-grep.
 |Cpp | `cc`, `c++`, `cpp`, `cxx` | `cc`, `hpp`, `cpp`, `c++`, `hh`, `cxx`, `cu`, `ino`|
 |CSharp | `cs`, `csharp` | `cs`|
 |Css | `css` | `css`|
-|Dart | `dart` | `dart`|
 |Elixir | `ex`, `elixir` | `ex`, `exs`|
 |Go | `go`, `golang` | `go`|
 |Haskell | `hs`, `haskell` | `hs`|

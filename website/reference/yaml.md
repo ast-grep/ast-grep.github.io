@@ -33,7 +33,7 @@ id: no-console-log
 
 Specify the language to parse and the file extension to includ in matching.
 
-Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Dart`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
+Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
 
 Example:
 ```yaml
