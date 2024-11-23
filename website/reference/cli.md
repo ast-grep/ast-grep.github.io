@@ -35,7 +35,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 | -U|  --update-all         |  Apply all rewrite without confirmation if true. |
 |   | --json`[=<STYLE>]`    | Output matches in structured JSON  [possible values: pretty, stream, compact] |
 |   |  --color `<WHEN>`     | Controls output color [default: auto] |
-|   |  --tracing `<LEVEL>`  | Show tracing information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary]
+|   |  --inspect `<GRANULARITY>`  | Inspect information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary, entity]|
 |   | --heading `<WHEN>`    | Controls whether to print the file name as heading [default: auto] [possible values: auto, always, never] |
 | -A| --after `<NUM>`      | Show NUM lines after each match [default: 0] |
 | -B| --before `<NUM>`     | Show NUM lines before each match [default: 0] |
@@ -73,7 +73,7 @@ sg scan [OPTIONS] [PATHS]...
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
-|   |  --tracing `<LEVEL>`  | Show tracing information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary]
+|   |  --inspect `<GRANULARITY>`  | Inspect information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary, entity]|
 |   | --error`[=<RULE_ID>...]`| Set rule severity to error
 |   | --warning`[=<RULE_ID>...]`| Set rule severity to warning
 |   | --info`[=<RULE_ID>...]`| Set rule severity to info

@@ -155,17 +155,25 @@ Possible values:
 - **always**: Always print heading regardless of output type
 - **never**:  Never print heading regardless of output type
 
-### `--tracing <LEVEL>`
+### `--inspect <GRANULARITY>`
+Inspect information for file/rule discovery and scanning.
 
-Show tracing information for file/rule discovery and scanning.
+This flag helps user to observe ast-grep's internal filtering of files and rules. Inspection will output how many and why files and rules are scanned and skipped. Inspection outputs to stderr and does not affect the result of the search.
 
-This flag helps user to inspect ast-grep's internal filtering of files and rules. tracing will output how many and why files and rules are scanned and skipped. tracing information outputs to stderr and does not affect the result of the search.
+The format of the output is informally defined as follows:
+
+```
+sg: <GRANULARITY>|<ENTITY_TYPE>|<ENTITY_IDENTIFIERS_SEPARATED_BY_COMMA>: KEY=VAL
+```
+
+The [Extended Backus–Naur form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) notation is specified in the [issue](https://github.com/ast-grep/ast-grep/issues/1574).
 
 [default: nothing]
 
 Possible values:
 - **nothing**: Do not show any tracing information
 - **summary**: Show summary about how many files are scanned and skipped
+- **entity**:  Show per-file/per-rule tracing information
 
 ## Context Options
 
