@@ -35,8 +35,8 @@ importers:
         specifier: 14.1.0
         version: 14.1.0
       search-insights:
-        specifier: 2.17.2
-        version: 2.17.2
+        specifier: 2.17.3
+        version: 2.17.3
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -45,7 +45,7 @@ importers:
         version: 5.4.11
       vitepress:
         specifier: 1.4.1
-        version: 1.4.1(@algolia/client-search@5.12.0)(postcss@8.4.47)(search-insights@2.17.2)(typescript@5.7.2)
+        version: 1.4.1(@algolia/client-search@5.12.0)(postcss@8.4.47)(search-insights@2.17.3)(typescript@5.7.2)
       vue-tsc:
         specifier: 2.1.10
         version: 2.1.10(typescript@5.7.2)
@@ -777,8 +777,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  search-insights@2.17.2:
-    resolution: {integrity: sha512-zFNpOpUO+tY2D85KrxJ+aqwnIfdEGi06UH2+xEb+Bp9Mwznmauqc9djbnBibJO5mpfUPPa8st6Sx65+vbeO45g==}
+  search-insights@2.17.3:
+    resolution: {integrity: sha512-RQPdCYTa8A68uM2jwxoY842xDhvx3E5LFL1LxvxCNMev4o5mLuokczhzjAgGwUZBAmOKZknArSxLKmXtIi2AxQ==}
 
   semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
@@ -947,19 +947,19 @@ packages:
 
 snapshots:
 
-  '@algolia/autocomplete-core@1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.2)':
+  '@algolia/autocomplete-core@1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.3)':
     dependencies:
-      '@algolia/autocomplete-plugin-algolia-insights': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.2)
+      '@algolia/autocomplete-plugin-algolia-insights': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.3)
       '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)
     transitivePeerDependencies:
       - '@algolia/client-search'
       - algoliasearch
       - search-insights
 
-  '@algolia/autocomplete-plugin-algolia-insights@1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.2)':
+  '@algolia/autocomplete-plugin-algolia-insights@1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.3)':
     dependencies:
       '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)
-      search-insights: 2.17.2
+      search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
       - algoliasearch
@@ -1074,9 +1074,9 @@ snapshots:
 
   '@docsearch/css@3.6.2': {}
 
-  '@docsearch/js@3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.2)':
+  '@docsearch/js@3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.3)':
     dependencies:
-      '@docsearch/react': 3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.2)
+      '@docsearch/react': 3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.3)
       preact: 10.11.3
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -1085,14 +1085,14 @@ snapshots:
       - react-dom
       - search-insights
 
-  '@docsearch/react@3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.2)':
+  '@docsearch/react@3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.3)':
     dependencies:
-      '@algolia/autocomplete-core': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.2)
+      '@algolia/autocomplete-core': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)(search-insights@2.17.3)
       '@algolia/autocomplete-preset-algolia': 1.9.3(@algolia/client-search@5.12.0)(algoliasearch@4.19.1)
       '@docsearch/css': 3.6.2
       algoliasearch: 4.19.1
     optionalDependencies:
-      search-insights: 2.17.2
+      search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
 
@@ -1684,7 +1684,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.21.0
       fsevents: 2.3.3
 
-  search-insights@2.17.2: {}
+  search-insights@2.17.3: {}
 
   semver@7.5.4:
     dependencies:
@@ -1765,10 +1765,10 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  vitepress@1.4.1(@algolia/client-search@5.12.0)(postcss@8.4.47)(search-insights@2.17.2)(typescript@5.7.2):
+  vitepress@1.4.1(@algolia/client-search@5.12.0)(postcss@8.4.47)(search-insights@2.17.3)(typescript@5.7.2):
     dependencies:
       '@docsearch/css': 3.6.2
-      '@docsearch/js': 3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.2)
+      '@docsearch/js': 3.6.2(@algolia/client-search@5.12.0)(search-insights@2.17.3)
       '@shikijs/core': 1.22.0
       '@shikijs/transformers': 1.22.0
       '@shikijs/types': 1.22.0
