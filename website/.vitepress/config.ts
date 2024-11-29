@@ -34,8 +34,24 @@ export default defineConfig({
     logo: 'logo.svg',
     nav: [
       { text: 'Guide', link: '/guide/introduction.html' },
-      { text: 'Reference', link: '/reference/cli.html' },
-      { text: 'Examples', link: '/catalog/' },
+      {
+        text: 'Reference',
+        items: [
+          { text: 'Command Line Interface', link: '/reference/cli.html' },
+          { text: 'Rule Config', link: '/reference/yaml.html' },
+          { text: 'Rule Object', link: '/reference/rule.html' },
+          { text: 'Playground Manual', link: '/reference/playground.html' },
+        ]
+      },
+      {
+        text: 'Resources',
+        items: [
+          { text: 'FAQ', link: '/advanced/faq.html' },
+          { text: 'Rule Examples', link: '/catalog/' },
+          { text: 'Custom Language', link: '/advanced/custom-language.html' },
+          { text: 'Contributing', link: '/contributing/how-to.html' },
+        ],
+      },
       { text: 'Playground', link: '/playground.html' },
     ],
     socialLinks: [
