@@ -231,10 +231,6 @@ impl Content for Wrapper {
   fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str> {
     Cow::Owned(bytes.iter().collect())
   }
-
-  fn get_char_column(&self, column: usize, _: usize) -> usize {
-    column
-  }
 }
 
 fn pos_for_char_offset(input: &[char], offset: usize) -> Point {
@@ -301,5 +297,25 @@ impl Doc for WasmDoc {
       lang,
       source: self.source.clone(),
     }
+  }
+}
+
+#[cfg(test)]
+mod test {
+  use super::*;
+  use tree_sitter_rust;
+
+  // https://github.com/tree-sitter/tree-sitter-rust/issues/82
+  // sadly, this does not test what tree-sitter-wasm actually does
+  // wasm uses UTF16 which counts different "error cost" than utf8
+  // native tree-sitter can use parse_with_utf16 :(
+  #[test]
+  fn test_process_pattern() {
+    let mut curr_lang = TS_LANG.lock().expect_throw("set language error");
+    *curr_lang = Some(tree_sitter_rust::language().into());
+    drop(curr_lang);
+    let grep = WasmLang::Rust.ast_grep("fn test() { Some(123) }");
+    let root = grep.root();
+    assert!(root.find("Some($A)").is_some());
   }
 }
