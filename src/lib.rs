@@ -7,7 +7,6 @@ use dump_tree::{dump_one_node, DumpNode, dump_pattern as dump_pattern_impl};
 use utils::WasmMatch;
 
 use ast_grep_config::{RuleConfig, SerializableRuleConfig, CombinedScan};
-use ast_grep_core::language::Language;
 use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::collections::HashMap;
@@ -39,7 +38,8 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
-  let root = lang.ast_grep(src);
+  let doc = WasmDoc::new(src.clone(), lang);
+  let root = AstGrep::doc(doc);
   let sets = combined.find(&root);
   let ret: HashMap<_, _> = combined.scan(&root, sets, false).matches.into_iter().map(|(id, matches)| {
     let rule = combined.get_rule(id);

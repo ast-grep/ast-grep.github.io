@@ -1,9 +1,10 @@
-use crate::wasm_lang::WasmLang;
+use crate::wasm_lang::{WasmLang, WasmDoc};
 use ast_grep_core::{
   meta_var::{MetaVarEnv, MetaVariable},
-  Node as SgNode, NodeMatch as SgNodeMatch, StrDoc,
+  Node as SgNode, NodeMatch as SgNodeMatch,
+  replacer::Replacer,
 };
-use ast_grep_config::RuleConfig;
+use ast_grep_config::{RuleConfig, Fixer};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -18,8 +19,8 @@ pub fn set_panic_hook() {
   console_error_panic_hook::set_once();
 }
 
-type Node<'a> = SgNode<'a, StrDoc<WasmLang>>;
-type NodeMatch<'a> = SgNodeMatch<'a, StrDoc<WasmLang>>;
+type Node<'a> = SgNode<'a, WasmDoc>;
+type NodeMatch<'a> = SgNodeMatch<'a, WasmDoc>;
 
 #[derive(Serialize, Deserialize)]
 pub struct WasmNode {
@@ -35,6 +36,14 @@ pub struct WasmMatch {
   pub message: String,
 }
 
+
+// TODO: move to ast-grep-core
+fn get_message(rule: &RuleConfig<WasmLang>, node: &NodeMatch) -> String {
+  let parsed = Fixer::from_str(&rule.message, &rule.language).expect("should work");
+  let bytes = parsed.generate_replacement(node);
+  bytes.into_iter().collect()
+}
+
 impl WasmMatch {
   pub fn from_match(nm: NodeMatch, rule: &RuleConfig<WasmLang>) -> Self {
     let node = nm.get_node().clone();
@@ -42,12 +51,12 @@ impl WasmMatch {
     let node = WasmNode::from(node);
     let env = nm.get_env().clone();
     let env = env_to_map(env);
-    let message = rule.get_message(&nm);
+    let message = get_message(rule, &nm);
     Self { node, env, message, id }
   }
 }
 
-fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNode> {
+fn env_to_map(env: MetaVarEnv<'_, WasmDoc>) -> BTreeMap<String, WasmNode> {
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
@@ -56,7 +65,7 @@ fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNod
           map.insert(name, WasmNode::from(node.clone()));
         } else if let Some(bytes) = env.get_transformed(&name) {
           let node = WasmNode {
-            text: String::from_utf8_lossy(bytes).to_string(),
+            text: bytes.iter().collect(),
             range: (0, 0, 0, 0),
           };
           map.insert(name, WasmNode::from(node));
