@@ -2,10 +2,10 @@
 
 ## My pattern does not work, why?
 
-1. **Use the Playground**: Test your pattern in the [ast-grep playground](https://ast-grep.github.io/playground.html).
+1. **Use the Playground**: Test your pattern in the [ast-grep playground](/playground.html).
 2. **Check for Valid Code**: Make sure your pattern is valid code that tree-sitter can parse.
 3. **Ensure Correctness**: Use a [pattern object](/guide/rule-config/atomic-rule.html#pattern) to ensure your code is correct and unambiguous.
-4. **Explore Examples**: See ast-grep's [catalog](https://ast-grep.github.io/catalog/) for more examples.
+4. **Explore Examples**: See ast-grep's [catalog](/catalog/) for more examples.
 
 
 The most common scenario is that you only want to match a sub-expression or one specific AST node in a whole syntax tree.
@@ -14,7 +14,7 @@ To make the code can be parsed by tree-sitter, you probably need more context in
 
 For example, if you want to match key-value pair in JSON, writing `"key": "$VAL"` will not work because it is not a legal JSON.
 
-Instead, you can provide context via the pattern object. See [playground code](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1widmVyc2lvblwiOiBcIiRWRVJcIiB9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoie1xuICAgIFwidmVyc2lvblwiOiBcInZlclwiXG59In0=).
+Instead, you can provide context via the pattern object. See [playground code](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1widmVyc2lvblwiOiBcIiRWRVJcIiB9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoie1xuICAgIFwidmVyc2lvblwiOiBcInZlclwiXG59In0=).
 
 ```YAML
 rule:
@@ -25,7 +25,7 @@ rule:
 
 The idea is that you can write full an valid code in the `context` field and use `selector` to select the sub-AST node.
 
-This trick can be used in other languages as well, like [C](https://ast-grep.github.io/catalog/c/#match-function-call) and [Go](https://ast-grep.github.io/catalog/go/#match-function-call-in-golang).
+This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call) and [Go](/catalog/go/#match-function-call-in-golang). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config.html) can be more expressive and powerful.
 
 ## My Rule does not work, why?
 Here are some tips to debug your rule:
@@ -36,14 +36,14 @@ Here are some tips to debug your rule:
 
 ## CLI and Playground produce different results, why?
 
-The CLI and Playground may use different tree-sitter parsers. There are two main reasons why the results may differ:
+There are two main reasons why the results may differ:
 
 * **Parser Version**: The CLI may use a different version of the tree-sitter parser than the Playground.
 Playground parsers are updated less frequently than the CLI, so there may be differences in the results.
-* **Text Encoding**: The CLI and Playground may use different text encodings. CLI uses utf-8, while the Playground uses utf-16.
+* **Text Encoding**: The CLI and Playground use different text encodings. CLI uses utf-8, while the Playground uses utf-16.
 The encoding difference may cause different fallback parsing during [error recovery](https://github.com/tree-sitter/tree-sitter/issues/224).
 
-To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#debug-query-format) flag in the CLI to see the parsed AST nodes and meta variables.
+To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#debug-query-format) in the CLI to see the parsed AST nodes and meta variables.
 
 ```sh
 sg run -p <PATTERN> --debug-query ast
@@ -51,7 +51,7 @@ sg run -p <PATTERN> --debug-query ast
 
 The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground.html). You can also use different debug formats like `cst` or `pattern`.
 
-If you find there are different results, it is usually caused by incomplete code snippet in the pattern. To fix the issue, you can provide a complete context code via the [pattern object](/reference/rule.html#atomic-rules).
+Different results are usually caused by incomplete or wrong code snippet in the pattern. A common fix is to provide a complete context code via the [pattern object](/reference/rule.html#atomic-rules).
 
 ```yaml
 rule:
@@ -60,7 +60,9 @@ rule:
     selector: function
 ```
 
-See [Pattern Deep Dive](/advanced/pattern-parse.html) for more context.
+See [Pattern Deep Dive](/advanced/pattern-parse.html) for more context. Alternatively, you can try [rule](/guide/rule-config.html) instead.
+
+Note `--debug-query` is not only for pattern, you can pass source code as `pattern` to see the parsed AST.
 
 :::details Text encoding impacts tree-sitter error recovery.
 Tree-sitter is a robust parser that can recover from syntax errors and continue parsing the rest of the code.
@@ -71,7 +73,7 @@ Text-encoding will affect the error recovery because it changed the cost of diff
 :::
 
 :::tip Found inconsistency?
-If you find the inconsistency between CLI and Playground, please [open an issue in the Playground repository](https://github.com/ast-grep/ast-grep.github.io/issues).
+If you find the inconsistency between CLI and Playground, please [open an issue in the Playground repository](https://github.com/ast-grep/ast-grep.github.io/issues). Contribution to update the Playground parser is warmly welcome!
 :::
 
 
