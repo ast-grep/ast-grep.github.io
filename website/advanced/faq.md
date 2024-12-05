@@ -226,3 +226,15 @@ More concretely, it is not easy, or even possible, to achieve the following task
 * Identify the flow of user input.
 
 Also see [tool comparison](/advanced/tool-comparison.html) for more information.
+
+## I don't want to read the docs / I don't understand the docs / The docs are too long / I have an urgent request
+
+[Open Source Software](https://antfu.me/posts/why-reproductions-are-required) is served "as-is" by volunteers. We appreciate your interest in ast-grep, but we also have limited time and resources to address every request.
+
+We appreciate constructive feedback and are always looking for ways to improve the documentation and the tool itself. There are several ways you can help us or yourself:
+
+* Ask [Copilot](https://copilot.microsoft.com/) or other AI assistants to help you understand the docs.
+* Provide feedbacks or pull requests on the [documentation](https://github.com/ast-grep/ast-grep.github.io).
+* Browse [Discord](https://discord.com/invite/4YZjf6htSQ), [StackOverflow](https://stackoverflow.com/questions/tagged/ast-grep) or [Reddit](https://www.reddit.com/r/astgrep/).
+
+~~If you just want an answer without effort, let the author [write a rule for you](https://github.com/sponsors/HerringtonDarkholme).~~
