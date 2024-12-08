@@ -130,6 +130,28 @@ nthChild:
 * nthChild's index is 1-based, not 0-based, as in the CSS selector.
 * nthChild's node list only includes named nodes, not unnamed nodes.
 
+
+### `range`
+* type: `RangeObject`
+
+A `RangeObject` is an object with two fields `start` and `end`, each of which is an object with two fields `line` and `column`.
+
+Both `line` and `column` are 0-based and character-based. `start` is inclusive and `end` is exclusive.
+
+**Example:**
+
+```yml
+range:
+  start:
+    line: 0
+    column: 0
+  end:
+    line: 0
+    column: 3
+```
+
+The above example will match an AST node having the first three characters of the first line like `foo` in `foo.bar()`.
+
 ## Relational Rules
 
 ### `inside`

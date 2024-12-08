@@ -2,7 +2,7 @@
 
 ast-grep has three categories of rules. Let's start with the most basic one: atomic rule.
 
-Atomic rule defines the most basic matching rule that determines whether one syntax node matches the rule or not. There are four kinds of atomic rule: `pattern`, `kind`, `regex` and `nthChild`.
+Atomic rule defines the most basic matching rule that determines whether one syntax node matches the rule or not. There are five kinds of atomic rule: `pattern`, `kind`, `regex`, `nthChild` and `range`.
 
 ## `pattern`
 
@@ -187,7 +187,26 @@ const arr = [ 1, 2, 3, ]
             //   |- match this number
 ```
 
+## `range`
 
+`range` is a rule to match nodes based on their position in the source code. It is useful when you want to integrate external tools like compilers or type checkers with ast-grep. External tools can provide the range information of the interested node, and ast-grep can use it to rewrite the code.
+
+`range` rule accepts a range object with `start` and `end` fields. Each field is an object with `line` and `column` fields.
+
+```yaml
+rule:
+  range:
+    start:
+      line: 0
+      column: 0
+    end:
+      line: 1
+      column: 5
+```
+
+The above example will match an AST node having the first three characters of the first line like `foo` in `foo.bar()`.
+
+`line` and `column` are 0-based and character-wise, and the `start` is inclusive while the `end` is exclusive.
 
 
 ## Tips for Writing Rules
