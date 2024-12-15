@@ -1,5 +1,99 @@
 # Design Space for Code Search
 
+Code search is a critical tool for developers, enabling them to find, understand, and reuse existing code.
+
+ast-grep at its core is a code search tool: other features like linting and rewriting are all derived from the basic code search functionality.
+
+
+This blog is a recap of a great review paper: Code Search: A Survey of Techniques for Finding Code https://www.lucadigrazia.com/papers/acmcsur2022.pdf
+
+
+We will not cover all the details in the paper, but focus on specifically the design space for code search tool. These factors are:
+1. Query design
+2. Indexing
+3. Retrieval
+
+
+## Query Design
+
+The starting point of every search is a query. We define a query as an explicit expression of the
+intent of the user of a code search engine. This intent can be expressed in various ways, and
+different code search engines support different kinds of queries.
+
+The designers of a code search
+engine typically aim at several goal when deciding what kinds of queries to support:
+• Ease. A query should be easy to formulate, enabling users to use the code search engine
+without extensive training. If formulating an effective query is too difficult, users may get
+discouraged from using the code search engine.
+• Expressiveness. Users should be able to formulate whatever intent they have when searching
+for code. If a user is unable to express a particular intent, the search engine cannot find the
+desired results.
+• Precision. The queries should allow specifying the intent as unambiguously as possible. If the
+queries are imprecise, the search is likely to yield irrelevant results.
+
+
+
+These three goals are often at odds with each other.
+
+
+##  PREPROCESSING AND EXPANSION OF QUERIES
+
+The query provided by a user may not be the best possible query to obtain the results a user
+expects. One reason is that natural language queries suffer from the inherent imprecision of natural
+language. Another reason is that the vocabulary used in a query may not match the vocabulary
+used in a potential search result. For example, a query about “container” is syntactically different
+from “collection”, but both refer to similar concepts. Finally, a user may initially be unsure what
+exactly she wants to find, which can cause the initial query to be incomplete.
+To address the limitations of user-provided queries, approaches for preprocessing and expanding
+queries have been developed. We discuss these approaches by focusing on three dimensions: (i)
+the user interface, i.e., if and how a user gets involved in modifying queries, (ii) the information
+used to modify queries, i.e., what additional source of knowledge an approach consults, and (iii)
+the actual technique used to modify queries. Table 1 summarizes different approaches along these
+three dimensions, and we discuss them in detail in the following.
+
+##  INDEXING OR TRAINING, FOLLOWED BY RETRIEVAL OF CODE
+
+The perhaps most important component of a code search engine is about retrieving code examples
+relevant for a given query. The vast majority of approaches follows a two-step approach inspired
+by general information retrieval: At first, they either index the data to search through, e.g., by
+representing features of code examples in a numerical vector, or train a model that learns representations of the data to search through. Then, they retrieve relevant data items based on the
+pre-computed index or the trained model. To simplify the presentation, we refer to the first phase
+as “indexing” and mean both indexing in the sense of information retrieval and training a model
+on the data to search through.
+The primary goal of indexing and retrieval is effectiveness, i.e., the ability to find the “right” code
+examples for a query. To effectively identify these code examples, various ways of representing
+code and queries to compare them with each other have been proposed. A secondary goal, which
+is often at odds with achieving effectiveness, is efficiency. As users typically expect code search
+engines to respond within seconds [108], building an index that is fast to query is crucial. Moreover,
+as the code corpora to search through are continuously increasing in size, the scalability of both
+indexing and retrieval is important as well [4].
+We survey the many different approaches to indexing, training and retrieval in code search
+engines along four dimensions, as illustrated in Figure 4. Section 4.1 discuss what kind of artifacts a
+search engine indexes. Section 4.2 describes different ways of representing the extracted information.
+Section 4.3 presents techniques for comparing queries and code examples with each other. Table 2
+summarizes the approaches along these first three dimensions. Finally, Section 4.4 discusses different
+levels of granularity of the source code retrieved by search engines.
+
+
+## Representing the Information for Indexing
+* Individual Code Elements: Representing code as sets of individual elements, such as tokens or function calls, without considering their order or relationships.
+* Sequences of Code Elements: Preserving the order of code elements by extracting sequences from Abstract Syntax Trees (ASTs) or control flow graphs.
+* Relations between Code Elements: Extracting and representing relationships between code elements, such as parent-child relationships, method calls, and data flow.
+
+ast-grep index the individual code elements
+
+## Representing the Information for Retrieval
+
+Techniques to Compare Queries and Code
+
+* Feature Vectors: Algorithmically extracted feature vectors represent code and queries as numerical vectors. Standard distance measures like cosine similarity or Euclidean distance are used to compare these vectors.
+* Machine Learning-Based Techniques: End-to-end neural learning models embed both queries and code into a joint vector space, allowing for efficient retrieval based on learned representations.
+* Database-Based Techniques: General-purpose databases, such as NoSQL or relational databases, store and retrieve code examples based on precise matches to the query.
+* Graph-Based Matching: Code and queries are represented as graphs, and graph similarity scores or rewrite rules are used to match them.
+* Solver-Based Matching: SMT solvers are used to match queries against code examples by solving constraints that describe input-output relationships.
+
+
+
 * Code Search: A Survey of Techniques for Finding Code https://www.lucadigrazia.com/papers/acmcsur2022.pdf
 * Aroma: Code recommendation via structural search https://arxiv.org/pdf/1812.01158
 * Deep code search: https://guxd.github.io/papers/deepcs.pdf
