@@ -198,26 +198,28 @@ interface Edit {
 * ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
 
 
-### Language Object (deprecated)
+### Language Object (deprecated) <Badge type="danger" text="Deprecated" />
 
-`ast-grep/napi` also has special language objects for `html`, `js` and `css`.
+`ast-grep/napi` also has special language objects for `html`, `js` and `css`. They are deprecated and will be removed in the next version.
 
+:::details
 A language object has following methods.
 
 ```ts
-export namespace js {
-  /** Parse a string to an ast-grep instance */
+/**
+ * @deprecated language specific objects are deprecated
+ * use the equivalent functions like `parse` in @ast-grep/napi
+ */
+export declare namespace js {
+  /** @deprecated use `parse(Lang.JavaScript, src)` instead */
   export function parse(src: string): SgRoot
-  /** Get the `kind` number from its string name. */
+  /** @deprecated use `parseAsync(Lang.JavaScript, src)` instead */
+  export function parseAsync(src: string): Promise<SgRoot>
+  /** @deprecated use `kind(Lang.JavaScript, kindName)` instead */
   export function kind(kindName: string): number
-  /** Compile a string to ast-grep Pattern. */
+  /** @deprecated use `pattern(Lang.JavaScript, p)` instead */
   export function pattern(pattern: string): NapiConfig
-  /**
-   * Discover and parse multiple files in Rust.
-   * `config` specifies the file path and matcher.
-   * `callback` will receive matching nodes found in a file.
-   * returns the number of matched files.
-   */
+  /** @deprecated use `findInFiles(Lang.JavaScript, config, callback)` instead */
   export function findInFiles(
     config: FindConfig,
     callback: (err: null | Error, result: SgNode[]) => void
@@ -233,6 +235,8 @@ import { js } from '@ast-grep/napi'
 const source = `console.log("hello world")`
 const ast = js.parse(source)
 ```
+
+:::
 
 ## Python API
 
