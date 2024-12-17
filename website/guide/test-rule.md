@@ -131,7 +131,7 @@ FAIL no-await-in-loop  ...........N............M
 ----------- Failure Details -----------
 [Noisy] Expect no-await-in-loop to report no issue, but some issues found in:
 
-  async function foo() { for await (var x of xs) { while (1) await f(x) } }
+  async function foo() { for (var bar of baz) await bar; }
 
 [Missing] Expect rule no-await-in-loop to report issues, but none found in:
 
@@ -140,7 +140,7 @@ FAIL no-await-in-loop  ...........N............M
 Error: test failed. 0 passed; 1 failed;
 ```
 
-The output shows that we have two failed cases. One is a **noisy** match, which means ast-grep reports error for valid code.The other is a **missing** match, which means ast-grep reports nothing for invalid code.
+The output shows that we have two failed cases. One is a **noisy** match, which means ast-grep reports error for valid code. The other is a **missing** match, which means ast-grep reports nothing for invalid code.
 In the test summary, we can see the cases are marked with `N` and `M` respectively.
 In failure details, we can see the detailed code snippet for each case.
 
