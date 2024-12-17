@@ -164,4 +164,4 @@ It has less indentation than before. See the rewritten rule [in action](/playgro
 Rule object does not guarantee the order of rule matching. It is possible that the `inside` rule matches before the `pattern` rule in the example above.
 :::
 
-Rule order is not important if rules are completely independent. However, matching metavaraible in patterns depends on the result of previous pattern matching. If you use pattern with [meta variables](/guide/pattern-syntax.html#meta-variable-capturing), make sure to use `all` array to guarantee rule execution order.
+Rule order is not important if rules are completely independent. However, matching metavariable in patterns depends on the result of previous pattern matching. If you use pattern with [meta variables](/guide/pattern-syntax.html#meta-variable-capturing), make sure to use `all` array to guarantee rule execution order.
