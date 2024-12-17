@@ -177,7 +177,7 @@ The [following rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3
 ```yaml
 rule:
   kind: number
-  nthChild: 1
+  nthChild: 2
 ```
 
 It will match the following code:
