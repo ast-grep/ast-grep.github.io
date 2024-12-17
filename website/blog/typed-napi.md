@@ -7,6 +7,13 @@ https://github.com/ast-grep/ast-grep/issues/48
 
 It guides one to write comprehensive AST code (in case people forget to handle some cases)
 
+# What are good TypeScript types?
+
+* Correct: reject invalid code and accept valid code
+* Concise: easy to read, especially in hover and completion
+* Robust: easy to refactor
+* Performant: fast to compile
+
 # TreeSitter's types
 
 Tree-Sitter's official API is untyped. However it provides static node types in json
@@ -33,9 +40,9 @@ For example `+`/`-`/`*`/`/` is too noisy for a general AST library
 
 Use type script to resolve type alias
 
-## `NodeKinds<M>`
+## `Kinds<M>`
 
-1. string literal completion with string
+1. string literal completion with `LowPriorityString`
 2. lenient
 
 Problem?
@@ -43,8 +50,11 @@ Problem?
 https://github.com/microsoft/TypeScript/issues/33471
 https://github.com/microsoft/TypeScript/issues/26277
 
-## Distinguish general `string` and specific kinds
-`RefinedNode<>`
+## Distinguish general `string`ly kinds and specific kinds
+
+Note `SgNode<'expression' | 'type'>` is different from `SgNode<'expression'> | SgNode<'type'>`
+
+ast-grep uses a trick via the type `RefineNode<>` to let you switch between the two
 
 
 ## Refine Node, Manually
@@ -52,16 +62,49 @@ https://github.com/microsoft/TypeScript/issues/26277
 1.via `sgNode.find<"KIND">`
 2.via `sgNode.is<"KIND">`, One time type narrowing
 
+Using the intersting overloading feature of TypeScript
+
+```typescript
+interface NodeMethod<K> {
+  (): SgNode
+  <T extends K>(): SgNode<T>
+}
+```
+
 ## Refine Node, Automatically
 
-`sgNode.field("kind")`
+`sgNode.field("kind")` will
 
 
-## Exhaustive Checking via `sgNode.kindForRefinement`
+## Exhaustive Checking via `sgNode.kindToRefine`
 
-Only available specific kinds
+Only available for node with specific kinds
+
+```typescript
+const func: SgNode<'function_declaration'> | SgNode<'arrow_function'>
+
+switch (func.kindToRefine) {
+  case 'function_declaration':
+    func.kindToRefine // narrow to 'function_declaration'
+    break
+  case 'arrow_function':
+    func.kindToRefine // narrow to 'arrow_function'
+    break
+  default:
+    func satisfies never // exhaustive check!
+}
+```
 
 ## Typed Rule!
+
+```typescript
+sgNode.find({
+  rule: {
+    // kind: 'invalid_kind', // error!
+    kind: 'function_declaration', // typed!
+  }
+})
+```
 
 ## Opt-in refinement for better compile time performance
 
