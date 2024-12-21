@@ -102,9 +102,10 @@ interface TypeMpa {
 }
 ```
 What is `TypeMaps`? It is a type that contains all static node types. It is a map from kind to the static type of the kind.
+Here is a simplified example of the TypeScript static type.
 
 ```typescript
-type TypeScriptMap = {
+type TypeScript = {
   // AST node type definition
   function_declaration: {
     type: "function_declaration", // kind
@@ -135,22 +136,21 @@ Tree-sitter also provides alias types where a kind is an alias of a list of othe
 
 We want to both type a node's kind and its fields.
 
-## `SgNode<K>`
+## Give a type to `SgNode`
 
-`SgNode<M, K>` is the main type in the new API. It is a generic type that represents a node with kind `K`. It is a union of all possible kinds of nodes.
+`SgNode<M, K>` is the main type in the new API. It is a generic type that represents a node with kind `K` of language type map `M`. It is a union of all possible kinds of nodes.
 
 ```typescript
 class SgNode<M extends TypesMap, K extends keyof M> {
   kind: K
-  fields: M[K]['fields'] // for simplicity
+  fields: M[K]['fields'] // demo definition, real one is more complex
 }
 ```
 
 
-
 ### `ResolveType<M, T>`
 
-TreeSitter's type alias is helpful to reduce the generated JSON file size but it is not useful to users because the alias is never directly used as a node's kind nor is used as `kind` in ast-grep rule.
+TreeSitter's type alias is helpful to reduce the generated JSON file size but it is not useful to users because the alias is never directly used as a node's kind nor is used as `kind` in ast-grep rule. For example, `declaration` mentioned above can never be used as `kind` in ast-grep rule.
 
 We need to use a type alias to resolve the alias type to its concrete type.
 
@@ -173,11 +173,10 @@ type LowPriorityString = string & {}
 
 The above type is a linient string type that is compatible with any string type. But it also uses a well-known trick to take advantage of TypeScript's type priority to prefer the `keyof M` type in completion over the `string & {}` type. To make it more self-explanatory, the `stirng & {}` type is aliased to `LowPriorityString`.
 
-Problem? open-ended union is not well supported in TypeScript
+Problem? open-ended union is not [well](https://github.com/microsoft/TypeScript/issues/33471)
+[supported](https://github.com/microsoft/TypeScript/issues/26277)in TypeScript.
 
-https://github.com/microsoft/TypeScript/issues/33471
-https://github.com/microsoft/TypeScript/issues/26277
-
+We need other tricks to make it work better. Introducing `RefineNode` type.
 
 ###  Bridging general nodes and specific nodes via `RefineNode`
 
@@ -196,6 +195,18 @@ Which kind of union should we use?
 
 Note `SgNode<'expression' | 'type'>` is different from `SgNode<'expression'> | SgNode<'type'>`
 TypeScript has difficulty in narrowing the previous type, because it not safe to assume the former is equivalent to the later.
+
+```typescript
+let single: SgNode<'expression' | 'type'>
+if (single.kind === 'expression') {
+  single // Still SgNode<'expression' | 'type'>, not narrowed
+}
+let union: SgNode<'expression'> | SgNode<'type'>
+if (union.kind === 'expression') {
+  union // SgNode<'expression'>, narrowed
+}
+```
+
 However, `SgNode` is covariant in the kind parameter and this means it is okay.
 it is general okay to distribute the type constructor over union type if the parameter is covariant.
 but TypeScript does not support this feature.
@@ -220,22 +231,24 @@ Now let's talk about how to refine the general node to a specific node in ast-gr
 
 Most AST traversal methods in ast-grep now can take a new type parameter to refine the node to a specific kind.
 
-This is like the `document.querySelector<T>` method in the DOM API. It returns a general `Element` type, but you can refine it to a specific type like `HTMLDivElement` by providing generic argument.
+This is like the `document.querySelector<T>` method in the [DOM API](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#the-queryselector-and-queryselectorall-methods). It returns a general `Element` type, but you can refine it to a specific type like `HTMLDivElement` by providing generic argument.
 
-For example `sgNode.find<"KIND">()`
+For example `sgNode.parent<"KIND">()`. This will refine the node to a specific kind.
 
-This uses the intersting overloading feature of TypeScript
+This uses the interesting overloading feature of TypeScript
 
 ```typescript
-interface NodeMethod<K> {
+interface NodeMethod<M, K> {
   (): SgNode
-  <T extends K>(): SgNode<T>
+  <T extends K>(): RefineNode<M, T>
 }
 ```
+If no type is provided, it returns a general node, `SgNode<M>`.
+If a type is provided, it returns a specific node, `SgNode<M, K>`.
 
-If no type is provided, it returns a general node. If a type is provided, it returns a specific node.
+The reason why we use two overloading signatures here is to distinguish the two cases. If we use a single generic signature, TypeScript will always return the single version `SgNode<M, K1|K2>` or always returns a union of different `SgNode`s.
 
- another way to do runtime checking is via `sgNode.is("kind")`, One time type narrowing
+ another way to do runtime checking is via `sgNode.is("kind")`, one time type narrowing
 
 ```typescript
 if (sgNode.is("function_declaration")) {
@@ -250,6 +263,10 @@ The key feature of the new API is to automatically refine the node to a specific
 This is done by using the `field` method
 
 `sgNode.field("kind")` will automatically check the field name and its corresponding types in the static type, and refine the node to the specific kind.
+```typescript
+let exportStmt: SgNode<'export_statement'>
+exportStmt.field('declaration') // refine to SgNde<'function_declaration'> | SgNode<'variable_declaration'> ...
+```
 
 
 ### Exhaustive Checking via `sgNode.kindToRefine`
@@ -291,8 +308,12 @@ This is also the reason why we need to include `string` in the `Kinds`.
 
 ### Opt-in refinement for better compile time performance
 
-The new API is designed to provide a better type checking and completion experience to the user. But it comes with a cost of performance. The more type information the user provides, the slower the compile time.
+The new API is designed to provide a better type checking and completion experience to the user. But it comes with a cost of performance.
+One type map for a single language can be several thousand lines of code with hundreds of kinds.
+The more type information the user provides, the slower the compile time.
 
+
+So you need to explicitly opt in type information by passing type parameters to `parse` method.
 ```typescript
 import { parse } from '@ast-grep/napi'
 import TS from '@ast-grep/napi/lang/TypeScript'
@@ -304,6 +325,7 @@ const typed = parse<TS>(Lang.TypeScript, code)
 
 The last feature worth mentioning is the typed rule! You can even type the `kind` in rule JSON!
 
+You can look up the available kinds in the static type via the completion popup in your editor. (btw I use nvim)
 ```typescript
 sgNode.find({
   rule: {
@@ -313,11 +335,20 @@ sgNode.find({
 })
 ```
 
+```typescript
+interface Rule<M> {
+    kind: Kinds<M>
+    ... // other rules
+}
+```
+
 ## Ending
 
 I'm very thrilled to see the future of AST manipulation in TypeScript.
 This feature enables users to switch freely between untyped AST and typed AST.
 
+To use a quote from [Theo's video](https://www.youtube.com/clip/Ugkxn2oomDuyQjtaKXhYP1MU9TLEShf5m1nf):
 
-https://x.com/hd_nvim/status/1868453729940500924
-There are very few devs that understands Rust deeply enough and compiler deeply enough that also care about TypeScript in web dev enough to build something for web devs in Rust
+> There are very few devs that understands Rust deeply enough and compiler deeply enough that also care about TypeScript in web dev enough to build something for web devs in Rust
+
+ast-grep will strive to be the one that bridges the gap between Rust and TypeScript.
