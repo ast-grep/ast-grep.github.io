@@ -10,11 +10,11 @@ In this blog post, we will walk through the problem and the [design](https://git
 
 ## What's type safety? Why?
 
-Writing AST manipulation code is hard. Even if we have a lot of helpful interactive tool, it's still hard to handle all edge cases.
+Writing AST manipulation code is hard. Even if we have a lot of [helpful](https://astexplorer.net/) [interactive](https://ast-grep.github.io/playground.html) [tool](https://github.com/sxzz/ast-kit), it's still hard to handle all edge cases.
 
-AST types are good guiderail to write comprehensive AST manipulation code. It guides one to write comprehensive AST manipulation code (in case people forget to handle some cases). Using exhaustive checking, one can ensure that all cases are handled.
+AST types are good guide-rail to write comprehensive AST manipulation code. It guides one to write comprehensive AST manipulation code (in case people forget to handle some cases). Using exhaustive checking, one can ensure that all cases are handled.
 
-While ast-grep napi is a convenient tool to programmatically process AST , but it lacks the type information to guide user to write robust logic to handle all potential code. Thank to Mohebifar from codemod, ast-grep napi now can provide type information via nodejs API.
+While ast-grep napi is a convenient tool to programmatically process AST , but it lacks the type information to guide user to write robust logic to handle all potential code. Thank to [Mohebifar](https://github.com/mohebifar) from [codemod](https://codemod.com/), `ast-grep/napi` now can provide type information via nodejs API.
 
 The solution to solve the problem is generating types from the static information provided by AST parser library, and using several TypeScript tricks to provide a good typing API.
 
@@ -24,11 +24,10 @@ before we talk about how we achieve the goal, let's talk about what are good Typ
 
 Designing a good library in the modern JavaScript world is not only about providing good API naming, documentation and examples, but also about providing good TypeScript types. A good API type should be:
 
-* Correct: reject invalid code and accept valid code
-* Concise: easy to read, especially in hover and completion
-* Robust: easy to spot the compile error when you make a mistake. it should not report a huge error that doesn't fit a screen
-* Performant: fast to compile. complex types can slow down the compiler
-
+* **Correct**: reject invalid code and accept valid code
+* **Concise**: easy to read, especially in hover and completion
+* **Robust**: if compiler fails to infer your type, it should either graciously grant you the permission to be wild, or gracefully give you a easy to understand error message. it should not report a huge error that doesn't fit a screen
+* **Performant**: fast to compile. complex types can slow down the compiler
 
 It is really hard to provide a type system that is both [Sound and Complete](https://logan.tw/posts/2014/11/12/soundness-and-completeness-of-the-type-system/#:~:text=A%20type%2Dsystem%20is%20sound,any%20false%20positive%20%5B2%5D.). This is similar to provide a good typing API.
 
@@ -38,36 +37,10 @@ Having a type to check your path parameter in your routing is cool, but what's t
 
 Designing a good TypeScript type is essentially a trade-off of these four aspects.
 
-## TreeSitter's types
-
-Let's come back to ast-grep's problem. ast-grep is based on Tree-Sitter.
-
-Tree-Sitter's official API is untyped. It provies a uniform API to access the syntax tree across different languages. A node in Tree-Sitter has several common methods to access its node type, children, parent, and text content.
-
-```TypeScript
-class Node {
-  kind(): string // get the node type
-  field(name: string): Node // get a child node by field name
-  parent(): Node
-  children(): Node[]
-  text(): string
-}
-```
-The API is simple and easy to use, but it lacks type information.
-
-In contrast, a specific language's syntax tree has a specific structure. For example, a function declaration in JavaScript has a `function` keyword, a name, a list of parameters, and a body. Other AST parser libraries encode this structure in their AST object types. For example, a `function_declaration` has fields like `parameters` and `body`.
-
-Fortunately tree-sitter provides static node types in json.
-There are several challenges to generate TypeScript types from tree-sitter's static node types.
-
-1. json is hosted by parser library repo
-We needs type generation (it is like F-sharp's type provider)
-2. json contains a lot unnamed kinds
-You are writing a compiler plugin, not elementary school math homework
-3. json has alias type
-For example, `declaration` is an alias of `function_declaration`, `class_declaration` and other declaration kinds.
 
 ## Design Type
+
+Let's come back to ast-grep's problem.
 
 The design principle of the new API is to progressively provide a more strict code checking and completion when the user gives more type information.
 
@@ -81,10 +54,34 @@ The new feature should not break the existing code.
 The user can give types to AST nodes either manually or automatically.
 Both approaches should refine the general untyped AST nodes to typed AST nodes and bring type check and intelligent completion to the user.
 
+### TreeSitter's types
 
-## Define Type
+ast-grep is based on Tree-Sitter. Tree-Sitter's official API is untyped. It provies a uniform API to access the syntax tree across different languages. A node in Tree-Sitter has several common methods to access its node type, children, parent, and text content.
 
-## TreeSitter's `TypeMap`
+```TypeScript
+class Node {
+  kind(): string // get the node type
+  field(name: string): Node // get a child node by field name
+  parent(): Node
+  children(): Node[]
+  text(): string
+}
+```
+The API is simple and easy to use, but it lacks type information.
+
+In contrast, a specific language's syntax tree, like [estree](https://github.com/estree/estree/blob/0362bbd130e926fed6293f04da57347a8b1e2325/es5.md), has a more specific structure. For example, a function declaration in JavaScript has a `function` keyword, a name, a list of parameters, and a body. Other AST parser libraries encode this structure in their AST object types. For example, a `function_declaration` has fields like `parameters` and `body`.
+
+Fortunately tree-sitter provides static node types in json.
+There are several challenges to generate TypeScript types from tree-sitter's static node types.
+
+1. json is hosted by parser library repo
+We needs type generation (it is like F-sharp's type provider)
+2. json contains a lot unnamed kinds
+You are writing a compiler plugin, not elementary school math homework
+3. json has alias type
+For example, `declaration` is an alias of `function_declaration`, `class_declaration` and other declaration kinds.
+
+### TreeSitter's `TypeMap`
 The new typed API will consume TreeSitte's [static node types](https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types) like below:
 
 ```typescript
@@ -136,23 +133,29 @@ Tree-sitter also provides alias types where a kind is an alias of a list of othe
 
 We want to both type a node's kind and its fields.
 
-## Give a type to `SgNode`
 
-`SgNode<M, K>` is the main type in the new API. It is a generic type that represents a node with kind `K` of language type map `M`. It is a union of all possible kinds of nodes.
+## Define Type
+
+### Give `SgNode` its type
+
+We add two type parameters to `SgNode` to represent the language type map and the node's kind.
+`SgNode<M, K>` is the main type in the new API. It is a generic type that represents a node with kind `K` of language type map `M`. By default, it is a union of all possible kinds of nodes.
 
 ```typescript
-class SgNode<M extends TypesMap, K extends keyof M> {
+class SgNode<M extends TypesMap, K extends keyof M = Kinds<M>> {
   kind: K
   fields: M[K]['fields'] // demo definition, real one is more complex
 }
 ```
+
+It provides a **correct** interface for an AST node in a specific language. While it is still **robust** enough to not trigger compiler error when no type information is available.
 
 
 ### `ResolveType<M, T>`
 
 TreeSitter's type alias is helpful to reduce the generated JSON file size but it is not useful to users because the alias is never directly used as a node's kind nor is used as `kind` in ast-grep rule. For example, `declaration` mentioned above can never be used as `kind` in ast-grep rule.
 
-We need to use a type alias to resolve the alias type to its concrete type.
+We need to use a type alias to **correctly** resolve the alias type to its concrete type.
 
 ```typescript
 type ResolveType<M, T extends keyof M> =
@@ -164,7 +167,9 @@ type ResolveType<M, T extends keyof M> =
 ### `Kinds<M>`
 
 Having a collection of possible AST node kinds is awesome, but it is sometime too clumsy to use a big string literal union type.
-Also, TreeSitter's static type contains a lot of unnamed kinds, which are not useful to users. Including them in the union type is too noisy. We need to allow users to opt-in to use the kind, and fallback to a plain `string` type.
+Using a type alias to **concisely** represent all possible kinds of nodes is a huge UX improvement.
+
+Also, TreeSitter's static type contains a lot of unnamed kinds, which are not useful to users. Including them in the union type is too noisy. We need to allow users to opt-in to use the kind, and fallback to a plain `string` type, creating a more **robust** API.
 
 ```typescript
 type Kinds<M> = keyof M & LowPriorityString
@@ -173,8 +178,7 @@ type LowPriorityString = string & {}
 
 The above type is a linient string type that is compatible with any string type. But it also uses a well-known trick to take advantage of TypeScript's type priority to prefer the `keyof M` type in completion over the `string & {}` type. To make it more self-explanatory, the `stirng & {}` type is aliased to `LowPriorityString`.
 
-Problem? open-ended union is not [well](https://github.com/microsoft/TypeScript/issues/33471)
-[supported](https://github.com/microsoft/TypeScript/issues/26277)in TypeScript.
+Problem? open-ended union is not [well](https://github.com/microsoft/TypeScript/issues/33471) [supported](https://github.com/microsoft/TypeScript/issues/26277) in TypeScript.
 
 We need other tricks to make it work better. Introducing `RefineNode` type.
 
@@ -213,7 +217,7 @@ but TypeScript does not support this feature.
 
 So ast-grep uses a trick via the type `RefineNode<M, K>` to let you refine the former one to  the later one.
 
-If the uniont type `K` contains a constituent of `string` type, it is equivalent to `SgNode<M, Kinds<M>>`.
+If we don't have confidence to narrow the type, that is, the union type `K` contains a constituent of `string` type, it is equivalent to `SgNode<M, Kinds<M>>`.
 Otherwise, we can refine the node to a union type of all possible kinds of nodes.
 
 ```typescript
@@ -222,18 +226,39 @@ type RefineNode<M, K> = string extends K ? SgNode<M, K> :
 ```
 it is like biome / rowan's API where you can refine the node to a specific kind.
 
+https://github.com/biomejs/biome/blob/09a04af727b3cdba33ac35837d112adb55726add/crates/biome_rowan/src/ast/mod.rs#L108-L120
+
+Again, having both untyped and typed API is a good trade-off between **correct** and **robust** type checking. You want the compiler to infer as much as possible if a clue of the node type is given, but you also want to allow writing code without type.
+
 
 ## Refine Type
 
-Now let's talk about how to refine the general node to a specific node in ast-grep/napi
+Now let's talk about how to refine the general node to a specific node in ast-grep/napi.
+
+Both manual and automatic refinement are **concise** and idiomatic in TypeScript.
 
 ### Refine Node, Manually
 
-Most AST traversal methods in ast-grep now can take a new type parameter to refine the node to a specific kind.
+You can  do runtime checking via `sgNode.is("kind")`
+```typescript
+class SgNode<M, K> {
+  is<T extends K>(kind: T): this is SgNode<M, T>
+}
+```
+
+It can offer one time type narrowing
+
+```typescript
+if (sgNode.is("function_declaration")) {
+  sgNode.kind // narrow to 'function_declaration'
+}
+```
+
+Another way is to provide an optional type parameter to the traversal method to refine the node to a specific kind, in case you are confident that the node is always of a specific kind and want to skip runtime check.
 
 This is like the `document.querySelector<T>` method in the [DOM API](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#the-queryselector-and-queryselectorall-methods). It returns a general `Element` type, but you can refine it to a specific type like `HTMLDivElement` by providing generic argument.
 
-For example `sgNode.parent<"KIND">()`. This will refine the node to a specific kind.
+For example `sgNode.parent<"program">()`. This will refine the node to a specific kind `SgNode<TS, "program">`.
 
 This uses the interesting overloading feature of TypeScript
 
@@ -248,13 +273,18 @@ If a type is provided, it returns a specific node, `SgNode<M, K>`.
 
 The reason why we use two overloading signatures here is to distinguish the two cases. If we use a single generic signature, TypeScript will always return the single version `SgNode<M, K1|K2>` or always returns a union of different `SgNode`s.
 
- another way to do runtime checking is via `sgNode.is("kind")`, one time type narrowing
 
-```typescript
-if (sgNode.is("function_declaration")) {
-  sgNode.kind // narrow to 'function_declaration'
-}
+:::tip When to use type parameter and when `is`?
+
+If you cannot guarantee the node kind and want to do runtime check, use `is` method.
+
+If you are 100% sure about the node kind and want to avoid the runtime check overhead, use type parameter.
+Note this option can break type safety if misused. This command can help you to audit.
+
+```bash
+ast-grep -p '$NODE.$METHOD<$K>($$$)'
 ```
+:::
 
 ### Refine Node, Automatically
 
@@ -268,19 +298,25 @@ let exportStmt: SgNode<'export_statement'>
 exportStmt.field('declaration') // refine to SgNde<'function_declaration'> | SgNode<'variable_declaration'> ...
 ```
 
+You don't need to explicitly spell out the kind! It is both **concise** and **correct**.
 
-### Exhaustive Checking via `sgNode.kindToRefine`
+
+### Exhaustive Check via `sgNode.kindToRefine`
+
+ast-grep/napi also introduced a new property `kindToRefine` to refine the node to a specific kind.
 
 Why do we need the `kindToRefine` property given that we already have a `kind()` method?
 
-TypeScript cannot narrow type via a method call. It can only narrow type via a property access.
+First, `kind` is a method in the existing API and we prefer not to have a breaking change.
 
-Also `kindToRefine` is a getter under the hood powered by napi. It is less efficient thant JavaScript's object property access.
+Secondly, TypeScript cannot narrow type via a method call. It can only narrow type via a property access.
+
+In terms of implementation, `kindToRefine` is a getter under the hood powered by napi. It is less efficient thant JavaScript's object property access.
 Actually, it will call Rust function from JavaScript, which is as expensive as the `kind()` method.
 
-To bring user's awareness to this performance implication and to make a backward compatible API change, we introduce the `kindToRefine` property.
+To bring user's awareness to this **performance** implication and to make a backward compatible API change, we introduce the `kindToRefine` property.
 
-It is mostly useful for a union type of nodes with specific kinds
+It is mostly useful for a union type of nodes with specific kinds, guiding you to write a **correct** AST program. You can use it in tandem with the union type returned by `RefinedNode` to exhaustively check all possible kinds of nodes.
 
 ```typescript
 const func: SgNode<'function_declaration'> | SgNode<'arrow_function'>
@@ -292,23 +328,28 @@ switch (func.kindToRefine) {
   case 'arrow_function':
     func.kindToRefine // narrow to 'arrow_function'
     break
+  // ....
   default:
-    func satisfies never // exhaustive check!
+    func satisfies never // exhaustiveness, checked!
 }
 ```
 
 ## Confine Types
 
-Be austere of type level programming.
+Be austere of type level programming. Too much type level programming can make the compiler explode, as well as users' brain.
 
 ### Prune unnamed kinds
-For example `+`/`-`/`*`/`/` is too noisy for a general AST library
+Tree-sitter's static type contains a lot of unnamed kinds, which are not useful to users.
+
+For example `+`/`-`/`*`/`/` is too noisy for an AST library.
 
 This is also the reason why we need to include `string` in the `Kinds`.
 
+In the type generation step, ast-grep filters out these unnamed kinds to make the type more **concise**.
+
 ### Opt-in refinement for better compile time performance
 
-The new API is designed to provide a better type checking and completion experience to the user. But it comes with a cost of performance.
+The new API is designed to provide a better type checking and completion experience to the user. But it comes with a cost of **performance**.
 One type map for a single language can be several thousand lines of code with hundreds of kinds.
 The more type information the user provides, the slower the compile time.
 
@@ -325,6 +366,16 @@ const typed = parse<TS>(Lang.TypeScript, code)
 
 The last feature worth mentioning is the typed rule! You can even type the `kind` in rule JSON!
 
+
+```typescript
+interface Rule<M extends TypeMaps> {
+    kind: Kinds<M>
+    ... // other rules
+}
+```
+
+Of course this is not to _confine_ the type, but let the type creep into the rule greatly improving the UX and rule **correctness**.
+
 You can look up the available kinds in the static type via the completion popup in your editor. (btw I use nvim)
 ```typescript
 sgNode.find({
@@ -333,13 +384,6 @@ sgNode.find({
     kind: 'function_declaration', // typed!
   }
 })
-```
-
-```typescript
-interface Rule<M> {
-    kind: Kinds<M>
-    ... // other rules
-}
 ```
 
 ## Ending
