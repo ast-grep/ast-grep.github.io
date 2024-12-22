@@ -50,6 +50,7 @@ export default defineConfig({
           { text: 'Rule Examples', link: '/catalog/' },
           { text: 'Custom Language', link: '/advanced/custom-language.html' },
           { text: 'Contributing', link: '/contributing/how-to.html' },
+          { text: 'Blog', link: '/blog.html' },
         ],
       },
       { text: 'Playground', link: '/playground.html' },
@@ -177,6 +178,7 @@ export default defineConfig({
         text: 'Links',
         items: [
           { text: 'Playground', link: '/playground.html' },
+          { text: 'Blog', link: '/blog.html' },
           { text: 'VSCode', link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode'},
           { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ'},
           { text: 'StackOverflow', link: 'https://stackoverflow.com/questions/tagged/ast-grep'},
