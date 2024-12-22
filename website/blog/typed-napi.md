@@ -312,84 +312,82 @@ ast-grep -p '$NODE.$METHOD<$K>($$$)'
 
 ### Refine Node, Automatically
 
-The key feature of the new API is to automatically refine the node to a specific kind when the user gives more type information.
+A standout feature of our new API is automatic type refinement based on contextual information. This happens seamlessly through the `field` method.
 
-This is done by using the `field` method
+When you access a node's field using `field("name")`, the system automatically examines the static type information and refines the node type accordingly:
 
-`sgNode.field("kind")` will automatically check the field name and its corresponding types in the static type, and refine the node to the specific kind.
 ```typescript
 let exportStmt: SgNode<'export_statement'>
-exportStmt.field('declaration') // refine to SgNde<'function_declaration'> | SgNode<'variable_declaration'> ...
+exportStmt.field('declaration') // Automatically refines to union:
+                               // SgNode<'function_declaration'> |
+                               // SgNode<'variable_declaration'> | ...
 ```
 
-You don't need to explicitly spell out the kind! It is both **concise** and **correct**.
+The magic here is that you never need to specify the possible types explicitly - the system infers them automatically. This approach is both **concise** in usage and **correct** in type inference.
 
+### Exhaustive Pattern Matching with kindToRefine
 
-### Exhaustive Check via `sgNode.kindToRefine`
+We've also introduced a new `kindToRefine` property for comprehensive type checking. You might wonder: why add this when we already have a `kind()` method?
 
-ast-grep/napi also introduced a new property `kindToRefine` to refine the node to a specific kind.
+There are two key reasons:
+1. Preserving backward compatibility with the existing `kind()` method
+2. Enabling TypeScript's type narrowing, which works with properties but not method calls
 
-Why do we need the `kindToRefine` property given that we already have a `kind()` method?
+While `kindToRefine` is implemented as a getter that calls into Rust code (making it as computationally expensive as the `kind()` method), it enables powerful type checking capabilities. To ensure developers are aware of this **performance** characteristic, we deliberately chose a _distinct and longer_ property name.
 
-First, `kind` is a method in the existing API and we prefer not to have a breaking change.
-
-Secondly, TypeScript cannot narrow type via a method call. It can only narrow type via a property access.
-
-In terms of implementation, `kindToRefine` is a getter under the hood powered by napi. It is less efficient thant JavaScript's object property access.
-Actually, it will call Rust function from JavaScript, which is as expensive as the `kind()` method.
-
-To bring user's awareness to this **performance** implication and to make a backward compatible API change, we introduce the `kindToRefine` property.
-
-It is mostly useful for a union type of nodes with specific kinds, guiding you to write a **correct** AST program. You can use it in tandem with the union type returned by `RefinedNode` to exhaustively check all possible kinds of nodes.
+This property really shines when working in tandem union types returned by `RefineNode`, helping you write **correct** AST transformations through exhaustive pattern matching:
 
 ```typescript
 const func: SgNode<'function_declaration'> | SgNode<'arrow_function'>
 
 switch (func.kindToRefine) {
   case 'function_declaration':
-    func.kindToRefine // narrow to 'function_declaration'
+    func.kindToRefine // Narrowed to function_declaration
     break
   case 'arrow_function':
-    func.kindToRefine // narrow to 'arrow_function'
+    func.kindToRefine // Narrowed to arrow_function
     break
-  // ....
   default:
-    func satisfies never // exhaustiveness, checked!
+    func satisfies never // TypeScript ensures we handled all cases
 }
 ```
 
+The combination of automatic type refinement and exhaustive pattern matching makes it easier to write **correct** AST transformations while catching potential errors at compile time.
+
 ## Confine Types
 
-Be austere of type level programming. Too much type level programming can make the compiler explode, as well as users' brain.
+Always bear in mind this mantra: _Be austere with type level programming._
+
+Overdoing type level programming can overload the compiler as well as overwhelm users.
+It is a good practice to confine the API type to a reasonable complexity level.
 
 ### Prune unnamed kinds
-Tree-sitter's static type contains a lot of unnamed kinds, which are not useful to users.
 
-For example `+`/`-`/`*`/`/` is too noisy for an AST library.
+Tree-sitter's static type includes many unnamed kinds, which are not user-friendly.
 
-This is also the reason why we need to include `string` in the `Kinds`.
+For instance, operators like `+`/`-`/`*`/`/` are too verbose for an AST library. We're building a compiler plugin, not solving elementary school math problems, right?
+
+This is why we exclude the unnamed kinds and include `string` in the `Kinds`.
 
 In the type generation step, ast-grep filters out these unnamed kinds to make the type more **concise**.
 
 ### Opt-in refinement for better compile time performance
 
-The new API is designed to provide a better type checking and completion experience to the user. But it comes with a cost of **performance**.
-One type map for a single language can be several thousand lines of code with hundreds of kinds.
-The more type information the user provides, the slower the compile time.
+The new API is designed to provide a better type checking and autocompletion experience for users.
+However, this improvement comes at the cost of **performance**. A single type map for one language can span several thousand lines of code with hundreds of kinds. The more type information the user provides, the slower the compile time.
 
+To manage this, you need to explicitly opt into type information by passing type parameters to the `parse` method.
 
-So you need to explicitly opt in type information by passing type parameters to `parse` method.
 ```typescript
 import { parse } from '@ast-grep/napi'
-import TS from '@ast-grep/napi/lang/TypeScript'
+import TS from '@ast-grep/napi/lang/TypeScript' // import this can be slow
 const untyped = parse(Lang.TypeScript, code)
 const typed = parse<TS>(Lang.TypeScript, code)
 ```
 
 ### Typed Rule!
 
-The last feature worth mentioning is the typed rule! You can even type the `kind` in rule JSON!
-
+The last notable feature is the typed rule. You can even type the `kind` in rule JSON!
 
 ```typescript
 interface Rule<M extends TypeMaps> {
@@ -398,9 +396,10 @@ interface Rule<M extends TypeMaps> {
 }
 ```
 
-Of course this is not to _confine_ the type, but let the type creep into the rule greatly improving the UX and rule **correctness**.
+Of course, this isn't about _confining_ the type but allowing type information to enhance rules, significantly improving UX and rule **correctness**.
 
 You can look up the available kinds in the static type via the completion popup in your editor. (btw I use nvim)
+
 ```typescript
 sgNode.find({
   rule: {
@@ -412,11 +411,12 @@ sgNode.find({
 
 ## Ending
 
-I'm very thrilled to see the future of AST manipulation in TypeScript.
-This feature enables users to switch freely between untyped AST and typed AST.
+I'm incredibly excited about the future of AST manipulation in TypeScript.
 
-To use a quote from [Theo's video](https://www.youtube.com/clip/Ugkxn2oomDuyQjtaKXhYP1MU9TLEShf5m1nf):
+This feature empowers users to seamlessly switch between untyped and typed AST, offering flexibility and enhanced capabilities, an innovation that has not been seen in other AST libraries, especially not in native language based ones.
+
+As Theo aptly puts it in [his video](https://www.youtube.com/clip/Ugkxn2oomDuyQjtaKXhYP1MU9TLEShf5m1nf):
 
 > There are very few devs that understands Rust deeply enough and compiler deeply enough that also care about TypeScript in web dev enough to build something for web devs in Rust
 
-ast-grep will strive to be the one that bridges the gap between Rust and TypeScript.
+ast-grep is determined to bridge that gap between Rust and TypeScript!
