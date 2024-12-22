@@ -122,13 +122,9 @@ Thanks to Tree-Sitter's design, we can leverage this rich type information to bu
 
 Our new API follows a progressive enhancement approach to type safety:
 
-**Preserve untyped AST access**
+**Preserve untyped AST access**. The existing untyped API remains available by default, ensuring backward compatibility
 
-The existing untyped API remains available by default, ensuring backward compatibility
-
-**Optional type safety on demand**
-
-Users can opt into typed AST nodes either manually or automatically for enhanced type checking and autocompletion
+**Optional type safety on demand**. Users can opt into typed AST nodes either manually or automatically for enhanced type checking and autocompletion
 
 However, it is a bumpy ride to transition to a new typed API via the path of Tree-sitter's static type.
 
@@ -138,28 +134,31 @@ Second, the JSON contains a lot of unnamed kinds, which are not useful to users.
 
 Finally, as mentioned earlier, the JSON contains alias types. We need to resolve the alias type to its concrete type, which is also covered in the next section.
 
-## Define Type
+## Define Types
 
-### Give `SgNode` its type
+New API's core involves several key new types and extensions to existing types.
 
-We add two type parameters to `SgNode` to represent the language type map and the node's kind.
-`SgNode<M, K>` is the main type in the new API. It is a generic type that represents a node with kind `K` of language type map `M`. By default, it is a union of all possible kinds of nodes.
+### Let `SgNode` Have Type
+
+`SgNode` class, the cornerstone of our new API, now accepts two new optional type parameters.
 
 ```typescript
-class SgNode<M extends TypesMap, K extends keyof M = Kinds<M>> {
+class SgNode<M extends TypesMap, K extends Kinds<M> = Kinds<M>> {
   kind: K
   fields: M[K]['fields'] // demo definition, real one is more complex
 }
 ```
 
-It provides a **correct** interface for an AST node in a specific language. While it is still **robust** enough to not trigger compiler error when no type information is available.
+It represents a node in a language with type map `M` that has a specific kind `K`. e.g. `SgNode<TypeScript, "function_declaration">` means a function declaration node in TypeScript. When used without a specific kind parameter, `SgNode` defaults to accepting any valid node kind in the language.
+
+`SgNode` provides a **correct** AST interface in a specific language. While at the same time, it is still **robust** enough to not trigger compiler error when no type information is available.
 
 
 ### `ResolveType<M, T>`
 
-TreeSitter's type alias is helpful to reduce the generated JSON file size but it is not useful to users because the alias is never directly used as a node's kind nor is used as `kind` in ast-grep rule. For example, `declaration` mentioned above can never be used as `kind` in ast-grep rule.
+While Tree-sitter's type aliases help keep the JSON type definitions compact, they present a challenge: these aliases never appear as actual node kinds in ast-grep rules.
 
-We need to use a type alias to **correctly** resolve the alias type to its concrete type.
+To handle this, we created `ResolveType` to **correctly** map aliases to their concrete kinds:
 
 ```typescript
 type ResolveType<M, T extends keyof M> =
@@ -168,89 +167,93 @@ type ResolveType<M, T extends keyof M> =
     : T
 ```
 
+This type recursively resolves aliases until it reaches actual node types that developers work with.
+
 ### `Kinds<M>`
 
-Having a collection of possible AST node kinds is awesome, but it is sometime too clumsy to use a big string literal union type.
-Using a type alias to **concisely** represent all possible kinds of nodes is a huge UX improvement.
+Having access to all possible AST node types is powerful, but it is unwieldy to work with large string literal union types. It can be a huge UX improvement to use a type alias to **concisely** represent all possible kinds of nodes.
 
-Also, TreeSitter's static type contains a lot of unnamed kinds, which are not useful to users. Including them in the union type is too noisy. We need to allow users to opt-in to use the kind, and fallback to a plain `string` type, creating a more **robust** API.
+Additionally, Tree-sitter's static type contains a bunch of noisy unnamed kinds. But excluding them from the union type can lead to a incomplete type signature. ast-grep instead bundle them into a plain `string` type, creating a more **robust** API.
 
 ```typescript
-type Kinds<M> = keyof M & LowPriorityString
+type Kinds<M> = ResolveType<M, keyof M> & LowPriorityString
 type LowPriorityString = string & {}
 ```
 
-The above type is a linient string type that is compatible with any string type. But it also uses a well-known trick to take advantage of TypeScript's type priority to prefer the `keyof M` type in completion over the `string & {}` type. To make it more self-explanatory, the `stirng & {}` type is aliased to `LowPriorityString`.
+The above type is a linient string type that is compatible with any string type. But it also uses a [well-known trick](https://stackoverflow.com/a/61048124/2198656) to take advantage of TypeScript's type priority to prefer the `ResolveType` in completion over the `string & {}` type.
 
-Problem? open-ended union is not [well](https://github.com/microsoft/TypeScript/issues/33471) [supported](https://github.com/microsoft/TypeScript/issues/26277) in TypeScript.
 
-We need other tricks to make it work better. Introducing `RefineNode` type.
+We alias `string & {}` to `LowPriorityString` to make the code's intent clearer. This approach creates a more intuitive developer experience, though it does run into [some limitations](https://github.com/microsoft/TypeScript/issues/33471) with TypeScript's handling of [open-ended unions](https://github.com/microsoft/TypeScript/issues/26277).
+
+We need other tricks to address these limitations. Introducing `RefineNode` type.
 
 ###  Bridging general nodes and specific nodes via `RefineNode`
 
-There are two categories of nodes:
-* general `string`ly typed SgNode
-* precisely typed SgNode
+A key challenge in our type system was handling two distinct categories of nodes:
 
-general node is like the untyped old API (but with better completion)
-precisely typed node is a union type of all possible kinds of nodes
+1. **General Nodes**: String-based typing (like our original API, but with enhanced completion), `SgNode<M, Kinds<M>>`.
+2. **Specific Nodes**: Precisely typed nodes with known kinds, `SgNode<M, 'specific_kind'>`.
 
-The previous general node is typed as `SgNode<M, Kinds<M>>`, the later is typed as `SgNode<M, 'specific_kind'>`.
+When dealing with nodes that could be several specific kinds, we faced an interesting type system challenge. Consider these two approaches:
 
-when it comes to a node that can have several specific kinds, it is better to use a union type of all possible kinds of nodes.
+```typescript
+// Approach 1: Union in the type parameter
+let single: SgNode<'expression' | 'type'>
 
-Which kind of union should we use?
+// Approach 2: Union of specific nodes
+let union: SgNode<'expression'> | SgNode<'type'>
+```
 
-Note `SgNode<'expression' | 'type'>` is different from `SgNode<'expression'> | SgNode<'type'>`
-TypeScript has difficulty in narrowing the previous type, because it not safe to assume the former is equivalent to the later.
+These approaches behave differently in TypeScript, for a [good reason](https://x.com/hd_nvim/status/1868706176281854151):
 
 ```typescript
 let single: SgNode<'expression' | 'type'>
 if (single.kind === 'expression') {
-  single // Still SgNode<'expression' | 'type'>, not narrowed
+  single // Remains SgNode<'expression' | 'type'> - not narrowed!
 }
+
 let union: SgNode<'expression'> | SgNode<'type'>
 if (union.kind === 'expression') {
-  union // SgNode<'expression'>, narrowed
+  union // Successfully narrowed to SgNode<'expression'>
 }
 ```
 
-However, `SgNode` is covariant in the kind parameter and this means it is okay.
-it is general okay to distribute the type constructor over union type if the parameter is covariant.
-but TypeScript does not support this feature.
+`SgNode` is technically covariant in its kind parameter, meaning it's safe to distribute the type constructor over unions. However TypeScript doesn't support this automatically. (We will not go down the rabbit hole of type constructor variance here. But interested readers can check out [this wiki](https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)).)
 
-So ast-grep uses a trick via the type `RefineNode<M, K>` to let you refine the former one to  the later one.
-
-If we don't have confidence to narrow the type, that is, the union type `K` contains a constituent of `string` type, it is equivalent to `SgNode<M, Kinds<M>>`.
-Otherwise, we can refine the node to a union type of all possible kinds of nodes.
+To bridge this gap, we introduced the `RefineNode` type:
 
 ```typescript
-type RefineNode<M, K> = string extends K ? SgNode<M, K> :
-  K extends keyof M ? SgNode<M, K> : never // this conditional type unpack the string union to Node union
+type RefineNode<M, K extends Kinds<M>> =
+type RefineNode<M, K> = string extends K ? SgNode<M, K> : // one SgNode
+  K extends keyof M ? SgNode<M, K> : never  // distribute over union
 ```
-it is like biome / rowan's API where you can refine the node to a specific kind.
 
-https://github.com/biomejs/biome/blob/09a04af727b3cdba33ac35837d112adb55726add/crates/biome_rowan/src/ast/mod.rs#L108-L120
+This utility type provides two key behaviors:
+1. When `K` includes a string type, it preserves the general node behavior
+2. Otherwise, it refines the node into a union of specific types, using TypeScripts' [distributive conditional types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types).
 
-Again, having both untyped and typed API is a good trade-off between **correct** and **robust** type checking. You want the compiler to infer as much as possible if a clue of the node type is given, but you also want to allow writing code without type.
+This approach, inspired by [Biome's Rowan API](https://github.com/biomejs/biome/blob/09a04af727b3cdba33ac35837d112adb55726add/crates/biome_rowan/src/ast/mod.rs#L108-L120), achieves our dual goals: it remains **correct** by preserving proper type relationships and stays **robust** by gracefully handling both typed and untyped usage.
 
+This hybrid approach gives developers the best of both worlds: strict type checking when types are known, with the flexibility to fall back to string-based typing when needed.
 
 ## Refine Type
 
 Now let's talk about how to refine the general node to a specific node in ast-grep/napi.
-
-Both manual and automatic refinement are **concise** and idiomatic in TypeScript.
+We've implemented two concise and idiomatic approaches in TypeScript: manual and automatic refinement.
 
 ### Refine Node, Manually
 
-You can  do runtime checking via `sgNode.is("kind")`
+#### Runtime Type Checking
+
+The first manual approach uses runtime verification through the `is` method:
+
 ```typescript
 class SgNode<M, K> {
   is<T extends K>(kind: T): this is SgNode<M, T>
 }
 ```
 
-It can offer one time type narrowing
+This enables straightforward type narrowing:
 
 ```typescript
 if (sgNode.is("function_declaration")) {
@@ -258,32 +261,49 @@ if (sgNode.is("function_declaration")) {
 }
 ```
 
-Another way is to provide an optional type parameter to the traversal method to refine the node to a specific kind, in case you are confident that the node is always of a specific kind and want to skip runtime check.
+#### Type Parameter Specification
 
-This is like the `document.querySelector<T>` method in the [DOM API](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#the-queryselector-and-queryselectorall-methods). It returns a general `Element` type, but you can refine it to a specific type like `HTMLDivElement` by providing generic argument.
+Another manual approach lets you explicitly specify node types through type parameters. This is particularly useful when you're certain about a node's kind and want to skip runtime checks for better performance.
 
-For example `sgNode.parent<"program">()`. This will refine the node to a specific kind `SgNode<TS, "program">`.
+This pattern may feel familiar if you've worked with the [DOM API](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#the-queryselector-and-queryselectorall-methods)'s `querySelector<T>`. Just as `querySelector` can be refined from a general `Element` to a specific `HTMLDivElement`, we can refine our nodes:
 
-This uses the interesting overloading feature of TypeScript
+```typescript
+sgNode.parent<"program">() // Returns SgNode<TS, "program">
+```
+
+
+The type parameter approach uses an interesting overloading signature
 
 ```typescript
 interface NodeMethod<M, K> {
-  (): SgNode
-  <T extends K>(): RefineNode<M, T>
+  (): SgNode<M>                     // Untyped version
+  <T extends K>(): RefineNode<M, T> // Typed version
 }
 ```
-If no type is provided, it returns a general node, `SgNode<M>`.
-If a type is provided, it returns a specific node, `SgNode<M, K>`.
 
-The reason why we use two overloading signatures here is to distinguish the two cases. If we use a single generic signature, TypeScript will always return the single version `SgNode<M, K1|K2>` or always returns a union of different `SgNode`s.
+If no type is provided, it returns a general node, `SgNode<M>`. If a type is provided, it returns a specific node, `SgNode<M, K>`.
 
+This dual-signature typing avoids the limitations of a single generic signature, which would either always return `SgNode<M, K1|K2>` or always produce a union of `SgNode`s.
 
-:::tip When to use type parameter and when `is`?
+#### Choosing the Right Type
 
-If you cannot guarantee the node kind and want to do runtime check, use `is` method.
+When should you use each manual refinement method? Here are some guidelines:
 
-If you are 100% sure about the node kind and want to avoid the runtime check overhead, use type parameter.
-Note this option can break type safety if misused. This command can help you to audit.
+✓ Use `is()` when:
+* You need runtime type check
+* Node types might vary
+* Type safety is crucial
+
+✓ Use type parameters when:
+
+* You're completely certain of the node type
+* Performance is critical
+* The node type is fixed
+
+:::tip Safety Tip
+
+Be cautious with type parameters as they bypass runtime checks. It can break type safety if misused.
+You can audit their usage with the command:
 
 ```bash
 ast-grep -p '$NODE.$METHOD<$K>($$$)'
