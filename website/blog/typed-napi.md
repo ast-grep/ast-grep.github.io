@@ -1,5 +1,21 @@
 ---
+author:
+  - name: Herrington Darkholme
 sidebar: false
+date: 2024-12-22
+head:
+  - - meta
+    - property: og:type
+      content: website
+  - - meta
+    - property: og:title
+      content: ast-grep's Journey to Type Safety in Node API
+  - - meta
+    - property: og:url
+      content: https://ast-grep.github.io/blog/typed-napi.html
+  - - meta
+    - property: og:description
+      content: ast-grep/napi now supports typed AST manipulation which is correct, concise, robust, and performant.
 ---
 
 # ast-grep's Journey to Type Safety in Node API
