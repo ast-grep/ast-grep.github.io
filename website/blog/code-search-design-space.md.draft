@@ -1,3 +1,23 @@
+---
+author:
+  - name: Herrington Darkholme
+sidebar: false
+date: 2024-12-23
+head:
+  - - meta
+    - property: og:type
+      content: website
+  - - meta
+    - property: og:title
+      content: Design Space for Code Search
+  - - meta
+    - property: og:url
+      content: https://ast-grep.github.io/blog/code-search-design-space.html
+  - - meta
+    - property: og:description
+      content: A review of the design space for code search tools.
+---
+
 # Design Space for Code Search
 
 Code search is a critical tool for developers, enabling them to find, understand, and reuse existing code.
