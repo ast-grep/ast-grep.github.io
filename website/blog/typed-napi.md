@@ -4,88 +4,65 @@ sidebar: false
 
 # Improve Napi Typing
 
-I'm thrilled to announce that [@ast-grep/napi] now supports typed, solving a [long standing issue](https://github.com/ast-grep/ast-grep/issues/48) in our feature request.
+> _Design, Define, Refine, and Confine: Crafting Balanced TypeScript Types_
 
-In this blog post, we will walk through the problem and the [design](https://github.com/ast-grep/ast-grep/issues/1669) of the new feature. It will also be a valuable resource to write a good TypeScript type in general.
+We're thrilled to introduce typed AST in [@ast-grep/napi], addressing a [long-requested feature](https://github.com/ast-grep/ast-grep/issues/48) for AST manipulation from the early days of this project.
 
-## What's type safety? Why?
+In this blog post, we will delve into the challenges addressed by this feature and explore [the design](https://github.com/ast-grep/ast-grep/issues/1669) that shaped its implementation. _We also believe this post can serve as a general guide to crafting balanced TypeScript types._
 
-Writing AST manipulation code is hard. Even if we have a lot of [helpful](https://astexplorer.net/) [interactive](https://ast-grep.github.io/playground.html) [tool](https://github.com/sxzz/ast-kit), it's still hard to handle all edge cases.
+## Why Type Safety Matters in AST
 
-AST types are good guide-rail to write comprehensive AST manipulation code. It guides one to write comprehensive AST manipulation code (in case people forget to handle some cases). Using exhaustive checking, one can ensure that all cases are handled.
+Working with Abstract Syntax Trees (ASTs) is complex. Even with AST [excellent](https://astexplorer.net/) [AST](https://ast-grep.github.io/playground.html) [tools](https://github.com/sxzz/ast-kit), handling all edge cases remains challenging.
 
-While ast-grep napi is a convenient tool to programmatically process AST , but it lacks the type information to guide user to write robust logic to handle all potential code. Thank to [Mohebifar](https://github.com/mohebifar) from [codemod](https://codemod.com/), `ast-grep/napi` now can provide type information via nodejs API.
+Type information serves as a crucial safety net when writing AST manipulation code. It guides developers toward handling all possible cases and enables exhaustive checking to ensure complete coverage.
 
-The solution to solve the problem is generating types from the static information provided by AST parser library, and using several TypeScript tricks to provide a good typing API.
+While `ast-grep/napi` has been a handy tool for programmatic AST processing, it previously lacked type information to help users write robust code. Thank to [Mohebifar](https://github.com/mohebifar) from [codemod](https://codemod.com/), we've now bridged this gap. Our solution generates types from parsers' metadata and employs TypeScript tricks to create an idiomatic API.
 
-## What are good TypeScript types?
+## Qualities of Good TypeScript Types
 
-before we talk about how we achieve the goal, let's talk about what are good TypeScript types.
+Before diving into our implementation, let's explore what makes TypeScript definitions truly effective. In today's JavaScript ecosystem, creating a great library involves more than just intuitive APIs and thorough documentation – it requires thoughtful type definitions that enhance developer experience.
 
-Designing a good library in the modern JavaScript world is not only about providing good API naming, documentation and examples, but also about providing good TypeScript types. A good API type should be:
+A well-designed type system should balance four key qualities:
 
-* **Correct**: reject invalid code and accept valid code
-* **Concise**: easy to read, especially in hover and completion
-* **Robust**: if compiler fails to infer your type, it should either graciously grant you the permission to be wild, or gracefully give you a easy to understand error message. it should not report a huge error that doesn't fit a screen
-* **Performant**: fast to compile. complex types can slow down the compiler
+* **Correct**: Types should act as reliable guardrails, rejecting invalid code while allowing all valid use cases.
+* **Concise**: Types should be easy to understand, whether in IDE hovers or code completions. Clear, readable types help developers quickly grasp your API.
+* **Robust**: In case type inference fails, the compiler should either graciously tolerate untyped code, or gracefully provide clear error messages. Cryptic type errors that span multiple screens is daunting and unhelpful.
+* **Performant**: Both type checking and runtime code should be fast. Complex types can significantly slow down compilation while unnecessary API calls just conforming to type safety can hurt runtime performance.
 
-It is really hard to provide a type system that is both [Sound and Complete](https://logan.tw/posts/2014/11/12/soundness-and-completeness-of-the-type-system/#:~:text=A%20type%2Dsystem%20is%20sound,any%20false%20positive%20%5B2%5D.). This is similar to provide a good typing API.
+Balancing these qualities is demanding job because they often compete with each other, just like creating a type system that is both [sound and complete](https://logan.tw/posts/2014/11/12/soundness-and-completeness-of-the-type-system/#:~:text=A%20type%2Dsystem%20is%20sound,any%20false%20positive%20%5B2%5D.). Many TS libraries lean heavily toward strict correctness – for instance, implementing elaborate types to validate routing parameters. While powerful, [type gymnastics](https://www.octomind.dev/blog/navigating-the-typescript-gymnastics-on-developer-dogma-2) can come with significant trade-offs in complexity and compile-time performance. Sometimes, being slightly less strict can lead to a dramatically better developer experience.
 
+We will explore how ast-grep balances these qualities through _Design, Define, Refine, and Confine_.
 
-TS libs nowaday probably pay too much attention to correctness IMHO.
-Having a type to check your path parameter in your routing is cool, but what's the cost?
+## Design Types
 
-Designing a good TypeScript type is essentially a trade-off of these four aspects.
+Let's return to ast-grep's challenge and learn some background knowledge on how Tree-sitter, our underlying parser library, handles types.
 
+### TreeSitter's Core API
 
-## Design Type
-
-Let's come back to ast-grep's problem.
-
-The design principle of the new API is to progressively provide a more strict code checking and completion when the user gives more type information.
-
-1. **Allow untyped AST access if no type information is provided**
-
-Existing untyped API is still available and it is the default behavior.
-The new feature should not break the existing code.
-
-2. **Allow user to type AST node and enjoy more type safety**
-
-The user can give types to AST nodes either manually or automatically.
-Both approaches should refine the general untyped AST nodes to typed AST nodes and bring type check and intelligent completion to the user.
-
-### TreeSitter's types
-
-ast-grep is based on Tree-Sitter. Tree-Sitter's official API is untyped. It provies a uniform API to access the syntax tree across different languages. A node in Tree-Sitter has several common methods to access its node type, children, parent, and text content.
-
-```TypeScript
-class Node {
-  kind(): string // get the node type
-  field(name: string): Node // get a child node by field name
-  parent(): Node
-  children(): Node[]
-  text(): string
-}
-```
-The API is simple and easy to use, but it lacks type information.
-
-In contrast, a specific language's syntax tree, like [estree](https://github.com/estree/estree/blob/0362bbd130e926fed6293f04da57347a8b1e2325/es5.md), has a more specific structure. For example, a function declaration in JavaScript has a `function` keyword, a name, a list of parameters, and a body. Other AST parser libraries encode this structure in their AST object types. For example, a `function_declaration` has fields like `parameters` and `body`.
-
-Fortunately tree-sitter provides static node types in json.
-There are several challenges to generate TypeScript types from tree-sitter's static node types.
-
-1. json is hosted by parser library repo
-We needs type generation (it is like F-sharp's type provider)
-2. json contains a lot unnamed kinds
-You are writing a compiler plugin, not elementary school math homework
-3. json has alias type
-For example, `declaration` is an alias of `function_declaration`, `class_declaration` and other declaration kinds.
-
-### TreeSitter's `TypeMap`
-The new typed API will consume TreeSitte's [static node types](https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types) like below:
+At its heart, Tree-sitter provides a language-agnostic API for traversing syntax trees. Its base API is intentionally untyped, offering a consistent interface across all programming languages:
 
 ```typescript
-interface TypeMpa {
+class Node {
+  kind(): string     // Get the type of node, e.g., 'function_declaration'
+  field(name: string): Node  // Get a specific child by its field name
+  parent(): Node             // Navigate to the parent node
+  children(): Node[]         // Get all child nodes
+  text(): string             // Get the actual source code text
+}
+```
+
+This API is elegantly simple, but its generality comes at the cost of type safety.
+
+In contrast, traditional language-specific parsers bake AST structures directly into their types. Consider [estree](https://github.com/estree/estree/blob/0362bbd130e926fed6293f04da57347a8b1e2325/es5.md). It encodes rich structural information about each node type in JavaScript. For instance, a `function_declaration` is a specific structure with the function's `name`, `parameters` list, and `body` fields.
+
+Fortunately, Tree-sitter hasn't left us entirely without type information. It provides detailed static type information in JSON format and leaves us an opportunity to enchant the flexible runtime API with the type safe magic.
+
+### Tree-sitter's `TypeMap`
+
+Tree-sitter provides [static node types](https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types) for library authors to consume. The type information has the following form, in TypeScript interface:
+
+```typescript
+interface TypeMap {
   [kind: string]: {
     type: string
     named: boolean
@@ -94,12 +71,13 @@ interface TypeMpa {
         types: { type: string, named: boolean }[]
       }
     }
+    children?: { name: string, type: string }[]
     subtypes?: { type: string, named: boolean }[]
   }
 }
 ```
-What is `TypeMaps`? It is a type that contains all static node types. It is a map from kind to the static type of the kind.
-Here is a simplified example of the TypeScript static type.
+
+`TypeMap` is a comprehensive catalog of all possible node types in a language's syntax tree. Let's break this down with a concrete example from TypeScript:
 
 ```typescript
 type TypeScript = {
@@ -111,9 +89,19 @@ type TypeScript = {
       body: {
         types: [ { type: "statement_block", named: true } ]
       },
-      ...
     }
   },
+  ...
+}
+```
+
+The structure contains the information about the node's kind, whether it is named, and its' fields and children.
+`fields` is a map from field name to the type of the field, which encodes the AST structure like traditional parsers.
+
+Tree-sitter also has a special type called `subtypes`, an alias of a list of other kinds.
+
+```typescript
+type TypeScript = {
   // node type alias
   declaration: {
     type: "declaration",
@@ -126,13 +114,29 @@ type TypeScript = {
 }
 ```
 
-The type information is encoded in a JSON object. Syntax node's static type contains the kind, whether it is named, and the fields of the node.
-`fields` is a map from field name to the type of the field, which encodes the structure of the AST like other parser libraries.
+In this example, `declaration` is an alias of `function_declaration`, `class_declaration` and other kinds. The alias type is used to reduce the redundancy in the static type JSON and will NOT be a node's actual kind.
 
-Tree-sitter also provides alias types where a kind is an alias of a list of other kinds. For example, `declaration` is an alias of `function_declaration`, `class_declaration` and other kinds. The alias type is used to reduce the number of kinds in the static type.
+Thanks to Tree-Sitter's design, we can leverage this rich type information to build our typed APIs!
 
-We want to both type a node's kind and its fields.
+### Design Principles of ast-grep/napi
 
+Our new API follows a progressive enhancement approach to type safety:
+
+**Preserve untyped AST access**
+
+The existing untyped API remains available by default, ensuring backward compatibility
+
+**Optional type safety on demand**
+
+Users can opt into typed AST nodes either manually or automatically for enhanced type checking and autocompletion
+
+However, it is a bumpy ride to transition to a new typed API via the path of Tree-sitter's static type.
+
+First, type information JSON is hosted by Parser Library Repository. ast-grep/napi uses [a dedicated script](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/scripts/generateTypes.ts) to fetch the JSON and generates the type. A [F# like type provider](https://learn.microsoft.com/en-us/dotnet/fsharp/tutorials/type-providers/) is on my TypeScript wishlist.
+
+Second, the JSON contains a lot of unnamed kinds, which are not useful to users. Including them in the union type is too noisy. We will address this in the next section.
+
+Finally, as mentioned earlier, the JSON contains alias types. We need to resolve the alias type to its concrete type, which is also covered in the next section.
 
 ## Define Type
 
