@@ -2,15 +2,17 @@
 sidebar: false
 ---
 
-# Improve Napi Typing
+# ast-grep's Journey to Type Safety in Node API
 
-> _Design, Define, Refine, and Confine: Crafting Balanced TypeScript Types_
+> Recipe to Craft Balanced Types: _Design, Define, Refine, and Confine_
 
 We're thrilled to introduce typed AST in [@ast-grep/napi], addressing a [long-requested feature](https://github.com/ast-grep/ast-grep/issues/48) for AST manipulation from the early days of this project.
 
 In this blog post, we will delve into the challenges addressed by this feature and explore [the design](https://github.com/ast-grep/ast-grep/issues/1669) that shaped its implementation. _We also believe this post can serve as a general guide to crafting balanced TypeScript types._
 
-## Why Type Safety Matters in AST
+![napi screenshot](/image/blog/napi.jpeg)
+
+## Type Safety in AST
 
 Working with Abstract Syntax Trees (ASTs) is complex. Even with AST [excellent](https://astexplorer.net/) [AST](https://ast-grep.github.io/playground.html) [tools](https://github.com/sxzz/ast-kit), handling all edge cases remains challenging.
 
@@ -18,7 +20,7 @@ Type information serves as a crucial safety net when writing AST manipulation co
 
 While `ast-grep/napi` has been a handy tool for programmatic AST processing, it previously lacked type information to help users write robust code. Thank to [Mohebifar](https://github.com/mohebifar) from [codemod](https://codemod.com/), we've now bridged this gap. Our solution generates types from parsers' metadata and employs TypeScript tricks to create an idiomatic API.
 
-## Qualities of Good TypeScript Types
+## Qualities of Good Types
 
 Before diving into our implementation, let's explore what makes TypeScript definitions truly effective. In today's JavaScript ecosystem, creating a great library involves more than just intuitive APIs and thorough documentation – it requires thoughtful type definitions that enhance developer experience.
 
@@ -236,7 +238,7 @@ This approach, inspired by [Biome's Rowan API](https://github.com/biomejs/biome/
 
 This hybrid approach gives developers the best of both worlds: strict type checking when types are known, with the flexibility to fall back to string-based typing when needed.
 
-## Refine Type
+## Refine Types
 
 Now let's talk about how to refine the general node to a specific node in ast-grep/napi.
 We've implemented two concise and idiomatic approaches in TypeScript: manual and automatic refinement.
@@ -408,6 +410,8 @@ sgNode.find({
   }
 })
 ```
+
+![napi screenshot](/image/blog/rule.jpeg)
 
 ## Ending
 
