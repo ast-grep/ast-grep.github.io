@@ -22,7 +22,7 @@ head:
 
 > Recipe to Craft Balanced Types: _Design, Define, Refine, and Confine_
 
-We're thrilled to introduce typed AST in [@ast-grep/napi], addressing a [long-requested feature](https://github.com/ast-grep/ast-grep/issues/48) for AST manipulation from the early days of this project.
+We're thrilled to introduce typed AST in [@ast-grep/napi](https://www.npmjs.com/package/@ast-grep/napi), addressing a [long-requested feature](https://github.com/ast-grep/ast-grep/issues/48) for AST manipulation from the early days of this project.
 
 In this blog post, we will delve into the challenges addressed by this feature and explore [the design](https://github.com/ast-grep/ast-grep/issues/1669) that shaped its implementation. _We also believe this post can serve as a general guide to crafting balanced TypeScript types._
 
@@ -431,7 +431,7 @@ sgNode.find({
 
 ## Ending
 
-I'm incredibly excited about the future of AST manipulation in TypeScript.
+I'm incredibly excited about the future of AST manipulation in TypeScript. You can see the full type definition [here](https://github.com/ast-grep/ast-grep/tree/main/crates/napi/types).
 
 This feature empowers users to seamlessly switch between untyped and typed AST, offering flexibility and enhanced capabilities, an innovation that has not been seen in other AST libraries, especially not in native language based ones.
 
