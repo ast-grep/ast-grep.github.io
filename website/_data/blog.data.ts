@@ -1,3 +1,4 @@
+// Created from https://github.com/vitejs/vite/blob/d7c8603897a8d78b83a4420846581a2e80cb57dd/docs/.vitepress/config.ts
 import { createContentLoader } from 'vitepress'
 
 interface Post {

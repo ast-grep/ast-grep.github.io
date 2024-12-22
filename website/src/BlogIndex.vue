@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Created from https://github.com/vitejs/vite/blob/d7c8603897a8d78b83a4420846581a2e80cb57dd/docs/blog.md
 import { data as posts } from '../_data/blog.data'
 
 function getDateTime(time: number) {
