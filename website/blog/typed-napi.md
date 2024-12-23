@@ -436,7 +436,7 @@ I'm incredibly excited about the future of AST manipulation in TypeScript. You c
 
 This feature empowers users to seamlessly switch between untyped and typed AST, offering flexibility and enhanced capabilities, an innovation that has not been seen in other AST libraries, especially not in native language based ones.
 
-As Theo aptly puts it in [his video](https://www.youtube.com/clip/Ugkxn2oomDuyQjtaKXhYP1MU9TLEShf5m1nf):
+As Theo aptly puts it in [this video](https://www.youtube.com/clip/Ugkxn2oomDuyQjtaKXhYP1MU9TLEShf5m1nf):
 
 > There are very few devs that understands Rust deeply enough and compiler deeply enough that also care about TypeScript in web dev enough to build something for web devs in Rust
 
