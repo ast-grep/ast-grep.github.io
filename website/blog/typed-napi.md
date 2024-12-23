@@ -242,7 +242,6 @@ if (union.kind === 'expression') {
 To bridge this gap, we introduced the `RefineNode` type:
 
 ```typescript
-type RefineNode<M, K extends Kinds<M>> =
 type RefineNode<M, K> = string extends K ? SgNode<M, K> : // one SgNode
   K extends keyof M ? SgNode<M, K> : never  // distribute over union
 ```
