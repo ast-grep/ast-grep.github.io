@@ -16,7 +16,7 @@ head:
       content: https://ast-grep.github.io/blog/stars-5000.html
   - - meta
     - property: og:description
-      content: ast-grep has recently reached 3000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
+      content: ast-grep has recently reached 5000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
 ---
 
 # ast-grep: 5000 stars and beyond!
