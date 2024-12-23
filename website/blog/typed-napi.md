@@ -35,7 +35,7 @@ Working with Abstract Syntax Trees (ASTs) is complex. Even with AST [excellent](
 
 Type information serves as a crucial safety net when writing AST manipulation code. It guides developers toward handling all possible cases and enables exhaustive checking to ensure complete coverage.
 
-While `ast-grep/napi` has been a handy tool for programmatic AST processing, it previously lacked type information to help users write robust code. Thank to [Mohebifar](https://github.com/mohebifar) from [codemod](https://codemod.com/), we've now bridged this gap. Our solution generates types from parsers' metadata and employs TypeScript tricks to create an idiomatic API.
+While `ast-grep/napi` has been a handy tool for programmatic AST processing, it previously lacked type information to help users write robust code. Thanks to [Mohebifar](https://github.com/mohebifar) from [Codemod](https://codemod.com/), we've now bridged this gap. Our solution generates types from parsers' metadata and employs TypeScript tricks to create an idiomatic API.
 
 ## Qualities of Good Types
 
