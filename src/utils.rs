@@ -82,7 +82,7 @@ fn env_to_map(env: MetaVarEnv<'_, WasmDoc>) -> BTreeMap<String, WasmNode> {
         let text = nodes.iter().map(|n| n.text()).collect();
         let node = WasmNode {
           text,
-          range: (start.row(), start.column(first), end.row(), end.column(last)),
+          range: (start.line(), start.column(first), end.line(), end.column(last)),
         };
         map.insert(name, node);
       }
@@ -99,7 +99,7 @@ impl From<Node<'_>> for WasmNode {
     let end = nm.end_pos();
     Self {
       text: nm.text().to_string(),
-      range: (start.row(), start.column(&nm), end.row(), end.column(&nm)),
+      range: (start.line(), start.column(&nm), end.line(), end.column(&nm)),
     }
   }
 }
