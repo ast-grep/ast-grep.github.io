@@ -1,15 +1,19 @@
 <template>
   <div>
     <div class="section-title">
-      <h1>Supported Languages</h1>
+      <h1>20+ Supported Languages</h1>
     </div>
     <div class="languages">
       <a href="/catalog/c/">
         <img src='/icons/C.svg'/>
       </a>
       <img src='/icons/CSharp.svg'/>
-      <img src='/icons/Go.svg'/>
-      <img src='/icons/Java.svg'/>
+      <a href="/catalog/go/">
+        <img src='/icons/Go.svg'/>
+      </a>
+      <a href="/catalog/java/">
+        <img src='/icons/Java.svg'/>
+      </a>
       <img src='/icons/JS.svg'/>
       <img src='/icons/Kotlin.svg'/>
       <a href="/catalog/python/">
@@ -21,6 +25,12 @@
       <a href="/catalog/typescript/">
         <img src='/icons/TS.svg'/>
       </a>
+      <p>
+        See more in the
+        <a class="link" href="/reference/languages.html">full list</a>.
+        Custom languages are also
+        <a class="link" href="/advanced/custom-language.html">loadable</a>.
+      </p>
     </div>
   </div>
 </template>
@@ -38,6 +48,12 @@
     font-size: 24px;
     opacity: 0.5;
     letter-spacing: -0.02em;
+  }
+  p {
+    opacity: 0.5;
+  }
+  a.link {
+    text-decoration: underline;
   }
   .feature {
     flex: 0 0 100vw;
