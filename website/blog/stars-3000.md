@@ -13,7 +13,7 @@ head:
       content: ast-grep got 3000 stars!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/typed-napi.html
+      content: https://ast-grep.github.io/blog/stars-3000.html
   - - meta
     - property: og:description
       content: ast-grep has recently reached 3000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
