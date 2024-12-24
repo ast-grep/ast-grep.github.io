@@ -10,7 +10,6 @@ through the full syntax tree, so pattern can also match nested expression. For e
 code.
 
 ```javascript
-
 const b = a + 1
 
 funcCall(a + 1)
