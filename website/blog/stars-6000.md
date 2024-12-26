@@ -1,7 +1,6 @@
 ---
 author:
   - name: Herrington Darkholme
-sidebar: false
 search: false
 date: 2024-05-19
 head:
