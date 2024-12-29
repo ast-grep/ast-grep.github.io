@@ -45,7 +45,7 @@ Before we start, we need to make sure that we have the following tools installed
 Compared to the other two tools, ast-grep is lesser-known. In short it can do search and replace based on [abstract syntax trees](https://www.wikiwand.com/en/Abstract_syntax_tree). You can install it via [`cargo`](https://crates.io/crates/ast-grep) or [`brew`](https://formulae.brew.sh/formula/ast-grep).
 
 ```shell
-# install the binary `sg`/`ast-grep`
+# install the binary `ast-grep`
 cargo install ast-grep
 # or use brew
 brew install ast-grep
@@ -149,7 +149,7 @@ So we just need to change the import name. [Using ast-grep is trivial here](http
 We need to provide a pattern, `-p`, for it to search as well as a rewrite string, `-r` to replace the old API with the new one. The command should be quite self-explanatory.
 
 ```
-sg -p 'CoreStage' -r CoreSet -i
+ast-grep -p 'CoreStage' -r CoreSet -i
 ```
 
 We suggest to add `-i` flag for `--interactive` editing. ast-grep will display the changed code diff and ask your decision to accept or not.
@@ -183,7 +183,7 @@ The [doc](https://bevyengine.org/learn/migration-guides/0.9-0.10/#label-types):
 
 The command:
 ```bash
-sg -p 'StageLabel' -r SystemSet -i
+ast-grep -p 'StageLabel' -r SystemSet -i
 ```
 
 3. `SystemStage`
@@ -217,7 +217,7 @@ app.configure_set(
 Let's write a command for this code migration.
 
 ```bash
-sg \
+ast-grep \
   -p '$APP.add_stage_after($STAGE, $OWN_STAGE, SystemStage::parallel())' \
   -r '$APP.configure_set($OWN_STAGE.after($STAGE))' -i
 ```
@@ -231,7 +231,7 @@ meta-variable is a wildcard expression that can match any single AST node. So we
 However, I found some `add_stage_after`s are not replaced. Nah, ast-grep is [quite dumb](https://github.com/ast-grep/ast-grep/issues/374) that it cannot handle the optional comma after the last argument. So I used another query with a trailing comma.
 
 ```shell
-sg \
+ast-grep \
   -p 'app.add_stage_after($STAGE, $OWN_STAGE, SystemStage::parallel(),)' \
   -r 'app.configure_set($OWN_STAGE.after($STAGE))' -i
 ```
@@ -267,7 +267,7 @@ app.add_system(my_system.in_base_set(CoreSet::PostUpdate))
 Let's also write a pattern for it.
 
 ```sh
-sg \
+ast-grep \
   -p '$APP.add_system_to_stage($STAGE, $SYS)' \
   -r '$APP.add_system($SYS.in_base_set($STAGE))' -i
 ```
@@ -305,7 +305,7 @@ _It is still faster than me scratching my head about how to automate everything.
 Another change is to use `add_systems` instead of `add_system_set`. This is a simple pattern!
 
 ```sh
-sg \
+ast-grep \
   -p '$APP.add_system_set_to_stage($STAGE, $SYS,)' \
   -r '$APP.add_systems($SYS.in_set($STAGE))' -i
 ```
