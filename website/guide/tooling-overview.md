@@ -121,7 +121,7 @@ The command above will produce a list of authors from the SciPy 2022 conference 
 
 With this feature, even if your preferred language does not have native bindings for ast-grep, you can still parse code from standard input (StdIn) to use ast-grep programmatically from the command line.
 
-You can invoke `ast-grep`, the command-line interface for ast-grep, as a subprocess to search and replace code.
+You can invoke `ast-grep`, the command-line interface binary, as a subprocess to search and replace code.
 
 ### Caveats
 
