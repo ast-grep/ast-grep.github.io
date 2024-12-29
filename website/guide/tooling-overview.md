@@ -4,11 +4,11 @@
 
 ast-grep's tooling supports multiple stages of your development. Here is a list of the tools and their purpose:
 
-* To run an ad-hoc query and apply rewrite: `sg run`.
-* Routinely check your codebase: `sg scan`.
-* Generate ast-grep's scaffolding files: `sg new`.
-* Develop new ast-grep rules and test them: `sg test`.
-* Start Language Server for editor integration: `sg lsp`.
+* To run an ad-hoc query and apply rewrite: `ast-grep run`.
+* Routinely check your codebase: `ast-grep scan`.
+* Generate ast-grep's scaffolding files: `ast-grep new`.
+* Develop new ast-grep rules and test them: `ast-grep test`.
+* Start Language Server for editor integration: `ast-grep lsp`.
 
 We will walk through some important features that are common to these commands.
 
@@ -26,7 +26,7 @@ Pressing `y` will accept the rewrite, `n` will skip it, `e` will open the file i
 Example:
 
 ```bash
-sg scan --interactive
+ast-grep scan --interactive
 ```
 
 ## JSON Mode
@@ -36,7 +36,7 @@ Composability is a key perk of command line tooling. ast-grep is no exception.
 `--json` will output results in JSON format. This is useful to pipe the results to other tools. For example, you can use [jq](https://stedolan.github.io/jq/) to extract information from the results and render it in [jless](https://jless.io/).
 
 ```bash
-sg run -p 'Some($A)' -r 'None' --json | jq '.[].replacement' | jless
+ast-grep run -p 'Some($A)' -r 'None' --json | jq '.[].replacement' | jless
 ```
 
 The format of the JSON output is an array of match objects.
@@ -71,18 +71,18 @@ See [JSON mode doc](/guide/tools/json.html) for more detailed explanation and ex
 ## Run One Single Query or One Single Rule
 
 You can also use ast-grep to explore a proper pattern for your query. There are two ways to try your pattern or rule.
-For testing one pattern, you can use `sg run` command.
+For testing one pattern, you can use `ast-grep run` command.
 
 ```bash
-sg run -p 'YOUR_PATTERN' --debug-query
+ast-grep run -p 'YOUR_PATTERN' --debug-query
 ```
 
 The `--debug-query` option will output the tree-sitter ast of the query.
 
-To test one single rule, you can use `sg scan -r`.
+To test one single rule, you can use `ast-grep scan -r`.
 
 ```bash
-sg scan -r path/to/your/rule.yml
+ast-grep scan -r path/to/your/rule.yml
 ```
 It is useful to test one rule in isolation.
 
@@ -94,11 +94,11 @@ You can use bash's [pipe operator](https://linuxhint.com/bash_pipe_tutorial/) `|
 
 ### Example: Simple Web Crawler
 
-Let's see an example in action. Combining with `curl`, `ast-grep` and `jq`, we can build a [simple web crawler](https://twitter.com/trevmanz/status/1671572111582978049) on command line. The command below uses `curl` to fetch the HTML source of SciPy conference website, and then uses `sg` to parse and extract relevant information as JSON from source, and finally uses `jq` to transform our matching results.
+Let's see an example in action. Combining with `curl`, `ast-grep` and `jq`, we can build a [simple web crawler](https://twitter.com/trevmanz/status/1671572111582978049) on command line. The command below uses `curl` to fetch the HTML source of SciPy conference website, and then uses `ast-grep` to parse and extract relevant information as JSON from source, and finally uses `jq` to transform our matching results.
 
 ```bash
 curl -s https://schedule2021.scipy.org/2022/conference/  |
-  sg -p '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json --stdin |
+  ast-grep -p '<div $$$> $$$ <i>$AUTHORS</i> </div>' --lang html --json --stdin |
   jq '
     .[]
     | .metaVariables
@@ -121,15 +121,15 @@ The command above will produce a list of authors from the SciPy 2022 conference 
 
 With this feature, even if your preferred language does not have native bindings for ast-grep, you can still parse code from standard input (StdIn) to use ast-grep programmatically from the command line.
 
-You can invoke sg, the command-line interface for ast-grep, as a subprocess to search and replace code.
+You can invoke `ast-grep`, the command-line interface for ast-grep, as a subprocess to search and replace code.
 
 ### Caveats
 
 **StdIn mode has several restrictions**, though:
 
 * It conflicts with `--interactive` mode, which reads user responses from StdIn.
-* For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | sg run --lang python`. This is because ast-grep cannot infer code language without file extension.
-* Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | sg scan --rule "python-rule.yml"`
+* For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | ast-grep run --lang python`. This is because ast-grep cannot infer code language without file extension.
+* Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | ast-grep scan --rule "python-rule.yml"`
 
 ### Enable StdIn Mode
 
@@ -155,7 +155,7 @@ ast-grep will hang there if you run it in a tty terminal session with `--stdin` 
 Here is a bonus example to use [fzf](https://github.com/junegunn/fzf/blob/master/ADVANCED.md#using-fzf-as-interactive-ripgrep-launcher) as interactive ast-grep launcher.
 
 ```bash
-SG_PREFIX="sg run --color=always -p "
+SG_PREFIX="ast-grep run --color=always -p "
 INITIAL_QUERY="${*:-}"
 : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload:$SG_PREFIX {q}" \
@@ -172,12 +172,12 @@ See the [editor integration](/guide/tools/editors.md) doc page.
 
 ## Shell Completions
 ast-grep comes with shell autocompletion scripts. You can generate a shell script and eval it when your shell starts up.
-The script will enable you to smoothly complete `sg` command's options by `tab`bing.
+The script will enable you to smoothly complete `ast-grep` command's options by `tab`bing.
 
 This command will instruct ast-grep  to generate shell completion script:
 
 ```shell
-sg completions <SHELL>
+ast-grep completions <SHELL>
 ```
 
 `<SHELL>` is an optional argument and can be one of the `bash`, `elvish`, `fish`, `powershell` and `zsh`. If shell is not specified, ast-grep will infer the correct shell from environment variable like `$SHELL`.
@@ -189,7 +189,7 @@ The exact steps required to enable autocompletion will vary by shell. For instru
 If you are using zsh, add this line to your `~/.zshrc`.
 
 ```shell
-eval "$(sg completions)"
+eval "$(ast-grep completions)"
 ```
 
 <video src="https://github-production-user-asset-6210df.s3.amazonaws.com/38807139/260303710-ef8b969e-2eb5-4345-932a-be4093466a48.mp4" controls/>
@@ -200,7 +200,7 @@ If you want to automate [ast-grep linting](https://github.com/marketplace/action
 
 For example, you can run ast-grep linting every time you push a new commit to your main branch.
 
-To use ast-grep in GitHub Action, you need to [set up a project](/guide/scan-project.html) first. You can do this by running `sg new` in your terminal, which will guide you through the process of creating a configuration file and a rules file.
+To use ast-grep in GitHub Action, you need to [set up a project](/guide/scan-project.html) first. You can do this by running `ast-grep new` in your terminal, which will guide you through the process of creating a configuration file and a rules file.
 
 Next, you need to create a workflow file for GitHub Action. This is a YAML file that defines the steps and actions that will be executed when a certain event occurs. You can create a workflow file named `ast-grep.yml` under the `.github/workflows/` folder in your repository, with the following content:
 
@@ -219,7 +219,7 @@ jobs:
 ```
 
 This workflow file tells GitHub Action to run ast-grep linting on every push event, using the latest Ubuntu image and the official ast-grep action.
-The action will check out your code and run [`sg scan`](/reference/cli.html#sg-scan) on it, reporting any errors or warnings.
+The action will check out your code and run [`ast-grep scan`](/reference/cli.html#sg-scan) on it, reporting any errors or warnings.
 
 That's it! You have successfully set up ast-grep linting in GitHub Action. Now, every time you push a new commit to your main branch, GitHub Action will automatically run ast-grep linting and show you the results. You can see an example of how it looks like below.
 
