@@ -19,7 +19,7 @@ The snippet above computes the integer logarithm base 10 of the number and adds 
 ### Pattern
 
 ```shell
-sg -p '$NUM.to_string().chars().count()' \
+ast-grep -p '$NUM.to_string().chars().count()' \
    -r '$NUM.checked_ilog10().unwrap_or(0) + 1' \
    -l rs
 ```
