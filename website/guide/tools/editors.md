@@ -161,7 +161,7 @@ ast-grep does not have LSP configuration, except that ast-grep LSP requires `sgc
 You can also specify the configuration file path via command line:
 
 ```bash
-sg lsp -c <configPath>
+ast-grep lsp -c <configPath>
 ```
 
 ## More Editors...
