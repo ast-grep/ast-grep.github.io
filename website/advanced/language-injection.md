@@ -24,7 +24,7 @@ Let's start with a simple example of searching for JavaScript and CSS within HTM
 ast-grep has builtin support to search JavaScript and CSS inside HTML files.
 
 
-### **Using `sg run`**: find patterns of CSS in an HTML file
+### **Using `ast-grep run`**: find patterns of CSS in an HTML file
 
 Suppose we have an HTML file like below:
 
@@ -43,7 +43,7 @@ Suppose we have an HTML file like below:
 Running this ast-grep command will extract the matching CSS style code out of the HTML file!
 
 ```sh
-sg run -p 'color: $COLOR'
+ast-grep run -p 'color: $COLOR'
 ```
 
 ast-grep outputs this beautiful CLI report.
@@ -55,7 +55,7 @@ test.html
 ast-grep works well even if just providing the pattern without specifying the pattern language!
 
 
-### **Using `sg scan`**: find JavaScript in HTML with rule files
+### **Using `ast-grep scan`**: find JavaScript in HTML with rule files
 
 You can also use ast-grep's [rule file](https://ast-grep.github.io/guide/rule-config.html) to search injected languages.
 
@@ -70,10 +70,10 @@ rule:
 message: Prefer use appropriate custom UI instead of obtrusive alert call.
 ```
 
-The rule above will detect usage of `alert` in JavaScript. Running the rule via `sg scan`.
+The rule above will detect usage of `alert` in JavaScript. Running the rule via `ast-grep scan`.
 
 ```sh
-sg scan --rule no-alert.yml
+ast-grep scan --rule no-alert.yml
 ```
 
 The command leverages built-in behaviors in ast-grep to handle language injection seamlessly. It will produce the following warning message for the HTML file above.
@@ -159,7 +159,7 @@ With the above `languageInjections` configuration, ast-grep will:
 You can search the CSS inside JavaScript in the project configuration folder using this command:
 
 ```sh
-sg -p 'background: $COLOR' -C 2
+ast-grep -p 'background: $COLOR' -C 2
 ```
 
 It will produce the match result:
@@ -223,7 +223,7 @@ const artistsQuery = graphql`
 We can search the GraphQL fragment via this `--inline-rules` scan.
 
 ```sh
-sg scan --inline-rules="{id: test, language: graphql, rule: {kind: fragment_spread}}"
+ast-grep scan --inline-rules="{id: test, language: graphql, rule: {kind: fragment_spread}}"
 ```
 
 Output
