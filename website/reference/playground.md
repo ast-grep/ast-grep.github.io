@@ -29,8 +29,8 @@ The **source AST dump** is where you can see the AST representation of your sour
 ### 3. Matcher Editor
 The **matcher editor** is where you can write the code patterns and rewrite rules that you want to apply to your source code. The matcher uses the same language as your source code. The matcher editor has two tabs: **Pattern** and **YAML**.
 
-- **Pattern** provides an _approachable_ option where you can write the [code pattern](/guide/pattern-syntax.html) that you want to match in your source code. You can also write a rewrite expression that specifies how to modify the matched code in the subeditor below. It roughly emulates the behavior of [`sg run`](/reference/cli/run.html).
-- **YAML** provides an _advanced_ option where you can write a [YAML rule](/reference/yaml.html) that defines the pattern and metadata for your ast-grep scan. You can specify the [rule object](/reference/rule.html), id, message, severity, and other options for your rule. It is a web counterpart of [`sg scan`](/reference/cli/scan.html).
+- **Pattern** provides an _approachable_ option where you can write the [code pattern](/guide/pattern-syntax.html) that you want to match in your source code. You can also write a rewrite expression that specifies how to modify the matched code in the subeditor below. It roughly emulates the behavior of [`ast-grep run`](/reference/cli/run.html).
+- **YAML** provides an _advanced_ option where you can write a [YAML rule](/reference/yaml.html) that defines the pattern and metadata for your ast-grep scan. You can specify the [rule object](/reference/rule.html), id, message, severity, and other options for your rule. It is a web counterpart of [`ast-grep scan`](/reference/cli/scan.html).
 
 ### 4. Matcher Info
 

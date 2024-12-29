@@ -8,7 +8,7 @@ outline: [2, 3]
 
 To scan a project with multiple rules, you need to specify the root of a project by maintaining a `sgconfig.yml` file.
 The file is similar to `tsconfig.json` in TypeScript or `.eslintrc.js` in eslint.
-You can also create the `sgconfig.yml` and related file scaffoldings by the `sg new` command.
+You can also create the `sgconfig.yml` and related file scaffoldings by the `ast-grep new` command.
 
 ::: tip sgconfig.yml is not `rule.yml`
 ast-grep has several kinds of yaml files. `sgconfig.yml` is for configuring ast-grep, like how to find rule directories or to register custom languages.
