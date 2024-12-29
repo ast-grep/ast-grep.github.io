@@ -2,19 +2,19 @@
 
 Let's explore its power to run scan on your code repository in a scalable way!
 
-`sg scan` is the command you can use to run multiple rules against your repository so that you don't need to pass pattern query to your command line every time.
+`ast-grep scan` is the command you can use to run multiple rules against your repository so that you don't need to pass pattern query to your command line every time.
 
 However, to ast-grep's scan need some scaffolding for project setup. We will walk through the process in this guide.
 
 :::tip
-`sg scan` requires at least one file and one directory to work:
+`ast-grep scan` requires at least one file and one directory to work:
 * `sgconfig.yml`, the [project configuration](/reference/sgconfig.html) file
 * a directory storing rule files, usually `rules/`
 :::
 
 ## Create Scaffolding
 
-To set up ast-grep's scanning, you can simply run the command `sg new` in the root directory of your repository. You will be guided with a series of interactive questions, like the following:
+To set up ast-grep's scanning, you can simply run the command `ast-grep new` in the root directory of your repository. You will be guided with a series of interactive questions, like the following:
 
 ```markdown
 No sgconfig.yml found. Creating a new ast-grep project...
@@ -38,7 +38,7 @@ my-awesome-project
 
 ## Create the Rule
 
-Now you can start creating a rule! Continue using `sg new`, it will ask you what to create. But you can also use `sg new rule` to create a rule directly!
+Now you can start creating a rule! Continue using `ast-grep new`, it will ask you what to create. But you can also use `ast-grep new rule` to create a rule directly!
 
 You will be asked several questions about the rule going to be created. Suppose we want to create a rule to ensure no eval in JavaScript.
 
@@ -86,7 +86,7 @@ Okay! The pattern syntax works just like what we have learnt before.
 
 Now you can try scanning the code! You can create a JavaScript file containing `eval` to test it.
 
-Run `sg scan` in your project, ast-grep will give you some beautiful scan report!
+Run `ast-grep scan` in your project, ast-grep will give you some beautiful scan report!
 
 ```bash
 error[no-eval]: Add your rule message here....
@@ -106,6 +106,6 @@ In this section we learnt how to set up ast-grep project, create new rules using
 
 To summarize the commands we used:
 
-* `sg new` - Create a new ast-grep project
-* `sg new rule` - Create a new rule in a rule folder.
-* `sg scan` - Scan the codebase with the rules in the project.
+* `ast-grep new` - Create a new ast-grep project
+* `ast-grep new rule` - Create a new rule in a rule folder.
+* `ast-grep scan` - Scan the codebase with the rules in the project.
