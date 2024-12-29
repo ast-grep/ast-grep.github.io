@@ -219,7 +219,7 @@ jobs:
 ```
 
 This workflow file tells GitHub Action to run ast-grep linting on every push event, using the latest Ubuntu image and the official ast-grep action.
-The action will check out your code and run [`ast-grep scan`](/reference/cli.html#sg-scan) on it, reporting any errors or warnings.
+The action will check out your code and run [`ast-grep scan`](/reference/cli.html#ast-grep-scan) on it, reporting any errors or warnings.
 
 That's it! You have successfully set up ast-grep linting in GitHub Action. Now, every time you push a new commit to your main branch, GitHub Action will automatically run ast-grep linting and show you the results. You can see an example of how it looks like below.
 
