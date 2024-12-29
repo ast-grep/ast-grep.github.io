@@ -2,7 +2,7 @@
 
 The table below lists all languages that are supported by ast-grep.
 
-**Alias** is the name you can use as an argument in `sg run --lang [alias]` or as a value in YAML rule with `language: [alias]`.
+**Alias** is the name you can use as an argument in `ast-grep run --lang [alias]` or as a value in YAML rule with `language: [alias]`.
 
 **Extension** specifies the file extensions that ast-grep will look for when scanning the file system. By default, ast-grep uses the file extensions to determine the language.
 

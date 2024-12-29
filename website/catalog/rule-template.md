@@ -1,7 +1,7 @@
 ---
 language: JavaScript # please fully spell the language
 playgroundLink: '[TODO]'
-command:  'sg -p [TODO] -r [TODO]'
+command:  'ast-grep -p [TODO] -r [TODO]'
 hasFix: true
 ruleType: 'pattern' # 'pattern' or 'yaml'
 ---
@@ -20,9 +20,9 @@ Some Description for your rule!
 ### Pattern
 
 ```shell
-sg -p pattern -r rewrite -l js
+ast-grep -p pattern -r rewrite -l js
 # or without fixer
-sg -p pattern -l js
+ast-grep -p pattern -l js
 ```
 
 <!-- Use YAML in the example. Delete this section if use pattern. -->

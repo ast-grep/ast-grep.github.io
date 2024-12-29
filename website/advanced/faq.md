@@ -46,7 +46,7 @@ The encoding difference may cause different fallback parsing during [error recov
 To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#debug-query-format) in the CLI to see the parsed AST nodes and meta variables.
 
 ```sh
-sg run -p <PATTERN> --debug-query ast
+ast-grep run -p <PATTERN> --debug-query ast
 ```
 
 The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground.html). You can also use different debug formats like `cst` or `pattern`.

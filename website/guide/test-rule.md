@@ -109,11 +109,11 @@ invalid:
   # .... more invalid test cases
 ```
 
-After writing the test configuration file, you can run `sg test` in the root folder to test your rule.
+After writing the test configuration file, you can run `ast-grep test` in the root folder to test your rule.
 We will discuss the `skip-snapshot-tests` option later.
 
 ```bash
-$ sg test --skip-snapshot-tests
+$ ast-grep test --skip-snapshot-tests
 
 Running 1 tests
 PASS no-await-in-loop  .........................
@@ -147,7 +147,7 @@ In failure details, we can see the detailed code snippet for each case.
 Besides testing code validity, we can further test rule's output like error's message and span. This is what snapshot test will cover.
 
 ## Snapshot Test
-Let's rerun `sg test` without `--skip-snapshot-tests` option.
+Let's rerun `ast-grep test` without `--skip-snapshot-tests` option.
 This time we will get test failure that invalid code error does not have a matching snapshot.
 Previously we use the `skip-snapshot-tests` option to suppress snapshot test, which is useful when you are still working on your rule. But after the rule is polished, we can create snapshot to capture the desired output of the rule.
 
@@ -165,14 +165,14 @@ my-awesome-rules/
 ```
 
 The generated `__snapshots__` folder will store all the error output and later test run will match against them.
-After the snapshot is generated, we can run `sg test` again, without any option this time, and pass all the test cases!
+After the snapshot is generated, we can run `ast-grep test` again, without any option this time, and pass all the test cases!
 
 Furthermore, when we change the rule or update the test case, we can use interactive mode to update the snapshot.
 
 Running this command
 
 ```bash
-sg test --interactive
+ast-grep test --interactive
 ```
 
 ast-grep will spawn an interactive session to ask you select desired snapshot updates. Example interactive session will look like this. Note the snapshot diff is highlighted in red/green color.

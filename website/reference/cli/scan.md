@@ -1,14 +1,14 @@
 ---
 outline: [2, 3]
 ---
-# `sg scan`
+# `ast-grep scan`
 
 Scan and rewrite code by configuration.
 
 ## Usage
 
 ```shell
-sg scan [OPTIONS] [PATHS]...
+ast-grep scan [OPTIONS] [PATHS]...
 ```
 
 ## Arguments

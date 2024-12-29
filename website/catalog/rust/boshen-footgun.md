@@ -23,7 +23,7 @@ Depending on your use case, you may want to use `char_indices()` instead of `cha
 ### Pattern
 
 ```shell
-sg -p '$A.chars().enumerate()' \
+ast-grep -p '$A.chars().enumerate()' \
    -r '$A.char_indices()' \
    -l rs
 ```

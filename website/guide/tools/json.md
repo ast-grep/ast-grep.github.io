@@ -7,7 +7,7 @@ Composability is a key perk of command line tooling. ast-grep is no exception.
 **Example:**
 
 ```bash
-sg run -p 'Some($A)' -r 'None' --json
+ast-grep run -p 'Some($A)' -r 'None' --json
 ```
 
 ## Output Data Structure
@@ -124,7 +124,7 @@ ast-grep embraces the Unix philosophy of composability. The `--json` flag is des
 
 For example, you can use [jq](https://stedolan.github.io/jq/) to extract information from the results and render it in [jless](https://jless.io/).
 ```bash
-sg run -p 'Some($A)' -r 'None' --json | jq '.[].replacement' | jless
+ast-grep run -p 'Some($A)' -r 'None' --json | jq '.[].replacement' | jless
 ```
 
 You can also see [an example](https://github.com/ast-grep/ast-grep/issues/1232#issuecomment-2181747911) of using `--json` flag in Vim's QuickFix window.
@@ -140,7 +140,7 @@ To avoid this problem, you can use the `--json=stream` option when running ast-g
 The output of `--json=stream` looks like below:
 
 ```
-$ sg -p pattern --json=stream
+$ ast-grep -p pattern --json=stream
 {"text":"Some(matched)", ... }
 {"text":"Some(matched)", ... }
 {"text":"Some(matched)", ... }

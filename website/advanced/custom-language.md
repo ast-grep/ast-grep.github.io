@@ -86,7 +86,7 @@ gcc -shared -fPIC -fno-exceptions -g -I 'src' -o mojo.so -O2 src/scanner.cc -xc 
 ## Register Language in `sgconfig.yml`
 
 Once you have compiled the dynamic library for your custom language, you need to register it in the `sgconfig.yml` file.
-You can use the command [`sg new`](/guide/scan-project.html#create-scaffolding) to create a project and find the configuration file in the project root.
+You can use the command [`ast-grep new`](/guide/scan-project.html#create-scaffolding) to create a project and find the configuration file in the project root.
 
 You need to add a new entry under the `customLanguages` key with the name of your custom language and some properties:
 
@@ -120,7 +120,7 @@ Now you are ready to use your custom language with ast-grep! You can use it as a
 For example, to search for all occurrences of `print` in mojo files, you can run:
 
 ```bash
-sg -p "print" -l mojo
+ast-grep -p "print" -l mojo
 ```
 
 Or you can write a rule in yaml like this:

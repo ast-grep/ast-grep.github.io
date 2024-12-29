@@ -39,7 +39,7 @@ We have introduced a lot of new features in the past few months, and we want to 
 ### CLI
 * You can now use [`--inline-rules`](https://ast-grep.github.io/reference/cli/scan.html#inline-rules-rule-text) to run rules without creating any files on your disk! You can pass everything, pattern/rule/input, as a string. This is great for scripting!
 * [`--stdin`](https://ast-grep.github.io/reference/cli/run.html#stdin) will always wait for your input so you can match some code written in your terminal.
-* You can also select [custom languages](https://ast-grep.github.io/advanced/custom-language.html) in [`sg new`](https://ast-grep.github.io/reference/cli/new.html).
+* You can also select [custom languages](https://ast-grep.github.io/advanced/custom-language.html) in [`ast-grep new`](https://ast-grep.github.io/reference/cli/new.html).
 
 ### Language Support
 * We have added support for three new languages: bash, php and elixir.

@@ -4,13 +4,13 @@ One of the powers of ast-grep is that it can not only find code patterns, but al
 
 For example, you may want to rename a variable, change a function call, or add a comment. ast-grep provides two ways to do this: using the `--rewrite` flag or using the `fix` key in YAML rules.
 
-## Using `sg run -p 'pat' --rewrite`
+## Using `ast-grep run -p 'pat' --rewrite`
 
-The simplest way to rewrite code is to use the `--rewrite` flag with the `sg run` command. This flag takes a string argument that specifies the new code to replace the matched pattern.
+The simplest way to rewrite code is to use the `--rewrite` flag with the `ast-grep run` command. This flag takes a string argument that specifies the new code to replace the matched pattern.
 For example, if you want to change all occurrences of identifier `foo` to `bar`, you can run:
 
 ```bash
-sg run --pattern 'foo' --rewrite 'bar' --lang python
+ast-grep run --pattern 'foo' --rewrite 'bar' --lang python
 ```
 
 This will show you a diff of the changes that will be made. If you are using interactive mode by the `--interactive` flag, ast-grep ask you if you want to apply them.
@@ -58,7 +58,7 @@ fix: baz($X)
 The first rule matches the definition of the function `foo`, and replaces it with `baz`. The second rule matches the calls of the function `foo`, and replaces them with `baz`. Note that we use `$X` and `$$$S` as [meta](/guide/pattern-syntax.html#meta-variable) [variables](/guide/pattern-syntax.html#multi-meta-variable), which can match any expression and any statement, respectively. We can run:
 
 ```bash
-sg scan -r change_func.yml test.py
+ast-grep scan -r change_func.yml test.py
 ```
 
 This will show us the following diff:

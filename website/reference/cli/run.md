@@ -2,15 +2,15 @@
 outline: [2, 3]
 ---
 
-# `sg run`
+# `ast-grep run`
 
 Run one time search or rewrite in command line.
-This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`.
+This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is equivalent to `ast-grep run -p 'foo()'`.
 
 ## Usage
 
 ```shell
-sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
+ast-grep run [OPTIONS] --pattern <PATTERN> [PATHS]...
 ```
 
 ## Arguments

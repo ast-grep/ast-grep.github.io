@@ -129,12 +129,12 @@ The table below summarize how nodes are skipped during matching.
 
 ast-grep has two ways to configure pattern strictness.
 
-1. Using `--strictness` in `sg run`
+1. Using `--strictness` in `ast-grep run`
 
-You can use the `--strictness` flag in [`sg run`](/reference/cli/run.html)
+You can use the `--strictness` flag in [`ast-grep run`](/reference/cli/run.html)
 
 ```bash
-sg run -p '$FOO($BAR)' --strictness ast
+ast-grep run -p '$FOO($BAR)' --strictness ast
 ```
 
 2. Using `strictness` in Pattern Object

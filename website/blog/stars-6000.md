@@ -55,7 +55,7 @@ The [ast-grep VSCode extension](https://marketplace.visualstudio.com/items?itemN
 
 - **Tree-Sitter Version Bump**: We've upgraded to the latest tree-sitter version, enhancing parsing accuracy and speed. In future releases, we plan to leverage tree-sitter's [new Web Assembly grammar](https://zed.dev/blog/language-extensions-part-1) to support even more languages.
 - **Scan and Diff Merge**: The [refactor](https://github.com/ast-grep/ast-grep/commit/c78299d2902662cd98bda44f3faf3fbc88439078) combines `CombinedScan::scan` and `CombinedScan::diff` for a more streamlined process.
-- **Input Stream Optimization**: Now, ast-grep avoids unnecessary input stream usage when updating all rules [#943](https://github.com/ast-grep/ast-grep/pull/943), making it possible to use `sg scan --update-all`.
+- **Input Stream Optimization**: Now, ast-grep avoids unnecessary input stream usage when updating all rules [#943](https://github.com/ast-grep/ast-grep/pull/943), making it possible to use `ast-grep scan --update-all`.
 
 ## Usability Improvements
 

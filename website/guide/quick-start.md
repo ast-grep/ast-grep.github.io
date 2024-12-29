@@ -45,18 +45,18 @@ pip install ast-grep-cli
 ```
 :::
 
-The binary command, `sg`, or `ast-grep`, should be available now. Let's try it with `--help`.
+The binary command, `ast-grep` or `sg`, should be available now. Let's try it with `--help`.
 
 ```shell
-sg --help
-# if you are on Linux
 ast-grep --help
+# if you are not on Linux
+sg --help
 ```
 
 :::danger Use `sg` on Linux
 Linux has a default command `sg` for `setgroups`. You can use the full command name `ast-grep` instead of `sg`.
 You can also use shorter alias if you want by `alias sg=ast-grep`.
-We will use `sg` in the guide below.
+We will use `ast-grep` in the guide below.
 :::
 
 
@@ -103,22 +103,22 @@ Optionally, we can use `lang` to tell ast-grep our target code language.
 
 :::code-group
 ```shell [Full Command]
-sg --pattern '$PROP && $PROP()' --lang ts TypeScript/src
+ast-grep --pattern '$PROP && $PROP()' --lang ts TypeScript/src
 ```
 ```shell [Short Form]
-sg -p '$PROP && $PROP()' -l ts TypeScript/src
+ast-grep -p '$PROP && $PROP()' -l ts TypeScript/src
 ```
 ```shell [Without Lang]
 # ast-grep will infer languages based on file extensions
-sg -p '$PROP && $PROP()' TypeScript/src
+ast-grep -p '$PROP && $PROP()' TypeScript/src
 ```
 :::
 
 :::tip Pro Tip
 Pattern must be quoted by single quote `'` to prevent shell from interpreting `$` sign.
-`sg -p '$PROP && $PROP()'` is okay.
+`ast-grep -p '$PROP && $PROP()'` is okay.
 
-But `sg -p "$PROP && $PROP()"` will be interpreted as `sg -p " && ()"` after shell expansion.
+But `ast-grep -p "$PROP && $PROP()"` will be interpreted as `ast-grep -p " && ()"` after shell expansion.
 :::
 
 ## Rewrite
@@ -127,7 +127,7 @@ Cool? Now we can use this pattern to refactor TypeScript source!
 
 ```shell
 # pattern and language argument support short form
-sg -p '$PROP && $PROP()' \
+ast-grep -p '$PROP && $PROP()' \
    --rewrite '$PROP?.()' \
    --interactive \
    -l ts \

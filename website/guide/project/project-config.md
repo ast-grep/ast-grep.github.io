@@ -3,7 +3,7 @@
 ## Root Configuration File
 
 ast-grep supports using [YAML](https://yaml.org/) to configure its linting rules to scan your code repository.
-We need a root configuration file `sgconfig.yml` to specify directories where `sg` can find all rules.
+We need a root configuration file `sgconfig.yml` to specify directories where `ast-grep` can find all rules.
 
 In your project root, add `sgconfig.yml` with content as below.
 
@@ -28,10 +28,10 @@ my-awesome-project
   |- not-a-rule.yml
 ```
 
-All the YAML files under `rules` folder will be treated as rule files by `sg`, while`not-a-rule.yml` is ignored by ast-grep.
+All the YAML files under `rules` folder will be treated as rule files by `ast-grep`, while`not-a-rule.yml` is ignored.
 
 
-**Note, the [`sg scan`](/reference/cli.html#scan) command requires you have an `sgconfig.yml` in your project root.**
+**Note, the [`ast-grep scan`](/reference/cli.html#scan) command requires you have an `sgconfig.yml` in your project root.**
 
 :::tip Pro tip
 We can also use directories in `node_modules` to reuse preconfigured rules published on npm!

@@ -15,7 +15,7 @@ ast-grep is a new AST based tool for managing your code, at massive scale.
 Using ast-grep can be as simple as running a single command in your terminal:
 
 ```bash
-sg --pattern 'var code = $PAT' --rewrite 'let code = $PAT' --lang js
+ast-grep --pattern 'var code = $PAT' --rewrite 'let code = $PAT' --lang js
 ```
 
 The command above will replace `var` statement with `let` for all <abbr title="ast-grep will also infer the language if you omit --lang">JavaScript</abbr> files.
@@ -24,7 +24,7 @@ The command above will replace `var` statement with `let` for all <abbr title="a
 
 ast-grep is a versatile tool for searching, linting and rewriting code in various languages.
 
-* **Search**: As a command line tool in your terminal, ast-grep, `sg`, can precisely search code based on AST, running through ten thousand files in sub seconds.
+* **Search**: As a command line tool in your terminal, `ast-grep` can precisely search code based on AST, running through ten thousand files in sub seconds.
 * **Lint**: You can also use ast-grep as a linter. Thanks to the flexible rule configuration, adding a new customized rule is more intuitive and straightforward. It also has a pretty error reporting out of box
 * **Rewrite**: ast-grep provide jQuery like utility methods to traverse and manipulate syntax tree. Besides, you can also use operators to compose complex matching from simple patterns.
 
@@ -71,7 +71,7 @@ Consider it as same as `grep` but based on AST instead of text.
 In comparison to Babel, we can complete this hello-world task in ast-grep trivially
 
 ```bash
-sg -p "console.log"
+ast-grep -p "console.log"
 ```
 
 See [playground](/playground.html) in action!

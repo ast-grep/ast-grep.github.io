@@ -1,15 +1,15 @@
 # Command Line Reference
 
-You can always see up-to-date command line options using `sg --help`.
+You can always see up-to-date command line options using `ast-grep --help`.
 ast-grep has several subcommands as listed below.
 
-## `sg run`
-Run one time search or rewrite in command line. This is the default command when you run `sg` so `sg -p 'foo()'` is equivalent to `sg run -p 'foo()'`. [View detailed reference.](/reference/cli/run.html)
+## `ast-grep run`
+Run one time search or rewrite in command line. This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is equivalent to `ast-grep run -p 'foo()'`. [View detailed reference.](/reference/cli/run.html)
 
 ### Usage
 
 ```shell
-sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
+ast-grep run [OPTIONS] --pattern <PATTERN> [PATHS]...
 ```
 
 ### Arguments
@@ -42,13 +42,13 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS]...
 | -C| --context `<NUM>`    | Show NUM lines around each match [default: 0] |
 |-h | --help                | Print help |
 
-## `sg scan`
+## `ast-grep scan`
 Scan and rewrite code by configuration. [View detailed reference.](/reference/cli/scan.html)
 
 ### Usage
 
 ```shell
-sg scan [OPTIONS] [PATHS]...
+ast-grep scan [OPTIONS] [PATHS]...
 ```
 
 ### Arguments
@@ -87,13 +87,13 @@ sg scan [OPTIONS] [PATHS]...
 | -C| --context `<NUM>`    | Show NUM lines around each match [default: 0] |
 | -h| --help|Print help|
 
-## `sg test`
+## `ast-grep test`
 Test ast-grep rules. See [testing guide](/guide/test-rule.html) for more details. [View detailed reference.](/reference/cli/test.html)
 
 ### Usage
 
 ```shell
-sg test [OPTIONS]
+ast-grep test [OPTIONS]
 ```
 
 ### Options
@@ -109,7 +109,7 @@ sg test [OPTIONS]
 | -i| --interactive                   |start an interactive review to update snapshots selectively.|
 | -h| --help                          |Print help.|
 
-## `sg new`
+## `ast-grep new`
 
 Create new ast-grep project or items like rules/tests. [View detailed reference.](/reference/cli/new.html)
 
@@ -117,7 +117,7 @@ Create new ast-grep project or items like rules/tests. [View detailed reference.
 ### Usage
 
 ```shell
-sg new [COMMAND] [OPTIONS] [NAME]
+ast-grep new [COMMAND] [OPTIONS] [NAME]
 ```
 
 ### Commands
@@ -142,14 +142,14 @@ sg new [COMMAND] [OPTIONS] [NAME]
 | -b| `--base-dir <BASE_DIR>` | Create new project/items in the folder specified by this argument `[default: .]` |
 | -h| `--help`                | Print help (see more with '--help') |
 
-## `sg lsp`
+## `ast-grep lsp`
 
 Start a language server to [report diagnostics](/guide/scan-project.html) in your project. This is useful for editor integration. See [editor integration](/guide/tools/editors.html) for more details.
 
 ### Usage
 
 ```shell
-sg lsp
+ast-grep lsp
 ```
 
 ### Options
@@ -159,14 +159,14 @@ sg lsp
 | -c | --config `<CONFIG_FILE>`| Path to ast-grep root config, default is `sgconfig.yml` |
 | -h| `--help`                | Print help (see more with '--help') |
 
-## `sg completions`
+## `ast-grep completions`
 
 Generate shell completion script.
 
 ### Usage
 
 ```shell
-sg completions [SHELL]
+ast-grep completions [SHELL]
 ```
 
 ### Arguments
@@ -178,5 +178,5 @@ If not provided, shell flavor will be inferred from environment.
 
 [possible values: bash, elvish, fish, powershell, zsh]
 
-## `sg help`
+## `ast-grep help`
 Print help message or the help of the given subcommand(s).
