@@ -2,14 +2,14 @@
 outline: [2, 3]
 ---
 
-# `sg test`
+# `ast-grep test`
 
 Test ast-grep rules.
 
 ## Usage
 
 ```shell
-sg test [OPTIONS]
+ast-grep test [OPTIONS]
 ```
 
 ## Options
