@@ -134,10 +134,10 @@ export default defineConfig({
           items: [
             { text: 'Command Line Interface', link: '/reference/cli.html', collapsed: true,
               items: [
-                { text: 'sg run', link: '/reference/cli/run.html' },
-                { text: 'sg scan', link: '/reference/cli/scan.html' },
-                { text: 'sg test', link: '/reference/cli/test.html' },
-                { text: 'sg new', link: '/reference/cli/new.html' },
+                { text: 'ast-grep run', link: '/reference/cli/run.html' },
+                { text: 'ast-grep scan', link: '/reference/cli/scan.html' },
+                { text: 'ast-grep test', link: '/reference/cli/test.html' },
+                { text: 'ast-grep new', link: '/reference/cli/new.html' },
               ],
             },
             { text: 'Project Config', link: '/reference/sgconfig.html' },
