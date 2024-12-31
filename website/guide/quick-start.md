@@ -29,6 +29,11 @@ brew install ast-grep
 sudo port install ast-grep
 ```
 
+```shell [nix-shell]
+# try ast-grep in nix-shell
+nix-shell -p ast-grep
+```
+
 ```shell [cargo]
 # install via cargo
 cargo install ast-grep --locked
