@@ -151,7 +151,7 @@ class SgNode {
 }
 ```
 
-Some methods have more sophisticated type signature for the ease of use. See the [source code](https://github.com/ast-grep/ast-grep/blob/0999cdb542ff4431e3734dad38fcd648de972e6a/crates/napi/types/sgnode.d.ts#L38-L41) and our [tech blog](/blog/typed-napi.html)
+Some methods have more sophisticated type signatures for the ease of use. See the [source code](https://github.com/ast-grep/ast-grep/blob/0999cdb542ff4431e3734dad38fcd648de972e6a/crates/napi/types/sgnode.d.ts#L38-L41) and our [tech blog](/blog/typed-napi.html)
 
 ### NapiConfig
 
