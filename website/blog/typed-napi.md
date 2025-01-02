@@ -16,6 +16,9 @@ head:
   - - meta
     - property: og:description
       content: ast-grep/napi now supports typed AST manipulation which is correct, concise, robust, and performant.
+  - - meta
+    - property: og:image
+      content: https://ast-grep.github.io/image/blog/napi.jpg
 ---
 
 # ast-grep's Journey to Type Safety in Node API
