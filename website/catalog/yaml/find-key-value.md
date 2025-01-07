@@ -23,15 +23,13 @@ rule:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-```yaml
+```yaml {5,6}
 db:
   username: root
   password: root
-
 server:
   host: 127.0.0.1
   port: 8001
-
 ```
 
 ### Contributed by
