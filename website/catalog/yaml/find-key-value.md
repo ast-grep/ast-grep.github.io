@@ -4,7 +4,7 @@
 
 ### Description
 
-This YAML rule helps detect specific host and port configurations in your code. For example, it checks if the port is set to something other than 8000 or if a particular host is used. It provides an error message prompting you to update the configuration.
+This YAML rule helps detecting specific host and port configurations in your code. For example, it checks if the port is set to something other than 8000 or if a particular host is used. It provides an error message prompting you to update the configuration.
 
 ### YAML
 

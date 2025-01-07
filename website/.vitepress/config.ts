@@ -126,6 +126,7 @@ export default defineConfig({
             { text: 'Rust', link: '/catalog/rust/'},
             { text: 'TypeScript', link: '/catalog/typescript/'},
             { text: 'TSX', link: '/catalog/tsx/'},
+            { text: 'YAML', link: '/catalog/yaml/'},
           ],
           collapsed: true,
         },
