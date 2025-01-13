@@ -31,7 +31,7 @@ In this case, I did not pay enough attention to runtime details or opted for nai
 
 Conceptually, ast-grep takes a piece of pattern code (think it like a regular expression but for AST), matches the pattern against your codebase and gives a list of matched AST nodes back to you. See the [playground](https://ast-grep.github.io/playground) for a live demo.
 
-I designed ast-grpe's architecture with performance in mind. Here are a few performance related highlights:
+I designed ast-grep's architecture with performance in mind. Here are a few performance related highlights:
 
 * it is written in Rust, a native language compiled to machine code.
 * it uses the venerable C library [tree-sitter](https://tree-sitter.github.io/) to parse code, which is the same library powering [GitHub's codesearch](https://github.com/features/code-search).
