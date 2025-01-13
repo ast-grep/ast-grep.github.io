@@ -27,7 +27,7 @@ In this case, I did not pay enough attention to runtime details or opted for nai
 
 # Context
 
-[ast-grep](https://ast-grep.github.io/) is my hobby project to help you search and rewrite code using [abstract syntax tree](https://www.wikiwand.com/en/Abstract_syntax_tree).
+[ast-grep](https://ast-grep.github.io/) is [my](https://github.com/HerringtonDarkholme) hobby project to help you search and rewrite code using [abstract syntax tree](https://www.wikiwand.com/en/Abstract_syntax_tree).
 
 Conceptually, ast-grep takes a piece of pattern code (think it like a regular expression but for AST), matches the pattern against your codebase and gives a list of matched AST nodes back to you. See the [playground](https://ast-grep.github.io/playground) for a live demo.
 
