@@ -237,6 +237,11 @@ To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 
+:::warning Don't add `./`
+Be sure to remove `./` to the beginning of your rules. ast-grep will not recognize the paths if you add `./`.
+:::
+
+
 ## Other
 
 ### `url`
