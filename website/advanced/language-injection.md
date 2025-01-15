@@ -145,7 +145,7 @@ const Button = styled.button`
   border-radius: 3px;
 `
 
-exporrt default function App() {
+export default function App() {
   return <Button>Click Me</Button>
 }
 ```
