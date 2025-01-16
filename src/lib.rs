@@ -41,8 +41,7 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
   let sets = combined.find(&root);
-  let ret: HashMap<_, _> = combined.scan(&root, sets, false).matches.into_iter().map(|(id, matches)| {
-    let rule = combined.get_rule(id);
+  let ret: HashMap<_, _> = combined.scan(&root, sets, false).matches.into_iter().map(|(rule, matches)| {
     let matches: Vec<_> = matches.into_iter().map(|m| {
       WasmMatch::from_match(m, rule)
     }).collect();
@@ -71,12 +70,11 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
   let mut start = 0;
   let src: Vec<_> = src.chars().collect();
   let mut new_content = Vec::<char>::new();
-  for (idx, nm) in diffs {
+  for (rule, nm) in diffs {
     let range = nm.range();
     if start > range.start {
       continue;
     }
-    let rule = combined.get_rule(idx);
     let fixer = rule.get_fixer()?.expect("rule returned by diff must have fixer");
     let edit = nm.make_edit(&rule.matcher, &fixer);
     new_content.extend(&src[start..edit.position]);
