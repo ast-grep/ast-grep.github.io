@@ -14,4 +14,3 @@ However, you can use the [`languageGlobs`](/reference/sgconfig.html#languageglob
 <!--@include: ./migrate-xstate-v5.md-->
 <!--@include: ./no-await-in-promise-all.md-->
 <!--@include: ./no-console-except-catch.md-->
-<!--@include: ./redundant-usestate-type.md-->

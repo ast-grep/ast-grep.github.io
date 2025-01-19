@@ -9,6 +9,7 @@ They need different parsers because of [conflicting syntax](https://www.typescri
 In order to reduce rule duplication, you can use the [`languageGlobs`](/reference/sgconfig.html#languageglobs) option to force ast-grep to use parse `.ts` files as TSX.
 :::
 
+<!--@include: ./redundant-usestate-type.md-->
 <!--@include: ./avoid-jsx-short-circuit.md-->
 <!--@include: ./rewrite-mobx-component.md-->
 <!--@include: ./unnecessary-react-hook.md-->

@@ -13,7 +13,7 @@ We can usually skip annotating if the generic type argument is a single primitiv
 
 ::: code-group
 ```bash [number]
-ast-grep -p 'useState<number>($A)' -r 'useState($A)' -l ts
+ast-grep -p 'useState<number>($A)' -r 'useState($A)' -l tsx
 ```
 
 ```bash [string]
