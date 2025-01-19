@@ -79,15 +79,24 @@ ast-grep uses file extensions to discover and parse files in certain languages. 
 
 The key of this option is the language name. The values are a list of [glob patterns](https://www.wikiwand.com/en/Glob_(programming)) that match the files you want to process.
 
-**Example:**
+Note, `languageGlobs` takes precedence over the default language parser so you can reassign the parser for a specific file extension.
 
-The following configuration tells ast-grep to treat the files with `.vue`, `.svelte`, and `.astro` extensions as HTML files, and the extension-less file `.eslintrc` as JSON files.
+**Example:**
 
 ```yml
 languageGlobs:
   html: ['*.vue', '*.svelte', '*.astro']
   json: ['.eslintrc']
+  cpp: ['*.c'] # override the default parsers
+  tsx: ['*.ts'] # useful for rule reuse
 ```
+
+The above configuration tells ast-grep to treat the files with `.vue`, `.svelte`, and `.astro` extensions as HTML files, and the extension-less file `.eslintrc` as JSON files. It also overrides the default parser for C files and TS files.
+
+
+:::tip Simliar languages
+This option can override the default language parser for a specific file extension, which is useful for rule reuse between similar languages like C/Cpp, or TS/TSX.
+:::
 
 ## `customLanguages` <Badge type="warning" text="Experimental" />
 
