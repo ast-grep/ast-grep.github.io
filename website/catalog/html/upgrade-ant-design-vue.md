@@ -20,6 +20,8 @@ The rule can be broken down into the following steps:
 <!-- Use YAML in the example. Delete this section if use pattern. -->
 ### YAML
 ```yaml
+id: upgrade-ant-design-vue
+language: HTML
 utils:
   inside-tag:
     # find the enclosing element of the attribute
@@ -57,7 +59,7 @@ fix: :open
 
 ### Diff
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
-```js
+```html
 <template>
   <a-modal :visible="visible">content</a-modal> // [!code --]
   <a-modal :open="visible">content</a-modal> // [!code ++]

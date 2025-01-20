@@ -17,6 +17,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Find function declarations with names of certain pattern](/catalog/go/#find-function-declarations-with-names-of-certain-pattern)
 * [HTML](/catalog/go/)
   * [Upgrade Ant Design Vue](/catalog/html/#upgrade-ant-design-vue)
+  * [Extract i18n Keys](/catalog/html/#extract-i18n-keys)
 * [Java](/catalog/java/)
   * [No Unused Vars](/catalog/java/#no-unused-vars)
 * [Python](/catalog/python/)

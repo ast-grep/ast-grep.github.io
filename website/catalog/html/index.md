@@ -9,3 +9,4 @@ You can leverage the [`languageGlobs`](/reference/sgconfig.html#languageglobs) o
 :::
 
 <!--@include: ./upgrade-ant-design-vue.md-->
+<!--@include: ./extract-i18n-key.md-->
