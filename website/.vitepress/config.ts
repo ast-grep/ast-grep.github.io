@@ -121,6 +121,7 @@ export default defineConfig({
             { text: 'C', link: '/catalog/c/'},
             { text: 'C++', link: '/catalog/cpp/'},
             { text: 'Go', link: '/catalog/go/'},
+            { text: 'HTML', link: '/catalog/html/'},
             { text: 'Java', link: '/catalog/java/'},
             { text: 'Python', link: '/catalog/python/'},
             { text: 'Ruby', link: '/catalog/ruby/'},
