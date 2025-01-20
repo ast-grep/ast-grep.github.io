@@ -10,6 +10,8 @@ In practice, you may want to map the extracted text to a key in a dictionary fil
 
 ### YAML
 ```yaml
+id: extract-i18n-key
+language: html
 rule:
   kind: text
   pattern: $T

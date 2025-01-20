@@ -13,3 +13,4 @@ In order to reduce rule duplication, you can use the [`languageGlobs`](/referenc
 <!--@include: ./avoid-jsx-short-circuit.md-->
 <!--@include: ./rewrite-mobx-component.md-->
 <!--@include: ./unnecessary-react-hook.md-->
+<!--@include: ./reverse-react-compiler.md-->
