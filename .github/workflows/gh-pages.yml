@@ -32,7 +32,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Build WASM
         run: wasm-pack build --target web && cd pkg && npm install
