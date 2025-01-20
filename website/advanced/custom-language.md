@@ -50,20 +50,16 @@ git clone https://github.com/HerringtonDarkholme/tree-sitter-mojo.git
 ## Compile the Parser as Dynamic Library
 
 Once we have prepared the tool and the grammar, we can compile the parser as dynamic library.
+_`tree-sitter-cli` is the preferred way to compile dynamic library._
 
-There are no official instructions on how to do this on the internet, but we can get some hints from Tree-sitter's [source code](https://github.com/tree-sitter/tree-sitter/blob/a62bac5370dc5c76c75935834ef083457a6dd0e1/cli/loader/src/lib.rs#L111).
-
-One way is to set an environment variable called `TREE_SITTER_LIBDIR` to the path where you want to store the dynamic library, and then run `tree-sitter test` in the directory of your custom language parser.
-
-This will generate a dynamic library at the `TREE_SITTER_LIBDIR` path.
-
-For example:
+The [official way](https://tree-sitter.github.io/tree-sitter/cli/build.html) to compile a parser as a dynamic library is to use the `tree-sitter build` command.
 
 ```sh
-cd path/to/mojo/parser
-export TREE_SITTER_LIBDIR=path/to/your/dir
-tree-sitter test
+tree-sitter build --output mojo.so
 ```
+
+The build command compiles your parser into a dynamically-loadable library as a shared object (.so, .dylib, or .dll).
+
 
 Another way is to use the following [commands](https://github.com/tree-sitter/tree-sitter/blob/a62bac5370dc5c76c75935834ef083457a6dd0e1/cli/loader/src/lib.rs#L380-L410) to compile the parser manually:
 
@@ -79,8 +75,21 @@ For example, in mojo's case, the full command will be:
 gcc -shared -fPIC -fno-exceptions -g -I 'src' -o mojo.so -O2 src/scanner.cc -xc src/parser.c -lstdc++
 ```
 
-:::warning
-`tree-sitter-cli` is the preferred way to compile dynamic library.
+:::details Old tree-sitter does not have build command
+
+[Previously](https://github.com/tree-sitter/tree-sitter/pull/3174) there are no official instructions on how to do this on the internet, but we can get some hints from Tree-sitter's [source code](https://github.com/tree-sitter/tree-sitter/blob/a62bac5370dc5c76c75935834ef083457a6dd0e1/cli/loader/src/lib.rs#L111).
+
+One way is to set an environment variable called `TREE_SITTER_LIBDIR` to the path where you want to store the dynamic library, and then run `tree-sitter test` in the directory of your custom language parser.
+
+This will generate a dynamic library at the `TREE_SITTER_LIBDIR` path.
+
+For example:
+
+```sh
+cd path/to/mojo/parser
+export TREE_SITTER_LIBDIR=path/to/your/dir
+tree-sitter test
+```
 :::
 
 ## Register Language in `sgconfig.yml`
