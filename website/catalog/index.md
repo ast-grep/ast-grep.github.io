@@ -37,6 +37,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [No `console` except in `catch` block](/catalog/typescript/#no-console-except-in-catch-block)
   * [Find Import File without Extension](/catalog/typescript/#find-import-file-without-extension)
   * [Migrate XState to V5 from V4](/catalog/typescript/#migrate-xstate-to-v5-from-v4)
+  * [Find Import Usage](/catalog/typescript/#find-import-usage)
 * [TSX](/catalog/tsx/)
   * [Avoid `&&` short circuit in JSX](/catalog/tsx/#avoid-short-circuit-in-jsx)
   * [Rewrite MobX Component Style](/catalog/tsx/#rewrite-mobx-component-style)
