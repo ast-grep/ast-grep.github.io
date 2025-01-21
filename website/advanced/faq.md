@@ -120,6 +120,21 @@ Meta variables cannot be mixed with prefix/suffix string . `use$HOOK` and `io_ur
 ast-grep will not treat them as valid meta variable name.
 :::
 
+## How to reuse rule for similar languages like TS/JS or C/C++?
+
+ast-grep does not support multiple languages in one rule because:
+
+1. **Different ASTs**: Similar languages still have different ASTs. For instance, [JS](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) and [TS](#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoidHlwZXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) have different parsing trees for the same function declaration code.
+2. **Different Kinds**: Similar languages may have different AST node kinds. Since ast-grep reports non-existing kinds as errors, there is no straightforward way to report error for kind only existing in one language.
+3. **Debugging Experience**: Mixing languages in one rule requires users to test the rule in both languages. This can be confusing and error-prone, especially when unexpected results occur.
+
+Supporting multi-lang rule is a challenging task for both tool developers and users. Instead, we recommend two approaches:
+* **Always use the superset language**: Rule reusing usually happens when one language is a superset of another, e.g., TS and JS. In this case, you can use [`languageGlobs`](/reference/sgconfig.html#languageglobs) to parse files in the superset language. This is more suitable if you don't need to distinguish between the two languages.
+* **Write Separate Rules**: Generate separate rules for each language. This approach is suitable when you do need to handle the differences between the languages.
+
+If you have a better, clearer and easier proposal to support multi-lang rule, please leave a comment under [this issue](https://github.com/ast-grep/ast-grep/issues/525).
+
+
 ## Why is rule matching order sensitive?
 
 ast-grep's rule matching is a step-by-step process. It matches one atomic rule at a time, stores the matched meta-variable, and proceeds to the next rule until all rules are matched.
