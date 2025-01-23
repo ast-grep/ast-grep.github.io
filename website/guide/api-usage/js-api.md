@@ -140,12 +140,12 @@ empty.length === 0 // true
 // find i.e. `console.log("hello world")` using a NapiConfig
 const node = root.find({
   rule: {
-    pattern: "console.log($A)",
+    pattern: "console.log($A)"
   },
   constraints: {
     A: { regex: "hello" }
   }
-});
+})
 ```
 
 Note, `find` returns `null` if no node is found. `findAll` returns an empty array if nothing matches.
