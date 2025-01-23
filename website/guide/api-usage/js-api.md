@@ -11,6 +11,7 @@ To try out the JavaScript API, you can use the [code sandbox](https://codesandbo
 First, install ast-grep's napi package.
 
 ::: code-group
+
 ```bash[npm]
 npm install --save @ast-grep/napi
 ```
@@ -18,6 +19,7 @@ npm install --save @ast-grep/napi
 ```bash[pnpm]
 pnpm add @ast-grep/napi
 ```
+
 :::
 
 Now let's explore ast-grep's API!
@@ -25,6 +27,7 @@ Now let's explore ast-grep's API!
 ## Core Concepts
 
 The core concepts in ast-grep's JavaScript API are:
+
 * `SgRoot`: a class representing the whole syntax tree
 * `SgNode`: a node in the syntax tree
 
@@ -133,6 +136,16 @@ Array.isArray(nodes)     // true, findAll returns SgNode
 nodes.map(n => n.text()) // string array of function source
 const empty = root.findAll('not exist') // returns []
 empty.length === 0 // true
+
+// find i.e. `console.log("hello world")` using a NapiConfig
+const node = root.find({
+  rule: {
+    pattern: "console.log($A)",
+  },
+  constraints: {
+    A: { regex: "hello" }
+  }
+});
 ```
 
 Note, `find` returns `null` if no node is found. `findAll` returns an empty array if nothing matches.
@@ -250,6 +263,7 @@ export class SgNode {
   prevAll(): Array<SgNode>
 }
 ```
+
 ## Fix code
 
 `SgNode` is immutable so it is impossible to change the code directly.
@@ -293,7 +307,6 @@ See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)
 ## Use Other Language
 
 To access other languages, you can use the `parse`/`parseAsync` function and the `Lang` enum.
-
 
 **Example**
 
