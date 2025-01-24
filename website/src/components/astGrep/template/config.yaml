@@ -1,0 +1,8 @@
+# YAML Rule is more powerful!
+# https://ast-grep.github.io/guide/rule-config.html#rule
+rule:
+  any:
+    - pattern: console.log($A)
+    - pattern: console.debug($A)
+fix:
+  logger.log($A)

@@ -4,6 +4,7 @@ import { Monaco, Diff, EditorWithPanel } from './editors'
 import QueryEditor from './QueryEditor.vue'
 import PatternEditor from './PatternEditor.vue'
 import SelectLang from './SelectLang.vue'
+import ResetConfig from './ResetConfig.vue'
 import Tabs from './utils/Tabs.vue'
 import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
@@ -13,7 +14,7 @@ import { initializeParser, useAstGrep, Mode as ModeImport } from './astGrep'
 import '../style.css'
 
 // important initialization
-await initializeParser()
+// await initializeParser()
 
 const {
   state,
@@ -95,7 +96,10 @@ let codeMode = shallowRef('code')
           </EditorWithPanel>
         </template>
         <template #addon>
-          <SelectLang v-model="lang"/>
+          <div style="display: flex; align-items: center;">
+            <SelectLang v-model="lang"/>
+            <ResetConfig v-model="state" />
+          </div>
         </template>
       </Tabs>
     </div>

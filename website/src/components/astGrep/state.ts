@@ -2,6 +2,9 @@ import type { SupportedLang } from "./lang"
 import { shallowReactive, toRefs, watch, provide } from 'vue'
 import type { InjectionKey, ToRefs, ShallowReactive } from 'vue'
 
+import source from './template/source?raw'
+import config from './template/config.yaml?raw'
+
 export enum Mode {
   Patch = 'Patch',
   Config = 'Config',
@@ -36,40 +39,10 @@ export function deserialize(str: string): State {
   return JSON.parse(atou(str))
 }
 
-const source =
-`// console.log() will be matched by pattern!
-// click diff tab to see rewrite.
-
-function tryAstGrep() {
-  console.log('matched in metavar!')
-}
-
-const multiLineExpression =
-  console
-   .log('Also matched!')
-
-if (true) {
-  const notThis = 'console.log("not me")'
-} else {
-  console.debug('matched by YAML')
-}`
-
-const query = 'console.log($MATCH)'
-const config = `
-# YAML Rule is more powerful!
-# https://ast-grep.github.io/guide/rule-config.html#rule
-rule:
-  any:
-    - pattern: console.log($A)
-    - pattern: console.debug($A)
-fix:
-  logger.log($A)
-`.trim()
-
 const defaultState = {
   mode: Mode.Patch,
   lang: 'javascript' as const,
-  query,
+  query: 'console.log($MATCH)',
   rewrite: 'logger.log($MATCH)',
   strictness: 'smart',
   selector: '',

@@ -25,8 +25,8 @@ const { isDark } = useData()
 const monaco = await setup()
 
 const emits = defineEmits<{
-    (e: 'update:modelValue', value: string): void,
-    (e: 'changeCursor', value: any): void,
+  (e: 'update:modelValue', value: string): void,
+  (e: 'changeCursor', value: any): void,
 }>()
 
 const props = defineProps({
@@ -80,10 +80,10 @@ onMounted(() => {
   })
   editor.value = editorInstance
   editorInstance.onDidChangeModelContent(() => {
-      emits('update:modelValue', editorInstance.getValue())
+    emits('update:modelValue', editorInstance.getValue())
   })
   editorInstance.onDidChangeCursorPosition(e => {
-      emits('changeCursor', e)
+    emits('changeCursor', e)
   })
   highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformHighlight) || [])
   matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch).filter(truthy) || [])
@@ -99,13 +99,13 @@ watch(isDark, () => {
 })
 
 const transformHighlight = (match: number[]) => {
-    const [sr, sc, er, ec] = match
-    return {
-      range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
-      options: {
-        inlineClassName: 'monaco-highlight-span'
-      }
+  const [sr, sc, er, ec] = match
+  return {
+    range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
+    options: {
+      inlineClassName: 'monaco-highlight-span'
     }
+  }
 }
 
 const transformMatch = (match: Match) => {
@@ -144,6 +144,15 @@ function toModelMark(match: Match) {
   }
 }
 
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (editor.value?.getValue() === value) return
+    editor.value?.setValue(value || '')
+  },
+  { immediate: true },
+)
+
 watch(() => props.highlights, (matched) => {
   const ranges = matched!.map(transformHighlight)
   highlights?.set(ranges)
@@ -175,7 +184,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="editor" ref="containerRef"/>
+  <div class="editor" ref="containerRef" />
 </template>
 
 <style scoped>
@@ -190,6 +199,7 @@ onBeforeUnmount(() => {
   border-bottom: 1px dashed var(--brand-color);
   background-color: var(--theme-highlight4);
 }
+
 .monaco-match-span {
   background-color: var(--theme-highlight3);
 }
