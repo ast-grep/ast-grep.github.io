@@ -48,6 +48,14 @@ function decrement() {
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">
+            Now it's the {{ currentIndex + 1 }}th matched
+            <span class="match-count">({{ currentIndex + 1 }}/{{props.envs.length}})</span>
+          </td>
+        </tr>
+      </tfoot>
     </table>
     <div class="choose-match">
       <button @click="decrement">Prev Match</button>
@@ -96,6 +104,9 @@ function decrement() {
 .metavar-table td:nth-child(2n) {
   border-left: 1px solid var(--vp-c-divider);
   width: 75%;
+}
+.metavar-table tfoot .match-count {
+  color: #999;
 }
 .choose-match {
   margin-top: 1em;

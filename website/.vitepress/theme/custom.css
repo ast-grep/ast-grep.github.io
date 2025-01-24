@@ -5,7 +5,7 @@
   --vp-c-brand-2: #a89f2a;
   --vp-c-brand-1: #918623;
   --vp-c-brand-3: #2f4f6d;
-  --vp-custom-selctor-option-text: #213547;
+  --vp-custom-selector-option-text: #213547;
 
 
   --vp-custom-block-tip-text: var(--vp-c-text-1);
@@ -13,5 +13,5 @@
   --vp-custom-block-tip-code-bg: var(--vp-c-green-soft);
 }
 .dark {
-  --vp-custom-selctor-option-text: #213547;
+  --vp-custom-selector-option-text: #213547;
 }
