@@ -30,39 +30,30 @@ function decrement() {
 
 <template>
 <div class="var-debugger">
-  <template v-if="currentEnv">
-    <table class="metavar-table">
-      <thead>
-        <tr>
-          <td>MetaVar Name</td>
-          <td>Matched Node(s)</td>
-        </tr>
-      </thead>
-      <tbody v-if="currentEnv">
-        <tr v-for="(val, key) in currentEnv">
-          <td>{{key}}</td>
-          <td>
-            <code>
-              {{val.text}}
-            </code>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="2">
-            Now it's the {{ currentIndex + 1 }}th matched
-            <span class="match-count">({{ currentIndex + 1 }}/{{props.envs.length}})</span>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-    <div class="choose-match">
-      <button @click="decrement">Prev Match</button>
-      &nbsp;
-      <button @click="increment">Next Match</button>
-    </div>
-  </template>
+  <table class="metavar-table" v-if="currentEnv">
+    <thead>
+      <tr>
+        <td>MetaVar Name</td>
+        <td>Matched Node(s)</td>
+      </tr>
+    </thead>
+    <tbody v-if="currentEnv">
+      <tr v-for="(val, key) in currentEnv">
+        <td>{{key}}</td>
+        <td>
+          <code>
+            {{val.text}}
+          </code>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot >
+      <div class="choose-match-division" />
+      <button @click="decrement">❮</button>
+      <span class="match-count">{{ currentIndex + 1 }}/{{props.envs.length}} match(es)</span>
+      <button @click="increment">❯</button>
+    </tfoot>
+  </table>
   <Error v-else-if="error" :error="error"/>
   <div v-else class="vp-doc">
     <div class="custom-block warning no-match-tip">
@@ -105,11 +96,19 @@ function decrement() {
   border-left: 1px solid var(--vp-c-divider);
   width: 75%;
 }
-.metavar-table tfoot .match-count {
-  color: #999;
+.match-count {
+  margin: 0 0.5em;
+  opacity: 0.8;
 }
-.choose-match {
+.choose-match-division{
   margin-top: 1em;
+}
+
+tfoot button {
+  padding: 0;
+  text-align: center;
+  line-height: 24px;
+  width: 24px;
 }
 
 .no-match-tip {
