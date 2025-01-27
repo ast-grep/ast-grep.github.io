@@ -125,7 +125,7 @@ An example will be like this. The meta variable `$GREET` will be replaced both i
 ## Other Linting Fields
 
 * `message` is a concise description when the issue is reported.
-* `severity` is the issue's severity.
+* `severity` is the issue's severity. See more in [severity](/guide/project/severity.html).
 * `note` is a detailed message to elaborate the message and preferably to provide actionable fix to end users.
 
 
@@ -158,32 +158,15 @@ Be sure to remove `./` to the beginning of your rules. ast-grep will not recogni
 
 ## Ignore Linting Error
 
-It is possible to ignore a single line of code in ast-grep's scanning. A developer can suppress ast-grep's error by adding `ast-grep-ignore` above the line that triggers the issue.
-
-The suppression comment has the following format:
+It is possible to ignore a single line of code in ast-grep's scanning. A developer can suppress ast-grep's error by adding `ast-grep-ignore` comment. For example, in JavaScript:
 
 ```javascript
 // ast-grep-ignore
 // ast-grep-ignore: <rule-id>, <more-rule-id>
 ```
 
-* A comment with the content `ast-grep-ignore` will suppress the following line's diagnostic.
-* The magic word `ast-grep-ignore` alone will suppress _all_ kinds of diagnostics.
-* `ast-grep-ignore: <rule-id>` can turn off specific rules.
-* You can turn off multiple rules by providing a comma-separated list in the comment. e.g. `ast-grep-ignore: rule-1, rule-2`
-
-See the [playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRDQUxMRVIgOj0gJmZvb3t9IiwicmV3cml0ZSI6IiIsImNvbmZpZyI6ImlkOiBuby1jb25zb2xlXG5sYW5ndWFnZTogSmF2YVNjcmlwdFxucnVsZTpcbiAgcGF0dGVybjogY29uc29sZS5sb2coJEEpIiwic291cmNlIjoiY29uc29sZS5sb2coJ2hlbGxvJykgIC8vIG1hdGNoXG4vLyBhc3QtZ3JlcC1pZ25vcmVcbmNvbnNvbGUubG9nKCdzdXBwcmVzc2VkJykgLy8gc3VwcHJlc3NlZFxuLy8gYXN0LWdyZXAtaWdub3JlOiBuby1jb25zb2xlXG5jb25zb2xlLmxvZygnc3VwcHJlc3NlZCcpIC8vIHN1cHByZXNzZWRcbi8vIGFzdC1ncmVwLWlnbm9yZTogb3RoZXItcnVsZVxuY29uc29sZS5sb2coJ3dvcmxkJykgLy8gbWF0Y2hcbiJ9) for example.
-
-```javascript [1,7]
-console.log('hello')  // match
-// ast-grep-ignore
-console.log('suppressed') // suppressed
-// ast-grep-ignore: no-console
-console.log('suppressed') // suppressed
-// ast-grep-ignore: other-rule
-console.log('world') // match
-```
-
+The first comment will suppress the following line's diagnostic. The second comment will suppress one or more specific rules.
+There are more options to configure ast-grep's linting behavior, please see [severity](/guide/project/severity.html) for more deep dive.
 
 ## Test and Debug Rules
 

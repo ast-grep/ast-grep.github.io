@@ -90,6 +90,7 @@ export default defineConfig({
                 { text: 'Project Configuration', link: '/guide/project/project-config.html' },
                 { text: 'Lint Rule', link: '/guide/project/lint-rule.html' },
                 { text: 'Test Your Rule', link: '/guide/test-rule.html' },
+                { text: 'Error Report', link: '/guide/project/severity.html' },
               ],
             },
             { text: 'Rewrite Code', link: '/guide/rewrite-code.html', collapsed: true,
