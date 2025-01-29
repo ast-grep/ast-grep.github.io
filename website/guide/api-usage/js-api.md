@@ -306,14 +306,7 @@ See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)
 
 ## Use Other Language
 
-To access other languages, you can use the `parse`/`parseAsync` function and the `Lang` enum.
+To access other languages, you will need to use `registerDynamicLanguage` function and probably `@ast-grep/lang-*` package.
+This is an experimental feature and the doc is not ready yet. Please refer to the [repo](https://github.com/ast-grep/langs) for more information.
 
-**Example**
-
-```js
-import { parse, Lang } from '@ast-grep/napi'
-
-const sg = parse(Lang.Python, 'def test(): pass')
-
-console.log(sg.root().has('function_definition'))
-```
+If you are interested in using other languages, please let us know by creating an issue.
