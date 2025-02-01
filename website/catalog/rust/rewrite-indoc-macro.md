@@ -12,25 +12,26 @@ Previously, the same refactor is implemented by a _unreadable monster regex_ in 
 :::details Click to see the original regex (neovim, btw)
 
 ```vimscript
-:%s/\v(indoc!|)(| )([|\{)r#"(([^#]+|\n+)+)"#/\4
+:%s/\v(indoc!|)(| )([|\{)r#"(([^#]+|\n+)+)"#/`\4`
 ```
 I have to confess that I don't understand this regex even if I use neovim, btw.
 
 Let Claude break it down piece by piece:
 
-- `:%s/` - This is a vim/sed substitution command
-- `\v` - Very magic mode in vim, making special characters active by default
-- `(indoc!|)` - Matches either "indoc!" or nothing (optional indoc!)
-- `(| )([\{)` - Matches any spaces, parentheses, or curly braces
-- `r#"` - Matches the literal raw string prefix in Rust
-- `(([^#]+|\n+)+)` - This is the capture group that matches:
-  - `[^#]+` - Any characters that aren't '#'
-  - `|\n+` - Or one or more newlines
-  - The outer `()+` makes it match one or more of these sequences
-- `"#` - Matches the raw string suffix
-- `/\4` - Replaces the entire match with the contents of the 4th capture group
+- `:%s/` - Vim substitution command for all lines
+- `\v` - Very magic mode in vim for simpler regex syntax
+- `(indoc!|)` - First capture group: matches either "indoc!" or nothing
+- `(| )` - Second capture group: matches either empty string or a space
+- `([|\{)` - Third capture group: matches either `[` or `{`
+- `r#"` - Matches literal `r#"` (Rust raw string delimiter)
+- `(([^#]+|\n+)+)` - Fourth capture group (nested):
+  - `[^#]+` - One or more non-# characters
+  - `|\n+` - OR one or more newlines
+  - Outer `()+` makes this repeat one or more times
+- `"#` - Matches the closing raw string delimiter
+- \`\4\` - Replaces with the fourth capture group wrapped in backticks
 
-This regex appears to be designed to extract the content from within Rust raw string literals that may or may not be wrapped in the `indoc!` macro.
+This regex is designed to find Rust raw string literals (possibly wrapped in `indoc!` macro), capture their content, and replace the entire match with just the content wrapped in backticks. It's more precise than my previous explanation and matches the pattern you're showing.
 
 :::
 
@@ -38,7 +39,7 @@ This regex appears to be designed to extract the content from within Rust raw st
 ### Pattern
 
 ```shell
-ast-grep --pattern 'indoc! { r#"$$$A"# }' --rewrite '$$$A' sgtest.rs
+ast-grep --pattern 'indoc! { r#"$$$A"# }' --rewrite '`$$$A`' sgtest.rs
 ```
 
 ### Example
