@@ -42,6 +42,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Find Import File without Extension](/catalog/typescript/#find-import-file-without-extension)
   * [Migrate XState to V5 from V4](/catalog/typescript/#migrate-xstate-to-v5-from-v4)
   * [Find Import Usage](/catalog/typescript/#find-import-usage)
+  * [Switch Chai from `should` style to `expect`](/catalog/typescript/#switch-chai-from-should-style-to-expect)
 * [TSX](/catalog/tsx/)
   * [Avoid `&&` short circuit in JSX](/catalog/tsx/#avoid-short-circuit-in-jsx)
   * [Rewrite MobX Component Style](/catalog/tsx/#rewrite-mobx-component-style)

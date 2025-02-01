@@ -15,3 +15,4 @@ However, you can use the [`languageGlobs`](/reference/sgconfig.html#languageglob
 <!--@include: ./no-await-in-promise-all.md-->
 <!--@include: ./no-console-except-catch.md-->
 <!--@include: ./find-import-usage.md-->
+<!--@include: ./switch-from-should-to-expect.md-->
