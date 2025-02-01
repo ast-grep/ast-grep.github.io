@@ -34,6 +34,7 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Avoid Duplicated Exports](/catalog/rust/#avoid-duplicated-exports)
   * [Get number of digits in a `usize`](/catalog/rust/#get-number-of-digits-in-a-usize)
   * [Beware of char offset when iterate over a string](/catalog/rust/#beware-of-char-offset-when-iterate-over-a-string)
+  * [Rewrite `indoc!` macro](/catalog/rust/#rewrite-indoc-macro)
 * [TypeScript](/catalog/typescript/)
   * [Repository of ESLint rules 🔗](https://github.com/ast-grep/eslint/)
   * [No `await` in `Promise.all`](/catalog/typescript/#no-await-in-promise-all-array)

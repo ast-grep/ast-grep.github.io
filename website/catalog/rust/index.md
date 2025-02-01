@@ -5,3 +5,4 @@ This page curates a list of example ast-grep rules to check and to rewrite Rust 
 <!--@include: ./avoid-duplicated-exports.md-->
 <!--@include: ./boshen-footgun.md-->
 <!--@include: ./get-digit-count-in-usize.md-->
+<!--@include: ./rewrite-indoc-macro.md-->
