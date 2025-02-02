@@ -124,6 +124,7 @@ export default defineConfig({
             { text: 'Go', link: '/catalog/go/'},
             { text: 'HTML', link: '/catalog/html/'},
             { text: 'Java', link: '/catalog/java/'},
+            { text: 'Kotlin', link: '/catalog/kotlin/'},
             { text: 'Python', link: '/catalog/python/'},
             { text: 'Ruby', link: '/catalog/ruby/'},
             { text: 'Rust', link: '/catalog/rust/'},

@@ -14,8 +14,12 @@
       <a href="/catalog/java/">
         <img src='/icons/Java.svg'/>
       </a>
-      <img src='/icons/JS.svg'/>
-      <img src='/icons/Kotlin.svg'/>
+      <a href="/catalog/tsx/">
+        <img src='/icons/JS.svg'/>
+      </a>
+      <a href="/catalog/kotlin/">
+        <img src='/icons/Kotlin.svg'/>
+      </a>
       <a href="/catalog/python/">
         <img src='/icons/Python.svg'/>
       </a>
