@@ -4,14 +4,28 @@ import Toast from './components/utils/Toast.vue'
 import { shallowRef, onMounted, onUnmounted } from 'vue'
 // vitepress SSR does not support Monaco, lazy load on client side
 let playground = shallowRef<unknown>(null)
+
+// setup global style
+import styles from './style.css?inline'
+const styleId = 'playground-style'
+function insertStyle() {
+  const style = document.createElement('style')
+  style.id = styleId
+  style.textContent = styles
+  document.head.appendChild(style)
+}
+
 onMounted(async () => {
   // apply playground style override, see style.css
+  insertStyle()
   document.body.classList.add('playground')
   playground.value = (await import('./components/Playground.vue')).default
 })
 onUnmounted(() => {
-  // apply playground style override, see style.css
+  // remove playground style override
   document.body.classList.remove('playground')
+  const style = document.getElementById(styleId)
+  style?.remove()
 })
 </script>
 
@@ -34,8 +48,6 @@ onUnmounted(() => {
     <Toast/>
   </div>
 </template>
-
-<style src="./style.css"/>
 
 <style scoped>
 .logo {

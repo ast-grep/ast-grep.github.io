@@ -9,9 +9,6 @@ import Toolbars from './Toolbars.vue'
 import EnvDisplay from './EnvDisplay.vue'
 import { initializeParser, useAstGrep, Mode as ModeImport } from './astGrep'
 
-// setup global style
-import '../style.css'
-
 // important initialization
 await initializeParser()
 
