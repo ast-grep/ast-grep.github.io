@@ -20,6 +20,8 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Extract i18n Keys](/catalog/html/#extract-i18n-keys)
 * [Java](/catalog/java/)
   * [No Unused Vars](/catalog/java/#no-unused-vars)
+* [Kotlin](/catalog/kotlin/)
+  * [Ensure Clean Architecture](/catalog/kotlin/#ensure-clean-architecture)
 * [Python](/catalog/python/)
   * [Migrate OpenAi SDK](/catalog/python/#migrate-openai-sdk)
   * [Use Walrus Operator in `if` statement](/catalog/python/#use-walrus-operator-in-if-statement)
