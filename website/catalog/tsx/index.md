@@ -15,3 +15,4 @@ In order to reduce rule duplication, you can use the [`languageGlobs`](/referenc
 <!--@include: ./unnecessary-react-hook.md-->
 <!--@include: ./reverse-react-compiler.md-->
 <!--@include: ./avoid-nested-links.md-->
+<!--@include: ./rename-svg-attribute.md-->

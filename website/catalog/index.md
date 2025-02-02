@@ -50,5 +50,6 @@ Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @
   * [Unnecessary `useState` Type](/catalog/tsx/#unnecessary-usestate-type)
   * [Reverse React Compiler™](/catalog/tsx/#reverse-react-compilertm)
   * [Avoid nested links](/catalog/tsx/#avoid-nested-links)
+  * [Rename SVG Attribute](/catalog/tsx/#rename-svg-attribute)
 * [YAML](/catalog/yaml/)
   * [Find key/value and show message](/catalog/yaml/#find-key-value-and-show-message-using-those-key-vals)
