@@ -1,3 +1,7 @@
+---
+aside: false
+---
+
 # Rule Catalog
 
 Get confused what ast-grep is? This is a list of rewriting rule to inspire you!
@@ -5,52 +9,9 @@ Explore the power of ast-grep with these rewriting rules that can transform your
 
 Feel free to join our [Discord](https://discord.gg/4YZjf6htSQ) channel and ask @ast-grep-bot to explain the rules for you line by line!
 
-* [C](/catalog/c/)
-  * [Match Function Call](/catalog/c/#match-function-call)
-  * [Rewrite Method to Function Call](/catalog/c/#rewrite-method-to-function-call)
-  * [Rewrite Check to Yoda Condition](/catalog/c/#rewrite-check-to-yoda-condition)
-* [C++](/catalog/cpp/)
-  * [Fix Format String Vulnerability](/catalog/cpp/#fix-format-string-vulnerability)
-* [Go](/catalog/go/)
-  * [Match Function Call](/catalog/go/#match-function-call)
-  * [Find function declarations with names of certain pattern](/catalog/go/#find-function-declarations-with-names-of-certain-pattern)
-* [HTML](/catalog/go/)
-  * [Upgrade Ant Design Vue](/catalog/html/#upgrade-ant-design-vue)
-  * [Extract i18n Keys](/catalog/html/#extract-i18n-keys)
-* [Java](/catalog/java/)
-  * [No Unused Vars](/catalog/java/#no-unused-vars)
-* [Kotlin](/catalog/kotlin/)
-  * [Ensure Clean Architecture](/catalog/kotlin/#ensure-clean-architecture)
-* [Python](/catalog/python/)
-  * [Migrate OpenAi SDK](/catalog/python/#migrate-openai-sdk)
-  * [Use Walrus Operator in `if` statement](/catalog/python/#use-walrus-operator-in-if-statement)
-  * [Prefer Generator Expressions](/catalog/python/#prefer-generator-expressions)
-  * [Remove `async` function](/catalog/python/#remove-async-function)
-  * [Rewrite `Optional[Type]` to `Type | None`](/catalog/python/#rewrite-optional-type-to-type-none)
-  * [Refactor pytest fixtures](/catalog/python/#refactor-pytest-fixtures)
-* [Ruby](/catalog/ruby/)
-  * [Prefer Symbol over Proc](/catalog/ruby/#prefer-symbol-over-proc)
-  * [Migrate action_filter in Ruby on Rails](/catalog/ruby/#migrate-action-filter-in-ruby-on-rails)
-* [Rust](/catalog/rust/)
-  * [Avoid Duplicated Exports](/catalog/rust/#avoid-duplicated-exports)
-  * [Get number of digits in a `usize`](/catalog/rust/#get-number-of-digits-in-a-usize)
-  * [Beware of char offset when iterate over a string](/catalog/rust/#beware-of-char-offset-when-iterate-over-a-string)
-  * [Rewrite `indoc!` macro](/catalog/rust/#rewrite-indoc-macro)
-* [TypeScript](/catalog/typescript/)
-  * [Repository of ESLint rules 🔗](https://github.com/ast-grep/eslint/)
-  * [No `await` in `Promise.all`](/catalog/typescript/#no-await-in-promise-all-array)
-  * [No `console` except in `catch` block](/catalog/typescript/#no-console-except-in-catch-block)
-  * [Find Import File without Extension](/catalog/typescript/#find-import-file-without-extension)
-  * [Migrate XState to V5 from V4](/catalog/typescript/#migrate-xstate-to-v5-from-v4)
-  * [Find Import Usage](/catalog/typescript/#find-import-usage)
-  * [Switch Chai from `should` style to `expect`](/catalog/typescript/#switch-chai-from-should-style-to-expect)
-* [TSX](/catalog/tsx/)
-  * [Avoid `&&` short circuit in JSX](/catalog/tsx/#avoid-short-circuit-in-jsx)
-  * [Rewrite MobX Component Style](/catalog/tsx/#rewrite-mobx-component-style)
-  * [Unnecessary React Hook](/catalog/tsx/#avoid-unnecessary-react-hook)
-  * [Unnecessary `useState` Type](/catalog/tsx/#unnecessary-usestate-type)
-  * [Reverse React Compiler™](/catalog/tsx/#reverse-react-compilertm)
-  * [Avoid nested links](/catalog/tsx/#avoid-nested-links)
-  * [Rename SVG Attribute](/catalog/tsx/#rename-svg-attribute)
-* [YAML](/catalog/yaml/)
-  * [Find key/value and show message](/catalog/yaml/#find-key-value-and-show-message-using-those-key-vals)
+
+<script setup>
+import Catalog from '../src/catalog/index.vue'
+</script>
+
+<Catalog/>
