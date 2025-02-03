@@ -14,7 +14,9 @@ console.log(rules)
         <a :href="rule.link" class="rule-name">{{ rule.name }}</a>
         <div class="rule-badges">
           <span class="badge type">{{ rule.type }}</span>
-          <span class="badge language">{{ rule.language }}</span>
+          <a :href="`/catalog/${rule.language}/`" class="badge language">
+            {{ rule.language }}
+          </a>
         </div>
       </div>
       <div class="rule-details">
@@ -91,6 +93,7 @@ console.log(rules)
 .badge.language {
   background-color: #f3f4f6;
   color: #4b5563;
+  text-decoration: none;
 }
 
 .badge.type {
