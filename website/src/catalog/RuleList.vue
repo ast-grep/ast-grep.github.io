@@ -2,8 +2,6 @@
 
 import { data as rules } from '../../_data/catalog.data'
 
-console.log(rules)
-
 </script>
 
 <template>
