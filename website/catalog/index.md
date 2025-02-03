@@ -1,7 +1,3 @@
----
-aside: false
----
-
 # Rule Catalog
 
 Get confused what ast-grep is? This is a list of rewriting rule to inspire you!

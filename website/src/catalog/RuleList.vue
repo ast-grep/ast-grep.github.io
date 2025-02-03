@@ -1,58 +1,17 @@
 <script setup lang="ts">
 
-let rules = [
-  {
-    id: "no-console",
-    type: "pattern",
-    link: "https://ast-grep.github.io/guide/rules/no-console.html",
-    playgroundLink: "https://ast-grep.github.io/playground/?rule=no-console",
-    language: "JavaScript",
-    hasFix: true,
-    rules: ["pattern"],
-    features: ["rewrites", "constraints"],
-  },
-  {
-    id: "no-debugger",
-    type: "yaml",
-    link: "https://ast-grep.github.io/guide/rules/no-debugger.html",
-    playgroundLink: "https://ast-grep.github.io/playground/?rule=no-debugger",
-    language: "JavaScript",
-    hasFix: true,
-    rules: ["kind", "pattern"],
-    features: ["rewrites"],
-  },
-  {
-    id: "prefer-optional-chain",
-    type: "yaml",
-    link: "https://ast-grep.github.io/guide/rules/prefer-optional-chain.html",
-    playgroundLink: "https://ast-grep.github.io/playground/?rule=prefer-optional-chain",
-    language: "JavaScript",
-    hasFix: true,
-    rules: ["kind", "inside"],
-    features: ["rewrites", "transform", "constraints"],
-  },
-  {
-    id: "no-var",
-    type: "yaml",
-    link: "https://ast-grep.github.io/guide/rules/no-var.html",
-    playgroundLink: "https://ast-grep.github.io/playground/?rule=no-var",
-    language: "JavaScript",
-    hasFix: true,
-    rules: ["pattern"],
-    features: ["rewrites"],
-  },
-]
-// Duplicate the rules to make the list longer
-rules = rules.concat(rules)
-rules = rules.concat(rules)
+import { data as rules } from '../../_data/catalog.data'
+
+console.log(rules)
+
 </script>
 
 <template>
-  <h4> Rule List </h4>
+  <h2> Rule List </h2>
   <ul class="rule-list">
     <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
       <div class="rule-header">
-        <a :href="rule.link" class="rule-name">{{ rule.id }}</a>
+        <a :href="rule.link" class="rule-name">{{ rule.name }}</a>
         <div class="rule-badges">
           <span class="badge type">{{ rule.type }}</span>
           <span class="badge language">{{ rule.language }}</span>
