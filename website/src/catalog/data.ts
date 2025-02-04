@@ -1,10 +1,8 @@
 import { data as allRules } from '../../_data/catalog.data'
 
-export function getRules(filter: Filter): Rule[] {
+export function getRules(filter: Filter) {
   const {
     selectedLanguages,
-    selectedRuleFilters,
-    selectedFeatures,
   } = filter
   return allRules.filter(rule => {
     return !selectedLanguages.length || selectedLanguages.map(s => s.toLowerCase()).includes(rule.language)
