@@ -1,6 +1,26 @@
+import { data as allRules } from '../../_data/catalog.data'
+
+export function getRules(filter: Filter): Rule[] {
+  const {
+    selectedLanguages,
+    selectedRuleFilters,
+    selectedFeatures,
+  } = filter
+  return allRules.filter(rule => {
+    return !selectedLanguages.length || selectedLanguages.map(s => s.toLowerCase()).includes(rule.language)
+  })
+}
+
+export type Filter = {
+  selectedLanguages: string[],
+  selectedRuleFilters: string[],
+  selectedFeatures: string[],
+  selectedTypes: string[],
+}
+
 export const languages = [
   'C',
-  'C++',
+  'Cpp',
   'Go',
   'HTML',
   'Java',

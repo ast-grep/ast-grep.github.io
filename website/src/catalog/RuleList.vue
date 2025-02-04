@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import { type Filter, getRules } from './data'
+import { computed, type PropType } from 'vue'
 
-import { data as rules } from '../../_data/catalog.data'
+const props = defineProps({
+  filter: {
+    type: Object as PropType<Filter>,
+    required: true,
+  }
+})
 
+const rules = computed(() => getRules(props.filter))
 </script>
 
 <template>
-  <h2> Rule List </h2>
+  <h2>
+    Rule List
+  </h2>
   <ul class="rule-list">
     <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
       <div class="rule-header">

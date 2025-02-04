@@ -1,12 +1,19 @@
 <script setup lang="ts">
-// TODO: add rule filter
-// import RuleFilter from './RuleFilter.vue'
+import { ref } from 'vue'
+const filter = ref({
+  selectedLanguages: [] as string[],
+  selectedRuleFilters: [] as string[],
+  selectedFeatures: [] as string[],
+  selectedTypes: [] as string[],
+})
+import RuleFilter from './RuleFilter.vue'
 import RuleList from './RuleList.vue'
 </script>
 
 <template>
   <div class="catalog-filter">
-    <RuleList/>
+    <RuleFilter v-model="filter" />
+    <RuleList :filter="filter"/>
   </div>
 </template>
 

@@ -1,24 +1,30 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { watchEffect, ref } from 'vue'
 import {
   languages,
   ruleFilters,
   features,
   ruleTypes,
+  type Filter,
 } from './data'
 
-const filter = reactive({
+const model = defineModel<Filter>()
+
+const filter = ref({
   selectedLanguages: [] as string[],
   selectedRuleFilters: [] as string[],
   selectedFeatures: [] as string[],
   selectedTypes: [] as string[],
-  sortBy: 'name',
+})
+
+watchEffect(() => {
+  model.value = filter.value
 })
 
 </script>
 <template>
   <form class="filters">
-    <details>
+    <details open>
       <summary>Language Filters</summary>
       <div class="checkbox-group">
         <label v-for="lang in languages" :key="lang">
@@ -28,7 +34,7 @@ const filter = reactive({
       </div>
     </details>
 
-    <details class="filter-group">
+    <details class="filter-group" style="display: none;">
       <summary>Rule Filters</summary>
       <div class="rule-group">
         <div v-for="rules, type in ruleFilters">
@@ -43,7 +49,7 @@ const filter = reactive({
       </div>
     </details>
 
-    <details class="filter-group">
+    <details class="filter-group" style="display: none;">
       <summary>More Filters</summary>
       <div class="rule-group">
         <div>
@@ -61,19 +67,6 @@ const filter = reactive({
             <label v-for="feature in features" :key="feature">
               <input type="checkbox" v-model="filter.selectedFeatures" :value="feature">
               <code class="option">{{ feature }}</code>
-            </label>
-          </div>
-        </div>
-        <div>
-          <em>Sort By</em>
-          <div>
-            <label>
-              <input value="name" type="radio" v-model="filter.sortBy"/>
-              Name
-            </label>
-            <label>
-              <input value="complexity" type="radio" v-model="filter.sortBy"/>
-              Complexity
             </label>
           </div>
         </div>
