@@ -16,7 +16,7 @@ const rules = computed(() => getRules(props.filter))
   <h2>
     Rule List
   </h2>
-  <ul class="rule-list">
+  <TransitionGroup class="rule-list" tag="ul">
     <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
       <div class="rule-header">
         <a :href="rule.link" class="rule-name">{{ rule.name }}</a>
@@ -44,7 +44,7 @@ const rules = computed(() => getRules(props.filter))
         </a>
       </div>
     </li>
-  </ul>
+  </TransitionGroup>
 </template>
 
 <style scoped>
@@ -60,7 +60,6 @@ const rules = computed(() => getRules(props.filter))
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 1rem;
-  background: white;
   transition: all 0.2s ease;
 }
 
@@ -79,7 +78,6 @@ const rules = computed(() => getRules(props.filter))
 .rule-name {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2563eb;
   text-decoration: none;
 }
 
@@ -143,7 +141,6 @@ const rules = computed(() => getRules(props.filter))
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  color: #2563eb;
   text-decoration: none;
   font-size: 0.875rem;
 }
@@ -159,5 +156,19 @@ const rules = computed(() => getRules(props.filter))
 
 .playground-link:hover .arrow {
   transform: translateX(2px);
+}
+.v-move,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.4s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.v-leave-active {
+  position: absolute;
+  width: 100%;
 }
 </style>
