@@ -23,7 +23,7 @@ You can also use the `--update-all` or `-U` flag to automatically accept the cha
 
 Another way to rewrite code is to use the `fix` option in a YAML rule file. This option allows you to specify more complex and flexible rewrite rules, such as using transformations and regular expressions.
 
-Let's look at a simple example of using `fix` in a YAML rule ([playground Link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBjaGFuZ2VfbmFtZVxubGFuZ3VhZ2U6IFB5dGhvblxucnVsZTpcbiAgcGF0dGVybjogfFxuICAgIGRlZiBmb28oJFgpOlxuICAgICAgJCQkU1xuZml4OiB8LVxuICBkZWYgYmF6KCRYKTpcbiAgICAkJCRTXG4tLS1cbmlkOiBjaGFuZ2VfcGFyYW1cbnJ1bGU6XG4gIHBhdHRlcm46IGZvbygkWClcbmZpeDogYmF6KG4pIiwic291cmNlIjoiZGVmIGZvbyh4KTpcbiAgICByZXR1cm4geCArIDFcblxueSA9IGZvbygyKVxucHJpbnQoeSkifQ==)).
+Let's look at a simple example of using `fix` in a YAML rule ([playground Link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IGNoYW5nZV9uYW1lXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiB8XG4gICAgZGVmIGZvbygkWCk6XG4gICAgICAkJCRTXG5maXg6IHwtXG4gIGRlZiBiYXooJFgpOlxuICAgICQkJFNcbi0tLVxuaWQ6IGNoYW5nZV9wYXJhbVxucnVsZTpcbiAgcGF0dGVybjogZm9vKCRYKVxuZml4OiBiYXooJFgpIiwic291cmNlIjoiZGVmIGZvbyh4KTpcbiAgICByZXR1cm4geCArIDFcblxueSA9IGZvbygyKVxucHJpbnQoeSkifQ==)).
 Suppose we have a Python file named `test.py` with the following content:
 
 ```python
@@ -65,8 +65,8 @@ This will show us the following diff:
 
 ```python
 def foo(x): # [!code --]
-def baz(n): # [!code ++]
-    return n + 1
+def baz(x): # [!code ++]
+    return x + 1
 
 y = foo(2) # [!code --]
 y = baz(2) # [!code ++]
