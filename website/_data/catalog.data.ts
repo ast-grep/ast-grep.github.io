@@ -1,5 +1,6 @@
 import { createContentLoader, type ContentData } from 'vitepress'
 import { ExampleLangs } from '../src/catalog/data'
+import { loadAll, JSON_SCHEMA } from 'js-yaml'
 
 interface Rule {
   id: string
@@ -38,6 +39,8 @@ function extractRuleInfo({ url, src }: ContentData): Rule {
   const language = url.split('/')[2] as ExampleLangs
   const name = source.match(/##\s*([^<\n]+)/)?.[1] || ''
 
+  const yamls = extractYAMLRule(source)
+
   return {
     id,
     name,
@@ -46,7 +49,23 @@ function extractRuleInfo({ url, src }: ContentData): Rule {
     playgroundLink,
     language,
     hasFix,
-    rules: [],
-    features: [],
+    rules: extractUsedRules(yamls),
+    features: extractUsedFeatures(yamls),
   }
+}
+
+function extractYAMLRule(source: string): Record<string, unknown>[] {
+  const yaml = source.match(/```ya?ml\n([\s\S]+?)\n```/)?.[1] || ''
+  if (!yaml) {
+    return []
+  }
+  return loadAll(yaml, null, { schema: JSON_SCHEMA }) as Record<string, unknown>[]
+}
+
+function extractUsedRules(yamls: Record<string, unknown>[]): string[] {
+  return []
+}
+
+function extractUsedFeatures(yamls: Record<string, unknown>[]): string[] {
+  return []
 }

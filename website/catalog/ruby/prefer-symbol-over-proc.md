@@ -16,7 +16,6 @@ id: prefer-symbol-over-proc
 language: ruby
 rule:
   pattern: $LIST.$ITER { |$V| $V.$METHOD }
-language: Ruby
 constraints:
   ITER:
     regex: 'map|select|each'
