@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-const filter = ref({
-  selectedLanguages: [] as string[],
-  selectedRuleFilters: [] as string[],
-  selectedFeatures: [] as string[],
-  selectedTypes: [] as string[],
-})
 import RuleFilter from './RuleFilter.vue'
 import RuleList from './RuleList.vue'
+import type { Filter } from './data';
+
+const filter = ref<Filter>({
+  selectedLanguages: [],
+  selectedRuleFilters: [],
+  selectedFeatures: [],
+  selectedTypes: [],
+})
 </script>
 
 <template>

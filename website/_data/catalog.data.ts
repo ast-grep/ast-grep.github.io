@@ -1,4 +1,5 @@
 import { createContentLoader } from 'vitepress'
+import { ExampleLangs } from '../src/catalog/data'
 
 interface Rule {
   id: string
@@ -6,7 +7,7 @@ interface Rule {
   type: string
   link: string
   playgroundLink: string
-  language: string
+  language: ExampleLangs
   hasFix: boolean
   rules: string[]
   features: string[]
@@ -29,7 +30,7 @@ export default createContentLoader('catalog/**/*.md', {
          ? 'YAML' : 'Pattern'
         const playgroundLink = /\[Playground Link\]\((.+)\)/.exec(source)?.[1] || ''
         const hasFix = source.includes('<Badge') && source.includes('Has Fix')
-        const language = url.split('/')[2]
+        const language = url.split('/')[2] as ExampleLangs
         const name = source.match(/##\s*([^<\n]+)/)?.[1] || ''
 
         return {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Filter, getRules } from './data'
+import { type Filter, getRules, languages } from './data'
 import { computed, type PropType } from 'vue'
 
 const props = defineProps({
@@ -23,7 +23,7 @@ const rules = computed(() => getRules(props.filter))
         <div class="rule-badges">
           <span class="badge type">{{ rule.type }}</span>
           <a :href="`/catalog/${rule.language}/`" class="badge language">
-            {{ rule.language }}
+            {{ languages[rule.language] }}
           </a>
         </div>
       </div>

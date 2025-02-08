@@ -5,31 +5,32 @@ export function getRules(filter: Filter) {
     selectedLanguages,
   } = filter
   return allRules.filter(rule => {
-    return !selectedLanguages.length || selectedLanguages.map(s => s.toLowerCase()).includes(rule.language)
+    return !selectedLanguages.length || selectedLanguages.includes(rule.language)
   })
 }
 
 export type Filter = {
-  selectedLanguages: string[],
+  selectedLanguages: ExampleLangs[],
   selectedRuleFilters: string[],
   selectedFeatures: string[],
   selectedTypes: string[],
 }
 
-export const languages = [
-  'C',
-  'Cpp',
-  'Go',
-  'HTML',
-  'Java',
-  'Kotlin',
-  'Python',
-  'Ruby',
-  'Rust',
-  'TSX',
-  'TypeScript',
-  'YAML',
-]
+export type ExampleLangs = keyof typeof languages
+export const languages = {
+  c: 'C',
+  cpp: 'C++',
+  go: 'Go',
+  html: 'HTML',
+  java: 'Java',
+  kotlin: 'Kotlin',
+  python: 'Python',
+  ruby: 'Ruby',
+  rust: 'Rust',
+  tsx: 'TSX',
+  typescript: 'TypeScript',
+  yaml: 'YAML',
+}
 
 export const ruleTypes = [
   'Pattern',

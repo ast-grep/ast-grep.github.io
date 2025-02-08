@@ -10,11 +10,11 @@ import {
 
 const model = defineModel<Filter>()
 
-const filter = ref({
-  selectedLanguages: [] as string[],
-  selectedRuleFilters: [] as string[],
-  selectedFeatures: [] as string[],
-  selectedTypes: [] as string[],
+const filter = ref<Filter>({
+  selectedLanguages: [],
+  selectedRuleFilters: [],
+  selectedFeatures: [],
+  selectedTypes: [],
 })
 
 watchEffect(() => {
@@ -27,9 +27,9 @@ watchEffect(() => {
     <details open>
       <summary>Language Filters</summary>
       <div class="checkbox-group">
-        <label v-for="lang in languages" :key="lang">
+        <label v-for="displayName, lang in languages" :key="lang">
           <input type="checkbox" v-model="filter.selectedLanguages" :value="lang">
-          <code class="option">{{ lang }}</code>
+          <code class="option">{{ displayName }}</code>
         </label>
       </div>
     </details>
