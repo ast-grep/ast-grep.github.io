@@ -1,4 +1,4 @@
-import { createContentLoader } from 'vitepress'
+import { createContentLoader, type ContentData } from 'vitepress'
 import { ExampleLangs } from '../src/catalog/data'
 
 interface Rule {
@@ -23,28 +23,30 @@ export default createContentLoader('catalog/**/*.md', {
       .filter(({ url }) => {
         return url.endsWith('.html') && !url.includes('rule-template')
       })
-      .map(({ url, src }) => {
-        const source = src!
-        const id = url.split('/').pop()?.replace(/\.md$/, '') || ''
-        const type = source.includes('```yml') || source.includes('```yaml')
-         ? 'YAML' : 'Pattern'
-        const playgroundLink = /\[Playground Link\]\((.+)\)/.exec(source)?.[1] || ''
-        const hasFix = source.includes('<Badge') && source.includes('Has Fix')
-        const language = url.split('/')[2] as ExampleLangs
-        const name = source.match(/##\s*([^<\n]+)/)?.[1] || ''
-
-        return {
-          id,
-          name,
-          type,
-          link: url,
-          playgroundLink,
-          language,
-          hasFix,
-          rules: [],
-          features: [],
-        }
-      })
+      .map(extractRuleInfo)
       .sort((a, b) => a.id.localeCompare(b.id))
   },
 })
+
+function extractRuleInfo({ url, src }: ContentData): Rule {
+  const source = src!
+  const id = url.split('/').pop()?.replace(/\.md$/, '') || ''
+  const type = source.includes('```yml') || source.includes('```yaml')
+   ? 'YAML' : 'Pattern'
+  const playgroundLink = /\[Playground Link\]\((.+)\)/.exec(source)?.[1] || ''
+  const hasFix = source.includes('<Badge') && source.includes('Has Fix')
+  const language = url.split('/')[2] as ExampleLangs
+  const name = source.match(/##\s*([^<\n]+)/)?.[1] || ''
+
+  return {
+    id,
+    name,
+    type,
+    link: url,
+    playgroundLink,
+    language,
+    hasFix,
+    rules: [],
+    features: [],
+  }
+}
