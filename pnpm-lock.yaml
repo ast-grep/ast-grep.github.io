@@ -18,15 +18,11 @@ importers:
         specifier: 0.52.2
         version: 0.52.2
       monaco-yaml:
-        specifier: 5.2.3
-        version: 5.2.3(monaco-editor@0.52.2)
+        specifier: 5.3.1
+        version: 5.3.1(monaco-editor@0.52.2)
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.7.3)
-    optionalDependencies:
-      ast-grep-wasm:
-        specifier: file:./pkg/
-        version: file:pkg
     devDependencies:
       '@algolia/client-search':
         specifier: 5.19.0
@@ -49,6 +45,10 @@ importers:
       vue-tsc:
         specifier: 2.2.0
         version: 2.2.0(typescript@5.7.3)
+    optionalDependencies:
+      ast-grep-wasm:
+        specifier: file:./pkg/
+        version: file:pkg
 
 packages:
 
@@ -909,8 +909,8 @@ packages:
     peerDependencies:
       monaco-editor: '>=0.30.0'
 
-  monaco-yaml@5.2.3:
-    resolution: {integrity: sha512-GEplKC+YYmS0TOlJdv0FzbqkDN/IG2FSwEw+95myECVxTlhty2amwERYjzvorvJXmIagP1grd3Lleq7aQEJpPg==}
+  monaco-yaml@5.3.1:
+    resolution: {integrity: sha512-1MN8i1Tnc8d8RugQGqv5jp+Ce2xtNhrnbm0ZZbe5ceExj9C2PkKZfHJhY9kbdUS4G7xSVwKlVdMTmLlStepOtw==}
     peerDependencies:
       monaco-editor: '>=0.36'
 
@@ -941,9 +941,9 @@ packages:
   preact@10.11.3:
     resolution: {integrity: sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==}
 
-  prettier@2.8.2:
-    resolution: {integrity: sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==}
-    engines: {node: '>=10.13.0'}
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+    engines: {node: '>=14'}
     hasBin: true
 
   property-information@6.5.0:
@@ -1962,7 +1962,7 @@ snapshots:
     dependencies:
       monaco-editor: 0.52.2
 
-  monaco-yaml@5.2.3(monaco-editor@0.52.2):
+  monaco-yaml@5.3.1(monaco-editor@0.52.2):
     dependencies:
       jsonc-parser: 3.2.0
       monaco-editor: 0.52.2
@@ -1971,7 +1971,7 @@ snapshots:
       monaco-types: 0.1.0
       monaco-worker-manager: 2.0.1(monaco-editor@0.52.2)
       path-browserify: 1.0.1
-      prettier: 2.8.2
+      prettier: 3.4.2
       vscode-languageserver-textdocument: 1.0.8
       vscode-languageserver-types: 3.17.3
       vscode-uri: 3.0.8
@@ -2001,7 +2001,7 @@ snapshots:
 
   preact@10.11.3: {}
 
-  prettier@2.8.2: {}
+  prettier@3.4.2: {}
 
   property-information@6.5.0: {}
 
