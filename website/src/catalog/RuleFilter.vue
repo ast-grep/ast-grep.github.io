@@ -127,6 +127,10 @@ code.option {
   text-align: center;
   padding-top: 0;
 }
+code.option:hover {
+  opacity: 1;
+  filter: saturate(1);
+}
 
 input[type="checkbox"]:checked + code.option {
   filter: saturate(1);
