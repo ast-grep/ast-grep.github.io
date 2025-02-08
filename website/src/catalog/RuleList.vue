@@ -52,8 +52,6 @@ const rules = computed(() => getRules(props.filter))
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  gap: 1rem;
 }
 
 .rule-item {
@@ -160,12 +158,13 @@ const rules = computed(() => getRules(props.filter))
 .v-move,
 .v-enter-active,
 .v-leave-active {
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.59, 0.12, 0.34, 0.95);
 }
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-  transform: scale(0.9);
+  transform: scaleY(0);
+  transform-origin: center top;
 }
 .v-leave-active {
   position: absolute;
