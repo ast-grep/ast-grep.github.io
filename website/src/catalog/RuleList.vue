@@ -20,23 +20,22 @@ const rules = computed(() => getRules(props.filter))
     <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
       <div class="rule-header">
         <a :href="rule.link" class="rule-name" target="_blank">{{ rule.name }}</a>
-        <Badge v-if="rule.hasFix" type="tip" text="🛠️ Has Fix" />
-        <div v-else/>
-      </div>
-      <div class="rule-details">
         <div class="rule-badges">
           <a :href="`/catalog/${rule.language}/`">
             <Badge type="info" :text="languages[rule.language]" />
           </a>
-          <Badge type="info" :text="rule.type" />
+          <Badge v-if="rule.hasFix" type="tip" text="🛠️ Fix" />
         </div>
-        <!--
-        <div class="features">
-          <span v-for="feature in rule.features" :key="feature" class="feature-tag">
-            {{ feature }}
-          </span>
+      </div>
+      <div class="rule-details">
+        <div class="rule-badges">
+          <Badge v-if="rule.type === 'Pattern'" type="info" text="Simple Pattern" />
+          <template v-else>
+            <code class="used" v-for="usedRule in rule.rules">
+              {{ usedRule }}
+            </code>
+          </template>
         </div>
-        -->
         <a :href="rule.playgroundLink" class="playground-link" target="_blank">
           Try in Playground →
         </a>
@@ -84,6 +83,14 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.used {
+  filter: saturate(0);
+  user-select: none;
+  height: 24px;
+  line-height: 24px;
+  padding-top: 0;
 }
 
 .playground-link {
