@@ -63,7 +63,26 @@ function extractYAMLRule(source: string): Record<string, unknown>[] {
 }
 
 function extractUsedRules(yamls: Record<string, unknown>[]): string[] {
-  return []
+  const rules = new Set<string>()
+  for (const yaml of yamls) {
+    if (typeof yaml !== 'object' || yaml === null) {
+      continue
+    }
+    extractOneRuleObject(yaml.rule as object, rules)
+    for (const util of Object.values(yaml.utils as object || {})) {
+      extractOneRuleObject(util as object, rules)
+    }
+  }
+  return [...rules]
+}
+
+function extractOneRuleObject(rule: object, rules: Set<string>) {
+  if (!rule) {
+    return
+  }
+  for (const ruleName of Object.keys(rule)) {
+    rules.add(ruleName)
+  }
 }
 
 function extractUsedFeatures(yamls: Record<string, unknown>[]): string[] {

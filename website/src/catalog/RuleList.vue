@@ -19,7 +19,7 @@ const rules = computed(() => getRules(props.filter))
   <TransitionGroup class="rule-list" tag="ul">
     <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
       <div class="rule-header">
-        <a :href="rule.link" class="rule-name">{{ rule.name }}</a>
+        <a :href="rule.link" class="rule-name" target="_blank">{{ rule.name }}</a>
         <Badge v-if="rule.hasFix" type="tip" text="🛠️ Has Fix" />
         <div v-else/>
       </div>
