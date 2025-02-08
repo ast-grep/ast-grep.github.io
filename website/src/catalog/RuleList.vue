@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Filter, getRules, languages } from './data'
 import { computed, type PropType } from 'vue'
+import { } from 'vitepress'
 
 const props = defineProps({
   filter: {
@@ -21,16 +22,15 @@ const rules = computed(() => getRules(props.filter))
       <div class="rule-header">
         <a :href="rule.link" class="rule-name">{{ rule.name }}</a>
         <div class="rule-badges">
-          <span class="badge type">{{ rule.type }}</span>
-          <a :href="`/catalog/${rule.language}/`" class="badge language">
-            {{ languages[rule.language] }}
+          <Badge type="info" :text="rule.type" />
+          <a :href="`/catalog/${rule.language}/`">
+            <Badge type="info" :text="languages[rule.language]" />
           </a>
         </div>
       </div>
       <div class="rule-details">
-        <span class="badge fix" :class="{ 'has-fix': rule.hasFix }">
-          {{ rule.hasFix ? 'Has Fix' : 'No Fix' }}
-        </span>
+        <Badge v-if="rule.hasFix" type="tip" text="🛠️ Has Fix" />
+        <div v-else/>
         <!--
         <div class="features">
           <span v-for="feature in rule.features" :key="feature" class="feature-tag">
@@ -39,8 +39,7 @@ const rules = computed(() => getRules(props.filter))
         </div>
         -->
         <a :href="rule.playgroundLink" class="playground-link" target="_blank">
-          Try in Playground
-          <span class="arrow">→</span>
+          Try in Playground →
         </a>
       </div>
     </li>
@@ -48,6 +47,12 @@ const rules = computed(() => getRules(props.filter))
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 .rule-list {
   list-style: none;
   padding: 0;
@@ -55,64 +60,25 @@ const rules = computed(() => getRules(props.filter))
 }
 
 .rule-item {
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   padding: 1rem;
-  transition: all 0.2s ease;
-}
-
-.rule-item:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
 }
 
 .rule-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
 }
 
 .rule-name {
-  font-size: 1.1rem;
   font-weight: 600;
-  text-decoration: none;
-}
-
-.rule-name:hover {
-  text-decoration: underline;
 }
 
 .rule-badges {
   display: flex;
-  gap: 0.5rem;
-}
-
-.badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
-}
-
-.badge.language {
-  background-color: #f3f4f6;
-  color: #4b5563;
-  text-decoration: none;
-}
-
-.badge.type {
-  background-color: #e0f2fe;
-  color: #0369a1;
-}
-
-.badge.fix {
-  background-color: #fee2e2;
-  color: #991b1b;
-}
-
-.badge.fix.has-fix {
-  background-color: #dcfce7;
-  color: #166534;
+  align-items: center;
+  gap: 0.2em;
 }
 
 .rule-details {
@@ -121,40 +87,10 @@ const rules = computed(() => getRules(props.filter))
   align-items: center;
 }
 
-.features {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.feature-tag {
-  background-color: #f3f4f6;
-  color: #4b5563;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-}
-
 .playground-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.8em;
 }
 
-.playground-link:hover {
-  text-decoration: underline;
-}
-
-.arrow {
-  font-size: 1.1em;
-  transition: transform 0.2s ease;
-}
-
-.playground-link:hover .arrow {
-  transform: translateX(2px);
-}
 .v-move,
 .v-enter-active,
 .v-leave-active {
