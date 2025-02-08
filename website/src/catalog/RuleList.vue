@@ -14,23 +14,22 @@ const rules = computed(() => getRules(props.filter))
 </script>
 
 <template>
-  <h2>
-    Rule List
-  </h2>
+  <h3>Rule List</h3>
+  <br/>
   <TransitionGroup class="rule-list" tag="ul">
     <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
       <div class="rule-header">
         <a :href="rule.link" class="rule-name">{{ rule.name }}</a>
+        <Badge v-if="rule.hasFix" type="tip" text="🛠️ Has Fix" />
+        <div v-else/>
+      </div>
+      <div class="rule-details">
         <div class="rule-badges">
-          <Badge type="info" :text="rule.type" />
           <a :href="`/catalog/${rule.language}/`">
             <Badge type="info" :text="languages[rule.language]" />
           </a>
+          <Badge type="info" :text="rule.type" />
         </div>
-      </div>
-      <div class="rule-details">
-        <Badge v-if="rule.hasFix" type="tip" text="🛠️ Has Fix" />
-        <div v-else/>
         <!--
         <div class="features">
           <span v-for="feature in rule.features" :key="feature" class="feature-tag">
@@ -89,6 +88,12 @@ a:hover {
 
 .playground-link {
   font-size: 0.8em;
+  color: var(--vp-button-brand-bg);
+  filter: brightness(1.1);
+}
+.playground-link:hover {
+  color: var(--vp-button-brand-bg);
+  filter: brightness(1.35);
 }
 
 .v-move,
