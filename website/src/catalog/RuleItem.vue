@@ -4,7 +4,7 @@ import { type PropType, computed } from 'vue'
 import { type RuleMeta, type Filter, languages } from './data'
 import Option from './Option.vue'
 
-const { meta } = defineProps({
+const { meta, filter } = defineProps({
   meta: {
     type: Object as PropType<RuleMeta>,
     required: true,
@@ -18,7 +18,19 @@ const displayRuleCount = computed(() => {
   const maxRule = meta.features.length > 0 ? 2 : 5
   return Math.min(meta.rules.length, maxRule)
 })
-const displayedRules = computed(() => meta.rules.slice(0, displayRuleCount.value))
+const displayedRules = computed(() => {
+  // display selected rules first
+  const result = []
+  const notSelected = []
+  for (const rule of meta.rules) {
+    if (filter.selectedRuleFilters.includes(rule)) {
+      result.push(rule)
+    } else {
+      notSelected.push(rule)
+    }
+  }
+  return result.concat(notSelected).slice(0, displayRuleCount.value)
+})
 const moreRules = computed(() => meta.rules.length - displayRuleCount.value)
 const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
 </script>
