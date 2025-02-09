@@ -1,6 +1,6 @@
 import { data as allRules } from '../../_data/catalog.data'
 
-export function getRules(filter: Filter) {
+export function getRuleMetaData(filter: Filter) {
   const {
     selectedLanguages,
   } = filter

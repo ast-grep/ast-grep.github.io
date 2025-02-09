@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Filter, getRules, languages } from './data'
+import { type Filter, getRuleMetaData, languages } from './data'
 import { computed, type PropType } from 'vue'
 import { } from 'vitepress'
 
@@ -10,40 +10,40 @@ const props = defineProps({
   }
 })
 
-const rules = computed(() => getRules(props.filter))
+const ruleMetaData = computed(() => getRuleMetaData(props.filter))
 </script>
 
 <template>
   <h3>Rule List</h3>
   <br/>
   <TransitionGroup class="rule-list" tag="ul">
-    <li v-for="rule in rules" :key="rule.language + rule.id" class="rule-item">
+    <li v-for="meta in ruleMetaData" :key="meta.language + meta.id" class="rule-item">
       <div class="rule-header">
-        <a :href="rule.link" class="rule-name" target="_blank">{{ rule.name }}</a>
+        <a :href="meta.link" class="rule-name" target="_blank">{{ meta.name }}</a>
         <div class="rule-badges">
-          <a :href="`/catalog/${rule.language}/`">
-            <Badge type="info" :text="languages[rule.language]" />
+          <a :href="`/catalog/${meta.language}/`">
+            <Badge type="info" :text="languages[meta.language]" />
           </a>
-          <Badge v-if="rule.hasFix" type="tip" text="🛠️ Fix" />
+          <Badge v-if="meta.hasFix" type="tip" text="🛠️ Fix" />
         </div>
       </div>
       <div class="rule-details">
         <div class="rule-badges">
-          <Badge v-if="rule.type === 'Pattern'" type="info" text="Simple Pattern" />
+          <Badge v-if="meta.type === 'Pattern'" type="info" text="Simple Pattern Example" />
           <template v-else>
             📏
-            <code class="used" v-for="r in rule.rules.slice(0, 2)">
+            <code class="used" v-for="r in meta.rules.slice(0, 2)">
               {{ r }}
             </code>
           </template>
         </div>
-        <div class="rule-badges" v-if="rule.features.length > 0">
+        <div class="rule-badges" v-if="meta.features.length > 0">
             💡
-            <code class="used" v-for="feature in rule.features">
+            <code class="used" v-for="feature in meta.features">
               {{ feature }}
             </code>
         </div>
-        <a :href="rule.playgroundLink" class="playground-link" target="_blank">
+        <a :href="meta.playgroundLink" class="playground-link" target="_blank">
           Try in Playground →
         </a>
       </div>
