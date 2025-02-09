@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { type RuleMeta, languages } from './data'
+import { type RuleMeta, type Filter, languages } from './data'
 import { type PropType, computed } from 'vue'
 
 const { meta } = defineProps({
   meta: {
     type: Object as PropType<RuleMeta>,
+    required: true,
+  },
+  filter: {
+    type: Object as PropType<Filter>,
     required: true,
   }
 })
@@ -23,7 +27,12 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
       <a :href="meta.link" class="rule-name" target="_blank">{{ meta.name }}</a>
       <div class="rule-badges">
         <Badge type="info">
-          <a :href="`/catalog/${meta.language}/`" class="override-badge-text-color" target="_blank">
+          <a
+            :href="`/catalog/${meta.language}/`"
+            class="override-badge-text-color"
+            :class="filter.selectedLanguages.length && 'highlight-filter'"
+            target="_blank"
+          >
             {{ languages[meta.language] }}
           </a>
         </Badge>
@@ -69,10 +78,10 @@ a:hover {
   text-decoration: underline;
 }
 .override-badge-text-color {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-2);
 }
 .override-badge-text-color:hover {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-2);
 }
 
 .link {
@@ -117,7 +126,7 @@ a:hover {
 }
 
 .used {
-  filter: saturate(0);
+  color: var(--vp-c-text-2);
   user-select: none;
   height: 24px;
   line-height: 24px;
@@ -126,5 +135,11 @@ a:hover {
 .emoji-offset {
   /* Offset emoji visual spacing */
   margin-right: -2px;
+}
+.highlight-filter {
+  color: var(--vp-c-brand-1);
+}
+.highlight-filter:hover {
+  color: var(--vp-c-brand-1);
 }
 </style>
