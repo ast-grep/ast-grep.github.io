@@ -54,14 +54,14 @@ const moreFeatures = computed(() => meta.features.slice(2))
         <img class="logo" :src="'/langs/' + meta.language.toLowerCase() + '.svg'"/>
       </a>
       <div class="rule-badges">
+        <Badge v-if="meta.hasFix" type="tip">
+          <span class="override-badge-text-color">🛠️ Fix</span>
+        </Badge>
         <a :href="`/catalog/${meta.language}/`" target="_blank">
           <Badge type="info" :class="filter.selectedLanguages.length && 'highlight-filter'">
             📚 {{ languages[meta.language] }}
           </Badge>
         </a>
-        <Badge v-if="meta.hasFix" type="tip">
-          <span class="override-badge-text-color">🛠️ Fix</span>
-        </Badge>
       </div>
     </div>
     <div class="rule-details">
