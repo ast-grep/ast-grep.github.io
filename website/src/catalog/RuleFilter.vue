@@ -35,9 +35,9 @@ watchEffect(() => {
       </div>
     </details>
 
-    <details class="filter-group" open>
+    <details open>
       <summary>📏 Used Rule</summary>
-      <div class="rule-group">
+      <div class="filter-group">
         <div v-for="rules, type in ruleFilters">
           <em style="text-transform: capitalize;">{{ type }}</em>
           <div class="checkbox-group">
@@ -50,9 +50,9 @@ watchEffect(() => {
       </div>
     </details>
 
-    <details class="filter-group" open>
+    <details open>
       <summary>💡 More Features</summary>
-      <div class="rule-group">
+      <div class="filter-group">
         <div>
           <em>Type</em>
           <div class="checkbox-group">
@@ -77,7 +77,7 @@ watchEffect(() => {
 </template>
 
 <style scoped>
-.rule-group {
+.filter-group {
   display: flex;
   margin-top: -2px;
   gap: 8px;
