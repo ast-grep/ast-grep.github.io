@@ -145,7 +145,7 @@ a > .VPBadge:hover {
 }
 .highlight-filter {
   color: var(--vp-c-text-2);
-  border-color: currentColor;
+  border-color: var(--vp-c-text-3);
 }
 .highlight-filter:hover {
   color: var(--vp-c-text-2);

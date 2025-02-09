@@ -24,6 +24,6 @@ defineProps({
   transition: all 0.25s;
 }
 .highlight {
-  border-color: currentColor;
+  border-color: var(--vp-c-text-3);
 }
 </style>

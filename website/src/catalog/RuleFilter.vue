@@ -121,11 +121,15 @@ input[type="checkbox"] {
 }
 .filter-option:hover {
   color: var(--vp-c-brand-1);
+  border-color: currentColor;
   opacity: 1;
 }
 
 input[type="checkbox"]:checked + code.option {
   opacity: 1;
+  border-color: var(--vp-c-text-3);
+}
+input[type="checkbox"]:checked + code.option:hover {
   border-color: currentColor;
 }
 
