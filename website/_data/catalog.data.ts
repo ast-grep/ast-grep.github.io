@@ -82,6 +82,12 @@ function extractOneRuleObject(rule: object, rules: Set<string>) {
   }
   for (const ruleName of Object.keys(rule)) {
     rules.add(ruleName)
+    if (ruleName === 'any' || ruleName === 'all') {
+      // @ts-expect-error
+      for (const subRule of rule[ruleName] as object[]) {
+        extractOneRuleObject(subRule, rules)
+      }
+    }
   }
 }
 
