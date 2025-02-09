@@ -17,7 +17,12 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
   <h3>Rule List</h3>
   <br/>
   <TransitionGroup class="rule-list" tag="ul">
-    <RuleItem v-for="meta in ruleMetaData" :key="meta.language + meta.id" :meta="meta" :filter="filter"/>
+    <RuleItem
+      v-for="meta in ruleMetaData"
+      :key="meta.language + meta.id"
+      :meta="meta"
+      :filter="filter"
+    />
   </TransitionGroup>
 </template>
 

@@ -30,7 +30,7 @@ watchEffect(() => {
       <div class="checkbox-group">
         <label v-for="displayName, lang in languages" :key="lang">
           <input type="checkbox" v-model="filter.selectedLanguages" :value="lang">
-          <Option :text="displayName"/>
+          <Option :text="displayName" class="filter-option"/>
         </label>
       </div>
     </details>
@@ -43,7 +43,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="rule in rules" :key="rule">
               <input type="checkbox" v-model="filter.selectedRuleFilters" :value="rule">
-              <Option :text="rule"/>
+              <Option :text="rule" class="filter-option"/>
             </label>
           </div>
         </div>
@@ -58,7 +58,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="type in ruleTypes" :key="type">
               <input type="checkbox" v-model="filter.selectedTypes" :value="type">
-              <Option :text="type"/>
+              <Option :text="type" class="filter-option"/>
             </label>
           </div>
         </div>
@@ -67,7 +67,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="feature in features" :key="feature">
               <input type="checkbox" v-model="filter.selectedFeatures" :value="feature">
-              <Option :text="feature"/>
+              <Option :text="feature" class="filter-option"/>
             </label>
           </div>
         </div>
@@ -85,7 +85,7 @@ watchEffect(() => {
 .checkbox-group {
   margin-top: 0.2em;
   display: flex;
-  gap: 5px;
+  gap: 4px;
 }
 
 label {
@@ -114,9 +114,19 @@ input[type="checkbox"] {
   display: none;
 }
 
-input[type="checkbox"]:checked + code.option {
-  filter: saturate(1);
+.filter-option {
+  cursor: pointer;
+  opacity: 0.8;
+  min-width: 3em;
+}
+.filter-option:hover {
   opacity: 1;
+  color: var(--catalog-filter-color);
+}
+
+input[type="checkbox"]:checked + code.option {
+  opacity: 1;
+  color: var(--catalog-filter-color);
   border-color: currentColor;
 }
 

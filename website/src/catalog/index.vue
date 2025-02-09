@@ -20,4 +20,8 @@ const filter = ref<Filter>({
 </template>
 
 <style scoped>
+.catalog-filter {
+  min-height: 300px;
+  --catalog-filter-color: #407cb5;
+}
 </style>

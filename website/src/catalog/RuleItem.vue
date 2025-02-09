@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { type RuleMeta, type Filter, languages } from './data'
 import { type PropType, computed } from 'vue'
+
+import { type RuleMeta, type Filter, languages } from './data'
+import Option from './Option.vue'
 
 const { meta } = defineProps({
   meta: {
@@ -41,24 +43,26 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
         <Badge v-if="meta.type === 'Pattern'" type="info" text="Simple Pattern Example" />
         <template v-else>
           📏<span class="emoji-offset"/>
-          <code class="used" v-for="rule in displayedRules" :class="filter.selectedRuleFilters.includes(rule) && 'highlight-filter'">
-            {{ rule }}
-          </code>
-          <code class="used" v-if="moreRules">
-            +{{ moreRules }}
-          </code>
+          <Option
+            v-for="rule in displayedRules"
+            :key="rule"
+            :text="rule"
+            :highlight="filter.selectedRuleFilters.includes(rule)"
+          />
+          <Option v-if="moreRules" :text="`+${moreRules}`"/>
         </template>
       </div>
       <div class="rule-badges" v-if="meta.features.length > 0">
           💡
-          <code class="used" v-for="feature in meta.features">
-            {{ feature }}
-          </code>
-          <code class="used" v-if="moreFeatures">
-            +{{ moreFeatures }}
-          </code>
+          <Option
+            v-for="feature in meta.features"
+            :key="feature"
+            :text="feature"
+            :highlight="filter.selectedFeatures.includes(feature)"
+          />
+          <Option v-if="moreFeatures" :text="`+${moreFeatures}`"/>
       </div>
-      <a :href="meta.playgroundLink" class="link playground" target="_blank">
+      <a :href="meta.playgroundLink" class="playground" target="_blank">
         Try in Playground →
       </a>
     </div>
@@ -137,10 +141,10 @@ a:hover {
   transition-duration: 0.25s;
 }
 .highlight-filter {
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
+  color: var(--catalog-filter-color);
+  border-color: var(--catalog-filter-color);
 }
 .highlight-filter:hover {
-  color: var(--vp-c-brand-1);
+  color: var(--catalog-filter-color);
 }
 </style>

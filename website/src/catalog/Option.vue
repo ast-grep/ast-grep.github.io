@@ -12,27 +12,22 @@ defineProps({
 </template>
 
 <style scoped>
-code.option {
-  cursor: pointer;
-  filter: saturate(0);
-  opacity: 0.8;
+.option {
+  color: var(--vp-c-text-2);
   user-select: none;
   border: 1px solid transparent;
-  min-width: 3em;
   display: inline-block;
   height: 24px;
   line-height: 24px;
   text-align: center;
   padding-top: 0;
-}
-code.option:hover {
-  opacity: 1;
-  filter: saturate(1);
+  transition: all 0.25s;
 }
 .highlight {
-  color: var(--vp-c-brand-1);
+  color: var(--catalog-filter-color);
+  border-color: var(--catalog-filter-color);
 }
 .highlight-filter:hover {
-  color: var(--vp-c-brand-1);
+  color: var(--catalog-filter-color);
 }
 </style>
