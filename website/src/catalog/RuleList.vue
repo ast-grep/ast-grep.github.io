@@ -31,10 +31,17 @@ const rules = computed(() => getRules(props.filter))
         <div class="rule-badges">
           <Badge v-if="rule.type === 'Pattern'" type="info" text="Simple Pattern" />
           <template v-else>
-            <code class="used" v-for="usedRule in rule.rules">
-              {{ usedRule }}
+            📏
+            <code class="used" v-for="r in rule.rules.slice(0, 2)">
+              {{ r }}
             </code>
           </template>
+        </div>
+        <div class="rule-badges" v-if="rule.features.length > 0">
+            💡
+            <code class="used" v-for="feature in rule.features">
+              {{ feature }}
+            </code>
         </div>
         <a :href="rule.playgroundLink" class="playground-link" target="_blank">
           Try in Playground →
@@ -75,7 +82,6 @@ a:hover {
 
 .rule-badges {
   display: flex;
-  align-items: center;
   gap: 0.2em;
 }
 
@@ -83,6 +89,10 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.rule-details > div {
+  flex: 1;
 }
 
 .used {

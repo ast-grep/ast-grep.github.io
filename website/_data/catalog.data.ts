@@ -86,5 +86,22 @@ function extractOneRuleObject(rule: object, rules: Set<string>) {
 }
 
 function extractUsedFeatures(yamls: Record<string, unknown>[]): string[] {
-  return []
+  const features = new Set<string>()
+  for (const yaml of yamls) {
+    if (typeof yaml === 'object' && yaml !== null) {
+      if ('utils' in yaml) {
+        features.add('utils')
+      }
+      if ('constraints' in yaml) {
+        features.add('constraints')
+      }
+      if ('rewriters' in yaml) {
+        features.add('rewriters')
+      }
+      if ('transform' in yaml) {
+        features.add('transform')
+      }
+    }
+  }
+  return [...features]
 }
