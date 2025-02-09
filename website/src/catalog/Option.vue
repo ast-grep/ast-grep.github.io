@@ -23,6 +23,9 @@ defineProps({
   padding-top: 0;
   transition: all 0.25s;
 }
+.highlight:hover {
+  border-color: currentColor;
+}
 .highlight {
   border-color: var(--vp-c-text-3);
 }

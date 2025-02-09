@@ -51,28 +51,37 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
       </div>
     </div>
     <div class="rule-details">
-      <div class="rule-badges">
+      <div class="rule-badges" >
         <Badge v-if="meta.type === 'Pattern'" type="info" text="Simple Pattern Example" />
         <template v-else>
-          📏<span class="emoji-offset"/>
+          <span title="Used Rules">📏</span>
+          <span class="emoji-offset"/>
           <Option
             v-for="rule in displayedRules"
             :key="rule"
             :text="rule"
             :highlight="filter.selectedRuleFilters.includes(rule)"
           />
-          <Option v-if="moreRules" :text="`+${moreRules}`"/>
+          <Option
+            v-if="moreRules"
+            :text="`+${moreRules}`"
+            :data-title="meta.rules.slice(displayRuleCount).join(', ')"
+          />
         </template>
       </div>
       <div class="rule-badges" v-if="meta.features.length > 0">
-          💡
+          <span title="Used Features">💡</span>
           <Option
             v-for="feature in meta.features"
             :key="feature"
             :text="feature"
             :highlight="filter.selectedFeatures.includes(feature)"
           />
-          <Option v-if="moreFeatures" :text="`+${moreFeatures}`"/>
+          <Option
+            v-if="moreFeatures"
+            :text="`+${moreFeatures}`"
+            :data-title="meta.features.slice(2).join(', ')"
+          />
       </div>
       <a :href="meta.playgroundLink" class="playground link" target="_blank">
         Try in Playground →
@@ -161,5 +170,44 @@ a > .VPBadge:hover {
 }
 .highlight-filter:hover {
   color: var(--vp-c-text-2);
+}
+@media only screen and (min-width: 780px) {
+  [data-title] {
+    position: relative;
+    cursor: help;
+  }
+  [data-title]::before {
+    position: absolute;
+    left: 5px;
+    bottom: -5px;
+    width: 0;
+    height: 0;
+    display: block;
+    border: 5px solid transparent;
+    content: '';
+    border-bottom-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  [data-title]::after {
+    content: attr(data-title);
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    color: var(--vp-c-white);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.25em 0.5em;
+    font-size: 10px;
+    width: max-content;
+    transform: translate(-50%, 100%);
+    transition: 0.2s;
+    border-radius: 5px;
+    opacity: 0;
+  }
+
+  [data-title]:hover::after, [data-title]:hover::before {
+    opacity: 1;
+  }
 }
 </style>

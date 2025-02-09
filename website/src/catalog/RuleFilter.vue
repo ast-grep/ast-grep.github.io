@@ -26,7 +26,7 @@ watchEffect(() => {
 <template>
   <form class="filters">
     <details open>
-      <summary>📚Language Filters</summary>
+      <summary>📚Example Language</summary>
       <div class="checkbox-group">
         <label v-for="displayName, lang in languages" :key="lang">
           <input type="checkbox" v-model="filter.selectedLanguages" :value="lang">
@@ -36,7 +36,7 @@ watchEffect(() => {
     </details>
 
     <details class="filter-group">
-      <summary>📏Rule Filters</summary>
+      <summary>📏Used Rule</summary>
       <div class="rule-group">
         <div v-for="rules, type in ruleFilters">
           <em style="text-transform: capitalize;">{{ type }}</em>
@@ -50,8 +50,8 @@ watchEffect(() => {
       </div>
     </details>
 
-    <details class="filter-group" style="display: none;">
-      <summary>More Filters</summary>
+    <details class="filter-group">
+      <summary>💡More Features</summary>
       <div class="rule-group">
         <div>
           <em>Type</em>
@@ -80,6 +80,7 @@ watchEffect(() => {
 .rule-group {
   display: flex;
   margin-top: -2px;
+  gap: 8px;
 }
 
 .checkbox-group {
@@ -121,7 +122,6 @@ input[type="checkbox"] {
 }
 .filter-option:hover {
   color: var(--vp-c-brand-1);
-  border-color: currentColor;
   opacity: 1;
 }
 
