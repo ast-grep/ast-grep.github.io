@@ -22,10 +22,14 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
     <div class="rule-header">
       <a :href="meta.link" class="rule-name" target="_blank">{{ meta.name }}</a>
       <div class="rule-badges">
-        <a :href="`/catalog/${meta.language}/`">
-          <Badge type="info" :text="languages[meta.language]" />
-        </a>
-        <Badge v-if="meta.hasFix" type="tip" text="🛠️ Fix" />
+        <Badge type="info">
+          <a :href="`/catalog/${meta.language}/`" class="override-badge-text-color" target="_blank">
+            {{ languages[meta.language] }}
+          </a>
+        </Badge>
+        <Badge v-if="meta.hasFix" type="tip">
+          <span class="override-badge-text-color">🛠️ Fix</span>
+        </Badge>
       </div>
     </div>
     <div class="rule-details">
@@ -50,7 +54,7 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
             +{{ moreFeatures }}
           </code>
       </div>
-      <a :href="meta.playgroundLink" class="playground-link" target="_blank">
+      <a :href="meta.playgroundLink" class="link playground" target="_blank">
         Try in Playground →
       </a>
     </div>
@@ -64,6 +68,27 @@ a {
 a:hover {
   text-decoration: underline;
 }
+.override-badge-text-color {
+  color: var(--vp-c-text-1);
+}
+.override-badge-text-color:hover {
+  color: var(--vp-c-text-1);
+}
+
+.link {
+  filter: brightness(1.3);
+  color: var(--vp-button-brand-bg);
+}
+.link:hover {
+  color: var(--vp-button-brand-bg);
+  filter: brightness(1.5);
+}
+.rule-name {
+  font-weight: 600;
+}
+.playground {
+  font-size: 0.8em;
+}
 .rule-item {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
@@ -74,10 +99,6 @@ a:hover {
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
-}
-
-.rule-name {
-  font-weight: 600;
 }
 
 .rule-badges {
@@ -101,16 +122,6 @@ a:hover {
   height: 24px;
   line-height: 24px;
   padding-top: 0;
-}
-
-.playground-link {
-  font-size: 0.8em;
-  color: var(--vp-button-brand-bg);
-  filter: brightness(1.1);
-}
-.playground-link:hover {
-  color: var(--vp-button-brand-bg);
-  filter: brightness(1.35);
 }
 .emoji-offset {
   /* Offset emoji visual spacing */
