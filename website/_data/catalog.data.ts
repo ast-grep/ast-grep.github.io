@@ -2,7 +2,7 @@ import { createContentLoader, type ContentData } from 'vitepress'
 import { ExampleLangs } from '../src/catalog/data'
 import { loadAll, JSON_SCHEMA } from 'js-yaml'
 
-interface RuleMeta {
+export interface RuleMeta {
   id: string
   name: string
   type: string

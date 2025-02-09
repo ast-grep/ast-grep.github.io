@@ -1,4 +1,5 @@
 import { data as allRules } from '../../_data/catalog.data'
+export type { RuleMeta } from '../../_data/catalog.data'
 
 export function getRuleMetaData(filter: Filter) {
   const {

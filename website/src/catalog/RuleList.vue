@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { type Filter, getRuleMetaData, languages } from './data'
+import { type Filter, getRuleMetaData } from './data'
 import { computed, type PropType } from 'vue'
-import { } from 'vitepress'
+import RuleItem from './RuleItem.vue'
 
 const props = defineProps({
   filter: {
@@ -17,100 +17,15 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
   <h3>Rule List</h3>
   <br/>
   <TransitionGroup class="rule-list" tag="ul">
-    <li v-for="meta in ruleMetaData" :key="meta.language + meta.id" class="rule-item">
-      <div class="rule-header">
-        <a :href="meta.link" class="rule-name" target="_blank">{{ meta.name }}</a>
-        <div class="rule-badges">
-          <a :href="`/catalog/${meta.language}/`">
-            <Badge type="info" :text="languages[meta.language]" />
-          </a>
-          <Badge v-if="meta.hasFix" type="tip" text="🛠️ Fix" />
-        </div>
-      </div>
-      <div class="rule-details">
-        <div class="rule-badges">
-          <Badge v-if="meta.type === 'Pattern'" type="info" text="Simple Pattern Example" />
-          <template v-else>
-            📏
-            <code class="used" v-for="r in meta.rules.slice(0, 2)">
-              {{ r }}
-            </code>
-          </template>
-        </div>
-        <div class="rule-badges" v-if="meta.features.length > 0">
-            💡
-            <code class="used" v-for="feature in meta.features">
-              {{ feature }}
-            </code>
-        </div>
-        <a :href="meta.playgroundLink" class="playground-link" target="_blank">
-          Try in Playground →
-        </a>
-      </div>
-    </li>
+    <RuleItem v-for="meta in ruleMetaData" :key="meta.language + meta.id" :meta="meta"/>
   </TransitionGroup>
 </template>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
 .rule-list {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.rule-item {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-.rule-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.rule-name {
-  font-weight: 600;
-}
-
-.rule-badges {
-  display: flex;
-  gap: 0.2em;
-}
-
-.rule-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.rule-details > div {
-  flex: 1;
-}
-
-.used {
-  filter: saturate(0);
-  user-select: none;
-  height: 24px;
-  line-height: 24px;
-  padding-top: 0;
-}
-
-.playground-link {
-  font-size: 0.8em;
-  color: var(--vp-button-brand-bg);
-  filter: brightness(1.1);
-}
-.playground-link:hover {
-  color: var(--vp-button-brand-bg);
-  filter: brightness(1.35);
 }
 
 .v-move,
