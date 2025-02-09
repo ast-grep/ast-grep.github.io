@@ -8,7 +8,9 @@ export function getRuleMetaData(filter: Filter) {
   return allRules.filter(meta => {
     const langFilter = !selectedLanguages.length || selectedLanguages.includes(meta.language)
     const ruleFilter = !filter.selectedRuleFilters.length || filter.selectedRuleFilters.some(r => meta.rules.includes(r))
-    return langFilter && ruleFilter
+    const featureFilter = !filter.selectedFeatures.length || filter.selectedFeatures.some(f => meta.features.includes(f))
+    const typeFilter = !filter.selectedTypes.length || filter.selectedTypes.includes(meta.type)
+    return langFilter && ruleFilter && featureFilter && typeFilter
   })
 }
 
@@ -61,7 +63,7 @@ export const ruleFilters = {
 }
 
 export const features = [
-  'rewrite',
+  'rewriters',
   'transform',
   'constraints',
   'utils'

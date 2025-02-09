@@ -35,7 +35,7 @@ watchEffect(() => {
       </div>
     </details>
 
-    <details class="filter-group">
+    <details class="filter-group" open>
       <summary>📏Used Rule</summary>
       <div class="rule-group">
         <div v-for="rules, type in ruleFilters">
@@ -50,7 +50,7 @@ watchEffect(() => {
       </div>
     </details>
 
-    <details class="filter-group">
+    <details class="filter-group" open>
       <summary>💡More Features</summary>
       <div class="rule-group">
         <div>

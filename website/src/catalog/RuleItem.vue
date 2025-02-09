@@ -14,25 +14,36 @@ const { meta, filter } = defineProps({
     required: true,
   }
 })
+
+// display selected options first
+function sortedOptions(options: string[], selected: string[]) {
+  const result = []
+  const notSelected = []
+  for (const option of options) {
+    if (selected.includes(option)) {
+      result.push(option)
+    } else {
+      notSelected.push(option)
+    }
+  }
+  return result.concat(notSelected)
+}
+
 const displayRuleCount = computed(() => {
   const maxRule = meta.features.length > 0 ? 2 : 5
   return Math.min(meta.rules.length, maxRule)
 })
 const displayedRules = computed(() => {
-  // display selected rules first
-  const result = []
-  const notSelected = []
-  for (const rule of meta.rules) {
-    if (filter.selectedRuleFilters.includes(rule)) {
-      result.push(rule)
-    } else {
-      notSelected.push(rule)
-    }
-  }
-  return result.concat(notSelected).slice(0, displayRuleCount.value)
+  const result = sortedOptions(meta.rules, filter.selectedRuleFilters)
+  return result.slice(0, displayRuleCount.value)
 })
 const moreRules = computed(() => meta.rules.length - displayRuleCount.value)
-const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
+
+const displayFeatures = computed(() => {
+  const result = sortedOptions(meta.features, filter.selectedFeatures)
+  return result.slice(0, 2)
+})
+const moreFeatures = computed(() => Math.max(displayFeatures.value.length - 2, 0))
 </script>
 
 <template>
@@ -52,7 +63,9 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
     </div>
     <div class="rule-details">
       <div class="rule-badges" >
-        <Badge v-if="meta.type === 'Pattern'" type="info" text="Simple Pattern Example" />
+        <template v-if="meta.type === 'Pattern'">
+          <Badge type="info" text="Simple Pattern Example" />
+        </template>
         <template v-else>
           <span title="Used Rules">📏</span>
           <span class="emoji-offset"/>
@@ -69,10 +82,10 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
           />
         </template>
       </div>
-      <div class="rule-badges" v-if="meta.features.length > 0">
+      <div class="rule-badges" v-if="displayFeatures.length > 0">
           <span title="Used Features">💡</span>
           <Option
-            v-for="feature in meta.features"
+            v-for="feature in displayFeatures"
             :key="feature"
             :text="feature"
             :highlight="filter.selectedFeatures.includes(feature)"
