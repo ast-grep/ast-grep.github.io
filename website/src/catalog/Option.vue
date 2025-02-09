@@ -24,10 +24,6 @@ defineProps({
   transition: all 0.25s;
 }
 .highlight {
-  color: var(--catalog-filter-color);
-  border-color: var(--catalog-filter-color);
-}
-.highlight-filter:hover {
-  color: var(--catalog-filter-color);
+  border-color: currentColor;
 }
 </style>

@@ -120,13 +120,12 @@ input[type="checkbox"] {
   min-width: 3em;
 }
 .filter-option:hover {
+  color: var(--vp-c-brand-1);
   opacity: 1;
-  color: var(--catalog-filter-color);
 }
 
 input[type="checkbox"]:checked + code.option {
   opacity: 1;
-  color: var(--catalog-filter-color);
   border-color: currentColor;
 }
 

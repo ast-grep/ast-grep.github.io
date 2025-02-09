@@ -30,7 +30,7 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
       <div class="rule-badges">
         <a :href="`/catalog/${meta.language}/`" target="_blank">
           <Badge type="info" :class="filter.selectedLanguages.length && 'highlight-filter'">
-            {{ languages[meta.language] }}
+            📚 {{ languages[meta.language] }}
           </Badge>
         </a>
         <Badge v-if="meta.hasFix" type="tip">
@@ -62,7 +62,7 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
           />
           <Option v-if="moreFeatures" :text="`+${moreFeatures}`"/>
       </div>
-      <a :href="meta.playgroundLink" class="playground" target="_blank">
+      <a :href="meta.playgroundLink" class="playground link" target="_blank">
         Try in Playground →
       </a>
     </div>
@@ -140,11 +140,14 @@ a:hover {
   transition-property: all;
   transition-duration: 0.25s;
 }
+a > .VPBadge:hover {
+  text-decoration: underline;
+}
 .highlight-filter {
-  color: var(--catalog-filter-color);
-  border-color: var(--catalog-filter-color);
+  color: var(--vp-c-text-2);
+  border-color: currentColor;
 }
 .highlight-filter:hover {
-  color: var(--catalog-filter-color);
+  color: var(--vp-c-text-2);
 }
 </style>
