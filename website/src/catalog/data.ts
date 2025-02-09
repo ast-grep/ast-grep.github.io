@@ -1,14 +1,18 @@
 import { data as allRules } from '../../_data/catalog.data'
 export type { RuleMeta } from '../../_data/catalog.data'
 
+export function intersect(a: string[], b: string[]) {
+  return a.some(x => b.includes(x))
+}
+
 export function getRuleMetaData(filter: Filter) {
   const {
     selectedLanguages,
   } = filter
   return allRules.filter(meta => {
     const langFilter = !selectedLanguages.length || selectedLanguages.includes(meta.language)
-    const ruleFilter = !filter.selectedRuleFilters.length || filter.selectedRuleFilters.some(r => meta.rules.includes(r))
-    const featureFilter = !filter.selectedFeatures.length || filter.selectedFeatures.some(f => meta.features.includes(f))
+    const ruleFilter = !filter.selectedRuleFilters.length || intersect(filter.selectedRuleFilters, meta.rules)
+    const featureFilter = !filter.selectedFeatures.length || intersect(filter.selectedFeatures, meta.features)
     const typeFilter = !filter.selectedTypes.length || filter.selectedTypes.includes(meta.type)
     return langFilter && ruleFilter && featureFilter && typeFilter
   })

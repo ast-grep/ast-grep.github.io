@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type PropType, computed } from 'vue'
 
-import { type RuleMeta, type Filter, languages } from './data'
+import { type RuleMeta, type Filter, languages, intersect } from './data'
 import Option from './Option.vue'
 
 const { meta, filter } = defineProps({
@@ -37,13 +37,13 @@ const displayedRules = computed(() => {
   const result = sortedOptions(meta.rules, filter.selectedRuleFilters)
   return result.slice(0, displayRuleCount.value)
 })
-const moreRules = computed(() => meta.rules.length - displayRuleCount.value)
+const moreRules = computed(() => meta.rules.slice(displayRuleCount.value))
 
 const displayFeatures = computed(() => {
   const result = sortedOptions(meta.features, filter.selectedFeatures)
   return result.slice(0, 2)
 })
-const moreFeatures = computed(() => Math.max(displayFeatures.value.length - 2, 0))
+const moreFeatures = computed(() => meta.features.slice(2))
 </script>
 
 <template>
@@ -76,9 +76,10 @@ const moreFeatures = computed(() => Math.max(displayFeatures.value.length - 2, 0
             :highlight="filter.selectedRuleFilters.includes(rule)"
           />
           <Option
-            v-if="moreRules"
-            :text="`+${moreRules}`"
-            :data-title="meta.rules.slice(displayRuleCount).join(', ')"
+            v-if="moreRules.length"
+            :text="`+${moreRules.length}`"
+            :data-title="moreRules.join(', ')"
+            :highlight="intersect(moreRules, filter.selectedRuleFilters)"
           />
         </template>
       </div>
@@ -91,9 +92,10 @@ const moreFeatures = computed(() => Math.max(displayFeatures.value.length - 2, 0
             :highlight="filter.selectedFeatures.includes(feature)"
           />
           <Option
-            v-if="moreFeatures"
-            :text="`+${moreFeatures}`"
-            :data-title="meta.features.slice(2).join(', ')"
+            v-if="moreFeatures.length"
+            :text="`+${moreFeatures.length}`"
+            :data-title="moreFeatures.join(', ')"
+            :highlight="intersect(moreFeatures, filter.selectedFeatures)"
           />
       </div>
       <a :href="meta.playgroundLink" class="playground link" target="_blank">
