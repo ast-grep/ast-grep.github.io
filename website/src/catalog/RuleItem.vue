@@ -49,7 +49,10 @@ const moreFeatures = computed(() => meta.features.slice(2))
 <template>
   <li class="rule-item">
     <div class="rule-header">
-      <a :href="meta.link" class="rule-name" target="_blank">{{ meta.name }}</a>
+      <a :href="meta.link" class="rule-name" target="_blank">
+        {{ meta.name }}
+        <img class="logo" :src="'/langs/' + meta.language.toLowerCase() + '.svg'"/>
+      </a>
       <div class="rule-badges">
         <a :href="`/catalog/${meta.language}/`" target="_blank">
           <Badge type="info" :class="filter.selectedLanguages.length && 'highlight-filter'">
@@ -129,6 +132,13 @@ a:hover {
 }
 .rule-name {
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.logo {
+  height: 18px;
+  display: inline;
 }
 .playground {
   font-size: 0.8em;
