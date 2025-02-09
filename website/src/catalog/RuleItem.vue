@@ -26,16 +26,11 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
     <div class="rule-header">
       <a :href="meta.link" class="rule-name" target="_blank">{{ meta.name }}</a>
       <div class="rule-badges">
-        <Badge type="info">
-          <a
-            :href="`/catalog/${meta.language}/`"
-            class="override-badge-text-color"
-            :class="filter.selectedLanguages.length && 'highlight-filter'"
-            target="_blank"
-          >
+        <a :href="`/catalog/${meta.language}/`" target="_blank">
+          <Badge type="info" :class="filter.selectedLanguages.length && 'highlight-filter'">
             {{ languages[meta.language] }}
-          </a>
-        </Badge>
+          </Badge>
+        </a>
         <Badge v-if="meta.hasFix" type="tip">
           <span class="override-badge-text-color">🛠️ Fix</span>
         </Badge>
@@ -46,7 +41,7 @@ const moreFeatures = computed(() => Math.max(meta.features.length - 2, 0))
         <Badge v-if="meta.type === 'Pattern'" type="info" text="Simple Pattern Example" />
         <template v-else>
           📏<span class="emoji-offset"/>
-          <code class="used" v-for="rule in displayedRules">
+          <code class="used" v-for="rule in displayedRules" :class="filter.selectedRuleFilters.includes(rule) && 'highlight-filter'">
             {{ rule }}
           </code>
           <code class="used" v-if="moreRules">
@@ -136,8 +131,14 @@ a:hover {
   /* Offset emoji visual spacing */
   margin-right: -2px;
 }
+/* hack vpbage's border transition */
+.VPBadge {
+  transition-property: all;
+  transition-duration: 0.25s;
+}
 .highlight-filter {
   color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
 }
 .highlight-filter:hover {
   color: var(--vp-c-brand-1);

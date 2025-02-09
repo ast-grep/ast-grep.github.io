@@ -5,8 +5,10 @@ export function getRuleMetaData(filter: Filter) {
   const {
     selectedLanguages,
   } = filter
-  return allRules.filter(rule => {
-    return !selectedLanguages.length || selectedLanguages.includes(rule.language)
+  return allRules.filter(meta => {
+    const langFilter = !selectedLanguages.length || selectedLanguages.includes(meta.language)
+    const ruleFilter = !filter.selectedRuleFilters.length || filter.selectedRuleFilters.some(r => meta.rules.includes(r))
+    return langFilter && ruleFilter
   })
 }
 

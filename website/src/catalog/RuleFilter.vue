@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { watchEffect, ref } from 'vue'
+import Option from './Option.vue'
 import {
   languages,
   ruleFilters,
@@ -25,24 +26,24 @@ watchEffect(() => {
 <template>
   <form class="filters">
     <details open>
-      <summary>Language Filters</summary>
+      <summary>📚Language Filters</summary>
       <div class="checkbox-group">
         <label v-for="displayName, lang in languages" :key="lang">
           <input type="checkbox" v-model="filter.selectedLanguages" :value="lang">
-          <code class="option">{{ displayName }}</code>
+          <Option :text="displayName"/>
         </label>
       </div>
     </details>
 
-    <details class="filter-group" style="display: none;">
-      <summary>Rule Filters</summary>
+    <details class="filter-group">
+      <summary>📏Rule Filters</summary>
       <div class="rule-group">
         <div v-for="rules, type in ruleFilters">
           <em style="text-transform: capitalize;">{{ type }}</em>
           <div class="checkbox-group">
             <label v-for="rule in rules" :key="rule">
               <input type="checkbox" v-model="filter.selectedRuleFilters" :value="rule">
-              <code class="option">{{ rule }}</code>
+              <Option :text="rule"/>
             </label>
           </div>
         </div>
@@ -57,7 +58,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="type in ruleTypes" :key="type">
               <input type="checkbox" v-model="filter.selectedTypes" :value="type">
-              <code class="option">{{ type }}</code>
+              <Option :text="type"/>
             </label>
           </div>
         </div>
@@ -66,7 +67,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="feature in features" :key="feature">
               <input type="checkbox" v-model="filter.selectedFeatures" :value="feature">
-              <code class="option">{{ feature }}</code>
+              <Option :text="feature"/>
             </label>
           </div>
         </div>
@@ -77,8 +78,7 @@ watchEffect(() => {
 
 <style scoped>
 .rule-group {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(20%, 1fr));
+  display: flex;
   margin-top: -2px;
 }
 
@@ -112,24 +112,6 @@ summary:hover {
 }
 input[type="checkbox"] {
   display: none;
-}
-
-code.option {
-  cursor: pointer;
-  filter: saturate(0);
-  opacity: 0.8;
-  user-select: none;
-  border: 1px solid var(--vp-code-bg);
-  min-width: 3em;
-  display: inline-block;
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  padding-top: 0;
-}
-code.option:hover {
-  opacity: 1;
-  filter: saturate(1);
 }
 
 input[type="checkbox"]:checked + code.option {
