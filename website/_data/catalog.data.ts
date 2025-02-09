@@ -2,7 +2,7 @@ import { createContentLoader, type ContentData } from 'vitepress'
 import { ExampleLangs } from '../src/catalog/data'
 import { loadAll, JSON_SCHEMA } from 'js-yaml'
 
-interface Rule {
+interface RuleMeta {
   id: string
   name: string
   type: string
@@ -14,12 +14,12 @@ interface Rule {
   features: string[]
 }
 
-declare const data: Rule[]
+declare const data: RuleMeta[]
 export { data }
 
 export default createContentLoader('catalog/**/*.md', {
   includeSrc: true,
-  transform(raw): Rule[] {
+  transform(raw): RuleMeta[] {
     return raw
       .filter(({ url }) => {
         return url.endsWith('.html') && !url.includes('rule-template')
@@ -29,7 +29,7 @@ export default createContentLoader('catalog/**/*.md', {
   },
 })
 
-function extractRuleInfo({ url, src }: ContentData): Rule {
+function extractRuleInfo({ url, src }: ContentData): RuleMeta {
   const source = src!
   const id = url.split('/').pop()?.replace(/\.md$/, '') || ''
   const type = source.includes('```yml') || source.includes('```yaml')
