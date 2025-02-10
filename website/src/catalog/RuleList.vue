@@ -15,7 +15,6 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
 
 <template>
   <h3>Rule List</h3>
-  <br/>
   <TransitionGroup class="rule-list" tag="ul">
     <RuleItem
       v-for="meta in ruleMetaData"
@@ -27,6 +26,9 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
 </template>
 
 <style scoped>
+h3 {
+  margin: 20px 0 8px;
+}
 .rule-list {
   list-style: none;
   padding: 0;
