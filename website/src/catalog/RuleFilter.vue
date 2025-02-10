@@ -37,7 +37,7 @@ watchEffect(() => {
 
     <details open>
       <summary>📏 Used Rule</summary>
-      <div class="filter-group">
+      <div class="filter-group rule-filter-group">
         <div v-for="rules, type in ruleFilters">
           <em style="text-transform: capitalize;">{{ type }}</em>
           <div class="checkbox-group">
@@ -47,14 +47,8 @@ watchEffect(() => {
             </label>
           </div>
         </div>
-      </div>
-    </details>
-
-    <details open>
-      <summary>💡 More Features</summary>
-      <div class="filter-group">
         <div>
-          <em>Type</em>
+          <em>Example Type</em>
           <div class="checkbox-group">
             <label v-for="type in ruleTypes" :key="type">
               <input type="checkbox" v-model="filter.selectedTypes" :value="type">
@@ -62,6 +56,12 @@ watchEffect(() => {
             </label>
           </div>
         </div>
+      </div>
+    </details>
+
+    <details open>
+      <summary>💡 More Features</summary>
+      <div class="filter-group">
         <div>
           <em>Features</em>
           <div class="checkbox-group">
@@ -79,14 +79,26 @@ watchEffect(() => {
 <style scoped>
 .filter-group {
   display: flex;
+  flex-wrap: wrap;
   margin-top: -2px;
   gap: 8px;
+  justify-content: space-between;
 }
 
 .checkbox-group {
   margin-top: 0.2em;
-  display: flex;
+  display: inline-flex;
+  flex-wrap: wrap;
   gap: 4px;
+}
+
+em {
+  margin-right: 0.5em;
+}
+
+.rule-filter-group > div {
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 
 label {
@@ -94,7 +106,6 @@ label {
 }
 details {
   padding-bottom: 5px;
-  border-radius: 5px;
 }
 summary {
   margin: 0;
