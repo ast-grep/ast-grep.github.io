@@ -6,7 +6,7 @@ import type { Filter } from './data';
 
 const filter = ref<Filter>({
   selectedLanguages: [],
-  selectedRuleFilters: [],
+  selectedRules: [],
   selectedFeatures: [],
   selectedTypes: [],
 })

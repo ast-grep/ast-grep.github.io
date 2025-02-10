@@ -34,7 +34,7 @@ const displayRuleCount = computed(() => {
   return Math.min(meta.rules.length, maxRule)
 })
 
-const sortedRules = computed(() => sortedOptions(meta.rules, filter.selectedRuleFilters))
+const sortedRules = computed(() => sortedOptions(meta.rules, filter.selectedRules))
 const displayedRules = computed(() => sortedRules.value.slice(0, displayRuleCount.value))
 const moreRules = computed(() => sortedRules.value.slice(displayRuleCount.value))
 
@@ -73,13 +73,13 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
             v-for="rule in displayedRules"
             :key="rule"
             :text="rule"
-            :highlight="filter.selectedRuleFilters.includes(rule)"
+            :highlight="filter.selectedRules.includes(rule)"
           />
           <Option
             v-if="moreRules.length"
             :text="`+${moreRules.length}`"
             :data-title="moreRules.join(', ')"
-            :highlight="intersect(moreRules, filter.selectedRuleFilters)"
+            :highlight="intersect(moreRules, filter.selectedRules)"
           />
         </template>
       </div>

@@ -13,7 +13,7 @@ const model = defineModel<Filter>()
 
 const filter = ref<Filter>({
   selectedLanguages: [],
-  selectedRuleFilters: [],
+  selectedRules: [],
   selectedFeatures: [],
   selectedTypes: [],
 })
@@ -42,7 +42,7 @@ watchEffect(() => {
           <em style="text-transform: capitalize;">{{ type }}</em>
           <div class="checkbox-group">
             <label v-for="rule in rules" :key="rule">
-              <input type="checkbox" v-model="filter.selectedRuleFilters" :value="rule">
+              <input type="checkbox" v-model="filter.selectedRules" :value="rule">
               <Option :text="rule" class="filter-option"/>
             </label>
           </div>

@@ -11,7 +11,7 @@ export function getRuleMetaData(filter: Filter) {
   } = filter
   return allRules.filter(meta => {
     const langFilter = !selectedLanguages.length || selectedLanguages.includes(meta.language)
-    const ruleFilter = !filter.selectedRuleFilters.length || intersect(filter.selectedRuleFilters, meta.rules)
+    const ruleFilter = !filter.selectedRules.length || intersect(filter.selectedRules, meta.rules)
     const featureFilter = !filter.selectedFeatures.length || intersect(filter.selectedFeatures, meta.features)
     const typeFilter = !filter.selectedTypes.length || filter.selectedTypes.includes(meta.type)
     return langFilter && ruleFilter && featureFilter && typeFilter
@@ -20,7 +20,7 @@ export function getRuleMetaData(filter: Filter) {
 
 export type Filter = {
   selectedLanguages: ExampleLangs[],
-  selectedRuleFilters: string[],
+  selectedRules: string[],
   selectedFeatures: string[],
   selectedTypes: string[],
 }
