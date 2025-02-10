@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NumberFlow, { continuous } from '@number-flow/vue'
 import { type Filter, getRuleMetaData } from './data'
 import { computed, type PropType } from 'vue'
 import RuleItem from './RuleItem.vue'
@@ -14,7 +15,13 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
 </script>
 
 <template>
-  <h3>Rule List</h3>
+  <h3>
+    Rule List
+    <NumberFlow
+      :plugins="[continuous]"
+      :value="ruleMetaData.length"
+    />
+  </h3>
   <TransitionGroup class="rule-list" tag="ul">
     <RuleItem
       v-for="meta in ruleMetaData"
@@ -28,6 +35,8 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
 <style scoped>
 h3 {
   margin: 20px 0 8px;
+  display: flex;
+  justify-content: space-between;
 }
 .rule-list {
   list-style: none;
@@ -50,4 +59,10 @@ h3 {
   position: absolute;
   width: 100%;
 }
+number-flow-vue::part(integer) {
+  font-variant-numeric: tabular-nums;
+  font-style: italic;
+  font-weight: 500;
+}
+
 </style>

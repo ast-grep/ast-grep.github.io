@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@number-flow/vue':
+        specifier: 0.4.3
+        version: 0.4.3(vue@3.5.13(typescript@5.7.3))
       '@types/js-yaml':
         specifier: 4.0.9
         version: 4.0.9
@@ -23,6 +26,10 @@ importers:
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.7.3)
+    optionalDependencies:
+      ast-grep-wasm:
+        specifier: file:./pkg/
+        version: file:pkg
     devDependencies:
       '@algolia/client-search':
         specifier: 5.19.0
@@ -45,10 +52,6 @@ importers:
       vue-tsc:
         specifier: 2.2.0
         version: 2.2.0(typescript@5.7.3)
-    optionalDependencies:
-      ast-grep-wasm:
-        specifier: file:./pkg/
-        version: file:pkg
 
 packages:
 
@@ -481,6 +484,11 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
 
+  '@number-flow/vue@0.4.3':
+    resolution: {integrity: sha512-FSgAzisKV/qOSExDKXT22P632dMaK0E86uGJ0lXYJXvdeE3ReDKh07tZiiAtV6DGuvti2fhNHKB+6XGjuuj3hw==}
+    peerDependencies:
+      vue: ^3
+
   '@rollup/rollup-android-arm-eabi@4.28.0':
     resolution: {integrity: sha512-wLJuPLT6grGZsy34g4N1yRfYeouklTgPhH1gWXCYspenKYD0s3cR99ZevOGw5BexMNywkbV3UkjADisozBmpPQ==}
     cpu: [arm]
@@ -808,6 +816,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  esm-env@1.2.2:
+    resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
+
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
@@ -921,6 +932,9 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  number-flow@0.5.3:
+    resolution: {integrity: sha512-iLKyssImNWQmJ41rza9K7P5lHRZTyishi/9FarWPLQHYY2Ydtl6eiXINEjZ1fa8dHeY0O7+YOD+Py3ZsJddYkg==}
 
   oniguruma-to-es@2.3.0:
     resolution: {integrity: sha512-bwALDxriqfKGfUufKGGepCzu9x7nJQuoRoAFp4AnwehhC2crqrDIAP/uN2qdlsAvSMpeRC3+Yzhqc7hLmle5+g==}
@@ -1477,6 +1491,12 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
+  '@number-flow/vue@0.4.3(vue@3.5.13(typescript@5.7.3))':
+    dependencies:
+      esm-env: 1.2.2
+      number-flow: 0.5.3
+      vue: 3.5.13(typescript@5.7.3)
+
   '@rollup/rollup-android-arm-eabi@4.28.0':
     optional: true
 
@@ -1845,6 +1865,8 @@ snapshots:
       '@esbuild/win32-ia32': 0.24.2
       '@esbuild/win32-x64': 0.24.2
 
+  esm-env@1.2.2: {}
+
   estree-walker@2.0.2: {}
 
   focus-trap@7.6.4:
@@ -1980,6 +2002,10 @@ snapshots:
   muggle-string@0.4.1: {}
 
   nanoid@3.3.7: {}
+
+  number-flow@0.5.3:
+    dependencies:
+      esm-env: 1.2.2
 
   oniguruma-to-es@2.3.0:
     dependencies:
