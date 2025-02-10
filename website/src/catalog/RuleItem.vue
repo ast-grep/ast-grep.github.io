@@ -33,17 +33,18 @@ const displayRuleCount = computed(() => {
   const maxRule = meta.features.length > 0 ? 2 : 5
   return Math.min(meta.rules.length, maxRule)
 })
-const displayedRules = computed(() => {
-  const result = sortedOptions(meta.rules, filter.selectedRuleFilters)
-  return result.slice(0, displayRuleCount.value)
-})
-const moreRules = computed(() => meta.rules.slice(displayRuleCount.value))
 
-const displayFeatures = computed(() => {
-  const result = sortedOptions(meta.features, filter.selectedFeatures)
-  return result.slice(0, 2)
+const sortedRules = computed(() => sortedOptions(meta.rules, filter.selectedRuleFilters))
+const displayedRules = computed(() => {
+  return sortedRules.value.slice(0, displayRuleCount.value)
 })
-const moreFeatures = computed(() => meta.features.slice(2))
+const moreRules = computed(() => sortedRules.value.slice(displayRuleCount.value))
+
+const sortedFeatures = computed(() => sortedOptions(meta.features, filter.selectedFeatures))
+const displayFeatures = computed(() => {
+  return sortedFeatures.value.slice(0, 2)
+})
+const moreFeatures = computed(() => sortedFeatures.value.slice(2))
 </script>
 
 <template>
