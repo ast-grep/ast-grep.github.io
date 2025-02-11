@@ -51,9 +51,11 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
         <img class="logo" :src="'/langs/' + meta.language.toLowerCase() + '.svg'"/>
       </a>
       <div class="rule-badges">
-        <Badge v-if="meta.hasFix" type="tip">
-          <span class="override-badge-text-color">🛠️ Fix</span>
-        </Badge>
+        <span> <!-- dummy wrapper for better align items -->
+          <Badge v-if="meta.hasFix" type="tip">
+            <span class="override-badge-text-color">🛠️ Fix</span>
+          </Badge>
+        </span>
         <a :href="`/catalog/${meta.language}/`" target="_blank">
           <Badge type="info" :class="filter.selectedLanguages.length && 'highlight-filter'">
             📚 {{ languages[meta.language] }}
@@ -158,6 +160,7 @@ a:hover {
 .rule-badges {
   display: flex;
   gap: 4px;
+  align-items: center;
 }
 
 .rule-details {
@@ -197,6 +200,9 @@ a:hover {
 .VPBadge {
   transition-property: all;
   transition-duration: 0.25s;
+  height: 24px;
+  line-height: 24px;
+  transform: translateY(0);
 }
 a > .VPBadge:hover {
   text-decoration: underline;
