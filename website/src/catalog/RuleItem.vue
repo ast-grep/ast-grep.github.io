@@ -183,6 +183,14 @@ a:hover {
   .rule-item:first-child {
     border-top-width: 1px;
   }
+  .rule-details {
+    flex-wrap: wrap;
+  }
+  .playground {
+    align-self: flex-end;
+    flex: 0 0 100%;
+    text-align: right;
+  }
 }
 
 .used {
