@@ -128,10 +128,12 @@ a:hover {
   filter: brightness(1.5);
 }
 .rule-name {
+  flex: 0 1 auto;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 5px;
+  max-width: 100%;
 }
 .logo {
   height: 18px;
@@ -139,6 +141,7 @@ a:hover {
 }
 .playground {
   font-size: 0.8em;
+  white-space: nowrap;
 }
 .rule-item {
   border: 1px solid var(--vp-c-divider);
@@ -164,7 +167,19 @@ a:hover {
 }
 
 .rule-details > div {
-  flex: 1;
+  flex: 1 0 30%;
+}
+
+@media only screen and (max-width: 640px) {
+  .rule-item {
+    margin: 0 -24px;
+    border-radius: 0;
+    border-width: 0;
+    border-bottom-width: 1px;
+  }
+  .rule-item:first-child {
+    border-top-width: 1px;
+  }
 }
 
 .used {
