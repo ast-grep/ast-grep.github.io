@@ -45,11 +45,51 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
 
 <template>
   <li class="rule-item">
-    <div class="rule-header">
+    <div class="rule-main">
       <a :href="meta.link" class="rule-name" target="_blank">
         {{ meta.name }}
         <img class="logo" :src="'/langs/' + meta.language.toLowerCase() + '.svg'"/>
       </a>
+      <div class="rule-details">
+        <div class="rule-badges" >
+          <template v-if="meta.type === 'Pattern'">
+            <Badge type="info" text="Simple Pattern Example" />
+          </template>
+          <template v-else>
+            <span title="Used Rules">📏</span>
+            <span class="emoji-offset"/>
+            <Option
+              v-for="rule in displayedRules"
+              :key="rule"
+              :text="rule"
+              :highlight="filter.selectedRules.includes(rule)"
+            />
+            <Option
+              v-if="moreRules.length"
+              :text="`+${moreRules.length}`"
+              :data-title="moreRules.join(', ')"
+              :highlight="intersect(moreRules, filter.selectedRules)"
+            />
+          </template>
+        </div>
+        <div class="rule-badges" v-if="displayFeatures.length > 0">
+            <span title="Used Features">💡</span>
+            <Option
+              v-for="feature in displayFeatures"
+              :key="feature"
+              :text="feature"
+              :highlight="filter.selectedFeatures.includes(feature)"
+            />
+            <Option
+              v-if="moreFeatures.length"
+              :text="`+${moreFeatures.length}`"
+              :data-title="moreFeatures.join(', ')"
+              :highlight="intersect(moreFeatures, filter.selectedFeatures)"
+            />
+        </div>
+      </div>
+    </div>
+    <div class="rule-aux">
       <div class="rule-badges">
         <span> <!-- dummy wrapper for better align items -->
           <Badge v-if="meta.hasFix" type="tip">
@@ -62,44 +102,6 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
           </Badge>
         </a>
       </div>
-    </div>
-    <div class="rule-details">
-      <div class="rule-badges" >
-        <template v-if="meta.type === 'Pattern'">
-          <Badge type="info" text="Simple Pattern Example" />
-        </template>
-        <template v-else>
-          <span title="Used Rules">📏</span>
-          <span class="emoji-offset"/>
-          <Option
-            v-for="rule in displayedRules"
-            :key="rule"
-            :text="rule"
-            :highlight="filter.selectedRules.includes(rule)"
-          />
-          <Option
-            v-if="moreRules.length"
-            :text="`+${moreRules.length}`"
-            :data-title="moreRules.join(', ')"
-            :highlight="intersect(moreRules, filter.selectedRules)"
-          />
-        </template>
-      </div>
-      <div class="rule-badges" v-if="displayFeatures.length > 0">
-          <span title="Used Features">💡</span>
-          <Option
-            v-for="feature in displayFeatures"
-            :key="feature"
-            :text="feature"
-            :highlight="filter.selectedFeatures.includes(feature)"
-          />
-          <Option
-            v-if="moreFeatures.length"
-            :text="`+${moreFeatures.length}`"
-            :data-title="moreFeatures.join(', ')"
-            :highlight="intersect(moreFeatures, filter.selectedFeatures)"
-          />
-      </div>
       <a :href="meta.playgroundLink" class="playground link" target="_blank">
         Try in Playground →
       </a>
@@ -108,6 +110,7 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
 </template>
 
 <style scoped>
+
 a {
   text-decoration: none;
 }
@@ -129,38 +132,49 @@ a:hover {
   color: var(--vp-button-brand-bg);
   filter: brightness(1.5);
 }
-.rule-name {
-  flex: 0 1 auto;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  max-width: 100%;
-}
-.logo {
-  height: 18px;
-  display: inline;
-}
-.playground {
-  font-size: 0.8em;
-  white-space: nowrap;
-}
+
 .rule-item {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   padding: 1rem;
-}
-
-.rule-header {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
 }
 
 .rule-badges {
   display: flex;
   gap: 4px;
   align-items: center;
+}
+
+.rule-main {
+  flex: 1 1 auto;
+}
+
+.rule-name {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  margin-bottom: 12px;
+}
+
+.logo {
+  height: 18px;
+  display: inline;
+}
+
+.rule-aux {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.playground {
+  font-size: 0.8em;
+  white-space: nowrap;
+  text-align: right;
+  flex: 1 0 auto;
 }
 
 .rule-details {
@@ -170,7 +184,7 @@ a:hover {
 }
 
 .rule-details > div {
-  flex: 1 0 30%;
+  flex: 1 0 50%;
 }
 
 @media only screen and (max-width: 640px) {
@@ -179,17 +193,19 @@ a:hover {
     border-radius: 0;
     border-width: 0;
     border-bottom-width: 1px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .rule-name {
+    text-wrap: pretty;
+    justify-content: space-between;
   }
   .rule-item:first-child {
     border-top-width: 1px;
   }
-  .rule-details {
-    flex-wrap: wrap;
-  }
-  .playground {
-    align-self: flex-end;
-    flex: 0 0 100%;
-    text-align: right;
+  .rule-aux {
+    flex: 1 0 auto;
+    flex-direction: row;
   }
 }
 
