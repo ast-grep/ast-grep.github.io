@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import NumberFlow, { continuous } from '@number-flow/vue'
-import { type Filter, getRuleMetaData } from './data'
-import { computed, type PropType } from 'vue'
+import { type Filter, getRuleMetaData } from './data.js'
+import { computed, ref, type PropType } from 'vue'
 import RuleItem from './RuleItem.vue'
 import IconDown from '../components/utils/IconDown.vue'
 
+const sortBy = ref('name')
 const props = defineProps({
   filter: {
     type: Object as PropType<Filter>,
@@ -15,7 +16,7 @@ const emit = defineEmits<{
   reset: []
 }>()
 
-const ruleMetaData = computed(() => getRuleMetaData(props.filter))
+const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
 </script>
 
 <template>
@@ -30,9 +31,9 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
       />
       <label class="sort-by">
         Sort by:
-        <select>
-          <option>Name</option>
-          <option>Lang</option>
+        <select v-model="sortBy">
+          <option value="name">Name</option>
+          <option value="lang">Lang</option>
         </select>
         <IconDown/>
       </label>

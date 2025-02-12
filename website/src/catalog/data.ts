@@ -5,16 +5,23 @@ export function intersect(a: string[], b: string[]) {
   return a.some(x => b.includes(x))
 }
 
-export function getRuleMetaData(filter: Filter) {
+export function getRuleMetaData(filter: Filter, sortBy = 'name') {
   const {
     selectedLanguages,
+    selectedRules,
   } = filter
   return allRules.filter(meta => {
     const langFilter = !selectedLanguages.length || selectedLanguages.includes(meta.language)
-    const ruleFilter = !filter.selectedRules.length || intersect(filter.selectedRules, meta.rules)
+    const ruleFilter = !selectedRules.length || intersect(selectedRules, meta.rules)
     const featureFilter = !filter.selectedFeatures.length || intersect(filter.selectedFeatures, meta.features)
     const typeFilter = !filter.selectedTypes.length || filter.selectedTypes.includes(meta.type)
     return langFilter && ruleFilter && featureFilter && typeFilter
+  }).toSorted((a, b) => {
+    if (sortBy === 'name') {
+      return a.name.localeCompare(b.name)
+    } else {
+      return a.language.localeCompare(b.language)
+    }
   })
 }
 
