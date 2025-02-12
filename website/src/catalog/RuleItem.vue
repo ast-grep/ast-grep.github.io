@@ -170,6 +170,9 @@ a:hover {
   flex-direction: column;
   gap: 12px;
 }
+.rule-aux .rule-badges {
+  justify-content: end;
+}
 .playground {
   font-size: 0.8em;
   white-space: nowrap;
