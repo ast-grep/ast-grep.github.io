@@ -194,7 +194,7 @@ a:hover {
     border-width: 0;
     border-bottom-width: 1px;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
   .rule-name {
     text-wrap: pretty;
