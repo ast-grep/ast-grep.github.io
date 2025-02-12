@@ -21,6 +21,10 @@ const filter = ref<Filter>({
 watchEffect(() => {
   model.value = filter.value
 })
+// :( cyclic assign, for reset event
+watchEffect(() => {
+  filter.value = model.value
+})
 
 </script>
 <template>

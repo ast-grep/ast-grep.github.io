@@ -10,12 +10,21 @@ const filter = ref<Filter>({
   selectedFeatures: [],
   selectedTypes: [],
 })
+
+function reset() {
+  filter.value = {
+    selectedLanguages: [],
+    selectedRules: [],
+    selectedFeatures: [],
+    selectedTypes: [],
+  }
+}
 </script>
 
 <template>
   <div class="catalog-filter">
     <RuleFilter v-model="filter" />
-    <RuleList :filter="filter"/>
+    <RuleList :filter="filter" @reset="reset"/>
   </div>
 </template>
 

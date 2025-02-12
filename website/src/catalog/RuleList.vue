@@ -10,6 +10,9 @@ const props = defineProps({
     required: true,
   }
 })
+const emit = defineEmits<{
+  reset: []
+}>()
 
 const ruleMetaData = computed(() => getRuleMetaData(props.filter))
 </script>
@@ -38,7 +41,7 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
         <p class="title">No Matching Rule</p>
         <hr class="divider"/>
         <div class="actions">
-          Try resetting the filter to discover all rules.<br/>
+          You can <a href="" @click="emit('reset')">reset the filter</a> to discover all rules.<br/>
           Contributing a new rule is also warmly welcomed. 🎉
           <ol>
             <li>
