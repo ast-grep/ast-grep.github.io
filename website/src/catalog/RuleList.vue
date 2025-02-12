@@ -3,6 +3,7 @@ import NumberFlow, { continuous } from '@number-flow/vue'
 import { type Filter, getRuleMetaData } from './data'
 import { computed, type PropType } from 'vue'
 import RuleItem from './RuleItem.vue'
+import IconDown from '../components/utils/IconDown.vue'
 
 const props = defineProps({
   filter: {
@@ -27,6 +28,14 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter))
         :plugins="[continuous]"
         :value="ruleMetaData.length"
       />
+      <label class="sort-by">
+        Sort by:
+        <select>
+          <option>Name</option>
+          <option>Lang</option>
+        </select>
+        <IconDown/>
+      </label>
     </h3>
     <TransitionGroup class="rule-list" tag="ul">
       <RuleItem
@@ -107,6 +116,21 @@ h3 {
   font-size: 14px;
   font-weight: 500;
   color: var(--vp-c-text-2);
+}
+
+h3 {
+  display: flex;
+}
+.sort-by {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 400;
+}
+.sort-by > select {
+  margin-left: 6px;
+  padding-right: 4px;
 }
 
 .not-found-enter-active,

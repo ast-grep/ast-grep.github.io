@@ -7,7 +7,7 @@ import {
   features,
   ruleTypes,
   type Filter,
-} from './data'
+} from './data.js'
 
 const model = defineModel<Filter>()
 
@@ -23,7 +23,7 @@ watchEffect(() => {
 })
 // :( cyclic assign, for reset event
 watchEffect(() => {
-  filter.value = model.value
+  filter.value = model.value!
 })
 
 </script>

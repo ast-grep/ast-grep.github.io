@@ -1,5 +1,5 @@
-import { data as allRules } from '../../_data/catalog.data'
-export type { RuleMeta } from '../../_data/catalog.data'
+import { data as allRules } from '../../_data/catalog.data.js'
+export type { RuleMeta } from '../../_data/catalog.data.js'
 
 export function intersect(a: string[], b: string[]) {
   return a.some(x => b.includes(x))
