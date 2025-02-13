@@ -98,6 +98,15 @@ watch(isDark, () => {
   monaco.editor.setTheme(isDark.value ? 'vs-dark' : 'vs')
 })
 
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (editor.value?.getValue() === value) return
+    editor.value?.setValue(value || '')
+  },
+  { immediate: true },
+)
+
 const transformHighlight = (match: number[]) => {
     const [sr, sc, er, ec] = match
     return {
