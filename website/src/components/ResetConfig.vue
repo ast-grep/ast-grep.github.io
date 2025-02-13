@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import IconReset from '../icons/Reset.vue'
 
-const state = defineModel()
+import type { State } from './astGrep/state'
+
+const state = defineModel<State>({
+  required: true,
+})
+
 const config = `
 # YAML Rule is more powerful!
 # https://ast-grep.github.io/guide/rule-config.html#rule
