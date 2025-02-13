@@ -2,6 +2,7 @@
 import { shallowRef } from 'vue'
 import { Monaco, Diff, EditorWithPanel } from './editors'
 import QueryEditor from './QueryEditor.vue'
+import ResetConfig from './ResetConfig.vue'
 import PatternEditor from './PatternEditor.vue'
 import SelectLang from './SelectLang.vue'
 import Tabs from './utils/Tabs.vue'
@@ -92,7 +93,10 @@ let codeMode = shallowRef('code')
           </EditorWithPanel>
         </template>
         <template #addon>
-          <SelectLang v-model="lang"/>
+          <div class="action-bar">
+            <SelectLang v-model="lang"/>
+            <ResetConfig v-model="state" />
+          </div>
         </template>
       </Tabs>
     </div>
@@ -119,6 +123,10 @@ let codeMode = shallowRef('code')
 .half:focus-within {
   /* keep here since monaco suggestion details are not expanded by default */
   filter: drop-shadow(0 0 16px #00000020);
+}
+.action-bar {
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (max-width: 780px) {
