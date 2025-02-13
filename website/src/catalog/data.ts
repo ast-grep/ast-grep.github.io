@@ -19,8 +19,14 @@ export function getRuleMetaData(filter: Filter, sortBy = 'name') {
   }).toSorted((a, b) => {
     if (sortBy === 'name') {
       return a.name.localeCompare(b.name)
-    } else {
+    } else if (sortBy === 'lang') {
       return a.language.localeCompare(b.language)
+    } else if (sortBy === 'complexity') {
+      const complexityA = a.rules.length + a.features.length
+      const complexityB = b.rules.length + b.features.length
+      return complexityA - complexityB
+    } else {
+      return 0
     }
   })
 }

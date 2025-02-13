@@ -34,6 +34,7 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
         <select v-model="sortBy">
           <option value="name">Name</option>
           <option value="lang">Lang</option>
+          <option value="complexity">Complexity</option>
         </select>
         <IconDown/>
       </label>
