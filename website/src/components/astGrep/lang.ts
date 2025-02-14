@@ -69,7 +69,7 @@ export async function initializeParser() {
 }
 
 async function setGlobalParser(lang: SupportedLang) {
-  const path = parserPaths[lang]
+  const path = 'parsers/' + parserPaths[lang]
   await setupParser(lang, path)
 }
 
