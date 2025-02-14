@@ -7,7 +7,7 @@ import {
   features,
   ruleTypes,
   type Filter,
-} from './data.js'
+} from './data'
 
 const model = defineModel<Filter>()
 

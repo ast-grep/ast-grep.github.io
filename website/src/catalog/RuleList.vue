@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import NumberFlow, { continuous } from '@number-flow/vue'
+import NumberFlow from '@number-flow/vue'
+// @ts-ignore missing type
+import { continuous } from '@number-flow/vue'
 import { type Filter, getRuleMetaData } from './data.js'
 import { computed, ref, type PropType } from 'vue'
 import RuleItem from './RuleItem.vue'
