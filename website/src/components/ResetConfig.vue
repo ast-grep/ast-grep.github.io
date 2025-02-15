@@ -1,22 +1,13 @@
 <script lang="ts" setup>
 import IconReset from '../icons/Reset.vue'
 
-import type { State } from './astGrep/state'
-import { config, query, rewrite } from './astGrep/state'
-
-const state = defineModel<State>({
-  required: true,
-})
-
-const onReset = () => {
-  state.value.config = config
-  state.value.query = query
-  state.value.rewrite = rewrite
-}
+const emits = defineEmits<{
+  reset: () => void
+}>()
 </script>
 
 <template>
-  <button class="reset" title="Reset your config" @click="onReset">
+  <button class="reset" title="Reset your config" @click="emits('reset')">
     <IconReset />
   </button>
 </template>

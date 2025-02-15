@@ -54,9 +54,9 @@ if (true) {
   console.debug('matched by YAML')
 }`
 
-export const query = 'console.log($MATCH)'
-export const rewrite = 'logger.log($MATCH)'
-export const config = `
+const query = 'console.log($MATCH)'
+const rewrite = 'logger.log($MATCH)'
+const config = `
 # YAML Rule is more powerful!
 # https://ast-grep.github.io/guide/rule-config.html#rule
 rule:
@@ -108,6 +108,17 @@ function storeStateInLocalStorage(state: State) {
   }
 }
 
+function resetState(state: ShallowReactive<State>) {
+  state.mode = Mode.Patch
+  state.query = query
+  state.rewrite = rewrite
+  state.config = config
+  state.source = source
+  state.strictness = 'smart'
+  state.selector = ''
+  state.lang = 'javascript'
+}
+
 export const astGrepStateKey = Symbol.for('ast-grep-state') as InjectionKey<ToRefs<ShallowReactive<State>>>
 
 export function useSgState() {
@@ -119,6 +130,7 @@ export function useSgState() {
   }, { deep: true })
   return {
     state,
+    reset: () => resetState(state),
     ...refs,
   }
 }

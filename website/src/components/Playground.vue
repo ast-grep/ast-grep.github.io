@@ -17,6 +17,7 @@ const {
   state,
   mode,
   lang,
+  reset,
   // source code
   source,
   // config
@@ -95,7 +96,7 @@ let codeMode = shallowRef('code')
         <template #addon>
           <div class="action-bar">
             <SelectLang v-model="lang"/>
-            <ResetConfig v-model="state" />
+            <ResetConfig @reset="reset" />
           </div>
         </template>
       </Tabs>
