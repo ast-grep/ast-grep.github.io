@@ -2,7 +2,7 @@
 import IconReset from '../icons/Reset.vue'
 
 const emits = defineEmits<{
-  reset: () => void
+  reset: []
 }>()
 </script>
 
