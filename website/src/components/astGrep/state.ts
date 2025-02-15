@@ -54,8 +54,9 @@ if (true) {
   console.debug('matched by YAML')
 }`
 
-const query = 'console.log($MATCH)'
-const config = `
+export const query = 'console.log($MATCH)'
+export const rewrite = 'logger.log($MATCH)'
+export const config = `
 # YAML Rule is more powerful!
 # https://ast-grep.github.io/guide/rule-config.html#rule
 rule:
@@ -70,7 +71,7 @@ const defaultState = {
   mode: Mode.Patch,
   lang: 'javascript' as const,
   query,
-  rewrite: 'logger.log($MATCH)',
+  rewrite,
   strictness: 'smart',
   selector: '',
   config,

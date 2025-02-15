@@ -1,33 +1,9 @@
 import init, { setupParser, initializeTreeSitter, findNodes, fixErrors } from 'ast-grep-wasm'
 import type { InjectionKey, Ref } from 'vue'
 import { shallowRef, watchEffect, provide } from 'vue'
+import { parserPaths } from '../../../_data/parsers'
 
 export type SupportedLang = keyof typeof parserPaths
-
-const parserPaths = {
-  javascript: 'tree-sitter-javascript.wasm',
-  typescript: 'tree-sitter-typescript.wasm',
-  tsx: 'tree-sitter-tsx.wasm',
-  // not so well supported lang...
-  bash: 'tree-sitter-bash.wasm',
-  c: 'tree-sitter-c.wasm',
-  csharp: 'tree-sitter-c_sharp.wasm',
-  css: 'tree-sitter-css.wasm',
-  cpp: 'tree-sitter-cpp.wasm',
-  elixir: 'tree-sitter-elixir.wasm',
-  go: 'tree-sitter-go.wasm',
-  html: 'tree-sitter-html.wasm',
-  java: 'tree-sitter-java.wasm',
-  json: 'tree-sitter-json.wasm',
-  kotlin: 'tree-sitter-kotlin.wasm',
-  php: 'tree-sitter-php.wasm',
-  python: 'tree-sitter-python.wasm',
-  ruby: 'tree-sitter-ruby.wasm',
-  rust: 'tree-sitter-rust.wasm',
-  scala: 'tree-sitter-scala.wasm',
-  swift: 'tree-sitter-swift.wasm',
-  yaml: 'tree-sitter-yaml.wasm',
-}
 
 // monaco does not realize bash is shell but shell is not bash.
 // use this mapping to highlight bash
@@ -43,7 +19,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   typescript: 'TypeScript',
   tsx: 'TSX',
   // not so well supported lang...
-  bash: 'Bash(beta)',
+  bash: 'Bash',
   c: 'C',
   csharp: 'C#',
   css: 'CSS',
@@ -54,7 +30,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   java: 'Java',
   json: 'JSON',
   kotlin: 'Kotlin',
-  php: 'PHP(alpha)',
+  php: 'PHP',
   python: 'Python',
   ruby: 'Ruby',
   rust: 'Rust',

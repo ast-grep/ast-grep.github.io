@@ -2,26 +2,16 @@
 import IconReset from '../icons/Reset.vue'
 
 import type { State } from './astGrep/state'
+import { config, query, rewrite } from './astGrep/state'
 
 const state = defineModel<State>({
   required: true,
 })
 
-const config = `
-# YAML Rule is more powerful!
-# https://ast-grep.github.io/guide/rule-config.html#rule
-rule:
-  any:
-    - pattern: console.log($A)
-    - pattern: console.debug($A)
-fix:
-  logger.log($A)
-`.trim()
-
 const onReset = () => {
   state.value.config = config
-  state.value.query = 'console.log($MATCH)'
-  state.value.rewrite = 'logger.log($MATCH)'
+  state.value.query = query
+  state.value.rewrite = rewrite
 }
 </script>
 
@@ -40,5 +30,6 @@ const onReset = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: transparent;
 }
 </style>
