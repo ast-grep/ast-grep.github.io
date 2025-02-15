@@ -7,6 +7,7 @@
     "dev": "vitepress dev website",
     "dev-force": "vitepress dev website --force",
     "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vitepress build website",
+    "download-parsers": "node --experimental-strip-types website/public/parsers/downloadParsers.mjs",
     "serve": "vitepress serve website"
   },
   "dependencies": {

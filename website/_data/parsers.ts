@@ -23,7 +23,7 @@ export const parserPaths = {
   yaml: 'tree-sitter-yaml.wasm',
 }
 
-export const repos = {
+export const repos: Record<string, string> = {
   bash: 'https://unpkg.com/tree-sitter-bash',
   c: 'https://unpkg.com/tree-sitter-c',
   cpp: 'https://unpkg.com/tree-sitter-cpp',
