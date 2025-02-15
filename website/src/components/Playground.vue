@@ -11,7 +11,7 @@ import EnvDisplay from './EnvDisplay.vue'
 import { initializeParser, useAstGrep, Mode as ModeImport } from './astGrep'
 
 // important initialization
-await initializeParser()
+// await initializeParser()
 
 const {
   state,
@@ -72,6 +72,7 @@ let codeMode = shallowRef('code')
               Found {{ matchedHighlights.length }} match(es).
             </span>
             <span v-else>No match found.</span>
+            <ResetConfig @reset="reset" />
           </p>
         </template>
       </Tabs>
@@ -96,7 +97,6 @@ let codeMode = shallowRef('code')
         <template #addon>
           <div class="action-bar">
             <SelectLang v-model="lang"/>
-            <ResetConfig @reset="reset" />
           </div>
         </template>
       </Tabs>
@@ -125,6 +125,13 @@ let codeMode = shallowRef('code')
   /* keep here since monaco suggestion details are not expanded by default */
   filter: drop-shadow(0 0 16px #00000020);
 }
+
+.match-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .action-bar {
   display: flex;
   align-items: center;

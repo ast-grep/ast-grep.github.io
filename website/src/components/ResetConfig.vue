@@ -18,7 +18,7 @@ const emits = defineEmits<{
   height: 2em;
   border-radius: 50%;
   padding: 0px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   background: transparent;

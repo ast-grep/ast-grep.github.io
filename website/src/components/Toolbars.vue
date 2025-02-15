@@ -22,7 +22,7 @@ async function onShare() {
 
 <template>
   <div class="toolbars">
-    <button class="floating" title="Copy your code URL to share!" @click="onShare">
+    <button class="floating" data-title="Copy your code URL to share!" @click="onShare">
       <Share style="width: 24px; height: 24px;"/>
     </button>
     <button
@@ -66,12 +66,12 @@ async function onShare() {
 }
 
 @media only screen and (min-width: 780px) {
-  [title] {
+  [data-title] {
     position: relative;
   }
 
-  [title]:after {
-    content: attr(title);
+  [data-title]:after {
+    content: attr(data-title);
     position: absolute;
     left: -10%;
     bottom: 50%;
@@ -85,12 +85,12 @@ async function onShare() {
     transition: 0.2s;
     border-radius: 5px;
   }
-  
-  .dark [title]:after {
+
+  .dark [data-title]:after {
     color: var(--vp-c-brand-1);
   }
 
-  [title]:hover:after {
+  [data-title]:hover:after {
     opacity: 1;
   }
 }
