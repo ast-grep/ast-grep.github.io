@@ -12,7 +12,7 @@ function selectAll(e: FocusEvent) {
 
 <template>
   <div class="pattern-config">
-    <label>
+    <label title="Strictness determines how the pattern is matched against the code.">
       <a target="_blank" href="https://ast-grep.github.io/advanced/match-algorithm.html">ⓘ</a>
       Strictness:
       <select class="strictness-select" v-model="strictness">
@@ -24,7 +24,7 @@ function selectAll(e: FocusEvent) {
       </select>
       <IconDown/>
     </label>
-    <label>
+    <label title="Selector is used to extract effective matcher from pattern.">
       <a target="_blank" href="https://ast-grep.github.io/advanced/faq.html#my-pattern-does-not-work-why">ⓘ</a>
       Selector:
       <input @focus="selectAll" class="selector-input" type="text" v-model="selector"/>
@@ -33,6 +33,16 @@ function selectAll(e: FocusEvent) {
 </template>
 
 <style scoped>
+label {
+  cursor: help;
+}
+label > input {
+  cursor: auto;
+}
+label:hover > a {
+  text-decoration: underline dashed;
+  text-underline-offset: 3px;
+}
 .pattern-config {
   z-index: 2;
   display: flex;

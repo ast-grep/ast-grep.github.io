@@ -11,7 +11,7 @@ import EnvDisplay from './EnvDisplay.vue'
 import { initializeParser, useAstGrep, Mode as ModeImport } from './astGrep'
 
 // important initialization
-await initializeParser()
+// await initializeParser()
 
 const {
   state,

@@ -64,7 +64,7 @@ let showFullTree = shallowRef(false)
       </div>
     </template>
     <template #panelAccessory>
-      <label class="tree-toggle-label">
+      <label class="tree-toggle-label" title="Show unnamed nodes in CST">
         <input class="tree-toggle" type="checkbox" v-model="showFullTree">
         Show Full Tree
         <a target="_blank" href="https://ast-grep.github.io/advanced/core-concepts.html">ⓘ</a>
@@ -91,6 +91,10 @@ let showFullTree = shallowRef(false)
   float: left;
   user-select: none;
   vertical-align: middle;
+}
+.tree-toggle-label:hover > a {
+  text-decoration: underline dashed;
+  text-underline-offset: 3px;
 }
 .tree-toggle {
   height: 0.85em;
