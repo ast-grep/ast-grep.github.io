@@ -8,15 +8,22 @@ const lang = defineModel<string>({
   required: true,
 })
 
-const version = computed(() => {
-  return versions[lang.value]
+const versionText = computed(() => {
+  const ver = versions[lang.value]
+  return ver ? `Parser version ${ver}` : 'No parser version info'
 })
 </script>
 
 <template>
   <div class="selector">
-    <span v-if="version" :title="`Parser version ${version}`">ⓘ </span>
-    Language:
+    <span
+      class="parser-icon"
+      title-left
+      :data-title="versionText"
+    >
+      ⓘ
+      Language:
+    </span>
     <select v-model="lang">
       <option
         class="selector-option-text"
@@ -47,5 +54,8 @@ select {
   .selector {
     display: none;
   }
+}
+.parser-icon {
+  cursor: help;
 }
 </style>

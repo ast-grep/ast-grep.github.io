@@ -150,3 +150,55 @@ let codeMode = shallowRef('code')
   }
 }
 </style>
+
+<style>
+@media only screen and (min-width: 780px) {
+  .playground [data-title] {
+    position: relative;
+  }
+
+  .playground [data-title]:after {
+    content: attr(data-title);
+    position: absolute;
+    color: var(--vp-c-white);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.25em 0.5em;
+    font-size: 10px;
+    width: max-content;
+    opacity: 0;
+    transition: 0.2s;
+    border-radius: 5px;
+    pointer-events: none;
+  }
+  .playground [data-title]::before {
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: block;
+    border: 5px solid transparent;
+    content: '';
+    opacity: 0;
+    transition: 0.2s;
+    pointer-events: none;
+  }
+  .playground [title-left]::before {
+    left: -10px;
+    bottom: 50%;
+    transform: translateY(50%);
+    border-left-color: rgba(0, 0, 0, 0.5);
+  }
+  .playground [title-left]:after {
+    left: -10px;
+    bottom: 50%;
+    transform: translate(-100%, 50%);
+  }
+
+  .dark .playground [data-title]::after {
+    color: var(--vp-c-brand-1);
+  }
+
+  .playground [data-title]:hover::after, .playground [data-title]:hover::before {
+    opacity: 1;
+  }
+}
+</style>
