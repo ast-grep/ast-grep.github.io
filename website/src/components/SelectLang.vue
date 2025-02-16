@@ -1,12 +1,21 @@
 <script lang="ts" setup>
 import { languageDisplayNames } from './astGrep/lang'
 import IconDown from './utils/IconDown.vue'
+import { versions } from '../../_data/parsers'
+import { computed } from 'vue';
 
-const lang = defineModel()
+const lang = defineModel<string>({
+  required: true,
+})
+
+const version = computed(() => {
+  return versions[lang.value]
+})
 </script>
 
 <template>
   <div class="selector">
+    <span v-if="version" :title="`Parser version ${version}`">ⓘ </span>
     Language:
     <select v-model="lang">
       <option
