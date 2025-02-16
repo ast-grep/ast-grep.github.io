@@ -72,8 +72,12 @@ See [tree-sitter issue](https://github.com/tree-sitter/tree-sitter/issues/224) f
 Text-encoding will affect the error recovery because it changed the cost of different recovery strategies.
 :::
 
+If you find the inconsistency between CLI and Playground, try confirming the playground version by hovering over the language label in playground, and the CLI version by [this file](https://github.com/ast-grep/ast-grep/blob/main/crates/language/Cargo.toml).
+
+![Playground Version](/image/playground-parser-version.png)
+
 :::tip Found inconsistency?
-If you find the inconsistency between CLI and Playground, please [open an issue in the Playground repository](https://github.com/ast-grep/ast-grep.github.io/issues). Contribution to update the Playground parser is warmly welcome!
+You can also [open an issue in the Playground repository](https://github.com/ast-grep/ast-grep.github.io/issues) if you find outdated parsers. Contribution to update the Playground parser is warmly welcome!
 :::
 
 
