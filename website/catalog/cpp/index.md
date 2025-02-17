@@ -7,3 +7,4 @@ Cpp is a superset of C, so you can reuse Cpp rules with C code. The [`languageGl
 :::
 
 <!--@include: ./fix-format-vuln.md-->
+<!--@include: ./find-struct-inheritance.md-->
