@@ -127,6 +127,7 @@ export function useSgState() {
   provide(astGrepStateKey, refs)
   watch(() => state, state => {
     storeStateInLocalStorage(state)
+    history.replaceState({}, '', '#' + serialize(state))
   }, { deep: true })
   return {
     state,
