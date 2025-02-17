@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import RuleFilter from './RuleFilter.vue'
 import RuleList from './RuleList.vue'
 import type { Filter } from './data';
+import { serialize, deserialize } from './data';
 
-const filter = ref<Filter>({
-  selectedLanguages: [],
-  selectedRules: [],
-  selectedFeatures: [],
-  selectedTypes: [],
+const filter = ref<Filter>(deserialize(
+  location.hash.slice(1) || ''
+))
+
+watch(filter, (value) => {
+  const hash = serialize(value)
+  history.replaceState({}, '', hash ? `#${hash}` : '/catalog')
+}, {
+  deep: true,
+  immediate: true,
 })
 
 function reset() {

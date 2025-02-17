@@ -1,6 +1,7 @@
 import type { SupportedLang } from "./lang"
 import { shallowReactive, toRefs, watch, provide } from 'vue'
 import type { InjectionKey, ToRefs, ShallowReactive } from 'vue'
+import { utoa, atou } from '../../utils'
 
 export enum Mode {
   Patch = 'Patch',
@@ -16,16 +17,6 @@ export type State = {
   strictness: string,
   selector: string,
   lang: SupportedLang,
-}
-
-// prefer old unicode hacks for backward compatibility
-// https://base64.guru/developers/javascript/examples/unicode-strings
-function utoa(data: string): string {
-  return btoa(unescape(encodeURIComponent(data)))
-}
-
-function atou(base64: string): string {
-  return decodeURIComponent(escape(atob(base64)))
 }
 
 export function serialize(state: State): string {

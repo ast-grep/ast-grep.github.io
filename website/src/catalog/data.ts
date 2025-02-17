@@ -1,5 +1,6 @@
 import { data as allRules } from '../../_data/catalog.data'
 export type { RuleMeta } from '../../_data/catalog.data'
+import { atou, utoa } from '../utils'
 
 export function intersect(a: string[], b: string[]) {
   return a.some(x => b.includes(x))
@@ -85,3 +86,24 @@ export const features = [
   'constraints',
   'utils'
 ]
+
+export function serialize(data: Filter): string {
+  const allEmpty = Object.values(data).every(x => !x.length)
+  if (allEmpty) {
+    return ''
+  }
+  return utoa(JSON.stringify(data))
+}
+
+export function deserialize(str: string): Filter {
+  try {
+    return JSON.parse(atou(str))
+  } catch {
+    return {
+      selectedLanguages: [],
+      selectedRules: [],
+      selectedFeatures: [],
+      selectedTypes: [],
+    }
+  }
+}
