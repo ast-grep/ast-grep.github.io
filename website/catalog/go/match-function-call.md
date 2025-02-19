@@ -6,10 +6,12 @@
 
 One of the common questions of ast-grep is to match function calls in Golang.
 
-A plain pattern like `fmt.Println($A)` will not work. This is because Golang syntax also allows type conversions, e.g. `int(3.14)`, that look like function calls.
+A plain pattern like `fmt.Println($A)` will not work. This is because Golang syntax also allows type conversions, e.g. `int(3.14)`, that look like function calls. Tree-sitter, ast-grep's parser, will prefer parsing `func_call(arg)` as a type conversion instead of a call expression.
 
 To avoid this ambiguity, ast-grep lets us write a [contextual pattern](/guide/rule-config/atomic-rule.html#pattern), which is a pattern inside a larger code snippet.
 We can use `context` to write a pattern like this: `func t() { fmt.Println($A) }`. Then, we can use the selector `call_expression` to match only function calls.
+
+Please also read the [deep dive](/advanced/pattern-parse.html) on [ambiguous pattern](/advanced/pattern-parse.html#ambiguous-pattern-code).
 
 ### YAML
 
