@@ -28,9 +28,9 @@ For example, to select class field in JavaScript, writing `$FIELD = $INIT` will 
 
 We can also use an _object_ to specify a sub-syntax node to match within a larger context. It consists of an object with three properties: `context`, `selector` and `strictness`.
 
-* `context`: defines the surrounding code that helps to resolve any ambiguity in the syntax.
-* `selector`: defines the sub-syntax node kind that is the actual matcher of the pattern.
-* `strictness`: optional. defines how strictly pattern will match against nodes.
+* `context` (required): defines the surrounding code that helps to resolve any ambiguity in the syntax.
+* `selector` (optional):  defines the sub-syntax node kind that is the actual matcher of the pattern.
+* `strictness` (optional): defines how strictly pattern will match against nodes.
 
 Let's see how pattern object can solve the ambiguity in the class field example above.
 
