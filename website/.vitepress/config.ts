@@ -45,7 +45,7 @@ export default defineConfig({
         text: 'Resources',
         items: [
           { text: 'FAQ', link: '/advanced/faq.html' },
-          { text: 'Rule Examples', link: '/catalog/' },
+          { text: 'Rule Examples', link: '/catalog' },
           { text: 'Custom Language', link: '/advanced/custom-language.html' },
           { text: 'Contributing', link: '/contributing/how-to.html' },
           { text: 'Blog', link: '/blog.html' },
@@ -117,7 +117,7 @@ export default defineConfig({
         },
         {
           text: 'Examples',
-          link: '/catalog/',
+          link: '/catalog',
           items: [
             { text: 'C', link: '/catalog/c/'},
             { text: 'C++', link: '/catalog/cpp/'},

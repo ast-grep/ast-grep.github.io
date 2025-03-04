@@ -96,7 +96,7 @@ The ast-grep website isn't just a static page; it's your interactive command cen
 
 ### Interactive Example Catalog:  Learn by Doing!
 
-The [example catalog](/catalog) has received a major upgrade, transforming it into an interactive learning environment:
+The [example catalog](https://ast-grep.github.io/catalog) has received a major upgrade, transforming it into an interactive learning environment:
 
 **Interactive Rule Exploration:** Dive deep into rules with interactive features like Rule Display & Extraction, MetaVar Panel, Matched Labeling, Pattern Debugger, Selector Explorer, and Pattern Configuration & Icons.  Dissect rules, understand their components, and visualize how they work – all in your browser!
 

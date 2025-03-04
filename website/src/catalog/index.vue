@@ -5,13 +5,17 @@ import RuleList from './RuleList.vue'
 import type { Filter } from './data';
 import { serialize, deserialize } from './data';
 
+// for SSR
+const loc = typeof location !== 'undefined' ? location : null
+const his = typeof history !== 'undefined' ? history : null
+
 const filter = ref<Filter>(deserialize(
-  location.hash.slice(1) || ''
+  loc?.hash.slice(1) || ''
 ))
 
 watch(filter, (value) => {
   const hash = serialize(value)
-  history.replaceState({}, '', hash ? `#${hash}` : '/catalog')
+  his?.replaceState({}, '', hash ? `#${hash}` : '/catalog')
 }, {
   deep: true,
   immediate: true,
