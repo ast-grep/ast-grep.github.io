@@ -46,7 +46,7 @@ Possible values:
 - **cst**: Print the query in tree-sitter CST format, both named and unnamed nodes are shown
 - **sexp**: Print the query in S-expression format
 
-#### `--selector <KIND>`
+### `--selector <KIND>`
 
 AST kind to extract sub-part of pattern to match.
 
