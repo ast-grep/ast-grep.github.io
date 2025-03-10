@@ -8,3 +8,4 @@ This page curates a list of example ast-grep rules to check and to rewrite Pytho
 <!--@include: ./remove-async-await.md-->
 <!--@include: ./refactor-pytest-fixtures.md-->
 <!--@include: ./optional-to-none-union.md-->
+<!--@include: ./recursive-rewrite-type.md-->
