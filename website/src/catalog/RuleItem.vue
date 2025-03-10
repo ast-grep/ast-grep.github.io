@@ -53,6 +53,7 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
       <div class="rule-details">
         <div class="rule-badges" >
           <template v-if="meta.type === 'Pattern'">
+            <span>📝</span>
             <Badge type="info" text="Simple Pattern Example" />
           </template>
           <template v-else>
@@ -138,6 +139,10 @@ a:hover {
   border-radius: 8px;
   padding: 1rem;
   display: flex;
+  transition: border-color 0.2s ease;
+}
+.rule-item:hover {
+  border-color: var(--vp-c-border);
 }
 
 .rule-badges {
