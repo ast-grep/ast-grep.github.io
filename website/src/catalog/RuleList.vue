@@ -33,7 +33,7 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
       />
       <label class="sort-by">
         Sort by:
-        <select v-model="sortBy">
+        <select class="select" v-model="sortBy">
           <option value="name">Name</option>
           <option value="lang">Lang</option>
           <option value="complexity">Complexity</option>
@@ -80,6 +80,9 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
 </template>
 
 <style scoped>
+.select {
+  background-color: var(--vp-c-bg);
+}
 .rule-list-container {
   position: relative;
   min-height: 280px;

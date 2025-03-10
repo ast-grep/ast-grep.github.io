@@ -43,6 +43,9 @@ table {
 input, textarea {
     -webkit-user-select: auto;
 }
+select {
+  background-color: var(--vp-c-bg);
+}
 
 /* revert the 'white-space' property for textarea elements on Safari */
 textarea {
