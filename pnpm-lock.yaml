@@ -46,8 +46,8 @@ importers:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.19.0)(postcss@8.5.1)(search-insights@2.17.3)(typescript@5.8.2)
       vue-tsc:
-        specifier: 2.2.2
-        version: 2.2.2(typescript@5.8.2)
+        specifier: 2.2.8
+        version: 2.2.8(typescript@5.8.2)
     optionalDependencies:
       ast-grep-wasm:
         specifier: file:./pkg/
@@ -768,8 +768,8 @@ packages:
   '@vue/devtools-shared@7.7.1':
     resolution: {integrity: sha512-BtgF7kHq4BHG23Lezc/3W2UhK2ga7a8ohAIAGJMBr4BkxUFzhqntQtCiuL1ijo2ztWnmusymkirgqUrXoQKumA==}
 
-  '@vue/language-core@2.2.2':
-    resolution: {integrity: sha512-QotO41kurE5PLf3vrNgGTk3QswO2PdUFjBwNiOi7zMmGhwb25PSTh9hD1MCgKC06AVv+8sZQvlL3Do4TTVHSiQ==}
+  '@vue/language-core@2.2.8':
+    resolution: {integrity: sha512-rrzB0wPGBvcwaSNRriVWdNAbHQWSf0NlGqgKHK5mEkXpefjUlVRP62u03KvwZpvKVjRnBIQ/Lwre+Mx9N6juUQ==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
@@ -1255,8 +1255,8 @@ packages:
   vscode-uri@3.0.8:
     resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
 
-  vue-tsc@2.2.2:
-    resolution: {integrity: sha512-1icPKkxAA5KTAaSwg0wVWdE48EdsH8fgvcbAiqojP4jXKl6LEM3soiW1aG/zrWrFt8Mw1ncG2vG1PvpZpVfehA==}
+  vue-tsc@2.2.8:
+    resolution: {integrity: sha512-jBYKBNFADTN+L+MdesNX/TB3XuDSyaWynKMDgR+yCSln0GQ9Tfb7JS2lr46s2LiFUT1WsmfWsSvIElyxzOPqcQ==}
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.0'
@@ -1854,7 +1854,7 @@ snapshots:
     dependencies:
       rfdc: 1.4.1
 
-  '@vue/language-core@2.2.2(typescript@5.8.2)':
+  '@vue/language-core@2.2.8(typescript@5.8.2)':
     dependencies:
       '@volar/language-core': 2.4.11
       '@vue/compiler-dom': 3.5.13
@@ -2418,10 +2418,10 @@ snapshots:
 
   vscode-uri@3.0.8: {}
 
-  vue-tsc@2.2.2(typescript@5.8.2):
+  vue-tsc@2.2.8(typescript@5.8.2):
     dependencies:
       '@volar/typescript': 2.4.11
-      '@vue/language-core': 2.2.2(typescript@5.8.2)
+      '@vue/language-core': 2.2.8(typescript@5.8.2)
       typescript: 5.8.2
 
   vue@3.5.13(typescript@5.8.2):
