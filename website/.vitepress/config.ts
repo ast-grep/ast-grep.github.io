@@ -210,4 +210,7 @@ export default defineConfig({
       provider: 'local',
     },
   },
+  sitemap: {
+    hostname: 'https://ast-grep.github.io',
+  },
 })
