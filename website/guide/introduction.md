@@ -10,7 +10,7 @@ head:
 
 ## Introduction
 
-ast-grep is a new AST based tool for managing your code, at massive scale.
+ast-grep is a new AST based tool to manage your code, at massive scale.
 
 Using ast-grep can be as simple as running a single command in your terminal:
 
@@ -24,11 +24,13 @@ The command above will replace `var` statement with `let` for all <abbr title="a
 
 ast-grep is a versatile tool for searching, linting and rewriting code in various languages.
 
-* **Search**: As a command line tool in your terminal, `ast-grep` can precisely search code based on AST, running through ten thousand files in sub seconds.
-* **Lint**: You can also use ast-grep as a linter. Thanks to the flexible rule configuration, adding a new customized rule is more intuitive and straightforward. It also has a pretty error reporting out of box
-* **Rewrite**: ast-grep provide jQuery like utility methods to traverse and manipulate syntax tree. Besides, you can also use operators to compose complex matching from simple patterns.
+* **Search**: As a _command line tool_ in your terminal, `ast-grep` can precisely search code _based on AST_, running through ten thousand files in sub seconds.
+* **Lint**: You can use ast-grep as a linter. Thanks to the flexible rule system, adding a new customized rule is intuitive and straightforward, with _pretty error reporting_ out of box.
+* **Rewrite**: ast-grep provide API to traverse and manipulate syntax tree. Besides, you can also use operators to compose complex matching from simple patterns.
 
 > Think ast-grep as an hybrid of [grep](https://www.gnu.org/software/grep/manual/grep.html), [eslint](https://eslint.org/) and [codemod](https://github.com/facebookincubator/fastmod).
+
+Wanna try it out? Check out the [quick start guide](/guide/quick-start)! Or see some [examples](/catalog) to get a sense of what ast-grep can do. We also have a [playground](/playground.html) for you to try out ast-grep online!
 
 ## Supported Languages
 

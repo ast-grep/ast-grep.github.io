@@ -17,10 +17,16 @@ hero:
     alt: ast-grep
   actions:
     - theme: brand
-      text: Get Started
-      link: /guide/introduction
+      text: Quickstart
+      link: /guide/quick-start.html
     - theme: alt
-      text: View on GitHub
+      text: Introduction
+      link: /guide/introduction.html
+    - theme: alt
+      text: Examples
+      link: /catalog/
+    - theme: alt
+      text: GitHub
       link: https://github.com/ast-grep/ast-grep
 
 features:
