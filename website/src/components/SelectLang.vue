@@ -49,6 +49,7 @@ select {
 }
 .selector-option-text {
   color: var(--vp-custom-selector-option-text);
+  background-color: var(--vp-c-bg);
 }
 @media only screen and (max-width: 780px) {
   .selector {
