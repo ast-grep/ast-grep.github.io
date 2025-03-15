@@ -48,7 +48,7 @@ select {
   cursor: pointer;
 }
 .selector-option-text {
-  color: var(--vp-custom-selector-option-text);
+  color: var(--vp-c-text-1);
   background-color: var(--vp-c-bg);
 }
 @media only screen and (max-width: 780px) {
