@@ -45,7 +45,7 @@ input, textarea {
 }
 option {
   background-color: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-1) !important;
 }
 
 /* revert the 'white-space' property for textarea elements on Safari */
