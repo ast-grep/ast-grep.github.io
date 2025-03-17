@@ -59,7 +59,7 @@ export const versions: Record<string, string> = {
   python:  "0.23.3",
   ruby:  "0.23.1",
   rust:  "0.23.2",
-  scala:  "0.23.4",
+  scala:  "0.23.3",
   tsx: "0.23.2",
   typescript: "0.23.2",
 }
