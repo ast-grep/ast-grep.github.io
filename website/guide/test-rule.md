@@ -40,9 +40,9 @@ The configuration file should be located at a directory that looks like this.
 ```bash{3,5}
 my-awesome-rules/
   |- rules/
-  | |- no-await-in-loop.yml        # test file
+  | |- no-await-in-loop.yml        # rule file
   |- rule-tests/
-  | |- no-await-in-loop-test.yml   # rule file
+  | |- no-await-in-loop-test.yml   # test file
   |- sgconfig.yml
 ```
 
