@@ -141,7 +141,7 @@ testFunc(1 + 1)
 testFunc(...args)
 ```
 
-Note in the example above, even if two meta variables have the same name `$_FUNC`, each occurrence of `$_FUNC` can match different content because the are not captured.
+Note in the example above, even if two meta variables have the same name `$_FUNC`, each occurrence of `$_FUNC` can match different content because they are not captured.
 
 :::info Why use non-capturing match?
 This is a useful trick to micro-optimize pattern matching speed, since we don't need to create a [HashMap](https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html) for bookkeeping.
