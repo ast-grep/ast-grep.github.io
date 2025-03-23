@@ -20,7 +20,7 @@ The rules below correspond to XState v5's [`createMachine`](https://stately.ai/d
 
 The example shows how ast-grep can use various features like [utility rule](/guide/rule-config/utility-rule.html), [transformation](/reference/yaml/transformation.html) and [multiple rule in single file](/reference/playground.html#test-multiple-rules) to automate the migration. Each rule has a clear and descriptive `id` field that explains its purpose.
 
-For more information, you can use [@ast-grep-bot](https://discord.gg/4YZjf6htSQ) to provide more detailed explanation for each rule.
+For more information, you can use [Codemod AI](https://app.codemod.com/studio?ai_thread_id=new) to provide more detailed explanation for each rule.
 
 ```yaml
 id: migrate-import-name
