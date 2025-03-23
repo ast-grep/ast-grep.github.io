@@ -14,7 +14,8 @@ https://github.com/ast-grep/ast-grep/blob/main/crates/napi/index.d.ts
 
 ### Supported Languages
 
-`@ast-grep/napi` supports all builtin languages listed [here](/reference/languages.html).
+`@ast-grep/napi` supports JS ecosystem languages by default.
+More custom languages can be loaded via [`registerDynamicLanguage`](https://github.com/search?q=repo%3Aast-grep%2Flangs%20registerDynamicLanguage&type=code).
 
 #### Type
 
@@ -25,25 +26,14 @@ export const enum Lang {
   Tsx = 'Tsx',
   Css = 'Css',
   TypeScript = 'TypeScript',
-  Bash = 'Bash',
-  C = 'C',
-  Cpp = 'Cpp',
-  CSharp = 'CSharp',
-  Go = 'Go',
-  Elixir = 'Elixir',
-  Haskell = 'Haskell',
-  Java = 'Java',
-  Json = 'Json',
-  Kotlin = 'Kotlin',
-  Lua = 'Lua',
-  Php = 'Php',
-  Python = 'Python',
-  Ruby = 'Ruby',
-  Rust = 'Rust',
-  Scala = 'Scala',
-  Swift = 'Swift'
 }
+
+// More custom languages can be loaded
+// see https://github.com/ast-grep/langs
+type CustomLang = string & {}
 ```
+
+`CustomLang` is not widely used now. If you have use case and needs support, please file an issue in the [@ast-grep/langs](https://github.com/ast-grep/langs?tab=readme-ov-file#packages) repository.
 
 ### Main functions
 
@@ -203,12 +193,12 @@ interface Edit {
 * [Test Case Source](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/index.spec.ts) for `@ast-grep/napi`
 * ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
 
-
 ### Language Object (deprecated) <Badge type="danger" text="Deprecated" />
+
+:::details language objects are deprecated
 
 `ast-grep/napi` also has special language objects for `html`, `js` and `css`. They are deprecated and will be removed in the next version.
 
-:::details
 A language object has following methods.
 
 ```ts
