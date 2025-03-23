@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import llmstxt from 'vitepress-plugin-llms'
 
 const gaScript = `
 window.dataLayer = window.dataLayer || [];
@@ -19,6 +20,7 @@ export default defineConfig({
   // appearance: false,
   lastUpdated: true,
   vite: {
+    plugins: [llmstxt()],
     build: {
       target: 'es2020',
     },
