@@ -45,9 +45,9 @@ The general usage of `llms.txt` is as follows:
 3. Ask AI questions about ast-grep
 
 
-## Codemod AI Studio
+## AI-powered Codemod Studio
 
-[Codemod.com](https://codemod.com/) is a long-time [supporter](https://github.com/ast-grep/ast-grep?tab=readme-ov-file#sponsor) of ast-grep and has recently introduced a new feature called [Codemod Studio](https://app.codemod.com/studio).
+[Codemod.com](https://codemod.com/) is a long-time [contributor](https://go.codemod.com/ast-grep-contributions) [supporter](https://github.com/ast-grep/ast-grep?tab=readme-ov-file#sponsor) of ast-grep and has recently introduced a new feature called [Codemod Studio](https://app.codemod.com/studio).
 
 The studio introduces an AI assistant which is is a game-changer for writing ast-grep rules. This interactive environment allows you to use natural language to describe the code patterns you want to find, and then the AI will help you write the corresponding ast-grep rule. Here's how it works:
 
@@ -81,4 +81,4 @@ See the tracking GitHub issue [here](https://github.com/ast-grep/ast-grep/issues
 
 ## Conclusion
 
-ast-grep's integration of LLMs, including `llms.txt`, Codemod AI Studio, and  GenAI Script, represents a significant leap forward in code analysis. With the promise of MCP on the horizon, ast-grep is poised to become an indispensable tool for developers seeking to harness the power of AI to understand, transform, and elevate their code. The future of code analysis is here, and it's powered by ast-grep.
+ast-grep's integration of LLMs, including `llms.txt`, Codemod Studio, and  GenAI Script, represents a significant leap forward in code analysis. With the promise of MCP on the horizon, ast-grep is poised to become an indispensable tool for developers seeking to harness the power of AI to understand, transform, and elevate their code. The future of code analysis is here, and it's powered by ast-grep.
