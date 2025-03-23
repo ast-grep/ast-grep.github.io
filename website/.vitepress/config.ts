@@ -193,6 +193,7 @@ export default defineConfig({
           text: 'Links',
           items: [
             { text: 'Playground', link: '/playground.html' },
+            { text: 'Codemod Studio', link: 'https://app.codemod.com/studio' },
             { text: 'Blog', link: '/blog.html' },
             { text: 'VSCode', link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode'},
             { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ'},
