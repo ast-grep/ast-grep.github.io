@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@number-flow/vue':
-        specifier: 0.4.5
-        version: 0.4.5(vue@3.5.13(typescript@5.8.2))
+        specifier: 0.4.6
+        version: 0.4.6(vue@3.5.13(typescript@5.8.2))
       '@types/js-yaml':
         specifier: 4.0.9
         version: 4.0.9
@@ -29,10 +29,6 @@ importers:
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.8.2)
-    optionalDependencies:
-      ast-grep-wasm:
-        specifier: file:./pkg/
-        version: file:pkg
     devDependencies:
       '@algolia/client-search':
         specifier: 5.21.0
@@ -55,6 +51,10 @@ importers:
       vue-tsc:
         specifier: 2.2.8
         version: 2.2.8(typescript@5.8.2)
+    optionalDependencies:
+      ast-grep-wasm:
+        specifier: file:./pkg/
+        version: file:pkg
 
 packages:
 
@@ -487,8 +487,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
 
-  '@number-flow/vue@0.4.5':
-    resolution: {integrity: sha512-Yj8yH9NS8JlsSFLf6uTcpIynGHKAht45HgE1QIBC4YJR+P93UoADTatBgFYk17YgFt2oVn7K9rVi27ft/8C8bA==}
+  '@number-flow/vue@0.4.6':
+    resolution: {integrity: sha512-91rNu2F4awAY0ejIffzCIwxLYRmGgG2twzg8+XO031gwwlDtxW23SAgKb2/+ZbUgQcClhhZdKGRh9p/qs8uhCQ==}
     peerDependencies:
       vue: ^3
 
@@ -1072,8 +1072,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  number-flow@0.5.5:
-    resolution: {integrity: sha512-oE+gyA3S0ar8un2dg80TlEi3hjvi/UnTewHl2bu9dGKMxU7nT8VTUdIf1X7NbRLslqyyTyxdSmIAv/QJhaq1pw==}
+  number-flow@0.5.6:
+    resolution: {integrity: sha512-3K4lWNn+zWYeWEgaJMbFIjqy6WnvIETXTVIybKnaPU0XmhsqQmdXfxXf7tmB4MybzHwrl5GN4oFT34EU/B2yhg==}
 
   oniguruma-to-es@2.3.0:
     resolution: {integrity: sha512-bwALDxriqfKGfUufKGGepCzu9x7nJQuoRoAFp4AnwehhC2crqrDIAP/uN2qdlsAvSMpeRC3+Yzhqc7hLmle5+g==}
@@ -1653,10 +1653,10 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
-  '@number-flow/vue@0.4.5(vue@3.5.13(typescript@5.8.2))':
+  '@number-flow/vue@0.4.6(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       esm-env: 1.2.2
-      number-flow: 0.5.5
+      number-flow: 0.5.6
       vue: 3.5.13(typescript@5.8.2)
 
   '@rollup/rollup-android-arm-eabi@4.28.0':
@@ -2256,7 +2256,7 @@ snapshots:
 
   nanoid@3.3.8: {}
 
-  number-flow@0.5.5:
+  number-flow@0.5.6:
     dependencies:
       esm-env: 1.2.2
 
