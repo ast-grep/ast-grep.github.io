@@ -9,7 +9,7 @@ The author is grateful to these predecessor tools for inspiring ast-grep! The re
 ## ast-grep
 
 **Pros**:
-* It is very performant. It uses ignore to do multi-thread processing, which makes it utilize all your CPU cores.
+* It is very performant. It uses [ignore](https://docs.rs/ignore/latest/ignore/) to do multi-thread processing, which makes it utilize all your CPU cores.
 * It is language aware. It uses tree-sitter, a real parser, to parse the code into ASTs, which enables more precise and accurate matching and fixing.
 * It has a powerful and flexible rule system. It allows you to write patterns, AST types and regular expressions to match code. It provides operators to compose complex matching rules for various scenarios.
 * It can be used as a lightweight CLI tool or as a library, depending on your usage. It has a simple and user-friendly interface, and it also exposes its core functionality as a library for other applications.
@@ -37,6 +37,18 @@ Semgrep is a well-established tool that uses code patterns to find and fix bugs 
 * It is relatively slow when used as command line tools.
 * It cannot be used as a library in other applications, which may reduce its integration and customization options.
 
+## [GritQL](https://about.grit.io/)
+
+[GritQL](https://docs.grit.io/language/overview) language is [Grit](https://docs.grit.io/)'s embedded query language for searching and transforming source code.
+
+**Pros**:
+
+* GritQL is generally more powerful. It has features like [clause](https://docs.grit.io/language/modifiers) from [logic programming language](https://en.wikipedia.org/wiki/Logic_programming#:~:text=A%20logic%20program%20is%20a,Programming%20(ASP)%20and%20Datalog.) and [operations](https://docs.grit.io/language/conditions#match-condition) from imperative programming languages.
+* It is used as [linter plugins](https://biomejs.dev/linter/plugins/) in [Biome](https://biomejs.dev/), a toolchain for JS ecosystem.
+
+**Cons**:
+* Depending on different background, developers may find it harder to learn a multi-paradigm DSL.
+
 ## [Comby](https://comby.dev/)
 
 Comby is a fast and flexible tool that uses structural patterns to match and rewrite code across languages and file formats.
@@ -51,17 +63,6 @@ Comby is a fast and flexible tool that uses structural patterns to match and rew
 * It does not support indentation-sensitive languages like Python or Haskell, which require special handling for whitespace and indentation.
 * It is hard to write complex queries with Comby, such as finding a function that does not call another function. It does not support logical operators or filters for patterns.
 
-## [Shisho](https://docs.shisho.dev/shisho)
-Shisho is a new and promising tool that uses code patterns to search and manipulate code in various languages.
-
-**Pros**:
-* It offers fast and flexible rule composition using code patterns.
-* It can handle multiple languages and files in parallel, and it has a simple and intuitive syntax for specifying patterns and filters.
-
-**Cons**:
-* It is still in development and it has limited language support compared to the other tools.
-It currently supports only 3 languages, while the other tools support over 20 languages.
-
 ## [IntelliJ Structural Search Replace](https://www.jetbrains.com/help/idea/structural-search-and-replace.html)
 
 IntelliJ Structural Search Replace is not a standalone tool, but a feature of the IntelliJ IDE that allows users to search and replace code using structural patterns.
@@ -72,14 +73,14 @@ IntelliJ Structural Search Replace is not a standalone tool, but a feature of th
 **Cons**:
 * Currently, IntelliJ IDEA supports the structural search and replace for Java, Kotlin and Groovy.
 
-## [GritQL](https://about.grit.io/)
-
-[GritQL](https://docs.grit.io/language/overview) language is [Grit](https://docs.grit.io/)'s embedded query language for searching and transforming source code.
+## [Shisho](https://docs.shisho.dev/shisho)
+Shisho is a new and promising tool that uses code patterns to search and manipulate code in various languages.
 
 **Pros**:
-
-* GritQL is generally more powerful. It has features like [clause](https://docs.grit.io/language/modifiers) from [logic programming language](https://en.wikipedia.org/wiki/Logic_programming#:~:text=A%20logic%20program%20is%20a,Programming%20(ASP)%20and%20Datalog.) and [operations](https://docs.grit.io/language/conditions#match-condition) from imperative programming languages.
-* It is used as [linter plugins](https://biomejs.dev/linter/plugins/) in [Biome](https://biomejs.dev/), a toolchain for JS ecosystem.
+* It offers fast and flexible rule composition using code patterns.
+* It can handle multiple languages and files in parallel, and it has a simple and intuitive syntax for specifying patterns and filters.
 
 **Cons**:
-* Depending on different background, developers may find it harder to learn a multi-paradigm DSL.
+* It is still in development and it has limited language support compared to the other tools.
+It currently supports only 3 languages, while the other tools support over 20 languages.
+* The tool's parent company seems to have changed their business direction.
