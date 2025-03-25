@@ -85,7 +85,7 @@ The idea of ast-grep can be applied to many other languages!
 
 ## Features
 
-There are a lot of existing tools that looks like ast-grep, notable predecessor including [Semgrep](https://semgrep.dev/), [comby](https://comby.dev/), [shisho](https://shisho.dev/), [gogocode](https://gogocode.io/).
+There are a lot of other tools that looks like ast-grep, notable predecessors including [Semgrep](https://semgrep.dev/), [comby](https://comby.dev/), [shisho](https://github.com/flatt-security/shisho), [gogocode](https://github.com/thx/gogocode), and new comers like [gritQL](https://about.grit.io/)
 
 What makes ast-grep stands out is:
 
