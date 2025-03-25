@@ -71,3 +71,15 @@ IntelliJ Structural Search Replace is not a standalone tool, but a feature of th
 
 **Cons**:
 * Currently, IntelliJ IDEA supports the structural search and replace for Java, Kotlin and Groovy.
+
+## [GritQL](https://about.grit.io/)
+
+[GritQL](https://docs.grit.io/language/overview) language is [Grit](https://docs.grit.io/)'s embedded query language for searching and transforming source code.
+
+**Pros**:
+
+* GritQL is generally more powerful. It has features like [clause](https://docs.grit.io/language/modifiers) from [logic programming language](https://en.wikipedia.org/wiki/Logic_programming#:~:text=A%20logic%20program%20is%20a,Programming%20(ASP)%20and%20Datalog.) and [operations](https://docs.grit.io/language/conditions#match-condition) from imperative programming languages.
+* It is used as [linter plugins](https://biomejs.dev/linter/plugins/) in [Biome](https://biomejs.dev/), a toolchain for JS ecosystem.
+
+**Cons**:
+* Depending on different background, developers may find it harder to learn a multi-paradigm DSL.
