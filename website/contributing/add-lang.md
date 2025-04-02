@@ -151,7 +151,7 @@ Then, in your parser repository, use this command to build a WASM file.
 
 ```bash
 tree-sitter generate # if grammar is not generated before
-tree-sitter build-wasm
+tree-sitter build --wasm
 ```
 
 Note you may need to install [docker](https://www.docker.com/) when building WASM files.
