@@ -22,7 +22,7 @@
       <a target="_blank" href="https://coderabbit.ai/" title="CodeRabbit" class="sponsor">
         <img src='https://avatars.githubusercontent.com/in/347564?s=200&v=4' style="padding: 23px"/>
       </a>
-      <a target="_blank" href="https://codemod.com/" title="Codemod" class="sponsor">
+      <a target="_blank" href="https://codemod.com/" title="Codemod">
         <img src='https://avatars.githubusercontent.com/u/78830094?s=200&v=4' style="padding: 23px"/>
       </a>
       <a target="_blank" href="https://opennext.js.org/cloudflare" title="OpenNext">
