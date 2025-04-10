@@ -96,14 +96,13 @@ After reloading the VSCode window, you should see red underlines for any errors 
 The recommended setup is using [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig).
 
 ```lua
-local configs = require 'lspconfig.configs'
-configs.ast_grep = {
-  default_config = {
-    cmd = {'ast-grep', 'lsp'};
-    single_file_support = false;
-    root_dir = nvim_lsp.util.root_pattern('sgconfig.yml');
-  };
-}
+require('lspconfig').ast_grep.setup({
+  -- these are the default options, you only need to specify
+  -- options you'd like to change from the default
+  cmd = { 'ast-grep', 'lsp' },
+  filetypes = { "c", "cpp", "rust", "go", "java", "python", "javascript", "typescript", "html", "css", "kotlin", "dart", "lua" },
+  root_dir = require('lspconfig.util').root_pattern('sgconfig.yaml', 'sgconfig.yml')
+})
 ```
 
 ### coc.nvim
