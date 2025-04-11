@@ -71,13 +71,13 @@ Let's change the `pattern` inside `rule` and change the rule's message.
 
 ```yml
 id: no-eval
-message: Add your rule message here.... // [!code --]
-message: Do not use eval! Dangerous! Hazardous! Perilous! // [!code ++]
+message: Add your rule message here.... # [!code --]
+message: Do not use eval! Dangerous! Hazardous! Perilous! # [!code ++]
 severity: error
 language: JavaScript
 rule:
-  pattern: Your Rule Pattern here... // [!code --]
-  pattern: eval($CODE) // [!code ++]
+  pattern: Your Rule Pattern here... # [!code --]
+  pattern: eval($CODE) # [!code ++]
 ```
 
 Okay! The pattern syntax works just like what we have learnt before.
