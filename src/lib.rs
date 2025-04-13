@@ -40,8 +40,7 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
   let combined = CombinedScan::new(rules.iter().collect());
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
-  let sets = combined.find(&root);
-  let ret: HashMap<_, _> = combined.scan(&root, sets, false).matches.into_iter().map(|(rule, matches)| {
+  let ret: HashMap<_, _> = combined.scan(&root, false).matches.into_iter().map(|(rule, matches)| {
     let matches: Vec<_> = matches.into_iter().map(|m| {
       WasmMatch::from_match(m, rule)
     }).collect();
@@ -62,8 +61,7 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
   let combined = CombinedScan::new(rules.iter().collect());
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
-  let sets = combined.find(&root);
-  let diffs = combined.scan(&root, sets, true).diffs;
+  let diffs = combined.scan(&root, true).diffs;
   if diffs.is_empty() {
     return Ok(src);
   }
