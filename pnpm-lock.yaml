@@ -43,8 +43,8 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
       vite:
-        specifier: 6.2.4
-        version: 6.2.4(@types/node@20.17.30)
+        specifier: 6.2.6
+        version: 6.2.6(@types/node@20.17.30)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.21.0)(@types/node@20.17.30)(postcss@8.5.3)(search-insights@2.17.3)(typescript@5.8.2)
@@ -1449,8 +1449,8 @@ packages:
       terser:
         optional: true
 
-  vite@6.2.4:
-    resolution: {integrity: sha512-veHMSew8CcRzhL5o8ONjy8gkfmFJAd5Ac16oxBUjlwgX3Gq2Wqr+qNC3TjPIpy7TPV/KporLga5GT9HqdrCizw==}
+  vite@6.2.6:
+    resolution: {integrity: sha512-9xpjNl3kR4rVDZgPNdTL0/c6ao4km69a/2ihNQbcANz8RuCOK3hQBmLSJf3bRKVQjVMda+YvizNE8AwvogcPbw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -2992,7 +2992,7 @@ snapshots:
       '@types/node': 20.17.30
       fsevents: 2.3.3
 
-  vite@6.2.4(@types/node@20.17.30):
+  vite@6.2.6(@types/node@20.17.30):
     dependencies:
       esbuild: 0.25.0
       postcss: 8.5.3
