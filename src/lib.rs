@@ -11,7 +11,7 @@ use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::collections::HashMap;
 use std::error::Error;
-use tree_sitter as ts;
+use web_tree_sitter_sg::TreeSitter;
 use wasm_bindgen::prelude::*;
 
 type Node<'a> = SgNode<'a, WasmDoc>;
@@ -21,7 +21,7 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen(js_name = initializeTreeSitter)]
 pub async fn initialize_tree_sitter() -> Result<(), JsError> {
-  ts::TreeSitter::init().await
+  TreeSitter::init().await
 }
 
 #[wasm_bindgen(js_name = setupParser)]
@@ -38,7 +38,7 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
-  let doc = WasmDoc::new(src.clone(), lang);
+  let doc = WasmDoc::try_new(src.clone(), lang)?;
   let root = AstGrep::doc(doc);
   let ret: HashMap<_, _> = combined.scan(&root, false).matches.into_iter().map(|(rule, matches)| {
     let matches: Vec<_> = matches.into_iter().map(|m| {
@@ -59,7 +59,7 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
-  let doc = WasmDoc::new(src.clone(), lang);
+  let doc = WasmDoc::try_new(src.clone(), lang)?;
   let root = AstGrep::doc(doc);
   let diffs = combined.scan(&root, true).diffs;
   if diffs.is_empty() {
@@ -85,7 +85,7 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
 }
 
 fn convert_to_debug_node(n: Node) -> DumpNode {
-  let mut cursor = n.get_ts_node().walk();
+  let mut cursor = n.get_inner_node().0.walk();
   let mut target = vec![];
   dump_one_node(&mut cursor, &mut target);
   target.pop().expect_throw("found empty node")
@@ -94,7 +94,7 @@ fn convert_to_debug_node(n: Node) -> DumpNode {
 #[wasm_bindgen(js_name = dumpASTNodes)]
 pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
   let lang = WasmLang::get_current();
-  let doc = WasmDoc::new(src, lang);
+  let doc = WasmDoc::try_new(src, lang)?;
   let root = AstGrep::doc(doc);
   let debug_node = convert_to_debug_node(root.root());
   let ret = serde_wasm_bindgen::to_value(&debug_node)?;

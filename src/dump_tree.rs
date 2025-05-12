@@ -1,16 +1,15 @@
 use serde::{Deserialize, Serialize};
-use tree_sitter as ts;
-use crate::wasm_lang::WasmLang;
+use crate::wasm_lang::{WasmDoc, WasmLang};
 use ast_grep_core::{
-  Language, Pattern, Node, StrDoc,
-  matcher::PatternNode
+  matcher::PatternNode, AstGrep, Language, Node, Pattern
 };
 use wasm_bindgen::prelude::JsError;
+use web_tree_sitter_sg::{Point, TreeCursor};
 
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DumpNode {
-  id: usize,
+  id: u32,
   field: Option<String>,
   kind: String,
   start: Pos,
@@ -26,26 +25,25 @@ pub struct Pos {
   column: u32,
 }
 
-impl From<ts::Point> for Pos {
-  #[inline]
-  fn from(pt: ts::Point) -> Self {
-    Pos {
-      row: pt.row(),
-      column: pt.column(),
+impl From<Point> for Pos {
+  fn from(point: Point) -> Self {
+    Self {
+      row: point.row(),
+      column: point.column(),
     }
   }
 }
 
-pub fn dump_one_node(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
-  let node = cursor.node();
+pub fn dump_one_node(cursor: &mut TreeCursor, target: &mut Vec<DumpNode>) {
+  let node = cursor.current_node();
   let kind = if node.is_missing() {
-    format!("MISSING {}", node.kind())
+    format!("MISSING {}", node.type_())
   } else {
-    node.kind().to_string()
+    format!("{}", node.type_())
   };
   let start = node.start_position().into();
   let end = node.end_position().into();
-  let field = cursor.field_name().map(|c| c.to_string());
+  let field = cursor.current_field_name().map(|c| format!("{}", c));
   let mut children = vec![];
   if cursor.goto_first_child() {
     dump_nodes(cursor, &mut children);
@@ -62,7 +60,7 @@ pub fn dump_one_node(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
   })
 }
 
-fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
+fn dump_nodes(cursor: &mut TreeCursor, target: &mut Vec<DumpNode>) {
   loop {
     dump_one_node(cursor, target);
     if !cursor.goto_next_sibling() {
@@ -74,7 +72,8 @@ fn dump_nodes(cursor: &mut ts::TreeCursor, target: &mut Vec<DumpNode>) {
 pub fn dump_pattern(query: String, selector: Option<String>) -> Result<PatternTree, JsError> {
   let lang = WasmLang::get_current();
   let processed = lang.pre_process_pattern(&query);
-  let root = lang.ast_grep(processed);
+  let doc = WasmDoc::try_new(processed.to_string(), lang)?;
+  let root = AstGrep::doc(doc);
   let pattern = if let Some(sel) = selector {
     Pattern::contextual(&query, &sel, lang)?
   } else {
@@ -85,12 +84,12 @@ pub fn dump_pattern(query: String, selector: Option<String>) -> Result<PatternTr
   Ok(ret)
 }
 
-fn dump_pattern_tree(node: Node<StrDoc<WasmLang>>, node_id: usize, pattern: &PatternNode) -> PatternTree {
+fn dump_pattern_tree(node: Node<WasmDoc>, node_id: usize, pattern: &PatternNode) -> PatternTree {
   if node.node_id() == node_id {
     return dump_pattern_impl(node, pattern)
   }
   let children: Vec<_> = node.children().map(|n| dump_pattern_tree(n, node_id, pattern)).collect();
-  let ts = node.get_ts_node();
+  let ts = node.get_inner_node().0;
   let text = if children.is_empty() {
     Some(node.text().into())
   } else {
@@ -112,9 +111,9 @@ fn dump_pattern_tree(node: Node<StrDoc<WasmLang>>, node_id: usize, pattern: &Pat
   }
 }
 
-fn dump_pattern_impl(node: Node<StrDoc<WasmLang>>, pattern: &PatternNode) -> PatternTree {
+fn dump_pattern_impl(node: Node<WasmDoc>, pattern: &PatternNode) -> PatternTree {
   use PatternNode as PN;
-  let ts = node.get_ts_node();
+  let ts = node.get_inner_node().0;
   let kind =  if ts.is_missing() {
     format!("MISSING {}", node.kind())
   } else {
