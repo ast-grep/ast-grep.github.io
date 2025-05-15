@@ -138,6 +138,16 @@ Usage:
 ```
 or swap to `astgrep` engine while running with the `Swap Engine` action.
 
+### vim-ale
+
+[ALE](https://github.com/dense-analysis/ale) supports LSP-based diagnostics.
+
+Usage:
+
+```vim
+let g:ale_linters = {'*': ['astgrep']}
+```
+
 ## LSP Server
 
 Currently ast-grep support these LSP capabilities:
