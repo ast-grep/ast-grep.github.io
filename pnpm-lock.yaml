@@ -21,8 +21,8 @@ importers:
         specifier: 0.52.2
         version: 0.52.2
       monaco-yaml:
-        specifier: 5.3.1
-        version: 5.3.1(monaco-editor@0.52.2)
+        specifier: 5.4.0
+        version: 5.4.0(monaco-editor@0.52.2)
       vitepress-plugin-llms:
         specifier: 1.1.0
         version: 1.1.0
@@ -1159,8 +1159,8 @@ packages:
     peerDependencies:
       monaco-editor: '>=0.30.0'
 
-  monaco-yaml@5.3.1:
-    resolution: {integrity: sha512-1MN8i1Tnc8d8RugQGqv5jp+Ce2xtNhrnbm0ZZbe5ceExj9C2PkKZfHJhY9kbdUS4G7xSVwKlVdMTmLlStepOtw==}
+  monaco-yaml@5.4.0:
+    resolution: {integrity: sha512-tuBVDy1KAPrgO905GHTItu8AaA5bIzF5S4X0JVRAE/D66FpRhkDUk7tKi5bwKMVTTugtpMLsXN4ewh4CgE/FtQ==}
     peerDependencies:
       monaco-editor: '>=0.36'
 
@@ -2599,7 +2599,7 @@ snapshots:
     dependencies:
       monaco-editor: 0.52.2
 
-  monaco-yaml@5.3.1(monaco-editor@0.52.2):
+  monaco-yaml@5.4.0(monaco-editor@0.52.2):
     dependencies:
       jsonc-parser: 3.3.1
       monaco-editor: 0.52.2
