@@ -204,6 +204,28 @@ Example:
 note: "Use a logger instead"
 ```
 
+### `labels`
+
+* type: `HashMap<String, LabelConfig>`
+* required: false
+
+A dictionary of labels to customize highlighting. The dictionary key is the meta-variable name without `$`, defined in `rules` or `constraints`. The value is a label config object containing the following fields:
+* `style`: (required) the style of the label. Available choice: `primary`, `secondary`.
+* `message`: (optional) the message to be displayed in the editor extension.
+
+Example:
+```yaml
+labels:
+  ARG:
+    style: primary
+    message: "This is the argument"
+  FUNC:
+    style: secondary
+    message: "This is the function"
+```
+
+Please also see [label guide](/guide/project/lint-rule.html#customize-code-highlighting) for details.
+
 ## Globbing
 
 ### `files`

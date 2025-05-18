@@ -127,7 +127,7 @@ An example will be like this. The meta variable `$GREET` will be replaced both i
 * `message` is a concise description when the issue is reported.
 * `severity` is the issue's severity. See more in [severity](/guide/project/severity.html).
 * `note` is a detailed message to elaborate the message and preferably to provide actionable fix to end users.
-
+* `labels` is a dictionary of labels to customize error reporting's code highlighting.
 
 ### `files`/`ignores`
 
@@ -146,15 +146,55 @@ ignores:
 - "tests/config/**"
 ```
 
-:::tip They work together!
-`ignores` and `files` can be used together.
-:::
+`ignores` and `files` can be used together. But `files` will take precedence over `ignores`.
 
 :::warning Don't add `./`
 
 Be sure to remove `./` to the beginning of your rules. ast-grep will not recognize the paths if you add `./`.
 
 :::
+
+## Customize Code Highlighting
+
+ast-grep will report linting issues with highlighted code span called label. A label describes an underlined region of code associated with an issue. _By default, the matched target code and its surrounding code captured by [relational rules](/guide/rule-config/relational-rule.html)_.
+
+ast-grep further allows you to customize the highlighting style with the configuration `labels` in the rule to provide more context to the developer. **`labels` is a dictionary of which the keys are the meta-variable name without `$` and the values ares label config objects.**
+
+The label config object contains two fields: the required `style` and the optional `message`.
+* `style` specifies the category of the label. Available choices are `primary` and `secondary`.
+  * `primary` describe the primary cause of an issue.
+  * `secondary` provides additional context for a diagnostic.
+* `message` specifies the message to be displayed along with the label.
+
+Note, a `label` meta-variable must have a corresponding AST node in the matched code because highlighting requires a range in the code for label. That is, the **label meta-variables must be defined in `rule` or `constraints`**. meta-variables in `transform` cannot be used in `labels` as they are not part of the matched AST node.
+
+---
+
+Let's see an example. Suppose we have a [rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46XG4gICAgY29udGV4dDogJ2NsYXNzIEggeyAkTUVUSE9EKCkgeyAkJCQgfSB9J1xuICAgIHNlbGVjdG9yOiBtZXRob2RfZGVmaW5pdGlvblxuICBpbnNpZGU6XG4gICAgcGF0dGVybjogY2xhc3MgJENMQVNTIHsgJCQkIH1cbiAgICBzdG9wQnk6IGVuZCIsInNvdXJjZSI6ImNsYXNzIE5vdENvbXBvbmVudCB7XG4gICAgbmdPbkluaXQoKSB7fVxufSJ9) that matches method declaration in a class.
+
+```yaml
+rule:
+  pattern:
+    context: 'class H { $METHOD() { $$$ } }'
+    selector: method_definition
+  inside:
+    pattern: class $CLASS { $$$ }
+    stopBy: end
+```
+Without label customization, ast-grep will highlight the method declaration (target), and the whole class declaration, captured by relational rule. We can customize the highlighting with `labels`:
+
+```yaml
+labels:
+  METHOD:
+    style: primary
+    message: the method name
+  CLASS:
+    style: secondary
+    message: The class name
+```
+
+Instead of highlighting the whole method declaration and class declaration, we are just highlighting the method name and class name. The `style` field specifies the highlighting style. The `message` field specifies the message to be displayed in the editor extension. See this post for a [demo](https://x.com/hd_nvim/status/1924120276939256154).
+
 
 ## Ignore Linting Error
 
