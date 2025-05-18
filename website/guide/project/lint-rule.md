@@ -193,7 +193,7 @@ labels:
     message: The class name
 ```
 
-Instead of highlighting the whole method declaration and class declaration, we are just highlighting the method name and class name. The `style` field specifies the highlighting style. The `message` field specifies the message to be displayed in the editor extension. See this post for a [demo](https://x.com/hd_nvim/status/1924120276939256154).
+Instead of highlighting the whole method declaration and class declaration, we are just highlighting the method name and class name. The `style` field specifies the highlighting style. The `message` field specifies the message to be displayed in the editor extension. See this post for a [demo](https://x.com/hd_nvim/status/1924120276939256154) and [the example](/catalog/typescript/missing-component-decorator.html) in catalog.
 
 :::tip VSCode Extension respects `labels`
 ast-grep's LSP diagnostic reporting also respects the labels configuration. Labels with messages are displayed in the editor extension as [diagnostic related information](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#diagnosticRelatedInformation). Users can jump to the label by clicking the message in the editor.
