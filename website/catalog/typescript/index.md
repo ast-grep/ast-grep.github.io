@@ -17,3 +17,5 @@ However, you can use the [`languageGlobs`](/reference/sgconfig.html#languageglob
 <!--@include: ./find-import-usage.md-->
 <!--@include: ./switch-from-should-to-expect.md-->
 <!--@include: ./speed-up-barrel-import.md-->
+<!--@include: ./missing-component-decorator.md-->
+<!--@include: ./find-import-identifiers.md-->
