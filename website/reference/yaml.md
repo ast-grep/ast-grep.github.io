@@ -261,11 +261,15 @@ url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
 * type: `HashMap<String, String>`
 * required: false
 
-Extra information for the rule.
+Extra information for the rule. This section can include custom data for external program to consume. For example, CVE/OWASP information can be added here for security research.
+
+ast-grep will output `metadata` with matches in [`--json`](/reference/cli/scan.html#json-style) mode if [`--include-metadata`](/reference/cli/scan.html#include-metadata) is on.
 
 Example:
 
 ```yaml
 metadata:
   extraField: 'Extra information for other usages'
+  complexData:
+    key: value
 ```

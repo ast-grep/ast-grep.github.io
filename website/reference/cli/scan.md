@@ -40,6 +40,12 @@ Scan the codebase with rules with ids matching REGEX.
 
 This flags conflicts with --rule. It is useful to scan with a subset of rules from a large set of rule definitions within a project.
 
+### `--include-metadata`
+
+Include rule [metadata](/reference/yaml.html#metadata) in the json output.
+
+This flags requires --json mode. Default is false.
+
 ## Input Options
 
 ### `--no-ignore <FILE_TYPE>`

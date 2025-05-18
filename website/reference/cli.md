@@ -62,6 +62,7 @@ ast-grep scan [OPTIONS] [PATHS]...
 | -r | --rule `<RULE_FILE>`| Scan the codebase with the single rule located at the path `RULE_FILE`.|
 |    | --inline-rules `<RULE_TEXT>` | Scan the codebase with a rule defined by the provided `RULE_TEXT` |
 |    | --filter `<REGEX>` |Scan the codebase with rules with ids matching `REGEX` |
+|    | --include-metadata | Include rule metadata in the json output |
 | -j | --threads `<NUM>`   | Set the approximate number of threads to use [default: heuristic]
 | -i | --interactive|Start interactive edit session.|
 | | --color `<WHEN>`|Controls output color [default: auto] [possible values: auto, always, ansi, never]|
