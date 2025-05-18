@@ -84,7 +84,8 @@ export const features = [
   'rewriters',
   'transform',
   'constraints',
-  'utils'
+  'utils',
+  'labels',
 ]
 
 export function serialize(data: Filter): string {

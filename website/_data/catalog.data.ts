@@ -107,6 +107,9 @@ function extractUsedFeatures(yamls: Record<string, unknown>[]): string[] {
       if ('transform' in yaml) {
         features.add('transform')
       }
+      if ('labels' in yaml) {
+        features.add('labels')
+      }
     }
   }
   return [...features]
