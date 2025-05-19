@@ -15,7 +15,7 @@ head:
       content: https://ast-grep.github.io/blog/new-ver-38.html
   - - meta
     - property: og:description
-      content:
+      content: ast-grep 0.38 brings some fantastic new features to improve your code searching and linting experience, alongside a significant internal shift.
 ---
 
 # ast-grep 0.38 is Here
