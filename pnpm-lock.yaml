@@ -24,8 +24,8 @@ importers:
         specifier: 5.4.0
         version: 5.4.0(monaco-editor@0.52.2)
       vitepress-plugin-llms:
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.3.3
+        version: 1.3.3
       vue:
         specifier: 3.5.14
         version: 3.5.14(typescript@5.8.3)
@@ -1411,8 +1411,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-llms@1.2.0:
-    resolution: {integrity: sha512-AEMwSl1EhXFm7bVRTycDFxL0DS7HuJL+xUmgmwJHd01iD0TPfbMzSeQymn0FDe9V+Y7xXIg5VF8MlSfGXML8cQ==}
+  vitepress-plugin-llms@1.3.3:
+    resolution: {integrity: sha512-5HIAXFaLgS3b4Z8B4HyemmNKWELRBBn5nnglzdZXUyfko8OCA/y8WP8JOsMI6VTw2Wu4vD3+hh5wTnkKuh79+A==}
 
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
@@ -2858,7 +2858,7 @@ snapshots:
       fsevents: 2.3.3
       yaml: 2.7.1
 
-  vitepress-plugin-llms@1.2.0:
+  vitepress-plugin-llms@1.3.3:
     dependencies:
       byte-size: 9.0.1
       gray-matter: 4.0.3
