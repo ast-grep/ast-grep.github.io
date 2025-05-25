@@ -41,25 +41,25 @@ async function copyJson() {
 <template>
 <div class="var-debugger">
   <template v-if="currentEnv">
-    <table class="metavar-table">
-      <thead>
-        <tr>
-          <td>MetaVar Name</td>
-          <td>Matched Node(s)</td>
-        </tr>
-      </thead>
-      <tbody v-if="currentEnv">
-        <tr v-for="(val, key) in currentEnv">
-          <td>{{key}}</td>
-          <td>
-            <code>
-              {{val.text}}
-            </code>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div>
+    <div class="metavar-table-container">
+      <table class="metavar-table">
+        <thead>
+          <tr>
+            <td>MetaVar Name</td>
+            <td>Matched Node(s)</td>
+          </tr>
+        </thead>
+        <tbody v-if="currentEnv">
+          <tr v-for="(val, key) in currentEnv">
+            <td>{{key}}</td>
+            <td>
+              <code>{{val.text}}</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="metavar-action">
       <div class="choose-match-division" />
       <button @click="decrement">❮</button>
       <span class="match-count">{{ currentIndex + 1 }}/{{props.envs.length}} match(es)</span>
@@ -88,6 +88,18 @@ async function copyJson() {
 </template>
 
 <style scoped>
+.var-debugger {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.metavar-table-container {
+  /* tweak padding/margin for scrolling shadow */
+  margin-top: -1em;
+  padding: 1em;
+  flex: 1 0 0;
+  overflow: auto;
+}
 .metavar-table {
   width: 100%;
   table-layout: fixed;
