@@ -90,7 +90,7 @@ let codeMode = shallowRef('code')
               <Monaco language="yaml" v-model="config"/>
             </template>
             <template #panel>
-              <EnvDisplay :envs="matchedEnvs" :error="ruleErrors"/>
+              <EnvDisplay :envs="matchedEnvs" :error="ruleErrors" :rule="config"/>
             </template>
           </EditorWithPanel>
         </template>
@@ -191,6 +191,17 @@ let codeMode = shallowRef('code')
     left: -10px;
     bottom: 50%;
     transform: translate(-100%, 50%);
+  }
+  .playground [title-up]:before {
+    left: 50%;
+    top: -8px;
+    transform: translateX(-50%);
+    border-top-color: rgba(0, 0, 0, 0.5);
+  }
+  .playground [title-up]:after {
+    left: 50%;
+    top: -8px;
+    transform: translate(-50%, -100%);
   }
 
   .dark .playground [data-title]::after {

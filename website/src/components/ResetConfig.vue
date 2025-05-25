@@ -7,7 +7,7 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <button class="reset" data-title="Reset your config" @click="emits('reset')">
+  <button class="reset" data-title="Reset your config" title-up @click="emits('reset')">
     <IconReset />
   </button>
 </template>
@@ -23,15 +23,8 @@ const emits = defineEmits<{
   align-items: center;
   background: transparent;
 }
-.reset[data-title]:before {
-  left: 50%;
-  top: -8px;
-  transform: translateX(-50%);
-  border-top-color: rgba(0, 0, 0, 0.5);
-}
-[data-title]:after {
-  left: 50%;
-  top: -8px;
+
+.reset[data-title]:after {
   transform: translate(-80%, -100%);
 }
 </style>

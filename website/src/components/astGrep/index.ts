@@ -8,7 +8,7 @@ export { Mode } from './state'
 
 type YAML = typeof import('js-yaml')
 
-const yamlImport = import('js-yaml')
+export const yamlImport = import('js-yaml')
 
 function buildRules(yaml: YAML, state: State) {
   let json = []

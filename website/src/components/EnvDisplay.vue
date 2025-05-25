@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import {computed, shallowRef, PropType} from 'vue'
 import Error from './utils/Error.vue'
+import { yamlImport } from './astGrep'
+import { showToast } from './utils/Toast.vue'
 
 const props = defineProps({
   envs: Array as PropType<any>,
   error: String,
+  rule: String,
 })
 let currentIndex = shallowRef(0)
 let currentEnv = computed(() => {
@@ -26,34 +29,44 @@ function increment() {
 function decrement() {
   currentIndex.value = (currentIndex.value + props.envs.length - 1) % props.envs.length
 }
+async function copyJson() {
+  const yaml = await yamlImport
+  const rules = yaml.loadAll(props.rule || '{}')
+  const json = rules.length === 1 ? rules[0] : rules
+  navigator.clipboard.writeText(JSON.stringify(json, null, 2))
+  showToast('Rule JSON copied to clipboard.')
+}
 </script>
 
 <template>
 <div class="var-debugger">
-  <table class="metavar-table" v-if="currentEnv">
-    <thead>
-      <tr>
-        <td>MetaVar Name</td>
-        <td>Matched Node(s)</td>
-      </tr>
-    </thead>
-    <tbody v-if="currentEnv">
-      <tr v-for="(val, key) in currentEnv">
-        <td>{{key}}</td>
-        <td>
-          <code>
-            {{val.text}}
-          </code>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot >
+  <template v-if="currentEnv">
+    <table class="metavar-table">
+      <thead>
+        <tr>
+          <td>MetaVar Name</td>
+          <td>Matched Node(s)</td>
+        </tr>
+      </thead>
+      <tbody v-if="currentEnv">
+        <tr v-for="(val, key) in currentEnv">
+          <td>{{key}}</td>
+          <td>
+            <code>
+              {{val.text}}
+            </code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
       <div class="choose-match-division" />
       <button @click="decrement">❮</button>
       <span class="match-count">{{ currentIndex + 1 }}/{{props.envs.length}} match(es)</span>
       <button @click="increment">❯</button>
-    </tfoot>
-  </table>
+      <button @click="copyJson" class="copy-json" data-title="Copy Rule as JSON" title-up>JSON</button>
+    </div>
+  </template>
   <Error v-else-if="error" :error="error"/>
   <div v-else class="vp-doc">
     <div class="custom-block warning no-match-tip">
@@ -125,5 +138,8 @@ tfoot button {
 }
 .no-match-tip ul > li {
   margin-top: 4px;
+}
+.copy-json {
+  margin-left: 0.5em;
 }
 </style>
