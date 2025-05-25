@@ -59,7 +59,7 @@ rule:
         - has:
             field: source
             pattern: $SOURCE
-    
+
     # REGULAR IMPORTS
     # ------------------------------------------------------------
     # import { ORIGINAL } from 'SOURCE'
@@ -79,7 +79,7 @@ rule:
               field: source
               pattern: $SOURCE
 
-    # DYNAMIC IMPORTS (Single Variable Assignment) 
+    # DYNAMIC IMPORTS (Single Variable Assignment)
     # ------------------------------------------------------------
     # const VAR_NAME = require('SOURCE')
     # ------------------------------------------------------------
@@ -105,7 +105,7 @@ rule:
                     - has: { field: function, regex: '^(require|import)$' }
                     - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
 
-    # DYNAMIC IMPORTS (Destructured Shorthand Assignment)     
+    # DYNAMIC IMPORTS (Destructured Shorthand Assignment)
     # ------------------------------------------------------------
     # const { ORIGINAL } = require('SOURCE')
     # ------------------------------------------------------------
@@ -136,7 +136,7 @@ rule:
                         - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
               stopBy: end # Search ancestors to find the correct variable_declarator
 
-    # DYNAMIC IMPORTS (Destructured Alias Assignment) 
+    # DYNAMIC IMPORTS (Destructured Alias Assignment)
     # ------------------------------------------------------------
     # const { ORIGINAL: ALIAS } = require('SOURCE')
     # ------------------------------------------------------------
@@ -177,7 +177,7 @@ rule:
               stopBy: end # Search ancestors to find the correct variable_declarator
             stopBy: end # Ensure we check ancestors for the variable_declarator
 
-    # DYNAMIC IMPORTS (Side Effect / Source Only) 
+    # DYNAMIC IMPORTS (Side Effect / Source Only)
     # ------------------------------------------------------------
     # require('SOURCE')
     # ------------------------------------------------------------
@@ -198,7 +198,7 @@ rule:
               kind: lexical_declaration
               stopBy: end # Search all ancestors up to the root
 
-    # NAMESPACE IMPORTS 
+    # NAMESPACE IMPORTS
     # ------------------------------------------------------------
     # import * as ns from 'mod'
     # ------------------------------------------------------------
@@ -216,7 +216,7 @@ rule:
             field: source
             pattern: $SOURCE
 
-    # SIDE EFFECT IMPORTS 
+    # SIDE EFFECT IMPORTS
     # ------------------------------------------------------------
     # import 'mod'
     # ------------------------------------------------------------
@@ -289,10 +289,10 @@ const asyncDynamicModule = await import('./async_dynamic1').then(module => modul
 const { originalIdentifier: aliasedDynamicImport} = await import('./async_dynamic2');
 
 // Comments in imports
-import /* test */ { 
+import /* test */ {
     // Comment in import
-    commentedImport 
-} from './commented'; // End of line comment 
+    commentedImport
+} from './commented'; // End of line comment
 ```
 
 ### Contributed by
