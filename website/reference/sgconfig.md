@@ -52,7 +52,7 @@ A string specifies where to discover test cases for ast-grep.
 
 A string path relative to `testDir` that specifies where to store test snapshots for ast-grep.
 You can think it like `__snapshots___` in popular test framework like jest.
-If this option is not specified, ast-grep will store the snapshot under the `__snapshots__` folder undert the `testDir`.
+If this option is not specified, ast-grep will store the snapshot under the `__snapshots__` folder under the `testDir`.
 
 Example:
 
@@ -94,7 +94,7 @@ languageGlobs:
 The above configuration tells ast-grep to treat the files with `.vue`, `.svelte`, and `.astro` extensions as HTML files, and the extension-less file `.eslintrc` as JSON files. It also overrides the default parser for C files and TS files.
 
 
-:::tip Simliar languages
+:::tip Similar languages
 This option can override the default language parser for a specific file extension, which is useful for rule reuse between similar languages like C/Cpp, or TS/TSX.
 :::
 

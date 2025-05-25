@@ -93,4 +93,4 @@ As ast-grep continues to grow, we remain committed to providing a tool that not 
 ![sponsors](/image/blog/sponsor2.png)
 
 
-We thank each and every one of you, espeically ast-grep's sponsors, for your support, contributions, and feedback that have shaped ast-grep into what it is today. Here's to many more milestones ahead!
+We thank each and every one of you, especially ast-grep's sponsors, for your support, contributions, and feedback that have shaped ast-grep into what it is today. Here's to many more milestones ahead!

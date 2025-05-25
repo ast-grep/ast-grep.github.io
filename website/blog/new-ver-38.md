@@ -34,7 +34,7 @@ One of the exciting new additions is the `labels` field for your rule configurat
 
 ![Example of Customizable Code Highlighting](/image/blog/labels-demo.png)
 
-But the benefits don't stop at individual understanding. The labels field offers a fantastic way to embed more guidance directly into your rules, and it allow you to share coding best practices, style guide reminders, or domain-specific knowledge across your entire team. This feature helps disseminate expertise and maintain consistency effortlessly. For example, [Sam Wight](https://github.com/samwightt), the lables feature's proposer, is using ast-grep to help his team to write better [Angular code](/catalog/typescript/missing-component-decorator.html)!
+But the benefits don't stop at individual understanding. The labels field offers a fantastic way to embed more guidance directly into your rules, and it allow you to share coding best practices, style guide reminders, or domain-specific knowledge across your entire team. This feature helps disseminate expertise and maintain consistency effortlessly. For example, [Sam Wight](https://github.com/samwightt), the labels feature's proposer, is using ast-grep to help his team to write better [Angular code](/catalog/typescript/missing-component-decorator.html)!
 
 ![Example of VSCode](/image/blog/labels-vscode.jpeg)
 

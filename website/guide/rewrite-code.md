@@ -173,7 +173,7 @@ This is because it has two spaces indentation as a part of the fix string, and t
 
 **ast-grep rule can only fix one target node at one time by replacing the target node text with a new string.**
 
-Using `fix` string alone is not enough to handle complex cases where we need to delete surrounding nodes like a comma, or to change surrounding brackets. We may leave redundant text in the fixed code because we cannot delete the surrounding trivias around the matched node.
+Using `fix` string alone is not enough to handle complex cases where we need to delete surrounding nodes like a comma, or to change surrounding brackets. We may leave redundant text in the fixed code because we cannot delete the surrounding trivials around the matched node.
 
 To accommodate these scenarios, ast-grep's `fix` also accepts an advanced object configuration that specifies how to fix the matched AST node: `FixConfig`. It allows you to expand the matched AST node range via two additional rules.
 

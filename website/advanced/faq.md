@@ -197,7 +197,7 @@ If your rule depends on using meta variables in later rules, the best way is to 
 
 ## `kind` and `pattern` rules are not working together, why?
 
-The most common scneario is that your pattern is parsed as a different AST node than you expected. And you may use `kind` rule to filter out the AST node you want to match. This does not work in ast-grep for two reasons:
+The most common scenario is that your pattern is parsed as a different AST node than you expected. And you may use `kind` rule to filter out the AST node you want to match. This does not work in ast-grep for two reasons:
 1. tree-sitter, the underlying parser library, does not offer a way to parse a string of a specific kind. So `kind` rule cannot be used to change the parsing outcome of a `pattern`.
 2. ast-grep rules are mostly independent of each other, except sharing meta-variables during a match. `pattern` will behave the same regardless of another `kind` rule.
 

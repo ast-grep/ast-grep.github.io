@@ -114,7 +114,7 @@ ast-grep can match an AST node by rules, and those rules can be composed togethe
 For example, the rule `any: [rule1, rule2]` is a composite rule that consists of two sub-rules and the composite rule matches a node when either one of the sub-rules matches the node.
 This can be expensive since multiple rules must be tried for every node to see if they actually make a match.
 
-I have already forsee it so every rule in ast-grep has an optimzation called `potential_kinds`. AST node in tree-sitter has its own type encoded in a unsigned number called `kind`.
+I have already forsee it so every rule in ast-grep has an optimization called `potential_kinds`. AST node in tree-sitter has its own type encoded in a unsigned number called `kind`.
 If a rule can only match nodes with specific kinds, then we can avoid calling `match_node` for nodes if its kind is not in the `potential_kinds` set.
 I used a BitSet to encode the set of potential kinds. Naturally the `potential_kinds` of composite rules can be constructed by merging the `potential_kinds` of its sub-rules, according to their logic nature.
 For example, `any`'s potential_kinds is the union of its sub-rules' potential_kinds, and `all`'s potential_kinds is the intersection of its sub-rules' potential_kinds.
