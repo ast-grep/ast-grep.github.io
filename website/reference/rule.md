@@ -43,7 +43,7 @@ pattern:
 
 ---
 
-You can also use `strictness` to change the matching algorithm of pattern. See the [deep div doc](/advanced/match-algorithm.html) for more detailed explanation for strictness.
+You can also use `strictness` to change the matching algorithm of pattern. See the [deep dive doc](/advanced/match-algorithm.html) for more detailed explanation for strictness.
 
 **Example**:
 

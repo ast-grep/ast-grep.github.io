@@ -166,7 +166,7 @@ The label config object contains two fields: the required `style` and the option
   * `secondary` provides additional context for a diagnostic.
 * `message` specifies the message to be displayed along with the label.
 
-Note, a `label` meta-variable must have a corresponding AST node in the matched code because highlighting requires a range in the code for label. That is, the **label meta-variables must be defined in `rule` or `constraints`**. meta-variables in `transform` cannot be used in `labels` as they are not part of the matched AST node.
+Note, a `label` meta-variable must have a corresponding AST node in the matched code because highlighting requires a range in the code for label. That is, the **label meta-variables must be defined in `rule` or `constraints`**. Meta-variables in `transform` cannot be used in `labels` as they are not part of the matched AST node.
 
 ---
 

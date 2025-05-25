@@ -31,7 +31,7 @@ id: no-console-log
 * type: `String`
 * required: true
 
-Specify the language to parse and the file extension to includ in matching.
+Specify the language to parse and the file extension to include in matching.
 
 Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
 

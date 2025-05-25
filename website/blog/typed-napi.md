@@ -170,7 +170,7 @@ class SgNode<M extends TypesMap, K extends Kinds<M> = Kinds<M>> {
 }
 ```
 
-It represents a node in a language with type map `M` that has a specific kind `K`. e.g. `SgNode<TypeScript, "function_declaration">` means a function declaration node in TypeScript. When used without a specific kind parameter, `SgNode` defaults to accepting any valid node kind in the language.
+It represents a node in a language with type map `M` that has a specific kind `K`. E.g. `SgNode<TypeScript, "function_declaration">` means a function declaration node in TypeScript. When used without a specific kind parameter, `SgNode` defaults to accepting any valid node kind in the language.
 
 `SgNode` provides a **correct** AST interface in a specific language. While at the same time, it is still **robust** enough to not trigger compiler error when no type information is available.
 

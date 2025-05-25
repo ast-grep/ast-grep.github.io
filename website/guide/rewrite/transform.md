@@ -10,7 +10,7 @@ Sometimes, we may want to apply some transformations to the meta variables in th
 
 A transformation object has a key indicating which string operation will be performed on the meta variable, and the value of that key is another object (usually with the source key). Different string operation keys expect different object values.
 
-The following is an example illustring the syntax of a transformation object:
+The following is an example illustrating the syntax of a transformation object:
 
 ```yaml
 transform:

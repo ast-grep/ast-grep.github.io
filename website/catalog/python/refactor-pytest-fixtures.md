@@ -31,7 +31,7 @@ utils:
 
 Pytest fixtures are declared with a decorator `@pytest.fixture`. We match the `function_definition` node that directly follows a `decorator` node. That decorator node must have a `fixture` identifier somewhere. This accounts for different location of the `fixture` node depending on the type of imports and whether the decorator is used as is or called with parameters.
 
-Pytest functions are fairly straghtforward to detect, as they always start with `test_` by convention.
+Pytest functions are fairly straightforward to detect, as they always start with `test_` by convention.
 
 The next utils builds onto those two to incrementally:
 - Find if a node is inside a pytest context (test/fixture)

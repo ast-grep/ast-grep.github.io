@@ -9,9 +9,9 @@ Suppose we want to transform Python's `Union[T1, T2]` to `T1 | T2` and `Optional
 
 By default, ast-grep will only fix the outermost node that matches a pattern and will not rewrite the inner AST nodes inside a match. This avoids unexpected rewriting or infinite rewriting loop.
 
-So if you are using non-recurisve rewriter like [this](https://github.com/ast-grep/ast-grep/discussions/1566#discussion-7401382), `Optional[Union[int, str]]` will only be converted to `Union[int, str] | None`. Note the inner `Union[int, str]` is not enabled. This is because the rewriter `optional` matches `Optional[$TYPE]` and rewrite it to `$TYPE | None`. The inner `$TYPE` is not processed.
+So if you are using non-recursive rewriter like [this](https://github.com/ast-grep/ast-grep/discussions/1566#discussion-7401382), `Optional[Union[int, str]]` will only be converted to `Union[int, str] | None`. Note the inner `Union[int, str]` is not enabled. This is because the rewriter `optional` matches `Optional[$TYPE]` and rewrite it to `$TYPE | None`. The inner `$TYPE` is not processed.
 
-However, we can apply `rewriters` to inner types recursively. Take the `optional` rewriter as an example, we need to apply rewriters, `optional` and `unioins`, **recursively** to `$TYPE` and get a new variable `$NT`.
+However, we can apply `rewriters` to inner types recursively. Take the `optional` rewriter as an example, we need to apply rewriters, `optional` and `unions`, **recursively** to `$TYPE` and get a new variable `$NT`.
 
 ### YAML
 ```yml
