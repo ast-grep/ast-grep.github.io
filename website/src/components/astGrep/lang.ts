@@ -55,12 +55,12 @@ export type Match = {
   message: string,
   rule: string,
   env: any,
-  id: number,
+  kind: string,
   range: [number, number, number, number],
 } | {
   type: 'simple',
   env: any,
-  id: number,
+  kind: string,
   range: [number, number, number, number],
 }
 
@@ -72,11 +72,23 @@ function shouldDisplayDiagnostic(rule: any) {
   )
 }
 
+interface WasmNode {
+  text: string
+  range: [number, number, number, number]
+}
+
+interface WasmMatch {
+  kind: string
+  node: WasmNode
+  env: Map<string, WasmNode>
+  message: string
+}
+
 export async function doFind(src: string, json: any[]): Promise<[Match[], string]> {
   if (!src || !json) {
     return [[], src]
   }
-  const result = await findNodes(src, json)
+  const result: Map<string, WasmMatch[]> = await findNodes(src, json)
   let matches: Match[] = []
   for (let [ruleId, nodes] of result.entries()) {
     for (let rule of json) {
@@ -92,7 +104,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
             message: nm.message,
             range: nm.node.range,
             env: nm.env,
-            id: nm.id,
+            kind: nm.kind,
           })
         }
       } else {
@@ -101,7 +113,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
             type: 'simple',
             range: nm.node.range,
             env: nm.env,
-            id: nm.id,
+            kind: nm.kind,
           })
         }
       }

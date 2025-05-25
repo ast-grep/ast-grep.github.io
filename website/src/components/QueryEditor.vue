@@ -27,9 +27,14 @@ watchEffect(() => {
   }
 })
 
+// this assumes the node can be tracked by range + kind
+// it will break if multiple same-kind nodes have the same range
 const matchedIds = computed(() => {
   const matches = props.matches || []
-  return new Set(matches.map(m => m.id))
+  return new Set(matches.map(match => {
+    const [startRow, startCol, endRow, endCol] = match.range
+    return `${match.kind}-${startRow}-${startCol}-${endRow}-${endCol}`
+  }))
 })
 
 let cursorPosition = shallowRef<Pos>()

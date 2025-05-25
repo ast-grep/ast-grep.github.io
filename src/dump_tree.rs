@@ -9,7 +9,6 @@ use web_tree_sitter_sg::{Point, TreeCursor};
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DumpNode {
-  id: u32,
   field: Option<String>,
   kind: String,
   start: Pos,
@@ -50,7 +49,6 @@ pub fn dump_one_node(cursor: &mut TreeCursor, target: &mut Vec<DumpNode>) {
     cursor.goto_parent();
   }
   target.push(DumpNode {
-    id: node.id(),
     field,
     kind,
     start,

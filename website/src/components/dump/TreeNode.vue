@@ -3,10 +3,11 @@ import { PropType } from 'vue'
 import { DumpNode, Pos, deepReactiveNode } from './dumpTree'
 import { showToast } from '../utils/Toast.vue'
 import GeneralNode from './GeneralNode.vue'
+import { computed } from 'vue';
 
 const props = defineProps({
   matchedIds: {
-    type: Set as PropType<Set<number>>,
+    type: Set as PropType<Set<string>>,
     required: true,
   },
   node: {
@@ -21,7 +22,6 @@ const props = defineProps({
 })
 
 let {
-  id,
   field,
   kind,
   start,
@@ -29,6 +29,15 @@ let {
   children,
   isNamed,
 } = deepReactiveNode(props)
+
+// also see how matchedIds is computed
+// track nodes by range + kind
+const id = computed(() => {
+  const k = kind.value
+  const { row: startRow, column: startCol } = start.value
+  const { row: endRow, column: endCol } = end.value
+  return `${k}-${startRow}-${startCol}-${endRow}-${endCol}`
+})
 
 function copyKind(kind: string) {
   navigator.clipboard.writeText(kind)
