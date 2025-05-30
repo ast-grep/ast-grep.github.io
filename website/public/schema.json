@@ -561,6 +561,9 @@
       "description": "Represents a transformation that can be applied to a matched AST node. Available transformations are `substring`, `replace` and `convert`.",
       "oneOf": [
         {
+          "type": "string"
+        },
+        {
           "type": "object",
           "required": [
             "substring"
