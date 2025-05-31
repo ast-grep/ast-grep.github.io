@@ -29,6 +29,9 @@ export default defineConfig({
         target: 'es2020',
       },
     },
+    experimental: {
+      enableNativePlugin: true
+    }
   },
   themeConfig: {
     logo: 'logo.svg',
