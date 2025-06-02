@@ -113,10 +113,27 @@ Please see the [guide](/advanced/custom-language.html) for detailed instructions
 A custom language configuration object has the following options.
 
 ### `libraryPath`
-* type: `String`
+* type: `String` or `HashMap<String, String>`
 * required: Yes
 
-The path to the tree-sitter dynamic library of the language.
+The path to the tree-sitter dynamic library of the language. The string field is interpreted as the dynamic library path relative to the sgconfig.yml.
+
+If `libraryPath` is a map, the key should be the [target triple](https://doc.rust-lang.org/rustc/platform-support.html) string and the value should be the dynamic library path. Projects supporting multiple host platforms can use object style configuration for different developers.
+
+**Example:**
+
+```yaml
+# simple string is library path
+libraryPath: my-lang-parser.so
+
+# object style config
+libraryPath:
+  aarch64-apple-darwin: lang-parser-mac.so
+  x86_64-unknown-linux-gnu: lang-parser-linux.so
+# target triple list can be found below
+# https://doc.rust-lang.org/rustc/platform-support.html
+```
+
 
 ### `extensions`
 
