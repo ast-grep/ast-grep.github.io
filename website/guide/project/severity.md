@@ -61,7 +61,38 @@ These are the rules for suppression comments:
 * You can turn off multiple rules by providing a comma-separated list in the comment. e.g. `ast-grep-ignore: rule-1, rule-2`
 * Suppression comments will suppress the next line diagnostic if and only if there is no preceding ASTs on the same line.
 
+## File Level Suppression
 
+You can also suppress all diagnostics in a file by adding a suppression comment at the top of the file followed by an empty line. This is useful when you want to ignore all diagnostics in a file.
+
+For example, in JavaScript:
+
+:::code-group
+```javascript [Disable all rules]
+// ast-grep-ignore
+
+// This file will not be scanned by ast-grep
+// note the empty line after the suppression comment.
+debugger // this line will not be scanned
+console.debug('debugging') // this line will not be scanned
+```
+
+```javascript{6} [Disable sepcific rules]
+// ast-grep-ignore: no-debugger
+
+// This file will not be scanned by ast-grep
+// note the empty line after the suppression comment.
+debugger // this line will not trigger error
+console.debug('debugging') // this line will trigger error
+```
+
+:::
+
+To suppress the whole file, there must be [two conditions](https://github.com/ast-grep/ast-grep/issues/1541#issuecomment-2573212686) met:
+* The suppression comment is on the very first line of the file.
+* AND the next line (second line in file) is empty
+
+These conditions are designed for backward compatibility.
 
 ## Report Unused Suppressions
 
