@@ -21,7 +21,7 @@ An ast-grep rule is a YAML object with the following keys:
 
 Unique, descriptive identifier, e.g., `no-unused-variable`.
 
-Example:
+**Example:**
 ```yaml
 id: no-console-log
 ```
@@ -35,7 +35,7 @@ Specify the language to parse and the file extension to include in matching.
 
 Valid values are: `C`, `Cpp`, `CSharp`, `Css`, `Go`, `Html`, `Java`, `JavaScript`, `Kotlin`, `Lua`, `Python`, `Rust`, `Scala`, `Swift`, `Thrift`, `Tsx`, `TypeScript`
 
-Example:
+**Example:**
 ```yaml
 language: JavaScript
 ```
@@ -64,7 +64,7 @@ Additional meta variables pattern to filter matches. The key is matched meta var
 **Note, constraints only applies to the single meta variable like `$ARG`,** not multiple meta variable like `$$$ARGS`.
 So the key name must only refer to a single meta variable.
 
-Example:
+**Example:**
 
 ```yaml
 rule:
@@ -91,7 +91,7 @@ A dictionary of utility rules that can be used in `matches` locally.
 The dictionary key is the utility rule id and the value is the rule object.
 See [utility rule guide](/guide/rule-config/utility-rule).
 
-Example:
+**Example:**
 
 ```yaml
 utils:
@@ -110,11 +110,11 @@ utils:
 * required: false
 
 A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
-The dictionary value is a transformation object that specifies how meta var is processed.
+The dictionary value is a transformation object or transformation string that specifies how meta var is processed.
 
 Please also see [transformation reference](/reference/yaml/transformation) for details.
 
-Example:
+**Example:**
 ```yaml
 transform:
   NEW_VAR_NAME:      # new variable name
@@ -122,6 +122,10 @@ transform:
       source: $ARGS
       replace: '^.+'
       by: ', '
+
+# string style for ast-grep 0.38.3+
+transform:
+  NEW_VAR_NAME: replace($ARGS, replace='^.+', by=', ')
 ```
 
 ### `fix`
@@ -133,7 +137,8 @@ A pattern or a `FixConfig` object to auto fix the issue. See details in [fix obj
 
 It can reference meta variables that appeared in the rule.
 
-Example:
+**Example:**
+
 ```yaml
 fix: logger.log($$$ARGS)
 
@@ -141,7 +146,7 @@ fix: logger.log($$$ARGS)
 fix: ""
 ```
 
-### `rewriters` <Badge type="warning" text="Experimental" />
+### `rewriters`
 * type: `Array<Rewriter>`
 * required: false
 
@@ -151,7 +156,7 @@ A rewriter rule is similar to ordinary YAML rule, but it ony contains _finding_ 
 
 Please also see [rewriter reference](/reference/yaml/rewriter.html) for details.
 
-Example:
+**Example:**
 ```yaml
 rewriters:
 - id: stringify
@@ -172,7 +177,7 @@ Specify the level of matched result. Available choice: `hint`, `info`, `warning`
 
 When `severity` is `off`, ast-grep will disable the rule in scanning.
 
-Example:
+**Example:**
 ```yaml
 severity: warning
 ```
@@ -187,7 +192,7 @@ but specific enough to be understood without additional context.
 
 It can reference meta-variables that appeared in the rule.
 
-Example:
+**Example:**
 ```yaml
 message: "console.log should not be used in production code"
 ```
@@ -199,7 +204,9 @@ message: "console.log should not be used in production code"
 
 Additional notes to elaborate the message and provide potential fix to the issue.
 
-Example:
+`note` can contains markdown syntax, but it _cannot_ reference meta-variables.
+
+**Example:**
 ```yaml
 note: "Use a logger instead"
 ```
@@ -213,7 +220,7 @@ A dictionary of labels to customize highlighting. The dictionary key is the meta
 * `style`: (required) the style of the label. Available choice: `primary`, `secondary`.
 * `message`: (optional) the message to be displayed in the editor extension.
 
-Example:
+**Example:**
 ```yaml
 labels:
   ARG:
@@ -251,6 +258,7 @@ Be sure to remove `./` to the beginning of your rules. ast-grep will not recogni
 * type: `Array<String>`
 * required: false
 
+**Example:**
 ```yaml
 ignores:
   - test/**/*.js
@@ -281,7 +289,7 @@ To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 
 Documentation link to this rule. It will be displayed in editor extension if supported.
 
-Example:
+**Example:**
 
 ```yaml
 url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
@@ -295,7 +303,7 @@ Extra information for the rule. This section can include custom data for externa
 
 ast-grep will output `metadata` with matches in [`--json`](/reference/cli/scan.html#json-style) mode if [`--include-metadata`](/reference/cli/scan.html#include-metadata) is on.
 
-Example:
+**Example:**
 
 ```yaml
 metadata:

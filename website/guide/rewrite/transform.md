@@ -26,6 +26,14 @@ transform:
       endChar: -1
 ```
 
+ast-grep 0.38.3+ supports string style transformations to simplify rule writing.
+The above example can be simplified to one-line style like:
+
+```yaml
+transfrom:
+  NEW_VAR: replace($VAR_NAME, replace=regex, by=replacement)
+  ANOTHER_NEW_VAR: substring($NEW_VAR, startChar=1, endChar=-1)
+```
 
 ## Example of Converting Generator in Python
 
@@ -162,6 +170,32 @@ If `$$$ARGS` does match nodes, then the replacement regular expression will repl
 
 :::tip DasSurma Trick
 This method is invented by [Surma](https://surma.dev/) in a [tweet](https://twitter.com/DasSurma/status/1706086320051794217), so the useful trick is named after him.
+:::
+
+## String Style Transformations
+
+To simplify the syntax of transformations, ast-grep 0.38.3+ supports a new string style transformation syntax. This allows us to write transformations in a more concise and readable way.
+
+The string style transformation syntax is similar to the CSS function call syntax
+
+```yaml
+# illustration of string style transformation syntax
+NEW_VAR: transform($SOURCE_VAR, option1=value1, option2=value2)
+```
+
+The transformation name is followed by parentheses containing the arguments. The first argument is always the source meta-variable, and the rest are the transformation options in the form of key-value pairs.
+
+For example, the transformation examples above can be written as:
+
+```yaml
+transform:
+  LIST: substring($GEN, startChar=1, endChar=-1)
+  KEBABED: convert($OLD_FN, toCase=kebabCase)
+  MAYBE_COMMA: replace($$$ARGS, replace='^.+', by=', ')
+```
+
+:::warning
+The string style transformation syntax is only available in ast-grep 0.38.3 and later versions. If you are using an older version, please use the original object style syntax.
 :::
 
 ## Even More Advanced Transformations

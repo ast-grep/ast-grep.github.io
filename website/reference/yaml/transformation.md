@@ -49,6 +49,10 @@ transform:
       replace: regex
       by: replacement
       source: $VAR
+
+# string style for ast-grep 0.38.3+
+transform:
+  NEW_VAR: replace($VAR, replace=regex, by=replacement)
 ```
 
 :::tip Pro tip
@@ -93,6 +97,10 @@ transform:
       startChar: 1
       endChar: -1
       source: $VAR
+
+# string style for ast-grep 0.38.3+
+transform:
+  NEW_VAR: substring($VAR, startChar=1, endChar=-1)
 ```
 
 :::tip Pro Tip
@@ -189,6 +197,10 @@ transform:
       toCase: kebabCase
       separatedBy: [underscore]
       source: $VAR
+
+# string style for ast-grep 0.38.3+
+transform:
+  NEW_VAR: convert($VAR, toCase=kebabCase, separatedBy=[underscore])
 ```
 
 Suppose we have a string `ast_Grep` as the input `$VAR`, The example above will convert the string as following:
@@ -198,7 +210,7 @@ Suppose we have a string `ast_Grep` as the input `$VAR`, The example above will 
 
 Thank [Aarni Koskela](https://github.com/akx) for proposing and implementing the first version of this feature!
 
-## `rewrite` <Badge type="warning" text="Experimental" />
+## `rewrite`
 
 `rewrite` is an experimental transformation that allows you to selectively transform a meta variable by `rewriter` rules.
 Instead of rewriting the single target node which matches the rule, `rewrite` can rewrite a subset of AST captured by a meta-variable.
@@ -250,6 +262,10 @@ transform:
       source: $VAR
       rewriters: [rule1, rule2]
       joinBy: "\n"
+
+# string style for ast-grep 0.38.3+
+transform:
+  NEW_VAR: rewrite($VAR, rewriters=[rule1, rule2], joinBy='\n')
 ```
 
 Thank [Eitan Mosenkis](https://github.com/emosenkis) for proposing this idea!
