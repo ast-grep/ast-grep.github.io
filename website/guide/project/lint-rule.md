@@ -146,7 +146,7 @@ ignores:
 - "tests/config/**"
 ```
 
-`ignores` and `files` can be used together. But `files` will take precedence over `ignores`.
+`ignores` and `files` can be used together. `ignores` will be tested before `files`. See [reference](/reference/yaml.html#ignores) for more details.
 
 :::warning Don't add `./`
 

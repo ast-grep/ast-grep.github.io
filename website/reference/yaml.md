@@ -232,14 +232,20 @@ Please also see [label guide](/guide/project/lint-rule.html#customize-code-highl
 * type: `Array<String>`
 * required: false
 
-Glob patterns to specify that the rule only applies to matching files. It takes priority over `ignores`.
+Glob patterns to specify that the rule only applies to matching files. It is tested if `ignores` does not exist or a file does not match any `ignores` glob.
 
-Example:
+**Example:**
+
 ```yaml
 files:
   - src/**/*.js
   - src/**/*.ts
 ```
+
+:::warning Don't add `./`
+Be sure to remove `./` to the beginning of your rules. ast-grep will not recognize the paths if you add `./`.
+:::
+
 
 ### `ignores`
 * type: `Array<String>`
@@ -251,16 +257,18 @@ ignores:
   - test/**/*.ts
 ```
 
-Glob patterns that exclude rules from applying to files. It is superseded by `files` if both are specified.
+Glob patterns that exclude rules from applying to files. A file is tested against `ignores` list before matching `files`.
+
+A typical globing process works as follows:
+
+1. If `ignores` is configured, a file will be skipped if it matches any of the glob in the list(`files` will not be tested).
+2. If `files` is configured, a file will be included if and only if it matches one of the glob in the list.
+3. If neither `ignores`/`files` is configured, a file is included by default.
 
 :::warning `ignores` in YAML is different from `--no-ignore` in CLI
 ast-grep respects common ignore files like `.gitignore` and hidden files by default.
 To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
-:::
-
-:::warning Don't add `./`
-Be sure to remove `./` to the beginning of your rules. ast-grep will not recognize the paths if you add `./`.
 :::
 
 
