@@ -28,31 +28,23 @@ rule:
 
 JWT Library Detection
 
-```go
+```go{5}
 package main
 
 import (
 	"fmt"
-	"github.com/golang-jwt/jwt"  // This matches the AST rule
+	"github.com/golang-jwt/jwt" // This matches the AST rule
 )
 
 func main() {
-	// Create a new token
-	token := jwt.New(jwt.SigningMethodHS256)
-	
+	token := jwt.New(jwt.SigningMethodHS256) // Create a new token
 	// Add some claims
-	token.Claims = jwt.MapClaims{
-		"user": "alice",
-		"role": "admin",
-	}
-	
-	// Sign the token
-	tokenString, err := token.SignedString([]byte("my-secret"))
+	token.Claims = jwt.MapClaims{"user": "alice", "role": "admin"}
+	tokenString, err := token.SignedString([]byte("my-secret")) // Sign the token
 	if err != nil {
 		fmt.Printf("Error signing token: %v\n", err)
 		return
 	}
-	
 	fmt.Printf("Generated token: %s\n", tokenString)
 }
 ```
