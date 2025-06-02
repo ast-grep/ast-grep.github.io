@@ -107,6 +107,7 @@ ast-grep test [OPTIONS]
 |   | --skip-snapshot-tests           |Only check if the test code is valid, without checking rule output. Turn it on when you want to ignore the output of rules|
 | -U| --update-all                   |Update the content of all snapshots that have changed in test.|
 | -f| --filter                        |Filter rule test cases to execute using a glob pattern.|
+|   | --include-off                   | Include `severity:off` rules in test
 | -i| --interactive                   |start an interactive review to update snapshots selectively.|
 | -h| --help                          |Print help.|
 
