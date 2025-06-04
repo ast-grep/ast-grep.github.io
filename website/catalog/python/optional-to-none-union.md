@@ -24,14 +24,14 @@ fix: $T | None
 
 <!-- highlight matched code in curly-brace {lineNum} -->
 ```py {1}
-def a(arg: Optional[Int]): pass
+def a(arg: Optional[int]): pass
 ```
 
 ### Diff
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
 ```py
-def a(arg: Optional[Int]): pass # [!code --]
-def a(arg: Int | None): pass # [!code ++]
+def a(arg: Optional[int]): pass # [!code --]
+def a(arg: int | None): pass # [!code ++]
 ```
 
 ### Contributed by
