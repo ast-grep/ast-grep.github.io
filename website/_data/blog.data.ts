@@ -8,6 +8,7 @@ interface Post {
     time: number
     string: string
   }
+  description: string
 }
 
 declare const data: Post[]
@@ -22,6 +23,8 @@ export default createContentLoader('blog/*.md', {
           .content,
         url,
         date: formatDate(frontmatter.date),
+        description: frontmatter.head.find((e: any) => e[1].property === 'og:description')[1]
+          .content,
       }))
       .sort((a, b) => b.date.time - a.date.time)
   },

@@ -17,6 +17,7 @@ function getDateTime(time: number) {
         <h2 class="title">
           <a :href="post.url">{{ post.title }}</a>
         </h2>
+        <i class="description">{{post.description}}</i>
       </article>
     </li>
   </ul>
@@ -43,5 +44,13 @@ function getDateTime(time: number) {
 .title a {
   font-weight: 600;
   text-decoration: none;
+}
+.description {
+  margin-top: -12px;
+  margin-bottom: 16px;
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
