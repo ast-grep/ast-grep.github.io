@@ -73,8 +73,9 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
     if start > range.start {
       continue;
     }
-    let fixer = rule.get_fixer()?.expect("rule returned by diff must have fixer");
-    let edit = nm.make_edit(&rule.matcher, &fixer);
+    let fixers = rule.get_fixer()?;
+    let fixer = fixers.first().expect("rule returned by diff must have fixer");
+    let edit = nm.make_edit(&rule.matcher, fixer);
     new_content.extend(&src[start..edit.position]);
     new_content.extend(&edit.inserted_text);
     start = edit.position + edit.deleted_length;
