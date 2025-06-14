@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@number-flow/vue':
-        specifier: 0.4.7
-        version: 0.4.7(vue@3.5.16(typescript@5.8.3))
+        specifier: 0.4.8
+        version: 0.4.8(vue@3.5.16(typescript@5.8.3))
       '@types/js-yaml':
         specifier: 4.0.9
         version: 4.0.9
@@ -504,8 +504,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
 
-  '@number-flow/vue@0.4.7':
-    resolution: {integrity: sha512-+g6mYm1XwgMZEy/r0kMOqhOR66RxXdLq8fyRLhBPRKGa6gpvOTqgxRBlf2H3zyloWoWwr2tNeLgmrhxtySNX3Q==}
+  '@number-flow/vue@0.4.8':
+    resolution: {integrity: sha512-g1kh66wndJ4MYkX5Z00GvyLxdOMbRotiTeTQujzb1XS009dL/mVH0ZRI5slXH1mzpl78yzzsjz3vjzGhTMM3CA==}
     peerDependencies:
       vue: ^3
 
@@ -1243,8 +1243,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  number-flow@0.5.7:
-    resolution: {integrity: sha512-P83Y9rBgN3Xpz5677YDNtuQHZpIldw6WXeWRg0+edrfFthhV7QqRdABas5gtu07QPLvbA8XhfO69rIvbKRzYIg==}
+  number-flow@0.5.8:
+    resolution: {integrity: sha512-FPr1DumWyGi5Nucoug14bC6xEz70A1TnhgSHhKyfqjgji2SOTz+iLJxKtv37N5JyJbteGYCm6NQ9p1O4KZ7iiA==}
 
   oniguruma-to-es@3.1.1:
     resolution: {integrity: sha512-bUH8SDvPkH3ho3dvwJwfonjlQ4R80vjyvrU8YpxuROddv55vAEJrTuCuCVUhhsHbtlD9tGGbaNApGQckXhS8iQ==}
@@ -1881,10 +1881,10 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
-  '@number-flow/vue@0.4.7(vue@3.5.16(typescript@5.8.3))':
+  '@number-flow/vue@0.4.8(vue@3.5.16(typescript@5.8.3))':
     dependencies:
       esm-env: 1.2.2
-      number-flow: 0.5.7
+      number-flow: 0.5.8
       vue: 3.5.16(typescript@5.8.3)
 
   '@rollup/rollup-android-arm-eabi@4.41.1':
@@ -2737,7 +2737,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  number-flow@0.5.7:
+  number-flow@0.5.8:
     dependencies:
       esm-env: 1.2.2
 
