@@ -73,6 +73,13 @@ const sidebar: DefaultTheme.Sidebar = [
     collapsed: true,
   },
   {
+    text: 'Cheat Sheet',
+    items: [
+      { text: 'Rule Cheat Sheet', link: '/cheatsheet/rule.html' },
+    ],
+    collapsed: true,
+  },
+  {
     text: 'Reference',
     items: [
       { text: 'Command Line Interface', link: '/reference/cli.html', collapsed: true,

@@ -4,8 +4,8 @@ This cheat sheet provides a concise overview of ast-grep's rule object configura
 
 
 <script setup>
-import CheatSheet from '../../src/cheatsheet/SheetTable.vue'
-import Item from '../../src/cheatsheet/Item.vue'
+import CheatSheet from '../src/cheatsheet/SheetTable.vue'
+import Item from '../src/cheatsheet/Item.vue'
 </script>
 
 ## Atomic Rules Cheat Sheet
