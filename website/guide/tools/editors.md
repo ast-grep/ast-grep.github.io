@@ -138,6 +138,23 @@ Usage:
 ```
 or swap to `astgrep` engine while running with the `Swap Engine` action.
 
+## Emacs
+
+### ast-grep.el
+[ast-grep.el](https://github.com/SunskyXH/ast-grep.el) is an emacs package for searching code using ast-grep with completing-read interface or consult.
+
+You can install via `straight.el`
+
+```elisp
+(straight-use-package '(ast-grep :type git :host github :repo "SunskyXH/ast-grep.el"))
+```
+
+Or if you are using doomemacs, add to your `packages.el`
+
+```elisp
+(package! ast-grep :recipe (:host github :repo "SunskyXH/ast-grep.el"))
+```
+
 ## LSP Server
 
 Currently ast-grep support these LSP capabilities:
