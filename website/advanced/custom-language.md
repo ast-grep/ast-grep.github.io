@@ -1,9 +1,5 @@
 # Custom Language Support
 
-:::danger Experimental Feature
-Custom language in ast-grep is an experimental option. Use it with caution!
-:::
-
 In this guide, we will show you how to use a custom language that is not built into ast-grep.
 
 We will use [Mojo 🔥](https://www.modular.com/mojo) as an example!

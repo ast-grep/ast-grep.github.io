@@ -98,13 +98,12 @@ The above configuration tells ast-grep to treat the files with `.vue`, `.svelte`
 This option can override the default language parser for a specific file extension, which is useful for rule reuse between similar languages like C/Cpp, or TS/TSX.
 :::
 
-## `customLanguages` <Badge type="warning" text="Experimental" />
+## `customLanguages`
 
 * type: `HashMap<String, CustomLang>`
 * required: No
-* status: **Experimental**
 
-A dictionary of custom languages in the project. This is an experimental feature.
+A dictionary of custom languages in the project.
 
 The key of the dictionary is the custom language name. The value of the dictionary is the custom language configuration object.
 

@@ -156,7 +156,6 @@ interface NapiConfig {
   rule: object
   constraints?: object
   language?: FrontEndLanguage
-  // @experimental
   transform?: object
   utils?: object
 }
