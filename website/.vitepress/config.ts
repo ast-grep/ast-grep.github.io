@@ -171,7 +171,7 @@ export default defineConfig({
     },
   },
   themeConfig: {
-    logo: 'logo.svg',
+    logo: '/logo.svg',
     nav: [
       { text: 'Guide', link: '/guide/introduction.html' },
       {
