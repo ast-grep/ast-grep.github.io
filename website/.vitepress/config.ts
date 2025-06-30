@@ -76,6 +76,7 @@ const sidebar: DefaultTheme.Sidebar = [
     text: 'Cheat Sheet',
     items: [
       { text: 'Rule Cheat Sheet', link: '/cheatsheet/rule.html' },
+      { text: 'Config Cheat Sheet', link: '/cheatsheet/yaml.html' },
     ],
     collapsed: true,
   },
