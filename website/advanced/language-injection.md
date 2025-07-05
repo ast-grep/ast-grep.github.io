@@ -23,7 +23,6 @@ This concept and terminology come from [tree-sitter's language injection](https:
 Let's start with a simple example of searching for JavaScript and CSS within HTML files using ast-grep's command-line interface (CLI).
 ast-grep has builtin support to search JavaScript and CSS inside HTML files.
 
-
 ### **Using `ast-grep run`**: find patterns of CSS in an HTML file
 
 Suppose we have an HTML file like below:
@@ -47,13 +46,13 @@ ast-grep run -p 'color: $COLOR'
 ```
 
 ast-grep outputs this beautiful CLI report.
+
 ```shell
 test.html
 2│  h1 { color: red; }
 ```
 
 ast-grep works well even if just providing the pattern without specifying the pattern language!
-
 
 ### **Using `ast-grep scan`**: find JavaScript in HTML with rule files
 
@@ -102,7 +101,6 @@ ast-grep employs a multi-step process to handle language injections effectively.
 
 You can customize language injection via the `sgconfig.yml` [configuration file](https://ast-grep.github.io/reference/sgconfig.html). This allows you to specify how ast-grep handles multi-language documents based on your specific needs, without modifying ast-grep's built-in behaviors.
 
-
 Let's see an example of searching CSS code in JavaScript. [styled-components](https://styled-components.com/) is a library for styling React applications using [CSS-in-JS](https://bootcamp.uxdesign.cc/css-in-js-libraries-for-styling-react-components-a-comprehensive-comparison-56600605a5a1). It allows you to write CSS directly within your JavaScript via [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), creating styled elements as React components.
 
 The example will configure ast-grep to detect styled-components' CSS.
@@ -121,13 +119,12 @@ languageInjections:
 
 Let's break the configuration down.
 
-
 1. `hostLanguage`: Specifies the main language of the document. In this example, it is set to `js` (JavaScript).
 
 2. `rule`: Defines the ast-grep rule to identify the injected language region within the host language.
 
-    * `pattern`: The pattern matches styled components syntax where `styled` is followed by a tag (e.g., `button`, `div`) and a template literal containing CSS.
-    * the rule should have a meta variable `$CONTENT` to specify the subregion of injected language. In this case, it is the content inside the template string.
+   - `pattern`: The pattern matches styled components syntax where `styled` is followed by a tag (e.g., `button`, `div`) and a template literal containing CSS.
+   - the rule should have a meta variable `$CONTENT` to specify the subregion of injected language. In this case, it is the content inside the template string.
 
 3. `injected`: Specifies the injected language within the identified regions. In this case, it is `css`.
 
@@ -136,7 +133,7 @@ Let's break the configuration down.
 Consider a JSX file using styled components:
 
 ```js
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Button = styled.button`
   background: red;
@@ -207,8 +204,8 @@ languageInjections:
 Suppose we have this JavaScript file from [Relay](https://relay.dev/), a GraphQL client framework.
 
 ```js
-import React from "react"
-import { graphql } from "react-relay"
+import React from 'react'
+import { graphql } from 'react-relay'
 
 const artistsQuery = graphql`
   query ArtistQuery($artistID: String!) {

@@ -12,6 +12,7 @@ The basic workflow of `rewriters` is as follows:
 3. Join the fixes together and store the string in a new metavariable for later use.
 
 ## Key Steps to Use Rewriters
+
 To use rewriters, you have three steps.
 
 **1. Define `rewriters` field in the Yaml rule root.**
@@ -42,7 +43,6 @@ rule: { pattern: a = $OLD_VAR }
 # ... rewriters and transform
 fix: a = $NEW_VAR
 ```
-
 
 ## Rewriter Example
 
@@ -157,6 +157,7 @@ transform:
 # combine and replace
 fix: '{ $LITERAL }'
 ```
+
 See the final result in [action](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGljdCgkJCRBUkdTKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiMgZGVmaW5lIHJld3JpdGVyc1xucmV3cml0ZXJzOlxuLSBpZDogZGljdC1yZXdyaXRlXG4gIHJ1bGU6XG4gICAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICAgIGFsbDpcbiAgICAtIGhhczpcbiAgICAgICAgZmllbGQ6IG5hbWVcbiAgICAgICAgcGF0dGVybjogJEtFWVxuICAgIC0gaGFzOlxuICAgICAgICBmaWVsZDogdmFsdWVcbiAgICAgICAgcGF0dGVybjogJFZBTFxuICBmaXg6IFwiJyRLRVknOiAkVkFMXCJcbiMgZmluZCB0aGUgdGFyZ2V0IG5vZGVcbnJ1bGU6XG4gIHBhdHRlcm46IGRpY3QoJCQkQVJHUylcbiMgYXBwbHkgcmV3cml0ZXJzIHRvIHN1YiBub2RlXG50cmFuc2Zvcm06XG4gIExJVEVSQUw6XG4gICAgcmV3cml0ZTpcbiAgICAgIHJld3JpdGVyczogW2RpY3QtcmV3cml0ZV1cbiAgICAgIHNvdXJjZTogJCQkQVJHU1xuIyBjb21iaW5lIGFuZCByZXBsYWNlXG5maXg6ICd7ICRMSVRFUkFMIH0nIiwic291cmNlIjoiZCA9IGRpY3QoYT0xLCBiPTIpIn0=).
 
 ## `rewriters` is Top Level
@@ -165,9 +166,9 @@ Every ast-grep rule can have one `rewriters` at top level. The `rewriters` accep
 
 Every rewriter rule is like a regular ast-grep rule with `fix`. These are required fields for a rewriter rule.
 
-* `id`: A unique identifier for the rewriter to be referenced in the `rewrite` transformation field.
-* `rule`: A rule object to match the sub node.
-* `fix`: A string to replace the matched sub node.
+- `id`: A unique identifier for the rewriter to be referenced in the `rewrite` transformation field.
+- `rule`: A rule object to match the sub node.
+- `fix`: A string to replace the matched sub node.
 
 Rewriter rule can also have other fields like `transform` and `constraints`. However, fields like `severity` and `message` are not available in rewriter rules. Generally, only [Finding](/reference/yaml.html#finding) and [Patching](/reference/yaml.html#patching) fields are allowed in rewriter rules.
 

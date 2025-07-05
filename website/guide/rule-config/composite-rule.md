@@ -33,7 +33,6 @@ We can read the rule as "matches code that is both an expression statement and h
 
 `any` accepts a list of rules and will match AST nodes as long as they satisfy any one of the rules.
 
-
 Example([playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoibGFuZ3VhZ2U6IFR5cGVTY3JpcHRcbnJ1bGU6XG4gIGFueTpcbiAgICAtIHBhdHRlcm46IHZhciBhID0gJEFcbiAgICAtIHBhdHRlcm46IGNvbnN0IGEgPSAkQVxuICAgIC0gcGF0dGVybjogbGV0IGEgPSAkQSIsInNvdXJjZSI6InZhciBhID0gMVxuY29uc3QgYSA9IDEgXG5sZXQgYSA9IDFcblxuIn0=)):
 
 ```yaml
@@ -69,6 +68,7 @@ The above rule will match any `console.log` call but not `console.log('Hello Wor
 `matches` rule enable us to reuse rules and even unlock the possibility of recursive rule. It is the most powerful rule in ast-grep and deserves a separate page to explain it. Please see the [dedicated page](/guide/rule-config/utility-rule) for `matches`.
 
 ## `all` and `any` Refers to Rules, Not Nodes
+
 `all` mean that a node should **satisfy all the rules**. `any` means that a node should **satisfy any one of the rules**.
 It does not mean `all` or `any` nodes matching the rules.
 
@@ -89,6 +89,7 @@ So the rule above means _"match a node has a child that is both a number and a s
 Instead we should search _"a node that has a number child and has a string child"_.
 
 Here is [the correct rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImE6IExpc3RbJEJdIiwicmV3cml0ZSI6Imxpc3RbJEJdIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJnZW5lcmljX3R5cGUiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBhcmd1bWVudHNcbiAgYWxsOlxuICAtIGhhczogeyBraW5kOiBudW1iZXIgfVxuICAtIGhhczogeyBraW5kOiBzdHJpbmcgfSIsInNvdXJjZSI6ImxvZygnc3RyJywgMTIzKSJ9). Note `all` is used before `has`.
+
 ```yaml
 all:
 - has: {kind: number}
@@ -97,8 +98,8 @@ all:
 
 Composite rule is inspired by logical operator `and`/`or` and related list method like [`all`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.all)/[`any`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.any). It tests whether a node matches all/any of the rules in the list.
 
-
 ## Combine Different Rules as Fields
+
 Sometimes it is necessary to match node nested within other desired nodes. We can use composite rule `all` and relational `inside` to find them, but the result rule is highly nested.
 
 For example, we want to find the usage of `this.foo` in a class getter, we can write the following rule:

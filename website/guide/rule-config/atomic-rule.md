@@ -17,20 +17,19 @@ The above rule will match code like `console.log('Hello World')`.
 
 By default, a _string_ `pattern` is parsed and matched as a whole.
 
-
 ### Pattern Object
 
 It is not always possible to select certain code with a simple string pattern. A pattern code can be invalid, incomplete or ambiguous for the parser since it lacks context.
 
 For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiJEZJRUxEID0gJElOSVQiLCJyZXdyaXRlIjoiRGVidWcuYXNzZXJ0IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjogXG4gICAgY29udGV4dDogJ3sgJE06ICgkJCRBKSA9PiAkTUFUQ0ggfSdcbiAgICBzZWxlY3RvcjogcGFpclxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==).
 
-----
+---
 
 We can also use an _object_ to specify a sub-syntax node to match within a larger context. It consists of an object with three properties: `context`, `selector` and `strictness`.
 
-* `context` (required): defines the surrounding code that helps to resolve any ambiguity in the syntax.
-* `selector` (optional):  defines the sub-syntax node kind that is the actual matcher of the pattern.
-* `strictness` (optional): defines how strictly pattern will match against nodes.
+- `context` (required): defines the surrounding code that helps to resolve any ambiguity in the syntax.
+- `selector` (optional): defines the sub-syntax node kind that is the actual matcher of the pattern.
+- `strictness` (optional): defines how strictly pattern will match against nodes.
 
 Let's see how pattern object can solve the ambiguity in the class field example above.
 
@@ -43,11 +42,12 @@ pattern:
 ```
 
 ast-grep works like this:
+
 1. First, the code in `context`, `class A { $FIELD = $INIT }`, is parsed as a class declaration.
 2. Then, it looks for the `field_definition` node, specified by `selector`, in the parsed tree.
 3. The selected `$FIELD = $INIT` is matched against code as the pattern.
 
-In this way, the pattern is parsed as `field_definition` instead of  `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46XG4gICAgc2VsZWN0b3I6IGZpZWxkX2RlZmluaXRpb25cbiAgICBjb250ZXh0OiBjbGFzcyBBIHsgJEZJRUxEID0gJElOSVQgfVxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==) in action.
+In this way, the pattern is parsed as `field_definition` instead of `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46XG4gICAgc2VsZWN0b3I6IGZpZWxkX2RlZmluaXRpb25cbiAgICBjb250ZXh0OiBjbGFzcyBBIHsgJEZJRUxEID0gJElOSVQgfVxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==) in action.
 
 Other examples are [function call in Go](https://github.com/ast-grep/ast-grep/issues/646) and [function parameter in Rust](https://github.com/ast-grep/ast-grep/issues/648).
 
@@ -57,13 +57,13 @@ You can also use pattern object to control the matching strategy with `strictnes
 
 By default, ast-grep uses a smart strategy to match pattern against the AST node. All nodes in the pattern must be matched, but it will skip unnamed nodes in target code.
 
-For the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
+For the definition of **_named_** and **_unnamed_** nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
 
 For example, the following pattern `function $A() {}` will match both plain function and async function in JavaScript. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJEZWJ1Zy5hc3NlcnQiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAneyAkTTogKCQkJEEpID0+ICRNQVRDSCB9J1xuICAgIHNlbGVjdG9yOiBwYWlyXG4iLCJzb3VyY2UiOiJmdW5jdGlvbiBhKCkge31cbmFzeW5jIGZ1bmN0aW9uIGEoKSB7fSJ9)
 
 ```js
 // function $A() {}
-function foo() {}    // matched
+function foo() {} // matched
 async function bar() {} // matched
 ```
 
@@ -71,11 +71,11 @@ This is because the keyword `async` is an unnamed node in the AST, so the `async
 
 However, this is not always the desired behavior. ast-grep provides `strictness` to control the matching strategy. At the moment, it provides these options, ordered from the most strict to the least strict:
 
-* `cst`: All nodes in the pattern and target code must be matched. No node is skipped.
-* `smart`: All nodes in the pattern must be matched, but it will skip unnamed nodes in target code. This is the default behavior.
-* `ast`: Only named AST nodes in both pattern and target code are matched. All unnamed nodes are skipped.
-* `relaxed`: Named AST nodes in both pattern and target code are matched. Comments and unnamed nodes are ignored.
-* `signature`: Only named AST nodes' kinds are matched. Comments, unnamed nodes and text are ignored.
+- `cst`: All nodes in the pattern and target code must be matched. No node is skipped.
+- `smart`: All nodes in the pattern must be matched, but it will skip unnamed nodes in target code. This is the default behavior.
+- `ast`: Only named AST nodes in both pattern and target code are matched. All unnamed nodes are skipped.
+- `relaxed`: Named AST nodes in both pattern and target code are matched. Comments and unnamed nodes are ignored.
+- `signature`: Only named AST nodes' kinds are matched. Comments, unnamed nodes and text are ignored.
 
 :::tip Deep Dive and More Examples
 
@@ -113,10 +113,10 @@ class Test {
 ```
 
 Here are some situations that you can effectively use `kind`:
+
 1. Pattern code is ambiguous to parse, e.g. `{}` in JavaScript can be either object or code block.
 2. It is too hard to enumerate all patterns of an AST kind node, e.g. matching all Java/TypeScript class declaration will need including all modifiers, generics, `extends` and `implements`.
 3. Patterns only appear within specific context, e.g. the class property definition.
-
 
 :::warning `kind` + `pattern` is different from pattern object
 You may want to use `kind` to change how `pattern` is parsed. However, ast-grep rules are independent of each other.
@@ -166,9 +166,10 @@ nthChild:
 ```
 
 :::tip
-* `nthChild`'s index is 1-based, not 0-based, as in the CSS selector.
-* `nthChild`'s node list only includes named nodes, not unnamed nodes.
-:::
+
+- `nthChild`'s index is 1-based, not 0-based, as in the CSS selector.
+- `nthChild`'s node list only includes named nodes, not unnamed nodes.
+  :::
 
 **Example**
 
@@ -183,8 +184,8 @@ rule:
 It will match the following code:
 
 ```js
-const arr = [ 1, 2, 3, ]
-            //   |- match this number
+const arr = [1, 2, 3]
+//   |- match this number
 ```
 
 ## `range`
@@ -208,19 +209,19 @@ The above example will match an AST node having the first three characters of th
 
 `line` and `column` are 0-based and character-wise, and the `start` is inclusive while the `end` is exclusive.
 
-
 ## Tips for Writing Rules
 
-Since one rule will have *only one* AST node in one match, it is recommended to first write the atomic rule that matches the desired node.
+Since one rule will have _only one_ AST node in one match, it is recommended to first write the atomic rule that matches the desired node.
 
 Suppose we want to write a rule which finds functions without a return type.
 For example, this code would trigger an error:
 
 ```ts
 const foo = () => {
-	return 1;
+  return 1
 }
 ```
+
 The first step to compose a rule is to find the target. In this case, we can first use kind: `arrow_function` to find function node. Then we can use other rules to filter candidate nodes that does have return type.
 
 Another trick to write cleaner rule is to use sub-rules as fields.

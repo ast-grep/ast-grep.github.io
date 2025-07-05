@@ -1,6 +1,5 @@
-import { ref, computed, inject, watchEffect } from 'vue'
-import { highlightKey, Pos, GeneralNode } from './dumpTree'
-
+import { computed, inject, ref, watchEffect } from 'vue'
+import { GeneralNode, highlightKey, Pos } from './dumpTree'
 
 interface Props {
   node: GeneralNode
@@ -21,7 +20,7 @@ export function useHighlightNode(props: Props) {
     ])
   }
 
-  function withinPos({start, end}: GeneralNode, pos?: Pos) {
+  function withinPos({ start, end }: GeneralNode, pos?: Pos) {
     if (!pos) {
       return false
     }
@@ -38,9 +37,8 @@ export function useHighlightNode(props: Props) {
     if (!isWithin.value) {
       return false
     }
-    const {node, cursorPosition} = props
-    const isTarget =
-      !expanded.value || // children not expanded, current target is the target
+    const { node, cursorPosition } = props
+    const isTarget = !expanded.value || // children not expanded, current target is the target
       !node.children.some(n => withinPos(n, cursorPosition)) // no children within node
     return isTarget
   })

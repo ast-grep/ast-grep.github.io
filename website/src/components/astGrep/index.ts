@@ -1,8 +1,8 @@
-import { shallowRef, watchEffect, inject, Ref } from 'vue'
+import { inject, Ref, shallowRef, watchEffect } from 'vue'
 import { doFind, Match, useSetupParser } from './lang'
-import { Mode, State, useSgState, astGrepStateKey } from './state'
+import { astGrepStateKey, Mode, State, useSgState } from './state'
 
-export type { SupportedLang, Match } from './lang'
+export type { Match, SupportedLang } from './lang'
 export { initializeParser, langLoadedKey } from './lang'
 export { Mode } from './state'
 
@@ -60,13 +60,13 @@ function useDoFind(langLoaded: Ref<boolean>, state: State) {
     onInvalidate(() => invalidated = true)
     try {
       const [matches, fixed] = await doFind(src, json)
-      if (invalidated) { return }
+      if (invalidated) return
       rewrittenCode.value = fixed
       matchedHighlights.value = matches
       matchedEnvs.value = matches.map(m => m.env)
       ruleErrors.value = undefined
     } catch (e: any) {
-      if (invalidated) { return }
+      if (invalidated) return
       console.error(e)
       ruleErrors.value = e.toString()
       matchedHighlights.value = []

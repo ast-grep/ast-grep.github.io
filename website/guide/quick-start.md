@@ -10,11 +10,12 @@ head:
 
 You can unleash `ast-grep`'s power at your finger tips within few keystrokes in command line!
 
-Let's try its power of  by rewriting some code in a moderately large codebase: [TypeScript](https://github.com/microsoft/TypeScript/).
+Let's try its power of by rewriting some code in a moderately large codebase: [TypeScript](https://github.com/microsoft/TypeScript/).
 
 Our task is to rewrite old defensive code that checks nullable nested method calls to the new shiny [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) `?.`.
 
 ## Installation
+
 First, install `ast-grep`. It is distributed by [npm](https://www.npmjs.com/package/@ast-grep/cli), [cargo](https://crates.io/crates/ast-grep), [homebrew](https://formulae.brew.sh/formula/ast-grep) and [macports](https://ports.macports.org/port/ast-grep/). You can also build it [from source](https://github.com/ast-grep/ast-grep#installation).
 
 ::: code-group
@@ -48,6 +49,7 @@ npm i @ast-grep/cli -g
 # install via pip
 pip install ast-grep-cli
 ```
+
 :::
 
 The binary command, `ast-grep` or `sg`, should be available now. Let's try it with `--help`.
@@ -64,7 +66,6 @@ You can also use shorter alias if you want by `alias sg=ast-grep`.
 We will use `ast-grep` in the guide below.
 :::
 
-
 Optionally, you can grab TypeScript source code if you want to follow the tutorial. Or you can apply the magic to your own code.
 
 ```shell
@@ -72,6 +73,7 @@ git clone git@github.com:microsoft/TypeScript.git --depth 1
 ```
 
 ## Pattern
+
 Then search the occurrence of looking up a method from a nested structure. `ast-grep` uses **pattern** to find similar code.
 Think it as the pattern in our old-friend `grep` but it matches AST node instead of text.
 We can write pattern as if write ordinary code. It will match all code that has the same syntactical structure.
@@ -86,11 +88,11 @@ will match all the following code, regardless of white spaces or new lines.
 
 ```javascript
 obj.val && obj.val() // verbatim match, of course
-obj.val    &&     obj.val() // this matches, too
+obj.val && obj.val() // this matches, too
 
 // this matches as well!
 const result = obj.val &&
-   obj.val()
+  obj.val()
 ```
 
 Matching based exactly on AST is cool, but we certainly want to use flexible pattern to match code with infinite possibility.
@@ -107,16 +109,20 @@ It is a valid `ast-grep` pattern! We can use it in command line! Use `pattern` a
 Optionally, we can use `lang` to tell ast-grep our target code language.
 
 :::code-group
+
 ```shell [Full Command]
 ast-grep --pattern '$PROP && $PROP()' --lang ts TypeScript/src
 ```
+
 ```shell [Short Form]
 ast-grep -p '$PROP && $PROP()' -l ts TypeScript/src
 ```
+
 ```shell [Without Lang]
 # ast-grep will infer languages based on file extensions
 ast-grep -p '$PROP && $PROP()' TypeScript/src
 ```
+
 :::
 
 :::tip Pro Tip
@@ -141,7 +147,6 @@ ast-grep -p '$PROP && $PROP()' \
 
 ast-grep will start an interactive session to let you choose if you want to apply the patch.
 Press `y` to accept the change!
-
 
 That's it! You have refactored TypeScript's repository in minutes. Congratulation!
 

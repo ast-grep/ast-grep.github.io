@@ -1,4 +1,4 @@
-import type { InjectionKey, ComputedRef } from 'vue'
+import type { ComputedRef, InjectionKey } from 'vue'
 import { computed } from 'vue'
 
 interface HighlightContext {
@@ -37,7 +37,7 @@ type DestructedNode<T> = {
   [K in keyof T]: ComputedRef<T[K]>
 }
 
-export function deepReactiveNode<T extends object>(props: {node: T}): DestructedNode<T> {
+export function deepReactiveNode<T extends object>(props: { node: T }): DestructedNode<T> {
   const keys = Object.keys(props.node) as (keyof T)[]
   const entries = keys.map(k => [k, computed(() => props.node[k])])
   return Object.fromEntries(entries)

@@ -5,8 +5,9 @@ Sometimes, we may want to apply some transformations to the meta variables in th
 ## Use `transform` in Rewrite
 
 `transform` accepts a **dictionary** of which:
-* the _key_ is the **new variable name** to be introduced and
-* the _value_ is a **transformation object** that specifies which meta-variable is transformed and how.
+
+- the _key_ is the **new variable name** to be introduced and
+- the _value_ is a **transformation object** that specifies which meta-variable is transformed and how.
 
 A transformation object has a key indicating which string operation will be performed on the meta variable, and the value of that key is another object (usually with the source key). Different string operation keys expect different object values.
 
@@ -68,8 +69,8 @@ Let's discuss the API step by step:
 2. The `LIST` key is the new variable name that we can use in `fix` or later transformation. We can choose any name as long as it does not conflict with any existing meta variable names. **Note, the new variable name does not start with `$`.**
 3. The `substring` key is the transform operation name that we want to use. This operation will extract a substring from the source string based on the given start and end characters.
 4. `substring` accepts an object
-    1. The `source` key specifies which meta variable we want to transform. **It should have `$` prefix.** In this case, it is `$GEN` that which matches the generator expression in the code.
-    2. The `startChar` and `endChar` keys specify the indices of the start and end characters of the substring that we want to extract. In this case, we want to extract everything except the wrapping parentheses, which are the first and last characters: `(` and `)`.
+   1. The `source` key specifies which meta variable we want to transform. **It should have `$` prefix.** In this case, it is `$GEN` that which matches the generator expression in the code.
+   2. The `startChar` and `endChar` keys specify the indices of the start and end characters of the substring that we want to extract. In this case, we want to extract everything except the wrapping parentheses, which are the first and last characters: `(` and `)`.
 5. The `fix` key specifies the new code that we want to replace the matched pattern with. We use the new variable `$LIST` in the fix part, and wrap it with `[` and `]` to make it a list comprehension.
 
 :::tip Pro Tips
@@ -77,15 +78,17 @@ Later transformations can use the variables that were transformed before. This a
 :::
 
 ## Supported `transformation`
+
 We have several different transformations available now. Please check out [transformation reference](/reference/yaml/transformation.html) for more details.
 
-* `replace`: Use a regular expression to replace the text in a meta-variable with a new text.
-* `substring`: Create a new string by cutting off leading and trailing characters.
-* `convert`: Change the string case of a meta-variable, such as from `camelCase` to `underscore_case`.
-* `rewrite`: Apply rewriter rules to a meta-variable AST and generate a new string. It is like rewriting a sub node recursively.
+- `replace`: Use a regular expression to replace the text in a meta-variable with a new text.
+- `substring`: Create a new string by cutting off leading and trailing characters.
+- `convert`: Change the string case of a meta-variable, such as from `camelCase` to `underscore_case`.
+- `rewrite`: Apply rewriter rules to a meta-variable AST and generate a new string. It is like rewriting a sub node recursively.
 
 ## Rewrite with Regex Capture Groups
-The `replace` transformation allows us to use Rust regex capture groups like `(?<NAME>.*)` to capture meta-variables and reference them in the `by` field.  For example, to replace `debug` with `release` in a function name, we can use the following transformation:
+
+The `replace` transformation allows us to use Rust regex capture groups like `(?<NAME>.*)` to capture meta-variables and reference them in the `by` field. For example, to replace `debug` with `release` in a function name, we can use the following transformation:
 
 ```yaml
 id: debug-to-release
@@ -100,18 +103,21 @@ transform:
       by: release$REG               # Refer to REG just like a meta-variable
 fix: $NEW_FN($$$ARGS)
 ```
+
 which will result in [the following change](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoiaWQ6IGRlYnVnLXRvLXJlbGVhc2Vcbmxhbmd1YWdlOiBqc1xucnVsZToge3BhdHRlcm46ICRPTERfRk4oJCQkQVJHUyl9ICAgIyBDYXB0dXJlIE9MRF9GTlxuY29uc3RyYWludHM6IHtPTERfRk46IHtyZWdleDogXmRlYnVnfX0gICMgT25seSBtYXRjaCBpZiBpdCBzdGFydHMgd2l0aCAnZGVidWcnXG50cmFuc2Zvcm06XG4gIE5FV19GTjpcbiAgICByZXBsYWNlOlxuICAgICAgc291cmNlOiAkT0xEX0ZOXG4gICAgICByZXBsYWNlOiBkZWJ1Zyg/PFJFRz4uKikgICAgICAjIENhcHR1cmUgZXZlcnl0aGluZyBmb2xsb3dpbmcgJ2RlYnVnJyBhcyBSRUdcbiAgICAgIGJ5OiByZWxlYXNlJFJFRyAgICAgICAgICAgICAgICMgUmVmZXIgdG8gUkVHIGp1c3QgbGlrZSBhIG1ldGEtdmFyaWFibGVcbmZpeDogJE5FV19GTigkJCRBUkdTKSIsInNvdXJjZSI6ImRlYnVnRm9vKGFyZzEsIGFyZzIpICAifQ==):
+
 ```js
-debugFoo(arg1, arg2)  // [!code --]
-releaseFoo(arg1, arg2)  // [!code ++]
+debugFoo(arg1, arg2) // [!code --]
+releaseFoo(arg1, arg2) // [!code ++]
 ```
+
 Alternatively, replacing `fooDebug` with `fooRelease`, is difficult because you can't concatenate a meta-variable with a capitalized string literal. `release$REG` is fine, but `$REGRelease` will be interpreted as a single meta-variable and not a concatenation. One workaround is to use multiple sequential transformations, as shown below.
 
 :::warning Limitation
 You can only extract regex capture groups in the `replace` field of the `replace` transformation and you can only reference them in the `by` field of the same transformation. The regular `regex` rule does not support capture groups.
 :::
 
-##  Multiple Sequential Transformations
+## Multiple Sequential Transformations
 
 Each transformation outputs a meta-variable that can be used as the input to later transformations. Chaining transformations like this allows us to build up complex behaviors.
 
@@ -136,6 +142,7 @@ transform:
       toCase: camelCase
 fix: $UNKEBABED($$$ARGS)
 ```
+
 ## Add conditional text
 
 Occasionally we may want to add extra text, such as punctuations and newlines, to our fixer string. But whether we should add the new text depends on the presence of absence of other syntax nodes.
@@ -145,7 +152,6 @@ A typical scenario is adding a comma between two arguments or list items. We onl
 We can use `replace` transformation to create a new meta-variable that only contains text when another meta-variable matches something.
 
 For example, suppose we want to add a new argument to existing function call. We need to add a comma `,` after the new argument only when the existing call already has some arguments.
-
 
 ```yaml
 id: add-leading-argument
@@ -166,7 +172,6 @@ In the above example, if `$$$ARGS` matches nothing, it will be an empty string a
 
 If `$$$ARGS` does match nodes, then the replacement regular expression will replace the text with `,`, so the final fix string will be
 `$FUNC(new_argument, $$$ARGS)`
-
 
 :::tip DasSurma Trick
 This method is invented by [Surma](https://surma.dev/) in a [tweet](https://twitter.com/DasSurma/status/1706086320051794217), so the useful trick is named after him.

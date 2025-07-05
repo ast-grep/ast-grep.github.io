@@ -1,6 +1,6 @@
-import { createContentLoader, type ContentData } from 'vitepress'
+import { JSON_SCHEMA, loadAll } from 'js-yaml'
+import { type ContentData, createContentLoader } from 'vitepress'
 import { ExampleLangs } from '../src/catalog/data'
-import { loadAll, JSON_SCHEMA } from 'js-yaml'
 
 export interface RuleMeta {
   id: string
@@ -33,7 +33,8 @@ function extractRuleInfo({ url, src }: ContentData): RuleMeta {
   const source = src!
   const id = url.split('/').pop()?.replace(/\.md$/, '') || ''
   const type = source.includes('```yml') || source.includes('```yaml')
-   ? 'YAML' : 'Pattern'
+    ? 'YAML' :
+    'Pattern'
   const playgroundLink = /\[Playground Link\]\((.+)\)/.exec(source)?.[1] || ''
   const hasFix = source.includes('<Badge') && source.includes('Has Fix')
   const language = url.split('/')[2] as ExampleLangs

@@ -6,12 +6,12 @@ ast-grep rule has a `rewriters` field which is a list of rewriter objects that c
 
 A rewriter rule is similar to ordinary ast-grep rule, except that:
 
-* It only has `id`, `rule`, `constraints`, `transform`, `utils`, and `fix` fields.
-* `id`, `rule` and `fix` are required in rewriter.
-* `rewriters` can only be used in [`rewrite`](/reference/yaml/transformation.html#rewrite) transformation.
-* Meta-variables defined in one `rewriter` are not accessible in other `rewriter` or the original rule.
-* `utils` and `transform` are independent similar to meta-variables. That is, these two fields can only be used by the defining rewriter.
-* You can use other rewriters in a rewriter rule's `transform` section if they are defined in the same `rewriter` list.
+- It only has `id`, `rule`, `constraints`, `transform`, `utils`, and `fix` fields.
+- `id`, `rule` and `fix` are required in rewriter.
+- `rewriters` can only be used in [`rewrite`](/reference/yaml/transformation.html#rewrite) transformation.
+- Meta-variables defined in one `rewriter` are not accessible in other `rewriter` or the original rule.
+- `utils` and `transform` are independent similar to meta-variables. That is, these two fields can only be used by the defining rewriter.
+- You can use other rewriters in a rewriter rule's `transform` section if they are defined in the same `rewriter` list.
 
 :::warning Consider ast-grep API
 Rewriters are an advanced feature and should be used with caution, and it is experimental at the moment. If possible, you can use ast-grep's [API](/guide/api-usage.html) as an alternative.
@@ -20,30 +20,35 @@ Rewriters are an advanced feature and should be used with caution, and it is exp
 Please ask questions on [StackOverflow](https://stackoverflow.com/questions/tagged/ast-grep), [GitHub Discussions](https://github.com/ast-grep/ast-grep/discussions) or [discord](https://discord.com/invite/4YZjf6htSQ) for help.
 
 ## `id`
-* type: `String`
-* required: true
+
+- type: `String`
+- required: true
 
 ## `rule`
-* type: `Rule`
-* required: true
+
+- type: `Rule`
+- required: true
 
 The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule.html).
 
 ## `fix`
-* type: `String` or `FixConfig`
-* required: true
+
+- type: `String` or `FixConfig`
+- required: true
 
 A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
 
 ## `constraints`
-* type: `HashMap<String, Rule>`
-* required: false
+
+- type: `HashMap<String, Rule>`
+- required: false
 
 Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value is a [rule object](/reference/rule.html).
 
 ## `transform`
-* type: `HashMap<String, Transformation>`
-* required: false
+
+- type: `HashMap<String, Transformation>`
+- required: false
 
 A dictionary to manipulate meta-variables. The dictionary key is the new variable name.
 The dictionary value is a transformation object that specifies how meta var is processed.
@@ -51,8 +56,9 @@ The dictionary value is a transformation object that specifies how meta var is p
 **Note: variables defined `transform` are only available in the `rewriter` itself.**
 
 ## `utils`
-* type: `HashMap<String, Rule>`
-* required: false
+
+- type: `HashMap<String, Rule>`
+- required: false
 
 A dictionary of utility rules that can be used in `matches` locally.
 The dictionary key is the utility rule id and the value is the rule object.
@@ -65,11 +71,11 @@ See [utility rule guide](/guide/rule-config/utility-rule).
 Suppose we want to rewrite a [barrel](https://vercel.com/blog/how-we-optimized-package-imports-in-next-js) [import](https://marvinh.dev/blog/speeding-up-javascript-ecosystem-part-7/) to individual imports in JavaScript. For example,
 
 ```JavaScript
-import { A, B, C } from './module';
+import { A, B, C } from './module'
 // rewrite the above to
-import A from './module/a';
-import B from './module/b';
-import C from './module/c';
+import A from './module/a'
+import B from './module/b'
+import C from './module/c'
 ```
 
 It is impossible to do this in ast-grep YAML without rewriters because ast-grep can only replace one node at a time with a string. We cannot process multiple imported identifiers like `A, B, C`.
@@ -85,7 +91,6 @@ rule:
 
 This will capture the imported identifiers `A, B, C` in `$$$IDENTS`.
 
-
 **Next, we need to transform `$$$IDENTS` to individual imports.**
 
 The idea is that we can find the identifier nodes in the `$$$IDENT` and rewrite them to individual imports.
@@ -99,7 +104,7 @@ rewriters:
   fix: import $IDENT from './module/$IDENT'
 ```
 
-The `rewrite-identifier` above will rewrite the identifier node to individual imports. To illustrate, the rewriter will change identifier `A` to  `import A from './module/A'`.
+The `rewrite-identifier` above will rewrite the identifier node to individual imports. To illustrate, the rewriter will change identifier `A` to `import A from './module/A'`.
 
 Note the library path has the uppercase letter `A` same as the identifier at the end, but we want it to be a lowercase letter in the import statement.
 The [`convert`](/reference/yaml/transformation.html#convert) operation in `transform` can be helpful in the rewriter rule as well.

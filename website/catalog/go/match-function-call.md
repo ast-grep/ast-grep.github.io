@@ -1,6 +1,6 @@
 ## Match Function Call in Golang
 
-* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiJhd2FpdCAkQSIsInJld3JpdGUiOiJ0cnkge1xuICAgIGF3YWl0ICRBXG59IGNhdGNoKGUpIHtcbiAgICAvLyB0b2RvXG59IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiAnZnVuYyB0KCkgeyBmbXQuUHJpbnRsbigkJCRBKSB9J1xuICAgIHNlbGVjdG9yOiBjYWxsX2V4cHJlc3Npb25cbiIsInNvdXJjZSI6ImZ1bmMgbWFpbigpIHtcbiAgICBmbXQuUHJpbnRsbihcIk9LXCIpXG59In0=)
+- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiJhd2FpdCAkQSIsInJld3JpdGUiOiJ0cnkge1xuICAgIGF3YWl0ICRBXG59IGNhdGNoKGUpIHtcbiAgICAvLyB0b2RvXG59IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiAnZnVuYyB0KCkgeyBmbXQuUHJpbnRsbigkJCRBKSB9J1xuICAgIHNlbGVjdG9yOiBjYWxsX2V4cHJlc3Npb25cbiIsInNvdXJjZSI6ImZ1bmMgbWFpbigpIHtcbiAgICBmbXQuUHJpbnRsbihcIk9LXCIpXG59In0=)
 
 ### Description
 
@@ -27,6 +27,7 @@ rule:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
+
 ```go{2}
 func main() {
     fmt.Println("OK")
@@ -34,4 +35,5 @@ func main() {
 ```
 
 ### Contributed by
+
 Inspired by [QuantumGhost](https://github.com/QuantumGhost) from [ast-grep/ast-grep#646](https://github.com/ast-grep/ast-grep/issues/646)

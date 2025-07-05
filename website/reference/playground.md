@@ -17,16 +17,19 @@ Annotated screenshot of the ast-grep playground:
 The ast-grep playground has a simple and intuitive layout that consists of four main areas.
 
 ### 1. Source Editor
-The **source editor** is where you can write or paste the code that you want to search or modify.  The source editor supports syntax highlighting and auto-indentation for various languages, such as Python, JavaScript, Java, C#, and more.
+
+The **source editor** is where you can write or paste the code that you want to search or modify. The source editor supports syntax highlighting and auto-indentation for various languages, such as Python, JavaScript, Java, C#, and more.
 
 :::tip How to Change Language?
 You can choose the language of your code from the drop-down menu at the top right corner.
 :::
 
 ### 2. Source AST Dump
+
 The **source AST dump** is where you can see the AST representation of your source code. The AST dump shows the structure and the [kind and field](/advanced/core-concepts.html#kind-vs-field) of each node in the AST. You can use the AST dump to understand how your code is parsed and how to write patterns that match specific nodes or subtrees.
 
 ### 3. Matcher Editor
+
 The **matcher editor** is where you can write the code patterns and rewrite rules that you want to apply to your source code. The matcher uses the same language as your source code. The matcher editor has two tabs: **Pattern** and **YAML**.
 
 - **Pattern** provides an _approachable_ option where you can write the [code pattern](/guide/pattern-syntax.html) that you want to match in your source code. You can also write a rewrite expression that specifies how to modify the matched code in the subeditor below. It roughly emulates the behavior of [`ast-grep run`](/reference/cli/run.html).
@@ -68,10 +71,10 @@ ast-grep can represent code using two different types of tree structures: **AST*
 
 In case you need to match unnamed nodes, you can toggle between AST and CST in the ast dumper by clicking the **Show Full Tree** option. This option will show you the full CST of your code, which may be useful for debugging or fine-tuning your patterns and rules.
 
-|Syntax Tree Format|Screenshot|
-|---|---|
-|Named AST|![no full](https://user-images.githubusercontent.com/2883231/268730796-57ffb3be-e2e9-4199-8a71-76f1320cebf7.png)|
-|Full CST|![full tree](https://user-images.githubusercontent.com/2883231/268730525-ea3b7c71-5389-42e5-abee-fc0d845e4b1b.png)|
+| Syntax Tree Format | Screenshot                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Named AST          | ![no full](https://user-images.githubusercontent.com/2883231/268730796-57ffb3be-e2e9-4199-8a71-76f1320cebf7.png)   |
+| Full CST           | ![full tree](https://user-images.githubusercontent.com/2883231/268730525-ea3b7c71-5389-42e5-abee-fc0d845e4b1b.png) |
 
 ## Test Multiple Rules
 
@@ -98,13 +101,11 @@ Screenshot:
 
 ## Test Rule Diagnostics
 
-
 Finally, the ast-grep playground also has a powerful feature that lets you see how your YAML rule reports diagnostics in the code editor.
 
 This feature is optional, but can be turned on easily. To enable it, you need to specify the following fields in your YAML rule: `id`, `message`, `rule`, and `severity`. The `severity` field should be either `error`, `warning` or `info`, but not `hint`.
 
 The playground will then display the diagnostics in the code editor with red or yellow wavy underlines, depending on the severity level. You can also hover over the underlines to see the message and the rule id for each diagnostic. This feature can help you detect and correct code issues more quickly and effectively.
-
 
 [Example Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiaWQ6IG5vLWNvbnNvbGVcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUuJE1FVEhPRCgkQSlcbm1lc3NhZ2U6IFVuZXhwZWN0ZWQgY29uc29sZVxuc2V2ZXJpdHk6IHdhcm5pbmdcblxuLS0tXG5cbmlkOiBuby1kZWJ1Z2dlclxucnVsZTpcbiAgcGF0dGVybjogZGVidWdnZXJcbm1lc3NhZ2U6IFVuZXhwZWN0ZWQgZGVidWdnZXJcbnNldmVyaXR5OiBlcnJvciIsInNvdXJjZSI6ImZ1bmN0aW9uIHRyeUFzdEdyZXAoKSB7XG4gIGNvbnNvbGUubG9nKCdtYXRjaGVkIGluIG1ldGF2YXIhJylcbn1cblxuY29uc3QgbXVsdGlMaW5lRXhwcmVzc2lvbiA9XG4gIGNvbnNvbGVcbiAgIC5sb2coJ0Fsc28gbWF0Y2hlZCEnKVxuXG5pZiAodHJ1ZSkge1xuICBkZWJ1Z2dlclxufSJ9)
 

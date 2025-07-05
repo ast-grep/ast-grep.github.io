@@ -16,7 +16,6 @@ Tree-sitter is a tool that generates parsers and provides an incremental parsing
 
 A [parser](https://www.wikiwand.com/en/Parser_(programming_language)) is a program that takes a source code file as input and produces a tree structure that describes the organization of the code. (Contrary to ast-grep's name, the tree structure is not abstract syntax tree, as we will see later).
 
-
 Writing good parsers for various programming languages is a laborious task, if even possible, for one single project like ast-grep. Fortunately, Tree-sitter is a venerable and popular tool that has a wide community support. Many mainstream languages such as C, Java, JavaScript, Python, Rust, and more are supported by Tree-sitter.
 Using Tree-sitter as ast-grep's underlying parsing library allows it to _work with any language that has a well-maintained grammar available_.
 
@@ -38,8 +37,8 @@ _Therefore, the patterns you write must also be of valid syntax that can be comp
 Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule.html#regex) to matches the text of a node by specifying a regular expression. This way, it is possible to combine textual and structural matching in ast-grep.
 :::
 
-
 ## AST vs CST
+
 To represent the syntax and structure of code, we have two types of tree structures: [AST](https://www.wikiwand.com/en/Abstract_syntax_tree) and [CST](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/).
 
 AST stands for Abstract Syntax Tree, which is a **simplified** representation of the code that _omits some details_ like punctuation and whitespaces.
@@ -49,12 +48,15 @@ Tree-sitter is a library that can parse code into CSTs for many programming lang
 
 Let's walk through an example to see why CST makes more sense.
 Consider the JavaScript snippet `1 + 1`. Its AST representation [looks like this](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJE1BVENIKSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiIxICsgMSJ9):
+
 ```
 binary_expression
   number
   number
 ```
+
 An astute reader should notice the important operator `+` is not encoded in AST. Meanwhile, its CST faithfully represents all critical information.
+
 ```
 binary_expression
   number
@@ -86,6 +88,7 @@ rules: {
                                           // ↑ unnamed node
 }
 ```
+
 Practically, named nodes have a property called `kind` that indicates their names. You can use ast-grep's [atomic rule `kind`](/guide/rule-config/atomic-rule.html#kind) to find the specific AST node. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOiBcbiAga2luZDogYmluYXJ5X2V4cHJlc3Npb24iLCJzb3VyY2UiOiIxICsgMSAifQ==) for the example below.
 
 ```yaml
@@ -98,7 +101,7 @@ Further more, ast-grep's meta variable matches only named nodes by default. `ret
 
 ```js
 return 123 // `123` is named `number` and matched.
-return;    // `;` is unnamed and not matched.
+return // `;` is unnamed and not matched.
 ```
 
 We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
@@ -118,6 +121,7 @@ rule:
     field: key
     kind: pair
 ```
+
 `field` can help us to narrow down the search scope and make the pattern more precise.
 
 We can also use `has` to rewrite the rule above, searching the key-value `pair` with `string` key. [Playground link](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBwYWlyXG4gIGhhczpcbiAgICBmaWVsZDoga2V5XG4gICAga2luZDogc3RyaW5nIiwic291cmNlIjoidmFyIG1hdGNoID0geyAna2V5JzogJ3ZhbHVlJyB9XG52YXIgbm9NYXRjaCA9IHsga2V5OiB2YWx1ZX0ifQ==).
@@ -131,17 +135,19 @@ rule:
 ```
 
 :::tip Key Difference between `kind` and `field`
-* `kind` is the property of the node itself. Only named nodes have `kind`s.
-* `field` is the property of the relation between parent and child. Unnamed nodes can also have `field`s.
-:::
+
+- `kind` is the property of the node itself. Only named nodes have `kind`s.
+- `field` is the property of the relation between parent and child. Unnamed nodes can also have `field`s.
+  :::
 
 It might be confusing to new users that a node has both `kind` and `field`. `kind` belongs to the node itself, represented by blue text in ast-grep's playground. Child node has a `field` only relative to its parent, and vice-versa. `field` is represented by dark yellow text in the playground. Since field is a property of a node relation, unnamed nodes can also have `field`. For example, the `+` in the binary expression `1 + 1` has the field `operator`.
 
 ## Significant vs Trivial
 
 ast-grep goes further beyond Tree-sitter. It has a concept about the "significance" of a node.
-* If a node is a named node or has a field relative to its parent, it is a **significant** node.
-* Otherwise, the node is a **trivial** node.
+
+- If a node is a named node or has a field relative to its parent, it is a **significant** node.
+- Otherwise, the node is a **trivial** node.
 
 :::warning Even significance is not enough
 Most Tree-sitter languages do not encode all critical structures in AST, the tree with named nodes only.
@@ -154,6 +160,7 @@ Tree-sitter parsers do not encode all semantics with named nodes. For example, `
 If you do not care about if the method is a getter method, a static method or an instance method, you can use `class $A { method() {} }` to [match all the three methods at once](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBtZXRob2QoKSB7fSB9IiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIGtpbmQ6IHN0cmluZyIsInNvdXJjZSI6ImNsYXNzIEEgeyBtZXRob2QoKSB7fX1cbmNsYXNzIEIgeyBnZXQgbWV0aG9kKCkge319XG5jbGFzcyBDIHsgc3RhdGljIG1ldGhvZCgpIHt9fSJ9). Alternatively, you can [fully spell out the method modifier](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBnZXQgbWV0aG9kKCkge30gfSIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJjbGFzcyBBIHsgbWV0aG9kKCkge319XG5jbGFzcyBCIHsgZ2V0IG1ldGhvZCgpIHt9fVxuY2xhc3MgQyB7IHN0YXRpYyBtZXRob2QoKSB7fX0ifQ==) if you need to tell getter method from normal method.
 
 ## Summary
+
 Thank you for reading until here! There are many concepts in this article. Let's summarize them in one paragraph.
 
 ast-grep uses Tree-sitter to parse _textual_ source code into a detailed tree _structure_ called **CST**. We can get **AST** from CST by only keeping **named nodes**, which have kinds. To search nodes in a syntax tree, you can use both node **kind** and node **field**, which is a special role of a child node relative to its parent node. A node with either a kind or a field is a **significant** node.

@@ -2,7 +2,6 @@
 
 This cheat sheet provides a concise overview of ast-grep's rule object configuration, covering Atomic, Relational, and Composite rules, along with notes on Utility rules. It's designed as a handy reference for common usage.
 
-
 <script setup>
 import CheatSheet from '../src/cheatsheet/SheetTable.vue'
 import Item from '../src/cheatsheet/Item.vue'
@@ -41,6 +40,7 @@ pattern:
 ```yaml
 kind: if_statement
 ```
+
 🏷️ Match an AST node by its `kind` name
 </Item>
 

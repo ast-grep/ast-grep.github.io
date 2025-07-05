@@ -24,25 +24,23 @@ We are thrilled to announce that [ast-grep](https://ast-grep.github.io/), the po
 
 ![ast-grep 6k stars](/image/blog/stars-6k.png)
 
-
 ## Feature Enhancements
 
 - **Rewriters Addition**: We've added support for rewriters [#855](https://github.com/ast-grep/ast-grep/pull/855), enabling complex code transformations and refactoring with ease. The new feature unlocks a novel functional programming like code rewrite scheme: [find and patch](/advanced/find-n-patch.html). Check out our previous [blog post](https://dev.to/herrington_darkholme/find-patch-a-novel-functional-programming-like-code-rewrite-scheme-3964) for more details.
 
 ![rewriter](/image/blog/rewriter.png)
 
-
 - **Error/Warning Suppression Support**: The new feature [#446](https://github.com/ast-grep/ast-grep/pull/446) allows users to suppress specific errors or warnings via the [code comment](/guide/project/lint-rule.html#suppress-linting-error) `ast-grep-ignore`. ast-grep also [respects suppression comments](https://github.com/ast-grep/ast-grep/issues/1019) in Language Server Protocol (LSP), making it easier to manage warnings and errors in your codebase.
 
-
 - **Enhanced Rule Constraints**: The ast-grep rule `constraints` previously only accepted `pattern`, `kind` and `regex`.
-Now it accepts a full rule [#855](https://github.com/ast-grep/ast-grep/pull/855), providing more flexibility than ever before.
+  Now it accepts a full rule [#855](https://github.com/ast-grep/ast-grep/pull/855), providing more flexibility than ever before.
 
 ## VSCode extension
 
 The [ast-grep VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode) is an official [VSCode integration](/guide/tools/editors.html) for this CLI tool. It unleashes the power of structural search and replace (SSR) directly into your editor.
 
 ### Notable Features
+
 - **Search**: Find code patterns with syntax tree.
 - **Replace**: Refactor code with pattern.
 - **Diagnose**: Identify issues via ast-grep rule.
@@ -72,10 +70,7 @@ We've introduced a suite of features to improve error reporting, making it easie
 - Add field ID errors for relational rules and optimize test updates to avoid erroneous reports.
 - Shift from reporting file counts to error counts for a more meaningful insight into code quality.
 
-
 ![error report](/image/blog/error-report.png)
-
-
 
 ## Language Support Expansion
 
@@ -89,8 +84,6 @@ We've introduced a suite of features to improve error reporting, making it easie
 
 As ast-grep continues to grow, we remain committed to providing a tool that not only meets but exceeds the expectations of our diverse user base.
 
-
 ![sponsors](/image/blog/sponsor2.png)
-
 
 We thank each and every one of you, especially ast-grep's sponsors, for your support, contributions, and feedback that have shaped ast-grep into what it is today. Here's to many more milestones ahead!

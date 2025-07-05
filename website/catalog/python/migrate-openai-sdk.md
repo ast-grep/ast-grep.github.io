@@ -1,6 +1,6 @@
 ## Migrate OpenAI SDK <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmICRGVU5DKCQkJEFSR1MpOiAkJCRCT0RZIiwicmV3cml0ZSI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IGltcG9ydCBvcGVuYWlcbmZpeDogZnJvbSBvcGVuYWkgaW1wb3J0IENsaWVudFxuLS0tXG5ydWxlOlxuICBwYXR0ZXJuOiBvcGVuYWkuYXBpX2tleSA9ICRLRVlcbmZpeDogY2xpZW50ID0gQ2xpZW50KCRLRVkpXG4tLS1cbnJ1bGU6XG4gIHBhdHRlcm46IG9wZW5haS5Db21wbGV0aW9uLmNyZWF0ZSgkJCRBUkdTKVxuZml4OiB8LVxuICBjbGllbnQuY29tcGxldGlvbnMuY3JlYXRlKFxuICAgICQkJEFSR1NcbiAgKSIsInNvdXJjZSI6ImltcG9ydCBvc1xuaW1wb3J0IG9wZW5haVxuZnJvbSBmbGFzayBpbXBvcnQgRmxhc2ssIGpzb25pZnlcblxuYXBwID0gRmxhc2soX19uYW1lX18pXG5vcGVuYWkuYXBpX2tleSA9IG9zLmdldGVudihcIk9QRU5BSV9BUElfS0VZXCIpXG5cblxuQGFwcC5yb3V0ZShcIi9jaGF0XCIsIG1ldGhvZHM9KFwiUE9TVFwiKSlcbmRlZiBpbmRleCgpOlxuICAgIGFuaW1hbCA9IHJlcXVlc3QuZm9ybVtcImFuaW1hbFwiXVxuICAgIHJlc3BvbnNlID0gb3BlbmFpLkNvbXBsZXRpb24uY3JlYXRlKFxuICAgICAgICBtb2RlbD1cInRleHQtZGF2aW5jaS0wMDNcIixcbiAgICAgICAgcHJvbXB0PWdlbmVyYXRlX3Byb21wdChhbmltYWwpLFxuICAgICAgICB0ZW1wZXJhdHVyZT0wLjYsXG4gICAgKVxuICAgIHJldHVybiBqc29uaWZ5KHJlc3BvbnNlLmNob2ljZXMpIn0=)
+- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmICRGVU5DKCQkJEFSR1MpOiAkJCRCT0RZIiwicmV3cml0ZSI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IGltcG9ydCBvcGVuYWlcbmZpeDogZnJvbSBvcGVuYWkgaW1wb3J0IENsaWVudFxuLS0tXG5ydWxlOlxuICBwYXR0ZXJuOiBvcGVuYWkuYXBpX2tleSA9ICRLRVlcbmZpeDogY2xpZW50ID0gQ2xpZW50KCRLRVkpXG4tLS1cbnJ1bGU6XG4gIHBhdHRlcm46IG9wZW5haS5Db21wbGV0aW9uLmNyZWF0ZSgkJCRBUkdTKVxuZml4OiB8LVxuICBjbGllbnQuY29tcGxldGlvbnMuY3JlYXRlKFxuICAgICQkJEFSR1NcbiAgKSIsInNvdXJjZSI6ImltcG9ydCBvc1xuaW1wb3J0IG9wZW5haVxuZnJvbSBmbGFzayBpbXBvcnQgRmxhc2ssIGpzb25pZnlcblxuYXBwID0gRmxhc2soX19uYW1lX18pXG5vcGVuYWkuYXBpX2tleSA9IG9zLmdldGVudihcIk9QRU5BSV9BUElfS0VZXCIpXG5cblxuQGFwcC5yb3V0ZShcIi9jaGF0XCIsIG1ldGhvZHM9KFwiUE9TVFwiKSlcbmRlZiBpbmRleCgpOlxuICAgIGFuaW1hbCA9IHJlcXVlc3QuZm9ybVtcImFuaW1hbFwiXVxuICAgIHJlc3BvbnNlID0gb3BlbmFpLkNvbXBsZXRpb24uY3JlYXRlKFxuICAgICAgICBtb2RlbD1cInRleHQtZGF2aW5jaS0wMDNcIixcbiAgICAgICAgcHJvbXB0PWdlbmVyYXRlX3Byb21wdChhbmltYWwpLFxuICAgICAgICB0ZW1wZXJhdHVyZT0wLjYsXG4gICAgKVxuICAgIHJldHVybiBqc29uaWZ5KHJlc3BvbnNlLmNob2ljZXMpIn0=)
 
 ### Description
 
@@ -38,6 +38,7 @@ fix: |-
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
+
 ```python {2,6,11-15}
 import os
 import openai
@@ -58,7 +59,9 @@ def index():
 ```
 
 ### Diff
+
 <!-- use # [!code --] and # [!code ++] to annotate diff -->
+
 ```python
 import os
 import openai # [!code --]
@@ -82,4 +85,5 @@ def index():
 ```
 
 ### Contributed by
+
 [Herrington Darkholme](https://twitter.com/hd_nvim), inspired by [Morgante](https://twitter.com/morgantepell/status/1721668781246750952) from [grit.io](https://www.grit.io/)

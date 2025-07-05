@@ -1,7 +1,6 @@
 ## Rewrite `indoc!` macro <Badge type="tip" text="Has Fix" />
 
-
-* [Playground Link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoicnVzdCIsInF1ZXJ5IjoiaW5kb2MhIHsgciNcIiQkJEFcIiMgfSIsInJld3JpdGUiOiJgJCQkQWAiLCJzdHJpY3RuZXNzIjoicmVsYXhlZCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoicnVsZTogXG4gYW55OlxuIC0gcGF0dGVybjogJFYgPT09ICRTRU5TRVRJVkVXT1JEXG4gLSBwYXR0ZXJuOiAkU0VOU0VUSVZFV09SRCA9PT0gJFZcbmNvbnN0cmFpbnRzOlxuICBTRU5TRVRJVkVXT1JEOlxuICAgIHJlZ2V4OiBwYXNzd29yZCIsInNvdXJjZSI6ImZuIG1haW4oKSB7XG4gICAgaW5kb2MhIHtyI1wiXG4gICAgICAgIC5mb28ge1xuICAgICAgICAgICAgb3JkZXI6IDE7XG4gICAgICAgIH1cbiAgICBcIiN9O1xufSJ9)
+- [Playground Link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoicnVzdCIsInF1ZXJ5IjoiaW5kb2MhIHsgciNcIiQkJEFcIiMgfSIsInJld3JpdGUiOiJgJCQkQWAiLCJzdHJpY3RuZXNzIjoicmVsYXhlZCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoicnVsZTogXG4gYW55OlxuIC0gcGF0dGVybjogJFYgPT09ICRTRU5TRVRJVkVXT1JEXG4gLSBwYXR0ZXJuOiAkU0VOU0VUSVZFV09SRCA9PT0gJFZcbmNvbnN0cmFpbnRzOlxuICBTRU5TRVRJVkVXT1JEOlxuICAgIHJlZ2V4OiBwYXNzd29yZCIsInNvdXJjZSI6ImZuIG1haW4oKSB7XG4gICAgaW5kb2MhIHtyI1wiXG4gICAgICAgIC5mb28ge1xuICAgICAgICAgICAgb3JkZXI6IDE7XG4gICAgICAgIH1cbiAgICBcIiN9O1xufSJ9)
 
 ### Description
 
@@ -14,6 +13,7 @@ Previously, the same refactor is implemented by a _unreadable monster regex_ in 
 ```vimscript
 :%s/\v(indoc!|)(| )([|\{)r#"(([^#]+|\n+)+)"#/`\4`
 ```
+
 I have to confess that I don't understand this regex even if I use neovim, btw.
 
 Let Claude break it down piece by piece:
@@ -36,6 +36,7 @@ This regex is designed to find Rust raw string literals (possibly wrapped in `in
 :::
 
 <!-- Use pattern in the example. Delete this section if use YAML. -->
+
 ### Pattern
 
 ```shell
@@ -45,6 +46,7 @@ ast-grep --pattern 'indoc! { r#"$$$A"# }' --rewrite '`$$$A`' sgtest.rs
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
+
 ```rs {2-6}
 fn main() {
     indoc! {r#"
@@ -56,7 +58,9 @@ fn main() {
 ```
 
 ### Diff
+
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
+
 ```rs
 fn main() {
     indoc! {r#" // [!code --]
@@ -69,4 +73,5 @@ fn main() {
 ```
 
 ### Contributed by
+
 [Zack in SF](https://x.com/zack_overflow)

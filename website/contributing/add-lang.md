@@ -10,13 +10,13 @@ However, there are some requirements and constraints that you need to consider b
 To keep ast-grep lightweight and fast, we have several factors to consider when adding a new language.
 As a rule of thumb, we want to limit the binary size of ast-grep under 10MB after zip compression.
 
-* **Popularity of the language**. While the popularity of a language does not necessarily reflect its merits, our limited size budget allows us to only support languages that are widely used and have a large user base. Online sources like [TIOBE index](https://www.tiobe.com/tiobe-index/) or [GitHub Octoverse](https://octoverse.github.com/2022/top-programming-languages) can help one to check the popularity of the language.
+- **Popularity of the language**. While the popularity of a language does not necessarily reflect its merits, our limited size budget allows us to only support languages that are widely used and have a large user base. Online sources like [TIOBE index](https://www.tiobe.com/tiobe-index/) or [GitHub Octoverse](https://octoverse.github.com/2022/top-programming-languages) can help one to check the popularity of the language.
 
-- **Quality of the Tree-sitter grammar**.  ast-grep relies on [Tree-sitter](https://tree-sitter.github.io/tree-sitter/), a parser generator tool and a parsing library, to support different languages. The Tree-sitter grammar for the new language should be _well-written_, _up-to-date_, and _regularly maintained_. You can search [Tree-sitter on GitHub](https://github.com/search?q=tree-sitter&type=repositories) or on [crates.io](https://crates.io/search?q=tree%20sitter).
+* **Quality of the Tree-sitter grammar**. ast-grep relies on [Tree-sitter](https://tree-sitter.github.io/tree-sitter/), a parser generator tool and a parsing library, to support different languages. The Tree-sitter grammar for the new language should be _well-written_, _up-to-date_, and _regularly maintained_. You can search [Tree-sitter on GitHub](https://github.com/search?q=tree-sitter&type=repositories) or on [crates.io](https://crates.io/search?q=tree%20sitter).
 
-- **Size of the grammar**. The new language's grammar should not be too complicated. Otherwise it may take too much space from other languages. You can also check the current size of ast-grep in the [releases page](https://github.com/ast-grep/ast-grep/releases).
+* **Size of the grammar**. The new language's grammar should not be too complicated. Otherwise it may take too much space from other languages. You can also check the current size of ast-grep in the [releases page](https://github.com/ast-grep/ast-grep/releases).
 
-- **Availability of the grammar on crates.io**. To ease the maintenance burden, we prefer to use grammars that are published on crates.io, Rust's package registry. If your grammar is not on crates.io, you need to publish it yourself or ask the author to do so.
+* **Availability of the grammar on crates.io**. To ease the maintenance burden, we prefer to use grammars that are published on crates.io, Rust's package registry. If your grammar is not on crates.io, you need to publish it yourself or ask the author to do so.
 
 ---
 
@@ -33,7 +33,6 @@ The core repository is multi-crate workspace hosted at [GitHub](https://github.c
 
 We will use Ruby as an example to show how to add a new language to ast-grep core. You can see [the commit](https://github.com/ast-grep/ast-grep/commit/ffe14ceb8773c5d2b85559ff7455070e2a1a9388#diff-3590708789e9cdf7fa0421ecba544a69e9bbe8dd0915f0d9ff8344a9c899adfd) as a reference.
 
-
 ### Add Dependencies
 
 1. Add `tree-sitter-[lang]` crate as `dependencies` to the [Cargo.toml](https://github.com/ast-grep/ast-grep/blob/main/crates/language/Cargo.toml#L13) in the `language` crate.
@@ -46,7 +45,7 @@ tree-sitter-ruby = {version = "0.20.0", optional = true } // [!code ++]
 ...
 ```
 
-*Note the  `optional` attribute is required here.*
+_Note the `optional` attribute is required here._
 
 2. Add the `tree-sitter-[lang]` dependency in [`builtin-parser`](https://github.com/ast-grep/ast-grep/blob/e494500fc5d6994c20fe0102aa4b93d2108827bb/crates/language/Cargo.toml#L40) list.
 
@@ -85,6 +84,7 @@ mod parser_implementation  {
   );
 }
 ```
+
 Note there are two places to add, one for `#[cfg(feature = "builtin-parser")]` and the other for `#[cfg(not(feature = "builtin-parser"))]`.
 
 4. Implement `language` trait by using macro in [lib.rs](https://github.com/ast-grep/ast-grep/commit/ffe14ceb8773c5d2b85559ff7455070e2a1a9388#diff-1f2939360f8f95434ed23b53406eac0aa8b2f404171b63c6466bbdfda728c82d)
@@ -101,6 +101,7 @@ You need to choose one of them to use for the new language. If the language does
 You can reference the comment [here](https://github.com/ast-grep/ast-grep/blob/e494500fc5d6994c20fe0102aa4b93d2108827bb/crates/language/src/lib.rs#L1-L8) for more information.
 
 ### Register the New Language
+
 6. Add new lang in [`SupportLang`](https://github.com/ast-grep/ast-grep/blob/e494500fc5d6994c20fe0102aa4b93d2108827bb/crates/language/src/lib.rs#L119) enum.
 
 ```rust
@@ -111,7 +112,9 @@ pub enum SupportLang {
   ...
 }
 ```
+
 7. Add new lang in [`execute_lang_method`](https://github.com/ast-grep/ast-grep/blob/e494500fc5d6994c20fe0102aa4b93d2108827bb/crates/language/src/lib.rs#L229C14-L229C33)
+
 ```rust
 // lib.rs
 macro_rules! execute_lang_method {
@@ -124,6 +127,7 @@ macro_rules! execute_lang_method {
   }
 }
 ```
+
 7. Add new lang in [`all_langs`](https://github.com/ast-grep/ast-grep/blob/be10ff97d6d5adad4b524961d82e40ca76ab4259/crates/language/src/lib.rs#L143), [`alias`](https://github.com/ast-grep/ast-grep/blob/be10ff97d6d5adad4b524961d82e40ca76ab4259/crates/language/src/lib.rs#L188), [`extension`](https://github.com/ast-grep/ast-grep/blob/be10ff97d6d5adad4b524961d82e40ca76ab4259/crates/language/src/lib.rs#L281) and [`file_types`](https://github.com/ast-grep/ast-grep/blob/be10ff97d6d5adad4b524961d82e40ca76ab4259/crates/language/src/lib.rs#L331)
 
 See this [commit](https://github.com/ast-grep/ast-grep/commit/ffe14ceb8773c5d2b85559ff7455070e2a1a9388#diff-1f2939360f8f95434ed23b53406eac0aa8b2f404171b63c6466bbdfda728c82d) for the detailed code change.

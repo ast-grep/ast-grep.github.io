@@ -30,7 +30,6 @@ my-awesome-project
 
 All the YAML files under `rules` folder will be treated as rule files by `ast-grep`, while`not-a-rule.yml` is ignored.
 
-
 **Note, the [`ast-grep scan`](/reference/cli.html#scan) command requires you have an `sgconfig.yml` in your project root.**
 
 :::tip Pro tip

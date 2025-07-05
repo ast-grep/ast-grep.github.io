@@ -7,7 +7,6 @@
 3. **Ensure Correctness**: Use a [pattern object](/guide/rule-config/atomic-rule.html#pattern) to ensure your code is correct and unambiguous.
 4. **Explore Examples**: See ast-grep's [catalog](/catalog/) for more examples.
 
-
 The most common scenario is that you only want to match a sub-expression or one specific AST node in a whole syntax tree.
 However, the code fragment corresponding to the sub-expression may not be valid code.
 To make the code can be parsed by tree-sitter, you probably need more context instead of providing just code fragment.
@@ -28,20 +27,22 @@ The idea is that you can write full an valid code in the `context` field and use
 This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call) and [Go](/catalog/go/#match-function-call-in-golang). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config.html) can be more expressive and powerful.
 
 ## My Rule does not work, why?
+
 Here are some tips to debug your rule:
-* Use the [ast-grep playground](/playground.html) to test your rule.
-* Simplify your rule to the minimal possible code that reproduces the issue.
-* Confirm pattern's matched AST nodes are expected. e.g. statement and expression are [different matches](/advanced/pattern-parse.html#extract-effective-ast-for-pattern). This usually happens when you use `follows` or `precedes` in the rule.
-* Check the [rule order](/advanced/faq.html#why-is-rule-matching-order-sensitive). The order of rules matters in ast-grep especially when using meta variables with relational rules.
+
+- Use the [ast-grep playground](/playground.html) to test your rule.
+- Simplify your rule to the minimal possible code that reproduces the issue.
+- Confirm pattern's matched AST nodes are expected. e.g. statement and expression are [different matches](/advanced/pattern-parse.html#extract-effective-ast-for-pattern). This usually happens when you use `follows` or `precedes` in the rule.
+- Check the [rule order](/advanced/faq.html#why-is-rule-matching-order-sensitive). The order of rules matters in ast-grep especially when using meta variables with relational rules.
 
 ## CLI and Playground produce different results, why?
 
 There are two main reasons why the results may differ:
 
-* **Parser Version**: The CLI may use a different version of the tree-sitter parser than the Playground.
-Playground parsers are updated less frequently than the CLI, so there may be differences in the results.
-* **Text Encoding**: The CLI and Playground use different text encodings. CLI uses utf-8, while the Playground uses utf-16.
-The encoding difference may cause different fallback parsing during [error recovery](https://github.com/tree-sitter/tree-sitter/issues/224).
+- **Parser Version**: The CLI may use a different version of the tree-sitter parser than the Playground.
+  Playground parsers are updated less frequently than the CLI, so there may be differences in the results.
+- **Text Encoding**: The CLI and Playground use different text encodings. CLI uses utf-8, while the Playground uses utf-16.
+  The encoding difference may cause different fallback parsing during [error recovery](https://github.com/tree-sitter/tree-sitter/issues/224).
 
 To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#debug-query-format) in the CLI to see the parsed AST nodes and meta variables.
 
@@ -80,7 +81,6 @@ If you find the inconsistency between CLI and Playground, try confirming the pla
 You can also [open an issue in the Playground repository](https://github.com/ast-grep/ast-grep.github.io/issues) if you find outdated parsers. Contribution to update the Playground parser is warmly welcome!
 :::
 
-
 ## MetaVariable does not work, why?
 
 1. **Correct Naming**: Start meta variables with the `$` sign, followed by uppercase letters (A-Z), underscores (`_`), or digits (1-9).
@@ -118,7 +118,6 @@ constraints:
 
 [Example usage](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiAkSE9PSygkJCRBUkdTKVxuY29uc3RyYWludHM6XG4gIEhPT0s6IHsgcmVnZXg6IF51c2UgfSIsInNvdXJjZSI6ImZ1bmN0aW9uIFJlYWN0Q29tcG9uZW50KCkge1xuICAgIGNvbnN0IGRhdGEgPSBub3RIb28oKVxuICAgIGNvbnN0IFtmb28sIHNldEZvb10gPSB1c2VTdGF0ZSgnJylcbn0ifQ==).
 
-
 :::danger MetaVariable must be one single AST node
 Meta variables cannot be mixed with prefix/suffix string . `use$HOOK` and `io_uring_$FUNC` are not valid meta variables. They are parsed as one AST node as whole, and
 ast-grep will not treat them as valid meta variable name.
@@ -133,11 +132,11 @@ ast-grep does not support multiple languages in one rule because:
 3. **Debugging Experience**: Mixing languages in one rule requires users to test the rule in both languages. This can be confusing and error-prone, especially when unexpected results occur.
 
 Supporting multi-lang rule is a challenging task for both tool developers and users. Instead, we recommend two approaches:
-* **Always use the superset language**: Rule reusing usually happens when one language is a superset of another, e.g., TS and JS. In this case, you can use [`languageGlobs`](/reference/sgconfig.html#languageglobs) to parse files in the superset language. This is more suitable if you don't need to distinguish between the two languages.
-* **Write Separate Rules**: Generate separate rules for each language. This approach is suitable when you do need to handle the differences between the languages.
+
+- **Always use the superset language**: Rule reusing usually happens when one language is a superset of another, e.g., TS and JS. In this case, you can use [`languageGlobs`](/reference/sgconfig.html#languageglobs) to parse files in the superset language. This is more suitable if you don't need to distinguish between the two languages.
+- **Write Separate Rules**: Generate separate rules for each language. This approach is suitable when you do need to handle the differences between the languages.
 
 If you have a better, clearer and easier proposal to support multi-lang rule, please leave a comment under [this issue](https://github.com/ast-grep/ast-grep/issues/525).
-
 
 ## Why is rule matching order sensitive?
 
@@ -166,6 +165,7 @@ function recurse() {
   recurse()
 }
 ```
+
 :::
 
 The rule works because the pattern `function $F() { $$$ }` matches first, capturing `$F` as `recurse`. The later `has` rule then looks for a `recurse()` call based on the matched `$F`.
@@ -198,6 +198,7 @@ If your rule depends on using meta variables in later rules, the best way is to 
 ## `kind` and `pattern` rules are not working together, why?
 
 The most common scenario is that your pattern is parsed as a different AST node than you expected. And you may use `kind` rule to filter out the AST node you want to match. This does not work in ast-grep for two reasons:
+
 1. tree-sitter, the underlying parser library, does not offer a way to parse a string of a specific kind. So `kind` rule cannot be used to change the parsing outcome of a `pattern`.
 2. ast-grep rules are mostly independent of each other, except sharing meta-variables during a match. `pattern` will behave the same regardless of another `kind` rule.
 
@@ -229,20 +230,21 @@ Note the rule above is one single pattern rule, instead of two. The `context` fi
 Short answer: **NO**.
 
 Long answer: ast-grep at the moment does not support the following information:
-* [scope analysis](https://eslint.org/docs/latest/extend/scope-manager-interface)
-* [type information](https://semgrep.dev/docs/writing-rules/pattern-syntax#typed-metavariables)
-* [control flow analysis](https://en.wikipedia.org/wiki/Control-flow_analysis)
-* [data flow analysis](https://en.wikipedia.org/wiki/Data-flow_analysis)
-* [taint analysis](https://semgrep.dev/docs/writing-rules/data-flow/taint-mode)
-* [constant propagation](https://semgrep.dev/docs/writing-rules/data-flow/constant-propagation)
+
+- [scope analysis](https://eslint.org/docs/latest/extend/scope-manager-interface)
+- [type information](https://semgrep.dev/docs/writing-rules/pattern-syntax#typed-metavariables)
+- [control flow analysis](https://en.wikipedia.org/wiki/Control-flow_analysis)
+- [data flow analysis](https://en.wikipedia.org/wiki/Data-flow_analysis)
+- [taint analysis](https://semgrep.dev/docs/writing-rules/data-flow/taint-mode)
+- [constant propagation](https://semgrep.dev/docs/writing-rules/data-flow/constant-propagation)
 
 More concretely, it is not easy, or even possible, to achieve the following tasks in ast-grep:
 
-* Find variables that are not defined/used in the current scope.
-* Find variables of a specific type.
-* Find code that is unreachable.
-* Find code that is always executed.
-* Identify the flow of user input.
+- Find variables that are not defined/used in the current scope.
+- Find variables of a specific type.
+- Find code that is unreachable.
+- Find code that is always executed.
+- Identify the flow of user input.
 
 Also see [tool comparison](/advanced/tool-comparison.html) for more information.
 
@@ -252,8 +254,8 @@ Also see [tool comparison](/advanced/tool-comparison.html) for more information.
 
 We appreciate constructive feedback and are always looking for ways to improve the documentation and the tool itself. There are several ways you can help us or yourself:
 
-* Ask [Copilot](https://copilot.microsoft.com/) or other AI assistants to help you understand the docs.
-* Provide feedbacks or pull requests on the [documentation](https://github.com/ast-grep/ast-grep.github.io).
-* Browse [Discord](https://discord.com/invite/4YZjf6htSQ), [StackOverflow](https://stackoverflow.com/questions/tagged/ast-grep) or [Reddit](https://www.reddit.com/r/astgrep/).
+- Ask [Copilot](https://copilot.microsoft.com/) or other AI assistants to help you understand the docs.
+- Provide feedbacks or pull requests on the [documentation](https://github.com/ast-grep/ast-grep.github.io).
+- Browse [Discord](https://discord.com/invite/4YZjf6htSQ), [StackOverflow](https://stackoverflow.com/questions/tagged/ast-grep) or [Reddit](https://www.reddit.com/r/astgrep/).
 
 ~~If you just want an answer without effort, let the author [write a rule for you](https://github.com/sponsors/HerringtonDarkholme).~~

@@ -22,7 +22,6 @@ By default, this command will create a root config file `sgconfig.yml`,
 a rule folder `rules`, a test case folder `rule-tests` and a utility rule folder `utils`.
 You can customize the folder names during the creation.
 
-
 ### `rule`
 
 Create a new rule.
@@ -42,6 +41,7 @@ ast-grep will ask you which `test_dir` to use if multiple ones are configured in
 If `-y, --yes` flag is true, ast-grep will choose the first `test_dir` to create the new test.
 
 ### `util`
+
 Create a new global utility rule.
 
 This command will create a new global utility rule in one of the `utils` folders.
@@ -68,12 +68,15 @@ The language of the item to create.
 This option is only available when creating rule and util.
 
 ### `-y, --yes`
+
 Accept all default options without interactive input during creation.
 
 You need to provide all required arguments via command line if this flag is true. Please see the command description for the what arguments are required.
 
 ### `-c, --config <CONFIG_FILE>`
+
 Path to ast-grep root config, default is sgconfig.yml
 
 ### `-h, --help`
+
 Print help (see a summary with '-h')

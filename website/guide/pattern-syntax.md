@@ -15,7 +15,7 @@ const b = a + 1
 funcCall(a + 1)
 
 deeplyNested({
-  target: a + 1
+  target: a + 1,
 })
 ```
 
@@ -28,6 +28,7 @@ If ast-grep fails to parse code as expected, you can try give it more context by
 :::
 
 ## Meta Variable
+
 It is usually desirable to write a pattern to match dynamic content.
 
 We can use meta variables to match sub expression in pattern.
@@ -37,11 +38,9 @@ Meta variables start with the `$` sign, followed by a name composed of upper cas
 
 Think it as REGEX dot `.`, except it is not textual.
 
-
 :::tip Valid meta variables
 `$META`, `$META_VAR`, `$META_VAR1`, `$_`, `$_123`
 :::
-
 
 :::danger Invalid meta variables
 `$invalid`, `$Svalue`, `$123`, `$KEBAB-CASE`， `$`
@@ -54,9 +53,8 @@ function tryAstGrep() {
   console.log('Hello World')
 }
 
-const multiLineExpression =
-  console
-   .log('Also matched!')
+const multiLineExpression = console
+  .log('Also matched!')
 ```
 
 But it will not match these.
@@ -75,15 +73,15 @@ Let's see how we can match multiple AST nodes.
 
 We can use `$$$` to match zero or more AST nodes, including function arguments, parameters or statements. These variables can also be named, for example: `console.log($$$ARGS)`.
 
-
 ### Function Arguments
+
 For example, `console.log($$$)` can match
 
 ```javascript
-console.log()                       // matches zero AST node
-console.log('hello world')          // matches one node
-console.log('debug: ', key, value)  // matches multiple nodes
-console.log(...args)                // it also matches spread
+console.log() // matches zero AST node
+console.log('hello world') // matches one node
+console.log('debug: ', key, value) // matches multiple nodes
+console.log(...args) // it also matches spread
 ```
 
 ### Function Parameters
@@ -103,12 +101,13 @@ function add(a, b, c) {
 ```
 
 :::details `ARGS` will be populated with a list of AST nodes. Click to see details.
-|Code|Match|
-|---|----|
-|`function foo(bar) { ... }` | [`bar`] |
-|`function noop() {}` | [] |
-|`function add(a, b, c) { ... }` | [`a`, `b`, `c`] |
-:::
+
+| Code                            | Match           |
+| ------------------------------- | --------------- |
+| `function foo(bar) { ... }`     | [`bar`]         |
+| `function noop() {}`            | []              |
+| `function add(a, b, c) { ... }` | [`a`, `b`, `c`] |
+| :::                             |                 |
 
 ## Meta Variable Capturing
 
@@ -148,6 +147,7 @@ This is a useful trick to micro-optimize pattern matching speed, since we don't 
 :::
 
 ### Capture Unnamed Nodes
+
 A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
 To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
 

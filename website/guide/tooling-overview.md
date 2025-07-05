@@ -4,11 +4,11 @@
 
 ast-grep's tooling supports multiple stages of your development. Here is a list of the tools and their purpose:
 
-* To run an ad-hoc query and apply rewrite: `ast-grep run`.
-* Routinely check your codebase: `ast-grep scan`.
-* Generate ast-grep's scaffolding files: `ast-grep new`.
-* Develop new ast-grep rules and test them: `ast-grep test`.
-* Start Language Server for editor integration: `ast-grep lsp`.
+- To run an ad-hoc query and apply rewrite: `ast-grep run`.
+- Routinely check your codebase: `ast-grep scan`.
+- Generate ast-grep's scaffolding files: `ast-grep new`.
+- Develop new ast-grep rules and test them: `ast-grep test`.
+- Start Language Server for editor integration: `ast-grep lsp`.
 
 We will walk through some important features that are common to these commands.
 
@@ -84,6 +84,7 @@ To test one single rule, you can use `ast-grep scan -r`.
 ```bash
 ast-grep scan -r path/to/your/rule.yml
 ```
+
 It is useful to test one rule in isolation.
 
 ## Parse Code from StdIn
@@ -108,6 +109,7 @@ curl -s https://schedule2021.scipy.org/2022/conference/  |
 The command above will produce a list of authors from the SciPy 2022 conference website.
 
 :::details JSON output of the author list
+
 ```json
 "Ben Blaiszik"
 "Qiming Sun"
@@ -117,6 +119,7 @@ The command above will produce a list of authors from the SciPy 2022 conference 
 "Cliff Kerr"
 ...
 ```
+
 :::
 
 With this feature, even if your preferred language does not have native bindings for ast-grep, you can still parse code from standard input (StdIn) to use ast-grep programmatically from the command line.
@@ -127,9 +130,9 @@ You can invoke `ast-grep`, the command-line interface binary, as a subprocess to
 
 **StdIn mode has several restrictions**, though:
 
-* It conflicts with `--interactive` mode, which reads user responses from StdIn.
-* For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | ast-grep run --lang python`. This is because ast-grep cannot infer code language without file extension.
-* Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | ast-grep scan --rule "python-rule.yml"`
+- It conflicts with `--interactive` mode, which reads user responses from StdIn.
+- For the `run` command, you must specify the language of the StdIn code with `--lang` or `-l` flag. For example: `echo "print('Hello world')" | ast-grep run --lang python`. This is because ast-grep cannot infer code language without file extension.
+- Similarly, you can only `scan` StdIn code against _one single rule_, specified by `--rule` or `-r` flag. The rule must match the language of the StdIn code. For example: `echo "print('Hello world')" | ast-grep scan --rule "python-rule.yml"`
 
 ### Enable StdIn Mode
 
@@ -140,9 +143,9 @@ You can invoke `ast-grep`, the command-line interface binary, as a subprocess to
 
 The first condition is quite self explanatory. However, it should be noted that many cases are not tty, for example:
 
-* ast-grep is invoked by other program as subprocess.
-* ast-grep is running inside [GitHub Action](https://github.com/actions/runner/issues/241).
-* ast-grep is used as the second program of a bash pipe `|`.
+- ast-grep is invoked by other program as subprocess.
+- ast-grep is running inside [GitHub Action](https://github.com/actions/runner/issues/241).
+- ast-grep is used as the second program of a bash pipe `|`.
 
 So you have to use `--stdin` to avoid unintentional StdIn mode and unexpected error.
 
@@ -171,10 +174,11 @@ INITIAL_QUERY="${*:-}"
 See the [editor integration](/guide/tools/editors.md) doc page.
 
 ## Shell Completions
+
 ast-grep comes with shell autocompletion scripts. You can generate a shell script and eval it when your shell starts up.
 The script will enable you to smoothly complete `ast-grep` command's options by `tab`bing.
 
-This command will instruct ast-grep  to generate shell completion script:
+This command will instruct ast-grep to generate shell completion script:
 
 ```shell
 ast-grep completions <SHELL>

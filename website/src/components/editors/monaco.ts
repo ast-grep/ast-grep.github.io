@@ -1,12 +1,12 @@
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 // https://github.com/remcohaszing/monaco-yaml/issues/150#issuecomment-1048599960
 import yamlWorker from './workaround?worker'
 
-type Monaco = typeof import('monaco-editor');
+type Monaco = typeof import('monaco-editor')
 let mnc: Promise<Monaco>
 
 export async function setup() {
@@ -36,11 +36,11 @@ async function doSetup() {
         return new yamlWorker()
       }
       return new editorWorker()
-    }
+    },
   }
   const [monaco, { configureMonacoYaml }] = await Promise.all([
     import('monaco-editor'),
-    import('monaco-yaml')
+    import('monaco-yaml'),
   ])
 
   disableTypeScriptCheck(monaco)

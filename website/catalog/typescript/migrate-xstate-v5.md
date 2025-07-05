@@ -1,7 +1,6 @@
 ## Migrate XState to v5 from v4 <Badge type="tip" text="Has Fix" />
 
-
-* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImlmICgkQSkgeyAkJCRCIH0iLCJyZXdyaXRlIjoiaWYgKCEoJEEpKSB7XG4gICAgcmV0dXJuO1xufVxuJCQkQiIsImNvbmZpZyI6InV0aWxzOlxuICBGUk9NX1hTVEFURTogeyBraW5kOiBpbXBvcnRfc3RhdGVtZW50LCBoYXM6IHsga2luZDogc3RyaW5nLCByZWdleDogeHN0YXRlIH0gfVxuICBYU1RBVEVfRVhQT1JUOlxuICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgICBpbnNpZGU6IHsgaGFzOiB7IG1hdGNoZXM6IEZST01fWFNUQVRFIH0sIHN0b3BCeTogZW5kIH1cbnJ1bGU6IHsgcmVnZXg6IF5NYWNoaW5lfGludGVycHJldCQsIHBhdHRlcm46ICRJTVBPUlQsIG1hdGNoZXM6IFhTVEFURV9FWFBPUlQgfVxudHJhbnNmb3JtOlxuICBTVEVQMTogXG4gICAgcmVwbGFjZToge2J5OiBjcmVhdGUkMSwgcmVwbGFjZTogKE1hY2hpbmUpLCBzb3VyY2U6ICRJTVBPUlQgfVxuICBGSU5BTDpcbiAgICByZXBsYWNlOiB7IGJ5OiBjcmVhdGVBY3RvciwgcmVwbGFjZTogaW50ZXJwcmV0LCBzb3VyY2U6ICRTVEVQMSB9XG5maXg6ICRGSU5BTFxuLS0tIFxucnVsZTogeyBwYXR0ZXJuOiAkTUFDSElORS53aXRoQ29uZmlnIH1cbmZpeDogJE1BQ0hJTkUucHJvdmlkZVxuLS0tXG5ydWxlOlxuICBraW5kOiBwcm9wZXJ0eV9pZGVudGlmaWVyXG4gIHJlZ2V4OiBec2VydmljZXMkXG4gIGluc2lkZTogeyBwYXR0ZXJuOiAgJE0ud2l0aENvbmZpZygkJCRBUkdTKSwgc3RvcEJ5OiBlbmQgfVxuZml4OiBhY3RvcnMiLCJzb3VyY2UiOiJpbXBvcnQgeyBNYWNoaW5lLCBpbnRlcnByZXQgfSBmcm9tICd4c3RhdGUnO1xuXG5jb25zdCBtYWNoaW5lID0gTWFjaGluZSh7IC8qLi4uKi99KTtcblxuY29uc3Qgc3BlY2lmaWNNYWNoaW5lID0gbWFjaGluZS53aXRoQ29uZmlnKHtcbiAgYWN0aW9uczogeyAvKiAuLi4gKi8gfSxcbiAgZ3VhcmRzOiB7IC8qIC4uLiAqLyB9LFxuICBzZXJ2aWNlczogeyAvKiAuLi4gKi8gfSxcbn0pO1xuXG5jb25zdCBhY3RvciA9IGludGVycHJldChzcGVjaWZpY01hY2hpbmUsIHtcbi8qIGFjdG9yIG9wdGlvbnMgKi9cbn0pOyJ9)
+- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImlmICgkQSkgeyAkJCRCIH0iLCJyZXdyaXRlIjoiaWYgKCEoJEEpKSB7XG4gICAgcmV0dXJuO1xufVxuJCQkQiIsImNvbmZpZyI6InV0aWxzOlxuICBGUk9NX1hTVEFURTogeyBraW5kOiBpbXBvcnRfc3RhdGVtZW50LCBoYXM6IHsga2luZDogc3RyaW5nLCByZWdleDogeHN0YXRlIH0gfVxuICBYU1RBVEVfRVhQT1JUOlxuICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgICBpbnNpZGU6IHsgaGFzOiB7IG1hdGNoZXM6IEZST01fWFNUQVRFIH0sIHN0b3BCeTogZW5kIH1cbnJ1bGU6IHsgcmVnZXg6IF5NYWNoaW5lfGludGVycHJldCQsIHBhdHRlcm46ICRJTVBPUlQsIG1hdGNoZXM6IFhTVEFURV9FWFBPUlQgfVxudHJhbnNmb3JtOlxuICBTVEVQMTogXG4gICAgcmVwbGFjZToge2J5OiBjcmVhdGUkMSwgcmVwbGFjZTogKE1hY2hpbmUpLCBzb3VyY2U6ICRJTVBPUlQgfVxuICBGSU5BTDpcbiAgICByZXBsYWNlOiB7IGJ5OiBjcmVhdGVBY3RvciwgcmVwbGFjZTogaW50ZXJwcmV0LCBzb3VyY2U6ICRTVEVQMSB9XG5maXg6ICRGSU5BTFxuLS0tIFxucnVsZTogeyBwYXR0ZXJuOiAkTUFDSElORS53aXRoQ29uZmlnIH1cbmZpeDogJE1BQ0hJTkUucHJvdmlkZVxuLS0tXG5ydWxlOlxuICBraW5kOiBwcm9wZXJ0eV9pZGVudGlmaWVyXG4gIHJlZ2V4OiBec2VydmljZXMkXG4gIGluc2lkZTogeyBwYXR0ZXJuOiAgJE0ud2l0aENvbmZpZygkJCRBUkdTKSwgc3RvcEJ5OiBlbmQgfVxuZml4OiBhY3RvcnMiLCJzb3VyY2UiOiJpbXBvcnQgeyBNYWNoaW5lLCBpbnRlcnByZXQgfSBmcm9tICd4c3RhdGUnO1xuXG5jb25zdCBtYWNoaW5lID0gTWFjaGluZSh7IC8qLi4uKi99KTtcblxuY29uc3Qgc3BlY2lmaWNNYWNoaW5lID0gbWFjaGluZS53aXRoQ29uZmlnKHtcbiAgYWN0aW9uczogeyAvKiAuLi4gKi8gfSxcbiAgZ3VhcmRzOiB7IC8qIC4uLiAqLyB9LFxuICBzZXJ2aWNlczogeyAvKiAuLi4gKi8gfSxcbn0pO1xuXG5jb25zdCBhY3RvciA9IGludGVycHJldChzcGVjaWZpY01hY2hpbmUsIHtcbi8qIGFjdG9yIG9wdGlvbnMgKi9cbn0pOyJ9)
 
 ### Description
 
@@ -56,24 +55,27 @@ fix: actors
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-```js {1,3,5,8,11}
-import { Machine, interpret } from 'xstate';
 
-const machine = Machine({ /*...*/});
+```js {1,3,5,8,11}
+import { interpret, Machine } from 'xstate'
+
+const machine = Machine({/*...*/})
 
 const specificMachine = machine.withConfig({
-  actions: { /* ... */ },
-  guards: { /* ... */ },
-  services: { /* ... */ },
-});
+  actions: {/* ... */},
+  guards: {/* ... */},
+  services: {/* ... */},
+})
 
 const actor = interpret(specificMachine, {
   /* actor options */
-});
+})
 ```
 
 ### Diff
+
 <!-- use // [!code --] and // [!code ++] to annotate diff -->
+
 ```js
 import { Machine, interpret } from 'xstate'; // [!code --]
 import { createMachine, createActor } from 'xstate'; // [!code ++]
@@ -96,4 +98,5 @@ const actor = createActor(specificMachine, { // [!code ++]
 ```
 
 ### Contributed by
+
 Inspired by [XState's blog](https://stately.ai/blog/2023-12-01-xstate-v5).

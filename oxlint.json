@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": ["vue", "typescript", "unicorn"],
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "globals": {
+    "defineProps": "readonly",
+    "defineEmits": "readonly",
+    "defineExpose": "readonly",
+    "withDefaults": "readonly"
+  },
+  "rules": {
+    "vue/no-unused-vars": "error",
+    "vue/no-undef": "error",
+    "vue/valid-template-root": "error",
+    "vue/no-multiple-template-root": "off",
+    "typescript/no-unused-vars": "error",
+    "typescript/prefer-as-const": "error",
+    "unicorn/prefer-module": "error",
+    "unicorn/prefer-node-protocol": "error"
+  },
+  "ignore": [
+    "node_modules",
+    "dist",
+    "pkg",
+    "target",
+    "**/*.d.ts",
+    "website/public/parsers/*.wasm"
+  ]
+}

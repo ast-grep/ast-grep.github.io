@@ -1,6 +1,6 @@
 ## Match Function Call in C
 
-* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImMiLCJxdWVyeSI6InRlc3QoJCQkKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAkTSgkJCQpO1xuICAgIHNlbGVjdG9yOiBjYWxsX2V4cHJlc3Npb24iLCJzb3VyY2UiOiIjZGVmaW5lIHRlc3QoeCkgKDIqeClcbmludCBhID0gdGVzdCgyKTtcbmludCBtYWluKCl7XG4gICAgaW50IGIgPSB0ZXN0KDIpO1xufSJ9)
+- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImMiLCJxdWVyeSI6InRlc3QoJCQkKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAkTSgkJCQpO1xuICAgIHNlbGVjdG9yOiBjYWxsX2V4cHJlc3Npb24iLCJzb3VyY2UiOiIjZGVmaW5lIHRlc3QoeCkgKDIqeClcbmludCBhID0gdGVzdCgyKTtcbmludCBtYWluKCl7XG4gICAgaW50IGIgPSB0ZXN0KDIpO1xufSJ9)
 
 ### Description
 
@@ -26,6 +26,7 @@ rule:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
+
 ```c{2,4}
 #define test(x) (2*x)
 int a = test(2);
@@ -38,9 +39,9 @@ int main(){
 
 Note, tree-sitter-c parses code differently when it receives code fragment. For example,
 
-* `test(a)` is parsed as `macro_type_specifier`
-* `test(a);` is parsed as `expression_statement -> call_expression`
-* `int b = test(a)` is parsed as `declaration -> init_declarator -> call_expression`
+- `test(a)` is parsed as `macro_type_specifier`
+- `test(a);` is parsed as `expression_statement -> call_expression`
+- `int b = test(a)` is parsed as `declaration -> init_declarator -> call_expression`
 
 The behavior is controlled by how the tree-sitter parser is written. And tree-sitter-c behaves differently from [tree-sitter-cpp](https://github.com/tree-sitter/tree-sitter-cpp).
 

@@ -1,6 +1,6 @@
 ## Avoid Duplicated Exports
 
-* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InJ1c3QiLCJxdWVyeSI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIGFsbDpcbiAgICAgLSBwYXR0ZXJuOiBwdWIgdXNlICRCOjokQztcbiAgICAgLSBpbnNpZGU6XG4gICAgICAgIGtpbmQ6IHNvdXJjZV9maWxlXG4gICAgICAgIGhhczpcbiAgICAgICAgICBwYXR0ZXJuOiBwdWIgbW9kICRBO1xuICAgICAtIGhhczpcbiAgICAgICAgcGF0dGVybjogJEFcbiAgICAgICAgc3RvcEJ5OiBlbmQiLCJzb3VyY2UiOiJwdWIgbW9kIGZvbztcbnB1YiB1c2UgZm9vOjpGb287XG5wdWIgdXNlIGZvbzo6QTo6QjtcblxuXG5wdWIgdXNlIGFhYTo6QTtcbnB1YiB1c2Ugd29vOjpXb287In0=)
+- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InJ1c3QiLCJxdWVyeSI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIGFsbDpcbiAgICAgLSBwYXR0ZXJuOiBwdWIgdXNlICRCOjokQztcbiAgICAgLSBpbnNpZGU6XG4gICAgICAgIGtpbmQ6IHNvdXJjZV9maWxlXG4gICAgICAgIGhhczpcbiAgICAgICAgICBwYXR0ZXJuOiBwdWIgbW9kICRBO1xuICAgICAtIGhhczpcbiAgICAgICAgcGF0dGVybjogJEFcbiAgICAgICAgc3RvcEJ5OiBlbmQiLCJzb3VyY2UiOiJwdWIgbW9kIGZvbztcbnB1YiB1c2UgZm9vOjpGb287XG5wdWIgdXNlIGZvbzo6QTo6QjtcblxuXG5wdWIgdXNlIGFhYTo6QTtcbnB1YiB1c2Ugd29vOjpXb287In0=)
 
 ### Description
 
@@ -10,6 +10,7 @@ However, sometimes, to keep the interface exposed by a lib crate tidy, we use re
 When doing so, a pitfall is to export a single item under two different names.
 
 Consider:
+
 ```rs
 pub mod foo;
 pub use foo::Foo;
@@ -23,7 +24,9 @@ It can also cause issues on the client side. For example, it makes the usage of 
 Instead, ensure you export only once with `pub`.
 
 <!-- Use YAML in the example. Delete this section if use pattern. -->
+
 ### YAML
+
 ```yaml
 id: avoid-duplicate-export
 language: rust
@@ -42,6 +45,7 @@ rule:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
+
 ```rs {2,3}
 pub mod foo;
 pub use foo::Foo;
