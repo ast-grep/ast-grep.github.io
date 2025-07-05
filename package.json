@@ -31,7 +31,7 @@
     "oxlint": "1.5.0",
     "search-insights": "2.17.3",
     "typescript": "5.8.3",
-    "vite": "7.0.0",
+    "vite": "7.0.2",
     "vitepress": "1.6.3",
     "vue-tsc": "3.0.1"
   }
