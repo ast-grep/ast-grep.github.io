@@ -193,6 +193,15 @@ I have no better explanation for it since I don't understand it well, so I will 
 
 To fully understand it, you also need to know `bubble`, `bubble($argument)` and pattern auto wrap.
 
+## What can go even more wrong?
+
+Integrating a custom linting rule from another parser ecosystem to your own has several more decisions to make. Making bad decisions can lead to even more confusion.
+
+* Your pattern syntax includes non standard syntax, like `$...`. You need to [change your parser](https://github.com/biomejs/biome/blob/31e439674493da76e0ce213e5660be3d903efbef/crates/biome_js_parser/src/syntax/jsx/mod.rs#L321) to support it.
+* You need to make a decision if you want to support existing pattern libraries. But these patterns are built upon [tree-sitter](https://tree-sitter.github.io/tree-sitter/). So you have to [map tree-sitter AST to your own](https://github.com/biomejs/biome/blob/7bf9a608e1592fd595f658f5f800e12d51835d34/crates/biome_grit_patterns/src/grit_target_language/js_target_language.rs#L42-L55)
+* Even worse, if you chose to support existing pattern libraries, you also need to work on a general algorithm to handle incompatibility between different ASTs. For example, different AST structures, different node names, different node properties, etc.
+* If you only supports part of it, how can you teach your users what is supported and what is not, without [reading the source](https://github.com/biomejs/biome/blob/7bf9a608e1592fd595f658f5f800e12d51835d34/crates/biome_grit_patterns/src/grit_target_language/js_target_language.rs#L48-L50)?
+* You also need to update your playground or editor plugins to support mapping between tree-sitter AST and your own AST. And teach users to use it.
 
 ## Conclusion
 
@@ -210,3 +219,5 @@ Consider these points when you want to have objective comparison:
 * Editor support beyong syntax highlighting. Say LSP.
 * Integration with API, how you bring type-safe DSL into your general purpose programming language, like [graphql](https://github.com/Quramy/ts-graphql-plugin) and [styled component](https://github.com/styled-components/typescript-styled-plugin).
 * Broader ecosystem support, such as GitHub language detection, AI support, etc.
+
+If you are going to use native tooling in your JavaScript/TypeScript project, I recommend you to use [oxlint](https://oxc.rs/) and, if you need simple custom rules, [ast-grep](https://ast-grep.github.io/).
