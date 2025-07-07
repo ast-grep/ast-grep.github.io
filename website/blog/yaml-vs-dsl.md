@@ -32,11 +32,15 @@ The original argument is quoted as follows:
 
 ## Direct rebuttal to the argument
 
+### Abstraction does not necessitate DSL
+
 > effectively built a DSL inside YAML
 
 This is a misunderstanding of DSL and abstraction. To model Abstract Syntax Tree (AST) manipulation, you will have to have some form of concepts, such as pattern, metavariable, etc. This is true for both DSL and YAML. You cannot cut more concepts out of the tool even if you have [Occam's razor](https://en.wikipedia.org/wiki/Occam%27s_razor).
 
 ast-grep does support pattern. It is a concept to match a strcture that contains multiple AST nodes, which makes it easier to write a rule. You can use `kind`/`has`/`all` to simulate pattern matching. But it does not mean that ast-grep should cut the concept of pattern since it looks like a DSL. In fact, ast-grep's pattern is just one of its [atomic rules](/guide/rule-config/atomic-rule.html). It does not meant to be a special embedded DSL.
+
+### Pattern has its limitations
 
 > your documentation, where you have to extensively explain how pattern syntax works, how pattern syntax works, how metavariables work
 
@@ -44,6 +48,7 @@ As stated before, pattern makes ast-grep users' life easier. Explaining how patt
 
 (an [ad-hominen](https://en.wikipedia.org/wiki/Ad_hominem) note: it is ironic to see this argument from a tool without proper documentation. I cannot suspend my suspect whether the author has used pattern to write non-trivial rules at all.)
 
+### Slippery slope fallacy
 
 > if you're creating a DSL anyway, you're better off doing it properly than to go halfway
 
@@ -51,6 +56,8 @@ This argument is a [slippery slope fallacy](https://en.wikipedia.org/wiki/Slippe
 
 Using one concept in your library, framework or tool does not imply that you have to design a whole new syntax for it. The similar comparison will be frontend frameworks. Some frameworks like React and Vue use [hook](https://react.dev/reference/react/hooks) or [signals](https://dev.to/this-is-learning/the-evolution-of-signals-in-javascript-8ob) to represent state changes. But using these building blocks does not grant the verdict to design a new language for your frontend framework. Even the most avant-garde company only introduces [new syntax](https://flow.org/en/docs/react/hook-syntax/) in JavaScript, not inventing a new language.
 
+
+### Subjective opinion is not objective fact
 
 > I think GritQL queries are significantly easier to read than ast-grep's mix of DSL of YAML.
 
