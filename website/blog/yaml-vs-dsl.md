@@ -40,7 +40,7 @@ ast-grep does support pattern. It is a concept to match a strcture that contains
 
 > your documentation, where you have to extensively explain how pattern syntax works, how pattern syntax works, how metavariables work
 
-As stated before, pattern makes ast-grep users' life easier. Explaining how pattern works is necessary to help users understand how to write rules. This is not a sign of a DSL being necessary, but rather a sign of the limitation of pattern: it is not general enough to cover all cases, and you have to communicate to your users how pattern works in your system. For example, see this [tweet](https://x.com/hd_nvim/status/1941876968363798766) about how to write a pattern to match `functtion` declation in JavaScript.
+As stated before, pattern makes ast-grep users' life easier. Explaining how pattern works is necessary to help users understand how to write rules. This is not a sign of a DSL being necessary, but rather a sign of the limitation of pattern: it is not general enough to cover all cases, and you have to communicate to your users how pattern works in your system. For example, see this [tweet](https://x.com/hd_nvim/status/1941876968363798766) about how to write a pattern to match `function` declation in JavaScript. Another brain teaser, how to tell if `$a = $b` is an `assignment_expression` or `field_initializer`?
 
 (an [ad-hominen](https://en.wikipedia.org/wiki/Ad_hominem) note: it is ironic to see this argument from a tool without proper documentation. I cannot suspend my suspect whether the author has used pattern to write non-trivial rules at all.)
 
@@ -59,3 +59,147 @@ This is a subjective opinion, instead of an fundamental blocker. The author fail
 We can also see using DSL is not subjectively better than YAML as well.
 
 ## Subjective Comparison of DSL
+
+Let's review the DSL mentioned above.
+
+### Mix of several different paradigms
+
+Biome's DSL is a mix of several different paradigms: declarative, logic, and imperative. Let's see one example:
+
+```JavaScript
+`$method($message)` where {
+  $method <: `console.log`,
+  if ($message <: r"Hello, .*!") {
+    $linter = "hello world"
+  } else {
+    $linter = "not hello"
+  },
+  register_diagnostic(
+    span = $method,
+    message = $linter
+  )
+}
+```
+
+* `$method('$message')` is a declarative pattern matching syntax.
+* `where` and `<:` are related to [logic programming](https://en.wikipedia.org/wiki/Logic_programming#:~:text=Logic%20programming%20is%20a%20programming,solve%20problems%20in%20the%20domain.) paradigm, say, [Prolog](https://en.wikipedia.org/wiki/Prolog) or SQL.
+* `if` is a typical imperative programming paradigm
+
+The mixture of paradigms does not blend well. At least, in the eye of a programming language veteran, it is too messy for a DSL for linting or structural search. We are not designing a next-era programming language.
+
+### Easy to miss comma
+
+Did you notice there is two trailing commas in `$method <: console.log` and if block?
+
+```JavaScript{2,7}
+`$method($message)` where {
+  $method <: `console.log`, // [!code focus]
+  if ($message <: r"Hello, .*!") {
+    $linter = "hello world"
+  } else {
+    $linter = "not hello"
+  }, // [!code focus]
+  register_diagnostic(
+    span = $method,
+    message = $linter
+  )
+}
+```
+
+Without them you will get a syntax error. This is a common problem for beginners to miss commas, a typical pitfall only in DSL. Alas, I can still remeber the old day when C compiler complained about missing semicolon.
+
+### Similar basic patterns have distinct syntax appearance
+
+There are several different basic patterns in the DSL. Though they are at the similar level of abstraction, their appearance is totally different.
+
+```JavaScript
+`console.log($foo)` // pattern
+augmented_assignment_expression(operator = $op, left = $x, right = $v) // syntax node
+r"Hello, (.*)"($name)  // regex
+```
+
+These patterns are corresponding to `pattern`, `kind` and `regex` in ast-grep. However, they look totally different. You need more learning to pick up these distinct syntax.
+
+### Similar syntax appearance have different meaning
+
+One common pitfall to design DSL is that similar syntax have different meaning.
+
+```JavaScript
+// this is a syntax node call
+augmented_assignment_expression(operator = $op)
+pattern console_method_to_info($method) {
+  `console.$method($message)` => `console.info($message)`
+}
+// this is a pattern call
+console_method_to_info(method = `log`)
+predicate program_contains_logger() {
+  $program <: contains `logger`
+}
+// this is a predicate call
+program_contains_logger()
+
+// define a lines function
+function lines($string) {
+    return split($string, separator=`\n`)
+}
+// this is a function call
+lines(string = $message)
+```
+
+They all look like function calls, but they are not. See explanation below for the differences.
+
+### Confusing Concepts of `pattern`, `predicate` and `function`
+
+These three concepts are very similar, but they have slightly different usage in the DSL.
+
+* `pattern` is used in `<:` or somewhere else, I dunno, the doc does not explain it well.
+* `predicate` is used in `where` condition.
+* `function` is used in `assignment`, `insertion` or `rewrite`.
+
+Example:
+
+```JavaScript
+`console.log` => `logger.info` where {
+  $program <: contains_logger(), // pattern
+  program_contains_logger(), // equivalent predicate
+  $program => replace_logger(), // function
+}
+```
+
+### Confusing Concepts of `condition`, `clause` and `modifier`
+
+The DSL also has three similar concepts: `condition`, `clause` and `modifier`.
+Introduced in different places, [here](https://docs.grit.io/language/conditions) and [here](https://docs.grit.io/language/modifiers), without clear definition.
+
+### Similar patterns but applied in different places
+
+Tell the difference between [and](https://docs.grit.io/language/modifiers#and-clause), [any](https://docs.grit.io/language/modifiers#any-clause), [some](https://docs.grit.io/language/modifiers#some-clause) and [every](https://docs.grit.io/language/modifiers#every-clause).
+Confusing? You should learn the difference between meta var in [list pattern](https://docs.grit.io/language/modifiers#list-patterns) and plain meta var. Also, don't confuse list meta var with [spread meta var](https://docs.grit.io/language/patterns#metavariables)
+
+### One more thing, variable scope.
+
+If you still have patience, you need one last thing to learn: variable scope.
+
+I have no better explanation for it since I don't understand it well, so I will quote the [official documentation](https://docs.grit.io/language/bubble):
+
+>  Once a metavariable is bound to a value, it retains this value throughout the target code. Therefore, the scope of the metavariable spans the entire target file.
+
+To fully understand it, you also need to know `bubble`, `bubble($argument)` and pattern auto wrap.
+
+
+## Conclusion
+
+If you also feel confused, you are not alone. Again, the preference of DSL over YAMl is largely subjective.
+
+If you think DSL is better, you are right. [You are absolutely right](https://www.reddit.com/r/ClaudeAI/comments/152b51r/you_are_absolutely_right/). In fact, you are [not even wrong](https://en.wikipedia.org/wiki/Not_even_wrong). Since this is a subjective opinion, not an objective fact.
+
+If you are a library or framework author, you can make decision based on your own preference. However, mistakenly thinking your preference is objective will lead to confusion and misunderstanding. It may even reflect inferior tech taste and judgement.
+
+Consider these points when you want to have objective comparison:
+
+* Documentation?
+* User Education? Howe you teach users to write your DSL?
+* Tooling support like [playground](/playground.html).
+* Editor support beyong syntax highlighting. Say LSP.
+* Integration with API, how you bring type-safe DSL into your general purpose programming language, like [graphql](https://github.com/Quramy/ts-graphql-plugin) and [styled component](https://github.com/styled-components/typescript-styled-plugin).
+* Broader ecosystem support, such as GitHub language detection, AI support, etc.
