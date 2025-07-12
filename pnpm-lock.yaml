@@ -49,8 +49,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: 7.0.2
-        version: 7.0.2(lightningcss@1.30.1)(yaml@2.7.1)
+        specifier: 7.0.4
+        version: 7.0.4(lightningcss@1.30.1)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.29.0)(lightningcss@1.30.1)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.3)
@@ -1518,8 +1518,8 @@ packages:
       terser:
         optional: true
 
-  vite@7.0.2:
-    resolution: {integrity: sha512-hxdyZDY1CM6SNpKI4w4lcUc3Mtkd9ej4ECWVHSMrOdSinVc2zYOAppHeGc/hzmRo3pxM5blMzkuWHOJA/3NiFw==}
+  vite@7.0.4:
+    resolution: {integrity: sha512-SkaSguuS7nnmV7mfJ8l81JGBFV7Gvzp8IzgE8A8t23+AxuNX61Q5H1Tpz5efduSN7NHC8nQXD3sKQKZAu5mNEA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3089,7 +3089,7 @@ snapshots:
       fsevents: 2.3.3
       lightningcss: 1.30.1
 
-  vite@7.0.2(lightningcss@1.30.1)(yaml@2.7.1):
+  vite@7.0.4(lightningcss@1.30.1)(yaml@2.7.1):
     dependencies:
       esbuild: 0.25.2
       fdir: 6.4.6(picomatch@4.0.2)
