@@ -85,7 +85,7 @@ It has several jQuery like methods for us to search, filter and inspect the AST 
 ```js
 const log = root.find('console.log($A)') // search node
 const arg = log.getMatch('A') // get matched variable
-log.text() // "hello world"
+arg.text() // "hello world"
 ```
 
 Let's see its details in the following sections!
