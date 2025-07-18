@@ -7,7 +7,7 @@ export function showToast(txt: string) {
 }
 </script>
 <script setup lang="ts">
-import { ref, watch, getCurrentInstance } from 'vue'
+import { getCurrentInstance, ref, watch } from 'vue'
 let shown = ref(false)
 let text = ref('')
 instance = getCurrentInstance()
@@ -30,7 +30,7 @@ watch(text, (newVal) => {
 <template>
   <transition>
     <div class="toast" v-if="shown">
-      {{text}}
+      {{ text }}
     </div>
   </transition>
 </template>
@@ -48,7 +48,7 @@ watch(text, (newVal) => {
   border-radius: 4px;
   backdrop-filter: blur(3px);
   transform: translate(50%, 0%);
-  box-shadow:  0 10px 38px rgba(0,0,0,0.30), 0 5px 12px rgba(0,0,0,0.22);
+  box-shadow: 0 10px 38px rgba(0, 0, 0, 0.30), 0 5px 12px rgba(0, 0, 0, 0.22);
 }
 .v-enter-active,
 .v-leave-active {

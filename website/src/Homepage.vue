@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { useData } from 'vitepress'
 import Theme from 'vitepress/theme'
+import { nextTick, provide } from 'vue'
+import Ecosystem from './homepage/Ecosystem.vue'
 import Features from './homepage/Features.vue'
 import Languages from './homepage/Languages.vue'
-import Ecosystem from './homepage/Ecosystem.vue'
-import { useData } from 'vitepress'
-import { nextTick, provide } from 'vue'
 
 const { isDark } = useData()
 

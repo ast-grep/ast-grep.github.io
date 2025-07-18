@@ -1,5 +1,5 @@
 <template>
-  <span class="vpi-chevron-down"/>
+  <span class="vpi-chevron-down" />
 </template>
 
 <style scoped>

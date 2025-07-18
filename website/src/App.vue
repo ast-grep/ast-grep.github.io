@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, shallowRef } from 'vue'
 import Intro from './components/Intro.vue'
 import Toast from './components/utils/Toast.vue'
-import { shallowRef, onMounted, onUnmounted } from 'vue'
 // vitepress SSR does not support Monaco, lazy load on client side
 let playground = shallowRef<unknown>(null)
 
@@ -31,13 +31,24 @@ onUnmounted(() => {
 
 <template>
   <div class="root">
-    <Intro/>
+    <Intro />
     <Suspense>
-      <component v-if="playground" :is="playground"/>
+      <component v-if="playground" :is="playground" />
       <div class="loading" v-else>
-        <svg class="lightning-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="120" viewBox="0 10 100 120">
-          <g transform="matrix(1,0,0,1,0,22)" >
-          <polygon xmlns="http://www.w3.org/2000/svg" points="100,0 25,50 43.75,62.5 0,100 75,62.5 56.25,50"></polygon>
+        <svg
+          class="lightning-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="100"
+          height="120"
+          viewBox="0 10 100 120"
+        >
+          <g transform="matrix(1,0,0,1,0,22)">
+            <polygon
+              xmlns="http://www.w3.org/2000/svg"
+              points="100,0 25,50 43.75,62.5 0,100 75,62.5 56.25,50"
+            >
+            </polygon>
           </g>
         </svg>
         <h2>
@@ -45,7 +56,7 @@ onUnmounted(() => {
         </h2>
       </div>
     </Suspense>
-    <Toast/>
+    <Toast />
   </div>
 </template>
 

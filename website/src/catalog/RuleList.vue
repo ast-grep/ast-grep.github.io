@@ -2,17 +2,17 @@
 import NumberFlow from '@number-flow/vue'
 // @ts-ignore missing type
 import { continuous } from '@number-flow/vue'
-import { type Filter, getRuleMetaData } from './data.js'
-import { computed, ref, type PropType } from 'vue'
-import RuleItem from './RuleItem.vue'
+import { computed, type PropType, ref } from 'vue'
 import IconDown from '../components/utils/IconDown.vue'
+import { type Filter, getRuleMetaData } from './data.js'
+import RuleItem from './RuleItem.vue'
 
 const sortBy = ref('name')
 const props = defineProps({
   filter: {
     type: Object as PropType<Filter>,
     required: true,
-  }
+  },
 })
 const emit = defineEmits<{
   reset: []
@@ -38,7 +38,7 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
           <option value="lang">Lang</option>
           <option value="complexity">Complexity</option>
         </select>
-        <IconDown/>
+        <IconDown />
       </label>
     </h3>
     <TransitionGroup class="rule-list" tag="ul">
@@ -52,25 +52,31 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
     <Transition name="not-found">
       <div class="no-rule" v-if="ruleMetaData.length === 0">
         <p class="title">No Matching Rule</p>
-        <hr class="divider"/>
+        <hr class="divider" />
         <div class="actions">
-          You can <a href="" @click="emit('reset')">reset the filter</a> to discover all rules.<br/>
+          You can <a href="" @click="emit('reset')">reset the filter</a> to discover all
+          rules.<br />
           Contributing a new rule is also warmly welcomed. 🎉
           <ol>
             <li>
               Read the
               <a href="/reference/rule.html" target="_blank">rule</a> and
-              <a href="/reference/yaml.html" target="_blank">YAML</a> doc.</li>
-            <li>Write your own rule in the
+              <a href="/reference/yaml.html" target="_blank">YAML</a> doc.
+            </li>
+            <li>
+              Write your own rule in the
               <a href="/playground.html" target="_blank">
                 playground
               </a>.
             </li>
             <li>
               Add a new example in the ast-grep
-                <a href="https://github.com/ast-grep/ast-grep.github.io/tree/main/website/catalog" target="_blank">
-                  website repo
-                </a>.
+              <a
+                href="https://github.com/ast-grep/ast-grep.github.io/tree/main/website/catalog"
+                target="_blank"
+              >
+                website repo
+              </a>.
             </li>
           </ol>
         </div>
