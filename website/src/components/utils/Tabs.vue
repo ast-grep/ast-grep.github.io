@@ -25,6 +25,7 @@ const Wrapper = defineComponent({
       :class="{ active: modelValue === mode }"
       v-for="(tabText, mode) in modeText"
       @click="switchTab(mode)"
+      :key="mode"
     >
       {{ tabText }}
     </a>
@@ -33,7 +34,7 @@ const Wrapper = defineComponent({
     </div>
   </div>
   <div class="tab-content">
-    <template v-for="(_, mode) in modeText">
+    <template v-for="(_, mode) in modeText" :key="mode">
       <transition>
         <keep-alive>
           <Wrapper class="content-wrapper" v-if="modelValue === mode">
