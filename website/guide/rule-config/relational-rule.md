@@ -148,7 +148,7 @@ Sometimes it is useful to specify the node by its field. Suppose we want to find
 kind: pair # key-value pair in JS
 has:
   field: key # note here
-  regex: 'prototype'
+  regex: "prototype"
 ```
 
 This rule will match the following code

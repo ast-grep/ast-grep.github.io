@@ -19,8 +19,8 @@ rule:
   pattern: $LIST.$ITER { |$V| $V.$METHOD }
 constraints:
   ITER:
-    regex: 'map|select|each'
-fix: '$LIST.$ITER(&:$METHOD)'
+    regex: "map|select|each"
+fix: "$LIST.$ITER(&:$METHOD)"
 ```
 
 ### Example

@@ -16,8 +16,8 @@ rule:
   pattern: await $_
   inside:
     any:
-    - kind: for_in_statement
-    - kind: while_statement
+      - kind: for_in_statement
+      - kind: while_statement
 
 # Other linting related fields
 message: Don't use await inside of loops
@@ -87,7 +87,7 @@ rule:
   pattern: console.log($GREET)
   not: { pattern: console.log($STR) }
 constraints:
-  STR: { kind: string}
+  STR: { kind: string }
 ```
 
 The intent of the above rule is to match all `console.log` call except the one with string argument.
@@ -138,15 +138,15 @@ Rules can be applied to only certain files in a codebase with `files`. `files` s
 
 ```yaml
 files:
-- "tests/**"
-- "integration_tests/test.py"
+  - "tests/**"
+  - "integration_tests/test.py"
 ```
 
 Similarly, you can use `ignores` to ignore applying a rule to certain files. `ignores` supports a list of glob patterns:
 
 ```yaml
 ignores:
-- "tests/config/**"
+  - "tests/config/**"
 ```
 
 `ignores` and `files` can be used together. `ignores` will be tested before `files`. See [reference](/reference/yaml.html#ignores) for more details.
@@ -179,7 +179,7 @@ Let's see an example. Suppose we have a [rule](/playground.html#eyJtb2RlIjoiQ29u
 ```yaml
 rule:
   pattern:
-    context: 'class H { $METHOD() { $$$ } }'
+    context: "class H { $METHOD() { $$$ } }"
     selector: method_definition
   inside:
     pattern: class $CLASS { $$$ }

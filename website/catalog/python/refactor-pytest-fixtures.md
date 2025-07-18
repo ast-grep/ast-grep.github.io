@@ -49,7 +49,7 @@ utils:
         - matches: is-fixture-function
         - matches: is-test-function
   is-fixture-arg:
-    # Fixture arguments are identifiers inside the 
+    # Fixture arguments are identifiers inside the
     # parameters of a test/fixture function
     all:
       - kind: identifier
@@ -66,7 +66,7 @@ The following rule adds a type-hint to a fixture.
 rule:
   matches: is-fixture-arg
   regex: ^foo$
-fix: 'foo: int'
+fix: "foo: int"
 ```
 
 This one renames a fixture and all its references.
@@ -76,7 +76,7 @@ rule:
   kind: identifier
   matches: is-fixture-context
   regex: ^foo$
-fix: 'five'
+fix: "five"
 ```
 
 ### Example

@@ -26,8 +26,8 @@ transform:
   MAYBE_COMMA:
     replace:
       source: $$$ARGS
-      replace: '^.+'
-      by: ', '
+      replace: "^.+"
+      by: ", "
 fix:
   $METHOD(&$R$MAYBE_COMMA$$$ARGS)
 ```

@@ -18,51 +18,51 @@ However, we can apply `rewriters` to inner types recursively. Take the `optional
 id: recursive-rewrite-types
 language: python
 rewriters:
-# rewrite Optional[T] to T | None
-- id: optional
-  rule:
-    any:
-    - pattern:
-        context: 'arg: Optional[$TYPE]'
+  # rewrite Optional[T] to T | None
+  - id: optional
+    rule:
+      any:
+        - pattern:
+            context: "arg: Optional[$TYPE]"
+            selector: generic_type
+        - pattern: Optional[$TYPE]
+    # recursively apply rewriters to $TYPE
+    transform:
+      NT:
+        rewrite:
+          rewriters: [optional, unions]
+          source: $TYPE
+    # use the new variable $NT
+    fix: $NT | None
+
+  # similar to Optional, rewrite Union[T1, T2] to T1 | T2
+  - id: unions
+    language: Python
+    rule:
+      pattern:
+        context: "a: Union[$$$TYPES]"
         selector: generic_type
-    - pattern: Optional[$TYPE]
-  # recursively apply rewriters to $TYPE
-  transform:
-    NT:
-      rewrite:
-        rewriters: [optional, unions]
-        source: $TYPE
-  # use the new variable $NT
-  fix: $NT | None
+    transform:
+      UNIONS:
+        # rewrite all types inside $$$TYPES
+        rewrite:
+          rewriters: [rewrite-unions]
+          source: $$$TYPES
+          joinBy: " | "
+    fix: $UNIONS
+  - id: rewrite-unions
+    rule:
+      pattern: $TYPE
+      kind: type
+    # recursive part
+    transform:
+      NT:
+        rewrite:
+          rewriters: [optional, unions]
+          source: $TYPE
+    fix: $NT
 
-# similar to Optional, rewrite Union[T1, T2] to T1 | T2
-- id: unions
-  language: Python
-  rule:
-    pattern:
-      context: 'a: Union[$$$TYPES]'
-      selector: generic_type
-  transform:
-    UNIONS:
-      # rewrite all types inside $$$TYPES
-      rewrite:
-        rewriters: [ rewrite-unions ]
-        source: $$$TYPES
-        joinBy: " | "
-  fix: $UNIONS
-- id: rewrite-unions
-  rule:
-    pattern: $TYPE
-    kind: type
-  # recursive part
-  transform:
-    NT:
-      rewrite:
-        rewriters: [optional, unions]
-        source: $TYPE
-  fix: $NT
-
-# find all types
+  # find all types
 rule:
   kind: type
   pattern: $TPE

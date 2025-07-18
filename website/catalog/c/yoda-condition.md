@@ -16,12 +16,12 @@ In programming jargon, a [Yoda condition](https://en.wikipedia.org/wiki/Yoda_con
 id: may-the-force-be-with-you
 language: c
 rule:
-  pattern: $A == $B                 # Find equality comparison
-  inside:                           # inside an if_statement
+  pattern: $A == $B # Find equality comparison
+  inside: # inside an if_statement
     kind: parenthesized_expression
-    inside: {kind: if_statement}
-constraints:                        # with the constraint that
-  B: { kind: number_literal }       # right side is a number
+    inside: { kind: if_statement }
+constraints: # with the constraint that
+  B: { kind: number_literal } # right side is a number
 fix: $B == $A
 ```
 

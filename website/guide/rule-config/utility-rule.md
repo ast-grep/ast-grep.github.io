@@ -7,10 +7,10 @@ Suppose we want to match all literal values in JavaScript. We will need to match
 
 ```yaml
 any:
-  - kind: 'false'
+  - kind: "false"
   - kind: undefined
-  - kind: 'null'
-  - kind: 'true'
+  - kind: "null"
+  - kind: "true"
   - kind: regex
   - kind: number
   - kind: string
@@ -21,14 +21,14 @@ If we want to match functions in different places using only the plain YAML file
 ```yaml
 rule:
   any:
-    - kind: 'false'
+    - kind: "false"
     - kind: undefined
     # more literal kinds omitted
     # ...
     - kind: array
       has:
         any:
-          - kind: 'false'
+          - kind: "false"
           - kind: undefined
           # more literal kinds omitted
           # ...
@@ -40,12 +40,12 @@ ast-grep provides a mechanism to reuse common rules: `utils`. A utility rule is 
 # define util rules using utils field
 utils:
   # it accepts a string-keyed dictionary of rule object
-  is-literal:               # rule-id
-    any:                    # actual rule object
-      - kind: 'false'
+  is-literal: # rule-id
+    any: # actual rule object
+      - kind: "false"
       - kind: undefined
-      - kind: 'null'
-      - kind: 'true'
+      - kind: "null"
+      - kind: "true"
       - kind: regex
       - kind: number
       - kind: string
@@ -77,10 +77,10 @@ For example, the following config file defines a local utility rule `is-literal`
 utils:
   is-literal:
     any:
-      - kind: 'false'
+      - kind: "false"
       - kind: undefined
-      - kind: 'null'
-      - kind: 'true'
+      - kind: "null"
+      - kind: "true"
       - kind: regex
       - kind: number
       - kind: string
@@ -126,10 +126,10 @@ id: is-literal
 language: TypeScript
 rule:
   any:
-    - kind: 'false'
+    - kind: "false"
     - kind: undefined
-    - kind: 'null'
-    - kind: 'true'
+    - kind: "null"
+    - kind: "true"
     - kind: regex
     - kind: number
     - kind: string

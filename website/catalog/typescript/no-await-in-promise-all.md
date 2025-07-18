@@ -18,7 +18,7 @@ rule:
   inside:
     pattern: Promise.all($_)
     stopBy:
-      not: { any: [{kind: array}, {kind: arguments}] }
+      not: { any: [{ kind: array }, { kind: arguments }] }
 fix: $A
 ```
 

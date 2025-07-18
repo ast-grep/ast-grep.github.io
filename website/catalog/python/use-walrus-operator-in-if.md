@@ -35,7 +35,7 @@ rule:
     selector: expression_statement
   precedes:
     pattern: "if $VAR: $$$B"
-fix: ''
+fix: ""
 ```
 
 This rule removes the standalone variable assignment when it directly precedes an `if` statement that uses the walrus operator. Since the assignment is now part of the `if` statement, the separate declaration is no longer needed.
@@ -65,7 +65,7 @@ rule:
     selector: expression_statement
   precedes:
     pattern: "if $VAR: $$$B"
-fix: ''
+fix: ""
 ```
 
 ### Example

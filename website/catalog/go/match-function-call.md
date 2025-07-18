@@ -20,7 +20,7 @@ id: match-function-call
 language: go
 rule:
   pattern:
-    context: 'func t() { fmt.Println($A) }'
+    context: "func t() { fmt.Println($A) }"
     selector: call_expression
 ```
 

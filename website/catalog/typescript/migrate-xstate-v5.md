@@ -24,14 +24,14 @@ For more information, you can use [Codemod AI](https://app.codemod.com/studio?ai
 ```yaml
 id: migrate-import-name
 utils:
-  FROM_XS: {kind: import_statement, has: {kind: string, regex: xstate}}
+  FROM_XS: { kind: import_statement, has: { kind: string, regex: xstate } }
   XS_EXPORT:
     kind: identifier
     inside: { has: { matches: FROM_XS }, stopBy: end }
 rule: { regex: ^Machine|interpret$, pattern: $IMPT, matches: XS_EXPORT }
 transform:
   STEP1:
-    replace: {by: create$1, replace: (Machine), source: $IMPT }
+    replace: { by: create$1, replace: (Machine), source: $IMPT }
   FINAL:
     replace: { by: createActor, replace: interpret, source: $STEP1 }
 fix: $FINAL
@@ -48,7 +48,7 @@ id: migrate-to-actors
 rule:
   kind: property_identifier
   regex: ^services$
-  inside: { pattern:  $M.withConfig($$$ARGS), stopBy: end }
+  inside: { pattern: $M.withConfig($$$ARGS), stopBy: end }
 fix: actors
 ```
 

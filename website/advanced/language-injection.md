@@ -111,10 +111,10 @@ You can add the `languageInjections` section in the project configuration file `
 
 ```yaml
 languageInjections:
-- hostLanguage: js
-  rule:
-    pattern: styled.$TAG`$CONTENT`
-  injected: css
+  - hostLanguage: js
+    rule:
+      pattern: styled.$TAG`$CONTENT`
+    injected: css
 ```
 
 Let's break the configuration down.
@@ -183,8 +183,8 @@ First, we need to register graphql as a custom language in ast-grep. See [custom
 customLanguages:
   graphql:
     libraryPath: graphql.so # the graphql tree-sitter parser dynamic library
-    extensions: [graphql]   # graphql file extension
-    expandoChar: $          # see reference above for explanation
+    extensions: [graphql] # graphql file extension
+    expandoChar: $ # see reference above for explanation
 ```
 
 ### Define graphql injection in `sgconfig.yml`.
@@ -193,10 +193,10 @@ Next, we need to customize what region should be parsed as graphql string in Jav
 
 ```yaml
 languageInjections:
-- hostLanguage: js
-  rule:
-    pattern: graphql`$CONTENT`
-  injected: graphql
+  - hostLanguage: js
+    rule:
+      pattern: graphql`$CONTENT`
+    injected: graphql
 ```
 
 ### Search GraphQL in JavaScript

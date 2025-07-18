@@ -96,19 +96,19 @@ The equivalent rule object interface in TypeScript is also provided for referenc
 ```yaml [Full Rule Object]
 rule:
   # atomic rule
-  pattern: 'search.pattern'
-  kind: 'tree_sitter_node_kind'
-  regex: 'rust|regex'
+  pattern: "search.pattern"
+  kind: "tree_sitter_node_kind"
+  regex: "rust|regex"
   # relational rule
-  inside: { pattern: 'sub.rule' }
-  has: { kind: 'sub_rule' }
-  follows: { regex: 'can|use|any' }
-  precedes: { kind: 'multi_keys', pattern: 'in.sub' }
+  inside: { pattern: "sub.rule" }
+  has: { kind: "sub_rule" }
+  follows: { regex: "can|use|any" }
+  precedes: { kind: "multi_keys", pattern: "in.sub" }
   # composite rule
-  all: [ {pattern: 'match.all'}, {kind: 'match_all'} ]
-  any: [ {pattern: 'match.any'}, {kind: 'match_any'} ]
-  not: { pattern: 'not.this' }
-  matches: 'utility-rule'
+  all: [{ pattern: "match.all" }, { kind: "match_all" }]
+  any: [{ pattern: "match.any" }, { kind: "match_any" }]
+  not: { pattern: "not.this" }
+  matches: "utility-rule"
 ```
 
 ```typescript [TS Interface]

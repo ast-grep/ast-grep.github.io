@@ -120,11 +120,11 @@ Please also see [transformation reference](/reference/yaml/transformation) for d
 
 ```yaml
 transform:
-  NEW_VAR_NAME:      # new variable name
-    replace:         # transform operation
+  NEW_VAR_NAME: # new variable name
+    replace: # transform operation
       source: $ARGS
-      replace: '^.+'
-      by: ', '
+      replace: "^.+"
+      by: ", "
 
 # string style for ast-grep 0.38.3+
 transform:
@@ -164,11 +164,11 @@ Please also see [rewriter reference](/reference/yaml/rewriter.html) for details.
 
 ```yaml
 rewriters:
-- id: stringify
-  rule: { pattern: "'' + $A" }
-  fix: "String($A)"
-  # you can also use these fields
-  # transform, utils, constraints
+  - id: stringify
+    rule: { pattern: "'' + $A" }
+    fix: "String($A)"
+    # you can also use these fields
+    # transform, utils, constraints
 ```
 
 ## Linting
@@ -303,7 +303,7 @@ Documentation link to this rule. It will be displayed in editor extension if sup
 **Example:**
 
 ```yaml
-url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
+url: "https://ast-grep.github.io/catalog/python/#migrate-openai-sdk"
 ```
 
 ### `metadata`
@@ -319,7 +319,7 @@ ast-grep will output `metadata` with matches in [`--json`](/reference/cli/scan.h
 
 ```yaml
 metadata:
-  extraField: 'Extra information for other usages'
+  extraField: "Extra information for other usages"
   complexData:
     key: value
 ```
