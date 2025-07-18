@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue';
+import type { PropType } from 'vue'
 import Share from '../icons/Share.vue'
 import { serialize, State } from './astGrep/state'
 import { showToast } from './utils/Toast.vue'
@@ -17,13 +17,12 @@ async function onShare() {
   await navigator.clipboard.writeText(location.href)
   showToast('Sharable URL has been copied to clipboard!')
 }
-
 </script>
 
 <template>
   <div class="toolbars">
     <button class="floating" data-title="Copy your code URL to share!" title-left @click="onShare">
-      <Share style="width: 24px; height: 24px;"/>
+      <Share style="width: 24px; height: 24px" />
     </button>
     <button
       class="switch"

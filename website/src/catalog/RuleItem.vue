@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { type PropType, computed } from 'vue'
+import { computed, type PropType } from 'vue'
 
-import { type RuleMeta, type Filter, languages, intersect } from './data'
+import { type Filter, intersect, languages, type RuleMeta } from './data'
 import Option from './Option.vue'
 
 const { meta, filter } = defineProps({
@@ -12,7 +12,7 @@ const { meta, filter } = defineProps({
   filter: {
     type: Object as PropType<Filter>,
     required: true,
-  }
+  },
 })
 
 // display selected options first
@@ -48,17 +48,17 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
     <div class="rule-main">
       <a :href="meta.link" class="rule-name" target="_blank">
         {{ meta.name }}
-        <img class="logo" :src="'/langs/' + meta.language.toLowerCase() + '.svg'"/>
+        <img class="logo" :src="'/langs/' + meta.language.toLowerCase() + '.svg'" />
       </a>
       <div class="rule-details">
-        <div class="rule-badges" >
+        <div class="rule-badges">
           <template v-if="meta.type === 'Pattern'">
             <span>📝</span>
             <Badge type="info" text="Simple Pattern Example" />
           </template>
           <template v-else>
             <span title="Used Rules">📏</span>
-            <span class="emoji-offset"/>
+            <span class="emoji-offset" />
             <Option
               v-for="rule in displayedRules"
               :key="rule"
@@ -74,25 +74,26 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
           </template>
         </div>
         <div class="rule-badges" v-if="displayFeatures.length > 0">
-            <span title="Used Features">💡</span>
-            <Option
-              v-for="feature in displayFeatures"
-              :key="feature"
-              :text="feature"
-              :highlight="filter.selectedFeatures.includes(feature)"
-            />
-            <Option
-              v-if="moreFeatures.length"
-              :text="`+${moreFeatures.length}`"
-              :data-title="moreFeatures.join(', ')"
-              :highlight="intersect(moreFeatures, filter.selectedFeatures)"
-            />
+          <span title="Used Features">💡</span>
+          <Option
+            v-for="feature in displayFeatures"
+            :key="feature"
+            :text="feature"
+            :highlight="filter.selectedFeatures.includes(feature)"
+          />
+          <Option
+            v-if="moreFeatures.length"
+            :text="`+${moreFeatures.length}`"
+            :data-title="moreFeatures.join(', ')"
+            :highlight="intersect(moreFeatures, filter.selectedFeatures)"
+          />
         </div>
       </div>
     </div>
     <div class="rule-aux">
       <div class="rule-badges">
-        <span> <!-- dummy wrapper for better align items -->
+        <span>
+          <!-- dummy wrapper for better align items -->
           <Badge v-if="meta.hasFix" type="tip">
             <span class="override-badge-text-color">🛠️ Fix</span>
           </Badge>
@@ -111,7 +112,6 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
 </template>
 
 <style scoped>
-
 a {
   text-decoration: none;
 }

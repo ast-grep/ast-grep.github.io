@@ -8,31 +8,24 @@ function truthy<T>(v: T | null | undefined): v is T {
 </script>
 
 <script lang="ts" setup>
-import {
-  ref,
-  onMounted,
-  onBeforeUnmount,
-  shallowRef,
-  watch,
-  PropType,
-} from 'vue'
+import { useData } from 'vitepress'
+import { onBeforeUnmount, onMounted, PropType, ref, shallowRef, watch } from 'vue'
 import { Match, normalizeMonacoLang } from '../astGrep/lang'
 import { setup } from './monaco'
-import { useData } from 'vitepress'
 
 // https://vitepress.dev/reference/runtime-api
 const { isDark } = useData()
 const monaco = await setup()
 
 const emits = defineEmits<{
-    (e: 'update:modelValue', value: string): void,
-    (e: 'changeCursor', value: any): void,
+  (e: 'update:modelValue', value: string): void
+  (e: 'changeCursor', value: any): void
 }>()
 
 const props = defineProps({
   language: {
     type: String as PropType<string>,
-    default: 'javascript'
+    default: 'javascript',
   },
   modelValue: String,
   readonly: {
@@ -48,7 +41,7 @@ const props = defineProps({
 })
 
 const containerRef = ref<HTMLDivElement | null>(null)
-const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
 let highlights: monaco.editor.IEditorDecorationsCollection | null = null
 let matches: monaco.editor.IEditorDecorationsCollection | null = null
@@ -76,17 +69,21 @@ onMounted(() => {
       other: true,
       comments: false,
       strings: true,
-    }
+    },
   })
   editor.value = editorInstance
   editorInstance.onDidChangeModelContent(() => {
-      emits('update:modelValue', editorInstance.getValue())
+    emits('update:modelValue', editorInstance.getValue())
   })
   editorInstance.onDidChangeCursorPosition(e => {
-      emits('changeCursor', e)
+    emits('changeCursor', e)
   })
-  highlights = editorInstance.createDecorationsCollection(props.highlights?.map(transformHighlight) || [])
-  matches = editorInstance.createDecorationsCollection(props.matches?.map(transformMatch).filter(truthy) || [])
+  highlights = editorInstance.createDecorationsCollection(
+    props.highlights?.map(transformHighlight) || [],
+  )
+  matches = editorInstance.createDecorationsCollection(
+    props.matches?.map(transformMatch).filter(truthy) || [],
+  )
   const modelMarks = props.matches?.map(toModelMark).filter(truthy) || []
   let oldModel = editorInstance.getModel()
   if (oldModel) {
@@ -108,13 +105,13 @@ watch(
 )
 
 const transformHighlight = (match: number[]) => {
-    const [sr, sc, er, ec] = match
-    return {
-      range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
-      options: {
-        inlineClassName: 'monaco-highlight-span'
-      }
-    }
+  const [sr, sc, er, ec] = match
+  return {
+    range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
+    options: {
+      inlineClassName: 'monaco-highlight-span',
+    },
+  }
 }
 
 const transformMatch = (match: Match) => {
@@ -125,8 +122,8 @@ const transformMatch = (match: Match) => {
   return {
     range: new monaco.Range(sr + 1, sc + 1, er + 1, ec + 1),
     options: {
-      inlineClassName: 'monaco-match-span'
-    }
+      inlineClassName: 'monaco-match-span',
+    },
   }
 }
 
@@ -180,11 +177,10 @@ watch(() => props.language, lang => {
 onBeforeUnmount(() => {
   editor.value?.dispose()
 })
-
 </script>
 
 <template>
-  <div class="editor" ref="containerRef"/>
+  <div class="editor" ref="containerRef" />
 </template>
 
 <style scoped>

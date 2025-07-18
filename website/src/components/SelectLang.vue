@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+import { versions } from '../../_data/parsers'
 import { languageDisplayNames } from './astGrep/lang'
 import IconDown from './utils/IconDown.vue'
-import { versions } from '../../_data/parsers'
-import { computed } from 'vue';
 
 const lang = defineModel<string>({
   required: true,
@@ -21,19 +21,18 @@ const versionText = computed(() => {
       title-left
       :data-title="versionText"
     >
-      ⓘ
-      Language:
+      ⓘ Language:
     </span>
     <select v-model="lang">
       <option
         class="selector-option-text"
-        v-for="val, key in languageDisplayNames"
+        v-for="(val, key) in languageDisplayNames"
         :value="key"
       >
-        {{val}}
+        {{ val }}
       </option>
     </select>
-    <IconDown/>
+    <IconDown />
   </div>
 </template>
 

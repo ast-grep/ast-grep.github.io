@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {computed, shallowRef, PropType} from 'vue'
-import Error from './utils/Error.vue'
+import { computed, PropType, shallowRef } from 'vue'
 import { yamlImport } from './astGrep'
+import Error from './utils/Error.vue'
 import { showToast } from './utils/Toast.vue'
 
 const props = defineProps({
@@ -19,7 +19,7 @@ let currentEnv = computed(() => {
   return Object.fromEntries(
     keys
       .filter(k => /^[A-Z_1-9]+$/.test(k)) // remove internal labels
-      .map(k => [k, map.get(k)])
+      .map(k => [k, map.get(k)]),
   )
 })
 
@@ -39,52 +39,61 @@ async function copyJson() {
 </script>
 
 <template>
-<div class="var-debugger">
-  <template v-if="currentEnv">
-    <div class="metavar-table-container">
-      <table class="metavar-table">
-        <thead>
-          <tr>
-            <td>MetaVar Name</td>
-            <td>Matched Node(s)</td>
-          </tr>
-        </thead>
-        <tbody v-if="currentEnv">
-          <tr v-for="(val, key) in currentEnv">
-            <td>{{key}}</td>
-            <td>
-              <code>{{val.text}}</code>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="metavar-action">
-      <div class="choose-match-division" />
-      <button @click="decrement">❮</button>
-      <span class="match-count">{{ currentIndex + 1 }}/{{props.envs.length}} match(es)</span>
-      <button @click="increment">❯</button>
-      <button @click="copyJson" class="copy-json" data-title="Copy Rule as JSON" title-up>JSON</button>
-    </div>
-  </template>
-  <Error v-else-if="error" :error="error"/>
-  <div v-else class="vp-doc">
-    <div class="custom-block warning no-match-tip">
-      <p class="custom-block-title">No match found? Some tips:</p>
-      <ul>
-        <li>Simplify the rule and code. Start from a minimal example.</li>
-        <li>
-          <code>pattern</code> may <a href="/advanced/pattern-parse.html#extract-effective-ast-for-pattern">not match a whole statement</a> but the expression inside.
-        </li>
-        <li>
-          <a href="/advanced/faq.html#why-is-rule-matching-order-sensitive">Rule order</a> can be important. Try using <code>all</code>.
-        </li>
-        <li>Deep dive into <a href="/advanced/pattern-parse.html" target="_blank">Pattern Syntax</a></li>
-        <li>See ast-grep's <a href="/advanced/faq.html" target="_blank">FAQs</a> for more info.</li>
-      </ul>
+  <div class="var-debugger">
+    <template v-if="currentEnv">
+      <div class="metavar-table-container">
+        <table class="metavar-table">
+          <thead>
+            <tr>
+              <td>MetaVar Name</td>
+              <td>Matched Node(s)</td>
+            </tr>
+          </thead>
+          <tbody v-if="currentEnv">
+            <tr v-for="(val, key) in currentEnv">
+              <td>{{ key }}</td>
+              <td>
+                <code>{{ val.text }}</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="metavar-action">
+        <div class="choose-match-division" />
+        <button @click="decrement">❮</button>
+        <span class="match-count">{{ currentIndex + 1 }}/{{ props.envs.length }} match(es)</span>
+        <button @click="increment">❯</button>
+        <button @click="copyJson" class="copy-json" data-title="Copy Rule as JSON" title-up>
+          JSON
+        </button>
+      </div>
+    </template>
+    <Error v-else-if="error" :error="error" />
+    <div v-else class="vp-doc">
+      <div class="custom-block warning no-match-tip">
+        <p class="custom-block-title">No match found? Some tips:</p>
+        <ul>
+          <li>Simplify the rule and code. Start from a minimal example.</li>
+          <li>
+            <code>pattern</code> may <a
+              href="/advanced/pattern-parse.html#extract-effective-ast-for-pattern"
+            >not match a whole statement</a> but the expression inside.
+          </li>
+          <li>
+            <a href="/advanced/faq.html#why-is-rule-matching-order-sensitive">Rule order</a> can be
+            important. Try using <code>all</code>.
+          </li>
+          <li>
+            Deep dive into <a href="/advanced/pattern-parse.html" target="_blank">Pattern Syntax</a>
+          </li>
+          <li>
+            See ast-grep's <a href="/advanced/faq.html" target="_blank">FAQs</a> for more info.
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <style scoped>
@@ -125,7 +134,7 @@ async function copyJson() {
   margin: 0 0.5em;
   opacity: 0.8;
 }
-.choose-match-division{
+.choose-match-division {
   margin-top: 1em;
 }
 

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { DumpNode, Pos, deepReactiveNode } from './dumpTree'
+import { computed } from 'vue'
 import { showToast } from '../utils/Toast.vue'
+import { deepReactiveNode, DumpNode, Pos } from './dumpTree'
 import GeneralNode from './GeneralNode.vue'
-import { computed } from 'vue';
 
 const props = defineProps({
   matchedIds: {
@@ -12,7 +12,7 @@ const props = defineProps({
   },
   node: {
     type: Object as PropType<DumpNode>,
-    required: true
+    required: true,
   },
   cursorPosition: Object as PropType<Pos>,
   showUnnamed: {
@@ -50,7 +50,8 @@ function copyField(name: string) {
 </script>
 
 <template>
-  <GeneralNode v-if="showUnnamed || isNamed || field"
+  <GeneralNode
+    v-if="showUnnamed || isNamed || field"
     :node="node"
     :cursorPosition="cursorPosition"
     :showToggle="children.some(n => n.isNamed || n.field)"
@@ -59,10 +60,11 @@ function copyField(name: string) {
       <span v-if="isNamed" class="node-kind" @click.stop="copyKind(kind)">{{ kind }}</span>
       <span v-else class="node-text">{{ kind }}</span>
       <span class="node-field" @click.stop="copyField(field || '')">{{ field }}</span>
-      <span class="node-range">({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})</span>
+      <span class="node-range"
+      >({{ start.row }}, {{ start.column }})-({{ end.row }},{{ end.column }})</span>
       <span class="matched" v-if="matchedIds.has(id)">Matched</span>
     </template>
-    <template #children="{cursorPosition}">
+    <template #children="{ cursorPosition }">
       <TreeNode
         :matchedIds="matchedIds"
         :showUnnamed="showUnnamed"

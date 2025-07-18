@@ -22,12 +22,15 @@ function selectAll(e: FocusEvent) {
         <option value="relaxed">Relaxed</option>
         <option value="signature">Signature</option>
       </select>
-      <IconDown/>
+      <IconDown />
     </label>
     <label title="Selector is used to extract effective matcher from pattern.">
-      <a target="_blank" href="https://ast-grep.github.io/advanced/faq.html#my-pattern-does-not-work-why">ⓘ</a>
+      <a
+        target="_blank"
+        href="https://ast-grep.github.io/advanced/faq.html#my-pattern-does-not-work-why"
+      >ⓘ</a>
       Selector:
-      <input @focus="selectAll" class="selector-input" type="text" v-model="selector"/>
+      <input @focus="selectAll" class="selector-input" type="text" v-model="selector" />
     </label>
   </div>
 </template>

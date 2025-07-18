@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, PropType } from 'vue'
-import { PatternTree, Pos, deepReactiveNode } from './dumpTree'
-import GeneralNode from './GeneralNode.vue';
+import { deepReactiveNode, PatternTree, Pos } from './dumpTree'
+import GeneralNode from './GeneralNode.vue'
 
 const props = defineProps({
   node: {
@@ -46,7 +46,8 @@ let metaVarClass = computed(() => {
   let metaVarText = text.value || ''
   if (metaVarText.startsWith('$$$')) {
     return metaVarText.startsWith('$$$_') || metaVarText === '$$$'
-      ? 'multi meta-var non-capture' : 'multi meta-var'
+      ? 'multi meta-var non-capture' :
+      'multi meta-var'
   }
   return metaVarText.startsWith('$_') ? 'meta-var non-capture' : 'meta-var'
 })
@@ -61,11 +62,11 @@ const shouldShow = computed(() => {
     return isNamed.value
   }
 })
-
 </script>
 
 <template>
-  <GeneralNode v-if="shouldShow"
+  <GeneralNode
+    v-if="shouldShow"
     :showToggle="children.some(n => n.isNamed)"
     :node="node"
     :cursorPosition="cursorPosition"
@@ -73,14 +74,16 @@ const shouldShow = computed(() => {
     <template #info>
       <span :class="!pattern && 'inactive'">
         <span :class="metaVarClass" v-if="metaVarClass">{{ text }}</span>
-        <span v-else-if="isNamed" class="node-kind"  @click.stop="clickKind?.(kind)">{{ kind }}</span>
+        <span v-else-if="isNamed" class="node-kind" @click.stop="clickKind?.(kind)">{{
+          kind
+        }}</span>
         <span v-if="showText" class="node-text">{{ showText }}</span>
         <span class="node-range">
-          ({{ start.row }}, {{start.column}})-({{ end.row }},{{ end.column }})
+          ({{ start.row }}, {{ start.column }})-({{ end.row }},{{ end.column }})
         </span>
       </span>
     </template>
-    <template #children={cursorPosition}>
+    <template #children="{ cursorPosition }">
       <PatternNode
         :strictness="strictness"
         :node="child"
