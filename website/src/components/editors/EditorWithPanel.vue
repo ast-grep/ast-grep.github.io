@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-let isCollapsed = shallowRef(true)
+let isCollapsed = shallowRef(false)
 defineProps({
   panelTitle: String,
 })
@@ -17,7 +17,7 @@ const emits = defineEmits<{
     </div>
     <div
       class="panel-area"
-      :class="!isCollapsed && 'collapsed'"
+      :class="isCollapsed && 'collapsed'"
       @mouseenter="emits('enterPanel')"
       @mouseleave="emits('leavePanel')"
     >
