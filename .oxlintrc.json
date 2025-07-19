@@ -1,0 +1,10 @@
+{
+  "plugins": ["vue", "typescript", "unicorn"],
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "pkg",
+    "target",
+    "website/public/parsers/*.wasm"
+  ]
+}
