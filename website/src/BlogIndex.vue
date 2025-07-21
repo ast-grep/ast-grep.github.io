@@ -11,11 +11,13 @@ function getDateTime(time: number) {
   <ul class="blog-list">
     <li class="blog-entry" v-for="post of posts">
       <article>
-        <time :datetime="getDateTime(post.date.time)">{{ post.date.string }}</time>
+        <time :datetime="getDateTime(post.date.time)">{{
+          post.date.string
+        }}</time>
         <h2 class="title">
           <a :href="post.url">{{ post.title }}</a>
         </h2>
-        <i class="description">{{ post.description }}</i>
+        <i class="description">{{post.description}}</i>
       </article>
     </li>
   </ul>

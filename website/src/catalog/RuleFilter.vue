@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import { features, type Filter, languages, ruleFilters, ruleTypes } from './data'
+import { watchEffect, ref } from 'vue'
 import Option from './Option.vue'
+import {
+  languages,
+  ruleFilters,
+  features,
+  ruleTypes,
+  type Filter,
+} from './data'
 
 const model = defineModel<Filter>()
 
@@ -19,15 +25,16 @@ watchEffect(() => {
 watchEffect(() => {
   filter.value = model.value!
 })
+
 </script>
 <template>
   <form class="filters">
     <details open>
       <summary>📚 Example Language</summary>
       <div class="checkbox-group">
-        <label v-for="(displayName, lang) in languages" :key="lang">
+        <label v-for="displayName, lang in languages" :key="lang">
           <input type="checkbox" v-model="filter.selectedLanguages" :value="lang">
-          <Option :text="displayName" class="filter-option" />
+          <Option :text="displayName" class="filter-option"/>
         </label>
       </div>
     </details>
@@ -35,12 +42,12 @@ watchEffect(() => {
     <details open>
       <summary>📏 Used Rule</summary>
       <div class="filter-group rule-filter-group">
-        <div v-for="(rules, type) in ruleFilters">
-          <em style="text-transform: capitalize">{{ type }}</em>
+        <div v-for="rules, type in ruleFilters">
+          <em style="text-transform: capitalize;">{{ type }}</em>
           <div class="checkbox-group">
             <label v-for="rule in rules" :key="rule">
               <input type="checkbox" v-model="filter.selectedRules" :value="rule">
-              <Option :text="rule" class="filter-option" />
+              <Option :text="rule" class="filter-option"/>
             </label>
           </div>
         </div>
@@ -49,7 +56,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="type in ruleTypes" :key="type">
               <input type="checkbox" v-model="filter.selectedTypes" :value="type">
-              <Option :text="type" class="filter-option" />
+              <Option :text="type" class="filter-option"/>
             </label>
           </div>
         </div>
@@ -64,7 +71,7 @@ watchEffect(() => {
           <div class="checkbox-group">
             <label v-for="feature in features" :key="feature">
               <input type="checkbox" v-model="filter.selectedFeatures" :value="feature">
-              <Option :text="feature" class="filter-option" />
+              <Option :text="feature" class="filter-option"/>
             </label>
           </div>
         </div>
@@ -143,7 +150,7 @@ input[type="checkbox"]:checked + code.option:hover {
 
 @keyframes details-show {
   from {
-    opacity: 0;
+    opacity:0;
     transform: translateY(-0.5em);
   }
 }

@@ -2,12 +2,12 @@
 const props = defineProps({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   variant: {
     type: String,
-    default: 'danger',
-  },
+    default: 'danger'
+  }
 })
 </script>
 <template>
@@ -15,13 +15,14 @@ const props = defineProps({
     <tbody>
       <tr class="title custom-block" :class="props.variant">
         <td colspan="3">
-          {{ props.title }}
+          {{props.title}}
         </td>
       </tr>
-      <slot />
+      <slot/>
     </tbody>
   </table>
 </template>
+
 
 <style scoped>
 table.custom-block {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineComponent, h, PropType } from 'vue'
+import { defineComponent, PropType, h } from 'vue'
 
 defineProps({
   modeText: Object as PropType<Record<string, string>>,
@@ -14,23 +14,24 @@ function switchTab(m: string) {
 const Wrapper = defineComponent({
   render() {
     return h('div', this.$attrs, this.$slots.default?.())
-  },
+  }
 })
+
 </script>
 
 <template>
   <div class="tabs">
     <a
       class="tab"
-      :class="{ active: modelValue === mode }"
-      v-for="(tabText, mode) in modeText"
+      :class="{active: modelValue === mode}"
+      v-for="tabText, mode in modeText"
       @click="switchTab(mode)"
       :key="mode"
     >
       {{ tabText }}
     </a>
     <div class="addon">
-      <slot name="addon" />
+      <slot name="addon"/>
     </div>
   </div>
   <div class="tab-content">
@@ -47,6 +48,7 @@ const Wrapper = defineComponent({
 </template>
 
 <style scoped>
+
 .tabs {
   flex: 0 0 auto;
   display: flex;

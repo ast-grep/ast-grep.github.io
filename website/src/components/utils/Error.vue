@@ -15,7 +15,7 @@ let prettyError = computed(() => {
 </script>
 <template>
   <div v-if="error" class="error-msg">
-    ⚠ {{ prettyError }}
+    ⚠ {{prettyError}}
   </div>
 </template>
 

@@ -5,15 +5,16 @@ defineProps({
   panelTitle: String,
 })
 const emits = defineEmits<{
-  (e: 'enterPanel'): void
-  (e: 'leavePanel'): void
+  (e: 'enterPanel'): void,
+  (e: 'leavePanel'): void,
 }>()
+
 </script>
 
 <template>
   <div class="editor-panel-container">
     <div class="editor-area">
-      <slot name="editor" />
+      <slot name="editor"/>
     </div>
     <div
       class="panel-area"
@@ -22,14 +23,14 @@ const emits = defineEmits<{
       @mouseleave="emits('leavePanel')"
     >
       <p v-if="panelTitle" @click.self="isCollapsed = !isCollapsed">
-        <slot name="panelAccessory" />
+        <slot name="panelAccessory"/>
         <span class="chevron">›</span>
-        {{ panelTitle }}
+        {{panelTitle}}
       </p>
-      <slot v-else name="panelAccessory" />
+      <slot v-else name="panelAccessory"/>
 
       <div class="scrollable">
-        <slot name="panel" />
+        <slot name="panel"/>
       </div>
     </div>
   </div>

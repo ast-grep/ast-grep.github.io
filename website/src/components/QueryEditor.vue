@@ -1,18 +1,18 @@
 <script setup lang="ts">
+import { Monaco, EditorWithPanel } from './editors'
+import { shallowRef, watchEffect, provide, PropType, inject, computed } from 'vue'
+import TreeNode from './dump/TreeNode.vue'
+import { highlightKey, DumpNode, Pos } from './dump/dumpTree'
 import { dumpASTNodes } from 'ast-grep-wasm'
-import { computed, inject, PropType, provide, shallowRef, watchEffect } from 'vue'
 import { langLoadedKey } from './astGrep'
 import type { Match, SupportedLang } from './astGrep'
-import { DumpNode, highlightKey, Pos } from './dump/dumpTree'
-import TreeNode from './dump/TreeNode.vue'
-import { EditorWithPanel, Monaco } from './editors'
 
 const modelValue = defineModel<string>()
 
 const props = defineProps({
   language: {
     type: String as PropType<SupportedLang>,
-    default: 'javascript',
+    default: 'javascript'
   },
   matches: Array as PropType<Match[]>,
 })
@@ -43,7 +43,7 @@ provide(highlightKey, e => {
 })
 
 function changeFocusNode(e: any) {
-  const { position } = e
+  const {position} = e
   cursorPosition.value = {
     row: position.lineNumber - 1,
     column: position.column - 1,
@@ -54,10 +54,8 @@ let showFullTree = shallowRef(false)
 </script>
 
 <template>
-  <EditorWithPanel
-    panelTitle="TreeSitter Output"
-    @enterPanel="cursorPosition = undefined"
-    @leavePanel="highlights = []"
+  <EditorWithPanel panelTitle="TreeSitter Output"
+    @enterPanel="cursorPosition = undefined" @leavePanel="highlights = []"
   >
     <template #editor>
       <div class="dual-editor">
@@ -66,9 +64,8 @@ let showFullTree = shallowRef(false)
           @changeCursor="changeFocusNode"
           :language="language"
           :matches="matches"
-          :highlights="highlights"
-        />
-        <slot />
+          :highlights="highlights"/>
+        <slot/>
       </div>
     </template>
     <template #panelAccessory>
@@ -85,8 +82,7 @@ let showFullTree = shallowRef(false)
         class="pre"
         :node="root"
         :matchedIds="matchedIds"
-        :cursorPosition="cursorPosition"
-      />
+        :cursorPosition="cursorPosition"/>
     </template>
   </EditorWithPanel>
 </template>
@@ -125,7 +121,7 @@ let showFullTree = shallowRef(false)
 .tree-toggle::before {
   position: absolute;
   font-size: 0.7em;
-  content: '✓';
+  content: "✓";
   top: 0;
   left: 0;
   transform: scale(0);

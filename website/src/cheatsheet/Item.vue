@@ -7,13 +7,14 @@ const [code, ...other] = slots.default?.() || []
 <template>
   <tr class="item">
     <td class="code-cell">
-      <component :is="code" />
+      <component :is="code"/>
     </td>
     <td class="description-cell">
-      <component v-for="(item, index) in other" :key="index" :is="item" />
+      <component v-for="(item, index) in other" :key="index" :is="item"/>
     </td>
   </tr>
 </template>
+
 
 <style scoped>
 /* override */

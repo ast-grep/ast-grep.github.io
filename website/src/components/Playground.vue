@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { initializeParser, Mode as ModeImport, useAstGrep } from './astGrep'
-import { Diff, EditorWithPanel, Monaco } from './editors'
-import EnvDisplay from './EnvDisplay.vue'
-import PatternEditor from './PatternEditor.vue'
+import { Monaco, Diff, EditorWithPanel } from './editors'
 import QueryEditor from './QueryEditor.vue'
 import ResetConfig from './ResetConfig.vue'
+import PatternEditor from './PatternEditor.vue'
 import SelectLang from './SelectLang.vue'
-import Toolbars from './Toolbars.vue'
 import Tabs from './utils/Tabs.vue'
+import Toolbars from './Toolbars.vue'
+import EnvDisplay from './EnvDisplay.vue'
+import { initializeParser, useAstGrep, Mode as ModeImport } from './astGrep'
 
 // important initialization
 await initializeParser()
@@ -61,14 +61,14 @@ let codeMode = shallowRef('code')
     <div class="half" :class="activeEditor !== 'code' && 'inactive'">
       <Tabs v-model="codeMode" :modeText="codeText">
         <template #code>
-          <QueryEditor v-model="source" :language="lang" :matches="matchedHighlights" />
+          <QueryEditor v-model="source" :language="lang" :matches="matchedHighlights"/>
         </template>
         <template #diff>
-          <Diff :source="source" :rewrite="rewrittenCode" :language="lang" />
+          <Diff :source="source" :rewrite="rewrittenCode" :language="lang"/>
         </template>
         <template #addon>
           <p class="match-result">
-            <span v-if="matchedHighlights.length > 0">
+            <span  v-if="matchedHighlights.length > 0">
               Found {{ matchedHighlights.length }} match(es).
             </span>
             <span v-else>No match found.</span>
@@ -82,22 +82,21 @@ let codeMode = shallowRef('code')
         <template #[Mode.Patch]>
           <PatternEditor
             :ruleErrors="ruleErrors"
-            :language="lang"
-          />
+            :language="lang"/>
         </template>
         <template #[Mode.Config]>
           <EditorWithPanel panelTitle="Matched Variables">
             <template #editor>
-              <Monaco language="yaml" v-model="config" />
+              <Monaco language="yaml" v-model="config"/>
             </template>
             <template #panel>
-              <EnvDisplay :envs="matchedEnvs" :error="ruleErrors" :rule="config" />
+              <EnvDisplay :envs="matchedEnvs" :error="ruleErrors" :rule="config"/>
             </template>
           </EditorWithPanel>
         </template>
         <template #addon>
           <div class="action-bar">
-            <SelectLang v-model="lang" />
+            <SelectLang v-model="lang"/>
           </div>
         </template>
       </Tabs>

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { dumpPattern } from 'ast-grep-wasm'
-import { inject, provide, shallowRef, watch, watchEffect } from 'vue'
-import { langLoadedKey, usePattern } from './astGrep'
-import { highlightKey, PatternTree, Pos } from './dump/dumpTree'
+import { Monaco, EditorWithPanel } from './editors'
+import { shallowRef, watchEffect, provide, inject, watch } from 'vue'
 import PatternNode from './dump/PatternNode.vue'
-import { EditorWithPanel, Monaco } from './editors'
+import { highlightKey, PatternTree, Pos } from './dump/dumpTree'
+import { langLoadedKey, usePattern } from './astGrep'
+import { dumpPattern } from 'ast-grep-wasm'
 import PatternConfig from './PatternConfig.vue'
 import Error from './utils/Error.vue'
 
 const props = defineProps({
   language: {
     type: String,
-    default: 'javascript',
+    default: 'javascript'
   },
   ruleErrors: {
     type: String,
@@ -50,18 +50,18 @@ provide(highlightKey, e => {
 })
 
 function changeFocusNode(e: any) {
-  const { position } = e
+  const {position} = e
   cursorPosition.value = {
     row: position.lineNumber - 1,
     column: position.column - 1,
   }
 }
+
 </script>
 
 <template>
   <EditorWithPanel
-    @enterPanel="cursorPosition = undefined"
-    @leavePanel="highlights = []"
+    @enterPanel="cursorPosition = undefined" @leavePanel="highlights = []"
   >
     <template #editor>
       <div class="dual-editor">
@@ -69,14 +69,13 @@ function changeFocusNode(e: any) {
           v-model="query"
           @changeCursor="changeFocusNode"
           :language="language"
-          :highlights="highlights"
-        />
+          :highlights="highlights"/>
         <p class="pattern-separator">
           <a target="_blank" href="https://ast-grep.github.io/guide/rewrite-code.html">ⓘ</a>
           Rewrite
         </p>
         <Monaco
-          v-model="rewrite"
+           v-model="rewrite"
           :language="language"
         />
       </div>
@@ -88,15 +87,14 @@ function changeFocusNode(e: any) {
       />
     </template>
     <template #panel>
-      <Error class="error" :error="ruleErrors" />
+      <Error class="error" :error="ruleErrors"/>
       <PatternNode
         v-if="root"
         :clickKind="k => selector = k"
         :strictness="strictness"
         class="pre"
         :node="root"
-        :cursorPosition="cursorPosition"
-      />
+        :cursorPosition="cursorPosition"/>
     </template>
   </EditorWithPanel>
 </template>

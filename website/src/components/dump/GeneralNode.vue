@@ -6,7 +6,7 @@ import { useHighlightNode } from './highlightNode'
 const props = defineProps({
   node: {
     type: Object as PropType<GeneralNode>,
-    required: true,
+    required: true
   },
   showToggle: Boolean,
   cursorPosition: Object as PropType<Pos>,
@@ -20,39 +20,39 @@ const {
   expanded,
   nodeRef,
 } = useHighlightNode(props)
+
 </script>
 
 <template>
-  <div class="tree-node" ref="nodeRef" :class="{ target: isTarget }">
+  <div class="tree-node" ref="nodeRef" :class="{target: isTarget}">
     <p class="click-area" @click.stop="expanded = !expanded" @mouseover="highlightNode">
       <span
         v-if="showToggle"
         class="toggle-sign"
-        :class="{ expanded }"
-      />
-      <slot name="info" />
+        :class="{expanded}"/>
+      <slot name="info"/>
     </p>
-    <slot v-if="expanded" name="children" :cursorPosition="isWithin ? cursorPosition : undefined" />
+    <slot v-if="expanded" name="children" :cursorPosition="isWithin ? cursorPosition : undefined"/>
   </div>
 </template>
 
 <style>
 .tree-node {
-  --yellow: #bf8803;
-  --red: #a31515;
-  --blue: #006ab1;
-  --green: #008000;
-  --black: #002b36;
-  --gray: #5a6169;
-  --cyan: #2aa198;
+  --yellow:    #bf8803;
+  --red:       #a31515;
+  --blue:      #006ab1;
+  --green:     #008000;
+  --black:     #002b36;
+  --gray:      #5a6169;
+  --cyan:      #2aa198;
 }
 html.dark .tree-node {
-  --yellow: #ce9178;
-  --red: #f48771;
-  --blue: #569cd6;
-  --green: #608b4e;
-  --black: #d4d4d4;
-  --gray: #8e949a;
+  --yellow:    #ce9178;
+  --red:       #f48771;
+  --blue:      #569cd6;
+  --green:     #608b4e;
+  --black:     #d4d4d4;
+  --gray:      #8e949a;
 }
 </style>
 
@@ -62,7 +62,7 @@ html.dark .tree-node {
   padding: 0 0 0 0.5em;
   border-left: 1px dashed var(--vp-c-divider);
   user-select: none;
-  transition: background-color ease-out 0.217s;
+  transition: background-color ease-out .217s;
 }
 .click-area {
   cursor: pointer;
