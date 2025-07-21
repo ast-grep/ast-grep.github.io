@@ -80,6 +80,7 @@ You can have multiple rules in one YAML file by using the YAML document separato
 This allows you to group related rules together!
 :::
 
+
 ## Use Meta Variable in Rewrite
 
 As we saw in the previous example, we can use [meta variables](/guide/pattern-syntax.html#meta-variable-capturing) in both the pattern and the fix parts of a YAML rule. They are like regular expression [capture groups](https://regexone.com/lesson/capturing_groups). Meta variables are identifiers that start with `$`, and they can match any syntactic element in the code, such as expressions, statements, types, etc. When we use a meta variable in the fix part of a rule, it will be replaced by whatever it matched in the pattern part.
@@ -155,6 +156,7 @@ def b():
 
 Note that the indentation level of `return $R` is preserved as two spaces in the rewritten code, even if the replacement `123` in the original code does not have indentation at all.
 
+
 `fix` string's indentation is preserved relative to their position in the source code. For example, if the `lambda` appears within `if` statement, the diff will be like:
 
 ```python
@@ -187,14 +189,13 @@ Suppose we have a JavaScript object like this:
 
 ```JavaScript
 const obj = {
-  Remove: 'value1',
+  Remove: 'value1'
 }
 const obj2 = {
   Remove: 'value1',
   Kept: 'value2',
 }
 ```
-
 We want to remove the key-value pair with the key `Remove` completely. Just removing the `pair` AST node is [not enough](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIHJlZ2V4OiBSZW1vdmVcbmZpeDogJyciLCJzb3VyY2UiOiJjb25zdCBvYmogPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMSdcbn1cbmNvbnN0IG9iajIgPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMScsXG4gIEtlcHQ6ICd2YWx1ZTInLFxufVxuIn0=) in `obj2` because we also need to remove the trailing comma.
 
 We can write [a rule in playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoibGFuZ3VhZ2U6IGphdmFzY3JpcHRcbnJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICByZWdleDogUmVtb3ZlXG4jIHJlbW92ZSB0aGUga2V5LXZhbHVlIHBhaXIgYW5kIGl0cyBjb21tYVxuZml4OlxuICB0ZW1wbGF0ZTogJydcbiAgZXhwYW5kRW5kOiB7IHJlZ2V4OiAnLCcgfSAjIGV4cGFuZCB0aGUgcmFuZ2UgdG8gdGhlIGNvbW1hXG4iLCJzb3VyY2UiOiJjb25zdCBvYmogPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMSdcbn1cbmNvbnN0IG9iajIgPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMScsXG4gIEtlcHQ6ICd2YWx1ZTInLFxufVxuIn0=) like this:

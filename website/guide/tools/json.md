@@ -72,10 +72,10 @@ interface Range {
 // UTF-8 encoded byte offset
 interface ByteOffset {
   start: number // start is inclusive
-  end: number // end is exclusive
+  end: number   // end is exclusive
 }
 interface Position {
-  line: number // zero-based line number
+  line: number   // zero-based line number
   column: number // zero-based column number
 }
 
@@ -104,10 +104,10 @@ interface RuleMatch extends Match {
 }
 
 enum Severity {
-  Error = 'error',
-  Warning = 'warning',
-  Info = 'info',
-  Hint = 'hint',
+  Error = "error",
+  Warning = "warning",
+  Info = "info",
+  Hint = "hint",
 }
 ```
 
@@ -123,7 +123,6 @@ If you need 1-based numbers, you can use `jq` to transform the output.
 ast-grep embraces the Unix philosophy of composability. The `--json` flag is designed to make it easy to pipe the results to other tools.
 
 For example, you can use [jq](https://stedolan.github.io/jq/) to extract information from the results and render it in [jless](https://jless.io/).
-
 ```bash
 ast-grep run -p 'Some($A)' -r 'None' --json | jq '.[].replacement' | jless
 ```

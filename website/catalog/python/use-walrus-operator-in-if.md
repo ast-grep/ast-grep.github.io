@@ -1,6 +1,6 @@
 ## Use Walrus Operator in `if` statement<Badge type="tip" text="Has Fix" />
 
-- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZm4gbWFpbigpIHsgXG4gICAgJCQkO1xuICAgIGlmKCRBKXskJCRCfSBcbiAgICBpZigkQSl7JCQkQ30gXG4gICAgJCQkRlxufSIsInJld3JpdGUiOiJmbiBtYWluKCkgeyAkJCRFOyBpZigkQSl7JCQkQiAkJCRDfSAkJCRGfSIsImNvbmZpZyI6ImlkOiB1c2Utd2FscnVzLW9wZXJhdG9yXG5ydWxlOlxuICBmb2xsb3dzOlxuICAgIHBhdHRlcm46XG4gICAgICBjb250ZXh0OiAkVkFSID0gJCQkRVhQUlxuICAgICAgc2VsZWN0b3I6IGV4cHJlc3Npb25fc3RhdGVtZW50XG4gIHBhdHRlcm46IFwiaWYgJFZBUjogJCQkQlwiXG5maXg6IHwtXG4gIGlmICRWQVIgOj0gJCQkRVhQUjpcbiAgICAkJCRCXG4tLS1cbmlkOiByZW1vdmUtZGVjbGFyYXRpb25cbnJ1bGU6XG4gIHBhdHRlcm46XG4gICAgY29udGV4dDogJFZBUiA9ICQkJEVYUFJcbiAgICBzZWxlY3RvcjogZXhwcmVzc2lvbl9zdGF0ZW1lbnRcbiAgcHJlY2VkZXM6XG4gICAgcGF0dGVybjogXCJpZiAkVkFSOiAkJCRCXCJcbmZpeDogJyciLCJzb3VyY2UiOiJhID0gZm9vKClcblxuaWYgYTpcbiAgICBkb19iYXIoKSJ9)
+* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZm4gbWFpbigpIHsgXG4gICAgJCQkO1xuICAgIGlmKCRBKXskJCRCfSBcbiAgICBpZigkQSl7JCQkQ30gXG4gICAgJCQkRlxufSIsInJld3JpdGUiOiJmbiBtYWluKCkgeyAkJCRFOyBpZigkQSl7JCQkQiAkJCRDfSAkJCRGfSIsImNvbmZpZyI6ImlkOiB1c2Utd2FscnVzLW9wZXJhdG9yXG5ydWxlOlxuICBmb2xsb3dzOlxuICAgIHBhdHRlcm46XG4gICAgICBjb250ZXh0OiAkVkFSID0gJCQkRVhQUlxuICAgICAgc2VsZWN0b3I6IGV4cHJlc3Npb25fc3RhdGVtZW50XG4gIHBhdHRlcm46IFwiaWYgJFZBUjogJCQkQlwiXG5maXg6IHwtXG4gIGlmICRWQVIgOj0gJCQkRVhQUjpcbiAgICAkJCRCXG4tLS1cbmlkOiByZW1vdmUtZGVjbGFyYXRpb25cbnJ1bGU6XG4gIHBhdHRlcm46XG4gICAgY29udGV4dDogJFZBUiA9ICQkJEVYUFJcbiAgICBzZWxlY3RvcjogZXhwcmVzc2lvbl9zdGF0ZW1lbnRcbiAgcHJlY2VkZXM6XG4gICAgcGF0dGVybjogXCJpZiAkVkFSOiAkJCRCXCJcbmZpeDogJyciLCJzb3VyY2UiOiJhID0gZm9vKClcblxuaWYgYTpcbiAgICBkb19iYXIoKSJ9)
 
 ### Description
 
@@ -71,7 +71,6 @@ fix: ''
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-
 ```python
 a = foo()
 
@@ -80,9 +79,7 @@ if a:
 ```
 
 ### Diff
-
 <!-- use # [!code --] and # [!code ++] to annotate diff -->
-
 ```python
 a = foo() # [!code --]
 
@@ -92,5 +89,4 @@ if a := foo(): # [!code ++]
 ```
 
 ### Contributed by
-
 Inspired by reddit user [/u/jackerhack](https://www.reddit.com/r/rust/comments/13eg738/comment/kagdklw/?)

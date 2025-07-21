@@ -4,7 +4,7 @@ In this guide, we will show you how to use a custom language that is not built i
 
 We will use [Mojo 🔥](https://www.modular.com/mojo) as an example!
 
----
+-----
 
 [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) is a popular parser generator library that ast-grep uses to support many languages.
 However, not all Tree-sitter compatible languages are shipped with ast-grep command line tool.
@@ -30,8 +30,8 @@ The recommended way to install the Tree-sitter CLI tool is via [npm](https://www
 ```bash
 npm install -g tree-sitter-cli
 ```
-
 Alternative installation methods are also available in the [official doc](https://tree-sitter.github.io/tree-sitter/creating-parsers#installation).
+
 
 For the Tree-sitter grammar, you can either [write your own](https://tree-sitter.github.io/tree-sitter/creating-parsers#writing-the-grammar) or find one from the Tree-sitter grammars [repository](https://github.com/tree-sitter).
 
@@ -55,6 +55,7 @@ tree-sitter build --output mojo.so
 ```
 
 The build command compiles your parser into a dynamically-loadable library as a shared object (.so, .dylib, or .dll).
+
 
 Another way is to use the following [commands](https://github.com/tree-sitter/tree-sitter/blob/a62bac5370dc5c76c75935834ef083457a6dd0e1/cli/loader/src/lib.rs#L380-L410) to compile the parser manually:
 
@@ -85,7 +86,6 @@ cd path/to/mojo/parser
 export TREE_SITTER_LIBDIR=path/to/your/dir
 tree-sitter test
 ```
-
 :::
 
 ## Register Language in `sgconfig.yml`
@@ -107,6 +107,8 @@ customLanguages:
 
 The `libraryPath` property specifies the path to the dynamic library relative to the `sgconfig.yml` file or an absolute path. The `extensions` property specifies a list of file extensions for this language.
 The `expandoChar` property is optional and specifies a character that can be used instead of `$` for meta-variables in your pattern.
+
+
 
 :::tip What's expandoChar?
 ast-grep requires pattern to be a valid syntactical construct, but `$VAR` might not be a valid expression in some language.

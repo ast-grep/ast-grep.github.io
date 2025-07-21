@@ -15,7 +15,6 @@ ast-grep test [OPTIONS]
 ## Options
 
 ### `-c, --config <CONFIG>`
-
 Path to ast-grep root config, default is sgconfig.yml
 
 ### `-t, --test-dir <TEST_DIR>`
@@ -24,7 +23,7 @@ the directories to search test YAML files
 
 ### `--snapshot-dir <SNAPSHOT_DIR>`
 
-Specify the directory name storing snapshots. Default to **snapshots**
+Specify the directory name storing snapshots. Default to __snapshots__
 
 ### `--skip-snapshot-tests`
 
@@ -43,7 +42,6 @@ Start an interactive review to update snapshots selectively
 Filter rule test cases to execute using a glob pattern
 
 ### `--include-off`
-
 Include `severity:off` rules in test
 
 ast-grep will not run rules with `severity: off` by default. This option will include those rules in the test.

@@ -1,11 +1,12 @@
 # Config Cheat Sheet
 
-This cheat sheet provides a concise overview of ast-grep's linter rule YAML configuration. It's designed as a handy reference for common usage.
+This cheat sheet provides a concise overview of ast-grep's linter rule YAML configuration.  It's designed as a handy reference for common usage.
 
 <script setup>
 import CheatSheet from '../src/cheatsheet/SheetTable.vue'
 import Item from '../src/cheatsheet/Item.vue'
 </script>
+
 
 ## Basic Information
 
@@ -32,15 +33,16 @@ language: JavaScript
 
 </Item>
 
+
 <Item>
 
 ```yaml
 url: 'https://doc.link/'
 ```
-
 🔗 A URL to the rule's documentation.
 
 </Item>
+
 
 <Item>
 
@@ -97,9 +99,11 @@ utils:
 
 </CheatSheet>
 
+
 ## Patching
 
 Keys for defining how to automatically fix the found code.
+
 
 <CheatSheet title="🛠️ Patching Code" variant="tip">
 

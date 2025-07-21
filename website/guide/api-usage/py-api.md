@@ -16,16 +16,14 @@ pip install ast-grep-py
 ## Core Concepts
 
 The core concepts in ast-grep's Python API are:
-
-- `SgRoot`: a class to parse a string into a syntax tree
-- `SgNode`: a node in the syntax tree
+* `SgRoot`: a class to parse a string into a syntax tree
+* `SgNode`: a node in the syntax tree
 
 :::tip Make AST like a XML/HTML doc!
 Using ast-grep's API is like [web scraping](https://opensource.com/article/21/9/web-scraping-python-beautiful-soup) using [beautiful soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) or [pyquery](https://pyquery.readthedocs.io/en/latest/). You can use `SgNode` to traverse the syntax tree and collect information from the nodes.
 :::
 
 A common workflow to use ast-grep's Python API is:
-
 1. Parse a string into a syntax tree by using `SgRoot`
 2. Get the root node of the syntax tree by calling `root.root()`
 3. `find` relevant nodes by using patterns or rules
@@ -67,6 +65,7 @@ The code above parses the string `print('hello world')` into a syntax tree, and 
 
 The root node can be used to find other nodes in the syntax tree.
 
+
 ### `SgNode`
 
 `SgNode` is the most important class in ast-grep's Python API. It provides methods to inspect and traverse the syntax tree.
@@ -85,8 +84,8 @@ print(string.text())
 
 You can use `find` and `find_all` to search for nodes in the syntax tree.
 
-- `find` returns the first node that matches the pattern or rule.
-- `find_all` returns a list of nodes that match the pattern or rule.
+* `find` returns the first node that matches the pattern or rule.
+* `find_all` returns a list of nodes that match the pattern or rule.
 
 ```python
 # Search
@@ -104,7 +103,6 @@ class SgNode:
 `find` has two overloads: one takes keyword arguments of [`Rule`](/reference/api.html#rule), and the other takes a [`Config`](/reference/api.html#config) object.
 
 ### Search with Rule
-
 Using keyword arguments rule is the most straightforward way to search for nodes.
 
 The argument name is the key of a rule, and the argument value is the rule's value.
@@ -200,7 +198,6 @@ node["A"].text() # Ok
 ```
 
 ## Inspection
-
 The following methods are used to inspect the node.
 
 ```python

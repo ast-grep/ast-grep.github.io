@@ -45,10 +45,10 @@ Before diving into our implementation, let's explore what makes TypeScript defin
 
 A well-designed type system should balance four key qualities:
 
-- **Correct**: Types should act as reliable guardrails, rejecting invalid code while allowing all valid use cases.
-- **Concise**: Types should be easy to understand, whether in IDE hovers or code completions. Clear, readable types help developers quickly grasp your API.
-- **Robust**: In case type inference fails, the compiler should either graciously tolerate untyped code, or gracefully provide clear error messages. Cryptic type errors that span multiple screens is daunting and unhelpful.
-- **Performant**: Both type checking and runtime code should be fast. Complex types can significantly slow down compilation while unnecessary API calls just conforming to type safety can hurt runtime performance.
+* **Correct**: Types should act as reliable guardrails, rejecting invalid code while allowing all valid use cases.
+* **Concise**: Types should be easy to understand, whether in IDE hovers or code completions. Clear, readable types help developers quickly grasp your API.
+* **Robust**: In case type inference fails, the compiler should either graciously tolerate untyped code, or gracefully provide clear error messages. Cryptic type errors that span multiple screens is daunting and unhelpful.
+* **Performant**: Both type checking and runtime code should be fast. Complex types can significantly slow down compilation while unnecessary API calls just conforming to type safety can hurt runtime performance.
 
 Balancing these qualities is demanding job because they often compete with each other, just like creating a type system that is both [sound and complete](https://logan.tw/posts/2014/11/12/soundness-and-completeness-of-the-type-system/#:~:text=A%20type%2Dsystem%20is%20sound,any%20false%20positive%20%5B2%5D.). Many TS libraries lean heavily toward strict correctness – for instance, implementing elaborate types to validate routing parameters. While powerful, [type gymnastics](https://www.octomind.dev/blog/navigating-the-typescript-gymnastics-on-developer-dogma-2) can come with significant trade-offs in complexity and compile-time performance. Sometimes, being slightly less strict can lead to a dramatically better developer experience.
 
@@ -64,11 +64,11 @@ At its heart, Tree-sitter provides a language-agnostic API for traversing syntax
 
 ```typescript
 class Node {
-  kind(): string // Get the type of node, e.g., 'function_declaration'
-  field(name: string): Node // Get a specific child by its field name
-  parent(): Node // Navigate to the parent node
-  children(): Node[] // Get all child nodes
-  text(): string // Get the actual source code text
+  kind(): string     // Get the type of node, e.g., 'function_declaration'
+  field(name: string): Node  // Get a specific child by its field name
+  parent(): Node             // Navigate to the parent node
+  children(): Node[]         // Get all child nodes
+  text(): string             // Get the actual source code text
 }
 ```
 
@@ -89,11 +89,11 @@ interface TypeMap {
     named: boolean
     fields?: {
       [field: string]: {
-        types: { type: string; named: boolean }[]
+        types: { type: string, named: boolean }[]
       }
     }
-    children?: { name: string; type: string }[]
-    subtypes?: { type: string; named: boolean }[]
+    children?: { name: string, type: string }[]
+    subtypes?: { type: string, named: boolean }[]
   }
 }
 ```
@@ -174,6 +174,7 @@ It represents a node in a language with type map `M` that has a specific kind `K
 
 `SgNode` provides a **correct** AST interface in a specific language. While at the same time, it is still **robust** enough to not trigger compiler error when no type information is available.
 
+
 ### `ResolveType<M, T>`
 
 While Tree-sitter's type aliases help keep the JSON type definitions compact, they present a challenge: these aliases never appear as actual node kinds in ast-grep rules.
@@ -181,9 +182,10 @@ While Tree-sitter's type aliases help keep the JSON type definitions compact, th
 To handle this, we created `ResolveType` to **correctly** map aliases to their concrete kinds:
 
 ```typescript
-type ResolveType<M, T extends keyof M> = M[T] extends
-  { subtypes: infer S extends { type: string }[] } ? ResolveType<M, S[number]['type']>
-  : T
+type ResolveType<M, T extends keyof M> =
+  M[T] extends {subtypes: infer S extends {type: string}[] }
+    ? ResolveType<M, S[number]['type']>
+    : T
 ```
 
 This type recursively resolves aliases until it reaches actual node types that developers work with.
@@ -201,11 +203,12 @@ type LowPriorityString = string & {}
 
 The above type is a linient string type that is compatible with any string type. But it also uses a [well-known trick](https://stackoverflow.com/a/61048124/2198656) to take advantage of TypeScript's type priority to prefer the `ResolveType` in completion over the `string & {}` type.
 
+
 We alias `string & {}` to `LowPriorityString` to make the code's intent clearer. This approach creates a more intuitive developer experience, though it does run into [some limitations](https://github.com/microsoft/TypeScript/issues/33471) with TypeScript's handling of [open-ended unions](https://github.com/microsoft/TypeScript/issues/26277).
 
 We need other tricks to address these limitations. Introducing `RefineNode` type.
 
-### Bridging general nodes and specific nodes via `RefineNode`
+###  Bridging general nodes and specific nodes via `RefineNode`
 
 A key challenge in our type system was handling two distinct categories of nodes:
 
@@ -242,12 +245,10 @@ To bridge this gap, we introduced the `RefineNode` type:
 
 ```typescript
 type RefineNode<M, K> = string extends K ? SgNode<M, K> : // one SgNode
-  K extends keyof M ? SgNode<M, K>
-  : never // distribute over union
+  K extends keyof M ? SgNode<M, K> : never  // distribute over union
 ```
 
 This utility type provides two key behaviors:
-
 1. When `K` includes a string type, it preserves the general node behavior
 2. Otherwise, it refines the node into a union of specific types, using TypeScripts' [distributive conditional types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types).
 
@@ -275,7 +276,7 @@ class SgNode<M, K> {
 This enables straightforward type narrowing:
 
 ```typescript
-if (sgNode.is('function_declaration')) {
+if (sgNode.is("function_declaration")) {
   sgNode.kind // narrow to 'function_declaration'
 }
 ```
@@ -287,14 +288,15 @@ Another manual approach lets you explicitly specify node types through type para
 This pattern may feel familiar if you've worked with the [DOM API](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#the-queryselector-and-queryselectorall-methods)'s `querySelector<T>`. Just as `querySelector` can be refined from a general `Element` to a specific `HTMLDivElement`, we can refine our nodes:
 
 ```typescript
-sgNode.parent<'program'>() // Returns SgNode<TS, "program">
+sgNode.parent<"program">() // Returns SgNode<TS, "program">
 ```
+
 
 The type parameter approach uses an interesting overloading signature
 
 ```typescript
 interface NodeMethod<M, K> {
-  (): SgNode<M> // Untyped version
+  (): SgNode<M>                     // Untyped version
   <T extends K>(): RefineNode<M, T> // Typed version
 }
 ```
@@ -308,16 +310,15 @@ This dual-signature typing avoids the limitations of a single generic signature,
 When should you use each manual refinement method? Here are some guidelines:
 
 ✓ Use `is()` when:
-
-- You need runtime type check
-- Node types might vary
-- Type safety is crucial
+* You need runtime type check
+* Node types might vary
+* Type safety is crucial
 
 ✓ Use type parameters when:
 
-- You're completely certain of the node type
-- Performance is critical
-- The node type is fixed
+* You're completely certain of the node type
+* Performance is critical
+* The node type is fixed
 
 :::tip Safety Tip
 
@@ -327,7 +328,6 @@ You can audit their usage with the command:
 ```bash
 ast-grep -p '$NODE.$METHOD<$K>($$$)'
 ```
-
 :::
 
 ### Refine Node, Automatically
@@ -339,8 +339,8 @@ When you access a node's field using `field("name")`, the system automatically e
 ```typescript
 let exportStmt: SgNode<'export_statement'>
 exportStmt.field('declaration') // Automatically refines to union:
-// SgNode<'function_declaration'> |
-// SgNode<'variable_declaration'> | ...
+                               // SgNode<'function_declaration'> |
+                               // SgNode<'variable_declaration'> | ...
 ```
 
 The magic here is that you never need to specify the possible types explicitly - the system infers them automatically. This approach is both **concise** in usage and **correct** in type inference.
@@ -350,7 +350,6 @@ The magic here is that you never need to specify the possible types explicitly -
 We've also introduced a new `kindToRefine` property for comprehensive type checking. You might wonder: why add this when we already have a `kind()` method?
 
 There are two key reasons:
-
 1. Preserving backward compatibility with the existing `kind()` method
 2. Enabling TypeScript's type narrowing, which works with properties but not method calls
 
@@ -426,7 +425,7 @@ sgNode.find({
   rule: {
     // kind: 'invalid_kind', // error!
     kind: 'function_declaration', // typed!
-  },
+  }
 })
 ```
 

@@ -26,7 +26,7 @@ For those new to ast-grep, it's a powerful command-line tool that lets you searc
 
 Let's dive into what's new:
 
-## New Features
+##  New Features
 
 ### Customizable Code Highlighting with `labels`
 
@@ -48,11 +48,11 @@ The `--json` output option can now include rule `metadata` when you use the new 
 
 This is a significant architectural change! Previously, ast-grep was tightly coupled with tree-sitter, a fantastic parser generator tool. While tree-sitter has been foundational to ast-grep's ability to support many languages, this tight coupling had limitations.
 
-- **Introducing `SgNode`:** We've abstracted the core AST node representation with a new trait called `SgNode`. This makes ast-grep's core logic more flexible and less dependent on a single parsing technology.
-- **WASM Power-Up:** The ast-grep WebAssembly (WASM) module, which powers our interactive playground, now directly uses `tree-sitter-web` instead of the wrapper library [`tree-sitter-facade`](https://github.com/ast-grep/tree-sitter-wasm/tree/main/crates/tree-sitter-facade).
-- **Paving the Way for the Future:** This independence opens doors for exciting new possibilities:
-  - **Proof of Concept OXC Integration:** We're exploring [integration](https://github.com/ast-grep/ast-grep/pull/1970) with Oxc, a high-performance JavaScript/TypeScript toolchain written in Rust. Oxc boasts an extremely fast parser, which could bring significant performance benefits to ast-grep for JavaScript and TypeScript projects.
-  - **Future SWC Integration:** Similarly, we're looking into [leveraging SWC](https://github.com/swc-project/plugins/pull/435), another Rust-based platform for fast JavaScript/TypeScript compilation and transformation.
+*   **Introducing `SgNode`:** We've abstracted the core AST node representation with a new trait called `SgNode`. This makes ast-grep's core logic more flexible and less dependent on a single parsing technology.
+*   **WASM Power-Up:** The ast-grep WebAssembly (WASM) module, which powers our interactive playground, now directly uses `tree-sitter-web` instead of the wrapper library [`tree-sitter-facade`](https://github.com/ast-grep/tree-sitter-wasm/tree/main/crates/tree-sitter-facade).
+*   **Paving the Way for the Future:** This independence opens doors for exciting new possibilities:
+    *   **Proof of Concept OXC Integration:** We're exploring [integration](https://github.com/ast-grep/ast-grep/pull/1970) with Oxc, a high-performance JavaScript/TypeScript toolchain written in Rust. Oxc boasts an extremely fast parser, which could bring significant performance benefits to ast-grep for JavaScript and TypeScript projects.
+    *   **Future SWC Integration:** Similarly, we're looking into [leveraging SWC](https://github.com/swc-project/plugins/pull/435), another Rust-based platform for fast JavaScript/TypeScript compilation and transformation.
 
 This move is all about future-proofing ast-grep and allowing us to adopt the best parsing technologies for different languages and use cases, ultimately leading to a faster and more versatile tool for you.
 
@@ -65,19 +65,18 @@ Due to [an upgrade in the GitHub Actions build images](https://github.com/action
 **Impact:** Pre-compiled ast-grep binaries will no longer support distributions with glibc versions older than 2.35. For example, Ubuntu 20.04, which has glibc 2.31, is no longer directly supported by our pre-built binaries. This change also impacts [@ast-grep/napi](https://www.npmjs.com/package/@ast-grep/napi).
 
 **Alternatives:** If you are on an older Linux distribution, you can still use ast-grep by:
-
-- Building it from source.
-- Using package managers that might compile it for your specific distribution if available (like AUR for Arch Linux).
-- Consider upgrading your system to a more recent version of your Linux distribution.
-- Keep using ast-grep 0.37 if you don't want to upgrade your system.
+* Building it from source.
+* Using package managers that might compile it for your specific distribution if available (like AUR for Arch Linux).
+* Consider upgrading your system to a more recent version of your Linux distribution.
+* Keep using ast-grep 0.37 if you don't want to upgrade your system.
 
 ### Rust Library API Breaking Changes
 
 For users of ast-grep as a Rust library, please note the following API adjustments:
 
-- `AstGrep` is now an alias for `Root`.
-- Tree-sitter specific methods within the `Language` trait have been moved to a new `LanguageExt` trait.
-- `StrDoc` and related types have been relocated to the `ast_grep_core::tree_sitter` module.
+*   `AstGrep` is now an alias for `Root`.
+*   Tree-sitter specific methods within the `Language` trait have been moved to a new `LanguageExt` trait.
+*   `StrDoc` and related types have been relocated to the `ast_grep_core::tree_sitter` module.
 
 These changes are part of the larger effort to decouple ast-grep from tree-sitter and provide a cleaner, more maintainable library interface.
 
@@ -85,7 +84,7 @@ These changes are part of the larger effort to decouple ast-grep from tree-sitte
 
 We believe these changes, especially the move towards parser independence and the enhanced diagnostic labeling, will make ast-grep an even more powerful and user-friendly tool for your everyday development tasks.
 
-Head over to our [GitHub repo](https://github.com/ast-grep/ast-grep) to grab the latest version. Check out the [documentation](https://ast-grep.github.io/) for more details on how to use the new features.
+Head over to our [GitHub repo](https://github.com/ast-grep/ast-grep)  to grab the latest version. Check out the [documentation](https://ast-grep.github.io/) for more details on how to use the new features.
 
 We're excited to see how you use ast-grep 0.38! As always, your feedback is invaluable, so please don't hesitate to open issues or discussions on our GitHub repository.
 

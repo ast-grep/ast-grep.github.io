@@ -17,8 +17,7 @@ A rule is called **positive** if it only matches nodes with specific kinds. For 
 ## Atomic Rules
 
 ### `pattern`
-
-- type: `String` or `Object`
+* type: `String` or `Object`
 
 A `String` pattern will match one single AST node according to [pattern syntax](/guide/pattern-syntax).
 
@@ -30,7 +29,7 @@ pattern: console.log($ARG)
 
 `pattern` also accepts an `Object` with `context`,`selector` and optionally `strictness`.
 
-By default `pattern` parses code as a standalone file. You can use the `selector` field to pull out the specific part to match.
+By default `pattern` parses code as a standalone file. You can use the `selector` field  to pull out the specific part to match.
 
 **Example**:
 
@@ -56,9 +55,9 @@ pattern:
 
 `strictness` accepts these options: `cst`, `smart`, `ast`, `relaxed` and `signature`.
 
-### `kind`
 
-- type: `String`
+### `kind`
+* type: `String`
 
 The kind name of the node to match. You can look up code's kind names in [playground](/playground).
 
@@ -69,17 +68,15 @@ kind: call_expression
 ```
 
 ### `regex`
-
-- type: `String`
+* type: `String`
 
 A [Rust regular expression](https://docs.rs/regex/latest/regex/) to match the node's text. The regex must match the whole text of the node.
 
-> Its syntax is similar to Perl-style regular expressions, but lacks a few features like look around and backreferences.
+>  Its syntax is similar to Perl-style regular expressions, but lacks a few features like look around and backreferences.
 
 Example:
 
 ::: code-group
-
 ```yml [Literal]
 regex: console
 ```
@@ -91,23 +88,21 @@ regex: ^[a-z]+$
 ```yml [Flag]
 regex: (?i)a(?-i)b+
 ```
-
 :::
 
 ### `nthChild`
-
-- type: `number | string | Object`
+* type: `number | string | Object`
 
 `nthChild` finds nodes based on their indexes in the parent node's children list.
 
 It can accept either a number, a string or an object:
 
-- number: match the exact nth child
-- string: `An+B` style string to match position based on formula
-- object: nthChild object has several options to tweak the behavior of the rule
-  - `position`: a number or an An+B style string
-  - `reverse`: boolean indicating if count index from the end of sibling list
-  - `ofRule`: object to filter the sibling node list based on rule
+* number: match the exact nth child
+* string: `An+B` style string to match position based on formula
+* object: nthChild object has several options to tweak the behavior of the rule
+  * `position`: a number or an An+B style string
+  * `reverse`: boolean indicating if count index from the end of sibling list
+  * `ofRule`: object to filter the sibling node list based on rule
 
 **Example:**
 
@@ -131,13 +126,13 @@ nthChild:
 
 **Note:**
 
-- nthChild is inspired the [nth-child CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child).
-- nthChild's index is 1-based, not 0-based, as in the CSS selector.
-- nthChild's node list only includes named nodes, not unnamed nodes.
+* nthChild is inspired the [nth-child CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child).
+* nthChild's index is 1-based, not 0-based, as in the CSS selector.
+* nthChild's node list only includes named nodes, not unnamed nodes.
+
 
 ### `range`
-
-- type: `RangeObject`
+* type: `RangeObject`
 
 A `RangeObject` is an object with two fields `start` and `end`, each of which is an object with two fields `line` and `column`.
 
@@ -160,15 +155,13 @@ The above example will match an AST node having the first three characters of th
 ## Relational Rules
 
 ### `inside`
-
-- type: `Object`
+* type: `Object`
 
 A relational rule object, which is a `Rule` object with two additional fields `stopBy` and `field`.
 
 The target node must appear inside of another node matching the `inside` sub-rule.
 
 Example:
-
 ```yaml
 inside:
   pattern: class $TEST { $$$ } # a sub rule object
@@ -179,15 +172,13 @@ inside:
 Please refer to [relational rule guide](/guide/rule-config/relational-rule) for detailed explanation of `stopBy` and `field`.
 
 ### `has`
-
-- type: `Object`
+* type: `Object`
 
 A relational rule object, which is a `Rule` object with two additional fields `stopBy` and `field`.
 
 The target node must has a descendant node matching the `has` sub-rule.
 
 Example:
-
 ```yaml
 has:
   kind: property_identifier    # a sub rule object
@@ -198,8 +189,7 @@ has:
 Please refer to [relational rule guide](/guide/rule-config/relational-rule) for detailed explanation of `stopBy` and `field`.
 
 ### `precedes`
-
-- type: `Object`
+* type: `Object`
 
 A relational rule object, which is a `Rule` object with one additional field `stopBy`.
 
@@ -208,7 +198,6 @@ The target node must appear before another node matching the `precedes` sub-rule
 Note `precedes` does not have `field` option.
 
 Example:
-
 ```yml
 precedes:
   kind: function_declaration   # a sub rule object
@@ -216,8 +205,7 @@ precedes:
 ```
 
 ### `follows`
-
-- type: `Object`
+* type: `Object`
 
 A relational rule object, which is a `Rule` object with one additional field `stopBy`.
 
@@ -226,35 +214,32 @@ The target node must appear after another node matching the `follows` sub-rule.
 Note `follows` does not have `field` option.
 
 Example:
-
 ```yml
 follows:
   kind: function_declaration   # a sub rule object
   stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
 ```
 
----
+-----
 
 There are two additional fields in relational rules:
 
 #### `stopBy`
-
-- type: `"neighbor"` or `"end"` or `Rule` object
-- default: `"neighbor"`
+* type: `"neighbor"` or `"end"` or `Rule` object
+* default: `"neighbor"`
 
 `stopBy` is an option to control how the search should stop when looking for the target node.
 
 It can have three types of value:
 
-- `"neighbor"`: stop when the target node's immediate surrounding node does not match the relational rule. This is the default behavior.
-- `"end"`: search all the way to the end of the search direction. i.e. to the root node for `inside`, to the leaf node for `has`, to the first sibling for `follows`, and to the last sibling for `precedes`.
-- `Rule` object: stop when the target node's surrounding node does match the rule. `stopBy` is inclusive. If the matching surrounding node also match the relational rule, the target node is still considered as matched.
+* `"neighbor"`: stop when the target node's immediate surrounding node does not match the relational rule. This is the default behavior.
+* `"end"`: search all the way to the end of the search direction. i.e. to the root node for `inside`, to the leaf node for `has`, to the first sibling for `follows`, and to the last sibling for `precedes`.
+* `Rule` object: stop when the target node's surrounding node does match the rule. `stopBy` is inclusive. If the matching surrounding node also match the relational rule, the target node is still considered as matched.
 
 #### `field`
-
-- type: `String`
-- required: No
-- Only available in `inside` and `has` relational rules
+* type: `String`
+* required: No
+* Only available in `inside` and `has` relational rules
 
 `field` is an option to specify the sub-node in the target node to match the relational rule.
 
@@ -267,14 +252,12 @@ Only relational rules have `stopBy` and `field` options.
 ## Composite Rules
 
 ### `all`
-
-- type: `Array<Rule>`
+* type: `Array<Rule>`
 
 `all` takes a list of sub rules and matches a node if all of sub rules match.
 The meta variables of the matched node contain all variables from the sub rules.
 
 Example:
-
 ```yml
 all:
   - kind: call_expression
@@ -282,14 +265,12 @@ all:
 ```
 
 ### `any`
-
-- type: `Array<Rule>`
+* type: `Array<Rule>`
 
 `any` takes a list of sub rules and matches a node if any of sub rules match.
 The meta variables of the matched node only contain those of the matched sub rule.
 
 Example:
-
 ```yml
 any:
   - pattern: console.log($ARG)
@@ -305,21 +286,18 @@ See the [composite rule guide](/guide/rule-config/composite-rule.html#all-and-an
 :::
 
 ### `not`
-
-- type: `Object`
+* type: `Object`
 
 `not` takes a single sub rule and matches a node if the sub rule does not match.
 
 Example:
-
 ```yml
 not:
   pattern: console.log($ARG)
 ```
 
 ### `matches`
-
-- type: `String`
+* type: `String`
 
 `matches` takes a utility rule id and matches a node if the utility rule matches. See [utility rule guide](/guide/rule-config/utility-rule) for more details.
 

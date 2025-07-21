@@ -8,15 +8,15 @@ To alleviate this pain, ast-grep provides a builtin tool to help you test your r
 
 Ideally, a perfect rule will approve all valid code and report issues only for all invalid code. Testing a rule should also cover two categories of code accordingly. If you are familiar with [detection theory](https://en.wikipedia.org/wiki/Detection_theory), you should recognize that testing rule will involve the four scenarios tabulated below.
 
-| Code Validity \ Rule Report | No Report | Has Report |
-| --------------------------- | --------- | ---------- |
-| Valid                       | Validated | Noisy      |
-| Invalid                     | Missing   | Reported   |
+|Code Validity \ Rule Report | No Report | Has Report |
+|----------------------------|-----------|------------|
+|         Valid              | Validated |    Noisy   |
+|         Invalid            | Missing   |  Reported  |
 
-- If ast-grep reports error for invalid code, it is a correct **reported** match.
-- If ast-grep reports error for valid code, it is called **noisy** match.
-- If ast-grep reports nothing for invalid code, we have a **missing** match.
-- If ast-grep reports nothing for valid code, it is called **validated** match.
+* If ast-grep reports error for invalid code, it is a correct **reported** match.
+* If ast-grep reports error for valid code, it is called **noisy** match.
+* If ast-grep reports nothing for invalid code, we have a **missing** match.
+* If ast-grep reports nothing for valid code, it is called **validated** match.
 
 We will see these four case status in ast-grep's test output.
 
@@ -27,7 +27,6 @@ Let's write a test for the rule we wrote in the [previous section](/guide/rule-c
 To write a test, we first need to specify a rule test directory in `sgconfig.yml`. This directory will be used to store all test cases for rules.
 
 Suppose we have the `sgconfig.yml` as below.
-
 ```yaml{4,5}
 ruleDirs:
   - rules
@@ -54,7 +53,6 @@ In the example, `no-await-in-loop.yml` contains the rule configuration we wrote 
 Below are all relevant files used in this example.
 
 ::: code-group
-
 ```yaml [no-await-in-loop.yml]{1}
 id: no-await-in-loop
 message: Don't use await inside of loops
@@ -71,6 +69,7 @@ rule:
     - pattern: await $_
 ```
 
+
 ```yaml [no-await-in-loop-test.yml]{1}
 id: no-await-in-loop
 valid:
@@ -81,6 +80,7 @@ invalid:
   # .... more invalid test cases
 ```
 
+
 ```yaml [sgconfig.yml]{4,5}
 ruleDirs:
   - rules
@@ -88,7 +88,6 @@ ruleDirs:
 testConfigs:
   - testDir: rule-tests
 ```
-
 :::
 
 We will delve into `no-await-in-loop-test.yml` in next section.
@@ -148,7 +147,6 @@ In failure details, we can see the detailed code snippet for each case.
 Besides testing code validity, we can further test rule's output like error's message and span. This is what snapshot test will cover.
 
 ## Snapshot Test
-
 Let's rerun `ast-grep test` without `--skip-snapshot-tests` option.
 This time we will get test failure that invalid code error does not have a matching snapshot.
 Previously we use the `skip-snapshot-tests` option to suppress snapshot test, which is useful when you are still working on your rule. But after the rule is polished, we can create snapshot to capture the desired output of the rule.

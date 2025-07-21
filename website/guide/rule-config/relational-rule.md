@@ -10,6 +10,7 @@ ast-grep now supports four kinds of relational rules:
 
 All four relational rules accept a sub rule object as their value. The sub rule will match the surrounding node while the relational rule itself will match the target node.
 
+
 ## Relational Rule Example
 
 Having an `await` expression inside a for loop is usually a bad idea because every iteration will have to wait for the previous promise to resolve.
@@ -28,6 +29,7 @@ The rule reads as "matches an `await` expression that is `inside` a `for_in_stat
 See [Playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InR5cGVzY3JpcHQiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoiaWQ6IG5vLWF3YWl0LWluLWxvb3Bcbmxhbmd1YWdlOiBUeXBlU2NyaXB0XG5ydWxlOlxuICBwYXR0ZXJuOiBhd2FpdCAkUFJPTUlTRVxuICBpbnNpZGU6XG4gICAga2luZDogZm9yX2luX3N0YXRlbWVudFxuICAgIHN0b3BCeTogZW5kIiwic291cmNlIjoiZm9yIChsZXQgaSBvZiBbMSwgMiwzXSkge1xuICAgIGF3YWl0IFByb21pc2UucmVzb2x2ZShpKVxufSJ9).
 
 The relational rule `inside` accepts a rule and will match any node that is inside another node that satisfies the inside rule. The `inside` rule itself matches `await` and its sub rule `kind` matches the surrounding loop.
+
 
 ## Relational Rule's Sub Rule
 
@@ -75,10 +77,10 @@ This will effectively let you extract a child node from a match.
 
 The four relational rules can read as:
 
-- `inside`: the _target_ node must be **inside** a node that matches the sub rule.
-- `has`: the _target_ node must **have** a child node specified by the sub rule.
-- `follows`: the _target_ node must **follow** a node specified by the sub rule. (target after surrounding)
-- `precedes`: the _target_ node must **precede** a node specified by the sub rule. (target before surrounding).
+* `inside`: the _target_ node must be **inside** a node that matches the sub rule.
+* `has`: the _target_ node must **have** a child node specified by the sub rule.
+* `follows`: the _target_ node must **follow** a node specified by the sub rule. (target after surrounding)
+* `precedes`: the _target_ node must **precede** a node specified by the sub rule. (target before surrounding).
 
 It is sometimes confusing to remember whether the rule matches target node or surrounding node. Here is the mnemonics to help you read the rule.
 
@@ -91,7 +93,7 @@ Finally, the relational rule's sub rule will match the surrounding node.
 Together, the rule specifies that the target node will `be inside` or `follows` the surrounding node.
 
 :::tip
-All relational rule takes the form of `target` `relates` to `surrounding`.
+ All relational rule takes the form of `target` `relates` to `surrounding`.
 :::
 
 For example, the rule below will match **`hello`(target)** greeting that **follows(relation)** a **`world`(surrounding)** greeting.
@@ -103,11 +105,10 @@ follows:
 ```
 
 Consider the [input source code](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBhbGw6XG4gICAgLSBwYXR0ZXJuOiBjb25zb2xlLmxvZygnaGVsbG8nKTtcbiAgICAtIGZvbGxvd3M6XG4gICAgICAgIHBhdHRlcm46IGNvbnNvbGUubG9nKCd3b3JsZCcpOyIsInNvdXJjZSI6ImNvbnNvbGUubG9nKCdoZWxsbycpOyAvLyBkb2VzIG5vdCBtYXRjaFxuY29uc29sZS5sb2coJ3dvcmxkJyk7XG5jb25zb2xlLmxvZygnaGVsbG8nKTsgLy8gbWF0Y2hlcyEhIn0=). Only the second `console.log('hello')` will match the rule.
-
 ```javascript
-console.log('hello') // does not match
-console.log('world')
-console.log('hello') // matches!!
+console.log('hello'); // does not match
+console.log('world');
+console.log('hello'); // matches!!
 ```
 
 ## Fine Tuning Relational Rule
@@ -115,7 +116,6 @@ console.log('hello') // matches!!
 Relational rule has several options to let you find nodes more precisely.
 
 ### `stopBy`
-
 By default, relational rule will only match nodes one level further. For example, ast-grep will only match the direct children of the target node for the `has` rule.
 
 You can change the behavior by using the `stopBy` field. It accepts three kinds of values: string `'end'`, string `'neighbor'` (the default option), and a rule object.
@@ -141,7 +141,6 @@ inside:
 Note the `stopBy` rule is inclusive. So when both `stopBy` rule and relational rule hit a node, the node is considered as a match.
 
 ### `field`
-
 Sometimes it is useful to specify the node by its field. Suppose we want to find a JavaScript object property with the key `prototype`, an outdated practice that we should avoid.
 
 ```yaml
@@ -152,19 +151,15 @@ has:
 ```
 
 This rule will match the following code
-
 ```js
 var a = {
-  prototype: anotherObject,
+  prototype: anotherObject
 }
 ```
-
 but will not match this code
-
 ```js
 var a = {
-  normalKey: prototype,
+  normalKey: prototype
 }
 ```
-
 Though `pair` has a child with text `prototype` in the second example, its relative field is not `key`. That is, `prototype` is not used as `key` but instead used as value. So it does not match the rule.

@@ -1,6 +1,6 @@
 ## Migrate action_filter in Ruby on Rails <Badge type="tip" text="Has Fix" />
 
-- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InJ1YnkiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiIyBhc3QtZ3JlcCBZQU1MIFJ1bGUgaXMgcG93ZXJmdWwgZm9yIGxpbnRpbmchXG4jIGh0dHBzOi8vYXN0LWdyZXAuZ2l0aHViLmlvL2d1aWRlL3J1bGUtY29uZmlnLmh0bWwjcnVsZVxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogYmVmb3JlX2ZpbHRlciAkJCRBQ1RJT05cbiAgICAtIHBhdHRlcm46IGFyb3VuZF9maWx0ZXIgJCQkQUNUSU9OXG4gICAgLSBwYXR0ZXJuOiBhZnRlcl9maWx0ZXIgJCQkQUNUSU9OXG4gIGhhczpcbiAgICBwYXR0ZXJuOiAkRklMVEVSXG4gICAgZmllbGQ6IG1ldGhvZFxuZml4OiBcbiAgJE5FV19BQ1RJT04gJCQkQUNUSU9OXG50cmFuc2Zvcm06XG4gIE5FV19BQ1RJT046XG4gICAgcmVwbGFjZTpcbiAgICAgIHNvdXJjZTogJEZJTFRFUlxuICAgICAgcmVwbGFjZTogX2ZpbHRlclxuICAgICAgYnk6IF9hY3Rpb24iLCJzb3VyY2UiOiJjbGFzcyBUb2Rvc0NvbnRyb2xsZXIgPCBBcHBsaWNhdGlvbkNvbnRyb2xsZXJcbiAgYmVmb3JlX2ZpbHRlciA6YXV0aGVudGljYXRlXG4gIGFyb3VuZF9maWx0ZXIgOndyYXBfaW5fdHJhbnNhY3Rpb24sIG9ubHk6IDpzaG93XG4gIGFmdGVyX2ZpbHRlciBkbyB8Y29udHJvbGxlcnxcbiAgICBmbGFzaFs6ZXJyb3JdID0gXCJZb3UgbXVzdCBiZSBsb2dnZWQgaW5cIlxuICBlbmRcblxuICBkZWYgaW5kZXhcbiAgICBAdG9kb3MgPSBUb2RvLmFsbFxuICBlbmRcbmVuZFxuIn0=)
+* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InJ1YnkiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiIyBhc3QtZ3JlcCBZQU1MIFJ1bGUgaXMgcG93ZXJmdWwgZm9yIGxpbnRpbmchXG4jIGh0dHBzOi8vYXN0LWdyZXAuZ2l0aHViLmlvL2d1aWRlL3J1bGUtY29uZmlnLmh0bWwjcnVsZVxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogYmVmb3JlX2ZpbHRlciAkJCRBQ1RJT05cbiAgICAtIHBhdHRlcm46IGFyb3VuZF9maWx0ZXIgJCQkQUNUSU9OXG4gICAgLSBwYXR0ZXJuOiBhZnRlcl9maWx0ZXIgJCQkQUNUSU9OXG4gIGhhczpcbiAgICBwYXR0ZXJuOiAkRklMVEVSXG4gICAgZmllbGQ6IG1ldGhvZFxuZml4OiBcbiAgJE5FV19BQ1RJT04gJCQkQUNUSU9OXG50cmFuc2Zvcm06XG4gIE5FV19BQ1RJT046XG4gICAgcmVwbGFjZTpcbiAgICAgIHNvdXJjZTogJEZJTFRFUlxuICAgICAgcmVwbGFjZTogX2ZpbHRlclxuICAgICAgYnk6IF9hY3Rpb24iLCJzb3VyY2UiOiJjbGFzcyBUb2Rvc0NvbnRyb2xsZXIgPCBBcHBsaWNhdGlvbkNvbnRyb2xsZXJcbiAgYmVmb3JlX2ZpbHRlciA6YXV0aGVudGljYXRlXG4gIGFyb3VuZF9maWx0ZXIgOndyYXBfaW5fdHJhbnNhY3Rpb24sIG9ubHk6IDpzaG93XG4gIGFmdGVyX2ZpbHRlciBkbyB8Y29udHJvbGxlcnxcbiAgICBmbGFzaFs6ZXJyb3JdID0gXCJZb3UgbXVzdCBiZSBsb2dnZWQgaW5cIlxuICBlbmRcblxuICBkZWYgaW5kZXhcbiAgICBAdG9kb3MgPSBUb2RvLmFsbFxuICBlbmRcbmVuZFxuIn0=)
 
 ### Description
 
@@ -10,8 +10,8 @@ These are methods that run before, after or around an action is executed, and th
 
 This rule will replace all occurrences of `{before,after,around}_filter` with `{before,after,around}_action` in the controller code.
 
-### YAML
 
+### YAML
 ```yaml
 id: migration-action-filter
 language: ruby
@@ -36,7 +36,6 @@ transform:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-
 ```rb {2-4}
 class TodosController < ApplicationController
   before_filter :authenticate
@@ -52,9 +51,7 @@ end
 ```
 
 ### Diff
-
 <!-- use # [!code --] and # [!code ++] to annotate diff -->
-
 ```rb
 class TodosController < ApplicationController
   before_action :authenticate  # [!code --]
@@ -75,5 +72,4 @@ end
 ```
 
 ### Contributed by
-
 [Herrington Darkholme](https://twitter.com/hd_nvim), inspired by [Future of Ruby - AST Tooling](https://dev.to/baweaver/future-of-ruby-ast-tooling-9i1).

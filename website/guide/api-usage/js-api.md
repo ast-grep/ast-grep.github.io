@@ -28,8 +28,8 @@ Now let's explore ast-grep's API!
 
 The core concepts in ast-grep's JavaScript API are:
 
-- `SgRoot`: a class representing the whole syntax tree
-- `SgNode`: a node in the syntax tree
+* `SgRoot`: a class representing the whole syntax tree
+* `SgNode`: a node in the syntax tree
 
 :::tip Make AST like a DOM tree!
 Using ast-grep's API is like using [jQuery](https://jquery.com/). You can use `SgNode` to traverse the syntax tree and collect information from the nodes.
@@ -61,7 +61,7 @@ node.getMatch('A').text()                   // 4. collect the info
 
 `SgRoot` represents the syntax tree of a source string.
 
-We can import the `Lang` enum from the `@ast-grep/napi` package and call the `parse` function to transform string.
+We can import the `Lang` enum from the `@ast-grep/napi` package and call the  `parse` function to transform string.
 
 ```js{4}
 import { Lang, parse } from '@ast-grep/napi';
@@ -94,8 +94,8 @@ Let's see its details in the following sections!
 
 You can use `find` and `findAll` to search for nodes in the syntax tree.
 
-- `find` returns the first node that matches the pattern or rule.
-- `findAll` returns an array of nodes that match the pattern or rule.
+* `find` returns the first node that matches the pattern or rule.
+* `findAll` returns an array of nodes that match the pattern or rule.
 
 ```ts
 // search
@@ -116,23 +116,23 @@ The argument is called `Matcher` in ast-grep JS.
 
 A `Matcher` can be one of the three types: `string`, `number` or `object`.
 
-- `string` is parsed as a [pattern](/guide/pattern-syntax.html). e.g. `'console.log($A)'`
+* `string` is parsed as a [pattern](/guide/pattern-syntax.html). e.g. `'console.log($A)'`
 
-- `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function. e.g. `kind('function', Lang.JavaScript)`.
+* `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function. e.g. `kind('function', Lang.JavaScript)`.
 
-- A `NapiConfig` has a similar type of [config object](/reference/yaml.html). See details below.
+* A `NapiConfig` has a similar type of [config object](/reference/yaml.html). See details below.
 
 ```ts
 // basic find example
-root.find('console.log($A)') // returns SgNode of call_expression
-let l = Lang.JavaScript // calling kind function requires Lang
-const kind = kind(l, 'string') // convert kind name to kind id number
-root.find(kind) // returns SgNode of string
-root.find('notExist') // returns null if not found
+root.find('console.log($A)')    // returns SgNode of call_expression
+let l = Lang.JavaScript         // calling kind function requires Lang
+const kind = kind(l, 'string')  // convert kind name to kind id number
+root.find(kind)                 // returns SgNode of string
+root.find('notExist')           // returns null if not found
 
 // basic find all example
 const nodes = root.findAll('function $A($$$) {$$$}')
-Array.isArray(nodes) // true, findAll returns SgNode
+Array.isArray(nodes)     // true, findAll returns SgNode
 nodes.map(n => n.text()) // string array of function source
 const empty = root.findAll('not exist') // returns []
 empty.length === 0 // true
@@ -140,11 +140,11 @@ empty.length === 0 // true
 // find i.e. `console.log("hello world")` using a NapiConfig
 const node = root.find({
   rule: {
-    pattern: 'console.log($A)',
+    pattern: "console.log($A)"
   },
   constraints: {
-    A: { regex: 'hello' },
-  },
+    A: { regex: "hello" }
+  }
 })
 ```
 

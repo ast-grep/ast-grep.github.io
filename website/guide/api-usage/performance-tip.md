@@ -9,7 +9,7 @@ There are a lot of tricks to improve performance when using `napi`. The mantra i
 `parseAsync` can take advantage of NodeJs' libuv thread pool to parse code in parallel threads. This can be faster than the sync version `parse` when handling a lot of code.
 
 ```ts
-import { js } from '@ast-grep/napi'
+import { js } from '@ast-grep/napi';
 // only one thread parsing
 const root = js.parse('console.log("hello world")')
 // better, can use multiple threads
@@ -47,10 +47,11 @@ The equivalent code using `findAll` is much faster:
 ```ts
 const root = sgroot.root()
 // only call FFI `findAll` once
-const nodes = root.findAll({ kind: 'member_expression' })
+const nodes = root.findAll({kind: 'member_expression'})
 ```
 
 > _One [success](https://x.com/hd_nvim/status/1767971906786128316) [story](https://x.com/sonofmagic95/status/1768433654404104555) on Twitter, as an example._
+
 
 ## Prefer `findInFiles` when possible
 
@@ -68,7 +69,7 @@ export function findInFiles(
   /** specify the file path and matcher */
   config: FindConfig,
   /** callback function for found nodes in a file */
-  callback: (err: null | Error, result: SgNode[]) => void,
+  callback: (err: null | Error, result: SgNode[]) => void
 ): Promise<number>
 ```
 
@@ -133,14 +134,13 @@ function countedPromise<F extends Callback>(func: F) {
 ```
 
 ### Example
-
 Example of using `findInFiles`
 
 ```ts
 let fileCount = await js.findInFiles({
   paths: ['relative/path/to/code'],
   matcher: {
-    rule: { kind: 'member_expression' },
+    rule: {kind: 'member_expression'}
   },
 }, (err, n) => {
   t.is(err, null)

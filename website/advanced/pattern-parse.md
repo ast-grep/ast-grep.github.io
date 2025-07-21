@@ -81,6 +81,7 @@ pattern:
 
 You can use both ast-grep playground's [pattern tab](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoianNvbiIsInF1ZXJ5IjoieyBcImFcIjogMTIzIH0iLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJwYWlyIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogbWV0aG9kX2RlZmluaXRpb25cbiAgcmVnZXg6ICdeZ2V0fHNldFxccyciLCJzb3VyY2UiOiJ7IFwiYVwiOiAxMjMgfSAifQ==) or [rule tab](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6InsgXCJhXCI6IDEyMyB9IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoicGFpciIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IFxuICAgIGNvbnRleHQ6ICd7XCJhXCI6IDEyM30nXG4gICAgc2VsZWN0b3I6IHBhaXIiLCJzb3VyY2UiOiJ7IFwiYVwiOiAxMjMgfSAifQ==) to verify it.
 
+
 _**Incomplete pattern code sometimes works fine due to error-tolerance.**_
 
 For better _user experience_, ast-grep parse pattern code as lenient as possible. ast-grep parsers will try recovering parsing errors and ignoring missing language constructs.
@@ -108,9 +109,8 @@ pattern:
 ```
 
 Other examples of ambiguous patterns include:
-
-- Match function call in [Golang](/catalog/go/#match-function-call-in-golang) and [C](/catalog/c/#match-function-call)
-- Match [class field](/guide/rule-config/atomic-rule.html#pattern-object) in JavaScript
+* Match function call in [Golang](/catalog/go/#match-function-call-in-golang) and [C](/catalog/c/#match-function-call)
+* Match [class field](/guide/rule-config/atomic-rule.html#pattern-object) in JavaScript
 
 ### How ast-grep Handles Pattern Code?
 
@@ -118,14 +118,14 @@ ast-grep uses best efforts to parse pattern code for best user experience.
 
 Here are some strategies ast-grep uses to handle code snippet:
 
-- **Replace `$` with expando_char**:
-  some languages use `$` as a special character, so ast-grep replace it with [expando_char](/advanced/custom-language.html#register-language-in-sgconfig-yml) in order to make the pattern code parsable.
+* **Replace `$` with expando_char**:
+some languages use `$` as a special character, so ast-grep replace it with [expando_char](/advanced/custom-language.html#register-language-in-sgconfig-yml) in order to make the pattern code parsable.
 
-- **Ignore missing nodes**: ast-grep will ignore missing nodes in pattern like trailing semicolon in Java/C/C++.
+* **Ignore missing nodes**: ast-grep will ignore missing nodes in pattern like trailing semicolon in Java/C/C++.
 
-- **Treat root error as normal node**: if the parser error has no siblings, ast-grep will treat it as a normal node.
+* **Treat root error as normal node**: if the parser error has no siblings, ast-grep will treat it as a normal node.
 
-- If all above fails, users should provide more code via pattern object
+* If all above fails, users should provide more code via pattern object
 
 :::warning Pattern Error Recovery is useful, but not guaranteed
 
@@ -151,7 +151,7 @@ If a node has only one child, it is atomic and cannot be further decomposed. We 
 
 Examples:
 
-- `123` will be extracted as `number` because it is the leaf node.
+* `123` will be extracted as `number` because it is the leaf node.
 
 ```yaml
 program
@@ -161,7 +161,7 @@ program
 
 See [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiMTIzIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoiIn0=).
 
-- `foo(bar)` will be extracted as `call_expression` because it is the innermost node that has more than one child.
+* `foo(bar)` will be extracted as `call_expression` because it is the innermost node that has more than one child.
 
 ```yaml
 program
@@ -184,8 +184,8 @@ For example, you may want to match the whole `console.log` statement in JavaScri
 Using `console.log($$$)` directly will not include the trailing `;` in the pattern, see [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJCQkKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic2lnbmF0dXJlIiwic2VsZWN0b3IiOiJjYWxsX2V4cHJlc3Npb24iLCJjb25maWciOiIiLCJzb3VyY2UiOiJjb25zb2xlLmxvZyhmb28pXG5jb25zb2xlLmxvZyhiYXIpOyJ9).
 
 ```js
-console.log('Hello')
-console.log('World')
+console.log("Hello")
+console.log("World");
 ```
 
 You can use pattern object to explicitly specify the effective node to be `expression_statement`. [Playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCQkJCkiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNpZ25hdHVyZSIsInNlbGVjdG9yIjoiY2FsbF9leHByZXNzaW9uIiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBjb25zb2xlLmxvZygkJCQpXG4gICAgc2VsZWN0b3I6IGV4cHJlc3Npb25fc3RhdGVtZW50XG5maXg6ICcnIiwic291cmNlIjoiY29uc29sZS5sb2coZm9vKVxuY29uc29sZS5sb2coYmFyKTsifQ==)
@@ -216,25 +216,25 @@ If meta variable text is not the only text in the node or it spans multiple node
 
 **Working meta variable examples:**
 
-- `$A` works
-  - `$A` is one single `identifier`
-- `$A.$B` works
-  - `$A` is `identifier` inside `member_expression`
-  - `$B` is the `property_identifier`.
-- `$A.method($B)` works
-  - `$A` is `identifier` inside `member_expression`
-  - `$B` is `identifier` inside `arguments`
+* `$A` works
+  * `$A` is one single `identifier`
+* `$A.$B` works
+  * `$A` is `identifier` inside `member_expression`
+  * `$B` is the `property_identifier`.
+* `$A.method($B)` works
+  * `$A` is `identifier` inside `member_expression`
+  * `$B` is `identifier` inside `arguments`
 
 **Non working meta variable examples:**
 
-- `obj.on$EVENT` does not work
-  - `on$EVENT` is `property_identifier` but `$EVENT` is not the only text
-- `"Hello $WORLD"` does not work
-  - `$WORLD` is inside `string_content` and is not the only text
-- `a $OP b` does not work
-  - the whole pattern does not parse
-- `$jq` does not work
-  - meta variable does not accept lower case letters
+* `obj.on$EVENT` does not work
+  * `on$EVENT` is `property_identifier` but `$EVENT` is not the only text
+* `"Hello $WORLD"` does not work
+  * `$WORLD` is inside `string_content` and is not the only text
+* `a $OP b` does not work
+  * the whole pattern does not parse
+* `$jq` does not work
+  * meta variable does not accept lower case letters
 
 See all examples in [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzaWduYXR1cmUiLCJzZWxlY3RvciI6ImNhbGxfZXhwcmVzc2lvbiIsImNvbmZpZyI6IiIsInNvdXJjZSI6Ii8vIHdvcmtpbmdcbiRBXG4kQS4kQlxuJEEubWV0aG9kKCRCKVxuXG4vLyBub24gd29ya2luZ1xub2JqLm9uJEVWRU5UXG5cIkhlbGxvICRXT1JMRFwiXG5hICRPUCBiIn0=).
 
@@ -243,7 +243,7 @@ See all examples in [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIj
 A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
 To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
 
-Let's go back to the binary expression example. It is impossible to match arbitrary binary expression in one single pattern. But we can combine `kind` and `has` to match the operator in binary expressions.
+Let's go back to the binary expression example. It is impossible to match arbitrary binary expression in one single pattern. But we can combine `kind` and `has` to match the operator in  binary expressions.
 
 Note, `$OP` cannot match the operator because operator is not a named node. We need to use `$$OP` instead.
 

@@ -1,6 +1,6 @@
 ## Find key/value and Show Message
 
-- [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InlhbWwiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6ImlkOiBkZXRlY3QtaG9zdC1wb3J0XG5tZXNzYWdlOiBZb3UgYXJlIHVzaW5nICRIT1NUIG9uIFBvcnQgJFBPUlQsIHBsZWFzZSBjaGFuZ2UgaXQgdG8gODAwMFxuc2V2ZXJpdHk6IGVycm9yXG5ydWxlOlxuICBhbnk6XG4gIC0gcGF0dGVybjogfFxuICAgICBwb3J0OiAkUE9SVFxuICAtIHBhdHRlcm46IHxcbiAgICAgaG9zdDogJEhPU1QiLCJzb3VyY2UiOiJkYjpcbiAgIHVzZXJuYW1lOiByb290XG4gICBwYXNzd29yZDogcm9vdFxuXG5zZXJ2ZXI6XG4gIGhvc3Q6IDEyNy4wLjAuMVxuICBwb3J0OiA4MDAxIn0=)
+* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InlhbWwiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6ImlkOiBkZXRlY3QtaG9zdC1wb3J0XG5tZXNzYWdlOiBZb3UgYXJlIHVzaW5nICRIT1NUIG9uIFBvcnQgJFBPUlQsIHBsZWFzZSBjaGFuZ2UgaXQgdG8gODAwMFxuc2V2ZXJpdHk6IGVycm9yXG5ydWxlOlxuICBhbnk6XG4gIC0gcGF0dGVybjogfFxuICAgICBwb3J0OiAkUE9SVFxuICAtIHBhdHRlcm46IHxcbiAgICAgaG9zdDogJEhPU1QiLCJzb3VyY2UiOiJkYjpcbiAgIHVzZXJuYW1lOiByb290XG4gICBwYXNzd29yZDogcm9vdFxuXG5zZXJ2ZXI6XG4gIGhvc3Q6IDEyNy4wLjAuMVxuICBwb3J0OiA4MDAxIn0=)
 
 ### Description
 
@@ -23,7 +23,6 @@ rule:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-
 ```yaml {5,6}
 db:
   username: root
@@ -34,5 +33,4 @@ server:
 ```
 
 ### Contributed by
-
 [rohitcoder](https://twitter.com/rohitcoder) on [Discord](https://discord.com/invite/4YZjf6htSQ).

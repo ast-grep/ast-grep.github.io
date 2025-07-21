@@ -6,10 +6,10 @@ ast-grep allows you to craft complicated rules, but it is not easy to do arbitra
 
 For example, you may struggle to:
 
-- replace a list of nodes individually, based on their content
-- replace a node conditionally, based on its content and surrounding nodes
-- count the number or order of nodes that match a certain pattern
-- compute the replacement string based on the matched nodes
+* replace a list of nodes individually, based on their content
+* replace a node conditionally, based on its content and surrounding nodes
+* count the number or order of nodes that match a certain pattern
+* compute the replacement string based on the matched nodes
 
 To solve these problems, you can use ast-grep's programmatic API! You can freely inspect and generate text patches based on syntax trees, using popular programming languages!
 
@@ -26,6 +26,7 @@ ast-grep provides support for these programming languages:
 - **Python:** ast-grep's PyO3 interface is the latest addition to climb the syntax tree! [Discover Python API](/guide/api-usage/py-api.html)
 
 - **Rust:** ast-grep's Rust API is the most efficient way, but also the most challenging way, to use ast-grep. You can refer to [ast_grep_core](https://docs.rs/ast-grep-core/latest/ast_grep_core/) if you are familiar with Rust.
+
 
 ## Why and When to use API?
 

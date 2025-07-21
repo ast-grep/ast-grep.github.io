@@ -2,6 +2,7 @@
 
 ## Environment Setup
 
+
 ast-grep is written in [Rust](https://www.rust-lang.org/) and hosted by [git](https://git-scm.com/).
 
 You need to have rust environment installed to build ast-grep.
@@ -12,7 +13,7 @@ Once you have rustup installed, you can install rust by running:
 rustup install stable
 ```
 
-You also need [pre-commit](https://pre-commit.com/) to setup git hooks for type checking, formatting and clippy.
+You also need  [pre-commit](https://pre-commit.com/) to setup git hooks for type checking, formatting and clippy.
 
 Run pre-commit install to set up the git hook scripts.
 
@@ -34,6 +35,7 @@ cargo check    # Run checking
 cargo clippy   # Run clippy
 cargo fmt      # Run formatting
 ```
+
 
 Below are some ast-grep specific commands.
 
@@ -66,18 +68,18 @@ To quote the conventional commits doc:
 
 > The commit contains the following structural elements, to communicate intent to the consumers of your library:
 >
-> - `fix:` a commit of the type fix patches a bug in your codebase.
-> - `feat:` a commit of the type feat introduces a new feature to the codebase.
-> - types other than `fix:` and `feat:` are allowed, for example, `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, and `test:`.
-> - `BREAKING CHANGE`: a commit that has a footer `BREAKING CHANGE:` introduces a breaking API change. A `BREAKING CHANGE` can be part of commits of any type.
-> - footers other than `BREAKING CHANGE: <description>` may be provided and follow a convention similar to git trailer format.
+> * `fix:` a commit of the type fix patches a bug in your codebase.
+> * `feat:` a commit of the type feat introduces a new feature to the codebase.
+> * types other than `fix:` and `feat:` are allowed, for example, `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, and `test:`.
+> * `BREAKING CHANGE`: a commit that has a footer `BREAKING CHANGE:` introduces a breaking API change. A `BREAKING CHANGE` can be part of commits of any type.
+> * footers other than `BREAKING CHANGE: <description>` may be provided and follow a convention similar to git trailer format.
 
 :::tip
 `BREAKING CHANGE` will be picked up and written in `CHANGELOG` by [`cargo xtask`](https://github.com/ast-grep/ast-grep/blob/86afc5865b42285106f232f01c0eb45708d134c3/xtask/src/main.rs#L162-L171).
 :::
 
-## Run Benchmark
 
+## Run Benchmark
 ast-grep's Benchmark is not included in the default cargo test. You need to run the benchmark command in `benches` folder.
 
 ```bash

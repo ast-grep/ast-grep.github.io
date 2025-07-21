@@ -33,11 +33,12 @@ Conceptually, ast-grep takes a piece of pattern code (think it like a regular ex
 
 I designed ast-grep's architecture with performance in mind. Here are a few performance related highlights:
 
-- it is written in Rust, a native language compiled to machine code.
-- it uses the venerable C library [tree-sitter](https://tree-sitter.github.io/) to parse code, which is the same library powering [GitHub's codesearch](https://github.com/features/code-search).
-- its command line interface is built upon [ignore](https://docs.rs/ignore/latest/ignore/), the same crates used by the blazing fast [ripgrep](https://github.com/BurntSushi/ripgrep).
+* it is written in Rust, a native language compiled to machine code.
+* it uses the venerable C library [tree-sitter](https://tree-sitter.github.io/) to parse code, which is the same library powering [GitHub's codesearch](https://github.com/features/code-search).
+* its command line interface is built upon [ignore](https://docs.rs/ignore/latest/ignore/), the same crates used by the blazing fast [ripgrep](https://github.com/BurntSushi/ripgrep).
 
 Okay, enough self-promotion _BS_. If it is designed to be fast, how comes this blog? Let's dive into the performance bottleneck I found in my bad code.
+
 
 > Spoiler. It's my bad to write slow Rust.
 
@@ -78,6 +79,7 @@ The time before `user` is the actual CPU time spent on my program. The time befo
 
 It only runs six rules against the codebase and it costs about 10 whole seconds!
 
+
 In contrast, running one ast-grep pattern agasint the TypeScript source only costs 0.5 second and the CPU utilization is decent.
 
 ```bash
@@ -103,6 +105,7 @@ time ast-grep scan -c eslint/sgconfig.yml TypeScript/src --json > /dev/null
 The new flamegraph looks like this.
 
 <img width="1509" alt="Avoid Regex Cloning" src="https://user-images.githubusercontent.com/2883231/215318711-634a8b99-3e02-4187-9073-ea5be25d098f.png">
+
 
 # Matching Rule can be Avoided
 

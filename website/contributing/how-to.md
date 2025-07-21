@@ -73,10 +73,8 @@ Thank you for your interest in contributing to the ast-grep project. We are grat
 :::tip You don’t have to contribute code
 
 A common misconception about contributing to open source is that you need to contribute code. In fact, it’s often the other parts of a project that are most neglected or overlooked. You’ll do the project a huge favor by offering to pitch in with these types of contributions!
-
 <div style="text-align: right">
 
-_[GitHub Open Source Guide](https://opensource.guide/)_
-
+  _[GitHub Open Source Guide](https://opensource.guide/)_
 </div>
 :::

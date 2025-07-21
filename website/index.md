@@ -42,4 +42,5 @@ features:
   - icon: 🛠️
     title: Pragmatic
     details: Not a toy but a batteries-included tool with interactive codemod, language server and testing tool.
+
 ---

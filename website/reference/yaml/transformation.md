@@ -6,10 +6,11 @@ outline: [2, 3]
 
 A transformation object is used to manipulate meta variables. It is a dictionary with the following structure:
 
-- a **key** that specifies which string operation will be applied to the meta variable, and
-- a **value** that is another object with the details of how to perform the operation.
+* a **key** that specifies which string operation will be applied to the meta variable, and
+* a **value** that is another object with the details of how to perform the operation.
 
 Different string operation keys expect different object values.
+
 
 ## `replace`
 
@@ -19,29 +20,28 @@ Use a regular expression to replace the text in a meta-variable with a new text.
 
 ### `replace`
 
-- type: `String`
-- required: true
+* type: `String`
+* required: true
 
 A Rust regular expression to match the text to be replaced.
 
 ### `by`
 
-- type: `String`
-- required: true
+* type: `String`
+* required: true
 
 A string to replace the matched text.
 
 ### `source`
 
-- type: `String`
-- required: true
+* type: `String`
+* required: true
 
 A meta-variable name to be replaced.
 
 _The meta-variable name must be prefixed with `$`._
 
 **Example**:
-
 ```yaml
 transform:
   NEW_VAR:
@@ -66,34 +66,30 @@ Create a new string by cutting off leading and trailing characters.
 `substring` transformation expects an object value with the following properties:
 
 ### `startChar`
-
-- type: `Integer`
-- required: false
+* type: `Integer`
+* required: false
 
 The starting character index of the new string, **inclusively**.<br/>
 If omitted, the new string starts from the beginning of the source string.<br/>
 The index can be negative, in which case the index is counted from the end of the string.
 
 ### `endChar`
-
-- type: `Integer`
-- required: false
+* type: `Integer`
+* required: false
 
 The ending character index of the new string, **exclusively**.<br/>
 If omitted, the new string ends at the end of the source string.<br/>
 The index can be negative, in which case the index is counted from the end of the string.
 
 ### `source`
-
-- type: `String`
-- required: true
+* type: `String`
+* required: true
 
 A meta-variable name to be truncated.
 
 _The meta-variable name must be prefixed with `$`._
 
 **Example**:
-
 ```yaml
 transform:
   NEW_VAR:
@@ -125,9 +121,8 @@ Ideally, the source string should be an identifier in the rule language.
 `convert` transformation expects an object value with the following properties:
 
 ### `toCase`
-
-- type: `StringCase`
-- required: true
+* type: `StringCase`
+* required: true
 
 The target case to convert to.
 
@@ -137,21 +132,21 @@ ast-grep supports the following cases:
 
 #### `StringCase`
 
-| Name         | Example input | Example output | Separator sensitive? |
-| ------------ | ------------: | -------------: | -------------------: |
-| `lowerCase`  |       astGrep |        astgrep |                   No |
-| `upperCase`  |       astGrep |        ASTGREP |                   No |
-| `capitalize` |       astGrep |        AstGrep |                   No |
-| `camelCase`  |      ast_grep |        astGrep |                  Yes |
-| `snakeCase`  |       astGrep |       ast_grep |                  Yes |
-| `kebabCase`  |       astGrep |       ast-grep |                  Yes |
-| `pascalCase` |       astGrep |        AstGrep |                  Yes |
+|Name|Example input|Example output|Separator sensitive?|
+|---|---:|---:|--:|
+|`lowerCase`| astGrep| astgrep| No|
+|`upperCase`| astGrep| ASTGREP| No|
+|`capitalize`| astGrep| AstGrep| No|
+|`camelCase`| ast_grep| astGrep| Yes|
+|`snakeCase`| astGrep| ast_grep| Yes|
+|`kebabCase`| astGrep| ast-grep| Yes|
+|`pascalCase`| astGrep| AstGrep| Yes|
 
 ### `separatedBy`
 
-- type: `Array<Separator>`
-- required: false
-- default: all separators
+* type: `Array<Separator>`
+* required: false
+* default: all separators
 
 A list of separators to be used to separate words in the source string.
 
@@ -159,20 +154,20 @@ ast-grep supports the following separators:
 
 #### `Separator`
 
-| Name         | Separator character | Example input | Example output |
-| ------------ | :-----------------: | :-----------: | :------------: |
-| `Dash`       |         `-`         |   ast-grep    |  [ast, grep]   |
-| `Dot`        |         `.`         |   ast.grep    |  [ast, grep]   |
-| `Space`      |         ``          |   ast grep    |  [ast, grep]   |
-| `Slash`      |         `/`         |   ast/grep    |  [ast, grep]   |
-| `Underscore` |         `_`         |   ast_grep    |  [ast, grep]   |
-| `CaseChange` |   Described below   |    astGrep    |  [ast, grep]   |
+|Name|Separator character |Example input|Example output|
+|---|:---:|:---:|:---:|
+|`Dash`|`-`| ast-grep| [ast, grep]|
+|`Dot`|`.`| ast.grep| [ast, grep]|
+|`Space`|` `| ast grep| [ast, grep]|
+|`Slash`|`/`| ast/grep| [ast, grep]|
+|`Underscore`|`_`| ast_grep| [ast, grep]|
+|`CaseChange`|Described below| astGrep| [ast, grep]|
 
 `CaseChange` separator is a special separator that splits the string when two consecutive characters' case changed.
 More specifically, it splits the string in the following two scenarios.
 
-- At the position between a lowercase letter and an uppercase letter, e.g. `astGrep` -> `[ast, Grep]`
-- Before an uppercase letter that is not the first character and is followed by a lowercase letter, e.g. `ASTGrep` -> `[AST, Grep]`
+* At the position between a lowercase letter and an uppercase letter, e.g. `astGrep` -> `[ast, Grep]`
+* Before an uppercase letter that is not the first character and is followed by a lowercase letter, e.g. `ASTGrep` -> `[AST, Grep]`
 
 More examples are shown below. You can also inspect [the equivalent regular expression examples](https://regexr.com/7prq5) to see how `CaseChange` works in action
 
@@ -183,17 +178,18 @@ regExp -> [reg, Exp]
 writeHTML -> [write, HTML]
 ```
 
+
 ### `source`
 
-- type: `String`
-- required: true
+* type: `String`
+* required: true
 
 A meta-variable name to convert.
 
 _The meta-variable name must be prefixed with `$`._
 
-**Example**:
 
+**Example**:
 ```yaml
 transform:
   NEW_VAR:
@@ -208,10 +204,9 @@ transform:
 ```
 
 Suppose we have a string `ast_Grep` as the input `$VAR`, The example above will convert the string as following:
-
-- split the string by `_` into `[ast, Grep]`
-- convert the words to lowercase words `[ast, grep]`
-- join the words by `-` into the target string `ast-grep`
+* split the string by `_` into `[ast, Grep]`
+* convert the words to lowercase words `[ast, grep]`
+* join the words by `-` into the target string `ast-grep`
 
 Thank [Aarni Koskela](https://github.com/akx) for proposing and implementing the first version of this feature!
 
@@ -225,9 +220,8 @@ Currently, it is an experimental feature. Please see the [issue](https://github.
 `rewrite` transformation expects an object value with the following properties:
 
 ### `source`
-
-- type: `String`
-- required: true
+* type: `String`
+* required: true
 
 The meta-variable name to be rewritten.
 
@@ -237,9 +231,8 @@ ast-grep will find matched descendants nodes of the source meta-variable for sin
 For multiple meta-variables, ast-grep will find matched descendants nodes of each node in the meta-variable list.
 
 ### `rewriters`
-
-- type: `Array<String>`
-- required: true
+* type: `Array<String>`
+* required: true
 
 A list of rewriter rules to apply to the source meta-variable. The rewrite rules work like ast-grep's fix mode.
 
@@ -251,10 +244,10 @@ ast-grep will find nodes in the meta-variable's AST that match the rewriter rule
 
 For one single node, `rewriters` are matched in order, and only the first match will be applied. Subsequent rules will be ignored.
 
-### `joinBy`
 
-- type: `String`
-- required: false
+### `joinBy`
+* type: `String`
+* required: false
 
 By default, the rewritten nodes will be put back to the original syntax tree.
 

@@ -42,12 +42,12 @@ The meta-variable `$MSG` captures the argument of `console.log` and is used in t
 
 ast-grep also has several other fields to fine-tune the process. The core fields in ast-grep's rule map naturally to the idea of **Find & Patch**.
 
-- **Find**
-  - Find a target node based on the [`rule`](https://ast-grep.github.io/reference/rule.html)
-  - Filter the matched nodes based on [`constraints`](https://ast-grep.github.io/reference/yaml.html#constraints)
-- **Patch**
-  - Rewrite the matched meta-variable based on [`transform`](https://ast-grep.github.io/reference/yaml/transformation.html)
-  - Replace the matched node with [`fix`](https://ast-grep.github.io/reference/yaml/fix.html), which can use the transformed meta-variables.
+* **Find**
+  * Find a target node based on the [`rule`](https://ast-grep.github.io/reference/rule.html)
+  * Filter the matched nodes based on [`constraints`](https://ast-grep.github.io/reference/yaml.html#constraints)
+* **Patch**
+  * Rewrite the matched meta-variable based on [`transform`](https://ast-grep.github.io/reference/yaml/transformation.html)
+  * Replace the matched node with [`fix`](https://ast-grep.github.io/reference/yaml/fix.html), which can use the transformed meta-variables.
 
 ## Limitation of the Current Workflow
 
@@ -56,7 +56,7 @@ However, this workflow has a limitation: it can only replace one node at a time,
 For example, suppose we want to rewrite barrel imports to single imports. A [barrel import](https://adrianfaciu.dev/posts/barrel-files/) is a way to consolidate the exports of multiple modules into a single convenient module that can be imported using a single import statement. For instance:
 
 ```js
-import { a, b, c } from './barrel'
+import {a, b, c} from './barrel';
 ```
 
 This imports three modules (`a`, `b`, and `c`) from a single barrel file (`barrel.js`) that re-exports them.
@@ -64,15 +64,15 @@ This imports three modules (`a`, `b`, and `c`) from a single barrel file (`barre
 Rewriting this to single imports has [some](https://vercel.com/blog/how-we-optimized-package-imports-in-next-js) [benefits](https://marvinh.dev/blog/speeding-up-javascript-ecosystem-part-7/), such as reducing [bundle size](https://dev.to/tassiofront/barrel-files-and-why-you-should-stop-using-them-now-bc4) or avoiding [conflicting names](https://flaming.codes/posts/barrel-files-in-javascript/).
 
 ```js
-import a from './barrel/a'
-import b from './barrel/b'
-import c from './barrel/c'
+import a from './barrel/a';
+import b from './barrel/b';
+import c from './barrel/c';
 ```
 
 This imports each module directly from its own file, without going through the barrel file.
 
 With the simple "Find and Patch" workflow, we cannot achieve this transformation easily. We either have to rewrite the whole import statement or rewrite each identifier one by one. We cannot replace the whole import statement because we cannot process the multiple identifiers, which requires processing a list of nodes at one time.
-Can we rewrite the identifiers one by one? This also fails because we cannot replace the whole import statement, so there will be unwanted import statement text surrounding the identifiers.
+ Can we rewrite the identifiers one by one? This also fails because we cannot replace the whole import statement, so there will be unwanted import statement text surrounding the identifiers.
 
 ```javascript
 // we cannot rewrite the whole import statements
@@ -84,6 +84,7 @@ import { ??, ??, ?? } from './barrel';
 ```
 
 We need a better way to rewrite code that involves multiple nodes or lists of nodes. And here comes **Find & Patch**.
+
 
 ## Extend the Concept of `Find` and `Patch`
 
@@ -140,7 +141,7 @@ The `rewrite-identifier` above will:
 1. First, find each `identifier` AST node and capture it as `$IDENT`.
 2. Rewrite the identifier to a new import statement.
 
-For example, the rewriter will change identifier `a` to `import a from './barrel/a'`.
+For example, the rewriter will change identifier `a` to  `import a from './barrel/a'`.
 
 **We can now apply the rewriter to the matched variable `$$$IDENTS`.**
 

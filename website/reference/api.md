@@ -52,11 +52,11 @@ export function pattern(lang: Lang, pattern: string): NapiConfig
 #### Example
 
 ```ts
-import { Lang, parse } from '@ast-grep/napi'
+import { parse, Lang } from '@ast-grep/napi'
 
 const ast = parse(Lang.JavaScript, source)
 const root = ast.root()
-root.find('console.log')
+root.find("console.log")
 ```
 
 ### SgRoot
@@ -85,11 +85,11 @@ class SgRoot {
 #### Example
 
 ```ts
-import { Lang, parse } from '@ast-grep/napi'
+import { parse, Lang } from '@ast-grep/napi'
 
 const ast = parse(Lang.JavaScript, source)
 const root = ast.root()
-root.find('console.log')
+root.find("console.log")
 ```
 
 ### SgNode
@@ -97,7 +97,6 @@ root.find('console.log')
 The main interface to traverse the AST.
 
 #### Type
-
 Most methods are self-explanatory. Please submit a new [issue](https://github.com/ast-grep/ast-grep/issues/new/choose) if you find something confusing.
 
 ```ts
@@ -163,7 +162,6 @@ interface NapiConfig {
 ```
 
 ### FindConfig
-
 `FindConfig` is used in `findInFiles`.
 
 #### Type
@@ -191,9 +189,8 @@ interface Edit {
 ```
 
 ### Useful Examples
-
-- [Test Case Source](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/index.spec.ts) for `@ast-grep/napi`
-- ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
+* [Test Case Source](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/index.spec.ts) for `@ast-grep/napi`
+* ast-grep usage in [vue-vine](https://github.com/vue-vine/vue-vine/blob/b661fd2dfb54f2945e7bf5f3691443e05a1ab8f8/packages/compiler/src/analyze.ts#L32)
 
 ### Language Object (deprecated) <Badge type="danger" text="Deprecated" />
 
@@ -220,7 +217,7 @@ export declare namespace js {
   /** @deprecated use `findInFiles(Lang.JavaScript, config, callback)` instead */
   export function findInFiles(
     config: FindConfig,
-    callback: (err: null | Error, result: SgNode[]) => void,
+    callback: (err: null | Error, result: SgNode[]) => void
   ): Promise<number>
 }
 ```
@@ -247,6 +244,7 @@ class SgRoot:
     def __init__(self, src: str, language: str) -> None: ...
     def root(self) -> SgNode: ...
 ```
+
 
 ### SgNode
 

@@ -8,10 +8,9 @@ However, to ast-grep's scan need some scaffolding for project setup. We will wal
 
 :::tip
 `ast-grep scan` requires at least one file and one directory to work:
-
-- `sgconfig.yml`, the [project configuration](/reference/sgconfig.html) file
-- a directory storing rule files, usually `rules/`
-  :::
+* `sgconfig.yml`, the [project configuration](/reference/sgconfig.html) file
+* a directory storing rule files, usually `rules/`
+:::
 
 ## Create Scaffolding
 
@@ -19,13 +18,12 @@ To set up ast-grep's scanning, you can simply run the command `ast-grep new` in 
 
 ```markdown
 No sgconfig.yml found. Creating a new ast-grep project...
-
 > Where do you want to have your rules? rules
 > Do you want to create rule tests? Yes
 > Where do you want to have your tests? rule-tests
 > Do you want to create folder for utility rules? Yes
 > Where do you want to have your utilities? utils
-> Your new ast-grep project has been created!
+Your new ast-grep project has been created!
 ```
 
 After you answering these questions, you will get a folder structure like the below.
@@ -47,9 +45,9 @@ You will be asked several questions about the rule going to be created. Suppose 
 ```markdown
 > What is your rule's name? no-eval
 > Choose rule's language JavaScript
-> Created rules at ./rules/no-eval.yml
+Created rules at ./rules/no-eval.yml
 > Do you also need to create a test for the rule? Yes
-> Created test at rule-tests/no-eval-test.yml
+Created test at rule-tests/no-eval-test.yml
 ```
 
 Now you can see open the new rule created in the `rules/no-eval.yml`. File path might vary depending on your choice on the first step.
@@ -101,12 +99,13 @@ Error: 1 error(s) found in code.
 Help: Scan succeeded and found error level diagnostics in the codebase.
 ```
 
+
 ## Summary
 
 In this section we learnt how to set up ast-grep project, create new rules using cli tool and scan problems in the repository.
 
 To summarize the commands we used:
 
-- `ast-grep new` - Create a new ast-grep project
-- `ast-grep new rule` - Create a new rule in a rule folder.
-- `ast-grep scan` - Scan the codebase with the rules in the project.
+* `ast-grep new` - Create a new ast-grep project
+* `ast-grep new rule` - Create a new rule in a rule folder.
+* `ast-grep scan` - Scan the codebase with the rules in the project.

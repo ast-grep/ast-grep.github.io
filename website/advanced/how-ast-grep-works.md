@@ -8,7 +8,7 @@ This is where **ast-grep** comes into play. Designed as a powerful structural se
 
 ## The Workflow of ast-grep
 
-Generally speaking, ast-grep takes user _queries of various input_ formats, _parses the code into an AST_ using TreeSitter, and performs _search, rewrite, lint, and analysis_, utilizing the full power of CPU cores.
+Generally speaking, ast-grep takes user _queries of various input_ formats, _parses the code into an AST_ using TreeSitter, and performs _search, rewrite, lint, and analysis_,  utilizing the full power of CPU cores.
 
 ### **Query via Various Formats**
 
@@ -49,7 +49,7 @@ ast-grep can be helpful for these scenarios.
 ## Example in the Real World
 
 - **Pattern + Search**: [CodeRabbit](https://coderabbit.ai/) uses ast-grep patterns to search code repo for code review knowledge.
-  This example is collected from ast-grep's own [dogfooding](https://github.com/ast-grep/ast-grep/pull/780#discussion_r1425817237).
+This example is collected from ast-grep's own [dogfooding](https://github.com/ast-grep/ast-grep/pull/780#discussion_r1425817237).
 
 - **API + Rewrite**: [@vue-macros/cli](https://github.com/vue-macros/vue-macros-cli) is a CLI for rewriting at Vue Macros powered by ast-grep.
 

@@ -22,13 +22,13 @@ head:
 
 # An Example of Rust's Fearless Concurrency
 
-Rust is famous for its "fearless concurrency." It's a bold claim, but what does it actually _mean_? How does Rust let you write concurrent code without constantly battling race conditions? [ast-grep](https://ast-grep.github.io/)'s [recent refactor](https://github.com/ast-grep/ast-grep/discussions/1710) is a great example of Rust's concurrency model in action.
+Rust is famous for its "fearless concurrency." It's a bold claim, but what does it actually *mean*? How does Rust let you write concurrent code without constantly battling race conditions? [ast-grep](https://ast-grep.github.io/)'s [recent refactor](https://github.com/ast-grep/ast-grep/discussions/1710) is a great example of Rust's concurrency model in action.
 
 ## Old Architecture of ast-grep's Printer
 
 `ast-grep` is basically a syntax-aware `grep` that understands code. It lets you search for specific patterns within files in a directory. To make things fast, it uses multiple worker threads to churn through files simultaneously. The results then need to be printed to the console, and that's where our concurrency story begins.
 
-Initially, ast-grep had a single `Printer` object, shared by _all_ worker threads. This was designed for maximum parallelism – print the results as soon as you find them! Therefore, the `Printer` had to be thread-safe, meaning it had to implement the `Send + Sync` traits in Rust. These traits are like stamps of approval, saying "this type is safe to move between threads (`Send`) and share between threads (`Sync`)."
+Initially, ast-grep had a single `Printer` object, shared by *all* worker threads. This was designed for maximum parallelism – print the results as soon as you find them! Therefore, the `Printer` had to be thread-safe, meaning it had to implement the `Send + Sync` traits in Rust. These traits are like stamps of approval, saying "this type is safe to move between threads (`Send`) and share between threads (`Sync`)."
 
 ```rust
 trait Printer: Send + Sync {
@@ -73,11 +73,13 @@ While this got results quickly, it wasn't ideal from a user experience perspecti
 
 The architecture needed a shift. Instead of sharing a printer, we moved to a message-passing model, using an [`mpsc` channel](https://doc.rust-lang.org/std/sync/mpsc/). `mpsc` stands for Multi-Producer, Single-Consumer FIFO queue, where a `Sender` is used to send data to a `Receiver`.
 
-Now, worker threads would send search results to a single dedicated _printer thread_. This printer thread then handles the printing sequentially and neatly.
+Now, worker threads would send search results to a single dedicated *printer thread*. This printer thread then handles the printing sequentially and neatly.
 
 Here's the magic: because the printer is no longer shared between threads, we could remove the `Send + Sync` constraint! No more complex locking mechanisms! The printer could be a simple struct with a mutable reference to the standard output.
 
+
 ![concurrent programming bell curve](/image/blog/concurrent.jpg)
+
 
 Here are some more concrete changes we made:
 
@@ -137,9 +139,11 @@ impl Printer for StdoutPrinter {
 
 Without the need to lock the printer object, the code became **faster** in a single thread, without data-racing.
 
+
 Thanks to Rust, this big architectural change was relatively painless. The compiler caught all the places where we were trying to share the printer between threads. It forced us to think about the design and make the necessary changes.
 
 ## What Rust Teaches Us
+
 
 This experience with `ast-grep` really highlights Rust's approach to concurrency. Rust forces you to _think deeply_ about your design and _encode_ it in the type system.
 
@@ -154,8 +158,8 @@ In other languages, concurrency is often treated as an afterthought. It is up to
 
 [And what, Rust, must we give in return?](https://knowyourmeme.com/memes/guldan-offer) Rust's approach comes with a trade-off:
 
-- **Upfront design investment:** You need to design your architecture thoroughly before you start writing actual production code. While the compiler could be helpful when you explore options or ambiguous design ideas, it can also be a hindrance when you need to iterate quickly.
-- **Refactoring can be hard:** If you need to change your architectural design, it can be an invasive change across your codebase, because you need to change the type signatures, the concurrency primitives, and data flows. Other languages might be more flexible in this regard.
+* **Upfront design investment:** You need to design your architecture thoroughly before you start writing actual production code. While the compiler could be helpful when you explore options or ambiguous design ideas, it can also be a hindrance when you need to iterate quickly.
+* **Refactoring can be hard:** If you need to change your architectural design, it can be an invasive change across your codebase, because you need to change the type signatures, the concurrency primitives, and data flows. Other languages might be more flexible in this regard.
 
 Rust feels a bit like a mini theorem prover, like [Lean](https://lean-lang.org/). You are using the compiler to prove that your concurrent model is correct and safe.
 

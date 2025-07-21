@@ -2,7 +2,7 @@
 
 By default, ast-grep uses a smart strategy to match pattern against the AST node. All nodes in the pattern must be matched, but it will skip unnamed nodes in target code.
 
-For background and the definition of **_named_** and **_unnamed_** nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
+For background and the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
 
 ## How ast-grep's Smart Matching Works
 
@@ -12,7 +12,7 @@ The following pattern `function $A() {}` will match both plain function and asyn
 
 ```js
 // function $A() {}
-function foo() {} // matched
+function foo() {}    // matched
 async function bar() {} // matched
 ```
 
@@ -22,7 +22,7 @@ However, if the `async` keyword appears in the pattern code, it will [not be ski
 
 ```js
 // async function $A() {}
-function foo() {} // not matched
+function foo() {}    // not matched
 async function bar() {} // matched
 ```
 
@@ -41,18 +41,19 @@ To this end, ast-grep implements different pattern matching algorithms to provid
 Different matching algorithm is controlled by **pattern strictness**.
 
 :::tip Strictness
-Strictness is defined in terms of what nodes can be _skipped_ during matching.
+Strictness is defined in terms of what nodes can be *skipped* during matching.
 
-A _stricter_ matching algorithm will _skip fewer nodes_ and accordingly _produce fewer matches_.
+A *stricter* matching algorithm will *skip fewer nodes* and accordingly *produce fewer matches*.
 :::
+
 
 Currently, ast-grep has these strictness levels.
 
-- `cst`: All nodes in the pattern and target code must be matched. No node is skipped.
-- `smart`: All nodes in the pattern must be matched, but it will skip unnamed nodes in target code. This is the default behavior.
-- `ast`: Only named AST nodes in both pattern and target code are matched. All unnamed nodes are skipped.
-- `relaxed`: Named AST nodes in both pattern and target code are matched. Comments and unnamed nodes are ignored.
-- `signature`: Only named AST nodes' kinds are matched. Comments, unnamed nodes and text are ignored.
+* `cst`: All nodes in the pattern and target code must be matched. No node is skipped.
+* `smart`: All nodes in the pattern must be matched, but it will skip unnamed nodes in target code. This is the default behavior.
+* `ast`: Only named AST nodes in both pattern and target code are matched. All unnamed nodes are skipped.
+* `relaxed`: Named AST nodes in both pattern and target code are matched. Comments and unnamed nodes are ignored.
+* `signature`: Only named AST nodes' kinds are matched. Comments, unnamed nodes and text are ignored.
 
 ## Strictness Examples
 
@@ -61,8 +62,8 @@ Let's see how strictness `ast` will impact matching. In our previous import lib 
 ```js
 import $A from 'lib' // pattern
 import A1 from 'lib' // match, quotation is ignored
-import A2 from 'lib' // match, quotation is ignored
-import A3 from 'not' // no match, string_fragment is checked
+import A2 from "lib" // match, quotation is ignored
+import A3 from "not" // no match, string_fragment is checked
 ```
 
 First, the pattern and code will be parsed as the tree below. Named
@@ -101,7 +102,7 @@ Another example will be matching the pattern `foo(bar)` across different strictn
 // exact match in all levels
 foo(bar)
 // match in all levels except cst due to the trailing comma in code
-foo(bar)
+foo(bar,)
 // match in relaxed and signature because comment is skipped
 foo(/* comment */ bar)
 // match in signature because text content is ignored
@@ -115,13 +116,14 @@ _is the node named_ and _is the node in pattern or code_
 
 The table below summarize how nodes are skipped during matching.
 
-| Strictness  | Named Node in Pattern     | Named Node in Code to Search | Unnamed Node in Pattern | Unnamed Node in Code to Search |
-| ----------- | ------------------------- | ---------------------------- | ----------------------- | ------------------------------ |
-| `cst`       | Keep                      | Keep                         | Keep                    | Keep                           |
-| `smart`     | Keep                      | Keep                         | Keep                    | Skip                           |
-| `ast`       | Keep                      | Keep                         | Skip                    | Skip                           |
-| `relaxed`   | Skip comment              | Skip comment                 | Skip                    | Skip                           |
-| `signature` | Skip comment. Ignore text | Skip comment. Ignore text    | Skip                    | Skip                           |
+|Strictness|Named Node in Pattern|Named Node in Code to Search|Unnamed Node in Pattern| Unnamed Node in Code to Search|
+|---|----|---|---|---|
+|`cst`| Keep | Keep| Keep | Keep |
+|`smart`| Keep| Keep | Keep | Skip |
+|`ast`| Keep| Keep | Skip| Skip |
+|`relaxed`| Skip comment | Skip comment | Skip | Skip |
+|`signature`| Skip comment. Ignore text | Skip comment. Ignore text | Skip | Skip |
+
 
 ## Configure Strictness
 

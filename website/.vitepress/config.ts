@@ -1,4 +1,4 @@
-import { DefaultTheme, defineConfig } from 'vitepress'
+import { defineConfig, DefaultTheme } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
 
 const gaScript = `
@@ -15,21 +15,15 @@ const sidebar: DefaultTheme.Sidebar = [
     items: [
       { text: 'Quick Start', link: '/guide/quick-start.html' },
       { text: 'Pattern Syntax', link: '/guide/pattern-syntax.html' },
-      {
-        text: 'Rule Essentials',
-        link: '/guide/rule-config.html',
-        collapsed: true,
-        items: [
+      { text: 'Rule Essentials', link: '/guide/rule-config.html', collapsed: true,
+        items:[
           { text: 'Atomic Rule', link: '/guide/rule-config/atomic-rule.html' },
           { text: 'Relational Rule', link: '/guide/rule-config/relational-rule.html' },
           { text: 'Composite Rule', link: '/guide/rule-config/composite-rule.html' },
           { text: 'Utility Rule', link: '/guide/rule-config/utility-rule.html' },
-        ],
-      },
+      ],},
       {
-        text: 'Project Setup',
-        collapsed: true,
-        link: '/guide/scan-project.html',
+        text: 'Project Setup', collapsed: true, link: '/guide/scan-project.html',
         items: [
           { text: 'Project Configuration', link: '/guide/project/project-config.html' },
           { text: 'Lint Rule', link: '/guide/project/lint-rule.html' },
@@ -37,34 +31,25 @@ const sidebar: DefaultTheme.Sidebar = [
           { text: 'Error Report', link: '/guide/project/severity.html' },
         ],
       },
-      {
-        text: 'Rewrite Code',
-        link: '/guide/rewrite-code.html',
-        collapsed: true,
+      { text: 'Rewrite Code', link: '/guide/rewrite-code.html', collapsed: true,
         items: [
           { text: 'Transform Code', link: '/guide/rewrite/transform.html' },
           { text: 'Rewriter Rule', link: '/guide/rewrite/rewriter.html' },
         ],
       },
       {
-        text: 'Tooling Overview',
-        link: '/guide/tooling-overview.html',
-        collapsed: true,
+        text: 'Tooling Overview', link: '/guide/tooling-overview.html', collapsed: true,
         items: [
           { text: 'Editor Integration', link: '/guide/tools/editors.html' },
           { text: 'JSON mode', link: '/guide/tools/json.html' },
         ],
       },
-      {
-        text: 'API Usage',
-        link: '/guide/api-usage.html',
-        collapsed: true,
-        items: [
+      { text: 'API Usage', link: '/guide/api-usage.html', collapsed: true,
+        items:[
           { text: 'JavaScript API', link: '/guide/api-usage/js-api.html' },
           { text: 'Python API', link: '/guide/api-usage/py-api.html' },
           { text: 'Performance Tip', link: '/guide/api-usage/performance-tip.html' },
-        ],
-      },
+        ]},
     ],
     collapsed: false,
   },
@@ -72,18 +57,18 @@ const sidebar: DefaultTheme.Sidebar = [
     text: 'Examples',
     link: '/catalog',
     items: [
-      { text: 'C', link: '/catalog/c/' },
-      { text: 'C++', link: '/catalog/cpp/' },
-      { text: 'Go', link: '/catalog/go/' },
-      { text: 'HTML', link: '/catalog/html/' },
-      { text: 'Java', link: '/catalog/java/' },
-      { text: 'Kotlin', link: '/catalog/kotlin/' },
-      { text: 'Python', link: '/catalog/python/' },
-      { text: 'Ruby', link: '/catalog/ruby/' },
-      { text: 'Rust', link: '/catalog/rust/' },
-      { text: 'TypeScript', link: '/catalog/typescript/' },
-      { text: 'TSX', link: '/catalog/tsx/' },
-      { text: 'YAML', link: '/catalog/yaml/' },
+      { text: 'C', link: '/catalog/c/'},
+      { text: 'C++', link: '/catalog/cpp/'},
+      { text: 'Go', link: '/catalog/go/'},
+      { text: 'HTML', link: '/catalog/html/'},
+      { text: 'Java', link: '/catalog/java/'},
+      { text: 'Kotlin', link: '/catalog/kotlin/'},
+      { text: 'Python', link: '/catalog/python/'},
+      { text: 'Ruby', link: '/catalog/ruby/'},
+      { text: 'Rust', link: '/catalog/rust/'},
+      { text: 'TypeScript', link: '/catalog/typescript/'},
+      { text: 'TSX', link: '/catalog/tsx/'},
+      { text: 'YAML', link: '/catalog/yaml/'},
     ],
     collapsed: true,
   },
@@ -98,10 +83,7 @@ const sidebar: DefaultTheme.Sidebar = [
   {
     text: 'Reference',
     items: [
-      {
-        text: 'Command Line Interface',
-        link: '/reference/cli.html',
-        collapsed: true,
+      { text: 'Command Line Interface', link: '/reference/cli.html', collapsed: true,
         items: [
           { text: 'ast-grep run', link: '/reference/cli/run.html' },
           { text: 'ast-grep scan', link: '/reference/cli/scan.html' },
@@ -110,10 +92,7 @@ const sidebar: DefaultTheme.Sidebar = [
         ],
       },
       { text: 'Project Config', link: '/reference/sgconfig.html' },
-      {
-        text: 'Rule Config',
-        link: '/reference/yaml.html',
-        collapsed: false,
+      { text: 'Rule Config', link: '/reference/yaml.html', collapsed: false,
         items: [
           { text: 'fix', link: '/reference/yaml/fix.html' },
           { text: 'transformation', link: '/reference/yaml/transformation.html' },
@@ -130,21 +109,18 @@ const sidebar: DefaultTheme.Sidebar = [
   {
     text: 'Advanced Topics',
     items: [
-      { text: 'Frequently Asked Questions', link: '/advanced/faq.html' },
-      {
-        text: 'How ast-grep Works',
-        link: '/advanced/how-ast-grep-works.html',
-        collapsed: false,
+      { text: 'Frequently Asked Questions', link: '/advanced/faq.html'},
+      { text: 'How ast-grep Works', link: '/advanced/how-ast-grep-works.html', collapsed: false,
         items: [
-          { text: 'Core Concepts', link: '/advanced/core-concepts.html' },
-          { text: 'Pattern Syntax', link: '/advanced/pattern-parse.html' },
-          { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html' },
-          { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html' },
-        ],
+          { text: 'Core Concepts', link: '/advanced/core-concepts.html'},
+          { text: 'Pattern Syntax', link: '/advanced/pattern-parse.html'},
+          { text: 'Pattern Match Algorithm', link: '/advanced/match-algorithm.html'},
+          { text: 'How Rewrite Works', link: '/advanced/find-n-patch.html'},
+        ] ,
       },
-      { text: 'Custom Language Support', link: '/advanced/custom-language.html' },
-      { text: 'Multi-Language Documents', link: '/advanced/language-injection.html' },
-      { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison.html' },
+      { text: 'Custom Language Support', link: '/advanced/custom-language.html'},
+      { text: 'Multi-Language Documents', link: '/advanced/language-injection.html'},
+      { text: 'Comparison with Other Tools', link: '/advanced/tool-comparison.html'},
     ],
     collapsed: true,
   },
@@ -163,13 +139,10 @@ const sidebar: DefaultTheme.Sidebar = [
       { text: 'Playground', link: '/playground.html' },
       { text: 'Codemod Studio', link: 'https://app.codemod.com/studio' },
       { text: 'Blog', link: '/blog.html' },
-      {
-        text: 'VSCode',
-        link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode',
-      },
-      { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ' },
-      { text: 'StackOverflow', link: 'https://stackoverflow.com/questions/tagged/ast-grep' },
-      { text: 'Reddit', link: 'https://www.reddit.com/r/astgrep/' },
+      { text: 'VSCode', link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode'},
+      { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ'},
+      { text: 'StackOverflow', link: 'https://stackoverflow.com/questions/tagged/ast-grep'},
+      { text: 'Reddit', link: 'https://www.reddit.com/r/astgrep/'},
       { text: 'Docs.rs', link: 'https://docs.rs/ast-grep-core/latest/ast_grep_core/' },
     ],
     collapsed: true,
@@ -179,10 +152,9 @@ const sidebar: DefaultTheme.Sidebar = [
 export default defineConfig({
   lang: 'en-US',
   title: 'ast-grep',
-  description:
-    'ast-grep(sg) is a lightning fast and user friendly tool for code searching, linting, rewriting at large scale.',
+  description: 'ast-grep(sg) is a lightning fast and user friendly tool for code searching, linting, rewriting at large scale.',
   head: [
-    ['script', { async: 'async', src: 'https://www.googletagmanager.com/gtag/js?id=G-EZSJ3YF2RG' }],
+    ['script', {async: 'async', src: 'https://www.googletagmanager.com/gtag/js?id=G-EZSJ3YF2RG'}],
     ['script', {}, gaScript],
   ],
   outDir: './dist',
@@ -210,7 +182,7 @@ export default defineConfig({
           { text: 'Rule Config', link: '/reference/yaml.html' },
           { text: 'Rule Object', link: '/reference/rule.html' },
           { text: 'Playground Manual', link: '/reference/playground.html' },
-        ],
+        ]
       },
       {
         text: 'Resources',
@@ -229,19 +201,16 @@ export default defineConfig({
       { icon: 'discord', link: 'https://discord.com/invite/4YZjf6htSQ' },
     ],
     editLink: {
-      pattern: 'https://github.com/ast-grep/ast-grep.github.io/edit/main/website/:path',
+      pattern: 'https://github.com/ast-grep/ast-grep.github.io/edit/main/website/:path'
     },
     sidebar: {
       '/blog/': [
         { text: 'Blog List', link: '/blog.html' },
         { text: 'Homepage', link: '/' },
-        {
-          text: 'VSCode',
-          link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode',
-        },
-        { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ' },
-        { text: 'StackOverflow', link: 'https://stackoverflow.com/questions/tagged/ast-grep' },
-        { text: 'Reddit', link: 'https://www.reddit.com/r/astgrep/' },
+        { text: 'VSCode', link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode'},
+        { text: 'Discord', link: 'https://discord.com/invite/4YZjf6htSQ'},
+        { text: 'StackOverflow', link: 'https://stackoverflow.com/questions/tagged/ast-grep'},
+        { text: 'Reddit', link: 'https://www.reddit.com/r/astgrep/'},
         { text: 'Docs.rs', link: 'https://docs.rs/ast-grep-core/latest/ast_grep_core/' },
       ],
       '/': sidebar,

@@ -34,10 +34,10 @@ ast-grep supports multiple programming languages, such as JavaScript, [TypeScrip
 
 ast-grep can help you with many tasks that involve code search and transformation, such as:
 
-- Finding and fixing bugs, vulnerabilities, or code smells
-- Refactoring or migrating code to a new syntax or framework
-- Enforcing or checking coding standards or best practices
-- Analyzing various code using a uniform interface
+*   Finding and fixing bugs, vulnerabilities, or code smells
+*   Refactoring or migrating code to a new syntax or framework
+*   Enforcing or checking coding standards or best practices
+*   Analyzing various code using a uniform interface
 
 > ast-grep can save you time and effort by automating repetitive or tedious tasks that would otherwise require manual editing or complex scripting.
 
@@ -45,25 +45,25 @@ ast-grep can help you with many tasks that involve code search and transformatio
 
 ast-grep is constantly evolving and improving thanks to the feedback and contributions from the users and sponsors. Here are some of the recent changes and updates of ast-grep:
 
-- ast-grep’s YAML rule now has a new `transform` rule: `conversion`, which can change matches to different cases, such as upper, lower, or camelcase.
-- ast-grep’s diff/rewriting now can fix multiple rules at once. See [commit](https://github.com/ast-grep/ast-grep/commit/2b301116996b7b010ed271672d35a3529fb36e56)
-- `ast-grep test -f`now accepts regex to selectively run ast-grep’s test case.
-- `ast-grep --json` supports multiple formats that powers [telescope-sg](https://github.com/Marskey/telescope-sg), a neovim plugin that integrates ast-grep with telescope.
-- ast-grep now prints matches with context like `grep -A -B -C`. See [issue](https://github.com/ast-grep/ast-grep/issues/464)
-- JSON schema is added for better YAML rule editing. See [folder](https://github.com/ast-grep/ast-grep/tree/main/schemas)
-- ast-grep now has official github action setup! See [action](https://github.com/ast-grep/action)
-- New documentation for [rewriting code](/guide/rewrite-code.html), [example catalogs](/catalog/), and [playground](/reference/playground.html).
+*   ast-grep’s YAML rule now has a new `transform` rule: `conversion`, which can change matches to different cases, such as upper, lower, or camelcase.
+*   ast-grep’s diff/rewriting now can fix multiple rules at once. See [commit](https://github.com/ast-grep/ast-grep/commit/2b301116996b7b010ed271672d35a3529fb36e56)
+*   `ast-grep test -f`now accepts regex to selectively run ast-grep’s test case.
+*   `ast-grep --json` supports multiple formats that powers [telescope-sg](https://github.com/Marskey/telescope-sg), a neovim plugin that integrates ast-grep with telescope.
+*   ast-grep now prints matches with context like `grep -A -B -C`. See [issue](https://github.com/ast-grep/ast-grep/issues/464)
+*   JSON schema is added for better YAML rule editing. See [folder](https://github.com/ast-grep/ast-grep/tree/main/schemas)
+*   ast-grep now has official github action setup! See [action](https://github.com/ast-grep/action)
+*   New documentation for [rewriting code](/guide/rewrite-code.html), [example catalogs](/catalog/), and [playground](/reference/playground.html).
 
 ## What’s next for ast-grep?
 
 ast-grep has many plans and goals for the future to make it more useful and user-friendly. Here are some of the upcoming features and enhancements of ast-grep:
 
-- Add python api support to allow users to write custom scripts using ast-grep. See [issue](https://github.com/ast-grep/ast-grep/issues/389)
-- Support global language config to let users specify default options for each language. See [issue](https://github.com/ast-grep/ast-grep/issues/658)
-- Improve napi documentation to help users understand how to use the native node module of ast-grep. See [issue](https://github.com/ast-grep/ast-grep/issues/682)
-- Add metavar filter to make ast-grep run more powerful by allowing users to filter matches based on metavariable values. See [issue](https://github.com/ast-grep/ast-grep/issues/379)
-- Add ast-grep’s pattern/rule tutorial to teach users how to write effective and efficient patterns and rules for ast-grep. See [issue](https://github.com/ast-grep/ast-grep.github.io/issues/154)
-- Add examples to ast-grep’s reference page to illustrate the usage and functionality of each option and feature. See [issue](https://github.com/ast-grep/ast-grep.github.io/issues/266)
+*   Add python api support to allow users to write custom scripts using ast-grep. See [issue](https://github.com/ast-grep/ast-grep/issues/389)
+*   Support global language config to let users specify default options for each language. See [issue](https://github.com/ast-grep/ast-grep/issues/658)
+*   Improve napi documentation to help users understand how to use the native node module of ast-grep. See [issue](https://github.com/ast-grep/ast-grep/issues/682)
+*   Add metavar filter to make ast-grep run more powerful by allowing users to filter matches based on metavariable values. See [issue](https://github.com/ast-grep/ast-grep/issues/379)
+*   Add ast-grep’s pattern/rule tutorial to teach users how to write effective and efficient patterns and rules for ast-grep. See [issue](https://github.com/ast-grep/ast-grep.github.io/issues/154)
+*   Add examples to ast-grep’s reference page to illustrate the usage and functionality of each option and feature. See [issue](https://github.com/ast-grep/ast-grep.github.io/issues/266)
 
 ## How to get involved?
 

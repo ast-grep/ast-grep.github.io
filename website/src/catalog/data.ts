@@ -14,8 +14,7 @@ export function getRuleMetaData(filter: Filter, sortBy = 'name') {
   return allRules.filter(meta => {
     const langFilter = !selectedLanguages.length || selectedLanguages.includes(meta.language)
     const ruleFilter = !selectedRules.length || intersect(selectedRules, meta.rules)
-    const featureFilter = !filter.selectedFeatures.length ||
-      intersect(filter.selectedFeatures, meta.features)
+    const featureFilter = !filter.selectedFeatures.length || intersect(filter.selectedFeatures, meta.features)
     const typeFilter = !filter.selectedTypes.length || filter.selectedTypes.includes(meta.type)
     return langFilter && ruleFilter && featureFilter && typeFilter
   }).toSorted((a, b) => {
@@ -34,10 +33,10 @@ export function getRuleMetaData(filter: Filter, sortBy = 'name') {
 }
 
 export type Filter = {
-  selectedLanguages: ExampleLangs[]
-  selectedRules: string[]
-  selectedFeatures: string[]
-  selectedTypes: string[]
+  selectedLanguages: ExampleLangs[],
+  selectedRules: string[],
+  selectedFeatures: string[],
+  selectedTypes: string[],
 }
 
 export type ExampleLangs = keyof typeof languages
@@ -78,7 +77,7 @@ export const ruleFilters = {
     'any',
     'not',
     'matches',
-  ],
+  ]
 }
 
 export const features = [

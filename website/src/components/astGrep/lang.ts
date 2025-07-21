@@ -1,6 +1,6 @@
-import init, { findNodes, fixErrors, initializeTreeSitter, setupParser } from 'ast-grep-wasm'
+import init, { setupParser, initializeTreeSitter, findNodes, fixErrors } from 'ast-grep-wasm'
 import type { InjectionKey, Ref } from 'vue'
-import { provide, shallowRef, watchEffect } from 'vue'
+import { shallowRef, watchEffect, provide } from 'vue'
 import { parserPaths } from '../../../_data/parsers'
 
 export type SupportedLang = keyof typeof parserPaths
@@ -8,7 +8,7 @@ export type SupportedLang = keyof typeof parserPaths
 // monaco does not realize bash is shell but shell is not bash.
 // use this mapping to highlight bash
 const monacoLangMapping: Record<string, string> = {
-  bash: 'shell',
+  bash: 'shell'
 }
 export function normalizeMonacoLang(lang: string) {
   return monacoLangMapping[lang] || lang
@@ -50,18 +50,18 @@ async function setGlobalParser(lang: SupportedLang) {
 }
 
 export type Match = {
-  type: 'rule'
-  severity: string
-  message: string
-  rule: string
-  env: any
-  kind: string
-  range: [number, number, number, number]
+  type: 'rule',
+  severity: string,
+  message: string,
+  rule: string,
+  env: any,
+  kind: string,
+  range: [number, number, number, number],
 } | {
-  type: 'simple'
-  env: any
-  kind: string
-  range: [number, number, number, number]
+  type: 'simple',
+  env: any,
+  kind: string,
+  range: [number, number, number, number],
 }
 
 function shouldDisplayDiagnostic(rule: any) {
@@ -93,7 +93,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
   for (let [ruleId, nodes] of result.entries()) {
     for (let rule of json) {
       if (rule.id !== ruleId) {
-        continue
+        continue;
       }
       if (shouldDisplayDiagnostic(rule)) {
         for (let nm of nodes) {
@@ -117,7 +117,7 @@ export async function doFind(src: string, json: any[]): Promise<[Match[], string
           })
         }
       }
-      break
+      break;
     }
   }
   const fixed = fixErrors(src, json)

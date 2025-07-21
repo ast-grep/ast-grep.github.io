@@ -27,16 +27,16 @@ Bevy's migration guide is comprehensive, but daunting. It is sometimes overwhelm
 
 In this article, we will show you how to make migration easier by using some command line tools such as [`git`](https://git-scm.com/), [`cargo`](https://doc.rust-lang.org/cargo/) and [`ast-grep`](https://ast-grep.github.io/). These tools can help you track the changes, search for specific patterns in your code, and automate API migration. Hope you can migrate your Bevy projects with less hassle and more confidence by following our tips.
 
----
+----
 
 We will use the utility AI library [big-brain](https://github.com/zkat/big-brain), the second most starred Bevy project on GitHub, as an example to illustrate bumping Bevy version from 0.9 to 0.10.
 Upgrading consists of four big steps: **make a clean git branch**, **updating the dependencies**, **running fix commands**, and **fixing failing tests**. And here is a list of commands used in the migration.
 
-- `git`: Manage code history, keep code snapshot, and help you revert changes if needed.
-- `cargo check`: Quickly check code for errors and warnings without building it.
-- `ast-grep`: Search for ASTs in source and automate code rewrite using patterns or expressions.
-- `cargo fmt`: Format the rewritten code according to Rust style guidelines.
-- `cargo test`: Run tests in the project and report the results to ensure the program still works.
+* `git`: Manage code history, keep code snapshot, and help you revert changes if needed.
+* `cargo check`: Quickly check code for errors and warnings without building it.
+* `ast-grep`: Search for ASTs in source and automate code rewrite using patterns or expressions.
+* `cargo fmt`: Format the rewritten code according to Rust style guidelines.
+* `cargo test`: Run tests in the project and report the results to ensure the program still works.
 
 ## Preparation
 
@@ -80,7 +80,6 @@ Now it's time for us to kick off the real migration! First big step is to update
 Let's change the dependency file `Cargo.toml`. Luckily big-brain has clean dependencies.
 
 Here is the diff:
-
 ```diff
 diff --git a/Cargo.toml b/Cargo.toml
 index c495381..9e99a3b 100644
@@ -105,7 +104,6 @@ index c495381..9e99a3b 100644
 ### Update lock-file
 
 After you have updated your dependencies, you need to build a new lock-file that reflects the changes. You can do this by running the following command:
-
 ```bash
 cargo check
 ```
@@ -143,7 +141,6 @@ error[E0432]: unresolved import `CoreStage`
 226 |         use CoreStage::*;
     |             ^^^^^^^^^ use of undeclared type `CoreStage`
 ```
-
 From [migration guide](https://bevyengine.org/learn/migration-guides/0.9-0.10/):
 
 > The `CoreStage` (... more omitted) enums have been replaced with `CoreSet` (... more omitted). The same scheduling guarantees have been preserved.
@@ -168,6 +165,7 @@ We suggest to add `-i` flag for `--interactive` editing. ast-grep will display t
 +        use CoreSet::*;
 ```
 
+
 2. `StageLabel`
 
 Our next error is also easy-peasy.
@@ -181,11 +179,9 @@ error: cannot find derive macro `StageLabel` in this scope
 ```
 
 The [doc](https://bevyengine.org/learn/migration-guides/0.9-0.10/#label-types):
-
 > System labels have been renamed to systems sets and unified with stage labels. The `StageLabel` trait should be replaced by a system set, using the `SystemSet` trait as dicussed immediately below.
 
 The command:
-
 ```bash
 ast-grep -p 'StageLabel' -r SystemSet -i
 ```
@@ -259,6 +255,7 @@ Cool! Now it replaced all `add_stage_after` calls!
 4. `Stage`
 
 Our next error is about [`add_system_to_stage`](https://bevyengine.org/learn/migration-guides/0.9-0.10/#stages). The migration guide told us:
+
 
 ```rust
 // Before:
@@ -343,10 +340,10 @@ Okay, `BigBrainStage::Thinkers` is not a base set in Bevy, so we should change i
 
 **Hoooray! Finally the program compiles! ~~ship it!~~ Now let's test it.**
 
+
 > Key take away: Automation saves your time! But you don't have to automate everything.
 
 ## cargo fmt
-
 Congrats! You have automated code refactoring! But ast-grep's rewrite can be messy and hard to read. Most code-rewriting tool does not support pretty-print, sadly.
 A simple solution is to run `cargo fmt` and make the repository neat and tidy.
 
@@ -396,6 +393,7 @@ I should have caught the bug during diff review but I missed that. It is not too
 Run `cargo test` again?
 
 ```
+
    Doc-tests big-brain
 
 failures:
@@ -440,9 +438,9 @@ It would be nice if the official guide can contain some automated command to eas
 
 To recap our semi-automated refactoring, this is our four steps:
 
-- Keep a clean git branch for upgrading
-- Update all dependencies in the project and check lock files.
-- Compile, Rewrite, Verify and Format. Repeat this process until the project compiles.
-- Run Test and fix the remaining bugs.
+* Keep a clean git branch for upgrading
+* Update all dependencies in the project and check lock files.
+* Compile, Rewrite, Verify and Format. Repeat this process until the project compiles.
+* Run Test and fix the remaining bugs.
 
 I hope this workflow will help you and other programming language developers in the future!
