@@ -39,14 +39,14 @@ id: rewrite-cache
 language: tsx
 rule:
   any:
-    - pattern: useCallback($FN, $$$)
-    - pattern: memo($FN, $$$)
+  - pattern: useCallback($FN, $$$)
+  - pattern: memo($FN, $$$)
 fix: $FN
 ---
 id: rewrite-use-memo
 language: tsx
-rule: { pattern: "useMemo($FN, $$$)" }
-fix: ($FN)() # need IIFE to wrap memo function
+rule: { pattern: 'useMemo($FN, $$$)' }
+fix: ($FN)()   # need IIFE to wrap memo function
 ```
 
 ### Example

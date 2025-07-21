@@ -97,21 +97,15 @@ rule:
               # Direct call
               - all: # Wrap conditions in all
                   - kind: call_expression
-                  - has: { field: function, regex: "^(require|import)$" }
-                  - has: {
-                      field: arguments,
-                      has: { kind: string, pattern: $SOURCE },
-                    } # Capture source
+                  - has: { field: function, regex: '^(require|import)$' }
+                  - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
               # Awaited call
               - kind: await_expression
                 has:
                   all: # Wrap conditions in all
                     - kind: call_expression
-                    - has: { field: function, regex: "^(require|import)$" }
-                    - has: {
-                        field: arguments,
-                        has: { kind: string, pattern: $SOURCE },
-                      } # Capture source
+                    - has: { field: function, regex: '^(require|import)$' }
+                    - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
 
     # DYNAMIC IMPORTS (Destructured Shorthand Assignment)
     # ------------------------------------------------------------
@@ -133,21 +127,15 @@ rule:
                   # Direct call
                   - all:
                       - kind: call_expression
-                      - has: { field: function, regex: "^(require|import)$" }
-                      - has: {
-                          field: arguments,
-                          has: { kind: string, pattern: $SOURCE },
-                        } # Capture source
+                      - has: { field: function, regex: '^(require|import)$' }
+                      - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
                   # Awaited call
                   - kind: await_expression
                     has:
                       all:
                         - kind: call_expression
-                        - has: { field: function, regex: "^(require|import)$" }
-                        - has: {
-                            field: arguments,
-                            has: { kind: string, pattern: $SOURCE },
-                          } # Capture source
+                        - has: { field: function, regex: '^(require|import)$' }
+                        - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
               stopBy: end # Search ancestors to find the correct variable_declarator
 
     # DYNAMIC IMPORTS (Destructured Alias Assignment)
@@ -179,21 +167,15 @@ rule:
                   # Direct call
                   - all:
                       - kind: call_expression
-                      - has: { field: function, regex: "^(require|import)$" }
-                      - has: {
-                          field: arguments,
-                          has: { kind: string, pattern: $SOURCE },
-                        } # Capture source
+                      - has: { field: function, regex: '^(require|import)$' }
+                      - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
                   # Awaited call
                   - kind: await_expression
                     has:
                       all:
                         - kind: call_expression
-                        - has: { field: function, regex: "^(require|import)$" }
-                        - has: {
-                            field: arguments,
-                            has: { kind: string, pattern: $SOURCE },
-                          } # Capture source
+                        - has: { field: function, regex: '^(require|import)$' }
+                        - has: { field: arguments, has: { kind: string, pattern: $SOURCE } } # Capture source
               stopBy: end # Search ancestors to find the correct variable_declarator
             stopBy: end # Ensure we check ancestors for the variable_declarator
 
@@ -211,7 +193,7 @@ rule:
               has:
                 field: function
                 # Match 'require' identifier or 'import' keyword used dynamically
-                regex: "^(require|import)$"
+                regex: '^(require|import)$'
             stopBy: end # Search ancestors if needed (for the arguments/call_expression)
         - not:
             inside:

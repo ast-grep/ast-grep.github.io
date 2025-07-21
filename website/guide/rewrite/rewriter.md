@@ -21,9 +21,9 @@ To use rewriters, you have three steps.
 id: rewriter-demo
 language: Python
 rewriters:
-  - id: sub-rule
-    rule: # some rule
-    fix: # some fix
+- id: sub-rule
+  rule: # some rule
+  fix: # some fix
 ```
 
 **2. Apply the defined rewriters to a metavariable via `transform`.**
@@ -75,12 +75,12 @@ So let's first define a rule to match the keyword arguments in the `dict` functi
 rule:
   kind: keyword_argument
   all:
-    - has:
-        field: name
-        pattern: $KEY
-    - has:
-        field: value
-        pattern: $VAL
+  - has:
+      field: name
+      pattern: $KEY
+  - has:
+      field: value
+      pattern: $VAL
 ```
 
 This rule can match the keyword arguments in the `dict` function call and extract key and value in the argument to meta-variables `$KEY` and `$VAL` respectively. [For example](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoic3RhcnRfdGFnIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgZmllbGQ6IG5hbWVcbiAgICAgIHBhdHRlcm46ICRLRVlcbiAgLSBoYXM6XG4gICAgICBmaWVsZDogdmFsdWVcbiAgICAgIHBhdHRlcm46ICRWQUwiLCJzb3VyY2UiOiJkID0gZGljdChhPTEsIGI9MikifQ==), `dict(a=1)` will extract `a` to `$KEY` and `1` to `$VAL`.
@@ -89,17 +89,17 @@ Then, we define the rule as a rewriter and add fix field to transform the keywor
 
 ```yaml
 rewriters:
-  - id: dict-rewrite
-    rule:
-      kind: keyword_argument
-      all:
-        - has:
-            field: name
-            pattern: $KEY
-        - has:
-            field: value
-            pattern: $VAL
-    fix: "'$KEY': $VAL"
+- id: dict-rewrite
+  rule:
+    kind: keyword_argument
+    all:
+    - has:
+        field: name
+        pattern: $KEY
+    - has:
+        field: value
+        pattern: $VAL
+  fix: "'$KEY': $VAL"
 ```
 
 You can see the `rewriters` field accepts a list of regular ast-grep rules. Rewriter rule must have an `id` field to identify the rewriter, a rule to specify the node to match, and a `fix` field to transform the matched node.
@@ -114,12 +114,12 @@ First, we match the `dict` function call with the pattern `dict($$$ARGS)`. The `
 
 ```yaml
 rule:
-  pattern: dict($$$ARGS) # match dict function call, capture $$$ARGS
+  pattern: dict($$$ARGS)        # match dict function call, capture $$$ARGS
 transform:
-  LITERAL: # the transformed code
+  LITERAL:                      # the transformed code
     rewrite:
       rewriters: [dict-rewrite] # specify the rewriter defined above
-      source: $$$ARGS # apply rewriters to $$$ARGS arguments
+      source: $$$ARGS           # apply rewriters to $$$ARGS arguments
 ```
 
 ast-grep will first try match the `dict-rewrite` rule to each sub node inside `$$$ARGS`. If the node has a matching rule, ast-grep will extract the node specified by the meta-variables in the `dict-rewrite` rewriter rule. It will then generate a new string using the `fix`.
@@ -134,18 +134,18 @@ Finally, we combine the transformed keyword arguments and replace the `dict` fun
 ```yaml
 # define rewriters
 rewriters:
-  - id: dict-rewrite
-    rule:
-      kind: keyword_argument
-      all:
-        - has:
-            field: name
-            pattern: $KEY
-        - has:
-            field: value
-            pattern: $VAL
-    fix: "'$KEY': $VAL"
-  # find the target node
+- id: dict-rewrite
+  rule:
+    kind: keyword_argument
+    all:
+    - has:
+        field: name
+        pattern: $KEY
+    - has:
+        field: value
+        pattern: $VAL
+  fix: "'$KEY': $VAL"
+# find the target node
 rule:
   pattern: dict($$$ARGS)
 # apply rewriters to sub node
@@ -155,7 +155,7 @@ transform:
       rewriters: [dict-rewrite]
       source: $$$ARGS
 # combine and replace
-fix: "{ $LITERAL }"
+fix: '{ $LITERAL }'
 ```
 
 See the final result in [action](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGljdCgkJCRBUkdTKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiMgZGVmaW5lIHJld3JpdGVyc1xucmV3cml0ZXJzOlxuLSBpZDogZGljdC1yZXdyaXRlXG4gIHJ1bGU6XG4gICAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICAgIGFsbDpcbiAgICAtIGhhczpcbiAgICAgICAgZmllbGQ6IG5hbWVcbiAgICAgICAgcGF0dGVybjogJEtFWVxuICAgIC0gaGFzOlxuICAgICAgICBmaWVsZDogdmFsdWVcbiAgICAgICAgcGF0dGVybjogJFZBTFxuICBmaXg6IFwiJyRLRVknOiAkVkFMXCJcbiMgZmluZCB0aGUgdGFyZ2V0IG5vZGVcbnJ1bGU6XG4gIHBhdHRlcm46IGRpY3QoJCQkQVJHUylcbiMgYXBwbHkgcmV3cml0ZXJzIHRvIHN1YiBub2RlXG50cmFuc2Zvcm06XG4gIExJVEVSQUw6XG4gICAgcmV3cml0ZTpcbiAgICAgIHJld3JpdGVyczogW2RpY3QtcmV3cml0ZV1cbiAgICAgIHNvdXJjZTogJCQkQVJHU1xuIyBjb21iaW5lIGFuZCByZXBsYWNlXG5maXg6ICd7ICRMSVRFUkFMIH0nIiwic291cmNlIjoiZCA9IGRpY3QoYT0xLCBiPTIpIn0=).
@@ -182,18 +182,18 @@ Suppose we have two rewriters to rewrite numbers and strings.
 
 ```yaml
 rewriters:
-  - id: rewrite-int
-    rule: { kind: integer }
-    fix: integer
-  - id: rewrite-str
-    rule: { kind: string }
-    fix: string
+- id: rewrite-int
+  rule: {kind: integer}
+  fix: integer
+- id: rewrite-str
+  rule: {kind: string}
+  fix: string
 ```
 
 We can apply both rewriters to the same source meta-variable.
 
 ```yaml
-rule: { pattern: "[$$$LIST]" }
+rule: {pattern: '[$$$LIST]' }
 transform:
   NEW_VAR:
     rewrite:
@@ -221,7 +221,7 @@ transform:
     rewrite:
       rewriters: [rewrite-num, rewrite-str]
       source: $$$LIST
-      joinBy: " + "
+      joinBy: ' + '
 ```
 
 This will transform `1, 2, 3` to `integer + integer + integer`.

@@ -103,7 +103,7 @@ Without other hints, ast-grep will parse it as labeled statement by default. To 
 
 ```yaml
 pattern:
-  context: "{ a: 123 }"
+  context: '{ a: 123 }'
   selector: pair
 ```
 
@@ -155,8 +155,8 @@ Examples:
 
 ```yaml
 program
-expression_statement
-number              <--- effective node
+  expression_statement
+    number              <--- effective node
 ```
 
 See [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiMTIzIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoiIn0=).
@@ -165,11 +165,11 @@ See [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdC
 
 ```yaml
 program
-expression_statement
-call_expression       <--- effective node
-identifier
-arguments
-identifier
+  expression_statement
+    call_expression       <--- effective node
+      identifier
+      arguments
+        identifier
 ```
 
 See [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZm9vKGJhcikiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJjYWxsX2V4cHJlc3Npb24iLCJjb25maWciOiIiLCJzb3VyY2UiOiIifQ==).

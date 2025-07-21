@@ -65,6 +65,6 @@ rule:
     regex: Remove
 # remove the key-value pair and its comma
 fix:
-  template: ""
-  expandEnd: { regex: "," } # expand the range to the comma
+  template: ''
+  expandEnd: { regex: ',' } # expand the range to the comma
 ```

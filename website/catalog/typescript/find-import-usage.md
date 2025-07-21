@@ -21,7 +21,7 @@ id: find-import-usage
 language: typescript
 rule:
   kind: identifier # ast-grep requires a kind
-  pattern: $MOD # the identifier to find
+  pattern: $MOD   # the identifier to find
   inside: # find the root
     stopBy: end
     kind: program

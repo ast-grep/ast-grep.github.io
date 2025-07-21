@@ -17,7 +17,7 @@ id: optional-to-none-union
 language: python
 rule:
   pattern:
-    context: "a: Optional[$T]"
+    context: 'a: Optional[$T]'
     selector: generic_type
 fix: $T | None
 ```

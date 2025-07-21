@@ -35,7 +35,7 @@ language: JavaScript
 <Item>
 
 ```yaml
-url: "https://doc.link/"
+url: 'https://doc.link/'
 ```
 
 🔗 A URL to the rule's documentation.
@@ -45,7 +45,7 @@ url: "https://doc.link/"
 <Item>
 
 ```yaml
-metadata: { author: "John Doe" }
+metadata: { author: 'John Doe' }
 ```
 
 📓 metadata	A dictionary for custom data related to the rule.
@@ -64,7 +64,7 @@ Keys for specifying what code to search for.
 
 ```yaml
 rule:
-  pattern: "console.log($$$ARGS)"
+  pattern: 'console.log($$$ARGS)'
 ```
 
 🎯 The core `rule` to find matching AST nodes.
@@ -108,7 +108,7 @@ Keys for defining how to automatically fix the found code.
 ```yaml
 transform:
   NEW_VAR:
-    substring: { endChar: 1, source: $V }
+    substring: {endChar: 1, source: $V}
 ```
 
 🎩 `transform` meta-variables before they are used in `fix`.
@@ -152,9 +152,9 @@ fix:
 
 ```yaml
 rewriters:
-  - id: remove-quotes
-    rule: { pattern: "'$A'" }
-    fix: "$A"
+- id: remove-quotes
+  rule: { pattern: "'$A'" }
+  fix: "$A"
 ```
 
 ✍️ A list of `rewriters` for complex transformations.
@@ -205,8 +205,8 @@ note:
 ```yaml
 labels:
   ARG:
-    style: "primary"
-    message: "The argument to log"
+    style: 'primary'
+    message: 'The argument to log'
 ```
 
 🎨 Customized `labels` for highlighting parts of the matched code.
@@ -216,7 +216,7 @@ labels:
 <Item>
 
 ```yaml
-files: ["src/**/*.js"]
+files: ['src/**/*.js']
 ```
 
 ✅ Glob `files` patterns to include files for the rule.
@@ -226,7 +226,7 @@ files: ["src/**/*.js"]
 <Item>
 
 ```yaml
-ignores: ["test/**/*.js"]
+ignores: ['test/**/*.js']
 ```
 
 ❌ Glob patterns to exclude files from the rule.

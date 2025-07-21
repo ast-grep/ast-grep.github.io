@@ -172,8 +172,8 @@ Example:
 ```yaml
 inside:
   pattern: class $TEST { $$$ } # a sub rule object
-  stopBy: end # stopBy accepts 'end', 'neighbor' or another rule object.
-  field: body # specify the sub-node in the target
+  stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
+  field: body                  # specify the sub-node in the target
 ```
 
 Please refer to [relational rule guide](/guide/rule-config/relational-rule) for detailed explanation of `stopBy` and `field`.
@@ -190,9 +190,9 @@ Example:
 
 ```yaml
 has:
-  kind: property_identifier # a sub rule object
-  stopBy: end # stopBy accepts 'end', 'neighbor' or another rule object.
-  field: name # specify the sub-node in the target
+  kind: property_identifier    # a sub rule object
+  stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
+  field: name                  # specify the sub-node in the target
 ```
 
 Please refer to [relational rule guide](/guide/rule-config/relational-rule) for detailed explanation of `stopBy` and `field`.
@@ -211,8 +211,8 @@ Example:
 
 ```yml
 precedes:
-  kind: function_declaration # a sub rule object
-  stopBy: end # stopBy accepts 'end', 'neighbor' or another rule object.
+  kind: function_declaration   # a sub rule object
+  stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
 ```
 
 ### `follows`
@@ -229,8 +229,8 @@ Example:
 
 ```yml
 follows:
-  kind: function_declaration # a sub rule object
-  stopBy: end # stopBy accepts 'end', 'neighbor' or another rule object.
+  kind: function_declaration   # a sub rule object
+  stopBy: end                  # stopBy accepts 'end', 'neighbor' or another rule object.
 ```
 
 ---

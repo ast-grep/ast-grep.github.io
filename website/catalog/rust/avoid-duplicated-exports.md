@@ -32,12 +32,12 @@ id: avoid-duplicate-export
 language: rust
 rule:
   all:
-    - pattern: pub use $B::$C;
-    - inside:
+     - pattern: pub use $B::$C;
+     - inside:
         kind: source_file
         has:
           pattern: pub mod $A;
-    - has:
+     - has:
         pattern: $A
         stopBy: end
 ```

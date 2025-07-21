@@ -13,21 +13,21 @@ This approach makes some simplifying assumptions. We only consider local variabl
 ```yaml
 id: no-unused-vars
 rule:
-  kind: local_variable_declaration
-  all:
-    - has:
-        has:
-          kind: identifier
-          pattern: $IDENT
-    - not:
-        precedes:
-          stopBy: end
-          has:
-            stopBy: end
-            any:
-              - { kind: identifier, pattern: $IDENT }
-              - { has: { kind: identifier, pattern: $IDENT, stopBy: end } }
-fix: ""
+    kind: local_variable_declaration
+    all:
+        - has:
+            has:
+                kind: identifier
+                pattern: $IDENT
+        - not:
+            precedes:
+                stopBy: end
+                has:
+                    stopBy: end
+                    any:
+                        - { kind: identifier, pattern: $IDENT }
+                        - { has: {kind: identifier, pattern: $IDENT, stopBy: end}}
+fix: ''
 ```
 
 First, we identify the local variable declaration and capture the pattern of the identifier inside of it. Then we use `not` and `precedes` to only match the local variable declaration if the identifier we captured does not appear later in the code.

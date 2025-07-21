@@ -128,11 +128,11 @@ To do this, we register a rewriter that acts as a separate rewriter rule for eac
 
 ```yaml
 rewriters:
-  - id: rewrite-identifer
-    rule:
-      pattern: $IDENT
-      kind: identifier
-    fix: import $IDENT from './barrel/$IDENT'
+- id: rewrite-identifer
+  rule:
+    pattern: $IDENT
+    kind: identifier
+  fix: import $IDENT from './barrel/$IDENT'
 ```
 
 The `rewrite-identifier` above will:
@@ -168,11 +168,11 @@ The final rule will be like this. See the [online playground](https://ast-grep.g
 rule:
   pattern: import {$$$IDENTS} from './barrel'
 rewriters:
-  - id: rewrite-identifer
-    rule:
-      pattern: $IDENT
-      kind: identifier
-    fix: import $IDENT from './barrel/$IDENT'
+- id: rewrite-identifer
+  rule:
+    pattern: $IDENT
+    kind: identifier
+  fix: import $IDENT from './barrel/$IDENT'
 transform:
   IMPORTS:
     rewrite:

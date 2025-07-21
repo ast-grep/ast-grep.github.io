@@ -134,7 +134,7 @@ For example, if we have a rule like this:
 id: lambda-to-def
 language: Python
 rule:
-  pattern: "$B = lambda: $R"
+  pattern: '$B = lambda: $R'
 fix: |-
   def $B():
     return $R
@@ -208,8 +208,8 @@ rule:
     regex: Remove
 # remove the key-value pair and its comma
 fix:
-  template: ""
-  expandEnd: { regex: "," } # expand the range to the comma
+  template: ''
+  expandEnd: { regex: ',' } # expand the range to the comma
 ```
 
 The idea is to remove the `pair` node and expand the fixing range to the comma. The `template` is an empty string, which means we will remove the matched node completely. The `expandEnd` rule will expand the fixing range to the comma. So the eventual matched range will be `Remove: 'value1',`, comma included.

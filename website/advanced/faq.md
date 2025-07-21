@@ -57,7 +57,7 @@ Different results are usually caused by incomplete or wrong code snippet in the 
 ```yaml
 rule:
   pattern:
-    context: "int main() { return 0; }"
+    context: 'int main() { return 0; }'
     selector: function
 ```
 
@@ -113,7 +113,7 @@ The workaround is using [`constraints`](https://ast-grep.github.io/guide/project
 rule:
   pattern: $HOOK($$$ARGS)
 constraints:
-  HOOK: { regex: "^use" }
+  HOOK: { regex: '^use' }
 ```
 
 [Example usage](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiAkSE9PSygkJCRBUkdTKVxuY29uc3RyYWludHM6XG4gIEhPT0s6IHsgcmVnZXg6IF51c2UgfSIsInNvdXJjZSI6ImZ1bmN0aW9uIFJlYWN0Q29tcG9uZW50KCkge1xuICAgIGNvbnN0IGRhdGEgPSBub3RIb28oKVxuICAgIGNvbnN0IFtmb28sIHNldEZvb10gPSB1c2VTdGF0ZSgnJylcbn0ifQ==).
@@ -153,10 +153,10 @@ id: recursive-call
 language: JavaScript
 rule:
   all:
-    - pattern: function $F() { $$$ }
-    - has:
-        pattern: $F()
-        stopBy: end
+  - pattern: function $F() { $$$ }
+  - has:
+      pattern: $F()
+      stopBy: end
 ```
 
 ```js [match.js]
@@ -177,10 +177,10 @@ id: recursive-call
 language: JavaScript
 rule:
   all:
-    - has: # N.B. has is the first rule
-        pattern: $F()
-        stopBy: end
-    - pattern: function $F() { $$$ }
+  - has:  # N.B. has is the first rule
+      pattern: $F()
+      stopBy: end
+  - pattern: function $F() { $$$ }
 ```
 
 In this case, the `has` rule matches first and captures `$F` as `foo` since `foo()` is the first function call matching the pattern `$F()`. The later rule `function $F() { $$$ }` will only find the `foo` declaration instead of `recurse`.
@@ -208,8 +208,8 @@ For example, to match class field in JavaScript, a kind + pattern rule [will not
 
 ```yaml
 # these are two separate rules
-pattern: a = 123 # rule 1
-kind: field_definition # rule 2
+pattern: a = 123          # rule 1
+kind: field_definition    # rule 2
 ```
 
 This is because pattern `a = 123` is parsed as [`assignment_expression`](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYSA9IDEyMyIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6IiJ9). Pattern and kind are two separate rules. And using them together will match nothing because no AST will have both `assignment_expression` and `field_definition` kind at once.
@@ -219,8 +219,8 @@ Instead, you need to use pattern object to provide enough context code for the p
 ```yaml
 # this is one single pattern rule!
 pattern:
-  context: "class A { a = 123 }" # provide full context code
-  selector: field_definition # select the effective pattern
+  context: 'class A { a = 123 }' # provide full context code
+  selector: field_definition     # select the effective pattern
 ```
 
 Note the rule above is one single pattern rule, instead of two. The `context` field provides the full unambiguous code snippet of `class`. So the `a = 123` will be parsed as `field_definition`. The `selector` field then selects the `field_definition` node as the [effective pattern](/advanced/pattern-parse.html#steps-to-create-a-pattern) matcher.

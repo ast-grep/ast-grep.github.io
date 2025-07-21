@@ -28,8 +28,8 @@ A list of string instructing where to discover ast-grep's YAML rules.
 
 ```yaml
 ruleDirs:
-  - rules
-  - anotherRuleDir
+- rules
+- anotherRuleDir
 ```
 
 Note, all items under `ruleDirs` are resolved relative to the location of `sgconfig.yml`.
@@ -62,9 +62,9 @@ Example:
 
 ```yaml
 testConfigs:
-  - testDir: test
-    snapshotDir: __snapshots__
-  - testDir: anotherTestDir
+- testDir: test
+  snapshotDir: __snapshots__
+- testDir: anotherTestDir
 ```
 
 ## `utilDirs`
@@ -91,10 +91,10 @@ Note, `languageGlobs` takes precedence over the default language parser so you c
 
 ```yml
 languageGlobs:
-  html: ["*.vue", "*.svelte", "*.astro"]
-  json: [".eslintrc"]
-  cpp: ["*.c"] # override the default parsers
-  tsx: ["*.ts"] # useful for rule reuse
+  html: ['*.vue', '*.svelte', '*.astro']
+  json: ['.eslintrc']
+  cpp: ['*.c'] # override the default parsers
+  tsx: ['*.ts'] # useful for rule reuse
 ```
 
 The above configuration tells ast-grep to treat the files with `.vue`, `.svelte`, and `.astro` extensions as HTML files, and the extension-less file `.eslintrc` as JSON files. It also overrides the default parser for C files and TS files.
@@ -165,9 +165,9 @@ The dylib symbol to load ts-language, default is `tree_sitter_{name}`, e.g. `tre
 ```yaml
 customLanguages:
   mojo:
-    libraryPath: mojo.so # path to dynamic library
-    extensions: [mojo, 🔥] # file extensions for this language
-    expandoChar: _ # optional char to replace $ in your pattern
+      libraryPath: mojo.so     # path to dynamic library
+      extensions: [mojo, 🔥]   # file extensions for this language
+      expandoChar: _           # optional char to replace $ in your pattern
 ```
 
 ## `languageInjections` <Badge type="warning" text="Experimental" />
@@ -212,18 +212,18 @@ This is a configuration to support styled-components in JS files with static `in
 
 ```yaml
 languageInjections:
-  - hostLanguage: js
-    rule:
-      pattern: styled.$TAG`$CONTENT`
-    injected: css
+- hostLanguage: js
+  rule:
+    pattern: styled.$TAG`$CONTENT`
+  injected: css
 ```
 
 This is a configuration to support CSS in JS style in JS files with dynamic `injected` language.
 
 ```yaml
 languageInjections:
-  - hostLanguage: js
-    rule:
-      pattern: styled.$LANG`$CONTENT`
-    injected: [css, scss, less]
+- hostLanguage: js
+  rule:
+    pattern: styled.$LANG`$CONTENT`
+  injected: [css, scss, less]
 ```

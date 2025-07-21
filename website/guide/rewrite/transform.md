@@ -93,14 +93,14 @@ The `replace` transformation allows us to use Rust regex capture groups like `(?
 ```yaml
 id: debug-to-release
 language: js
-rule: { pattern: $OLD_FN($$$ARGS) } # Capture OLD_FN
-constraints: { OLD_FN: { regex: ^debug } } # Only match if it starts with 'debug'
+rule: {pattern: $OLD_FN($$$ARGS)}   # Capture OLD_FN
+constraints: {OLD_FN: {regex: ^debug}}  # Only match if it starts with 'debug'
 transform:
   NEW_FN:
     replace:
       source: $OLD_FN
-      replace: debug(?<REG>.*) # Capture everything following 'debug' as REG
-      by: release$REG # Refer to REG just like a meta-variable
+      replace: debug(?<REG>.*)      # Capture everything following 'debug' as REG
+      by: release$REG               # Refer to REG just like a meta-variable
 fix: $NEW_FN($$$ARGS)
 ```
 
@@ -124,19 +124,19 @@ Each transformation outputs a meta-variable that can be used as the input to lat
 Here we can see an example that transforms `fooDebug` into `fooRelease` by using `convert`, `replace`, and `convert` transformations.
 
 ```yaml
-rule: { pattern: $OLD_FN($$$ARGS) } # Capture OLD_FN
-constraints: { OLD_FN: { regex: Debug$ } } # Only match if it ends with 'Debug'
+rule: {pattern: $OLD_FN($$$ARGS)}      # Capture OLD_FN
+constraints: {OLD_FN: {regex: Debug$}} # Only match if it ends with 'Debug'
 transform:
-  KEBABED: # 1. Convert to 'foo-debug'
+  KEBABED:                             # 1. Convert to 'foo-debug'
     convert:
       source: $OLD_FN
       toCase: kebabCase
-  RELEASED: # 2. Replace with 'foo-release'
+  RELEASED:                            # 2. Replace with 'foo-release'
     replace:
       source: $KEBABED
       replace: (?<ROOT>)-debug
       by: $ROOT-release
-  UNKEBABED: # 3. Convert to 'fooRelease'
+  UNKEBABED:                           # 3. Convert to 'fooRelease'
     convert:
       source: $RELEASED
       toCase: camelCase
@@ -162,8 +162,8 @@ transform:
   MAYBE_COMMA:
     replace:
       source: $$$ARGS
-      replace: "^.+"
-      by: ", "
+      replace: '^.+'
+      by: ', '
 fix:
   $FUNC(new_argument$MAYBE_COMMA$$$ARGS)
 ```

@@ -22,15 +22,15 @@ utils:
       stopBy: end
 rule:
   any:
-    - pattern: function $FUNC($$$) { $$$ }
-    - pattern: let $FUNC = ($$$) => $$$
-    - pattern: const $FUNC = ($$$) => $$$
+  - pattern: function $FUNC($$$) { $$$ }
+  - pattern: let $FUNC = ($$$) => $$$
+  - pattern: const $FUNC = ($$$) => $$$
   has:
     pattern: $BODY
     kind: statement_block
     stopBy: end
 constraints:
-  FUNC: { regex: ^use }
+  FUNC: {regex: ^use }
   BODY: { not: { matches: hook_call } }
 ```
 

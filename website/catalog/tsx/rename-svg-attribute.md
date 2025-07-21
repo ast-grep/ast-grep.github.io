@@ -13,16 +13,16 @@ For example, an SVG attribute like `stroke-linecap` needs to be renamed to `stro
 id: rewrite-svg-attribute
 language: tsx
 rule:
-  pattern: $PROP # capture in metavar
-  regex: ([a-z]+)-([a-z]) # hyphenated name
+  pattern: $PROP            # capture in metavar
+  regex: ([a-z]+)-([a-z])   # hyphenated name
   kind: property_identifier
   inside:
-    kind: jsx_attribute # in JSX attribute
+    kind: jsx_attribute     # in JSX attribute
 transform:
-  NEW_PROP: # new property name
-    convert: # use ast-grep's convert
+  NEW_PROP:                 # new property name
+    convert:                # use ast-grep's convert
       source: $PROP
-      toCase: camelCase # to camelCase naming
+      toCase: camelCase     # to camelCase naming
 fix: $NEW_PROP
 ```
 

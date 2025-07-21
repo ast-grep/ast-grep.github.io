@@ -18,14 +18,14 @@ language: TypeScript
 severity: warning
 rule:
   pattern:
-    context: "class Hi { $METHOD() { $$$_} }"
+    context: 'class Hi { $METHOD() { $$$_} }'
     selector: method_definition
   inside:
-    pattern: "class $KLASS $$$_ { $$$_ }"
+    pattern: 'class $KLASS $$$_ { $$$_ }'
     stopBy: end
     not:
       has:
-        pattern: "@Component($$$_)"
+        pattern: '@Component($$$_)'
 constraints:
   METHOD:
     regex: ngOnInit|ngOnDestroy

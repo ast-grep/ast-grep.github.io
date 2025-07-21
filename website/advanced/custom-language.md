@@ -100,9 +100,9 @@ You need to add a new entry under the `customLanguages` key with the name of you
 ruleDirs: ["./rules"]
 customLanguages:
   mojo:
-    libraryPath: mojo.so # path to dynamic library
-    extensions: [mojo, 🔥] # file extensions for this language
-    expandoChar: _ # optional char to replace $ in your pattern
+      libraryPath: mojo.so     # path to dynamic library
+      extensions: [mojo, 🔥]   # file extensions for this language
+      expandoChar: _           # optional char to replace $ in your pattern
 ```
 
 The `libraryPath` property specifies the path to the dynamic library relative to the `sgconfig.yml` file or an absolute path. The `extensions` property specifies a list of file extensions for this language.
@@ -130,7 +130,7 @@ Or you can write a rule in yaml like this:
 
 ```yaml
 id: my-first-mojo-rule
-language: mojo # the name we register before!
+language: mojo  # the name we register before!
 severity: hint
 rule:
   pattern: print

@@ -20,12 +20,12 @@ language: python
 rule:
   # match async function definition
   pattern:
-    context: "async def $FUNC($$$ARGS): $$$BODY"
+    context: 'async def $FUNC($$$ARGS): $$$BODY'
     selector: function_definition
 rewriters:
-  # define a rewriter to remove the await keyword
+# define a rewriter to remove the await keyword
   remove-await-call:
-    pattern: "await $$$CALL"
+    pattern: 'await $$$CALL'
     fix: $$$CALL # remove await keyword
 # apply the rewriter to the function body
 transform:

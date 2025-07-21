@@ -16,7 +16,7 @@ rule:
   kind: list_comprehension
 transform:
   INNER:
-    substring: { source: $LIST, startChar: 1, endChar: -1 }
+    substring: {source: $LIST, startChar: 1, endChar: -1 }
 fix: ($INNER)
 ```
 
@@ -39,7 +39,7 @@ constraints:
       # ...
 transform:
   INNER:
-    substring: { source: $LIST, startChar: 1, endChar: -1 }
+    substring: {source: $LIST, startChar: 1, endChar: -1 }
 fix: $FUNC($INNER)
 ```
 

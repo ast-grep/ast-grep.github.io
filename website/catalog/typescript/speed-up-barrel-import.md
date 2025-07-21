@@ -21,12 +21,12 @@ rule:
   pattern: import {$$$IDENTS} from './barrel'
 # rewrite imported identifiers to direct imports
 rewriters:
-  - id: rewrite-identifer
-    rule:
-      pattern: $IDENT
-      kind: identifier
-    fix: import $IDENT from './barrel/$IDENT'
-  # apply the rewriter to the import statement
+- id: rewrite-identifer
+  rule:
+    pattern: $IDENT
+    kind: identifier
+  fix: import $IDENT from './barrel/$IDENT'
+# apply the rewriter to the import statement
 transform:
   IMPORTS:
     rewrite:

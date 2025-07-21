@@ -92,8 +92,8 @@ Here is [the correct rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Imph
 
 ```yaml
 all:
-  - has: { kind: number }
-  - has: { kind: string }
+- has: {kind: number}
+- has: {kind: string}
 ```
 
 Composite rule is inspired by logical operator `and`/`or` and related list method like [`all`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.all)/[`any`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.any). It tests whether a node matches all/any of the rules in the list.
@@ -107,18 +107,18 @@ For example, we want to find the usage of `this.foo` in a class getter, we can w
 ```yaml
 rule:
   all:
-    - pattern: this.foo # the root node
-    - inside: # inside another node
+    - pattern: this.foo                              # the root node
+    - inside:                                        # inside another node
         all:
           - pattern:
-              context: class A { get $_() { $$$ } } # a class getter inside
+              context: class A { get $_() { $$$ } }  # a class getter inside
               selector: method_definition
-          - inside: # class body
+          - inside:                                  # class body
               kind: class_body
-        stopBy: # but not inside nested
+        stopBy:                                      # but not inside nested
           any:
-            - kind: object # either object
-            - kind: class_body # or class
+            - kind: object                           # either object
+            - kind: class_body                       # or class
 ```
 
 See the [playground link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNsYXNzIEEge1xuICAgIGdldCB0ZXN0KCkge31cbn0iLCJjb25maWciOiIjIENvbmZpZ3VyZSBSdWxlIGluIFlBTUxcbnJ1bGU6XG4gIGFsbDpcbiAgICAtIHBhdHRlcm46IHRoaXMuZm9vXG4gICAgLSBpbnNpZGU6XG4gICAgICAgIGFsbDpcbiAgICAgICAgICAtIHBhdHRlcm46XG4gICAgICAgICAgICAgIGNvbnRleHQ6IGNsYXNzIEEgeyBnZXQgJEdFVFRFUigpIHsgJCQkIH0gfVxuICAgICAgICAgICAgICBzZWxlY3RvcjogbWV0aG9kX2RlZmluaXRpb25cbiAgICAgICAgICAtIGluc2lkZTpcbiAgICAgICAgICAgICAgaW1tZWRpYXRlOiB0cnVlXG4gICAgICAgICAgICAgIGtpbmQ6IGNsYXNzX2JvZHlcbiAgICAgICAgc3RvcEJ5OlxuICAgICAgICAgIGFueTpcbiAgICAgICAgICAgIC0ga2luZDogb2JqZWN0XG4gICAgICAgICAgICAtIGtpbmQ6IGNsYXNzX2JvZHkiLCJzb3VyY2UiOiJjbGFzcyBBIHtcbiAgZ2V0IHRlc3QoKSB7XG4gICAgdGhpcy5mb29cbiAgICBsZXQgbm90VGhpcyA9IHtcbiAgICAgIGdldCB0ZXN0KCkge1xuICAgICAgICB0aGlzLmZvb1xuICAgICAgfVxuICAgIH1cbiAgfVxuICBub3RUaGlzKCkge1xuICAgIHRoaXMuZm9vXG4gIH1cbn1cbmNvbnN0IG5vdFRoaXMgPSB7XG4gIGdldCB0ZXN0KCkge1xuICAgIHRoaXMuZm9vXG4gIH1cbn0ifQ==).
@@ -152,7 +152,7 @@ rule:
       context: class A { get $GETTER() { $$$ } }
       selector: method_definition
     inside:
-      kind: class_body
+        kind: class_body
     stopBy:
       any:
         - kind: object

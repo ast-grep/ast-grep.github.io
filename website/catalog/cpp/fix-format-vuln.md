@@ -25,8 +25,8 @@ constraints:
   VAR: # not a literal string
     not:
       any:
-        - { kind: string_literal }
-        - { kind: concatenated_string }
+      - { kind: string_literal }
+      - { kind: concatenated_string }
 fix: $PRINTF($S, "%s", $VAR)
 ```
 

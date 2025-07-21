@@ -92,7 +92,7 @@ fix:
 ---
 rule:
   pattern: function $A() { $$$BODY }
-fix: "const $A = () => { $$$BODY }"
+fix: 'const $A = () => { $$$BODY }'
 ```
 
 Screenshot:

@@ -20,14 +20,14 @@ message: Import Dependency Violation
 notes: Ensures that imports comply with architectural rules.
 severity: error
 rule:
-  pattern: import $PATH # capture the import statement
+  pattern: import $PATH  # capture the import statement
 constraints:
   PATH: # find specific package imports
     any:
-      - regex: com\.example(\.\w+)*\.data
-      - regex: com\.example(\.\w+)*\.presentation
-files: # apply only to domain package
-  - com/example/domain/**/*.kt
+    - regex: com\.example(\.\w+)*\.data
+    - regex: com\.example(\.\w+)*\.presentation
+files:  # apply only to domain package
+- com/example/domain/**/*.kt
 ```
 
 ### Example

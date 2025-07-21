@@ -26,7 +26,7 @@ rule:
     - pattern: console.$METHOD($$$)
 constraints:
   METHOD:
-    regex: "log|debug|warn"
+    regex: 'log|debug|warn'
 ```
 
 ### Example

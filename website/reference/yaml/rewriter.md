@@ -97,11 +97,11 @@ The idea is that we can find the identifier nodes in the `$$$IDENT` and rewrite 
 
 ```yaml
 rewriters:
-  - id: rewrite-identifer
-    rule:
-      pattern: $IDENT
-      kind: identifier
-    fix: import $IDENT from './module/$IDENT'
+- id: rewrite-identifer
+  rule:
+    pattern: $IDENT
+    kind: identifier
+  fix: import $IDENT from './module/$IDENT'
 ```
 
 The `rewrite-identifier` above will rewrite the identifier node to individual imports. To illustrate, the rewriter will change identifier `A` to `import A from './module/A'`.
@@ -111,13 +111,13 @@ The [`convert`](/reference/yaml/transformation.html#convert) operation in `trans
 
 ```yaml
 rewriters:
-  - id: rewrite-identifer
-    rule:
-      pattern: $IDENT
-      kind: identifier
-    transform:
-      LIB: { convert: { source: $IDENT, toCase: lowerCase } }
-    fix: import $IDENT from './module/$LIB'
+- id: rewrite-identifer
+  rule:
+    pattern: $IDENT
+    kind: identifier
+  transform:
+    LIB: { convert: { source: $IDENT, toCase: lowerCase } }
+  fix: import $IDENT from './module/$LIB'
 ```
 
 **We can now apply the rewriter to the matched variable `$$$IDENTS`.**
@@ -146,13 +146,13 @@ language: JavaScript
 rule:
   pattern: import {$$$IDENTS} from './module'
 rewriters:
-  - id: rewrite-identifer
-    rule:
-      pattern: $IDENT
-      kind: identifier
-    transform:
-      LIB: { convert: { source: $IDENT, toCase: lowerCase } }
-    fix: import $IDENT from './module/$LIB'
+- id: rewrite-identifer
+  rule:
+    pattern: $IDENT
+    kind: identifier
+  transform:
+    LIB: { convert: { source: $IDENT, toCase: lowerCase } }
+  fix: import $IDENT from './module/$LIB'
 transform:
   IMPORTS:
     rewrite:

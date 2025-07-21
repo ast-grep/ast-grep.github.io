@@ -27,7 +27,7 @@ pattern: console.log($ARG)
 
 ```yaml
 pattern:
-  context: "{ key: value }"
+  context: '{ key: value }'
   selector: pair
 ```
 
@@ -236,7 +236,7 @@ rules:
 utils:
   my-local-check:
     kind: identifier
-    regex: "^my"
+    regex: '^my'
 ```
 
 🏡 Defined within the `utils` field of your current config file. Only accessible within that file.
