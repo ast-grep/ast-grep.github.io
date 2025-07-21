@@ -1,7 +1,7 @@
-import type { SupportedLang } from "./lang"
-import { shallowReactive, toRefs, watch, provide } from 'vue'
-import type { InjectionKey, ToRefs, ShallowReactive } from 'vue'
-import { utoa, atou } from '../../utils'
+import { provide, shallowReactive, toRefs, watch } from 'vue'
+import type { InjectionKey, ShallowReactive, ToRefs } from 'vue'
+import { atou, utoa } from '../../utils'
+import type { SupportedLang } from './lang'
 
 export enum Mode {
   Patch = 'Patch',
@@ -9,14 +9,14 @@ export enum Mode {
 }
 
 export type State = {
-  mode: Mode,
-  query: string,
-  rewrite: string,
-  config: string,
-  source: string,
-  strictness: string,
-  selector: string,
-  lang: SupportedLang,
+  mode: Mode
+  query: string
+  rewrite: string
+  config: string
+  source: string
+  strictness: string
+  selector: string
+  lang: SupportedLang
 }
 
 export function serialize(state: State): string {
@@ -27,8 +27,7 @@ export function deserialize(str: string): State {
   return JSON.parse(atou(str))
 }
 
-const source =
-`// console.log() will be matched by pattern!
+const source = `// console.log() will be matched by pattern!
 // click diff tab to see rewrite.
 
 function tryAstGrep() {
@@ -110,7 +109,9 @@ function resetState(state: ShallowReactive<State>) {
   state.lang = 'javascript'
 }
 
-export const astGrepStateKey = Symbol.for('ast-grep-state') as InjectionKey<ToRefs<ShallowReactive<State>>>
+export const astGrepStateKey = Symbol.for('ast-grep-state') as InjectionKey<
+  ToRefs<ShallowReactive<State>>
+>
 
 export function useSgState() {
   const state = shallowReactive(restoreState())

@@ -1,5 +1,4 @@
 {
-  "plugins": ["vue", "typescript", "unicorn"],
   "ignorePatterns": [
     "node_modules",
     "dist",

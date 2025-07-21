@@ -8,7 +8,9 @@
     "dev-force": "vitepress dev website --force",
     "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vitepress build website",
     "download-parsers": "node --experimental-strip-types website/public/parsers/downloadParsers.mjs",
-    "serve": "vitepress serve website"
+    "serve": "vitepress serve website",
+    "lint": "oxlint && dprint check",
+    "lint:fix": "oxlint --fix && dprint fmt"
   },
   "dependencies": {
     "@number-flow/vue": "0.4.8",
@@ -23,6 +25,7 @@
     "ast-grep-wasm": "file:./pkg/"
   },
   "devDependencies": {
+    "dprint": "0.50.1",
     "@algolia/client-search": "5.29.0",
     "markdown-it": "14.1.0",
     "oxlint": "1.7.0",
