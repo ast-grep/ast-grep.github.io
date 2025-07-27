@@ -153,8 +153,8 @@ impl Language for WasmLang {
     use WasmLang as W;
     match self {
       W::Bash => '$',
-      W::C => '_',
-      W::Cpp => '_',
+      W::C => 'µ',
+      W::Cpp => 'µ',
       W::CSharp => 'µ',
       W::Css => '_',
       W::Elixir => 'µ',
