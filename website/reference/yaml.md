@@ -253,6 +253,8 @@ files:
 Be sure to remove `./` to the beginning of your rules. ast-grep will not recognize the paths if you add `./`.
 :::
 
+Paths in `files` are relative to the project root directory, that is, `sgconfig.yml`'s directory.
+
 
 ### `ignores`
 * type: `Array<String>`
@@ -279,6 +281,7 @@ To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 
+Paths in `ignores` are relative to the project root directory, that is, `sgconfig.yml`'s directory.
 
 ## Other
 

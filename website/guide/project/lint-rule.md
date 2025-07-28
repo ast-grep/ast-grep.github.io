@@ -154,6 +154,8 @@ Be sure to remove `./` to the beginning of your rules. ast-grep will not recogni
 
 :::
 
+Paths in both `files` and `ignores` are relative to the project root directory, that is, `sgconfig.yml`'s directory.
+
 ## Customize Code Highlighting
 
 ast-grep will report linting issues with highlighted code span called label. A label describes an underlined region of code associated with an issue. _By default, the matched target code and its surrounding code captured by [relational rules](/guide/rule-config/relational-rule.html)_.
