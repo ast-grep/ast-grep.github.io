@@ -53,7 +53,7 @@ async function doSetup() {
     format: true,
     schemas: [
       {
-        uri: '/schema.json',
+        uri: 'https://raw.githubusercontent.com/ast-grep/ast-grep/refs/heads/main/schemas/rule.json',
         fileMatch: ['*'],
       },
     ],
