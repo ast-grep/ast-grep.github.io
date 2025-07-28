@@ -21,7 +21,7 @@ A rule is called **positive** if it only matches nodes with specific kinds. For 
 
 A `String` pattern will match one single AST node according to [pattern syntax](/guide/pattern-syntax).
 
-Example:
+**Example:**
 
 ```yml
 pattern: console.log($ARG)
@@ -61,10 +61,17 @@ pattern:
 
 The kind name of the node to match. You can look up code's kind names in [playground](/playground).
 
-Example:
+**Example:**
 
 ```yml
 kind: call_expression
+```
+
+ast-grep 0.39+ also supports limited ESQuery syntax for `kind`:
+
+**Example:**
+```yml
+kind: call_expression > identifier
 ```
 
 ### `regex`

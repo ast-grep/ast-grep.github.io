@@ -125,6 +125,26 @@ To change the parsing behavior of `pattern`, you should use pattern object with 
 See [this FAQ](/advanced/faq.html#kind-and-pattern-rules-are-not-working-together-why).
 :::
 
+### ESQuery style `kind` <Badge type="warning" text="Experimental" />
+
+From ast-grep v0.39.1, you can also use ESQuery style selector in `kind` to match AST nodes. This is an experimental feature and may change in the future.
+
+```yaml
+rule:
+  kind: call_expression > identifier
+```
+This will match the `identifier` node that is a child of `call_expression` node. Internally, it will be converted to a [relational rule](/guide/rule-config/relational-rule.html) `has`.
+
+Currently, the ESQuery style `kind` only supports the following selectors:
+* node kind: `identifier`
+* `>`: direct child selectors
+* `+`: next sibling selector
+* `~`: following sibling selector
+* ` `: descendant selector
+
+If you want more selectors, please respond to [this issue on GitHub](https://github.com/ast-grep/ast-grep/issues/2127).
+
+
 ## `regex`
 
 The `regex` atomic rule will match the AST node by its text against a Rust regular expression.

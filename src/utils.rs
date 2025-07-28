@@ -45,6 +45,15 @@ fn get_message(rule: &RuleConfig<WasmLang>, node: &NodeMatch) -> String {
 }
 
 impl WasmMatch {
+  pub fn from_pattern(nm: NodeMatch) -> Self {
+    let node = nm.get_node().clone();
+    let kind = node.kind().to_string();
+    let node = WasmNode::from(node);
+    let env = nm.get_env().clone();
+    let env = env_to_map(env);
+    let message = String::new();
+    Self { node, env, message, kind }
+  }
   pub fn from_match(nm: NodeMatch, rule: &RuleConfig<WasmLang>) -> Self {
     let node = nm.get_node().clone();
     let kind = node.kind().to_string();
