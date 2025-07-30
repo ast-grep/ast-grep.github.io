@@ -1,30 +1,28 @@
 <script lang="ts">
-let instance: any
+import { ref } from 'vue'
+
+// Global reactive state for toast
+const shown = ref(false)
+const text = ref('')
+let timer: number
+
 export function showToast(txt: string) {
-  if (instance) {
-    instance.show(txt)
-  }
+  text.value = txt
+  shown.value = true
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    shown.value = false
+    text.value = ''
+  }, 2000)
+}
+
+export function useToast() {
+  return { shown, text }
 }
 </script>
 <script setup lang="ts">
-import { ref, watch, getCurrentInstance } from 'vue'
-let shown = ref(false)
-let text = ref('')
-instance = getCurrentInstance()
-instance.show = function show(val: string) {
-  text.value = val
-}
-let timer: number
-watch(text, (newVal) => {
-  if (newVal) {
-    shown.value = true
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      shown.value = false
-      text.value = ''
-    }, 2000)
-  }
-})
+// Use the global toast state
+const { shown, text } = useToast()
 </script>
 
 <template>
