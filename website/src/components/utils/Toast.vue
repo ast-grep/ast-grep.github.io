@@ -1,17 +1,16 @@
 <script lang="ts">
-let instance: any
 export function showToast(txt: string) {
-  if (instance) {
-    instance.show(txt)
+  let show = (window as any).instanceShow
+  if (show) {
+    show(txt)
   }
 }
 </script>
 <script setup lang="ts">
-import { ref, watch, getCurrentInstance } from 'vue'
+import { ref, watch } from 'vue'
 let shown = ref(false)
 let text = ref('')
-instance = getCurrentInstance()
-instance.show = function show(val: string) {
+;(window as any).instanceShow = function show(val: string) {
   text.value = val
 }
 let timer: number
