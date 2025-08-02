@@ -29,7 +29,7 @@ rule:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-```go{5,7-10,12-13}
+```go{6-9,11-12}
 func TestIssue16696(t *testing.T) {
 	alarmRatio := vardef.MemoryUsageAlarmRatio.Load()
 	vardef.MemoryUsageAlarmRatio.Store(0.0)
