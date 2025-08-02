@@ -9,6 +9,9 @@ license = "MIT"
 repository = "https://github.com/ast-grep/ast-grep"
 rust-version = "1.63"
 
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 
