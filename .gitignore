@@ -133,3 +133,6 @@ dist
 
 .yarn
 website/.vitepress/cache
+
+# Package manager lock files - this project uses pnpm
+package-lock.json
