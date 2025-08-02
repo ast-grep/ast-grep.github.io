@@ -15,15 +15,13 @@ defer require.NoError(t, failpoint.Disable("some/path"))
 
 In this case, `failpoint.Disable("some/path")` is called immediately when the defer statement is reached, not when the function exits. This means the failpoint is disabled right after being enabled, making the test ineffective.
 
-### YAML
+### Pattern
 
-```yaml
-id: defer-func-call-antipattern
-language: go
-rule:
-  pattern: |
-    defer $A.$B(t, failpoint.$M($$$))
-  selector: defer_statement
+```shell
+ast-grep \
+  --lang go \
+  --pattern '{ defer $A.$B(t, failpoint.$M($$$)) } \
+  --selector defer_statement'
 ```
 
 ### Example
@@ -35,12 +33,12 @@ func TestIssue16696(t *testing.T) {
 	vardef.MemoryUsageAlarmRatio.Store(0.0)
 	defer vardef.MemoryUsageAlarmRatio.Store(alarmRatio)
 	require.NoError(t, failpoint.Enable("github.com/pingcap/tidb/pkg/executor/sortexec/testSortedRowContainerSpill", "return(true)"))
-	defer require.NoError(t, 
+	defer require.NoError(t,
 	   failpoint.Disable(
 		"github.com/pingcap/tidb/pkg/executor/sortexec/testSortedRowContainerSpill"
 	))
 	require.NoError(t, failpoint.Enable("github.com/pingcap/tidb/pkg/executor/join/testRowContainerSpill", "return(true)"))
-	defer require.NoError(t, 
+	defer require.NoError(t,
 		failpoint.Disable("github.com/pingcap/tidb/pkg/executor/join/testRowContainerSpill"))
 }
 ```
