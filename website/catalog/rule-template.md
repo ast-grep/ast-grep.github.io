@@ -1,11 +1,3 @@
----
-language: JavaScript # please fully spell the language
-playgroundLink: '[TODO]'
-command:  'ast-grep -p [TODO] -r [TODO]'
-hasFix: true
-ruleType: 'pattern' # 'pattern' or 'yaml'
----
-
 <!-- Remove Badge if it does not have fix-->
 ## Your Rule Name <Badge type="tip" text="Has Fix" />
 
