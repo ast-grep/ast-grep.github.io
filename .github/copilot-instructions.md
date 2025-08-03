@@ -4,18 +4,22 @@
 
 This repository contains the documentation website source code for **ast-grep**, a lightning-fast and user-friendly tool for code searching, linting, and rewriting at large scale. The website is built using VitePress and serves as the comprehensive documentation hub for the ast-grep project.
 
+## Documentation Only Changes
+
+If your change is only related to markdown, do NOT try building the whole project. Go ahead and change the markdown without wasting time on building and setting up the project.
+
 ## Technology Stack
 
 - **Frontend Framework**: VitePress (static site generator based on Vue.js)
-- **Programming Languages**: 
+- **Programming Languages**:
   - TypeScript/JavaScript (website functionality)
   - Rust (WASM compilation for in-browser ast-grep functionality)
 - **Package Manager**: **pnpm** (NOT npm - this is important!)
-- **Build Tools**: 
+- **Build Tools**:
   - wasm-pack (for Rust to WASM compilation)
   - Vite (bundling and development server)
   - Vue TypeScript compiler (vue-tsc)
-- **Linting/Formatting**: 
+- **Linting/Formatting**:
   - oxlint (JavaScript/TypeScript linting)
   - dprint (code formatting)
 
@@ -32,7 +36,7 @@ The project has a `pnpm-lock.yaml` file and is configured to work specifically w
 
 ## Development Setup
 
-1. **Prerequisites**: 
+1. **Prerequisites**:
    - Install Rust toolchain
    - Install wasm-pack: `cargo install wasm-pack`
    - Install pnpm: `npm install -g pnpm`
@@ -41,10 +45,10 @@ The project has a `pnpm-lock.yaml` file and is configured to work specifically w
    ```bash
    # Build WASM package
    wasm-pack build --target web
-   
+
    # Install dependencies
    pnpm install
-   
+
    # Start development server
    pnpm dev
    ```
