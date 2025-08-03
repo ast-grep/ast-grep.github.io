@@ -10,8 +10,6 @@ According to the [Go documentation](https://pkg.go.dev/encoding/json#Marshal), i
 
 This creates a security issue where developers think they are preventing a field from being unmarshaled (like `IsAdmin` in authentication), but attackers can still set that field by providing the `-` key in JSON input.
 
-### Example of the vulnerability
-
 ```go
 type User struct {
     Username string `json:"username,omitempty"`
@@ -21,6 +19,7 @@ type User struct {
 
 // This still works and sets IsAdmin to true!
 json.Unmarshal([]byte(`{"-": true}`), &user)
+// Result: main.User{Username:"", Password:"", IsAdmin:true}
 ```
 
 ### YAML
@@ -35,34 +34,30 @@ rule:
   inside:
     kind: field_declaration
 constraints:
-  TAG: 
+  TAG:
     regex: json:"-,.*"
 ```
 
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-```go{5,10,15,20}
+```go{10,15,20}
 package main
 
 type TestStruct1 struct {
-	// ok: unmarshal-tag-is-dash
-	A string `json:"id"`
+	A string `json:"id"` // ok
 }
 
 type TestStruct2 struct {
-	// ruleid: unmarshal-tag-is-dash
-	B string `json:"-,omitempty"`
+	B string `json:"-,omitempty"` // wrong
 }
 
 type TestStruct3 struct {
-	// ruleid: unmarshal-tag-is-dash
-	C string `json:"-,123"`
+	C string `json:"-,123"` // wrong
 }
 
 type TestStruct4 struct {
-	// ruleid: unmarshal-tag-is-dash
-	D string `json:"-,"`
+	D string `json:"-,"` // wrong
 }
 ```
 
