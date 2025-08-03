@@ -24,11 +24,13 @@ The table below lists all languages that are supported by ast-grep.
 |Json | `json` | `json` |
 |Kotlin | `kotlin`, `kt` | `kt`, `ktm`, `kts`|
 |Lua | `lua` | `lua`|
+|Nix | `nix` | `nix`|
 |Php | `php` | `php` |
 |Python | `py`, `python` | `py`, `py3`, `pyi`, `bzl`|
 |Ruby | `rb`, `ruby` | `rb`, `rbw`, `gemspec`|
 |Rust | `rs`, `rust` | `rs`|
 |Scala | `scala` | `scala`, `sc`, `sbt`|
+|Solidity | `solidity`, `sol` | `sol`|
 |Swift | `swift` | `swift`|
 |TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
