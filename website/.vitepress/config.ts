@@ -232,7 +232,7 @@ export default defineConfig({
       pattern: 'https://github.com/ast-grep/ast-grep.github.io/edit/main/website/:path',
     },
     sidebar: {
-      '/blog/': [
+      '/blog': [
         { text: 'Blog List', link: '/blog.html' },
         { text: 'Homepage', link: '/' },
         {
