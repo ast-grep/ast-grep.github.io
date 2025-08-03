@@ -107,6 +107,11 @@ Previously, the files section appears to be treated as relative to the current w
 
 This has been changed in 0.39, so now the `files` section is relative to the project config file.
 
+## NAPI-RS version bump!
+
+NAPI-RS recently released its [version 3](https://napi.rs/blog/announce-v3). ast-grep [followed the release](https://github.com/ast-grep/ast-grep/pull/2108) and the result is amazing. `ThreadSafeFunction`'s implementation complexity is greatly reduced.
+
+Though this does not impact ast-grep-napi users' experience or code. This section is a tribute to NAPI-RS and its creator, [Brooklyn](https://github.com/Brooooooklyn).
 
 ## Next Steps
 
