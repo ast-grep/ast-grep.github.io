@@ -48,6 +48,7 @@ export const languages = {
   html: 'HTML',
   java: 'Java',
   kotlin: 'Kotlin',
+  lua: 'Lua',
   python: 'Python',
   ruby: 'Ruby',
   rust: 'Rust',
