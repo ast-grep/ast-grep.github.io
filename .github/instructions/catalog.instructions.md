@@ -1,12 +1,10 @@
+---
+applyTo: "website/catalog/**/*.md"
+---
+
 # Catalog Instructions
 
 These instructions apply specifically to markdown files in the `website/catalog/` directory and help with creating and managing ast-grep rule examples.
-
-## applyTo
-
-Only apply these instructions to files matching these patterns:
-- `website/catalog/**/*.md`
-- Files being created in the `website/catalog/` directory
 
 ## Rule Creation Workflow
 
