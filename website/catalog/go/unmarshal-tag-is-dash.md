@@ -41,7 +41,7 @@ constraints:
 ### Example
 
 <!-- highlight matched code in curly-brace {lineNum} -->
-```go{10,15,20}
+```go{8,12,16}
 package main
 
 type TestStruct1 struct {
