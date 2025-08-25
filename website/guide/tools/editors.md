@@ -31,6 +31,7 @@ Use [pattern](https://ast-grep.github.io/guide/pattern-syntax.html) to structura
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
 | Search Pattern  | <img src="https://github.com/ast-grep/ast-grep-vscode/blob/main/readme/search-pattern.png?raw=true">     |
+| Search YAML     | <img src="https://github.com/ast-grep/ast-grep-vscode/blob/main/readme/search-yaml.png?raw=true">     |
 | Search In Folder| <img src="https://github.com/ast-grep/ast-grep-vscode/blob/main/readme/search-in-folder.png?raw=true">  |
 
 ### Structural Replace
