@@ -28,6 +28,9 @@
       <a target="_blank" href="https://opennext.js.org/cloudflare" title="OpenNext">
         <img src='https://avatars.githubusercontent.com/u/180226629?s=200&v=4'/>
       </a>
+      <a target="_blank" href="https://dify.ai" title="Dify">
+        <img src='https://avatars.githubusercontent.com/u/127165244'/>
+      </a>
     </div>
   </div>
 </template>
