@@ -19,7 +19,7 @@
     "monaco-editor": "0.52.2",
     "monaco-yaml": "5.4.0",
     "vitepress-plugin-llms": "1.7.4",
-    "vue": "3.5.19"
+    "vue": "3.5.21"
   },
   "optionalDependencies": {
     "ast-grep-wasm": "file:./pkg/"
