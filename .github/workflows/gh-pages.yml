@@ -30,7 +30,7 @@ jobs:
           restore-keys: ${{ runner.os }}-
 
       - name: Install Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
 
       - name: Build WASM
         run: wasm-pack build --target web && cd pkg && npm install
