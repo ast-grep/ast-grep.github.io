@@ -8,11 +8,11 @@ head:
 
 # Quick Start
 
-You can unleash `ast-grep`'s power from your fingertips within few keystrokes at the command line!
+You can unleash `ast-grep`'s power at your fingertips in a few keystrokes on the command line!
 
-Let's try its power by rewriting some code in a moderately large codebase: [TypeScript](https://github.com/microsoft/TypeScript/).
+Let's see it in action by rewriting code in a moderately large codebase: [TypeScript](https://github.com/microsoft/TypeScript/).
 
-Our task is to rewrite old defensive code that checks nullable nested method calls to use the new shiny [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) `?.`.
+Our task is to rewrite old defensive code that checks nullable nested method calls to use the shiny new [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) `?.`.
 
 ## Installation
 First, install `ast-grep`. It is distributed by [npm](https://www.npmjs.com/package/@ast-grep/cli), [cargo](https://crates.io/crates/ast-grep), [homebrew](https://formulae.brew.sh/formula/ast-grep) and [macports](https://ports.macports.org/port/ast-grep/). You can also build it [from source](https://github.com/ast-grep/ast-grep#installation).
@@ -72,8 +72,8 @@ git clone git@github.com:microsoft/TypeScript.git --depth 1
 ```
 
 ## Pattern
-Let's search for occurrences of looking up a method from a nested structure. `ast-grep` uses **patterns** to find similar code.
-Think of it as the pattern in our old-friend `grep`, but instead of text, it matches AST nodes.
+Let's search for instances of calling a method on a nested property. `ast-grep` uses **patterns** to find similar code.
+Think of patterns like those in our old friend `grep`, but instead of text, they match AST nodes.
 We can write patterns like we write ordinary code, and it will match all code that has the same syntactical structure.
 
 For example, the following pattern code
@@ -93,9 +93,9 @@ const result = obj.val &&
    obj.val()
 ```
 
-Exact matching based on the AST is cool, but we can go further with **meta variables** which allow for more flexibility.
-We can use **meta variable** to match any single AST node. Meta variables begin with the `$` sign and use upper case letters, e.g. `$METAVAR`.
-Think it as REGEX dot `.`, except it is not textual.
+Exact AST matching is already powerful, but we can go further with **metavariables** for more flexibility.
+Use a **metavariable** to match any single AST node. Metavariables begin with `$` and are typically uppercase (e.g., `$PROP`).
+Think of it like the regex dot `.`, except it matches syntax nodes, not text.
 
 We can use the following pattern to find all property checking code.
 
@@ -103,8 +103,8 @@ We can use the following pattern to find all property checking code.
 $PROP && $PROP()
 ```
 
-This is a valid `ast-grep` pattern that we can use from the command line! The `pattern` argument specifies our target.
-Optionally, we can use `lang` to tell `ast-grep` our target code language.
+This is a valid `ast-grep` pattern you can run from the command line. The `--pattern` argument specifies the target.
+Optionally, use `--lang` to specify the target language.
 
 :::code-group
 ```shell [Full Command]
@@ -120,10 +120,10 @@ ast-grep -p '$PROP && $PROP()' TypeScript/src
 :::
 
 :::tip Pro Tip
-The pattern must be quoted by single quote `'` to prevent shell from interpreting `$` sign.
+The pattern must be enclosed in single quotes `'` to prevent the shell from interpreting the `$` sign.
 `ast-grep -p '$PROP && $PROP()'` is okay.
 
-With double quotes `ast-grep -p "$PROP && $PROP()"` the command would be interpreted as `ast-grep -p " && ()"` after shell expansion.
+With double quotes, `ast-grep -p "$PROP && $PROP()"` would be interpreted as `ast-grep -p " && ()"` after shell expansion.
 :::
 
 ## Rewrite
@@ -143,9 +143,9 @@ ast-grep -p '$PROP && $PROP()' \
 Press `y` to accept the change!
 
 
-That's it! You have refactored TypeScript's repository in minutes. Congratulations!
+That's it! You have refactored the TypeScript source in minutes. Congratulations!
 
-We hope you enjoy the power of AST editing in plain programming language pattern. The next step is to learn more about writing patterns.
+We hope you enjoy the power of AST editing with plain programming-language patterns. Next, learn more about writing patterns.
 
 :::tip Pattern does not work?
 See our FAQ for more [guidance](/advanced/faq.html) on writing patterns.
