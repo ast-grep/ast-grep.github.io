@@ -161,6 +161,17 @@ So some features are not available like arbitrary look-ahead and back references
 
 You should almost always combine `regex` with other atomic rules to make sure the regular expression is applied to the correct AST node. Regex matching is quite expensive and cannot be optimized based on AST node kinds. While `kind` and `pattern` rules can be only applied to nodes with specific `kind_id` for optimized performance.
 
+:::tip
+You can use [Rust‑style inline flags](https://docs.rs/regex/latest/regex/#grouping-and-flags), for example:
+
+```yaml
+rule:
+  regex: "(?i)apple"
+```
+
+This matches Apple as well as apple or APPLE.
+:::
+
 ## `nthChild`
 
 `nthChild` is a rule to find nodes based on their indexes in the parent node's children list. In other words, it selects nodes based on their position among all sibling nodes within a parent node. It is very helpful in finding nodes without children or nodes appearing in specific positions.
