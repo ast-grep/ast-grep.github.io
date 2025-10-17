@@ -130,6 +130,7 @@ const sidebar: DefaultTheme.Sidebar = [
   {
     text: 'Advanced Topics',
     items: [
+      { text: 'Using ast-grep with AI', link: '/advanced/prompting.html' },
       { text: 'Frequently Asked Questions', link: '/advanced/faq.html' },
       {
         text: 'How ast-grep Works',
