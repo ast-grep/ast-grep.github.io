@@ -19,3 +19,4 @@ However, you can use the [`languageGlobs`](/reference/sgconfig.html#languageglob
 <!--@include: ./speed-up-barrel-import.md-->
 <!--@include: ./missing-component-decorator.md-->
 <!--@include: ./find-import-identifiers.md-->
+<!--@include: ./use-logical-assignment.md-->
