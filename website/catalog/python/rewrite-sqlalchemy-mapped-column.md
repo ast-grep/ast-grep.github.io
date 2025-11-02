@@ -16,7 +16,7 @@ The key technique demonstrated here is using **rewriters** to selectively filter
 
 ### YAML
 ```yaml
-id: sqlalchemy-mapped-column
+id: remove-nullable-arg
 language: python
 rule:
   pattern: $X = mapped_column($$$ARGS)
