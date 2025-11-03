@@ -17,7 +17,7 @@ default = []
 
 [dependencies]
 wasm-bindgen = {version = "=0.2.93", features = ["serde-serialize"]}
-wasm-bindgen-futures = "=0.4.43"
+wasm-bindgen-futures = "=0.4.55"
 serde = { version = "1.0", features = ["derive"] }
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
