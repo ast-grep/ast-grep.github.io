@@ -16,7 +16,7 @@ crate-type = ["cdylib", "rlib"]
 default = []
 
 [dependencies]
-wasm-bindgen = {version = "=0.2.93", features = ["serde-serialize"]}
+wasm-bindgen = {version = "=0.2.105", features = ["serde-serialize"]}
 wasm-bindgen-futures = "=0.4.43"
 serde = { version = "1.0", features = ["derive"] }
 
