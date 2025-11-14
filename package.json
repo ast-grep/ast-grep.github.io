@@ -33,6 +33,6 @@
     "typescript": "5.9.3",
     "vite": "7.1.12",
     "vitepress": "1.6.4",
-    "vue-tsc": "3.1.2"
+    "vue-tsc": "3.1.3"
   }
 }
