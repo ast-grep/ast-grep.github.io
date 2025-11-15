@@ -15,7 +15,7 @@
   "dependencies": {
     "@number-flow/vue": "0.4.8",
     "@types/js-yaml": "4.0.9",
-    "js-yaml": "4.1.0",
+    "js-yaml": "4.1.1",
     "monaco-editor": "0.54.0",
     "monaco-yaml": "5.4.0",
     "vitepress-plugin-llms": "1.8.1",
