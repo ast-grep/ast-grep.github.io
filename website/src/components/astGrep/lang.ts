@@ -30,6 +30,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   java: 'Java',
   json: 'JSON',
   kotlin: 'Kotlin',
+  nix: 'Nix',
   php: 'PHP',
   python: 'Python',
   ruby: 'Ruby',
