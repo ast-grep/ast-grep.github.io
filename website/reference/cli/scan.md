@@ -129,11 +129,11 @@ Possible values:
 - **entity**:  Show per-file/per-rule tracing information
 
 ### `--format <FORMAT>`
-Output warning/error messages in GitHub Action format.
+Output warning/error messages in different formats.
 
-Currently, only GitHub is supported.
+Supported formats: GitHub Action, [SARIF](https://sarifweb.azurewebsites.net/) (Static Analysis Results Interchange Format).
 
-[possible values: github]
+[possible values: github, sarif]
 
 ## Context Options
 

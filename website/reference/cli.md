@@ -69,7 +69,7 @@ ast-grep scan [OPTIONS] [PATHS]...
 | | --report-style `<REPORT_STYLE>` | [default: rich] [possible values: rich, medium, short]
 |   | --follow   |  Follow symbolic links |
 | | --json`[=<STYLE>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
-| | --format `<FORMAT>` | Output warning/error messages in GitHub Action format [possible values: github] |
+| | --format `<FORMAT>` |  Output warning/error messages in different formats [possible values: github, sarif] |
 | -U | --update-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
