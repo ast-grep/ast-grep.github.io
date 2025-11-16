@@ -6,6 +6,26 @@ This guide outlines several existing methods for leveraging AI with ast-grep.
 The field of AI is constantly evolving. The approaches detailed here are for reference, and we encourage you to explore and discover the best ways to utilize ast-grep with emerging AI technologies.
 :::
 
+## Using ast-grep with Claude Code Skill
+
+This skill teaches Claude how to write and use ast-grep rules to perform advanced code searches. Unlike traditional text-based search (grep, ripgrep), ast-grep understands the structure of your code, allowing you to find patterns like:
+
+- "Find all async functions that don't have error handling"
+- "Locate all React components that use a specific hook"
+- "Find functions with more than 3 parameters"
+- "Search for console.log calls inside class methods"
+
+Clone or download the [ast-grep skill repository](https://github.com/ast-grep/claude-skill) to your Claude Code skills directory:
+
+```bash
+# If you have a skills directory configured
+cp -r ast-grep ~/.claude-code/skills/
+
+# Or place it wherever your Claude Code skills are located
+```
+
+The skill should be automatically detected by Claude Code. You can verify by checking available skills in Claude Code.
+
 ## Simple Prompting in `AGENTS.md`
 
 For everyday development, you can instruct your AI agent to use ast-grep for code searching and analysis. This method is straightforward but requires a model with up-to-date knowledge of ast-grep to be effective. If the model is not familiar with the tool, it may not utilize it as instructed.

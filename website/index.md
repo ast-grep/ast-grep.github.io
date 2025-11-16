@@ -20,14 +20,14 @@ hero:
       text: Quickstart
       link: /guide/quick-start.html
     - theme: alt
-      text: Introduction
+      text: Intro
       link: /guide/introduction.html
     - theme: alt
       text: Examples
       link: /catalog/
     - theme: alt
-      text: GitHub
-      link: https://github.com/ast-grep/ast-grep
+      text: With AI
+      link: /advanced/prompting.html
 
 features:
   - icon: ⚡️
