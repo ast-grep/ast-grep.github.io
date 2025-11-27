@@ -20,6 +20,10 @@ head:
 
 # How to Debug ast-grep Rule Effectively
 
+:::tip Let Claude Debug For You
+If you prefer not to debug manually, try the [ast-grep Claude skill](https://github.com/ast-grep/claude-skill). It can explain AST structures, identify why rules don't match, and suggest fixes—all through natural conversation.
+:::
+
 Debugging ast-grep rules can be frustrating. You write what looks like a perfectly reasonable rule, test it against your code, and... nothing matches. Or worse, it matches things you didn't expect.
 
 The key to effective debugging is one word: **SIMPLIFY**.
@@ -304,9 +308,5 @@ When a rule unexpectedly fails to match:
 4. **Iterate systematically.** Don't guess. Remove one thing at a time, test, observe, repeat.
 
 5. **Use the right tools.** The [online playground](https://ast-grep.github.io/playground.html) provides instant feedback and AST visualization. Use it liberally.
-
-:::tip Let Claude Debug For You
-If you prefer not to debug manually, try the [ast-grep Claude skill](https://github.com/ast-grep/claude-skill). It can explain AST structures, identify why rules don't match, and suggest fixes—all through natural conversation.
-:::
 
 Happy debugging!
