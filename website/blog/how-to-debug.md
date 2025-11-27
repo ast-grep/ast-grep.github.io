@@ -305,4 +305,8 @@ When a rule unexpectedly fails to match:
 
 5. **Use the right tools.** The [online playground](https://ast-grep.github.io/playground.html) provides instant feedback and AST visualization. Use it liberally.
 
+:::tip Let Claude Debug For You
+If you prefer not to debug manually, try the [ast-grep Claude skill](https://github.com/ast-grep/claude-skill). It can explain AST structures, identify why rules don't match, and suggest fixes—all through natural conversation.
+:::
+
 Happy debugging!
