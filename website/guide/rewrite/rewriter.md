@@ -208,7 +208,7 @@ The produced `NEW_VAR` will contain the transformed nodes from both rewriters. [
 Using multiple rewriters can make you dynamically apply different rewriting logic to different sub nodes, based on the matching rules.
 :::
 
-In case multiple rewriters match the same sub node, the rewriter that appears first in the `rewriters` list will be applied first. Therefore, _**the order of rewriters in the `rewriters` list matters.**_
+In case multiple rewriters match the same sub node, only the matching rewriter that appears first in the `rewriters` list will be applied. Therefore, _**the order of rewriters in the `rewriters` list matters.**_
 
 ## Use Alternative Joiner
 
