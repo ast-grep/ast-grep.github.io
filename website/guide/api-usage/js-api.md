@@ -118,7 +118,7 @@ A `Matcher` can be one of the three types: `string`, `number` or `object`.
 
 * `string` is parsed as a [pattern](/guide/pattern-syntax.html). e.g. `'console.log($A)'`
 
-* `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function. e.g. `kind('function', Lang.JavaScript)`.
+* `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function. e.g. `kind(Lang.JavaScript, 'function')`.
 
 * A `NapiConfig` has a similar type of [config object](/reference/yaml.html). See details below.
 
