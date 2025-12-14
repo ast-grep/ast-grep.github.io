@@ -212,3 +212,7 @@ This flag turns off the specified RULE_ID. You can disable multiple rules by usi
 
 ### `-h, --help`
   Print help (see a summary with '-h')
+
+## Exit codes
+
+The program exit with the status code 1 if the scan match at least one rule and 0 no match were found.

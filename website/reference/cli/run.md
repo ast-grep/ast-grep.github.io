@@ -200,3 +200,7 @@ This is equivalent to providing both the -B/--before and -A/--after flags with t
 
 ### `-h, --help`
 Print help (see a summary with '-h')
+
+## Exit codes
+
+The program exit with the status code 0 if the search match at least one line and 1 if no match were found.
