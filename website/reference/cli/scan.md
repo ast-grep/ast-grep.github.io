@@ -215,4 +215,6 @@ This flag turns off the specified RULE_ID. You can disable multiple rules by usi
 
 ## Exit codes
 
-The program exit with the status code 1 if the scan match at least one rule and 0 no match were found.
+The program exits with status code:
+- **1**: if at least one rule matches
+- **0**: if no rules match

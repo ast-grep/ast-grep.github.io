@@ -203,4 +203,6 @@ Print help (see a summary with '-h')
 
 ## Exit codes
 
-The program exit with the status code 0 if the search match at least one line and 1 if no match were found.
+The program exits with status code:
+- **0**: at least one line matches
+- **1**: no matches found
