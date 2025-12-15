@@ -9,11 +9,13 @@ There are a lot of tricks to improve performance when using `napi`. The mantra i
 `parseAsync` can take advantage of NodeJs' libuv thread pool to parse code in parallel threads. This can be faster than the sync version `parse` when handling a lot of code.
 
 ```ts
-import { js } from '@ast-grep/napi';
+import { Lang, parse, parseAsync } from '@ast-grep/napi'
 // only one thread parsing
-const root = js.parse('console.log("hello world")')
+const ast = parse(Lang.JavaScript, 'console.log("hello world")')
+const root = ast.root()
 // better, can use multiple threads
-const root = await js.parseAsync('console.log("hello world")')
+const ast2 = await parseAsync(Lang.JavaScript, 'console.log("hello world")')
+const root2 = ast2.root()
 ```
 
 This is especially useful when you are using ast-grep in bundlers where the main thread is busy with other CPU intensive tasks.
@@ -55,7 +57,7 @@ const nodes = root.findAll({kind: 'member_expression'})
 
 ## Prefer `findInFiles` when possible
 
-If you have a lot of files to parse and want to maximize your programs' performance, ast-grep's language object provides a `findInFiles` function that parses multiple files and searches relevant nodes in parallel Rust threads.
+If you have a lot of files to parse and want to maximize your programs' performance, ast-grep provides a `findInFiles` function that parses multiple files and searches relevant nodes in parallel Rust threads.
 
 APIs we showed above all require parsing code in Rust and pass the `SgRoot` back to JavaScript.
 This incurs foreign function communication overhead and only utilizes the single main JavaScript thread.
@@ -66,6 +68,8 @@ The function signature of `findInFiles` is as follows:
 
 ```ts
 export function findInFiles(
+  /** the language to parse */
+  lang: Lang,
   /** specify the file path and matcher */
   config: FindConfig,
   /** callback function for found nodes in a file */
@@ -137,14 +141,19 @@ function countedPromise<F extends Callback>(func: F) {
 Example of using `findInFiles`
 
 ```ts
-let fileCount = await js.findInFiles({
+import { Lang, findInFiles } from '@ast-grep/napi'
+
+let fileCount = await findInFiles(Lang.JavaScript, {
   paths: ['relative/path/to/code'],
   matcher: {
     rule: {kind: 'member_expression'}
   },
 }, (err, n) => {
-  t.is(err, null)
-  t.assert(n.length > 0)
-  t.assert(n[0].text().includes('.'))
+  if (err) {
+    console.error(err)
+    return
+  }
+  console.log(`Found ${n.length} nodes`)
+  console.log(n[0].text())
 })
 ```
