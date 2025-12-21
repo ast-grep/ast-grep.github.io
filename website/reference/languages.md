@@ -18,6 +18,7 @@ The table below lists all languages that are supported by ast-grep.
 |Elixir | `ex`, `elixir` | `ex`, `exs`|
 |Go | `go`, `golang` | `go`|
 |Haskell | `hs`, `haskell` | `hs`|
+|Hcl | `hcl` | `hcl`|
 |Html | `html` | `html`, `htm`, `xhtml`|
 |Java | `java` | `java`|
 |JavaScript | `javascript`, `js`, `jsx` | `cjs`, `js`, `mjs`, `jsx`|
