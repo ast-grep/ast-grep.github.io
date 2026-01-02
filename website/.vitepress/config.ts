@@ -230,7 +230,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ast-grep/ast-grep' },
       { icon: 'discord', link: 'https://discord.com/invite/4YZjf6htSQ' },
-      { icon: 'leanpub', link: 'https://leanpub.com/ast-grep' },
+      { icon: 'leanpub', link: 'https://leanpub.com/ast-grep', ariaLabel: 'Mastering ast-grep' },
     ],
     editLink: {
       pattern: 'https://github.com/ast-grep/ast-grep.github.io/edit/main/website/:path',
