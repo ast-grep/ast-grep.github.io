@@ -238,6 +238,7 @@ export default defineConfig({
       '/blog': [
         { text: 'Blog List', link: '/blog.html' },
         { text: 'Homepage', link: '/' },
+        { text: 'Mastering ast-grep', link: 'https://leanpub.com/ast-grep' },
         {
           text: 'VSCode',
           link: 'https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode',
