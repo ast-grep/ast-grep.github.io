@@ -161,8 +161,8 @@ const sidebar: DefaultTheme.Sidebar = [
   {
     text: 'Links',
     items: [
+      { text: 'Mastering ast-grep', link: 'https://leanpub.com/ast-grep' },
       { text: 'Playground', link: '/playground.html' },
-      { text: 'Codemod Studio', link: 'https://app.codemod.com/studio' },
       { text: 'Blog', link: '/blog.html' },
       {
         text: 'VSCode',
@@ -172,6 +172,7 @@ const sidebar: DefaultTheme.Sidebar = [
       { text: 'StackOverflow', link: 'https://stackoverflow.com/questions/tagged/ast-grep' },
       { text: 'Reddit', link: 'https://www.reddit.com/r/astgrep/' },
       { text: 'Docs.rs', link: 'https://docs.rs/ast-grep-core/latest/ast_grep_core/' },
+      { text: 'Codemod Studio', link: 'https://app.codemod.com/studio' },
     ],
     collapsed: true,
   },
@@ -221,6 +222,7 @@ export default defineConfig({
           { text: 'Custom Language', link: '/advanced/custom-language.html' },
           { text: 'Contributing', link: '/contributing/how-to.html' },
           { text: 'Blog', link: '/blog.html' },
+          { text: 'Mastering ast-grep', link: 'https://leanpub.com/ast-grep' },
         ],
       },
       { text: 'Playground', link: '/playground.html' },
