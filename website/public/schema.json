@@ -101,7 +101,7 @@
         "null"
       ],
       "items": {
-        "type": "string"
+        "$ref": "#/$defs/RuleFileGlob"
       }
     },
     "ignores": {
@@ -111,7 +111,7 @@
         "null"
       ],
       "items": {
-        "type": "string"
+        "$ref": "#/$defs/RuleFileGlob"
       }
     },
     "url": {
@@ -816,6 +816,32 @@
       "description": "Additional metadata for the rule, can be used to store extra information.",
       "type": "object",
       "additionalProperties": true
+    },
+    "RuleFileGlob": {
+      "description": "A glob pattern for file matching, either as a simple string or an object with case-insensitive option.",
+      "anyOf": [
+        {
+          "description": "A glob pattern string",
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "glob": {
+              "description": "A glob pattern string",
+              "type": "string"
+            },
+            "caseInsensitive": {
+              "description": "Whether the glob matching is case insensitive",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "glob"
+          ]
+        }
+      ]
     }
   }
 }

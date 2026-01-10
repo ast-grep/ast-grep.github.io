@@ -236,17 +236,42 @@ Please also see [label guide](/guide/project/lint-rule.html#customize-code-highl
 ## Globbing
 
 ### `files`
-* type: `Array<String>`
+* type: `Array<Glob>`
 * required: false
 
 Glob patterns to specify that the rule only applies to matching files. It is tested if `ignores` does not exist or a file does not match any `ignores` glob.
 
+Each item in the array can be either:
+- A **string**: a simple glob pattern
+- An **object** with the following fields:
+  - `glob` (required): the glob pattern string
+  - `caseInsensitive` (optional): whether the glob matching is case insensitive. Defaults to `false`.
+
 **Example:**
 
 ```yaml
+# Simple string globs
 files:
   - src/**/*.js
   - src/**/*.ts
+```
+
+```yaml
+# Object syntax with case-insensitive matching
+files:
+  - glob: '*.ts'
+    caseInsensitive: true
+  - glob: 'README.md'
+    caseInsensitive: true
+```
+
+```yaml
+# Mixed formats
+files:
+  - '*.ts'                          # simple string
+  - glob: 'README.md'               # object with case-insensitive
+    caseInsensitive: true
+  - 'src/**/*.tsx'                  # simple string
 ```
 
 :::warning Don't add `./`
@@ -257,17 +282,28 @@ Paths in `files` are relative to the project root directory, that is, `sgconfig.
 
 
 ### `ignores`
-* type: `Array<String>`
+* type: `Array<Glob>`
 * required: false
+
+Glob patterns that exclude rules from applying to files. A file is tested against `ignores` list before matching `files`.
+
+Like `files`, each item can be either a string or an object with `glob` and `caseInsensitive` fields.
 
 **Example:**
 ```yaml
+# Simple string globs
 ignores:
   - test/**/*.js
   - test/**/*.ts
 ```
 
-Glob patterns that exclude rules from applying to files. A file is tested against `ignores` list before matching `files`.
+```yaml
+# With case-insensitive matching
+ignores:
+  - 'test/**'
+  - glob: 'BUILD'
+    caseInsensitive: true
+```
 
 A typical globing process works as follows:
 

@@ -230,6 +230,18 @@ files: ['src/**/*.js']
 <Item>
 
 ```yaml
+files:
+  - glob: 'README.md'
+    caseInsensitive: true
+```
+
+✅ Use object syntax for case-insensitive glob matching.
+
+</Item>
+
+<Item>
+
+```yaml
 ignores: ['test/**/*.js']
 ```
 
