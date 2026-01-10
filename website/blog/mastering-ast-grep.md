@@ -14,7 +14,7 @@ head:
       content: https://ast-grep.github.io/blog/optimize-ast-grep.html
   - - meta
     - property: og:description
-      content: How to optimize the Rust CLI tool ast-grep to become 10 times faster.
+      content: Mastering ast-grep, a comprehensive guide designed to bridge the gap between basic tool reference and advanced structural search mastery.
 ---
 
 # Announcing the Book: Mastering ast-grep
