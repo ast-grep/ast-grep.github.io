@@ -56,7 +56,7 @@ transform:
 ```
 
 :::tip Pro tip
-You can use regular expression capture groups in the `replace` field and refer to them in the `by` field. See [replace guide](/guide/rewrite-code.html#rewrite-with-regex-capture-groups)
+You can use regular expression capture groups in the `replace` field and refer to them in the `by` field. See [replace guide](/guide/rewrite/transform.html#rewrite-with-regex-capture-groups)
 :::
 
 ## `substring`
