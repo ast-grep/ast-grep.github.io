@@ -30,7 +30,7 @@ ast-grep 0.38.3+ supports string style transformations to simplify rule writing.
 The above example can be simplified to one-line style like:
 
 ```yaml
-transfrom:
+transform:
   NEW_VAR: replace($VAR_NAME, replace=regex, by=replacement)
   ANOTHER_NEW_VAR: substring($NEW_VAR, startChar=1, endChar=-1)
 ```
