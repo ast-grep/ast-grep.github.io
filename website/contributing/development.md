@@ -13,12 +13,12 @@ Once you have rustup installed, you can install rust by running:
 rustup install stable
 ```
 
-You also need  [pre-commit](https://pre-commit.com/) to setup git hooks for type checking, formatting and clippy.
+You also need  [prek](https://github.com/j178/prek) to setup git hooks for type checking, formatting and clippy.
 
-Run pre-commit install to set up the git hook scripts.
+Run prek install to set up the git hook scripts.
 
 ```bash
-pre-commit install
+prek install
 ```
 
 Optionally, you can also install [nodejs](https://github.com/Schniz/fnm) and [yarn](https://yarnpkg.com/) for napi binding development.
