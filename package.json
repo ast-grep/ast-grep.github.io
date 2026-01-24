@@ -28,7 +28,7 @@
     "dprint": "0.51.1",
     "@algolia/client-search": "5.47.0",
     "markdown-it": "14.1.0",
-    "oxlint": "1.39.0",
+    "oxlint": "1.41.0",
     "search-insights": "2.17.3",
     "typescript": "5.9.3",
     "vite": "7.3.1",
