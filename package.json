@@ -13,7 +13,7 @@
     "lint:fix": "oxlint --fix && dprint fmt"
   },
   "dependencies": {
-    "@number-flow/vue": "0.4.8",
+    "@number-flow/vue": "0.4.9",
     "@types/js-yaml": "4.0.9",
     "js-yaml": "4.1.1",
     "monaco-editor": "0.52.2",
