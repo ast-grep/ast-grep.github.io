@@ -18,7 +18,7 @@
     "js-yaml": "4.1.1",
     "monaco-editor": "0.52.2",
     "monaco-yaml": "5.4.0",
-    "vitepress-plugin-llms": "1.10.0",
+    "vitepress-plugin-llms": "1.11.0",
     "vue": "3.5.27"
   },
   "optionalDependencies": {
