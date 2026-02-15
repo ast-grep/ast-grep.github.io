@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@number-flow/vue':
-        specifier: 0.4.9
-        version: 0.4.9(vue@3.5.27(typescript@5.9.3))
+        specifier: 0.4.10
+        version: 0.4.10(vue@3.5.27(typescript@5.9.3))
       '@types/js-yaml':
         specifier: 4.0.9
         version: 4.0.9
@@ -569,8 +569,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@number-flow/vue@0.4.9':
-    resolution: {integrity: sha512-K1E0ZMj7So66kbo5BD4rdqIwpIWt1sqAY5r9B/N8Np8b2ejcJHGmKs+7vQXuXDccQjP5zqsbe/+oDV6QgTWGyg==}
+  '@number-flow/vue@0.4.10':
+    resolution: {integrity: sha512-mDz8OZB8CAeICCw34265EiMWPnsljpXQhn3ecXqCIqvAJW6K/fY9c6+1d91PR/h0pw1++jUQNZHHBrUP4D/NWA==}
     peerDependencies:
       vue: ^3
 
@@ -1336,8 +1336,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  number-flow@0.5.9:
-    resolution: {integrity: sha512-o3102c/4qRd6eV4n+rw6B/UP8+FosbhIxj4uA6GsjhryrGZRVtCtKIKEeBiOwUV52cUGJneeu0treELcV7U/lw==}
+  number-flow@0.5.10:
+    resolution: {integrity: sha512-Ss6fU7zZgfAlhT4KFcUVOafStQVHs22xTx7/Fm6nj9j9WUREYlQpBgFX+vzdnB2PpGPTrtdGZPJou6Yyu/uDeA==}
 
   oniguruma-to-es@3.1.1:
     resolution: {integrity: sha512-bUH8SDvPkH3ho3dvwJwfonjlQ4R80vjyvrU8YpxuROddv55vAEJrTuCuCVUhhsHbtlD9tGGbaNApGQckXhS8iQ==}
@@ -2020,10 +2020,10 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  '@number-flow/vue@0.4.9(vue@3.5.27(typescript@5.9.3))':
+  '@number-flow/vue@0.4.10(vue@3.5.27(typescript@5.9.3))':
     dependencies:
       esm-env: 1.2.2
-      number-flow: 0.5.9
+      number-flow: 0.5.10
       vue: 3.5.27(typescript@5.9.3)
 
   '@oxlint/darwin-arm64@1.43.0':
@@ -2880,7 +2880,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  number-flow@0.5.9:
+  number-flow@0.5.10:
     dependencies:
       esm-env: 1.2.2
 
