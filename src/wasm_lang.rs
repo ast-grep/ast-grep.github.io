@@ -202,7 +202,7 @@ impl Language for WasmLang {
   }
 }
 
-fn pre_process_pattern(expando: char, query: &str) -> Cow<str> {
+fn pre_process_pattern(expando: char, query: &str) -> Cow<'_, str> {
   let mut ret = Vec::with_capacity(query.len());
   let mut dollar_count = 0;
   for c in query.chars() {
@@ -253,10 +253,10 @@ impl Content for Wrapper {
   fn get_range(&self, range: Range<usize>) -> &[char] {
     &self.inner[range]
   }
-  fn decode_str(src: &str) -> Cow<[Self::Underlying]> {
+  fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]> {
     Cow::Owned(src.chars().collect())
   }
-  fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<str> {
+  fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str> {
     Cow::Owned(bytes.iter().collect())
   }
 
@@ -378,7 +378,7 @@ impl<'a> SgNode<'a> for Node {
   fn is_leaf(&self) -> bool {
     self.0.child_count() == 0
   }
-  fn kind(&self) -> Cow<str> {
+  fn kind(&self) -> Cow<'_, str> {
     Cow::Owned(self.0.type_().into())
   }
   fn kind_id(&self) -> u16 {
