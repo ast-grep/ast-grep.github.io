@@ -228,3 +228,38 @@ This will transform `1, 2, 3` to `integer + integer + integer`.
 ## Philosophy behind Rewriters
 
 You can see a more detailed design philosophy, _Find and Patch_, behind rewriters in [this page](/advanced/find-n-patch.html).
+
+## Known Limitations
+
+### Pattern Matching with Python Type Annotations
+
+:::warning Python Limitation
+Pattern syntax does not work with Python `kind: type` nodes used in function annotations. Use `regex` matching instead.
+:::
+
+Pattern matching (e.g., `pattern: "Optional[$TYPE]"`) fails to match type annotation nodes in Python function signatures, even though the same pattern works for type aliases. This is because tree-sitter's Python grammar structures `kind: type` nodes differently from `kind: subscript` nodes.
+
+**Affected**:
+```python
+def func_param(x: Optional[int]): pass  # type node - pattern fails
+```
+
+**Works**:
+```python
+TypeAlias = Optional[int]  # subscript node - pattern works
+```
+
+**Workaround** - use `regex` instead of `pattern`:
+
+```yaml
+rewriters:
+  - id: optional-rewriter
+    rule:
+      kind: type
+      regex: "^Optional\\[(.+)\\]$"
+    fix: $1 | None
+```
+
+Note: Regex capture groups use `$1`, `$2`, etc., not meta-variable names.
+
+See [issue #2485](https://github.com/ast-grep/ast-grep/issues/2485).
