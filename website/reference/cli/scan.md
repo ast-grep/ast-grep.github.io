@@ -216,5 +216,5 @@ This flag turns off the specified RULE_ID. You can disable multiple rules by usi
 ## Exit codes
 
 The program exits with status code:
-- **1**: if at least one rule matches
+- **1**: if at least one rule matches (if severity setted to error)
 - **0**: if no rules match
