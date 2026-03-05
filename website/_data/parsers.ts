@@ -9,6 +9,7 @@ export const parserPaths = {
   css: 'tree-sitter-css.wasm',
   cpp: 'tree-sitter-cpp.wasm',
   elixir: 'tree-sitter-elixir.wasm',
+  erlang: 'tree-sitter-erlang.wasm',
   go: 'tree-sitter-go.wasm',
   html: 'tree-sitter-html.wasm',
   java: 'tree-sitter-java.wasm',
