@@ -19,7 +19,7 @@
     "monaco-editor": "0.52.2",
     "monaco-yaml": "5.4.0",
     "vitepress-plugin-llms": "1.11.0",
-    "web-tree-sitter": "0.25.3",
+    "web-tree-sitter": "0.26.6",
     "vue": "3.5.28"
   },
   "optionalDependencies": {
