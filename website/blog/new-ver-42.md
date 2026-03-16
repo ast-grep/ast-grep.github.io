@@ -113,7 +113,7 @@ rule:
   matches:
     audit-log-call:
       logger-rule: { regex: ^console$ } # pass rule as arg
------
+---
 id: no-hardcoded-logger
 language: TypeScript
 rule:
@@ -252,11 +252,13 @@ Exclude nodes matching a selector. Perfect for filtering out unwanted matches.
 :::code-group
 
 ```yaml [:not]
-kind: 'expression_statement:not(call_expression)'
+# match expression statements that don't contain a call
+kind: 'expression_statement:not(:has(> call_expression))'
 # is equivalent to
 kind: expression_statement
 not:
-  kind: call_expression
+  has:
+    kind: call_expression
 ```
 
 :::
@@ -268,14 +270,15 @@ Match nodes against any one of several selectors — a concise way to express "o
 :::code-group
 
 ```yaml [:is]
-# match top-level function declarations or expression statements
-kind: 'program > :is(function_declaration, expression_statement)'
+# match functions containing either return or variable declaration
+kind: 'function_declaration:has(:is(return_statement, lexical_declaration))'
 # is equivalent to
-kind: program
+kind: function_declaration
 has:
   any:
-    - kind: function_declaration
-    - kind: expression_statement
+    - kind: return_statement
+    - kind: lexical_declaration
+  stopBy: end
 ```
 
 :::
