@@ -56,7 +56,7 @@ rule:
         field: arguments
         has:
           kind: string
------
+---
 id: no-hardcoded-logger
 language: TypeScript
 rule:
