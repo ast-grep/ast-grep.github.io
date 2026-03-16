@@ -270,15 +270,14 @@ Match nodes against any one of several selectors — a concise way to express "o
 :::code-group
 
 ```yaml [:is]
-# match functions containing either return or variable declaration
-kind: 'function_declaration:has(:is(return_statement, lexical_declaration))'
+# match return statements or variable declarations inside a block
+kind: 'statement_block > :is(return_statement, lexical_declaration)'
 # is equivalent to
-kind: function_declaration
-has:
-  any:
-    - kind: return_statement
-    - kind: lexical_declaration
-  stopBy: end
+any:
+  - kind: return_statement
+  - kind: lexical_declaration
+inside:
+  kind: statement_block
 ```
 
 :::
