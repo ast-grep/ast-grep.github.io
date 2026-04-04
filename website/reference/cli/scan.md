@@ -213,6 +213,26 @@ This flag turns off the specified RULE_ID. You can disable multiple rules by usi
 ### `-h, --help`
   Print help (see a summary with '-h')
 
+## Built-in Rules
+
+ast-grep provides built-in rules that can be used with the [severity override flags](#rule-options) above. These rules are not enabled by default and must be activated via CLI flags.
+
+### `unused-suppression`
+
+Reports `ast-grep-ignore` suppression comments that do not actually suppress any diagnostic. It behaves like a `hint` rule with auto-fix. See [Report Unused Suppressions](/guide/project/severity.html#report-unused-suppressions) for more details.
+
+```bash
+ast-grep scan --error=unused-suppression
+```
+
+### `no-suppress-all`
+
+Reports `ast-grep-ignore` comments that do not specify a rule ID, which would suppress all diagnostics on a line. See [Disallow Suppress-All Comments](/guide/project/severity.html#disallow-suppress-all-comments) for more details.
+
+```bash
+ast-grep scan --warning=no-suppress-all
+```
+
 ## Exit codes
 
 The program exits with status code:
