@@ -128,6 +128,21 @@ ast-grep scan --error unused-suppression
 ast-grep --rule rule.yml scan --hint unused-suppression
 ```
 
+## Disallow Suppress-All Comments
+
+By default, `ast-grep-ignore` without a rule ID suppresses _all_ diagnostics on a line. This can accidentally hide issues, especially when `ast-grep-ignore: rule-id` is mistakenly written as `ast-grep-ignore rule-id` (missing the colon).
+
+ast-grep provides a built-in rule `no-suppress-all` to disallow such suppress-all comments. When enabled, any `ast-grep-ignore` comment that does not specify a rule ID will be flagged.
+
+```bash
+# flag suppress-all comments as warning
+ast-grep scan --warning=no-suppress-all
+# flag suppress-all comments as error in CI/CD
+ast-grep scan --error=no-suppress-all
+```
+
+With `no-suppress-all` enabled, developers are required to always specify which rule(s) to suppress. This helps track suppression counts per rule and prevents accidental suppression of multiple rules.
+
 ## Inspect Rule Severity
 
 Finally, ast-grep provides a CLI flag [`--inspect`](/reference/cli/scan.html#inspect-granularity) to debug what rules are enabled and their severity levels. This is useful to understand the rule configuration and to debug why a rule is not triggered.
