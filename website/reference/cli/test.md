@@ -46,6 +46,19 @@ Include `severity:off` rules in test
 
 ast-grep will not run rules with `severity: off` by default. This option will include those rules in the test.
 
+### `--color <WHEN>`
+
+Controls when to use color in the output.
+
+This is useful when piping test output to a file or another command, where ANSI escape codes would be unwanted.
+Possible values:
+
+* `auto` (default): Automatically detect if color support is available on the terminal
+* `always`: Always display colors
+* `ansi`: Always display colors but with ANSI escape codes (alias for `always`)
+* `never`: Never display colors
+
+
 ### `-h, --help`
 
 Print help

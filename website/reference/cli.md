@@ -109,6 +109,7 @@ ast-grep test [OPTIONS]
 | -f| --filter                        |Filter rule test cases to execute using a glob pattern.|
 |   | --include-off                   | Include `severity:off` rules in test
 | -i| --interactive                   |start an interactive review to update snapshots selectively.|
+|   | --color `<WHEN>`                |Controls output color [default: auto] [possible values: auto, always, ansi, never]|
 | -h| --help                          |Print help.|
 
 ## `ast-grep new`
