@@ -18,7 +18,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bb90b567a78bc2678a8ba24ba04147c184f9f618366a4803b197b4c6ee30a01d"
 dependencies = [
  "ast-grep-core",
- "bit-set",
+ "bit-set 0.9.1",
  "globset",
  "regex",
  "schemars",
@@ -29,11 +29,11 @@ dependencies = [
 
 [[package]]
 name = "ast-grep-core"
-version = "0.42.0"
+version = "0.42.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7bdde23a7460d533ac757b053ad37d59e33d6ca6cfc21707000e07d8cfc431e9"
+checksum = "0e4ae49b5c42878311768f4cdd576ef470c6e45c3105d558af928fd04ac8c588"
 dependencies = [
- "bit-set",
+ "bit-set 0.10.0",
  "regex",
  "thiserror",
 ]
@@ -78,6 +78,15 @@ name = "bit-set"
 version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34ddef2995421ab6a5c779542c81ee77c115206f4ad9d5a8e05f4ff49716a3dd"
+dependencies = [
+ "bit-vec",
+]
+
+[[package]]
+name = "bit-set"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09ec2f926cc3060f09db9ebc5b52823d85268d24bb917e472c0c4bea35780a7d"
 dependencies = [
  "bit-vec",
 ]
