@@ -43,7 +43,7 @@ cargo install ast-grep --locked
 # install via npm
 npm i @ast-grep/cli -g
 
-# note, for pnpm, you many need manually approve postinstall script
+# note, for pnpm, you may need manually approve postinstall script
 # pnpm approve-builds
 ```
 
