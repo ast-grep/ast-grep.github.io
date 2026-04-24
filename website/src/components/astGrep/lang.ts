@@ -25,6 +25,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   css: 'CSS',
   cpp: 'C++',
   elixir: 'Elixir',
+  erlang: 'Erlang',
   go: 'Go',
   hcl: 'HCL',
   html: 'HTML',
