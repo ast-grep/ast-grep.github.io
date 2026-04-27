@@ -36,7 +36,7 @@ jobs:
         run: wasm-pack build --target web && cd pkg && npm install
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6.0.1
+        uses: pnpm/action-setup@v6.0.3
         with:
           version: 10.27.0
           run_install: |
