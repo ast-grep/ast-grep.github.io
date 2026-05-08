@@ -72,15 +72,3 @@ IntelliJ Structural Search Replace is not a standalone tool, but a feature of th
 
 **Cons**:
 * Currently, IntelliJ IDEA supports the structural search and replace for Java, Kotlin and Groovy.
-
-## [Shisho](https://github.com/flatt-security/shisho)
-Shisho is a new and promising tool that uses code patterns to search and manipulate code in various languages.
-
-**Pros**:
-* It offers fast and flexible rule composition using code patterns.
-* It can handle multiple languages and files in parallel, and it has a simple and intuitive syntax for specifying patterns and filters.
-
-**Cons**:
-* It is still in development and it has limited language support compared to the other tools.
-It currently supports only 3 languages, while the other tools support over 20 languages.
-* The tool's parent company seems to have changed their business direction.
