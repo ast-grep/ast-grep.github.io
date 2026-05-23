@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Checks that language lists across documentation and source files stay consistent.
-// Run: node website/check-lang-consistency.mjs
+// Run: node scripts/check-lang-consistency.mjs
 
 import { readFileSync, readdirSync } from 'fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+const rootDir = join(__dirname, '..')
+const websiteDir = join(rootDir, 'website')
 let errors = 0
 
 function error(msg) {
@@ -20,7 +22,7 @@ function sorted(arr) {
 
 // --- 1. Parse reference/languages.md table ---
 console.log('Checking reference/languages.md ...')
-const langsMd = readFileSync(join(__dirname, 'reference/languages.md'), 'utf8')
+const langsMd = readFileSync(join(websiteDir, 'reference/languages.md'), 'utf8')
 const langTableRe = /^\|(\w+)\s*\|/gm
 const langsFromTable = []
 for (const m of langsMd.matchAll(langTableRe)) {
@@ -32,7 +34,7 @@ console.log(`  Found ${langsFromTable.length} languages in table`)
 
 // --- 2. Parse reference/yaml.md valid values ---
 console.log('Checking reference/yaml.md ...')
-const yamlMd = readFileSync(join(__dirname, 'reference/yaml.md'), 'utf8')
+const yamlMd = readFileSync(join(websiteDir, 'reference/yaml.md'), 'utf8')
 const yamlValuesRe = /Valid values are:\s*(.+)/
 const yamlMatch = yamlMd.match(yamlValuesRe)
 const langsFromYaml = yamlMatch
@@ -67,14 +69,14 @@ for (let i = 0; i < langsFromTable.length; i++) {
 
 // --- 5. Parse parsers.ts parserPaths keys ---
 console.log('Checking _data/parsers.ts ...')
-const parsersTs = readFileSync(join(__dirname, '_data/parsers.ts'), 'utf8')
+const parsersTs = readFileSync(join(websiteDir, '_data/parsers.ts'), 'utf8')
 const parserPathsBlock = parsersTs.match(/export const parserPaths = \{([\s\S]*?)\}/)?.[1] || ''
 const parserKeys = [...parserPathsBlock.matchAll(/^\s*(\w+):/gm)].map(m => m[1])
 console.log(`  Found ${parserKeys.length} languages in parserPaths`)
 
 // --- 6. Parse lang.ts languageDisplayNames keys ---
 console.log('Checking src/components/astGrep/lang.ts ...')
-const langTs = readFileSync(join(__dirname, 'src/components/astGrep/lang.ts'), 'utf8')
+const langTs = readFileSync(join(websiteDir, 'src/components/astGrep/lang.ts'), 'utf8')
 const displayNamesBlock = langTs.match(/languageDisplayNames[\s\S]*?\{([\s\S]*?)\}/)?.[1] || ''
 const displayKeys = [...displayNamesBlock.matchAll(/^\s*(\w+):/gm)].map(m => m[1])
 console.log(`  Found ${displayKeys.length} languages in languageDisplayNames`)
@@ -96,7 +98,7 @@ for (const lang of displayKeys) {
 
 // --- 8. Parse wasm_lang.rs WasmLang enum variants ---
 console.log('Checking src/wasm_lang.rs ...')
-const wasmRs = readFileSync(join(__dirname, '..', 'src/wasm_lang.rs'), 'utf8')
+const wasmRs = readFileSync(join(rootDir, 'src/wasm_lang.rs'), 'utf8')
 const enumBlock = wasmRs.match(/pub enum WasmLang \{([\s\S]*?)\}/)?.[1] || ''
 const wasmVariants = [...enumBlock.matchAll(/^\s*(\w+),?/gm)]
   .map(m => m[1])
@@ -120,7 +122,7 @@ for (const lang of wasmLangsLower) {
 
 // --- 10. Check every parserPaths WASM file exists on disk ---
 console.log('Checking WASM parser files exist ...')
-const parsersDir = join(__dirname, 'public/parsers')
+const parsersDir = join(websiteDir, 'public/parsers')
 const wasmFiles = new Set(readdirSync(parsersDir).filter(f => f.endsWith('.wasm')))
 const parserPathValues = [...parserPathsBlock.matchAll(/:\s*'([^']+)'/gm)].map(m => m[1])
 for (const file of parserPathValues) {
@@ -131,7 +133,7 @@ for (const file of parserPathValues) {
 
 // --- 11. Check every playground language has an SVG icon ---
 console.log('Checking SVG language icons ...')
-const iconsDir = join(__dirname, 'public/langs')
+const iconsDir = join(websiteDir, 'public/langs')
 const svgFiles = new Set(readdirSync(iconsDir).filter(f => f.endsWith('.svg')).map(f => f.replace('.svg', '')))
 for (const lang of parserKeys) {
   if (!svgFiles.has(lang)) {
