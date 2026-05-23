@@ -9,6 +9,7 @@
     "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vitepress build website",
     "download-parsers": "node --experimental-strip-types website/public/parsers/downloadParsers.mjs",
     "serve": "vitepress serve website",
+    "check-langs": "node website/check-lang-consistency.mjs",
     "lint": "oxlint && dprint check",
     "lint:fix": "oxlint --fix && dprint fmt"
   },
