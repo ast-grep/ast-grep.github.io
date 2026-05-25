@@ -9,7 +9,7 @@ Run one time search or rewrite in command line. This is the default command when
 ### Usage
 
 ```shell
-ast-grep run [OPTIONS] --pattern <PATTERN> [PATHS]...
+ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 ```
 
 ### Arguments
@@ -22,10 +22,11 @@ ast-grep run [OPTIONS] --pattern <PATTERN> [PATHS]...
 |-------|------|-------------|
 | -p| --pattern `<PATTERN>` |  AST pattern to match. |
 |   | --selector `<KIND>`   |  AST kind to extract sub-part of pattern to match. |
+| -k| --kind `<KIND>`       |  AST kind to match. Accepts ESQuery-style selectors. See [ESQuery Style Kind](/reference/rule/esquery.html). |
 | -r| --rewrite `<REWRITE>` |  String to replace the matched AST node. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
 |   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
-|   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature] |
+|   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature, template] |
 |   | --follow   |  Follow symbolic links |
 |   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |

@@ -10,7 +10,7 @@ This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is eq
 ## Usage
 
 ```shell
-ast-grep run [OPTIONS] --pattern <PATTERN> [PATHS]...
+ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 ```
 
 ## Arguments
@@ -52,6 +52,12 @@ AST kind to extract sub-part of pattern to match.
 
 selector defines the sub-syntax node kind that is the actual matcher of the pattern. See https://ast-grep.github.io/guide/rule-config/atomic-rule.html#pattern-object.
 
+### `-k, --kind <KIND>`
+
+AST kind to match.
+
+`kind` accepts a single tree-sitter node kind or an ESQuery-style selector. See [ESQuery Style Kind](/reference/rule/esquery.html) for the supported selector syntax.
+
 ### `--strictness <STRICTNESS>`
 
 The strictness of the pattern. More strict algorithm will match less code. See [match algorithm deep dive](/advanced/match-algorithm.html) for more details.
@@ -62,6 +68,7 @@ Possible values:
 - **ast**:       Match only ast nodes
 - **relaxed**:   Match ast node except comments
 - **signature**: Match ast node except comments, without text
+- **template**:  Similar to smart but match text only, node kinds are ignored
 
 [default: smart]
 
