@@ -120,7 +120,12 @@ const sidebar: DefaultTheme.Sidebar = [
           { text: 'rewriter', link: '/reference/yaml/rewriter.html' },
         ],
       },
-      { text: 'Rule Object', link: '/reference/rule.html' },
+      {
+        text: 'Rule Object',
+        link: '/reference/rule.html',
+        collapsed: false,
+        items: [{ text: 'ESQuery Style Kind', link: '/reference/rule/esquery.html' }],
+      },
       { text: 'API Reference', link: '/reference/api.html' },
       { text: 'Language List', link: '/reference/languages.html' },
       { text: 'Playground Manual', link: '/reference/playground.html' },

@@ -74,6 +74,8 @@ ast-grep 0.39+ also supports limited ESQuery syntax for `kind`:
 kind: call_expression > identifier
 ```
 
+See [ESQuery style kind](/reference/rule/esquery.html) for supported selectors and their equivalent rule objects.
+
 ### `regex`
 * type: `String`
 
