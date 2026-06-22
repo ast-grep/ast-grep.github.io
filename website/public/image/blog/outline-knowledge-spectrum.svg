@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 260" role="img" aria-labelledby="title desc">
+  <title id="title">Code navigation knowledge spectrum</title>
+  <desc id="desc">A compact gradient spectrum from fast local textual tools to slower global semantic tools. grep is textual and local, ast-grep outline is local and structure-aware, AST indexing is global and approximate, and LSP is global and type-aware.</desc>
+  <defs>
+    <clipPath id="railClip">
+      <rect x="78" y="124" width="900" height="14" rx="7"/>
+    </clipPath>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; }
+      .title { font-size: 32px; font-weight: 700; fill: #17231f; }
+      .subtitle { font-size: 20px; font-weight: 700; fill: #36433e; }
+      .axis { font-size: 13px; font-weight: 700; fill: #7a8984; }
+      .label { font-size: 18px; font-weight: 700; fill: #1c2925; }
+      .detail { font-size: 13px; font-weight: 500; fill: #66746f; }
+      .sweet { font-size: 13px; font-weight: 700; fill: #0f684e; }
+      .small { font-size: 13px; font-weight: 500; fill: #7a8984; }
+    </style>
+  </defs>
+  <rect width="1040" height="260" fill="#ffffff"/>
+  <text class="subtitle" x="20" y="52">A spectrum from local signals to global semantics.</text>
+
+  <text class="axis" x="52" y="101">FAST / LOCAL</text>
+  <text class="axis" x="1004" y="101" text-anchor="end">SLOWER / GLOBAL</text>
+
+  <g clip-path="url(#railClip)">
+    <rect x="78" y="124" width="56" height="14" fill="#72c79a"/>
+    <rect x="134" y="124" width="56" height="14" fill="#5fc492"/>
+    <rect x="190" y="124" width="56" height="14" fill="#49bd89"/>
+    <rect x="246" y="124" width="56" height="14" fill="#31b481"/>
+    <rect x="302" y="124" width="56" height="14" fill="#18a87d"/>
+    <rect x="358" y="124" width="56" height="14" fill="#35ad79"/>
+    <rect x="414" y="124" width="56" height="14" fill="#55b174"/>
+    <rect x="470" y="124" width="56" height="14" fill="#79b86b"/>
+    <rect x="526" y="124" width="56" height="14" fill="#a2bd63"/>
+    <rect x="582" y="124" width="56" height="14" fill="#c8bd5d"/>
+    <rect x="638" y="124" width="56" height="14" fill="#e5b65b"/>
+    <rect x="694" y="124" width="56" height="14" fill="#d9aa64"/>
+    <rect x="750" y="124" width="56" height="14" fill="#c09f78"/>
+    <rect x="806" y="124" width="56" height="14" fill="#9fa08f"/>
+    <rect x="862" y="124" width="56" height="14" fill="#8098b7"/>
+    <rect x="918" y="124" width="60" height="14" fill="#6e89d8"/>
+  </g>
+
+  <circle cx="83" cy="131" r="23" fill="#72c79a" stroke="#ffffff" stroke-width="4"/>
+  <circle cx="75" cy="122" r="9" fill="#ffffff" opacity="0.32"/>
+  <circle cx="348" cy="131" r="32" fill="#18a87d" stroke="#0f765b" stroke-width="5"/>
+  <circle cx="335" cy="118" r="12" fill="#ffffff" opacity="0.26"/>
+  <circle cx="677" cy="131" r="23" fill="#e5b65b" stroke="#ffffff" stroke-width="4"/>
+  <circle cx="669" cy="122" r="9" fill="#ffffff" opacity="0.32"/>
+  <circle cx="978" cy="131" r="23" fill="#6e89d8" stroke="#ffffff" stroke-width="4"/>
+  <circle cx="970" cy="122" r="9" fill="#ffffff" opacity="0.32"/>
+
+  <text class="label" x="83" y="182" text-anchor="middle">grep</text>
+  <text class="detail" x="83" y="203" text-anchor="middle">textual</text>
+  <text class="detail" x="83" y="220" text-anchor="middle">fast, local</text>
+
+  <text class="label" x="348" y="182" text-anchor="middle">ast-grep outline</text>
+  <text class="sweet" x="348" y="203" text-anchor="middle">sweet spot</text>
+  <text class="detail" x="348" y="220" text-anchor="middle">fast, correct, concise</text>
+
+  <text class="label" x="677" y="182" text-anchor="middle">AST index</text>
+  <text class="detail" x="677" y="203" text-anchor="middle">approximate semantics</text>
+  <text class="detail" x="677" y="220" text-anchor="middle">global, cached</text>
+
+  <text class="label" x="978" y="182" text-anchor="middle">LSP</text>
+  <text class="detail" x="978" y="203" text-anchor="middle">type-aware</text>
+  <text class="detail" x="978" y="220" text-anchor="middle">global, slower</text>
+
+  <rect x="20" y="232" width="1016" height="1" fill="#edf2ef"/>
+  <text class="small" x="20" y="250">Gradient: text search -> local structure -> indexed approximations -> compiler-backed semantics.</text>
+</svg>

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">ast-grep outline benchmark cost savings</title>
+  <desc id="desc">Horizontal bar chart showing median Claude Code cost savings with ast-grep outline: Django 55%, OkHttp 40%, VS Code 35%, Excalidraw 25%, Tokio 12%, Alamofire even, and Gin 11% costlier.</desc>
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-7%" width="110%" height="116%">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#1f2933" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; }
+      .title { font-size: 38px; font-weight: 700; fill: #17231f; }
+      .subtitle { font-size: 18px; font-weight: 500; fill: #65736e; }
+      .chip { font-size: 16px; font-weight: 700; fill: #1e3c33; }
+      .axis { font-size: 14px; font-weight: 600; fill: #83918c; }
+      .tick { font-size: 13px; font-weight: 500; fill: #93a09b; }
+      .repo { font-size: 17px; font-weight: 700; fill: #25312d; }
+      .size { font-size: 13px; font-weight: 500; fill: #7d8a85; }
+      .value { font-size: 16px; font-weight: 700; fill: #17231f; }
+      .note { font-size: 14px; font-weight: 500; fill: #6d7b76; }
+      .grid { stroke: #e8eeeb; stroke-width: 1; }
+      .zero { stroke: #2d3a35; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="675" fill="#f7fbfa"/>
+  <rect x="56" y="48" width="1088" height="579" rx="30" fill="#ffffff" filter="url(#cardShadow)"/>
+  <rect x="56.5" y="48.5" width="1087" height="578" rx="29.5" fill="none" stroke="#e0e8e4"/>
+
+  <text class="title" x="96" y="112">Benchmark result: lower agent cost</text>
+  <text class="subtitle" x="96" y="145">Median Claude Code cost savings with ast-grep outline available</text>
+
+  <rect x="790" y="86" width="308" height="38" rx="19" fill="#eaf7f1"/>
+  <text class="chip" x="812" y="111">100% median coverage / precision</text>
+  <rect x="790" y="132" width="184" height="34" rx="17" fill="#f2f5f3"/>
+  <text class="axis" x="812" y="154">56 real agent runs</text>
+
+  <text class="axis" x="96" y="190">Repository</text>
+  <text class="axis" x="356" y="190">Cost saved vs baseline</text>
+  <text class="axis" x="1028" y="190" text-anchor="end">Higher is better</text>
+
+  <line class="grid" x1="397.3" y1="204" x2="397.3" y2="514"/>
+  <line class="zero" x1="487.7" y1="198" x2="487.7" y2="520"/>
+  <line class="grid" x1="578.1" y1="204" x2="578.1" y2="514"/>
+  <line class="grid" x1="668.5" y1="204" x2="668.5" y2="514"/>
+  <line class="grid" x1="758.9" y1="204" x2="758.9" y2="514"/>
+  <line class="grid" x1="849.3" y1="204" x2="849.3" y2="514"/>
+  <line class="grid" x1="939.7" y1="204" x2="939.7" y2="514"/>
+  <line class="grid" x1="1030" y1="204" x2="1030" y2="514"/>
+
+  <text class="tick" x="397.3" y="540" text-anchor="middle">-10%</text>
+  <text class="tick" x="487.7" y="540" text-anchor="middle">0</text>
+  <text class="tick" x="578.1" y="540" text-anchor="middle">10%</text>
+  <text class="tick" x="668.5" y="540" text-anchor="middle">20%</text>
+  <text class="tick" x="758.9" y="540" text-anchor="middle">30%</text>
+  <text class="tick" x="849.3" y="540" text-anchor="middle">40%</text>
+  <text class="tick" x="939.7" y="540" text-anchor="middle">50%</text>
+  <text class="tick" x="1030" y="540" text-anchor="middle">60%</text>
+
+  <text class="repo" x="96" y="225">VS Code</text>
+  <text class="size" x="96" y="244">11,370 files / 3,279k LOC</text>
+  <rect x="487.7" y="209" width="316.4" height="28" rx="14" fill="#18a87d"/>
+  <text class="value" x="820" y="229">35% cheaper</text>
+
+  <text class="repo" x="96" y="270">Excalidraw</text>
+  <text class="size" x="96" y="289">625 files / 173k LOC</text>
+  <rect x="487.7" y="254" width="226.0" height="28" rx="14" fill="#18a87d"/>
+  <text class="value" x="730" y="274">25% cheaper</text>
+
+  <text class="repo" x="96" y="315">Django</text>
+  <text class="size" x="96" y="334">3,030 files / 551k LOC</text>
+  <rect x="487.7" y="299" width="497.2" height="28" rx="14" fill="#18a87d"/>
+  <text class="value" x="1001" y="319">55% cheaper</text>
+
+  <text class="repo" x="96" y="360">Tokio</text>
+  <text class="size" x="96" y="379">779 files / 175k LOC</text>
+  <rect x="487.7" y="344" width="108.5" height="28" rx="14" fill="#18a87d"/>
+  <text class="value" x="612" y="364">12% cheaper</text>
+
+  <text class="repo" x="96" y="405">OkHttp</text>
+  <text class="size" x="96" y="424">640 files / 135k LOC</text>
+  <rect x="487.7" y="389" width="361.6" height="28" rx="14" fill="#18a87d"/>
+  <text class="value" x="865" y="409">40% cheaper</text>
+
+  <text class="repo" x="96" y="450">Gin</text>
+  <text class="size" x="96" y="469">99 files / 24k LOC</text>
+  <rect x="388.3" y="434" width="99.4" height="28" rx="14" fill="#dc6b5e"/>
+  <text class="value" x="372" y="454" text-anchor="end">11% costlier</text>
+
+  <text class="repo" x="96" y="495">Alamofire</text>
+  <text class="size" x="96" y="514">108 files / 47k LOC</text>
+  <circle cx="487.7" cy="479" r="7" fill="#a9b4af"/>
+  <text class="value" x="506" y="484">even</text>
+
+  <rect x="96" y="568" width="12" height="12" rx="6" fill="#27b58b"/>
+  <text class="note" x="116" y="579">Positive savings means the outline arm was cheaper than the baseline arm.</text>
+  <rect x="96" y="596" width="12" height="12" rx="6" fill="#df6659"/>
+  <text class="note" x="116" y="607">Correctness was checked against baseline answers, not assumed from speed alone.</text>
+</svg>
