@@ -90,29 +90,54 @@ ast-grep outline crates --json=stream
 
 The core design decision is what `outline` refuses to do.
 
-First, there is no index. `outline` parses the files you ask about in real time
-every time. That means there is no index to build, update, invalidate, or debug.
-This matters for agentic programming because agents often work in multiple
-`git worktree` checkouts at once. Indexed tools have to either share a cache
-across worktrees or build one codebase index per checkout. `ast-grep outline`
-does neither. Each worktree is just source text on disk, so parallel agent
-worktrees do not create parallel copies of the same codebase index. The command
-stays simple and is still fast on projects below roughly 10,000 files.
+### No Index
 
-Second, there is no cross-file analysis and no type resolution. `outline` does
-not resolve imports, follow references, construct call graphs, infer receiver
-types, or guess that two symbols must be related because they share the same
-name. That keeps it fast, but more importantly it keeps the failure mode
-understandable.
+`outline` parses the files you ask about in real time every time. That means
+there is no index to build, update, invalidate, or debug. This matters for
+agentic programming because agents often work in multiple `git worktree`
+checkouts at once. Indexed tools have to either share a cache across worktrees
+or build one codebase index per checkout. `ast-grep outline` does neither. Each
+worktree is just source text on disk, so parallel agent worktrees do not create
+parallel copies of the same codebase index. The command stays simple and is
+still fast on projects below roughly 10,000 files.
+
+### No Cross-File Analysis
+
+There is no cross-file analysis and no type resolution. `outline` does not
+resolve imports, follow references, construct call graphs, infer receiver types,
+or guess that two symbols must be related because they share the same name. That
+keeps it fast, but more importantly it keeps the failure mode understandable.
 If `outline` misses something, it is usually because the extractor rule for that
 language does not cover that syntax yet. It should not invent relationships by
 heuristic name matching.
 
-Third, extraction is declarative. The command uses ast-grep's rule system to
-find outline entries. Built-in language support is a bundled rule catalog.
-Adding a new language should primarily mean adding rule definitions and tests,
-not hard-coded language branches in the CLI. Custom language extraction is not
-supported yet, but this rule-based design is intended to make it possible.
+:::details Different tool, different knowledge
+
+Code navigation tools make different trade-offs between speed, scope, and
+semantic accuracy. `outline` sits between text search and global semantic tools:
+it stays local like grep, but it understands syntax structure.
+
+| Tool approach | Speed | Scope | Knowledge |
+| --- | --- | --- | --- |
+| grep-style search | Fast | Local | Textual knowledge. It knows the bytes and lines that match. |
+| ast-grep outline | Fast | Local | Structure-aware knowledge. It knows declarations, imports, exports, members, and source ranges. |
+| AST code indexing | Relatively fast | Global | Roughly accurate semantic knowledge. It can connect files and symbols, but approximate relationships can go wrong. |
+| LSP | Slow | Global | Accurate semantic knowledge from the language toolchain, including type and reference resolution. |
+
+This is why `outline` intentionally avoids acting like a language server. If the
+task needs exact type resolution, use an LSP or compiler-backed tool. If the task
+needs a quick structural map of the code in the current checkout, `outline` can
+answer without waiting for a global index or duplicating one per worktree.
+
+:::
+
+### Declarative Extraction
+
+The command uses ast-grep's rule system to find outline entries. Built-in
+language support is a bundled rule catalog. Adding a new language should
+primarily mean adding rule definitions and tests, not hard-coded language
+branches in the CLI. Custom language extraction is not supported yet, but this
+rule-based design is intended to make it possible.
 
 Conceptually, an extractor looks like this:
 
@@ -172,24 +197,6 @@ language relationship graph. If that information is visible in the signature,
 the signature preserves it. If you need a deeper semantic question, use normal
 search, ast-grep rules, or a language-specific tool after the outline points you
 to the right code.
-
-## Different Tool, Different Knowledge
-
-Code navigation tools make different trade-offs between speed, scope, and
-semantic accuracy. `outline` sits between text search and global semantic tools:
-it stays local like grep, but it understands syntax structure.
-
-| Tool approach | Speed | Scope | Knowledge |
-| --- | --- | --- | --- |
-| grep-style search | Fast | Local | Textual knowledge. It knows the bytes and lines that match. |
-| ast-grep outline | Fast | Local | Structure-aware knowledge. It knows declarations, imports, exports, members, and source ranges. |
-| AST code indexing | Relatively fast | Global | Roughly accurate semantic knowledge. It can connect files and symbols, but approximate relationships can go wrong. |
-| LSP | Slow | Global | Accurate semantic knowledge from the language toolchain, including type and reference resolution. |
-
-This is why `outline` intentionally avoids acting like a language server. If the
-task needs exact type resolution, use an LSP or compiler-backed tool. If the task
-needs a quick structural map of the code in the current checkout, `outline` can
-answer without waiting for a global index or duplicating one per worktree.
 
 ## Why Agents Benefit
 
