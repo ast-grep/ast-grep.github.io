@@ -101,7 +101,7 @@ require('lspconfig').ast_grep.setup({
   -- these are the default options, you only need to specify
   -- options you'd like to change from the default
   cmd = { 'ast-grep', 'lsp' },
-  filetypes = { "c", "cpp", "rust", "go", "java", "python", "javascript", "typescript", "html", "css", "kotlin", "dart", "lua" },
+  filetypes = { "bash", "c", "cpp", "c_sharp", "css", "dart", "elixir", "go", "haskell", "hcl", "html", "java", "javascript", "json", "kotlin", "lua", "nix", "php", "python", "ruby", "rust", "scala", "solidity", "swift", "tsx", "typescript", "yaml" },
   root_dir = require('lspconfig.util').root_pattern('sgconfig.yaml', 'sgconfig.yml')
 })
 ```
