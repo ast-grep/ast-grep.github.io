@@ -306,7 +306,67 @@ See also [ast-grep#1172](https://github.com/ast-grep/ast-grep/issues/1172)
 
 ## Use Other Language
 
-To access other languages, you will need to use `registerDynamicLanguage` function and probably `@ast-grep/lang-*` package.
-This is an experimental feature and the doc is not ready yet. Please refer to the [repo](https://github.com/ast-grep/langs) for more information.
+`@ast-grep/napi` ships JavaScript ecosystem languages by default. To use another language, install a prebuilt parser package from [`@ast-grep/lang-*`](https://github.com/ast-grep/langs#packages) and register it with `registerDynamicLanguage` before calling `parse`.
 
-If you are interested in using other languages, please let us know by creating an issue.
+::: code-group
+
+```bash[npm]
+npm install --save @ast-grep/napi @ast-grep/lang-python
+```
+
+```bash[pnpm]
+pnpm add @ast-grep/napi @ast-grep/lang-python
+```
+
+:::
+
+:::tip PNPM 10 and above
+The `@ast-grep/lang-*` packages use a postinstall script to place the parser library for your platform. PNPM 10 does not run lifecycle scripts by default, so allow the build for the language package when installing it.
+
+```bash
+pnpm add --allow-build=@ast-grep/lang-python @ast-grep/lang-python
+```
+:::
+
+Then import the language package's default export and register it under the language name you want to pass to ast-grep.
+
+```ts{4,6}
+import langPython from '@ast-grep/lang-python'
+import { parse, registerDynamicLanguage } from '@ast-grep/napi'
+
+registerDynamicLanguage({ python: langPython })
+
+const sg = parse('python', 'print("hello")')
+sg.root().kind()
+```
+
+:::warning Call `registerDynamicLanguage` only once
+`registerDynamicLanguage` should be called once per process.
+:::
+
+If you need multiple dynamic languages, pass all of them in the same call.
+
+Calling `registerDynamicLanguage` repeatedly is not supported. Only the first registration is used, so later calls can be ignored.
+
+```ts
+import langBash from '@ast-grep/lang-bash'
+import langPython from '@ast-grep/lang-python'
+import langSwift from '@ast-grep/lang-swift'
+import { registerDynamicLanguage } from '@ast-grep/napi'
+
+// Works: register every dynamic language in one call.
+registerDynamicLanguage({
+  bash: langBash,
+  python: langPython,
+  swift: langSwift,
+})
+```
+
+```ts
+// Avoid this: only the first call is registered.
+registerDynamicLanguage({ python: langPython })
+registerDynamicLanguage({ bash: langBash })
+registerDynamicLanguage({ swift: langSwift })
+```
+
+You can find available packages and package-specific setup notes in the [`@ast-grep/langs` repository](https://github.com/ast-grep/langs#packages).
