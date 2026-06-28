@@ -25,7 +25,7 @@ severity: error
 You can override the severity level of a rule on the command line. This is useful when you want to change the severity level of a rule for a specific scan.
 
 ```bash
-ast-grep scan --error rule-id --warning other-rule-id
+ast-grep scan --error=rule-id --warning=other-rule-id
 ```
 
 You can use multiple `--error`, `--warning`, `--info`, `--hint`, and `--off` flags to override multiple rules.
@@ -123,9 +123,9 @@ You can also override the severity level of the `unused-suppression` rule on the
 
 ```bash
 # treat unused directive as error, useful in CI/CD
-ast-grep scan --error unused-suppression
+ast-grep scan --error=unused-suppression
 # enable report even not all rules are enabled
-ast-grep --rule rule.yml scan --hint unused-suppression
+ast-grep --rule rule.yml scan --hint=unused-suppression
 ```
 
 ## Disallow Suppress-All Comments
