@@ -5,12 +5,28 @@
 ast-grep's tooling supports multiple stages of your development. Here is a list of the tools and their purpose:
 
 * To run an ad-hoc query and apply rewrite: `ast-grep run`.
+* To inspect a file or directory's source structure: `ast-grep outline`.
 * Routinely check your codebase: `ast-grep scan`.
 * Generate ast-grep's scaffolding files: `ast-grep new`.
 * Develop new ast-grep rules and test them: `ast-grep test`.
 * Start Language Server for editor integration: `ast-grep lsp`.
 
 We will walk through some important features that are common to these commands.
+
+## Outline Code Structure
+
+`ast-grep outline` prints a compact table of contents for source code. It is
+useful when you want to inspect a file's declarations, imports, exports, or
+direct members before reading the full implementation.
+
+```shell
+ast-grep outline src/parser.ts
+ast-grep outline src --items exports
+ast-grep outline src/parser.ts --match Parser --view expanded
+```
+
+See the [outline guide](/guide/outline-code.html) and
+[outline CLI reference](/reference/cli/outline.html) for details.
 
 ## Interactive Mode
 

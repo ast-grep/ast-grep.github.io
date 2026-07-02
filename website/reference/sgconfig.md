@@ -141,6 +141,22 @@ libraryPath:
 
 The file extensions for this language.
 
+### `outlineRules`
+
+* type: `String`
+* required: No
+
+The path to the YAML file containing outline extraction rules for this custom
+language. The path is resolved relative to `sgconfig.yml`.
+
+When this field is set, `ast-grep outline` automatically loads the configured
+outline rules for the custom language. You can still pass additional
+`--outline-rules` files on the command line; rules from `customLanguages` are
+loaded before command-line outline rule files.
+
+See [outline extraction rule reference](/reference/outline-rules.html) for the
+rule file format.
+
 
 ### `expandoChar`
 
@@ -164,6 +180,7 @@ customLanguages:
   mojo:
       libraryPath: mojo.so     # path to dynamic library
       extensions: [mojo, 🔥]   # file extensions for this language
+      outlineRules: outline/mojo.yml # optional outline extraction rules
       expandoChar: _           # optional char to replace $ in your pattern
 ```
 

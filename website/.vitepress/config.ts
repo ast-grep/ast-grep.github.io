@@ -51,6 +51,7 @@ const sidebar: DefaultTheme.Sidebar = [
         link: '/guide/tooling-overview.html',
         collapsed: true,
         items: [
+          { text: 'Outline Code', link: '/guide/outline-code.html' },
           { text: 'Editor Integration', link: '/guide/tools/editors.html' },
           { text: 'JSON mode', link: '/guide/tools/json.html' },
         ],
@@ -107,6 +108,7 @@ const sidebar: DefaultTheme.Sidebar = [
           { text: 'ast-grep scan', link: '/reference/cli/scan.html' },
           { text: 'ast-grep test', link: '/reference/cli/test.html' },
           { text: 'ast-grep new', link: '/reference/cli/new.html' },
+          { text: 'ast-grep outline', link: '/reference/cli/outline.html' },
         ],
       },
       { text: 'Project Config', link: '/reference/sgconfig.html' },
@@ -126,6 +128,7 @@ const sidebar: DefaultTheme.Sidebar = [
         collapsed: false,
         items: [{ text: 'ESQuery Style Kind', link: '/reference/rule/esquery.html' }],
       },
+      { text: 'Outline Extraction Rules', link: '/reference/outline-rules.html' },
       { text: 'API Reference', link: '/reference/api.html' },
       { text: 'Language List', link: '/reference/languages.html' },
       { text: 'Playground Manual', link: '/reference/playground.html' },

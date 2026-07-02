@@ -102,11 +102,13 @@ customLanguages:
   mojo:
       libraryPath: mojo.so     # path to dynamic library
       extensions: [mojo, 🔥]   # file extensions for this language
+      outlineRules: outline/mojo.yml # optional outline extraction rules
       expandoChar: _           # optional char to replace $ in your pattern
 ```
 
 The `libraryPath` property specifies the path to the dynamic library relative to the `sgconfig.yml` file or an absolute path. The `extensions` property specifies a list of file extensions for this language.
 The `expandoChar` property is optional and specifies a character that can be used instead of `$` for meta-variables in your pattern.
+The `outlineRules` property is optional and specifies an outline extraction rule file relative to `sgconfig.yml`. When it is set, `ast-grep outline` automatically loads the file for this custom language. You can still pass extra outline rules with `--outline-rules`; configured custom language rules load first.
 
 
 
@@ -117,6 +119,43 @@ ast-grep requires pattern to be a valid syntactical construct, but `$VAR` might 
 
 For example, `$VAR` is not valid in ~~[Python](https://github.com/ast-grep/ast-grep/blob/1b999b249110c157ae5026e546a3112cd64344f7/crates/language/src/python.rs#L15)~~ Mojo. So we need to replace it with `_VAR`.
 You can check the `expandoChar` of ast-grep's built-in languages [here](https://github.com/ast-grep/ast-grep/tree/main/crates/language/src).
+
+## Add Outline Support
+
+To make `ast-grep outline` show symbols for your custom language, add an
+`outlineRules` file to the custom language registration.
+
+```yaml
+# sgconfig.yml
+customLanguages:
+  mojo:
+      libraryPath: mojo.so
+      extensions: [mojo, 🔥]
+      outlineRules: outline/mojo.yml
+```
+
+The outline rule file is a stream of YAML extractor documents:
+
+```yaml
+# outline/mojo.yml
+id: mojo-function
+language: mojo
+role: item
+symbolType: function
+rule:
+  pattern: fn $NAME($$$ARGS) { $$$BODY }
+name: $NAME
+signature: fn $NAME($$$ARGS)
+```
+
+Now `outline` can load the extractor from project configuration:
+
+```shell
+ast-grep outline src -l mojo
+```
+
+See [outline extraction rule reference](/reference/outline-rules.html) for all
+supported fields.
 
 ## Use It!
 

@@ -43,6 +43,41 @@ ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 | -C| --context `<NUM>`    | Show NUM lines around each match [default: 0] |
 |-h | --help                | Print help |
 
+## `ast-grep outline`
+Explore code structure for symbols, imports, exports, and members. [View detailed reference.](/reference/cli/outline.html)
+
+### Usage
+
+```shell
+ast-grep outline [OPTIONS] [PATHS]...
+```
+
+### Arguments
+
+`[PATHS]...`  The paths to search. You can provide multiple paths separated by spaces [default: .]
+
+### Options
+
+| Short | Long | Description |
+|-------|------|-------------|
+|   | --items `<ITEMS>` | Select top-level items [possible values: auto, structure, exports, imports, all] |
+|   | --view `<VIEW>` | Control text presentation [possible values: auto, names, signatures, digest, expanded] |
+|   | --match `<REGEX>` | Filter top-level items by regular expression. |
+|   | --type `<TYPE[,TYPE...]>` | Filter top-level items by symbol type. |
+|   | --pub-members | Display only public members in member views. |
+| -l| --lang `<LANG>` | Specify the input language. For path input, ast-grep parses only files of this language. Required with `--stdin`. |
+| -c| --config `<CONFIG_FILE>` | Path to ast-grep root config, default is `sgconfig.yml` |
+|   | --stdin | Read source from StdIn. |
+|   | --outline-rules `<FILE>` | Load additional outline extractor definitions. These are added after custom language `outlineRules` from config. |
+|   | --no-default-outline-rules | Disable bundled extractor definitions. |
+|   | --globs `<GLOBS>` | Include or exclude file paths. |
+|   | --follow | Follow symbolic links. |
+|   | --no-ignore `<NO_IGNORE>` | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
+| -j| --threads `<NUM>` | Set the approximate number of threads to use [default: 0] |
+|   | --json`[=<STYLE>]` | Output outline entries in structured JSON [possible values: pretty, stream, compact] |
+|   | --color `<WHEN>` | Controls output color [default: auto] |
+|-h | --help | Print help |
+
 ## `ast-grep scan`
 Scan and rewrite code by configuration. [View detailed reference.](/reference/cli/scan.html)
 
