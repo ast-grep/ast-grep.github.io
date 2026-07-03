@@ -82,6 +82,75 @@ interface: Rule
 function: validateRule
 ```
 
+## Prompt AI Agents
+
+`outline` works best when an agent knows to use it before broad file reads. The
+command has a small interface, so you can teach the habit with a short,
+low-token instruction in `AGENTS.md`, `CLAUDE.md`, or the equivalent file your
+coding agent reads.
+
+```md
+## Code Navigation
+
+Use `ast-grep outline` before reading full source files when exploring code.
+
+- Use `ast-grep outline <file>` to inspect a candidate file.
+- Use `ast-grep outline <dir> --items exports` to find public entry points.
+
+After finding candidate files, use `ast-grep outline` to decide which source
+range to read. If your agent supports skills, use the `use-ast-grep-outline`
+skill for more detailed guidance.
+```
+
+`ast-grep outline` also has a more detailed skill for advanced usage and CLI
+argument tweaking.
+
+:::details `SKILL.md`
+
+```md
+---
+name: use-ast-grep-outline
+description: Use when exploring or modifying a codebase and you need a cheap structural map of files, directories, imports, exports, or direct members before reading full source.
+---
+
+# Use ast-grep outline
+
+Before reading a large file or directory, run `ast-grep outline` to choose the
+smallest useful source range.
+
+## Common Workflows
+
+- Candidate file before editing: `ast-grep outline <file>`
+- Directory entry points: `ast-grep outline <dir> --items exports`
+- File dependencies: `ast-grep outline <file> --items imports`
+- Known symbol: `ast-grep outline <file> --match <symbol> --view expanded`
+- Public surface of changed files: `ast-grep outline <changed-files> --items exports`
+- Find importers of a dependency:
+  `ast-grep outline <dir> --items imports --match <package> --view signatures`
+
+## Argument Guide
+
+- Use `--items` to choose what kind of top-level entries to inspect:
+  `structure` for local declarations, `exports` for public API, `imports` for
+  dependencies, and `all` when import/export edges matter together.
+- Use `--view` to control detail: `names` for a compact directory scan,
+  `signatures` for top-level declarations, `digest` for file summaries with
+  member names, and `expanded` when you need direct member signatures.
+- Use `--match <REGEX>` after search finds a likely symbol name.
+- Use `--type <TYPE[,TYPE...]>` to disambiguate broad matches, such as
+  `--type class,function` or `--type struct,enum`.
+- Use `--pub-members` when only the externally visible members of a selected
+  item matter.
+
+Use text output for navigation. Use `--json=stream` only when you need to pipe
+or post-process outline entries.
+
+Remember the limit: `outline` shows local syntax structure. It does not resolve
+references, infer types, or build a call graph.
+```
+
+:::
+
 ## Control The Output
 
 ### Choose What To Show

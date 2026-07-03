@@ -35,6 +35,15 @@
 - [x] JSON output
 - [ ] execute remote rules
 
+## Outline Docs
+- [ ] Remove "Read Code In Stages" from the outline guide.
+- [x] Add a section about prompting AI agents to use ast-grep, including a skill for `ast-grep outline`.
+- [ ] Add a text output screenshot and explain how the ASCII style represents imported/exported items and public/private members.
+- [ ] Add a TypeScript interface definition for JSON output.
+- [ ] Start the outline extraction rule reference with the ast-grep outline data model.
+- [ ] Explain that the outline data model is deliberately simple: a reduced common ground across programming languages.
+- [ ] Link the Basic Usage data model explanation in the outline guide to the fuller data model explanation.
+
 ## Config
 - [x] support YAML config rule
 - [x] Add support for severity
