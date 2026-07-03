@@ -36,6 +36,18 @@ rules may still change based on feedback.
 
 ## Basic Usage
 
+`outline` organizes source code into two levels:
+
+* **Items** are top-level things in a file, such as imports, functions,
+  classes, structs, interfaces, modules, or enums. An item can be marked as
+  _imported_, _exported_, or both.
+* **Members** are direct children of items, such as methods, fields,
+  constructors, or enum variants. A member can be _public_ or _private_ when the
+  language exposes that syntax.
+
+The command prints items first. Depending on the view, it can also print compact
+member names or expanded member signatures under each item.
+
 Inspect one file:
 
 ```shell
