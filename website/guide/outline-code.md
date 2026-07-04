@@ -6,6 +6,11 @@ head:
       content: ast-grep outline, code outline, code navigation, source structure, coding agents, imports, exports
 ---
 
+<script setup>
+import OutlineStaticOutput from '../src/components/OutlineStaticOutput.vue'
+import OutlineTextStyleDemo from '../src/components/OutlineTextStyleDemo.vue'
+</script>
+
 # Outline Code <Badge type="warning" text="Experimental" />
 
 `ast-grep outline` gives coding agents a cheap first pass over source code. Use
@@ -56,13 +61,7 @@ ast-grep outline src/parser.ts
 
 Example output:
 
-```text
-src/parser.ts
-12: export function parseRule(source: string)
-40: export class Parser
-    fields: source, diagnostics
-    methods: parse, recover, finish
-```
+<OutlineStaticOutput variant="file" />
 
 Inspect a directory:
 
@@ -73,14 +72,7 @@ ast-grep outline src
 Directory outlines show exported items by default, so the output is a quick map
 of the public surface:
 
-```text
-src/parser.ts
-function: parseRule
-class: Parser
-src/rule.ts
-interface: Rule
-function: validateRule
-```
+<OutlineStaticOutput variant="directory" />
 
 ## Prompt AI Agents
 
@@ -353,6 +345,13 @@ src/parser.ts
 
 :::
 
+### Text Output Style
+
+Text output uses styling to keep structural facts visible while staying compact.
+Select a style below to see which lines it affects.
+
+<OutlineTextStyleDemo />
+
 ## Common Tasks
 
 ### Narrow The Outline
@@ -435,33 +434,6 @@ JSON includes file paths, languages, symbol names, symbol types, ranges,
 signatures, AST kinds, import/export flags, and nested direct members when the
 selected view includes them. Ranges use the same zero-based line and column
 convention as ast-grep's other JSON output.
-
-## Read Code In Stages
-
-A typical navigation workflow is:
-
-1. Use search or file names to find candidate files.
-2. Run `ast-grep outline` on the file or directory.
-3. Narrow the result with `--items`, `--match`, `--type`, or `--view`.
-4. Open only the source range or symbol body that matters.
-
-Examples:
-
-```shell
-# Understand a large file before editing.
-ast-grep outline crates/cli/src/scan.rs
-ast-grep outline crates/cli/src/scan.rs --items imports
-ast-grep outline crates/cli/src/scan.rs --items exports
-
-# Find CLI-related declarations in a subtree.
-ast-grep outline crates/cli/src --type enum,struct,function
-ast-grep outline crates/cli/src/lib.rs --match Commands --type enum --view expanded
-
-# Check changed files after an edit.
-git diff --name-only HEAD
-ast-grep outline <changed-files>
-ast-grep outline <changed-files> --items exports
-```
 
 ## Custom Extraction Rules
 
