@@ -7,8 +7,7 @@ outline: [2, 3]
 Explore code structure for symbols, imports, exports, and members.
 
 Use `outline` to inspect file structure, imports, exports, and direct members
-before opening full source files. It is a local code-navigation command, not a
-search, lint, rewrite, or semantic-analysis command.
+before opening full source files.
 
 ## Usage
 
@@ -244,7 +243,10 @@ mixed-input command selects nothing overall, `outline` prints one command-level
 
 ## JSON Output
 
-JSON output contains file objects:
+JSON output contains file objects. `--json` and `--json=compact` emit an array
+of file objects. `--json=stream` emits one file object per line.
+
+One file object looks like this:
 
 ```json
 {
@@ -284,16 +286,59 @@ JSON output contains file objects:
 }
 ```
 
-Important properties:
+The output shape is:
 
-* `path` is always present.
-* `range` is always present.
-* JSON ranges use zero-based line and column numbers plus byte offsets.
-* `symbolType` uses lower camel case names compatible with LSP `SymbolKind`.
-* `role` is `item` or `member`.
-* `isImport` and `isExported` are present on top-level items.
-* `isPublic` is present on members.
-* Members are nested under their parent item.
+```ts
+/** `--json` and `--json=compact` emit this array shape. */
+type OutlineJsonOutput = OutlineFile[]
+
+interface OutlineFile {
+  path: string
+  language: string
+  items: OutlineItem[]
+}
+
+/** Shared fields for top-level items and direct members. */
+interface OutlineEntry {
+  /** Lower camel case name compatible with LSP SymbolKind. */
+  symbolType: string
+  name: string
+  /** Zero-based line/column positions plus byte offsets. */
+  range: OutlineRange
+  signature: string
+  astKind: string
+}
+
+interface OutlineItem extends OutlineEntry {
+  role: 'item'
+  isImport: boolean
+  isExported: boolean
+  /** Direct syntactic children selected by the current view. */
+  members?: OutlineMember[]
+}
+
+interface OutlineMember extends OutlineEntry {
+  role: 'member'
+  isPublic: boolean
+}
+
+interface OutlineRange {
+  byteOffset: {
+    start: number
+    end: number
+  }
+  start: OutlinePosition
+  end: OutlinePosition
+}
+
+interface OutlinePosition {
+  line: number
+  column: number
+}
+```
+
+For `--json=stream`, parse each line as `OutlineFile` instead of parsing the
+whole output as `OutlineJsonOutput`.
 
 ## Default Behavior
 

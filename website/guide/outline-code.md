@@ -433,7 +433,9 @@ ast-grep outline src --json=stream |
 JSON includes file paths, languages, symbol names, symbol types, ranges,
 signatures, AST kinds, import/export flags, and nested direct members when the
 selected view includes them. Ranges use the same zero-based line and column
-convention as ast-grep's other JSON output.
+convention as ast-grep's other JSON output. See the
+[CLI reference](/reference/cli/outline.html#json-output) for the TypeScript
+interface.
 
 ## Custom Extraction Rules
 
