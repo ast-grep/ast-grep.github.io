@@ -97,8 +97,9 @@ range to read. If your agent supports skills, use the `ast-grep-outline`
 skill for more detailed guidance.
 ```
 
-`ast-grep outline` also has a more detailed skill for advanced usage and CLI
-argument tweaking.
+`ast-grep outline` also has a more detailed
+[agent skill](https://github.com/ast-grep/agent-skill) for advanced usage and
+CLI argument tweaking.
 
 :::details `SKILL.md`
 
