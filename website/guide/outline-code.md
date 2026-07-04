@@ -116,7 +116,7 @@ interfaces, modules, enums) and their direct **members** (fields, methods,
 constructors, enum variants). It is a local, syntax-only view — cheap enough
 to run before any full file read.
 
-Read code in stages: find candidate files with search or file names, outline
+Start with structure: find candidate files with search or file names, outline
 them, then open only the source range the outline points to. Defaults adapt to
 input: a file shows its local structure with member digests; a directory shows
 only its exported surface as grouped names.
