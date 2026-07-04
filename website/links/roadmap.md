@@ -40,9 +40,9 @@
 - [x] Add a section about prompting AI agents to use ast-grep, including a skill for `ast-grep outline`.
 - [x] Add a text output style demo and explain how the style represents imported/exported items and public/private members.
 - [x] Add a TypeScript interface definition for JSON output.
-- [ ] Start the outline extraction rule reference with the ast-grep outline data model.
-- [ ] Explain that the outline data model is deliberately simple: a reduced common ground across programming languages.
-- [ ] Link the Basic Usage data model explanation in the outline guide to the fuller data model explanation.
+- [x] Start the outline extraction rule reference with the ast-grep outline data model.
+- [x] Explain that the outline data model is deliberately simple: a reduced common ground across programming languages.
+- [x] Link the Basic Usage data model explanation in the outline guide to the fuller data model explanation.
 
 ## Config
 - [x] support YAML config rule

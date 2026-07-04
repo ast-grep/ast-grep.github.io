@@ -9,6 +9,9 @@ Explore code structure for symbols, imports, exports, and members.
 Use `outline` to inspect file structure, imports, exports, and direct members
 before opening full source files.
 
+For the item/member concepts behind this output, see
+[How Outline Entries Work](/reference/outline-rules.html#how-outline-entries-work).
+
 ## Usage
 
 ```shell

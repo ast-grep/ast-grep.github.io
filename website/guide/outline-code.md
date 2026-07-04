@@ -51,7 +51,10 @@ rules may still change based on feedback.
   language exposes that syntax.
 
 The command prints items first. Depending on the view, it can also print compact
-member names or expanded member signatures under each item.
+member names or expanded member signatures under each item. The
+[outline entry concepts](/reference/outline-rules.html#how-outline-entries-work)
+explain the same structure in more detail. For all options and JSON output, see
+the [`outline` CLI reference](/reference/cli/outline.html).
 
 Inspect one file:
 

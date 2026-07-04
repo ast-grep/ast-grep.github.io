@@ -154,7 +154,7 @@ Now `outline` can load the extractor from project configuration:
 ast-grep outline src -l mojo
 ```
 
-See [outline extraction rule reference](/reference/outline-rules.html) for all
+See [outline rule fields reference](/reference/outline-rule-fields.html) for all
 supported fields.
 
 ## Use It!

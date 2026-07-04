@@ -2,17 +2,72 @@
 outline: [2, 3]
 ---
 
-# Outline Extraction Rule Reference
+# Outline Extraction Rules
 
 Outline extraction rules tell `ast-grep outline` how to turn parsed source code
 into outline entries.
 
-Most users do not need to write these rules. ast-grep ships bundled extractors
-for supported languages. Write custom outline rules when:
+## How Outline Entries Work
 
-* a supported language misses syntax your project uses;
-* you use a custom language registered in `sgconfig.yml`;
-* you want a project-specific outline shape.
+`ast-grep outline` turns source code into outline entries. Each file contains
+top-level **items**, and each item can contain direct **members**.
+
+Items are the main entries someone would scan first: imports, functions,
+classes, structs, interfaces, modules, or enums. Members are the direct children
+under an item: class methods, fields, constructors, enum variants, or module
+children.
+
+An outline entry has:
+
+* a `role`, either `item` or `member`;
+* a `symbolType`, such as `function`, `class`, `struct`, `field`, or `method`;
+* a `name`;
+* a source `range`;
+* a source-like `signature`;
+* an `astKind` from the underlying tree-sitter node;
+* visibility flags, such as `isImport`, `isExported`, or `isPublic`.
+
+Items represent top-level file or module structure. Members represent direct
+syntactic children of an item. For example, a class method is a member of the
+class, and an enum variant is a member of the enum.
+
+This structure is deliberately simple. It is a reduced common ground across
+programming languages: broad enough to describe common local structure, but
+small enough to stay predictable in text and JSON output.
+
+The model is also intentionally local. It does not resolve references, infer
+types, follow re-export chains, attach methods by receiver type, or build
+inheritance relationships. If a relationship cannot be derived from local syntax
+containment, it should usually stay out of `outline`.
+
+## How Rules Are Loaded
+
+When `ast-grep outline` runs, it builds a catalog of extraction rules, parses
+the input files, then applies the rules for each file's language. Matching
+`item` rules create top-level entries. Matching `member` rules create candidate
+members, which are attached to the nearest containing item allowed by
+`parentRuleIds`.
+
+Rules can come from three places:
+
+* **Default rules**: bundled extractors shipped with ast-grep for supported
+  languages.
+* **Custom language rules**: rule files registered with
+  `customLanguages.<name>.outlineRules` in `sgconfig.yml`.
+* **Command-line rules**: extra rule files passed with `--outline-rules`.
+
+By default, all applicable sources are combined. Custom language rules are
+loaded before command-line rules. Use `--no-default-outline-rules` when you want
+the command-line rule set to replace the bundled default extractors.
+
+## Load Custom Rules
+
+Most users do not need custom rules. ast-grep ships bundled extractors for
+supported languages. Add custom rules when a supported language misses syntax
+your project uses, when you register a custom language, or when you want a
+project-specific outline shape.
+
+### Custom Languages
 
 For a custom language registered in `sgconfig.yml`, attach its outline rule file
 with `outlineRules`:
@@ -28,14 +83,17 @@ customLanguages:
 `outlineRules` is resolved relative to `sgconfig.yml`. `ast-grep outline` loads
 these configured custom language rules automatically.
 
-For one-off or extra extractor files, pass `--outline-rules`:
+Rules configured in `customLanguages` are loaded before command-line
+`--outline-rules` files.
+
+### Command Line
+
+Use `--outline-rules` for one-off extractor files or extra project-specific
+rules:
 
 ```shell
 ast-grep outline src --outline-rules project-outline.yml
 ```
-
-Rules configured in `customLanguages` are loaded before command-line
-`--outline-rules` files.
 
 Replace bundled rules completely with:
 
@@ -48,7 +106,10 @@ ast-grep outline src \
 ## Rule File Format
 
 An outline rule file is a stream of YAML documents. Each document defines one
-extractor.
+extractor. Separate documents with `---`.
+
+For every supported field, see the
+[Outline Rule Fields Reference](/reference/outline-rule-fields.html).
 
 ```yaml
 id: rust-struct
@@ -56,11 +117,12 @@ language: Rust
 role: item
 symbolType: struct
 rule:
-  pattern: $VIS struct $NAME { $$$BODY }
-name: $NAME
-isExported:
+  kind: struct_item
   has:
-    regex: '^pub\b'
+    field: name
+    pattern: $NAME
+name: $NAME
+isExported: true
 ---
 id: rust-field
 language: Rust
@@ -68,246 +130,61 @@ role: member
 parentRuleIds: [rust-struct]
 symbolType: field
 rule:
-  pattern: $VIS $NAME: $TYPE
-name: $NAME
-signature: $VIS $NAME: $TYPE
-isPublic:
+  kind: field_declaration
   has:
-    regex: '^pub\b'
+    field: name
+    pattern: $NAME
+name: $NAME
+isPublic: true
 ```
 
 `rule`, `constraints`, `utils`, and `transform` use the same ast-grep YAML
 fields as normal rules. Outline rules add metadata for output placement, symbol
 type, names, signatures, and visibility flags.
 
-If a top-level item extractor omits `isImport`, it defaults to `false`. If it
-omits `isExported`, it defaults to `true`. If a member extractor omits
-`isPublic`, it defaults to `true`. Set these fields explicitly when the default
-would make `--items imports`, `--items exports`, or `--pub-members` misleading.
+`isImport`, `isExported`, and `isPublic` can be simple booleans or predicate
+rules. The [Boolean Fields](#boolean-fields) section explains when to use each
+form.
 
-## Extractor Fields
+## Names And Signatures
 
-### `id`
-
-* type: `String`
-* required: true
-
-Stable extractor id used in diagnostics and `parentRuleIds`.
-
-```yaml
-id: ts-class
-```
-
-### `language`
-
-* type: `String`
-* required: true
-
-The language this extractor applies to. Use a built-in ast-grep language name or
-a custom language registered in `sgconfig.yml`.
-
-```yaml
-language: TypeScript
-```
-
-### `role`
-
-* type: `item | member`
-* required: true
-
-Controls where the extracted entry appears.
-
-* `item`: top-level file or module structure, including declarations, imports,
-  and explicit exports.
-* `member`: direct child structure under an item, such as fields, methods,
-  constructors, enum variants, or module children.
-
-```yaml
-role: item
-```
-
-### `parentRuleIds`
-
-* type: `String[]`
-* required: true for `role: member`
-
-Lists item extractor ids that can contain this member.
-
-```yaml
-parentRuleIds: [ts-class, ts-interface]
-```
-
-`parentRuleIds` references extractor ids, not symbol names or symbol types.
-Actual member attachment is based on syntax containment. `outline` does not
-attach members by matching names, receiver types, imports, traits, or references.
-
-### `symbolType`
-
-* type: `String`
-* required: true
-
-The outline category for the entry. Values use lower camel case names compatible
-with LSP `SymbolKind`.
-
-Common values:
-
-| Source construct | `symbolType` |
-| --- | --- |
-| File-level source unit | `file` |
-| Import or module dependency | `module` |
-| Module declaration | `module` |
-| Namespace declaration | `namespace` |
-| Package declaration | `package` |
-| Class declaration | `class` |
-| Method declaration | `method` |
-| Object or class property | `property` |
-| Struct or class field | `field` |
-| Constructor | `constructor` |
-| Enum declaration | `enum` |
-| Interface, trait, or protocol | `interface` |
-| Free function | `function` |
-| Variable | `variable` |
-| Constant | `constant` |
-| Object or map key | `key` |
-| Enum variant or member | `enumMember` |
-| Struct declaration | `struct` |
-| Operator overload | `operator` |
-| Type or generic parameter | `typeParameter` |
-
-Do not create custom symbol types for imports or exports. Use `symbolType`
-together with `isImport` and `isExported`.
-
-### `rule`
-
-* type: `Rule`
-* required: true
-
-The ast-grep rule object that selects the syntax node to turn into an outline
-entry.
+`name` is the short label for an outline entry. It is usually captured from a
+named child node:
 
 ```yaml
 rule:
-  pattern: function $NAME($$$PARAMS) { $$$BODY }
+  all:
+    - kind: struct_item
+    - has:
+        field: name
+        pattern: $NAME
+name: $NAME
 ```
 
-See [rule object reference](/reference/rule.html) for supported rule syntax.
+`signature` is the source-like text shown after the name. It is optional: when
+omitted, `outline` still emits the entry name and range. Add a signature when
+the extra text helps users or agents choose what to read next, such as a
+function parameter list, class header, or field type.
 
-### `constraints`
-
-* type: `HashMap<String, Rule>`
-* required: false
-
-Additional filters for metavariables, using normal ast-grep constraints.
-
-```yaml
-constraints:
-  NAME:
-    regex: '^[A-Z]'
-```
-
-### `utils`
-
-* type: `HashMap<String, Rule>`
-* required: false
-
-Local utility rules that can be referenced with `matches`.
-
-### `transform`
-
-* type: `HashMap<String, Transformation>`
-* required: false
-
-Transform metavariables before using them in `name` or `signature`.
+Use [`transform`](/guide/rewrite/transform.html) when the matched node is
+larger than the text you want to print. The same transformation syntax can also
+use [`rewriters`](/guide/rewrite/rewriter.html) for more advanced AST-based
+text generation. For example, a Rust struct match includes the body, but the
+outline signature usually only needs the declaration header:
 
 ```yaml
+rule:
+  all:
+    - kind: struct_item
+    - pattern: $DECL
 transform:
-  NAME:
+  SIG:
     replace:
-      source: $RAW_NAME
-      replace: '^r#'
+      source: $DECL
+      replace: '\s*\{[\s\S]*$|;\s*$'
       by: ''
-name: $NAME
+signature: '$SIG'
 ```
-
-See [transformation reference](/reference/yaml/transformation.html).
-
-### `name`
-
-* type: `String`
-* required: true
-
-Template used to compute the displayed entry name. It can reference captured or
-transformed metavariables.
-
-```yaml
-name: $NAME
-```
-
-Text fields use ast-grep-style template replacement:
-
-* `$NAME`: captured metavariable text.
-* `$CLEAN_NAME`: transformed metavariable text.
-* literal text mixed with metavariables.
-
-### `signature`
-
-* type: `String`
-* required: false
-
-Template used to compute the displayed signature.
-
-```yaml
-signature: function $NAME($$$PARAMS)
-```
-
-If omitted, `outline` uses the first non-empty line of the matched node as the
-signature. This fallback is predictable, but multiline declarations may be more
-readable with an explicit `signature`.
-
-### `isImport`
-
-* type: `Boolean | Rule`
-* required: false, defaults to `false`
-* applies to: `role: item`
-
-Marks a top-level item as an import or dependency edge.
-
-```yaml
-isImport: true
-```
-
-### `isExported`
-
-* type: `Boolean | Rule`
-* required: false, defaults to `true`
-* applies to: `role: item`
-
-Marks a top-level item as part of the local public or exported surface.
-
-```yaml
-isExported:
-  has:
-    regex: '^export\b'
-```
-
-This is syntax-only. It does not follow re-export chains or resolve module
-visibility across files.
-
-### `isPublic`
-
-* type: `Boolean | Rule`
-* required: false, defaults to `true`
-* applies to: `role: member`
-
-Marks a member as public or externally usable.
-
-```yaml
-isPublic:
-  has:
-    regex: '^pub\b'
-```
-
-If a member extractor omits `isPublic`, `outline` treats the member as public.
 
 ## Boolean Fields
 
@@ -322,9 +199,14 @@ isPublic:
     regex: '^pub\b'
 ```
 
-When the value is a rule predicate, it is evaluated against the matched
-candidate node. Normal ast-grep relational rules such as `has` and `inside`
-keep their usual meaning relative to that candidate.
+If a top-level item extractor omits `isImport`, it defaults to `false`. If it
+omits `isExported`, it defaults to `true`. If a member extractor omits
+`isPublic`, it defaults to `true`. Set these fields explicitly when the default
+would make `--items imports`, `--items exports`, or `--pub-members` misleading.
+
+When the value is a rule predicate, it is evaluated against the primary node
+matched by the extractor's `rule`. Normal ast-grep relational rules such as
+`has` and `inside` keep their usual meaning relative to that node.
 
 Prefer one extractor with boolean derivation over duplicated extractors.
 
@@ -335,19 +217,28 @@ language: Rust
 role: item
 symbolType: struct
 rule:
-  pattern: $VIS struct $NAME { $$$BODY }
+  kind: struct_item
+  has:
+    field: name
+    pattern: $NAME
 name: $NAME
 isExported:
   has:
-    regex: '^pub\b'
+    kind: visibility_modifier
+    regex: '^pub'
 ```
 
-This handles both:
+The main `rule` matches every Rust struct item and captures its name. The
+`isExported` predicate checks whether the matched struct has a Rust visibility
+modifier. That lets one extractor produce different visibility values:
 
 ```rust
 struct Foo {}
 pub struct Bar {}
 ```
+
+For `struct Foo {}`, `isExported` is `false`. For `pub struct Bar {}`,
+`isExported` is `true`.
 
 ## Member Attachment
 
@@ -374,7 +265,9 @@ traits, references, imports, or type resolution.
 
 ### TypeScript Function
 
-```yaml
+:::: code-group
+
+```yaml [outline.yml]
 id: ts-function
 language: TypeScript
 role: item
@@ -383,71 +276,125 @@ rule:
   pattern: function $NAME($$$PARAMS) { $$$BODY }
 name: $NAME
 signature: function $NAME($$$PARAMS)
+isExported:
+  inside:
+    kind: export_statement
 ```
+
+```ts [source.ts]
+export function parseRule(source: string) { // item: function parseRule, exported
+  return source
+}
+```
+
+::::
 
 ### TypeScript Class
 
-```yaml
+:::: code-group
+
+```yaml [outline.yml]
 id: ts-class
 language: TypeScript
 role: item
 symbolType: class
 rule:
-  any:
-    - pattern: class $NAME { $$$BODY }
-    - pattern: export class $NAME { $$$BODY }
+  pattern: class $NAME { $$$BODY }
 name: $NAME
+signature: class $NAME
 isExported:
-  any:
-    - regex: '^export\b'
-    - inside:
-        kind: export_statement
+  inside:
+    kind: export_statement
 ```
+
+```ts [source.ts]
+export class Parser { // item: class Parser, exported
+  parse(source: string) {
+    return source
+  }
+}
+```
+
+::::
 
 ### TypeScript Method
 
-```yaml
+This member extractor attaches to items produced by the `ts-class` extractor
+above.
+
+:::: code-group
+
+```yaml [outline.yml]
 id: ts-method
 language: TypeScript
 role: member
 parentRuleIds: [ts-class]
 symbolType: method
 rule:
-  pattern: $NAME($$$PARAMS) { $$$BODY }
+  kind: method_definition
+  all:
+    - has:
+        field: name
+        pattern: $NAME
+    - has:
+        field: parameters
+        pattern: $PARAMS
 name: $NAME
-signature: $NAME($$$PARAMS)
+signature: $NAME$PARAMS
+isPublic:
+  not:
+    has:
+      kind: accessibility_modifier
+      regex: '^private$'
 ```
+
+```ts [source.ts]
+export class Parser {
+  parse(source: string) { // member: method parse, public
+    return source
+  }
+
+  private recover() { // member: method recover, private
+    return null
+  }
+}
+```
+
+::::
 
 ### Rust Import And Re-export
 
-```yaml
+:::: code-group
+
+```yaml [outline.yml]
 id: rust-use
 language: Rust
 role: item
 symbolType: module
 rule:
-  pattern: $VIS use $TARGET;
+  any:
+    - pattern: use $TARGET;
+    - pattern: pub use $TARGET;
 transform:
   NAME:
     replace:
       source: $TARGET
-      replace: '^.*::'
+      replace: '^.*::|^.*\s+as\s+'
       by: ''
 name: $NAME
 isImport: true
 isExported:
   has:
+    kind: visibility_modifier
     regex: '^pub\b'
 ```
 
-This can represent both ordinary imports and public re-exports:
-
-```rust
-use crate::parser::Parser;
-pub use internal_mod as api;
+```rust [source.rs]
+use crate::parser::Parser; // item: module Parser, imported
+pub use internal_mod as api; // item: module api, imported and exported
 ```
 
-The re-export is one item with both `isImport: true` and `isExported: true`.
+::::
 
 ## Custom Languages
 

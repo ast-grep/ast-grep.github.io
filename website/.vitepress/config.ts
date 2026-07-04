@@ -128,7 +128,12 @@ const sidebar: DefaultTheme.Sidebar = [
         collapsed: false,
         items: [{ text: 'ESQuery Style Kind', link: '/reference/rule/esquery.html' }],
       },
-      { text: 'Outline Extraction Rules', link: '/reference/outline-rules.html' },
+      {
+        text: 'Outline Extraction Rules',
+        link: '/reference/outline-rules.html',
+        collapsed: false,
+        items: [{ text: 'Field Reference', link: '/reference/outline-rule-fields.html' }],
+      },
       { text: 'API Reference', link: '/reference/api.html' },
       { text: 'Language List', link: '/reference/languages.html' },
       { text: 'Playground Manual', link: '/reference/playground.html' },
