@@ -51,26 +51,26 @@ const outputs: Record<OutputVariant, { label: string; rows: OutlineCodeRow[] }> 
       {
         parts: [
           { text: 'function: ', kind: 'function' },
-          { text: 'parseRule', kind: 'function', exported: true },
+          { text: 'parseRule', exported: true },
         ],
       },
       {
         parts: [
           { text: 'class: ', kind: 'class' },
-          { text: 'Parser', kind: 'class', exported: true },
+          { text: 'Parser', exported: true },
         ],
       },
       { path: true, parts: [{ text: 'src/rule.ts' }] },
       {
         parts: [
           { text: 'interface: ', kind: 'interface' },
-          { text: 'Rule', kind: 'interface', exported: true },
+          { text: 'Rule', exported: true },
         ],
       },
       {
         parts: [
           { text: 'function: ', kind: 'function' },
-          { text: 'validateRule', kind: 'function', exported: true },
+          { text: 'validateRule', exported: true },
         ],
       },
     ],
