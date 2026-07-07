@@ -12,7 +12,7 @@ head:
       content: ast-grep's Journey to Type Safety in Node API
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/typed-napi.html
+      content: https://astgrep.com/blog/typed-napi
   - - meta
     - property: og:description
       content: ast-grep/napi now supports typed AST manipulation which is correct, concise, robust, and performant.
@@ -33,7 +33,7 @@ In this blog post, we will delve into the challenges addressed by this feature a
 
 ## Type Safety in AST
 
-Working with Abstract Syntax Trees (ASTs) is complex. Even with AST [excellent](https://astexplorer.net/) [AST](https://astgrep.com/playground.html) [tools](https://github.com/sxzz/ast-kit), handling all edge cases remains challenging.
+Working with Abstract Syntax Trees (ASTs) is complex. Even with AST [excellent](https://astexplorer.net/) [AST](https://astgrep.com/playground) [tools](https://github.com/sxzz/ast-kit), handling all edge cases remains challenging.
 
 Type information serves as a crucial safety net when writing AST manipulation code. It guides developers toward handling all possible cases and enables exhaustive checking to ensure complete coverage.
 

@@ -11,7 +11,7 @@ head:
       content: Optimize ast-grep to get 10X faster
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/optimize-ast-grep.html
+      content: https://astgrep.com/blog/optimize-ast-grep
   - - meta
     - property: og:description
       content: How to optimize the Rust CLI tool ast-grep to become 10 times faster.

@@ -67,7 +67,7 @@ testConfigs:
 * type: `String`
 * required: No
 
-A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules).
+A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule#global-utility-rules).
 
 ## `languageGlobs`
 * type: `HashMap<String, Array<String>>`
@@ -107,7 +107,7 @@ A dictionary of custom languages in the project.
 
 The key of the dictionary is the custom language name. The value of the dictionary is the custom language configuration object.
 
-Please see the [guide](/advanced/custom-language.html) for detailed instructions.
+Please see the [guide](/advanced/custom-language) for detailed instructions.
 
 A custom language configuration object has the following options.
 
@@ -154,7 +154,7 @@ outline rules for the custom language. You can still pass additional
 `--outline-rules` files on the command line; rules from `customLanguages` are
 loaded before command-line outline rule files.
 
-See [outline extraction rule reference](/reference/outline-rules.html) for the
+See [outline extraction rule reference](/reference/outline-rules) for the
 rule file format.
 
 
@@ -192,7 +192,7 @@ customLanguages:
 A list of language injections to support embedded languages in the project like JS/CSS in HTML.
 This is an experimental feature.
 
-Please see the [guide](/advanced/language-injection.html) for detailed instructions.
+Please see the [guide](/advanced/language-injection) for detailed instructions.
 
 A language injection object has the following options.
 

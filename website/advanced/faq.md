@@ -2,9 +2,9 @@
 
 ## My pattern does not work, why?
 
-1. **Use the Playground**: Test your pattern in the [ast-grep playground](/playground.html).
+1. **Use the Playground**: Test your pattern in the [ast-grep playground](/playground).
 2. **Check for Valid Code**: Make sure your pattern is valid code that tree-sitter can parse.
-3. **Ensure Correctness**: Use a [pattern object](/guide/rule-config/atomic-rule.html#pattern) to ensure your code is correct and unambiguous.
+3. **Ensure Correctness**: Use a [pattern object](/guide/rule-config/atomic-rule#pattern) to ensure your code is correct and unambiguous.
 4. **Explore Examples**: See ast-grep's [catalog](/catalog/) for more examples.
 
 
@@ -14,7 +14,7 @@ To make the code can be parsed by tree-sitter, you probably need more context in
 
 For example, if you want to match key-value pair in JSON, writing `"key": "$VAL"` will not work because it is not a legal JSON.
 
-Instead, you can provide context via the pattern object. See [playground code](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1widmVyc2lvblwiOiBcIiRWRVJcIiB9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoie1xuICAgIFwidmVyc2lvblwiOiBcInZlclwiXG59In0=).
+Instead, you can provide context via the pattern object. See [playground code](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1widmVyc2lvblwiOiBcIiRWRVJcIiB9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoie1xuICAgIFwidmVyc2lvblwiOiBcInZlclwiXG59In0=).
 
 ```YAML
 rule:
@@ -25,14 +25,14 @@ rule:
 
 The idea is that you can write full an valid code in the `context` field and use `selector` to select the sub-AST node.
 
-This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call) and [Go](/catalog/go/#match-function-call-in-golang). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config.html) can be more expressive and powerful.
+This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call) and [Go](/catalog/go/#match-function-call-in-golang). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config) can be more expressive and powerful.
 
 ## My Rule does not work, why?
 Here are some tips to debug your rule:
-* Use the [ast-grep playground](/playground.html) to test your rule.
+* Use the [ast-grep playground](/playground) to test your rule.
 * Simplify your rule to the minimal possible code that reproduces the issue.
-* Confirm pattern's matched AST nodes are expected. e.g. statement and expression are [different matches](/advanced/pattern-parse.html#extract-effective-ast-for-pattern). This usually happens when you use `follows` or `precedes` in the rule.
-* Check the [rule order](/advanced/faq.html#why-is-rule-matching-order-sensitive). The order of rules matters in ast-grep especially when using meta variables with relational rules.
+* Confirm pattern's matched AST nodes are expected. e.g. statement and expression are [different matches](/advanced/pattern-parse#extract-effective-ast-for-pattern). This usually happens when you use `follows` or `precedes` in the rule.
+* Check the [rule order](/advanced/faq#why-is-rule-matching-order-sensitive). The order of rules matters in ast-grep especially when using meta variables with relational rules.
 
 ## CLI and Playground produce different results, why?
 
@@ -43,15 +43,15 @@ Playground parsers are updated less frequently than the CLI, so there may be dif
 * **Text Encoding**: The CLI and Playground use different text encodings. CLI uses utf-8, while the Playground uses utf-16.
 The encoding difference may cause different fallback parsing during [error recovery](https://github.com/tree-sitter/tree-sitter/issues/224).
 
-To debug the issue, you can use the [`--debug-query`](/reference/cli/run.html#debug-query-format) in the CLI to see the parsed AST nodes and meta variables.
+To debug the issue, you can use the [`--debug-query`](/reference/cli/run#debug-query-format) in the CLI to see the parsed AST nodes and meta variables.
 
 ```sh
 ast-grep run -p <PATTERN> --debug-query ast
 ```
 
-The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground.html). You can also use different debug formats like `cst` or `pattern`.
+The debug output will show the parsed AST nodes and you can compare them with the [Playground](/playground). You can also use different debug formats like `cst` or `pattern`.
 
-Different results are usually caused by incomplete or wrong code snippet in the pattern. A common fix is to provide a complete context code via the [pattern object](/reference/rule.html#atomic-rules).
+Different results are usually caused by incomplete or wrong code snippet in the pattern. A common fix is to provide a complete context code via the [pattern object](/reference/rule#atomic-rules).
 
 ```yaml
 rule:
@@ -60,7 +60,7 @@ rule:
     selector: function
 ```
 
-See [Pattern Deep Dive](/advanced/pattern-parse.html) for more context. Alternatively, you can try [rule](/guide/rule-config.html) instead.
+See [Pattern Deep Dive](/advanced/pattern-parse) for more context. Alternatively, you can try [rule](/guide/rule-config) instead.
 
 Note `--debug-query` is not only for pattern, you can pass source code as `pattern` to see the parsed AST.
 
@@ -107,7 +107,7 @@ For example, [React Hook](https://react.dev/learn/reusing-logic-with-custom-hook
 
 You may start with pattern like `use$HOOK` or `io_uring_$FUNC`. However, they are not valid meta variable names since the AST node text does not start with the dollar sign.
 
-The workaround is using [`constraints`](https://astgrep.com/guide/project/lint-rule.html#constraints) in [YAML rule](https://astgrep.com/guide/project/lint-rule.html) and [`regex`](https://astgrep.com/guide/rule-config/atomic-rule.html#regex) rule.
+The workaround is using [`constraints`](https://astgrep.com/guide/project/lint-rule#constraints) in [YAML rule](https://astgrep.com/guide/project/lint-rule) and [`regex`](https://astgrep.com/guide/rule-config/atomic-rule#regex) rule.
 
 ```yaml
 rule:
@@ -116,7 +116,7 @@ constraints:
   HOOK: { regex: '^use' }
 ```
 
-[Example usage](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiAkSE9PSygkJCRBUkdTKVxuY29uc3RyYWludHM6XG4gIEhPT0s6IHsgcmVnZXg6IF51c2UgfSIsInNvdXJjZSI6ImZ1bmN0aW9uIFJlYWN0Q29tcG9uZW50KCkge1xuICAgIGNvbnN0IGRhdGEgPSBub3RIb28oKVxuICAgIGNvbnN0IFtmb28sIHNldEZvb10gPSB1c2VTdGF0ZSgnJylcbn0ifQ==).
+[Example usage](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiAkSE9PSygkJCRBUkdTKVxuY29uc3RyYWludHM6XG4gIEhPT0s6IHsgcmVnZXg6IF51c2UgfSIsInNvdXJjZSI6ImZ1bmN0aW9uIFJlYWN0Q29tcG9uZW50KCkge1xuICAgIGNvbnN0IGRhdGEgPSBub3RIb28oKVxuICAgIGNvbnN0IFtmb28sIHNldEZvb10gPSB1c2VTdGF0ZSgnJylcbn0ifQ==).
 
 
 :::danger MetaVariable must be one single AST node
@@ -128,12 +128,12 @@ ast-grep will not treat them as valid meta variable name.
 
 ast-grep does not support multiple languages in one rule because:
 
-1. **Different ASTs**: Similar languages still have different ASTs. For instance, [JS](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) and [TS](#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoidHlwZXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) have different parsing trees for the same function declaration code.
+1. **Different ASTs**: Similar languages still have different ASTs. For instance, [JS](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) and [TS](#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoidHlwZXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) have different parsing trees for the same function declaration code.
 2. **Different Kinds**: Similar languages may have different AST node kinds. Since ast-grep reports non-existing kinds as errors, there is no straightforward way to report error for kind only existing in one language.
 3. **Debugging Experience**: Mixing languages in one rule requires users to test the rule in both languages. This can be confusing and error-prone, especially when unexpected results occur.
 
 Supporting multi-lang rule is a challenging task for both tool developers and users. Instead, we recommend two approaches:
-* **Always use the superset language**: Rule reusing usually happens when one language is a superset of another, e.g., TS and JS. In this case, you can use [`languageGlobs`](/reference/sgconfig.html#languageglobs) to parse files in the superset language. This is more suitable if you don't need to distinguish between the two languages.
+* **Always use the superset language**: Rule reusing usually happens when one language is a superset of another, e.g., TS and JS. In this case, you can use [`languageGlobs`](/reference/sgconfig#languageglobs) to parse files in the superset language. This is more suitable if you don't need to distinguish between the two languages.
 * **Write Separate Rules**: Generate separate rules for each language. This approach is suitable when you do need to handle the differences between the languages.
 
 If you have a better, clearer and easier proposal to support multi-lang rule, please leave a comment under [this issue](https://github.com/ast-grep/ast-grep/issues/525).
@@ -145,7 +145,7 @@ ast-grep's rule matching is a step-by-step process. It matches one atomic rule a
 
 **Rule matching is ordered** because previous rules' matched meta-variables can affect later rules. Only the first rule can specify what a `$META_VAR` matches, and later rules can only match the content captured by the first rule without modifying it.
 
-Let's see an example. Suppose we want to find a recursive function in JavaScript. [This rule](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gcGF0dGVybjogZnVuY3Rpb24gJEYoKSB7ICQkJCB9XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==) can do the trick.
+Let's see an example. Suppose we want to find a recursive function in JavaScript. [This rule](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gcGF0dGVybjogZnVuY3Rpb24gJEYoKSB7ICQkJCB9XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==) can do the trick.
 
 :::code-group
 
@@ -170,7 +170,7 @@ function recurse() {
 
 The rule works because the pattern `function $F() { $$$ }` matches first, capturing `$F` as `recurse`. The later `has` rule then looks for a `recurse()` call based on the matched `$F`.
 
-If we [swap the order of rules](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiAgLSBwYXR0ZXJuOiBmdW5jdGlvbiAkRigpIHsgJCQkIH1cbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==), it will produce no match.
+If we [swap the order of rules](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiAgLSBwYXR0ZXJuOiBmdW5jdGlvbiAkRigpIHsgJCQkIH1cbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==), it will produce no match.
 
 ```yml [rule.yml]
 id: recursive-call
@@ -201,9 +201,9 @@ The most common scenario is that your pattern is parsed as a different AST node 
 1. tree-sitter, the underlying parser library, does not offer a way to parse a string of a specific kind. So `kind` rule cannot be used to change the parsing outcome of a `pattern`.
 2. ast-grep rules are mostly independent of each other, except sharing meta-variables during a match. `pattern` will behave the same regardless of another `kind` rule.
 
-To specify the `kind` of a `pattern`, you need to use [pattern](/guide/rule-config/atomic-rule.html#pattern-object) [object](/advanced/pattern-parse.html#incomplete-pattern-code).
+To specify the `kind` of a `pattern`, you need to use [pattern](/guide/rule-config/atomic-rule#pattern-object) [object](/advanced/pattern-parse#incomplete-pattern-code).
 
-For example, to match class field in JavaScript, a kind + pattern rule [will not work](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IGEgPSAxMjNcbiAga2luZDogZmllbGRfZGVmaW5pdGlvbiIsInNvdXJjZSI6ImNsYXNzIEEge1xuICAgIGEgPSAxMjNcbn0ifQ==):
+For example, to match class field in JavaScript, a kind + pattern rule [will not work](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IGEgPSAxMjNcbiAga2luZDogZmllbGRfZGVmaW5pdGlvbiIsInNvdXJjZSI6ImNsYXNzIEEge1xuICAgIGEgPSAxMjNcbn0ifQ==):
 
 ```yaml
 # these are two separate rules
@@ -211,7 +211,7 @@ pattern: a = 123          # rule 1
 kind: field_definition    # rule 2
 ```
 
-This is because pattern `a = 123` is parsed as [`assignment_expression`](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYSA9IDEyMyIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6IiJ9). Pattern and kind are two separate rules. And using them together will match nothing because no AST will have both `assignment_expression` and `field_definition` kind at once.
+This is because pattern `a = 123` is parsed as [`assignment_expression`](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYSA9IDEyMyIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6IiJ9). Pattern and kind are two separate rules. And using them together will match nothing because no AST will have both `assignment_expression` and `field_definition` kind at once.
 
 Instead, you need to use pattern object to provide enough context code for the parser to parse the code snippet as `field_definition`:
 
@@ -222,7 +222,7 @@ pattern:
   selector: field_definition     # select the effective pattern
 ```
 
-Note the rule above is one single pattern rule, instead of two. The `context` field provides the full unambiguous code snippet of `class`. So the `a = 123` will be parsed as `field_definition`. The `selector` field then selects the `field_definition` node as the [effective pattern](/advanced/pattern-parse.html#steps-to-create-a-pattern) matcher.
+Note the rule above is one single pattern rule, instead of two. The `context` field provides the full unambiguous code snippet of `class`. So the `a = 123` will be parsed as `field_definition`. The `selector` field then selects the `field_definition` node as the [effective pattern](/advanced/pattern-parse#steps-to-create-a-pattern) matcher.
 
 ## Does ast-grep support some advanced static analysis?
 
@@ -244,7 +244,7 @@ More concretely, it is not easy, or even possible, to achieve the following task
 * Find code that is always executed.
 * Identify the flow of user input.
 
-Also see [tool comparison](/advanced/tool-comparison.html) for more information.
+Also see [tool comparison](/advanced/tool-comparison) for more information.
 
 ## I don't want to read the docs / I don't understand the docs / The docs are too long / I have an urgent request
 

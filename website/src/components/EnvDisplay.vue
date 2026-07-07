@@ -74,13 +74,13 @@ async function copyJson() {
       <ul>
         <li>Simplify the rule and code. Start from a minimal example.</li>
         <li>
-          <code>pattern</code> may <a href="/advanced/pattern-parse.html#extract-effective-ast-for-pattern">not match a whole statement</a> but the expression inside.
+          <code>pattern</code> may <a href="/advanced/pattern-parse#extract-effective-ast-for-pattern">not match a whole statement</a> but the expression inside.
         </li>
         <li>
-          <a href="/advanced/faq.html#why-is-rule-matching-order-sensitive">Rule order</a> can be important. Try using <code>all</code>.
+          <a href="/advanced/faq#why-is-rule-matching-order-sensitive">Rule order</a> can be important. Try using <code>all</code>.
         </li>
-        <li>Deep dive into <a href="/advanced/pattern-parse.html" target="_blank">Pattern Syntax</a></li>
-        <li>See ast-grep's <a href="/advanced/faq.html" target="_blank">FAQs</a> for more info.</li>
+        <li>Deep dive into <a href="/advanced/pattern-parse" target="_blank">Pattern Syntax</a></li>
+        <li>See ast-grep's <a href="/advanced/faq" target="_blank">FAQs</a> for more info.</li>
       </ul>
     </div>
   </div>

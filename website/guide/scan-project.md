@@ -8,7 +8,7 @@ However, to ast-grep's scan need some scaffolding for project setup. We will wal
 
 :::tip
 `ast-grep scan` requires at least one file and one directory to work:
-* `sgconfig.yml`, the [project configuration](/reference/sgconfig.html) file
+* `sgconfig.yml`, the [project configuration](/reference/sgconfig) file
 * a directory storing rule files, usually `rules/`
 :::
 

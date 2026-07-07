@@ -57,7 +57,7 @@ ast-grep works well even if just providing the pattern without specifying the pa
 
 ### **Using `ast-grep scan`**: find JavaScript in HTML with rule files
 
-You can also use ast-grep's [rule file](https://astgrep.com/guide/rule-config.html) to search injected languages.
+You can also use ast-grep's [rule file](https://astgrep.com/guide/rule-config) to search injected languages.
 
 For example, we can warn the use of `alert` in JavaScript, even if it is inside the HTML file.
 
@@ -100,7 +100,7 @@ ast-grep employs a multi-step process to handle language injections effectively.
 
 ## Customize Language Injection: styled-components in JavaScript
 
-You can customize language injection via the `sgconfig.yml` [configuration file](https://astgrep.com/reference/sgconfig.html). This allows you to specify how ast-grep handles multi-language documents based on your specific needs, without modifying ast-grep's built-in behaviors.
+You can customize language injection via the `sgconfig.yml` [configuration file](https://astgrep.com/reference/sgconfig). This allows you to specify how ast-grep handles multi-language documents based on your specific needs, without modifying ast-grep's built-in behaviors.
 
 
 Let's see an example of searching CSS code in JavaScript. [styled-components](https://styled-components.com/) is a library for styling React applications using [CSS-in-JS](https://bootcamp.uxdesign.cc/css-in-js-libraries-for-styling-react-components-a-comprehensive-comparison-56600605a5a1). It allows you to write CSS directly within your JavaScript via [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), creating styled elements as React components.
@@ -180,7 +180,7 @@ This demonstrates ast-grep's flexibility in handling custom language injections.
 
 ### Define graphql custom language in `sgconfig.yml`.
 
-First, we need to register graphql as a custom language in ast-grep. See [custom language reference](https://astgrep.com/advanced/custom-language.html) for more details.
+First, we need to register graphql as a custom language in ast-grep. See [custom language reference](https://astgrep.com/advanced/custom-language) for more details.
 
 ```yaml
 customLanguages:

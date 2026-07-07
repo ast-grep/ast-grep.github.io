@@ -14,9 +14,9 @@ Generally speaking, ast-grep takes user _queries of various input_ formats, _par
 
 ast-grep can accept queries in multiple formats, making it flexible and user-friendly. Here are some common query formats:
 
-- **Pattern Query**: Users can define [specific patterns](/guide/pattern-syntax.html) to search for within their codebase.
-- **YAML Rule**: Structured rules written in [YAML](/guide/rule-config.html) format to guide the search and analysis process.
-- **API Code**: Direct [API calls](/guide/api-usage.html) for more programmatic control over the searching and rewriting tasks.
+- **Pattern Query**: Users can define [specific patterns](/guide/pattern-syntax) to search for within their codebase.
+- **YAML Rule**: Structured rules written in [YAML](/guide/rule-config) format to guide the search and analysis process.
+- **API Code**: Direct [API calls](/guide/api-usage) for more programmatic control over the searching and rewriting tasks.
 
 ### ast-grep's Core
 

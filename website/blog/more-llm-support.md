@@ -12,7 +12,7 @@ head:
       content: ast-grep gets more LLM support!
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/more-llm-support.html
+      content: https://astgrep.com/blog/more-llm-support
   - - meta
     - property: og:description
       content: ast-grep is getting even better with enhanced Large Language Model (LLM) support. This exciting development opens up new possibilities for developers to analyze, understand, and transform code more efficiently. Let's dive into the details of these new features.

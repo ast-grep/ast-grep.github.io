@@ -11,7 +11,7 @@ head:
       content: ast-grep's Journey to AI Generated Rules
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/ast-grep-agent.html
+      content: https://astgrep.com/blog/ast-grep-agent
   - - meta
     - property: og:description
       content: Advancements in AI have made it possible to generate ast-grep rules with a well-written prompt.
@@ -21,13 +21,13 @@ head:
 
 ast-grep is a command-line tool that empowers developers to find and replace code with precision. It operates directly on the syntax tree (AST), the true structure of your code. While powerful, writing ast-grep rules is a hurdle that requires grokking the tool.
 
-This project has always been about designed and built as a tool for human beings, not for AI hype. But ast-grep been [exploring how to use Al](/blog/more-llm-support.html) to improve the human experience. This is the story of my journey into using Al to generate YAML rules.
+This project has always been about designed and built as a tool for human beings, not for AI hype. But ast-grep been [exploring how to use Al](/blog/more-llm-support) to improve the human experience. This is the story of my journey into using Al to generate YAML rules.
 
 ## Why ast-grep Rules are Hard for AI
 
 Generating ast-grep rules is not an easy task,especially for AI. First, ast-grep is a relatively new tool, so Large Language Models have not been extensively trained on its specific syntax, leading to hallucinations or a complete lack of understanding. While [in-context learning](https://www.prompthub.us/blog/in-context-learning-guide) can help an LLM grasp the basic syntax, it often fails to address the problem of [compounding errors](https://arxiv.org/abs/2505.24187v1).
 
-This is particularly true for ast-grep, where rules are frequently composed of smaller, [atomic rules](/guide/rule-config/atomic-rule.html). Human developers often need to debug these smaller rules through [trial and error](/advanced/faq.html#my-pattern-does-not-work-why), and pay extra attention to how they are orchestrated into a [working composition](/advanced/faq.html#my-rule-does-not-work-why). For an LLM, a small mistake in one part of the rule can snowball into a completely incorrect rule. Quoting from the paper [Faith and Fate](https://arxiv.org/abs/2305.18654):
+This is particularly true for ast-grep, where rules are frequently composed of smaller, [atomic rules](/guide/rule-config/atomic-rule). Human developers often need to debug these smaller rules through [trial and error](/advanced/faq#my-pattern-does-not-work-why), and pay extra attention to how they are orchestrated into a [working composition](/advanced/faq#my-rule-does-not-work-why). For an LLM, a small mistake in one part of the rule can snowball into a completely incorrect rule. Quoting from the paper [Faith and Fate](https://arxiv.org/abs/2305.18654):
 
 > _These tasks require breaking problems down into sub-steps and synthesizing these steps into a precise answer._
 
@@ -52,7 +52,7 @@ Before the prompt engineering, however, I saw some interesting failure modes acr
 
 *   **OpenAI O3** hallucinated with wild abandon. It invented syntax that looked more like [CodeQL](https://codeql.github.com/) or [jscodeshift](https://github.com/facebook/jscodeshift), completely ignoring the ast-grep documentation available online. It couldn't recover from tool errors and would quickly give up on using the tools I gave it. It felt like OpenAI's pretraining dataset glanced at my documentation, decided it knew better, and threw it in the bin. (Oops, like how OpenAI treated my resume)
 
-*   **Gemini** was a bit more grounded. Its hallucinations were at least in the right ballpark, borrowing syntax from a [related but more established](/advanced/tool-comparison.html#semgrep) tool, [Semgrep](https://semgrep.dev/). (Thanks for the flattery, again, $GOOG). It also showed a decent ability to recover from errors but had a stubborn streak, preferring to invent its own ast-grep cli commands rather than using the [MCP](https://modelcontextprotocol.io) tools I [provided](https://github.com/ast-grep/ast-grep-mcp).
+*   **Gemini** was a bit more grounded. Its hallucinations were at least in the right ballpark, borrowing syntax from a [related but more established](/advanced/tool-comparison#semgrep) tool, [Semgrep](https://semgrep.dev/). (Thanks for the flattery, again, $GOOG). It also showed a decent ability to recover from errors but had a stubborn streak, preferring to invent its own ast-grep cli commands rather than using the [MCP](https://modelcontextprotocol.io) tools I [provided](https://github.com/ast-grep/ast-grep-mcp).
 *   **Claude 4** was the most promising out of the box. It correctly identified ast-grep and produced syntactically valid rules. Looks like Anthropic's training data is indexing ast-grep's doc! Hoooray! However, it struggled with subtle semantic details that would make a rule functionally correct. To its credit, it tried very hard, retrying the tools I gave it over and over with different inputs, demonstrating a dogged persistence the others lacked.
 
 ## Prompting AI Agents like Teaching a Human

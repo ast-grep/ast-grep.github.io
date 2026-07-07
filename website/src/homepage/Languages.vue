@@ -31,9 +31,9 @@
       </a>
       <p>
         See more in the
-        <a class="link" href="/reference/languages.html">full list</a>.
+        <a class="link" href="/reference/languages">full list</a>.
         Custom languages are also
-        <a class="link" href="/advanced/custom-language.html">loadable</a>.
+        <a class="link" href="/advanced/custom-language">loadable</a>.
       </p>
     </div>
   </div>

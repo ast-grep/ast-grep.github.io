@@ -11,7 +11,7 @@ head:
       content: An Example of Rust's Fearless Concurrency
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/fearless-concurrency.html
+      content: https://astgrep.com/blog/fearless-concurrency
   - - meta
     - property: og:description
       content: ast-grep shows how Rust's fearless concurrency works in practice. Learn how to design concurrent systems in Rust and the trade-offs involved.

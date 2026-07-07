@@ -21,12 +21,12 @@ It includes two parts:
 * a client for ast-grep LSP.
 
 :::tip Requirement
-You need to [install ast-grep CLI](/guide/quick-start.html#installation) locally and optionally [set up a linting project](/guide/scan-project.html).
+You need to [install ast-grep CLI](/guide/quick-start#installation) locally and optionally [set up a linting project](/guide/scan-project).
 :::
 
 ### Structural Search
 
-Use [pattern](https://astgrep.com/guide/pattern-syntax.html) to structural search your codebase.
+Use [pattern](https://astgrep.com/guide/pattern-syntax) to structural search your codebase.
 
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -36,7 +36,7 @@ Use [pattern](https://astgrep.com/guide/pattern-syntax.html) to structural searc
 
 ### Structural Replace
 
-Use pattern to [replace](https://astgrep.com/guide/rewrite-code.html) matching code.
+Use pattern to [replace](https://astgrep.com/guide/rewrite-code) matching code.
 
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -47,7 +47,7 @@ Use pattern to [replace](https://astgrep.com/guide/rewrite-code.html) matching c
 
 *Require LSP setup*
 
-Code linting and code actions require [setting up `sgconfig.yml`](https://astgrep.com/guide/scan-project.html) in your workspace root.
+Code linting and code actions require [setting up `sgconfig.yml`](https://astgrep.com/guide/scan-project) in your workspace root.
 
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -60,8 +60,8 @@ Code linting and code actions require [setting up `sgconfig.yml`](https://astgre
 #### Why LSP diagnostics are not working?
 
 You need several things to set up LSP diagnostics:
-1. [Install](/guide/quick-start.html#installation) ast-grep CLI. Make sure it is accessible in VSCode editor.
-2. [Set up a linting project](/guide/scan-project.html) in your workspace root. The `sgconfig.yml` file is required for LSP diagnostics.
+1. [Install](/guide/quick-start#installation) ast-grep CLI. Make sure it is accessible in VSCode editor.
+2. [Set up a linting project](/guide/scan-project) in your workspace root. The `sgconfig.yml` file is required for LSP diagnostics.
 3. The LSP server by default is started in the workspace root. Make sure the `sgconfig.yml` is in the workspace root.
 
 

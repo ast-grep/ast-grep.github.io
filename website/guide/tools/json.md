@@ -91,9 +91,9 @@ interface MetaVar {
 }
 ```
 
-For more information about `MetaVariables` and `transformed` fields, see the [Pattern](/guide/pattern-syntax.html#meta-variable) and [Rewrite](/guide/rewrite/transform.html) documentation.
+For more information about `MetaVariables` and `transformed` fields, see the [Pattern](/guide/pattern-syntax#meta-variable) and [Rewrite](/guide/rewrite/transform) documentation.
 
-If you are using [lint rule](/guide/project/lint-rule.html) to find matches, the generated match objects will have several more fields.
+If you are using [lint rule](/guide/project/lint-rule) to find matches, the generated match objects will have several more fields.
 
 ```typescript
 interface RuleMatch extends Match {

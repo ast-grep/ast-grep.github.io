@@ -1,6 +1,6 @@
 # ast-grep Playground Manual
 
-The [ast-grep playground](/playground.html) is an online tool that allows you to try out ast-grep without installing anything on your machine. You can write code patterns and see how they match your code in real time. You can also apply rewrite rules to modify your code based on the patterns.
+The [ast-grep playground](/playground) is an online tool that allows you to try out ast-grep without installing anything on your machine. You can write code patterns and see how they match your code in real time. You can also apply rewrite rules to modify your code based on the patterns.
 
 <iframe style="width:100%;aspect-ratio:16/9;" src="https://www.youtube.com/embed/eQSbypFjXQs?si=NL8AUX9VS_egBMuF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -24,13 +24,13 @@ You can choose the language of your code from the drop-down menu at the top righ
 :::
 
 ### 2. Source AST Dump
-The **source AST dump** is where you can see the AST representation of your source code. The AST dump shows the structure and the [kind and field](/advanced/core-concepts.html#kind-vs-field) of each node in the AST. You can use the AST dump to understand how your code is parsed and how to write patterns that match specific nodes or subtrees.
+The **source AST dump** is where you can see the AST representation of your source code. The AST dump shows the structure and the [kind and field](/advanced/core-concepts#kind-vs-field) of each node in the AST. You can use the AST dump to understand how your code is parsed and how to write patterns that match specific nodes or subtrees.
 
 ### 3. Matcher Editor
 The **matcher editor** is where you can write the code patterns and rewrite rules that you want to apply to your source code. The matcher uses the same language as your source code. The matcher editor has two tabs: **Pattern** and **YAML**.
 
-- **Pattern** provides an _approachable_ option where you can write the [code pattern](/guide/pattern-syntax.html) that you want to match in your source code. You can also write a rewrite expression that specifies how to modify the matched code in the subeditor below. It roughly emulates the behavior of [`ast-grep run`](/reference/cli/run.html).
-- **YAML** provides an _advanced_ option where you can write a [YAML rule](/reference/yaml.html) that defines the pattern and metadata for your ast-grep scan. You can specify the [rule object](/reference/rule.html), id, message, severity, and other options for your rule. It is a web counterpart of [`ast-grep scan`](/reference/cli/scan.html).
+- **Pattern** provides an _approachable_ option where you can write the [code pattern](/guide/pattern-syntax) that you want to match in your source code. You can also write a rewrite expression that specifies how to modify the matched code in the subeditor below. It roughly emulates the behavior of [`ast-grep run`](/reference/cli/run).
+- **YAML** provides an _advanced_ option where you can write a [YAML rule](/reference/yaml) that defines the pattern and metadata for your ast-grep scan. You can specify the [rule object](/reference/rule), id, message, severity, and other options for your rule. It is a web counterpart of [`ast-grep scan`](/reference/cli/scan).
 
 ### 4. Matcher Info
 
@@ -51,7 +51,7 @@ In addition to the four main areas, the playground also has a **share button** a
 
 ## View Diffs
 
-Another feature of the ast-grep playground is the **View Diffs** option. You can use this option to see how your source code is changed by your rewrite expression or the [`fix`](/reference/yaml.html#fix) option in your YAML rule.
+Another feature of the ast-grep playground is the **View Diffs** option. You can use this option to see how your source code is changed by your rewrite expression or the [`fix`](/reference/yaml#fix) option in your YAML rule.
 
 You can access this option by clicking the **Diff** tab in the source editor area. The Diff tab will show you a unified inline comparison of your original code and your modified code.
 
@@ -61,10 +61,10 @@ This is a useful way to check and debug your rule/pattern before applying it to 
 
 ## Toggle Full AST Display
 
-Sometimes you need to match code based on elements that are not encoded in AST. These elements are called [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed) in ast-grep.
+Sometimes you need to match code based on elements that are not encoded in AST. These elements are called [unnamed nodes](/advanced/core-concepts#named-vs-unnamed) in ast-grep.
 
 ast-grep can represent code using two different types of tree structures: **AST** and **CST**.
-**AST**, Abstract Syntax Tree, is a simplified representation of the code _excluding_ unnamed nodes. **CST**, Concrete Syntax Tree, is a more detailed representation of the code _including_ unnamed nodes. We have a standalone [doc page](/advanced/core-concepts.html#ast-vs-cst) for a deep-dive explanation of the two concepts.
+**AST**, Abstract Syntax Tree, is a simplified representation of the code _excluding_ unnamed nodes. **CST**, Concrete Syntax Tree, is a more detailed representation of the code _including_ unnamed nodes. We have a standalone [doc page](/advanced/core-concepts#ast-vs-cst) for a deep-dive explanation of the two concepts.
 
 In case you need to match unnamed nodes, you can toggle between AST and CST in the ast dumper by clicking the **Show Full Tree** option. This option will show you the full CST of your code, which may be useful for debugging or fine-tuning your patterns and rules.
 
@@ -79,7 +79,7 @@ One of the cool features of the ast-grep playground is that you can test multipl
 
 To test multiple rules, you just need to separate them by `---` in the YAML editor. Each rule will have its own metadata and options, and you can see the results of each rule in the Source tab as well as the Diff tab.
 
-Example with [playground link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiIyBhc3QtZ3JlcCBub3cgc3VwcG9ydHMgbXVsdGlwbGUgcnVsZXMgaW4gcGxheWdyb3VuZCFcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRBKVxuZml4OlxuICBsb2dnZXIubG9nKCRBKVxuLS0tXG5ydWxlOlxuICBwYXR0ZXJuOiBmdW5jdGlvbiAkQSgpIHsgJCQkQk9EWSB9XG5maXg6ICdjb25zdCAkQSA9ICgpID0+IHsgJCQkQk9EWSB9JyIsInNvdXJjZSI6Ii8vIGNvbnNvbGUubG9nKCkgd2lsbCBiZSBtYXRjaGVkIGJ5IHBhdHRlcm4hXG4vLyBjbGljayBkaWZmIHRhYiB0byBzZWUgcmV3cml0ZS5cblxuZnVuY3Rpb24gdHJ5QXN0R3JlcCgpIHtcbiAgY29uc29sZS5sb2coJ21hdGNoZWQgaW4gbWV0YXZhciEnKVxufVxuXG5jb25zdCBtdWx0aUxpbmVFeHByZXNzaW9uID1cbiAgY29uc29sZVxuICAgLmxvZygnQWxzbyBtYXRjaGVkIScpIn0=):
+Example with [playground link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiIyBhc3QtZ3JlcCBub3cgc3VwcG9ydHMgbXVsdGlwbGUgcnVsZXMgaW4gcGxheWdyb3VuZCFcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUubG9nKCRBKVxuZml4OlxuICBsb2dnZXIubG9nKCRBKVxuLS0tXG5ydWxlOlxuICBwYXR0ZXJuOiBmdW5jdGlvbiAkQSgpIHsgJCQkQk9EWSB9XG5maXg6ICdjb25zdCAkQSA9ICgpID0+IHsgJCQkQk9EWSB9JyIsInNvdXJjZSI6Ii8vIGNvbnNvbGUubG9nKCkgd2lsbCBiZSBtYXRjaGVkIGJ5IHBhdHRlcm4hXG4vLyBjbGljayBkaWZmIHRhYiB0byBzZWUgcmV3cml0ZS5cblxuZnVuY3Rpb24gdHJ5QXN0R3JlcCgpIHtcbiAgY29uc29sZS5sb2coJ21hdGNoZWQgaW4gbWV0YXZhciEnKVxufVxuXG5jb25zdCBtdWx0aUxpbmVFeHByZXNzaW9uID1cbiAgY29uc29sZVxuICAgLmxvZygnQWxzbyBtYXRjaGVkIScpIn0=):
 
 ```yaml
 rule:
@@ -106,6 +106,6 @@ This feature is optional, but can be turned on easily. To enable it, you need to
 The playground will then display the diagnostics in the code editor with red or yellow wavy underlines, depending on the severity level. You can also hover over the underlines to see the message and the rule id for each diagnostic. This feature can help you detect and correct code issues more quickly and effectively.
 
 
-[Example Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiaWQ6IG5vLWNvbnNvbGVcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUuJE1FVEhPRCgkQSlcbm1lc3NhZ2U6IFVuZXhwZWN0ZWQgY29uc29sZVxuc2V2ZXJpdHk6IHdhcm5pbmdcblxuLS0tXG5cbmlkOiBuby1kZWJ1Z2dlclxucnVsZTpcbiAgcGF0dGVybjogZGVidWdnZXJcbm1lc3NhZ2U6IFVuZXhwZWN0ZWQgZGVidWdnZXJcbnNldmVyaXR5OiBlcnJvciIsInNvdXJjZSI6ImZ1bmN0aW9uIHRyeUFzdEdyZXAoKSB7XG4gIGNvbnNvbGUubG9nKCdtYXRjaGVkIGluIG1ldGF2YXIhJylcbn1cblxuY29uc3QgbXVsdGlMaW5lRXhwcmVzc2lvbiA9XG4gIGNvbnNvbGVcbiAgIC5sb2coJ0Fsc28gbWF0Y2hlZCEnKVxuXG5pZiAodHJ1ZSkge1xuICBkZWJ1Z2dlclxufSJ9)
+[Example Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiaWQ6IG5vLWNvbnNvbGVcbnJ1bGU6XG4gIHBhdHRlcm46IGNvbnNvbGUuJE1FVEhPRCgkQSlcbm1lc3NhZ2U6IFVuZXhwZWN0ZWQgY29uc29sZVxuc2V2ZXJpdHk6IHdhcm5pbmdcblxuLS0tXG5cbmlkOiBuby1kZWJ1Z2dlclxucnVsZTpcbiAgcGF0dGVybjogZGVidWdnZXJcbm1lc3NhZ2U6IFVuZXhwZWN0ZWQgZGVidWdnZXJcbnNldmVyaXR5OiBlcnJvciIsInNvdXJjZSI6ImZ1bmN0aW9uIHRyeUFzdEdyZXAoKSB7XG4gIGNvbnNvbGUubG9nKCdtYXRjaGVkIGluIG1ldGF2YXIhJylcbn1cblxuY29uc3QgbXVsdGlMaW5lRXhwcmVzc2lvbiA9XG4gIGNvbnNvbGVcbiAgIC5sb2coJ0Fsc28gbWF0Y2hlZCEnKVxuXG5pZiAodHJ1ZSkge1xuICBkZWJ1Z2dlclxufSJ9)
 
 ![diagnostics](https://user-images.githubusercontent.com/2883231/268741624-98017dd4-8093-4b11-aa6f-cf7b66e68762.png)

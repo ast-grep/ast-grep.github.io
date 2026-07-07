@@ -42,7 +42,7 @@ This flags conflicts with --rule. It is useful to scan with a subset of rules fr
 
 ### `--include-metadata`
 
-Include rule [metadata](/reference/yaml.html#metadata) in the json output.
+Include rule [metadata](/reference/yaml#metadata) in the json output.
 
 This flags requires --json mode. Default is false.
 
@@ -219,7 +219,7 @@ ast-grep provides built-in rules that can be used with the [severity override fl
 
 ### `unused-suppression`
 
-Reports `ast-grep-ignore` suppression comments that do not actually suppress any diagnostic. It behaves like a `hint` rule with auto-fix. See [Report Unused Suppressions](/guide/project/severity.html#report-unused-suppressions) for more details.
+Reports `ast-grep-ignore` suppression comments that do not actually suppress any diagnostic. It behaves like a `hint` rule with auto-fix. See [Report Unused Suppressions](/guide/project/severity#report-unused-suppressions) for more details.
 
 ```bash
 ast-grep scan --error=unused-suppression
@@ -227,7 +227,7 @@ ast-grep scan --error=unused-suppression
 
 ### `no-suppress-all`
 
-Reports `ast-grep-ignore` comments that do not specify a rule ID, which would suppress all diagnostics on a line. See [Disallow Suppress-All Comments](/guide/project/severity.html#disallow-suppress-all-comments) for more details.
+Reports `ast-grep-ignore` comments that do not specify a rule ID, which would suppress all diagnostics on a line. See [Disallow Suppress-All Comments](/guide/project/severity#disallow-suppress-all-comments) for more details.
 
 ```bash
 ast-grep scan --warning=no-suppress-all

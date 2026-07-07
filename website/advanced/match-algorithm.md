@@ -2,13 +2,13 @@
 
 By default, ast-grep uses a smart strategy to match pattern against the AST node. All nodes in the pattern must be matched, but it will skip unnamed nodes in target code.
 
-For background and the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
+For background and the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts) doc.
 
 ## How ast-grep's Smart Matching Works
 
 Let's see an example in action.
 
-The following pattern `function $A() {}` will match both plain function and async function in JavaScript. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJEZWJ1Zy5hc3NlcnQiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAneyAkTTogKCQkJEEpID0+ICRNQVRDSCB9J1xuICAgIHNlbGVjdG9yOiBwYWlyXG4iLCJzb3VyY2UiOiJmdW5jdGlvbiBhKCkge31cbmFzeW5jIGZ1bmN0aW9uIGEoKSB7fSJ9)
+The following pattern `function $A() {}` will match both plain function and async function in JavaScript. See [playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJEZWJ1Zy5hc3NlcnQiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAneyAkTTogKCQkJEEpID0+ICRNQVRDSCB9J1xuICAgIHNlbGVjdG9yOiBwYWlyXG4iLCJzb3VyY2UiOiJmdW5jdGlvbiBhKCkge31cbmFzeW5jIGZ1bmN0aW9uIGEoKSB7fSJ9)
 
 ```js
 // function $A() {}
@@ -18,7 +18,7 @@ async function bar() {} // matched
 
 This is because the keyword `async` is an unnamed node in the syntax tree, so the `async` in the code to search is skipped. As long as `function`, `$A` and `{}` are matched, the pattern is considered matched.
 
-However, if the `async` keyword appears in the pattern code, it will [not be skipped](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYXN5bmMgZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJ1c2luZyBuYW1lc3BhY2UgZm9vOjokQTsiLCJjb25maWciOiJcbmlkOiB0ZXN0YmFzZV9pbml0aWFsaXplclxubGFuZ3VhZ2U6IENQUFxucnVsZTpcbiAgcGF0dGVybjpcbiAgICBzZWxlY3RvcjogY29tcG91bmRfc3RhdGVtZW50XG4gICAgY29udGV4dDogXCJ7ICQkJEIgfVwiXG5maXg6IHwtXG4gIHtcbiAgICBmKCk7XG4gICAgJCQkQlxuICB9Iiwic291cmNlIjoiLy8gYXN5bmMgZnVuY3Rpb24gJEEoKSB7fVxuZnVuY3Rpb24gZm9vKCkge30gICAgLy8gbm90IG1hdGNoZWRcbmFzeW5jIGZ1bmN0aW9uIGJhcigpIHt9IC8vIG1hdGNoZWRcbiJ9) and is required to match node in the code.
+However, if the `async` keyword appears in the pattern code, it will [not be skipped](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiYXN5bmMgZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJ1c2luZyBuYW1lc3BhY2UgZm9vOjokQTsiLCJjb25maWciOiJcbmlkOiB0ZXN0YmFzZV9pbml0aWFsaXplclxubGFuZ3VhZ2U6IENQUFxucnVsZTpcbiAgcGF0dGVybjpcbiAgICBzZWxlY3RvcjogY29tcG91bmRfc3RhdGVtZW50XG4gICAgY29udGV4dDogXCJ7ICQkJEIgfVwiXG5maXg6IHwtXG4gIHtcbiAgICBmKCk7XG4gICAgJCQkQlxuICB9Iiwic291cmNlIjoiLy8gYXN5bmMgZnVuY3Rpb24gJEEoKSB7fVxuZnVuY3Rpb24gZm9vKCkge30gICAgLy8gbm90IG1hdGNoZWRcbmFzeW5jIGZ1bmN0aW9uIGJhcigpIHt9IC8vIG1hdGNoZWRcbiJ9) and is required to match node in the code.
 
 ```js
 // async function $A() {}
@@ -131,7 +131,7 @@ ast-grep has two ways to configure pattern strictness.
 
 1. Using `--strictness` in `ast-grep run`
 
-You can use the `--strictness` flag in [`ast-grep run`](/reference/cli/run.html)
+You can use the `--strictness` flag in [`ast-grep run`](/reference/cli/run)
 
 ```bash
 ast-grep run -p '$FOO($BAR)' --strictness ast
@@ -139,7 +139,7 @@ ast-grep run -p '$FOO($BAR)' --strictness ast
 
 2. Using `strictness` in Pattern Object
 
-[Pattern object](/reference/rule.html#pattern) in YAML has an optional `strictness` field.
+[Pattern object](/reference/rule#pattern) in YAML has an optional `strictness` field.
 
 ```
 id: test-pattern-strictness

@@ -52,9 +52,9 @@ rules may still change based on feedback.
 
 The command prints items first. Depending on the view, it can also print compact
 member names or expanded member signatures under each item. The
-[outline entry concepts](/reference/outline-rules.html#how-outline-entries-work)
+[outline entry concepts](/reference/outline-rules#how-outline-entries-work)
 explain the same structure in more detail. For all options and JSON output, see
-the [`outline` CLI reference](/reference/cli/outline.html).
+the [`outline` CLI reference](/reference/cli/outline).
 
 Inspect one file:
 
@@ -438,7 +438,7 @@ JSON includes file paths, languages, symbol names, symbol types, ranges,
 signatures, AST kinds, import/export flags, and nested direct members when the
 selected view includes them. Ranges use the same zero-based line and column
 convention as ast-grep's other JSON output. See the
-[CLI reference](/reference/cli/outline.html#json-output) for the TypeScript
+[CLI reference](/reference/cli/outline#json-output) for the TypeScript
 interface.
 
 ## Custom Extraction Rules
@@ -473,7 +473,7 @@ ast-grep outline src \
   --outline-rules project-outline.yml
 ```
 
-See the [outline extraction rule reference](/reference/outline-rules.html) for
+See the [outline extraction rule reference](/reference/outline-rules) for
 the YAML format.
 
 ## Limits

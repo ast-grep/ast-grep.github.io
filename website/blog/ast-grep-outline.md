@@ -11,7 +11,7 @@ head:
       content: Introducing ast-grep Outline
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/ast-grep-outline.html
+      content: https://astgrep.com/blog/ast-grep-outline
   - - meta
     - property: og:description
       content: ast-grep Outline gives humans and coding agents a fast, syntax-aware table of contents for source code without building an index.
@@ -39,7 +39,7 @@ ast-grep outline src
 ast-grep outline src/parser.ts --match Parser --view expanded
 ```
 
-It parses source files with [ast-grep rule](/reference/yaml.html) and [tree-sitter](https://tree-sitter.github.io/tree-sitter/), then prints a compact
+It parses source files with [ast-grep rule](/reference/yaml) and [tree-sitter](https://tree-sitter.github.io/tree-sitter/), then prints a compact
 table of contents: functions, classes, structs, imports, exports, direct members,
 and source ranges. It is not a language server or semantic graph, just **a small
 structural primitive** for deciding what to read next.

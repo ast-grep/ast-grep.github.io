@@ -48,7 +48,7 @@ const query = 'console.log($MATCH)'
 const rewrite = 'logger.log($MATCH)'
 const config = `
 # YAML Rule is more powerful!
-# https://astgrep.com/guide/rule-config.html#rule
+# https://astgrep.com/guide/rule-config#rule
 rule:
   any:
     - pattern: console.log($A)

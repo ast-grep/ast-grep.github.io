@@ -22,9 +22,9 @@ deeplyNested({
 ::: warning
 Pattern code must be valid code that tree-sitter can parse.
 
-[ast-grep playground](/playground.html) is a useful tool to confirm pattern is parsed correctly.
+[ast-grep playground](/playground) is a useful tool to confirm pattern is parsed correctly.
 
-If ast-grep fails to parse code as expected, you can try give it more context by using [object-style pattern](/reference/rule.html#pattern).
+If ast-grep fails to parse code as expected, you can try give it more context by using [object-style pattern](/reference/rule#pattern).
 :::
 
 ## Meta Variable
@@ -148,21 +148,21 @@ This is a useful trick to micro-optimize pattern matching speed, since we don't 
 :::
 
 ### Capture Unnamed Nodes
-A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
-To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
+A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts#named-vs-unnamed) by default.
+To capture [unnamed nodes](/advanced/core-concepts#named-vs-unnamed), you can use double dollar sign `$$VAR`.
 
-Namedness is an advanced topic in [Tree-sitter](https://tree-sitter.github.io/tree-sitter/using-parsers#named-vs-anonymous-nodes). You can read this [in-depth guide](/advanced/core-concepts.html) for more background.
+Namedness is an advanced topic in [Tree-sitter](https://tree-sitter.github.io/tree-sitter/using-parsers#named-vs-anonymous-nodes). You can read this [in-depth guide](/advanced/core-concepts) for more background.
 
 ## More Powerful Rule
 
-Pattern is a fast and easy way to match code. But it is not as powerful as [rule](/guide/rule-config.html#rule-file) which can match code with more [precise selector](/guide/rule-config/atomic-rule.html#kind) or [more context](/guide/rule-config/relational-rule.html).
+Pattern is a fast and easy way to match code. But it is not as powerful as [rule](/guide/rule-config#rule-file) which can match code with more [precise selector](/guide/rule-config/atomic-rule#kind) or [more context](/guide/rule-config/relational-rule).
 
 We will cover using rules in next chapter.
 
 :::tip Pro Tip
 Pattern can also be an object instead of string in YAML rule.
 
-It is very useful to avoid ambiguity in code snippet. See [here](/guide/rule-config/atomic-rule.html#pattern) for more details.
+It is very useful to avoid ambiguity in code snippet. See [here](/guide/rule-config/atomic-rule#pattern) for more details.
 
-Also see our FAQ for more [guidance](/advanced/faq.html) on writing patterns.
+Also see our FAQ for more [guidance](/advanced/faq) on writing patterns.
 :::

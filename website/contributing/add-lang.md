@@ -20,13 +20,13 @@ As a rule of thumb, we want to limit the binary size of ast-grep under 10MB afte
 
 ---
 
-Don't worry if your language is not supported by ast-grep. You can try ast-grep's [custom language support](/advanced/custom-language.html) and register your own Tree-sitter parser!
+Don't worry if your language is not supported by ast-grep. You can try ast-grep's [custom language support](/advanced/custom-language) and register your own Tree-sitter parser!
 
 If your language satisfies the requirements above, congratulations! Let's see how to add it to ast-grep.
 
 ## Add to ast-grep Core
 
-ast-grep has several distinct use cases: [CLI tool](https://crates.io/crates/ast-grep), [n-api lib](https://www.npmjs.com/package/@ast-grep/napi) and [web playground](https://astgrep.com/playground.html).
+ast-grep has several distinct use cases: [CLI tool](https://crates.io/crates/ast-grep), [n-api lib](https://www.npmjs.com/package/@ast-grep/napi) and [web playground](https://astgrep.com/playground).
 
 Adding a language includes two steps. The first step is to add the language to ast-grep core.
 The core repository is multi-crate workspace hosted at [GitHub](https://github.com/ast-grep/ast-grep). The relevant crate is [language](https://github.com/ast-grep/ast-grep/tree/main/crates/language), which defines the supported languages and their tree-sitter grammars.
@@ -143,7 +143,7 @@ The playground has a standalone [repository](https://github.com/ast-grep/ast-gre
 
 1. Set up Tree-sitter
 
-First, we need to set up Tree-sitter development tools like. You can refer to the Tree-sitter setup section in this [link](/advanced/custom-language.html#prepare-tree-sitter-tool-and-parser).
+First, we need to set up Tree-sitter development tools like. You can refer to the Tree-sitter setup section in this [link](/advanced/custom-language#prepare-tree-sitter-tool-and-parser).
 
 2. Build WASM file
 

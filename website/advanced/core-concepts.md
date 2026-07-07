@@ -20,7 +20,7 @@ A [parser](https://www.wikiwand.com/en/Parser_(programming_language)) is a progr
 Writing good parsers for various programming languages is a laborious task, if even possible, for one single project like ast-grep. Fortunately, Tree-sitter is a venerable and popular tool that has a wide community support. Many mainstream languages such as C, Java, JavaScript, Python, Rust, and more are supported by Tree-sitter.
 Using Tree-sitter as ast-grep's underlying parsing library allows it to _work with any language that has a well-maintained grammar available_.
 
-Another perk of Tree-sitter is its incremental nature. An incremental parser is a parser that can update the syntax tree efficiently when the source code file is edited, without having to re-parse the entire file. _It can run very fast on every code changes in ast-greps' [interactive editing](https://astgrep.com/guide/tooling-overview.html#interactive-mode)._
+Another perk of Tree-sitter is its incremental nature. An incremental parser is a parser that can update the syntax tree efficiently when the source code file is edited, without having to re-parse the entire file. _It can run very fast on every code changes in ast-greps' [interactive editing](https://astgrep.com/guide/tooling-overview#interactive-mode)._
 
 Finally, Tree-sitter also handles syntax errors gracefully, and it can parse multiple languages within the same file. _This makes pattern code more robust to parse and easier to write._ In future we can also support multi-language source code like Vue.
 
@@ -35,7 +35,7 @@ However, ast-grep does not match patterns against the text directly. Instead, it
 _Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree._
 
 :::tip Textual Search in ast-grep
-Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule.html#regex) to matches the text of a node by specifying a regular expression. This way, it is possible to combine textual and structural matching in ast-grep.
+Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule#regex) to matches the text of a node by specifying a regular expression. This way, it is possible to combine textual and structural matching in ast-grep.
 :::
 
 
@@ -48,7 +48,7 @@ CST stands for Concrete Syntax Tree, which is a more **faithful** representation
 Tree-sitter is a library that can parse code into CSTs for many programming languages. Thusly, _ast-grep, contrary to its name, searches and rewrites code based on CST patterns, instead of AST_.
 
 Let's walk through an example to see why CST makes more sense.
-Consider the JavaScript snippet `1 + 1`. Its AST representation [looks like this](https://astgrep.com/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJE1BVENIKSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiIxICsgMSJ9):
+Consider the JavaScript snippet `1 + 1`. Its AST representation [looks like this](https://astgrep.com/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJE1BVENIKSIsImNvbmZpZyI6IiMgQ29uZmlndXJlIFJ1bGUgaW4gWUFNTFxucnVsZTpcbiAgYW55OlxuICAgIC0gcGF0dGVybjogaWYgKGZhbHNlKSB7ICQkJCB9XG4gICAgLSBwYXR0ZXJuOiBpZiAodHJ1ZSkgeyAkJCQgfVxuY29uc3RyYWludHM6XG4gICMgTUVUQV9WQVI6IHBhdHRlcm4iLCJzb3VyY2UiOiIxICsgMSJ9):
 ```
 binary_expression
   number
@@ -63,7 +63,7 @@ binary_expression
 ```
 
 You might wonder if using CST will make trivial whitespaces affect your search results.
-Fortunately, ast-grep uses a [smart matching algorithm](/advanced/match-algorithm.html) that can skip trivial nodes in CST when appropriate, which saves you a lot of trouble.
+Fortunately, ast-grep uses a [smart matching algorithm](/advanced/match-algorithm) that can skip trivial nodes in CST when appropriate, which saves you a lot of trouble.
 
 ## Named vs Unnamed
 
@@ -86,7 +86,7 @@ rules: {
                                           // ↑ unnamed node
 }
 ```
-Practically, named nodes have a property called `kind` that indicates their names. You can use ast-grep's [atomic rule `kind`](/guide/rule-config/atomic-rule.html#kind) to find the specific AST node. [Playground link](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOiBcbiAga2luZDogYmluYXJ5X2V4cHJlc3Npb24iLCJzb3VyY2UiOiIxICsgMSAifQ==) for the example below.
+Practically, named nodes have a property called `kind` that indicates their names. You can use ast-grep's [atomic rule `kind`](/guide/rule-config/atomic-rule#kind) to find the specific AST node. [Playground link](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOiBcbiAga2luZDogYmluYXJ5X2V4cHJlc3Npb24iLCJzb3VyY2UiOiIxICsgMSAifQ==) for the example below.
 
 ```yaml
 rule:
@@ -94,22 +94,22 @@ rule:
 # matches `1 + 1`
 ```
 
-Further more, ast-grep's meta variable matches only named nodes by default. `return $A` matches only the first statement below. [Playground link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICRBIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoicmV0dXJuIDEyM1xucmV0dXJuOyJ9).
+Further more, ast-grep's meta variable matches only named nodes by default. `return $A` matches only the first statement below. [Playground link](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICRBIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoicmV0dXJuIDEyM1xucmV0dXJuOyJ9).
 
 ```js
 return 123 // `123` is named `number` and matched.
 return;    // `;` is unnamed and not matched.
 ```
 
-We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
+We can use double dollar `$$VAR` to _include unnamed nodes_ in the pattern result. `return $$A` will match both statement above. [Playground link](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoicmV0dXJuICQkQSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6InJldHVybiAxMjNcbnJldHVybjsifQ==).
 
 ## Kind vs Field
 
-Sometimes, using kind alone is not enough to find the nodes we want. A node may have several children with the same kind, but different roles in the code. For [example](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJ2YXIgYSA9IHtcbiAgJ2tleSc6ICd2YWx1ZSdcbn0ifQ==), in JavaScript, an object may have multiple keys and values, all with the string kind.
+Sometimes, using kind alone is not enough to find the nodes we want. A node may have several children with the same kind, but different roles in the code. For [example](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJ2YXIgYSA9IHtcbiAgJ2tleSc6ICd2YWx1ZSdcbn0ifQ==), in JavaScript, an object may have multiple keys and values, all with the string kind.
 
-To distinguish them, we can use `field` to specify the relation between a node and its parent. In ast-grep, `field` can be specified in two [relational rules](/guide/rule-config/relational-rule.html#relational-rule-mnemonics): `has` and `inside`.
+To distinguish them, we can use `field` to specify the relation between a node and its parent. In ast-grep, `field` can be specified in two [relational rules](/guide/rule-config/relational-rule#relational-rule-mnemonics): `has` and `inside`.
 
-`has` and `inside` accept a special configuration item called `field`. The value of `field` is the _field name_ of the parent-child relation. For example, the key-value `pair` in JavaScript object has two children: one with field `key` and the other with field `value`. We can use [this rule](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmdcbiAgaW5zaWRlOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBwYWlyIiwic291cmNlIjoidmFyIGEgPSB7XG4gICdrZXknOiAndmFsdWUnXG59In0=) to match the `key` node of kind `string`.
+`has` and `inside` accept a special configuration item called `field`. The value of `field` is the _field name_ of the parent-child relation. For example, the key-value `pair` in JavaScript object has two children: one with field `key` and the other with field `value`. We can use [this rule](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBzdHJpbmdcbiAgaW5zaWRlOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBwYWlyIiwic291cmNlIjoidmFyIGEgPSB7XG4gICdrZXknOiAndmFsdWUnXG59In0=) to match the `key` node of kind `string`.
 
 ```yaml
 rule:
@@ -120,7 +120,7 @@ rule:
 ```
 `field` can help us to narrow down the search scope and make the pattern more precise.
 
-We can also use `has` to rewrite the rule above, searching the key-value `pair` with `string` key. [Playground link](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBwYWlyXG4gIGhhczpcbiAgICBmaWVsZDoga2V5XG4gICAga2luZDogc3RyaW5nIiwic291cmNlIjoidmFyIG1hdGNoID0geyAna2V5JzogJ3ZhbHVlJyB9XG52YXIgbm9NYXRjaCA9IHsga2V5OiB2YWx1ZX0ifQ==).
+We can also use `has` to rewrite the rule above, searching the key-value `pair` with `string` key. [Playground link](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCRNQVRDSCkiLCJjb25maWciOiJydWxlOlxuICBraW5kOiBwYWlyXG4gIGhhczpcbiAgICBmaWVsZDoga2V5XG4gICAga2luZDogc3RyaW5nIiwic291cmNlIjoidmFyIG1hdGNoID0geyAna2V5JzogJ3ZhbHVlJyB9XG52YXIgbm9NYXRjaCA9IHsga2V5OiB2YWx1ZX0ifQ==).
 
 ```yaml
 rule:
@@ -151,7 +151,7 @@ We have to preserve some trivial nodes for precise matching.
 
 Tree-sitter parsers do not encode all semantics with named nodes. For example, `class A { get method() {} }` and `class A { method() {} }` are equivalent in Tree-sitter's AST. The critical token `get` is not named nor has a field name. It is a trivial node!
 
-If you do not care about if the method is a getter method, a static method or an instance method, you can use `class $A { method() {} }` to [match all the three methods at once](https://astgrep.com/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBtZXRob2QoKSB7fSB9IiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIGtpbmQ6IHN0cmluZyIsInNvdXJjZSI6ImNsYXNzIEEgeyBtZXRob2QoKSB7fX1cbmNsYXNzIEIgeyBnZXQgbWV0aG9kKCkge319XG5jbGFzcyBDIHsgc3RhdGljIG1ldGhvZCgpIHt9fSJ9). Alternatively, you can [fully spell out the method modifier](https://astgrep.com/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBnZXQgbWV0aG9kKCkge30gfSIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJjbGFzcyBBIHsgbWV0aG9kKCkge319XG5jbGFzcyBCIHsgZ2V0IG1ldGhvZCgpIHt9fVxuY2xhc3MgQyB7IHN0YXRpYyBtZXRob2QoKSB7fX0ifQ==) if you need to tell getter method from normal method.
+If you do not care about if the method is a getter method, a static method or an instance method, you can use `class $A { method() {} }` to [match all the three methods at once](https://astgrep.com/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBtZXRob2QoKSB7fSB9IiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIGtpbmQ6IHN0cmluZyIsInNvdXJjZSI6ImNsYXNzIEEgeyBtZXRob2QoKSB7fX1cbmNsYXNzIEIgeyBnZXQgbWV0aG9kKCkge319XG5jbGFzcyBDIHsgc3RhdGljIG1ldGhvZCgpIHt9fSJ9). Alternatively, you can [fully spell out the method modifier](https://astgrep.com/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY2xhc3MgJEEgeyBnZXQgbWV0aG9kKCkge30gfSIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICBraW5kOiBzdHJpbmciLCJzb3VyY2UiOiJjbGFzcyBBIHsgbWV0aG9kKCkge319XG5jbGFzcyBCIHsgZ2V0IG1ldGhvZCgpIHt9fVxuY2xhc3MgQyB7IHN0YXRpYyBtZXRob2QoKSB7fX0ifQ==) if you need to tell getter method from normal method.
 
 ## Summary
 Thank you for reading until here! There are many concepts in this article. Let's summarize them in one paragraph.

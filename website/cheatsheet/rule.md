@@ -127,7 +127,7 @@ has:
   field: body
 ```
 
-🌳 `field` makes `has`/`inside` match nodes by their [semantic role](/advanced/core-concepts.html#kind-vs-field)
+🌳 `field` makes `has`/`inside` match nodes by their [semantic role](/advanced/core-concepts#kind-vs-field)
 
 </Item>
 

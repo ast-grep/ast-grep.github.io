@@ -2,7 +2,7 @@
 
 ast-grep currently has an experimental API for [Node.js](https://nodejs.org/).
 
-You can see [API usage guide](/guide/api-usage.html) for more details.
+You can see [API usage guide](/guide/api-usage) for more details.
 
 [[toc]]
 
@@ -141,7 +141,7 @@ class SgNode {
 }
 ```
 
-Some methods have more sophisticated type signatures for the ease of use. See the [source code](https://github.com/ast-grep/ast-grep/blob/0999cdb542ff4431e3734dad38fcd648de972e6a/crates/napi/types/sgnode.d.ts#L38-L41) and our [tech blog](/blog/typed-napi.html)
+Some methods have more sophisticated type signatures for the ease of use. See the [source code](https://github.com/ast-grep/ast-grep/blob/0999cdb542ff4431e3734dad38fcd648de972e6a/crates/napi/types/sgnode.d.ts#L38-L41) and our [tech blog](/blog/typed-napi)
 
 ### NapiConfig
 
@@ -149,7 +149,7 @@ Some methods have more sophisticated type signatures for the ease of use. See th
 
 #### Type
 
-`NapiConfig` has similar fields as the [rule config](/reference/yaml.html).
+`NapiConfig` has similar fields as the [rule config](/reference/yaml).
 
 ```ts
 interface NapiConfig {
@@ -300,7 +300,7 @@ class SgNode:
 
 ### Rule
 
-The `Rule` object is a Python representation of the [YAML rule object](/guide/rule-config/atomic-rule.html) in the CLI. See the [reference](/reference/rule.html).
+The `Rule` object is a Python representation of the [YAML rule object](/guide/rule-config/atomic-rule) in the CLI. See the [reference](/reference/rule).
 
 ```python
 class Pattern(TypedDict):
@@ -335,7 +335,7 @@ class Relation(Rule, total=False):
 
 ### Config
 
-The Config object is similar to the [YAML rule config](/guide/rule-config.html) in the CLI. See the [reference](/reference/yaml.html).
+The Config object is similar to the [YAML rule config](/guide/rule-config) in the CLI. See the [reference](/reference/yaml).
 
 ```python
 class Config(TypedDict, total=False):

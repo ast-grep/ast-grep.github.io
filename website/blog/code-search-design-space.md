@@ -11,7 +11,7 @@ head:
       content: Design Space for Code Search Query
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/code-search-design-space.html
+      content: https://astgrep.com/blog/code-search-design-space
   - - meta
     - property: og:description
       content: A review of the design space for code search tools.
@@ -24,7 +24,7 @@ head:
 
 Code search is a critical tool for modern software development. It enables developers to quickly locate, understand, and reuse existing code, boosting productivity and ensuring code consistency across projects.
 
-At its core, ast-grep is a [code search](/guide/introduction.html#motivation) tool. Its other features, such as [linting](/guide/scan-project.html) and code [rewriting](/guide/rewrite-code.html), are built upon the foundation of its code search capabilities.
+At its core, ast-grep is a [code search](/guide/introduction#motivation) tool. Its other features, such as [linting](/guide/scan-project) and code [rewriting](/guide/rewrite-code), are built upon the foundation of its code search capabilities.
 
 This blog post delves into the design space of code search, with a particular focus on how queries are designed and used. We'll be drawing inspiration from the excellent paper, "[Code Search: A Survey of Techniques for Finding Code](https://www.lucadigrazia.com/papers/acmcsur2022.pdf)". But we won't be covering every single detail from that paper. Instead, our focus will be on the diverse ways that code search tools allow users to express their search intent.
 
@@ -135,11 +135,11 @@ The downside of using existing languages is also emphasized in the IntelliJ IDEA
 
 > Any (SSR) template entered should be a well formed Java construction ...
 
-An off-the-shelf grammar of the programming language may not be able to parse a query because the query is [incomplete or ambiguous](/advanced/pattern-parse.html#pattern-is-ast-based).
+An off-the-shelf grammar of the programming language may not be able to parse a query because the query is [incomplete or ambiguous](/advanced/pattern-parse#pattern-is-ast-based).
 For example, `"key": "value"` is not a valid JSON object, a JSON parser will reject and will fail to create a query. Maybe it is clear to a human that it is a key-value pair, but the parser does not know that. Other examples will be like [distinguishing function calls](/catalog/c/) and macro invocation in C/C++.
 
 :::tip
-ast-grep takes a unique approach to this problem. It uses a [pattern object](/guide/rule-config/atomic-rule.html#pattern-object) to represent and disambiguate a complete and valid code snippet, and then leverages a [`selector`](/reference/rule.html#pattern) to extract the part that matches the query.
+ast-grep takes a unique approach to this problem. It uses a [pattern object](/guide/rule-config/atomic-rule#pattern-object) to represent and disambiguate a complete and valid code snippet, and then leverages a [`selector`](/reference/rule#pattern) to extract the part that matches the query.
 :::
 
 
@@ -251,7 +251,7 @@ Configuration files are more expressive than patterns and still relatively easy 
 
 Program-based eDSLs provide direct access to the AST through AST node objects.
 
-Examples of programmatic APIs include [JSCodeshift](https://jscodeshift.com/build/api-reference/), the [Code Property Graph](https://docs.joern.io/code-property-graph/) from [Joern](https://joern.io/), and ast-grep's [NAPI](https://astgrep.com/guide/api-usage.html).
+Examples of programmatic APIs include [JSCodeshift](https://jscodeshift.com/build/api-reference/), the [Code Property Graph](https://docs.joern.io/code-property-graph/) from [Joern](https://joern.io/), and ast-grep's [NAPI](https://astgrep.com/guide/api-usage).
 
 :::code-group
 ```typescript [@ast-grep/napi]
@@ -365,7 +365,7 @@ sg.root().find({
 This flexible design allows you to combine basic queries into larger, more complex ones, and you can always use a general-purpose language for very complex and specific searches.
 
 :::warning ast-grep favors existing programming languages
-We don't want the user to learn a new language, but rather use the existing language constructs to describe the query. We also think TypeScript is a great language with [great type system](/blog/typed-napi.html). There is no need to reinvent a new language to express code search logic.
+We don't want the user to learn a new language, but rather use the existing language constructs to describe the query. We also think TypeScript is a great language with [great type system](/blog/typed-napi). There is no need to reinvent a new language to express code search logic.
 :::
 
 ## ast-grep's Design Choices

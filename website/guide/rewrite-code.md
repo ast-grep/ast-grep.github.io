@@ -23,7 +23,7 @@ You can also use the `--update-all` or `-U` flag to automatically accept the cha
 
 Another way to rewrite code is to use the `fix` option in a YAML rule file. This option allows you to specify more complex and flexible rewrite rules, such as using transformations and regular expressions.
 
-Let's look at a simple example of using `fix` in a YAML rule ([playground Link](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IGNoYW5nZV9uYW1lXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiB8XG4gICAgZGVmIGZvbygkWCk6XG4gICAgICAkJCRTXG5maXg6IHwtXG4gIGRlZiBiYXooJFgpOlxuICAgICQkJFNcbi0tLVxuaWQ6IGNoYW5nZV9wYXJhbVxucnVsZTpcbiAgcGF0dGVybjogZm9vKCRYKVxuZml4OiBiYXooJFgpIiwic291cmNlIjoiZGVmIGZvbyh4KTpcbiAgICByZXR1cm4geCArIDFcblxueSA9IGZvbygyKVxucHJpbnQoeSkifQ==)).
+Let's look at a simple example of using `fix` in a YAML rule ([playground Link](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IGNoYW5nZV9uYW1lXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiB8XG4gICAgZGVmIGZvbygkWCk6XG4gICAgICAkJCRTXG5maXg6IHwtXG4gIGRlZiBiYXooJFgpOlxuICAgICQkJFNcbi0tLVxuaWQ6IGNoYW5nZV9wYXJhbVxucnVsZTpcbiAgcGF0dGVybjogZm9vKCRYKVxuZml4OiBiYXooJFgpIiwic291cmNlIjoiZGVmIGZvbyh4KTpcbiAgICByZXR1cm4geCArIDFcblxueSA9IGZvbygyKVxucHJpbnQoeSkifQ==)).
 Suppose we have a Python file named `test.py` with the following content:
 
 ```python
@@ -55,7 +55,7 @@ rule:
 fix: baz($X)
 ```
 
-The first rule matches the definition of the function `foo`, and replaces it with `baz`. The second rule matches the calls of the function `foo`, and replaces them with `baz`. Note that we use `$X` and `$$$S` as [meta](/guide/pattern-syntax.html#meta-variable) [variables](/guide/pattern-syntax.html#multi-meta-variable), which can match any expression and any statement, respectively. We can run:
+The first rule matches the definition of the function `foo`, and replaces it with `baz`. The second rule matches the calls of the function `foo`, and replaces them with `baz`. Note that we use `$X` and `$$$S` as [meta](/guide/pattern-syntax#meta-variable) [variables](/guide/pattern-syntax#multi-meta-variable), which can match any expression and any statement, respectively. We can run:
 
 ```bash
 ast-grep scan -r change_func.yml test.py
@@ -83,9 +83,9 @@ This allows you to group related rules together!
 
 ## Use Meta Variable in Rewrite
 
-As we saw in the previous example, we can use [meta variables](/guide/pattern-syntax.html#meta-variable-capturing) in both the pattern and the fix parts of a YAML rule. They are like regular expression [capture groups](https://regexone.com/lesson/capturing_groups). Meta variables are identifiers that start with `$`, and they can match any syntactic element in the code, such as expressions, statements, types, etc. When we use a meta variable in the fix part of a rule, it will be replaced by whatever it matched in the pattern part.
+As we saw in the previous example, we can use [meta variables](/guide/pattern-syntax#meta-variable-capturing) in both the pattern and the fix parts of a YAML rule. They are like regular expression [capture groups](https://regexone.com/lesson/capturing_groups). Meta variables are identifiers that start with `$`, and they can match any syntactic element in the code, such as expressions, statements, types, etc. When we use a meta variable in the fix part of a rule, it will be replaced by whatever it matched in the pattern part.
 
-For example, if we have a [rule](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBzd2FwXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWCA9ICRZXG5maXg6ICRZID0gJFgiLCJzb3VyY2UiOiJhID0gYlxuYyA9IGQgKyBlXG5mID0gZyAqIGgifQ==) like this:
+For example, if we have a [rule](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBzd2FwXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWCA9ICRZXG5maXg6ICRZID0gJFgiLCJzb3VyY2UiOiJhID0gYlxuYyA9IGQgKyBlXG5mID0gZyAqIGgifQ==) like this:
 
 ```yaml
 id: swap
@@ -111,7 +111,7 @@ d + e = c
 g * h = f
 ```
 
-[Playground link](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBzd2FwXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWCA9ICRZXG5maXg6ICRZID0gJFgiLCJzb3VyY2UiOiJhID0gYlxuYyA9IGQgKyBlXG5mID0gZyAqIGgifQ==)
+[Playground link](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGVmIGZvbygkWCk6XG4gICRTIiwicmV3cml0ZSI6ImxvZ2dlci5sb2coJE1BVENIKSIsImNvbmZpZyI6ImlkOiBzd2FwXG5sYW5ndWFnZTogUHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWCA9ICRZXG5maXg6ICRZID0gJFgiLCJzb3VyY2UiOiJhID0gYlxuYyA9IGQgKyBlXG5mID0gZyAqIGgifQ==)
 
 Note that this may **not** be a valid or sensible code transformation, but it illustrates how meta variables work.
 
@@ -119,7 +119,7 @@ Note that this may **not** be a valid or sensible code transformation, but it il
 It will not work if you want to append a string starting with uppercase letters to a meta variable because it will be parsed as an undefined meta variable.
 :::
 
-Suppose we want to append `Name` to the meta variable `$VAR`, the fix string `$VARName` will be parsed as `$VARN` + `ame` instead. You can instead use [replace transformation](/guide/rewrite/transform.html#rewrite-with-regex-capture-groups) to create a new variable whose content is `$VAR` plus `Name`.
+Suppose we want to append `Name` to the meta variable `$VAR`, the fix string `$VARName` will be parsed as `$VARN` + `ame` instead. You can instead use [replace transformation](/guide/rewrite/transform#rewrite-with-regex-capture-groups) to create a new variable whose content is `$VAR` plus `Name`.
 
 :::danger Non-matched meta-variable
 non-matched meta-variable will be replaced by empty string in the `fix`.
@@ -179,7 +179,7 @@ To accommodate these scenarios, ast-grep's `fix` also accepts an advanced object
 
 It has one required field `template` and two optional fields `expandStart` and `expandEnd`.
 
-`template` is the same as the string fix. Both `expandStart` and `expandEnd` accept a [rule](/guide/rule-config.html) object to specify the expansion.
+`template` is the same as the string fix. Both `expandStart` and `expandEnd` accept a [rule](/guide/rule-config) object to specify the expansion.
 
 `expandStart` will expand the fixing range's start until the rule is not met, while `expandEnd` will expand the fixing range's end until the rule is not met.
 
@@ -196,9 +196,9 @@ const obj2 = {
   Kept: 'value2',
 }
 ```
-We want to remove the key-value pair with the key `Remove` completely. Just removing the `pair` AST node is [not enough](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIHJlZ2V4OiBSZW1vdmVcbmZpeDogJyciLCJzb3VyY2UiOiJjb25zdCBvYmogPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMSdcbn1cbmNvbnN0IG9iajIgPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMScsXG4gIEtlcHQ6ICd2YWx1ZTInLFxufVxuIn0=) in `obj2` because we also need to remove the trailing comma.
+We want to remove the key-value pair with the key `Remove` completely. Just removing the `pair` AST node is [not enough](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogcGFpclxuICBoYXM6XG4gICAgZmllbGQ6IGtleVxuICAgIHJlZ2V4OiBSZW1vdmVcbmZpeDogJyciLCJzb3VyY2UiOiJjb25zdCBvYmogPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMSdcbn1cbmNvbnN0IG9iajIgPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMScsXG4gIEtlcHQ6ICd2YWx1ZTInLFxufVxuIn0=) in `obj2` because we also need to remove the trailing comma.
 
-We can write [a rule in playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoibGFuZ3VhZ2U6IGphdmFzY3JpcHRcbnJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICByZWdleDogUmVtb3ZlXG4jIHJlbW92ZSB0aGUga2V5LXZhbHVlIHBhaXIgYW5kIGl0cyBjb21tYVxuZml4OlxuICB0ZW1wbGF0ZTogJydcbiAgZXhwYW5kRW5kOiB7IHJlZ2V4OiAnLCcgfSAjIGV4cGFuZCB0aGUgcmFuZ2UgdG8gdGhlIGNvbW1hXG4iLCJzb3VyY2UiOiJjb25zdCBvYmogPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMSdcbn1cbmNvbnN0IG9iajIgPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMScsXG4gIEtlcHQ6ICd2YWx1ZTInLFxufVxuIn0=) like this:
+We can write [a rule in playground](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoibGFuZ3VhZ2U6IGphdmFzY3JpcHRcbnJ1bGU6XG4gIGtpbmQ6IHBhaXJcbiAgaGFzOlxuICAgIGZpZWxkOiBrZXlcbiAgICByZWdleDogUmVtb3ZlXG4jIHJlbW92ZSB0aGUga2V5LXZhbHVlIHBhaXIgYW5kIGl0cyBjb21tYVxuZml4OlxuICB0ZW1wbGF0ZTogJydcbiAgZXhwYW5kRW5kOiB7IHJlZ2V4OiAnLCcgfSAjIGV4cGFuZCB0aGUgcmFuZ2UgdG8gdGhlIGNvbW1hXG4iLCJzb3VyY2UiOiJjb25zdCBvYmogPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMSdcbn1cbmNvbnN0IG9iajIgPSB7XG4gIFJlbW92ZTogJ3ZhbHVlMScsXG4gIEtlcHQ6ICd2YWx1ZTInLFxufVxuIn0=) like this:
 
 ```yaml
 language: javascript
@@ -219,7 +219,7 @@ The idea is to remove the `pair` node and expand the fixing range to the comma. 
 
 The examples above illustrate the basic usage of rewriting code with ast-grep.
 
-ast-grep also provides more advanced features for rewriting code, such as using [transformations](/guide/rewrite/transform.html) and [rewriter rules](/guide/rewrite/rewriter.html).
+ast-grep also provides more advanced features for rewriting code, such as using [transformations](/guide/rewrite/transform) and [rewriter rules](/guide/rewrite/rewriter).
 
 These features allow you to change the matched code to desired code, like replace string using regex, slice the string, or convert the case of the string.
 

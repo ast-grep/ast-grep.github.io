@@ -5,10 +5,10 @@
       <div class="description">
         <h2>Search and Rewrite</h2>
         <p>
-        ast-grep is a code tool for <a href="/guide/quick-start.html">structural search and replace</a>.
+        ast-grep is a code tool for <a href="/guide/quick-start">structural search and replace</a>.
         It is like syntax-aware grep/sed!
-        You can write code <a href="/guide/pattern-syntax.html">patterns</a> to locate and modify code,
-        based on AST, in thousands of files, <a href="/guide/tooling-overview.html#interactive-mode">interactively</a>.
+        You can write code <a href="/guide/pattern-syntax">patterns</a> to locate and modify code,
+        based on AST, in thousands of files, <a href="/guide/tooling-overview#interactive-mode">interactively</a>.
         </p>
         <code class="vp-code">
           <span>ast-grep</span> -p '$A && $A()' -r '$A?.()'
@@ -21,8 +21,8 @@
       <div class="description">
         <h2>Scan as Linter</h2>
         <p>
-        ast-grep is a versatile and flexible tool for <a href="/guide/scan-project.html">linting</a> code with AST patterns.
-        You can easily add new customized rules with <a href="/guide/rule-config.html">intuitive syntax</a> and enjoy pretty error reporting out of box.
+        ast-grep is a versatile and flexible tool for <a href="/guide/scan-project">linting</a> code with AST patterns.
+        You can easily add new customized rules with <a href="/guide/rule-config">intuitive syntax</a> and enjoy pretty error reporting out of box.
         </p>
         <code class="vp-code">
           <span>ast-grep</span> scan
@@ -35,9 +35,9 @@
       <div class="description">
         <h2>Programmatic Usage</h2>
         <p>
-          ast-grep also provides <a href="/guide/api-usage/js-api.html">node-js binding</a> to access syntax trees programmatically.
-          You can use jQuery like <a href="/reference/api.html#napi">utility methods</a> to traverse syntax tree nodes.
-          Node API also has opt-in <a href="/blog/typed-napi.html">type safety</a>.
+          ast-grep also provides <a href="/guide/api-usage/js-api">node-js binding</a> to access syntax trees programmatically.
+          You can use jQuery like <a href="/reference/api#napi">utility methods</a> to traverse syntax tree nodes.
+          Node API also has opt-in <a href="/blog/typed-napi">type safety</a>.
         </p>
         <code class="vp-code">
           npm install <span>@ast-grep/napi</span>

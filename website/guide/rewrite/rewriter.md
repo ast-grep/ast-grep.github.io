@@ -83,7 +83,7 @@ rule:
       pattern: $VAL
 ```
 
-This rule can match the keyword arguments in the `dict` function call and extract key and value in the argument to meta-variables `$KEY` and `$VAL` respectively. [For example](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoic3RhcnRfdGFnIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgZmllbGQ6IG5hbWVcbiAgICAgIHBhdHRlcm46ICRLRVlcbiAgLSBoYXM6XG4gICAgICBmaWVsZDogdmFsdWVcbiAgICAgIHBhdHRlcm46ICRWQUwiLCJzb3VyY2UiOiJkID0gZGljdChhPTEsIGI9MikifQ==), `dict(a=1)` will extract `a` to `$KEY` and `1` to `$VAL`.
+This rule can match the keyword arguments in the `dict` function call and extract key and value in the argument to meta-variables `$KEY` and `$VAL` respectively. [For example](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoic3RhcnRfdGFnIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgZmllbGQ6IG5hbWVcbiAgICAgIHBhdHRlcm46ICRLRVlcbiAgLSBoYXM6XG4gICAgICBmaWVsZDogdmFsdWVcbiAgICAgIHBhdHRlcm46ICRWQUwiLCJzb3VyY2UiOiJkID0gZGljdChhPTEsIGI9MikifQ==), `dict(a=1)` will extract `a` to `$KEY` and `1` to `$VAL`.
 
 Then, we define the rule as a rewriter and add fix field to transform the keyword argument to a dictionary key-value pair.
 
@@ -157,7 +157,7 @@ transform:
 # combine and replace
 fix: '{ $LITERAL }'
 ```
-See the final result in [action](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGljdCgkJCRBUkdTKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiMgZGVmaW5lIHJld3JpdGVyc1xucmV3cml0ZXJzOlxuLSBpZDogZGljdC1yZXdyaXRlXG4gIHJ1bGU6XG4gICAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICAgIGFsbDpcbiAgICAtIGhhczpcbiAgICAgICAgZmllbGQ6IG5hbWVcbiAgICAgICAgcGF0dGVybjogJEtFWVxuICAgIC0gaGFzOlxuICAgICAgICBmaWVsZDogdmFsdWVcbiAgICAgICAgcGF0dGVybjogJFZBTFxuICBmaXg6IFwiJyRLRVknOiAkVkFMXCJcbiMgZmluZCB0aGUgdGFyZ2V0IG5vZGVcbnJ1bGU6XG4gIHBhdHRlcm46IGRpY3QoJCQkQVJHUylcbiMgYXBwbHkgcmV3cml0ZXJzIHRvIHN1YiBub2RlXG50cmFuc2Zvcm06XG4gIExJVEVSQUw6XG4gICAgcmV3cml0ZTpcbiAgICAgIHJld3JpdGVyczogW2RpY3QtcmV3cml0ZV1cbiAgICAgIHNvdXJjZTogJCQkQVJHU1xuIyBjb21iaW5lIGFuZCByZXBsYWNlXG5maXg6ICd7ICRMSVRFUkFMIH0nIiwic291cmNlIjoiZCA9IGRpY3QoYT0xLCBiPTIpIn0=).
+See the final result in [action](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGljdCgkJCRBUkdTKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiMgZGVmaW5lIHJld3JpdGVyc1xucmV3cml0ZXJzOlxuLSBpZDogZGljdC1yZXdyaXRlXG4gIHJ1bGU6XG4gICAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICAgIGFsbDpcbiAgICAtIGhhczpcbiAgICAgICAgZmllbGQ6IG5hbWVcbiAgICAgICAgcGF0dGVybjogJEtFWVxuICAgIC0gaGFzOlxuICAgICAgICBmaWVsZDogdmFsdWVcbiAgICAgICAgcGF0dGVybjogJFZBTFxuICBmaXg6IFwiJyRLRVknOiAkVkFMXCJcbiMgZmluZCB0aGUgdGFyZ2V0IG5vZGVcbnJ1bGU6XG4gIHBhdHRlcm46IGRpY3QoJCQkQVJHUylcbiMgYXBwbHkgcmV3cml0ZXJzIHRvIHN1YiBub2RlXG50cmFuc2Zvcm06XG4gIExJVEVSQUw6XG4gICAgcmV3cml0ZTpcbiAgICAgIHJld3JpdGVyczogW2RpY3QtcmV3cml0ZV1cbiAgICAgIHNvdXJjZTogJCQkQVJHU1xuIyBjb21iaW5lIGFuZCByZXBsYWNlXG5maXg6ICd7ICRMSVRFUkFMIH0nIiwic291cmNlIjoiZCA9IGRpY3QoYT0xLCBiPTIpIn0=).
 
 ## `rewriters` is Top Level
 
@@ -169,7 +169,7 @@ Every rewriter rule is like a regular ast-grep rule with `fix`. These are requir
 * `rule`: A rule object to match the sub node.
 * `fix`: A string to replace the matched sub node.
 
-Rewriter rule can also have other fields like `transform` and `constraints`. However, fields like `severity` and `message` are not available in rewriter rules. Generally, only [Finding](/reference/yaml.html#finding) and [Patching](/reference/yaml.html#patching) fields are allowed in rewriter rules.
+Rewriter rule can also have other fields like `transform` and `constraints`. However, fields like `severity` and `message` are not available in rewriter rules. Generally, only [Finding](/reference/yaml#finding) and [Patching](/reference/yaml#patching) fields are allowed in rewriter rules.
 
 ## Apply Multiple Rewriters
 
@@ -202,7 +202,7 @@ transform:
 
 In this case, the `rewrite-num` rewriter will be applied to the integer nodes in `$$$LIST`, and the `rewrite-str` rewriter will be applied to the string nodes in `$$$LIST`.
 
-The produced `NEW_VAR` will contain the transformed nodes from both rewriters. [For example](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGljdCgkJCRBUkdTKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJld3JpdGVyczpcbi0gaWQ6IHJld3JpdGUtaW50XG4gIHJ1bGU6IHtraW5kOiBpbnRlZ2VyfVxuICBmaXg6IGludGVnZXJcbi0gaWQ6IHJld3JpdGUtc3RyXG4gIHJ1bGU6IHtraW5kOiBzdHJpbmd9XG4gIGZpeDogc3RyaW5nXG5ydWxlOiB7cGF0dGVybjogJ1skJCRMSVNUXScgfVxudHJhbnNmb3JtOlxuICBORVdfVkFSOlxuICAgIHJld3JpdGU6XG4gICAgICByZXdyaXRlcnM6IFtyZXdyaXRlLWludCwgcmV3cml0ZS1zdHJdXG4gICAgICBzb3VyY2U6ICQkJExJU1RcbmZpeDogJE5FV19WQVIiLCJzb3VyY2UiOiJbMSwgJ2EnXSJ9), `[1, 'a']` will be transformed to `integer, string`.
+The produced `NEW_VAR` will contain the transformed nodes from both rewriters. [For example](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiZGljdCgkJCRBUkdTKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJld3JpdGVyczpcbi0gaWQ6IHJld3JpdGUtaW50XG4gIHJ1bGU6IHtraW5kOiBpbnRlZ2VyfVxuICBmaXg6IGludGVnZXJcbi0gaWQ6IHJld3JpdGUtc3RyXG4gIHJ1bGU6IHtraW5kOiBzdHJpbmd9XG4gIGZpeDogc3RyaW5nXG5ydWxlOiB7cGF0dGVybjogJ1skJCRMSVNUXScgfVxudHJhbnNmb3JtOlxuICBORVdfVkFSOlxuICAgIHJld3JpdGU6XG4gICAgICByZXdyaXRlcnM6IFtyZXdyaXRlLWludCwgcmV3cml0ZS1zdHJdXG4gICAgICBzb3VyY2U6ICQkJExJU1RcbmZpeDogJE5FV19WQVIiLCJzb3VyY2UiOiJbMSwgJ2EnXSJ9), `[1, 'a']` will be transformed to `integer, string`.
 
 :::tip Pro Tip
 Using multiple rewriters can make you dynamically apply different rewriting logic to different sub nodes, based on the matching rules.
@@ -227,4 +227,4 @@ This will transform `1, 2, 3` to `integer + integer + integer`.
 
 ## Philosophy behind Rewriters
 
-You can see a more detailed design philosophy, _Find and Patch_, behind rewriters in [this page](/advanced/find-n-patch.html).
+You can see a more detailed design philosophy, _Find and Patch_, behind rewriters in [this page](/advanced/find-n-patch).

@@ -13,7 +13,7 @@ function selectAll(e: FocusEvent) {
 <template>
   <div class="pattern-config">
     <label title="Strictness determines how the pattern is matched against the code.">
-      <a target="_blank" href="https://astgrep.com/advanced/match-algorithm.html">ⓘ</a>
+      <a target="_blank" href="https://astgrep.com/advanced/match-algorithm">ⓘ</a>
       Strictness:
       <select class="strictness-select" v-model="strictness">
         <option value="smart">Smart</option>
@@ -25,7 +25,7 @@ function selectAll(e: FocusEvent) {
       <IconDown/>
     </label>
     <label title="Selector is used to extract effective matcher from pattern.">
-      <a target="_blank" href="https://astgrep.com/advanced/faq.html#my-pattern-does-not-work-why">ⓘ</a>
+      <a target="_blank" href="https://astgrep.com/advanced/faq#my-pattern-does-not-work-why">ⓘ</a>
       Selector:
       <input @focus="selectAll" class="selector-input" type="text" v-model="selector"/>
     </label>

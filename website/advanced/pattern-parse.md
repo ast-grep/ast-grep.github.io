@@ -8,10 +8,10 @@ This article aims to provide you with a deep understanding of how ast-grep's pat
 
 Parsing a pattern in ast-grep involves these keys steps:
 
-1. Preprocess the pattern text, e.g, replacing `$` with [expando_char](/advanced/custom-language.html#register-language-in-sgconfig-yml).
+1. Preprocess the pattern text, e.g, replacing `$` with [expando_char](/advanced/custom-language#register-language-in-sgconfig-yml).
 2. Parse the preprocessed pattern text into AST.
-3. Extract effective AST nodes based on builtin heuristics or user provided [selector](/reference/rule.html#pattern).
-4. Detect AST with wildcard text and convert them into [meta variables](/guide/pattern-syntax.html#meta-variable).
+3. Extract effective AST nodes based on builtin heuristics or user provided [selector](/reference/rule#pattern).
+4. Detect AST with wildcard text and convert them into [meta variables](/guide/pattern-syntax#meta-variable).
 
 ![image](/image/parse-pattern.jpg)
 
@@ -42,7 +42,7 @@ The pattern below will not work because parsers see it as three consecutive iden
 $LEFT $OP $RIGHT
 ```
 
-You can instead use [atomic rule](/guide/rule-config/atomic-rule.html#kind) `kind: binary_expression` to [match binary expressions](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IGJpbmFyeV9leHByZXNzaW9uIiwic291cmNlIjoiYSArIGIgXHJcbmEgLSBiXHJcbmEgPT0gYiAifQ==).
+You can instead use [atomic rule](/guide/rule-config/atomic-rule#kind) `kind: binary_expression` to [match binary expressions](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IGJpbmFyeV9leHByZXNzaW9uIiwic291cmNlIjoiYSArIGIgXHJcbmEgLSBiXHJcbmEgPT0gYiAifQ==).
 
 Similarly, in JavaScript you may want to match [object accessors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#method_definitions) like `{ get foo() {}, set bar() { } }`.
 The pattern below will not work because meta-variable is not parsed as the keywords `get` and `set`.
@@ -51,7 +51,7 @@ The pattern below will not work because meta-variable is not parsed as the keywo
 obj = { $KIND foo() { } }
 ```
 
-Again [rule](/guide/rule-config.html) is more suitable for [this scenario](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IG1ldGhvZF9kZWZpbml0aW9uXG4gIHJlZ2V4OiAnXmdldHxzZXRcXHMnIiwic291cmNlIjoidmFyIGEgPSB7XHJcbiAgICBmb28oKSB7fVxyXG4gICAgZ2V0IGZvbygpIHt9LFxyXG4gICAgc2V0IGJhcigpIHt9LFxyXG59In0=).
+Again [rule](/guide/rule-config) is more suitable for [this scenario](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IG1ldGhvZF9kZWZpbml0aW9uXG4gIHJlZ2V4OiAnXmdldHxzZXRcXHMnIiwic291cmNlIjoidmFyIGEgPSB7XHJcbiAgICBmb28oKSB7fVxyXG4gICAgZ2V0IGZvbygpIHt9LFxyXG4gICAgc2V0IGJhcigpIHt9LFxyXG59In0=).
 
 ```yaml
 rule:
@@ -71,7 +71,7 @@ Consider the following JSON code snippet as pattern:
 
 While the intention here is clearly to match a key-value pair, tree-sitter does not treat it as valid JSON code because it is missing the enclosing `{}`. Consequently ast-grep will not be able to parse it.
 
-The solution here is to use [pattern object](/guide/rule-config/atomic-rule.html#pattern-object) to provide complete code snippet.
+The solution here is to use [pattern object](/guide/rule-config/atomic-rule#pattern-object) to provide complete code snippet.
 
 ```yaml
 pattern:
@@ -79,14 +79,14 @@ pattern:
   selector: pair
 ```
 
-You can use both ast-grep playground's [pattern tab](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoianNvbiIsInF1ZXJ5IjoieyBcImFcIjogMTIzIH0iLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJwYWlyIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogbWV0aG9kX2RlZmluaXRpb25cbiAgcmVnZXg6ICdeZ2V0fHNldFxccyciLCJzb3VyY2UiOiJ7IFwiYVwiOiAxMjMgfSAifQ==) or [rule tab](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6InsgXCJhXCI6IDEyMyB9IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoicGFpciIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IFxuICAgIGNvbnRleHQ6ICd7XCJhXCI6IDEyM30nXG4gICAgc2VsZWN0b3I6IHBhaXIiLCJzb3VyY2UiOiJ7IFwiYVwiOiAxMjMgfSAifQ==) to verify it.
+You can use both ast-grep playground's [pattern tab](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoianNvbiIsInF1ZXJ5IjoieyBcImFcIjogMTIzIH0iLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJwYWlyIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogbWV0aG9kX2RlZmluaXRpb25cbiAgcmVnZXg6ICdeZ2V0fHNldFxccyciLCJzb3VyY2UiOiJ7IFwiYVwiOiAxMjMgfSAifQ==) or [rule tab](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6Impzb24iLCJxdWVyeSI6InsgXCJhXCI6IDEyMyB9IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoicGFpciIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46IFxuICAgIGNvbnRleHQ6ICd7XCJhXCI6IDEyM30nXG4gICAgc2VsZWN0b3I6IHBhaXIiLCJzb3VyY2UiOiJ7IFwiYVwiOiAxMjMgfSAifQ==) to verify it.
 
 
 _**Incomplete pattern code sometimes works fine due to error-tolerance.**_
 
 For better _user experience_, ast-grep parse pattern code as lenient as possible. ast-grep parsers will try recovering parsing errors and ignoring missing language constructs.
 
-For example, the pattern `foo(bar)` in Java cannot be parsed as valid code. However, ast-grep recover the parsing error, ignoring missing semicolon and treat it as a method call. So the pattern [still works](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YSIsInF1ZXJ5IjoiZm9vKGJhcikiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1wiYVwiOiAxMjN9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoiY2xhc3MgQSB7XG4gICAgZm9vKCkge1xuICAgICAgICBmb28oYmFyKTtcbiAgICB9XG59In0=).
+For example, the pattern `foo(bar)` in Java cannot be parsed as valid code. However, ast-grep recover the parsing error, ignoring missing semicolon and treat it as a method call. So the pattern [still works](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YSIsInF1ZXJ5IjoiZm9vKGJhcikiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1wiYVwiOiAxMjN9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoiY2xhc3MgQSB7XG4gICAgZm9vKCkge1xuICAgICAgICBmb28oYmFyKTtcbiAgICB9XG59In0=).
 
 ### Ambiguous Pattern Code
 
@@ -100,7 +100,7 @@ a: 123
 
 It can be interpreted as an object key-value pair or a labeled statement.
 
-Without other hints, ast-grep will parse it as labeled statement by default. To match object key-value pair, we need to provide more context by [using pattern object](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoieyBhOiAxMjMgfSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6InBhaXIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1wiYVwiOiAxMjN9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoiYSA9IHsgYTogIDEyMyB9In0=).
+Without other hints, ast-grep will parse it as labeled statement by default. To match object key-value pair, we need to provide more context by [using pattern object](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoieyBhOiAxMjMgfSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6InBhaXIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAne1wiYVwiOiAxMjN9J1xuICAgIHNlbGVjdG9yOiBwYWlyIiwic291cmNlIjoiYSA9IHsgYTogIDEyMyB9In0=).
 
 ```yaml
 pattern:
@@ -110,7 +110,7 @@ pattern:
 
 Other examples of ambiguous patterns include:
 * Match function call in [Golang](/catalog/go/#match-function-call-in-golang) and [C](/catalog/c/#match-function-call)
-* Match [class field](/guide/rule-config/atomic-rule.html#pattern-object) in JavaScript
+* Match [class field](/guide/rule-config/atomic-rule#pattern-object) in JavaScript
 
 ### How ast-grep Handles Pattern Code?
 
@@ -119,7 +119,7 @@ ast-grep uses best efforts to parse pattern code for best user experience.
 Here are some strategies ast-grep uses to handle code snippet:
 
 * **Replace `$` with expando_char**:
-some languages use `$` as a special character, so ast-grep replace it with [expando_char](/advanced/custom-language.html#register-language-in-sgconfig-yml) in order to make the pattern code parsable.
+some languages use `$` as a special character, so ast-grep replace it with [expando_char](/advanced/custom-language#register-language-in-sgconfig-yml) in order to make the pattern code parsable.
 
 * **Ignore missing nodes**: ast-grep will ignore missing nodes in pattern like trailing semicolon in Java/C/C++.
 
@@ -159,7 +159,7 @@ program
     number              <--- effective node
 ```
 
-See [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiMTIzIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoiIn0=).
+See [Playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiMTIzIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiIiwic291cmNlIjoiIn0=).
 
 * `foo(bar)` will be extracted as `call_expression` because it is the innermost node that has more than one child.
 
@@ -172,23 +172,23 @@ program
         identifier
 ```
 
-See [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZm9vKGJhcikiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJjYWxsX2V4cHJlc3Npb24iLCJjb25maWciOiIiLCJzb3VyY2UiOiIifQ==).
+See [Playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZm9vKGJhcikiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiJjYWxsX2V4cHJlc3Npb24iLCJjb25maWciOiIiLCJzb3VyY2UiOiIifQ==).
 
 ### User Defined Selector
 
 Sometimes the effective node extracted by the builtin heuristic may not be what you want.
-You can explicitly specify the node to extract using the [selector](/reference/rule.html#pattern) field in the rule configuration.
+You can explicitly specify the node to extract using the [selector](/reference/rule#pattern) field in the rule configuration.
 
 For example, you may want to match the whole `console.log` statement in JavaScript code. The effective node extracted by the builtin heuristic is `call_expression`, but you want to match the whole `expression_statement`.
 
-Using `console.log($$$)` directly will not include the trailing `;` in the pattern, see [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJCQkKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic2lnbmF0dXJlIiwic2VsZWN0b3IiOiJjYWxsX2V4cHJlc3Npb24iLCJjb25maWciOiIiLCJzb3VyY2UiOiJjb25zb2xlLmxvZyhmb28pXG5jb25zb2xlLmxvZyhiYXIpOyJ9).
+Using `console.log($$$)` directly will not include the trailing `;` in the pattern, see [Playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiY29uc29sZS5sb2coJCQkKSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic2lnbmF0dXJlIiwic2VsZWN0b3IiOiJjYWxsX2V4cHJlc3Npb24iLCJjb25maWciOiIiLCJzb3VyY2UiOiJjb25zb2xlLmxvZyhmb28pXG5jb25zb2xlLmxvZyhiYXIpOyJ9).
 
 ```js
 console.log("Hello")
 console.log("World");
 ```
 
-You can use pattern object to explicitly specify the effective node to be `expression_statement`. [Playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCQkJCkiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNpZ25hdHVyZSIsInNlbGVjdG9yIjoiY2FsbF9leHByZXNzaW9uIiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBjb25zb2xlLmxvZygkJCQpXG4gICAgc2VsZWN0b3I6IGV4cHJlc3Npb25fc3RhdGVtZW50XG5maXg6ICcnIiwic291cmNlIjoiY29uc29sZS5sb2coZm9vKVxuY29uc29sZS5sb2coYmFyKTsifQ==)
+You can use pattern object to explicitly specify the effective node to be `expression_statement`. [Playground](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCQkJCkiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNpZ25hdHVyZSIsInNlbGVjdG9yIjoiY2FsbF9leHByZXNzaW9uIiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBjb25zb2xlLmxvZygkJCQpXG4gICAgc2VsZWN0b3I6IGV4cHJlc3Npb25fc3RhdGVtZW50XG5maXg6ICcnIiwic291cmNlIjoiY29uc29sZS5sb2coZm9vKVxuY29uc29sZS5sb2coYmFyKTsifQ==)
 
 ```yaml
 pattern:
@@ -236,12 +236,12 @@ If meta variable text is not the only text in the node or it spans multiple node
 * `$jq` does not work
   * meta variable does not accept lower case letters
 
-See all examples in [Playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzaWduYXR1cmUiLCJzZWxlY3RvciI6ImNhbGxfZXhwcmVzc2lvbiIsImNvbmZpZyI6IiIsInNvdXJjZSI6Ii8vIHdvcmtpbmdcbiRBXG4kQS4kQlxuJEEubWV0aG9kKCRCKVxuXG4vLyBub24gd29ya2luZ1xub2JqLm9uJEVWRU5UXG5cIkhlbGxvICRXT1JMRFwiXG5hICRPUCBiIn0=).
+See all examples in [Playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzaWduYXR1cmUiLCJzZWxlY3RvciI6ImNhbGxfZXhwcmVzc2lvbiIsImNvbmZpZyI6IiIsInNvdXJjZSI6Ii8vIHdvcmtpbmdcbiRBXG4kQS4kQlxuJEEubWV0aG9kKCRCKVxuXG4vLyBub24gd29ya2luZ1xub2JqLm9uJEVWRU5UXG5cIkhlbGxvICRXT1JMRFwiXG5hICRPUCBiIn0=).
 
 ### Matching Unnamed Nodes
 
-A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts.html#named-vs-unnamed) by default.
-To capture [unnamed nodes](/advanced/core-concepts.html#named-vs-unnamed), you can use double dollar sign `$$VAR`.
+A meta variable pattern `$META` will capture [named nodes](/advanced/core-concepts#named-vs-unnamed) by default.
+To capture [unnamed nodes](/advanced/core-concepts#named-vs-unnamed), you can use double dollar sign `$$VAR`.
 
 Let's go back to the binary expression example. It is impossible to match arbitrary binary expression in one single pattern. But we can combine `kind` and `has` to match the operator in  binary expressions.
 
@@ -256,7 +256,7 @@ rule:
     # pattern: $OP
 ```
 
-See the above rule to match all arithmetic expressions in [action](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCQkJCkiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNpZ25hdHVyZSIsInNlbGVjdG9yIjoiY2FsbF9leHByZXNzaW9uIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogYmluYXJ5X2V4cHJlc3Npb25cbiAgaGFzOlxuICAgIGZpZWxkOiBvcGVyYXRvclxuICAgIHBhdHRlcm46ICQkT1BcbiAgICAjIHBhdHRlcm46ICRPUCIsInNvdXJjZSI6IjEgKyAxIn0=).
+See the above rule to match all arithmetic expressions in [action](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImNvbnNvbGUubG9nKCQkJCkiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNpZ25hdHVyZSIsInNlbGVjdG9yIjoiY2FsbF9leHByZXNzaW9uIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDogYmluYXJ5X2V4cHJlc3Npb25cbiAgaGFzOlxuICAgIGZpZWxkOiBvcGVyYXRvclxuICAgIHBhdHRlcm46ICQkT1BcbiAgICAjIHBhdHRlcm46ICRPUCIsInNvdXJjZSI6IjEgKyAxIn0=).
 
 ### How Multi Meta Variables Match Code
 

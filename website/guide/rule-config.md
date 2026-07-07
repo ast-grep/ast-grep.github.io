@@ -30,9 +30,9 @@ Let's walk through the main fields in this configuration.
 
 * `id` is a unique short string for the rule.
 
-* `language` is the programming language that the rule is intended to check. It specifies what files will be checked against this rule, based on the file extensions. See the list of [supported languages](/reference/languages.html).
+* `language` is the programming language that the rule is intended to check. It specifies what files will be checked against this rule, based on the file extensions. See the list of [supported languages](/reference/languages).
 
-* `rule` is the most interesting part of ast-grep's configuration. It accepts a [rule object](/reference/rule.html) and defines how the rule behaves and what code will be matched. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
+* `rule` is the most interesting part of ast-grep's configuration. It accepts a [rule object](/reference/rule) and defines how the rule behaves and what code will be matched. You can learn how to write rule in the [detailed guide](/guide/rule-config/atomic-rule).
 
 ## Run the Rule
 
@@ -78,7 +78,7 @@ rule:
 
 ### Online Playground
 
-ast-grep provides an online [playground](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IlByb21pc2UuYWxsKCRBKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogbm8tYXdhaXQtaW4tcHJvbWlzZS1hbGxcbmxhbmd1YWdlOiBUeXBlU2NyaXB0XG5ydWxlOlxuICBwYXR0ZXJuOiBQcm9taXNlLmFsbCgkQSlcbiAgaGFzOlxuICAgIHBhdHRlcm46IGF3YWl0ICRfXG4gICAgc3RvcEJ5OiBlbmQiLCJzb3VyY2UiOiJQcm9taXNlLmFsbChbXG4gIGF3YWl0IFByb21pc2UucmVzb2x2ZSgxMjMpXG5dKSJ9) to test your rule.
+ast-grep provides an online [playground](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IlByb21pc2UuYWxsKCRBKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogbm8tYXdhaXQtaW4tcHJvbWlzZS1hbGxcbmxhbmd1YWdlOiBUeXBlU2NyaXB0XG5ydWxlOlxuICBwYXR0ZXJuOiBQcm9taXNlLmFsbCgkQSlcbiAgaGFzOlxuICAgIHBhdHRlcm46IGF3YWl0ICRfXG4gICAgc3RvcEJ5OiBlbmQiLCJzb3VyY2UiOiJQcm9taXNlLmFsbChbXG4gIGF3YWl0IFByb21pc2UucmVzb2x2ZSgxMjMpXG5dKSJ9) to test your rule.
 
 You can paste the rule configuration into the playground and see the matched code. The playground also has a share button that generates a link to share the rule with others.
 
@@ -136,7 +136,7 @@ interface Pattern {
   strictness?: Strictness
 }
 
-// See https://astgrep.com/advanced/match-algorithm.html
+// See https://astgrep.com/advanced/match-algorithm
 type Strictness =
   | 'cst'
   | 'smart'
@@ -159,7 +159,7 @@ A node must **satisfies all fields** in the rule object to be considered as a ma
 Unordered rule object means that certain rules may be applied before others, even if they appear later in the YAML.
 Whether a node matches or not may depend on the order of rule being applied, especially when using `has`/`inside` rules.
 
-If a rule object does not work, you can try using `all` rule to specify the order of rules. See [FAQ](/advanced/faq.html#why-is-rule-matching-order-sensitive) for more details.
+If a rule object does not work, you can try using `all` rule to specify the order of rules. See [FAQ](/advanced/faq#why-is-rule-matching-order-sensitive) for more details.
 :::
 
 ## Three Rule Categories

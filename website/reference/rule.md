@@ -43,7 +43,7 @@ pattern:
 
 ---
 
-You can also use `strictness` to change the matching algorithm of pattern. See the [deep dive doc](/advanced/match-algorithm.html) for more detailed explanation for strictness.
+You can also use `strictness` to change the matching algorithm of pattern. See the [deep dive doc](/advanced/match-algorithm) for more detailed explanation for strictness.
 
 **Example**:
 
@@ -74,7 +74,7 @@ ast-grep 0.39+ also supports limited ESQuery syntax for `kind`:
 kind: call_expression > identifier
 ```
 
-See [ESQuery style kind](/reference/rule/esquery.html) for supported selectors and their equivalent rule objects.
+See [ESQuery style kind](/reference/rule/esquery) for supported selectors and their equivalent rule objects.
 
 ### `regex`
 * type: `String`
@@ -291,7 +291,7 @@ any:
 `all` will match a node only if all sub rules must match.
 
 It will never match multiple nodes at once. Use it with other rules like `has`/`inside` will not alter this behavior.
-See the [composite rule guide](/guide/rule-config/composite-rule.html#all-and-any-refers-to-rules-not-nodes) for more details and examples.
+See the [composite rule guide](/guide/rule-config/composite-rule#all-and-any-refers-to-rules-not-nodes) for more details and examples.
 :::
 
 ### `not`

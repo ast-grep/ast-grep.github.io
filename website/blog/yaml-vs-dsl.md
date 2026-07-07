@@ -12,7 +12,7 @@ head:
       content: 'YAML vs DSL: comparison is subjective'
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/yaml-vs-dsl.html
+      content: https://astgrep.com/blog/yaml-vs-dsl
   - - meta
     - property: og:description
       content: YAML and DSL are two different approaches to configure rule in structural search. The question "which is better" is largely subjective.
@@ -21,7 +21,7 @@ head:
 
 # YAML vs DSL: comparison is subjective
 
-As stated in the [tool comparison](/advanced/tool-comparison.html#gritql), YAML configuration and DSL (Domain Specific Language) are two different approaches to configure rules in structural search. The question "which is better" is largely subjective.
+As stated in the [tool comparison](/advanced/tool-comparison#gritql), YAML configuration and DSL (Domain Specific Language) are two different approaches to configure rules in structural search. The question "which is better" is largely subjective.
 
 However, recently I have received some feedback that YAML is __objectively__ not as good as DSL, and I would like to clarify some points.
 
@@ -38,7 +38,7 @@ The original argument is quoted as follows:
 
 This is a misunderstanding of DSL and abstraction. To model Abstract Syntax Tree (AST) manipulation, you will have to have some form of concepts, such as pattern, metavariable, etc. This is true for both DSL and YAML. You cannot cut more concepts out of the tool even if you have [Occam's razor](https://en.wikipedia.org/wiki/Occam%27s_razor).
 
-ast-grep does support pattern. It is a concept to match a strcture that contains multiple AST nodes, which makes it easier to write a rule. You can use `kind`/`has`/`all` to simulate pattern matching. But it does not mean that ast-grep should cut the concept of pattern since it looks like a DSL. In fact, ast-grep's pattern is just one of its [atomic rules](/guide/rule-config/atomic-rule.html). It does not meant to be a special embedded DSL.
+ast-grep does support pattern. It is a concept to match a strcture that contains multiple AST nodes, which makes it easier to write a rule. You can use `kind`/`has`/`all` to simulate pattern matching. But it does not mean that ast-grep should cut the concept of pattern since it looks like a DSL. In fact, ast-grep's pattern is just one of its [atomic rules](/guide/rule-config/atomic-rule). It does not meant to be a special embedded DSL.
 
 ### Pattern has its limitations
 
@@ -215,7 +215,7 @@ Consider these points when you want to have objective comparison:
 
 * Documentation?
 * User Education? Howe you teach users to write your DSL?
-* Tooling support like [playground](/playground.html).
+* Tooling support like [playground](/playground).
 * Editor support beyong syntax highlighting. Say LSP.
 * Integration with API, how you bring type-safe DSL into your general purpose programming language, like [graphql](https://github.com/Quramy/ts-graphql-plugin) and [styled component](https://github.com/styled-components/typescript-styled-plugin).
 * Broader ecosystem support, such as GitHub language detection, AI support, etc.

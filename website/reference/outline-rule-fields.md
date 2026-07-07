@@ -6,7 +6,7 @@ outline: [2, 3]
 
 This page documents the fields in each outline extractor document. For the
 concepts behind items, members, rule loading, and custom rule files, see
-[Outline Extraction Rules](/reference/outline-rules.html).
+[Outline Extraction Rules](/reference/outline-rules).
 
 An outline rule file is a stream of YAML documents. Each document defines one
 extractor. Separate documents with `---`.
@@ -209,7 +209,7 @@ rule:
   pattern: function $NAME($$$PARAMS) { $$$BODY }
 ```
 
-See [rule object reference](/reference/rule.html) for supported rule syntax.
+See [rule object reference](/reference/rule) for supported rule syntax.
 
 ### `constraints`
 
@@ -248,4 +248,4 @@ transform:
 name: $NAME
 ```
 
-See [transformation reference](/reference/yaml/transformation.html).
+See [transformation reference](/reference/yaml/transformation).

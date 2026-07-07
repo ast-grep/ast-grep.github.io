@@ -22,7 +22,7 @@ We will see these four case status in ast-grep's test output.
 
 ## Test Setup
 
-Let's write a test for the rule we wrote in the [previous section](/guide/rule-config.html#rule-file).
+Let's write a test for the rule we wrote in the [previous section](/guide/rule-config#rule-file).
 
 To write a test, we first need to specify a rule test directory in `sgconfig.yml`. This directory will be used to store all test cases for rules.
 

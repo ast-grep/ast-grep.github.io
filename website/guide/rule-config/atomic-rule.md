@@ -22,7 +22,7 @@ By default, a _string_ `pattern` is parsed and matched as a whole.
 
 It is not always possible to select certain code with a simple string pattern. A pattern code can be invalid, incomplete or ambiguous for the parser since it lacks context.
 
-For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiJEZJRUxEID0gJElOSVQiLCJyZXdyaXRlIjoiRGVidWcuYXNzZXJ0IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjogXG4gICAgY29udGV4dDogJ3sgJE06ICgkJCRBKSA9PiAkTUFUQ0ggfSdcbiAgICBzZWxlY3RvcjogcGFpclxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==).
+For example, to select class field in JavaScript, writing `$FIELD = $INIT` will not work because it will be parsed as `assignment_expression`. See [playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiJEZJRUxEID0gJElOSVQiLCJyZXdyaXRlIjoiRGVidWcuYXNzZXJ0IiwiY29uZmlnIjoicnVsZTpcbiAgcGF0dGVybjogXG4gICAgY29udGV4dDogJ3sgJE06ICgkJCRBKSA9PiAkTUFUQ0ggfSdcbiAgICBzZWxlY3RvcjogcGFpclxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==).
 
 ----
 
@@ -47,7 +47,7 @@ ast-grep works like this:
 2. Then, it looks for the `field_definition` node, specified by `selector`, in the parsed tree.
 3. The selected `$FIELD = $INIT` is matched against code as the pattern.
 
-In this way, the pattern is parsed as `field_definition` instead of  `assignment_expression`. See [playground](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46XG4gICAgc2VsZWN0b3I6IGZpZWxkX2RlZmluaXRpb25cbiAgICBjb250ZXh0OiBjbGFzcyBBIHsgJEZJRUxEID0gJElOSVQgfVxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==) in action.
+In this way, the pattern is parsed as `field_definition` instead of  `assignment_expression`. See [playground](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIHBhdHRlcm46XG4gICAgc2VsZWN0b3I6IGZpZWxkX2RlZmluaXRpb25cbiAgICBjb250ZXh0OiBjbGFzcyBBIHsgJEZJRUxEID0gJElOSVQgfVxuIiwic291cmNlIjoiYSA9IDEyM1xuY2xhc3MgQSB7XG4gIGEgPSAxMjNcbn0ifQ==) in action.
 
 Other examples are [function call in Go](https://github.com/ast-grep/ast-grep/issues/646) and [function parameter in Rust](https://github.com/ast-grep/ast-grep/issues/648).
 
@@ -57,9 +57,9 @@ You can also use pattern object to control the matching strategy with `strictnes
 
 By default, ast-grep uses a smart strategy to match pattern against the AST node. All nodes in the pattern must be matched, but it will skip unnamed nodes in target code.
 
-For the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts.html) doc.
+For the definition of __*named*__ and __*unnamed*__ nodes, please refer to the [core concepts](/advanced/core-concepts) doc.
 
-For example, the following pattern `function $A() {}` will match both plain function and async function in JavaScript. See [playground](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJEZWJ1Zy5hc3NlcnQiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAneyAkTTogKCQkJEEpID0+ICRNQVRDSCB9J1xuICAgIHNlbGVjdG9yOiBwYWlyXG4iLCJzb3VyY2UiOiJmdW5jdGlvbiBhKCkge31cbmFzeW5jIGZ1bmN0aW9uIGEoKSB7fSJ9)
+For example, the following pattern `function $A() {}` will match both plain function and async function in JavaScript. See [playground](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiZnVuY3Rpb24gJEEoKSB7fSIsInJld3JpdGUiOiJEZWJ1Zy5hc3NlcnQiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBcbiAgICBjb250ZXh0OiAneyAkTTogKCQkJEEpID0+ICRNQVRDSCB9J1xuICAgIHNlbGVjdG9yOiBwYWlyXG4iLCJzb3VyY2UiOiJmdW5jdGlvbiBhKCkge31cbmFzeW5jIGZ1bmN0aW9uIGEoKSB7fSJ9)
 
 ```js
 // function $A() {}
@@ -81,7 +81,7 @@ However, this is not always the desired behavior. ast-grep provides `strictness`
 
 `strictness` is an advanced feature that you may not need in most cases.
 
-If you are interested in more examples and details, please refer to the [deep dive](/advanced/match-algorithm.html) doc on ast-grep's match algorithm.
+If you are interested in more examples and details, please refer to the [deep dive](/advanced/match-algorithm) doc on ast-grep's match algorithm.
 
 :::
 
@@ -104,7 +104,7 @@ rule:
   kind: field_definition
 ```
 
-It will match the following code successfully ([playground link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImEgPSAxMjMiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiIyBDb25maWd1cmUgUnVsZSBpbiBZQU1MXG5ydWxlOlxuICBraW5kOiBmaWVsZF9kZWZpbml0aW9uIiwic291cmNlIjoiY2xhc3MgVGVzdCB7XG4gIGEgPSAxMjNcbn0ifQ==)).
+It will match the following code successfully ([playground link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImEgPSAxMjMiLCJyZXdyaXRlIjoibG9nZ2VyLmxvZygkTUFUQ0gpIiwiY29uZmlnIjoiIyBDb25maWd1cmUgUnVsZSBpbiBZQU1MXG5ydWxlOlxuICBraW5kOiBmaWVsZF9kZWZpbml0aW9uIiwic291cmNlIjoiY2xhc3MgVGVzdCB7XG4gIGEgPSAxMjNcbn0ifQ==)).
 
 ```js
 class Test {
@@ -122,7 +122,7 @@ Here are some situations that you can effectively use `kind`:
 You may want to use `kind` to change how `pattern` is parsed. However, ast-grep rules are independent of each other.
 
 To change the parsing behavior of `pattern`, you should use pattern object with `context` and `selector` field.
-See [this FAQ](/advanced/faq.html#kind-and-pattern-rules-are-not-working-together-why).
+See [this FAQ](/advanced/faq#kind-and-pattern-rules-are-not-working-together-why).
 :::
 
 ### ESQuery style `kind`
@@ -133,9 +133,9 @@ From ast-grep v0.39.1, you can also use ESQuery style selector in `kind` to matc
 rule:
   kind: call_expression > identifier
 ```
-This will match the `identifier` node that is a child of `call_expression` node. Internally, it will be converted to a [relational rule](/guide/rule-config/relational-rule.html) `has`.
+This will match the `identifier` node that is a child of `call_expression` node. Internally, it will be converted to a [relational rule](/guide/rule-config/relational-rule) `has`.
 
-See [ESQuery style kind](/reference/rule/esquery.html) for supported selectors and their equivalent rule objects.
+See [ESQuery style kind](/reference/rule/esquery) for supported selectors and their equivalent rule objects.
 
 
 ## `regex`
@@ -196,7 +196,7 @@ nthChild:
 
 **Example**
 
-The [following rule](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IG51bWJlclxuICBudGhDaGlsZDogMiIsInNvdXJjZSI6IlsxLDIsM10ifQ==) will match the second number in the JavaScript array.
+The [following rule](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRGSUVMRCA9ICRJTklUIiwicmV3cml0ZSI6IkRlYnVnLmFzc2VydCIsImNvbmZpZyI6InJ1bGU6XG4gIGtpbmQ6IG51bWJlclxuICBudGhDaGlsZDogMiIsInNvdXJjZSI6IlsxLDIsM10ifQ==) will match the second number in the JavaScript array.
 
 ```yaml
 rule:
@@ -248,4 +248,4 @@ const foo = () => {
 The first step to compose a rule is to find the target. In this case, we can first use kind: `arrow_function` to find function node. Then we can use other rules to filter candidate nodes that does have return type.
 
 Another trick to write cleaner rule is to use sub-rules as fields.
-Please refer to [composite rule](/guide/rule-config/composite-rule.html#combine-different-rules-as-fields) for more details.
+Please refer to [composite rule](/guide/rule-config/composite-rule#combine-different-rules-as-fields) for more details.
