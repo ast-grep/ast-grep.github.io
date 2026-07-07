@@ -273,6 +273,6 @@ export default defineConfig({
     },
   },
   sitemap: {
-    hostname: 'https://ast-grep.github.io',
+    hostname: 'https://astgrep.com',
   },
 })
