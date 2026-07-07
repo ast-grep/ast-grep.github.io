@@ -8,7 +8,7 @@ In this post, we will introduce a different approach to code transformation call
 
 This scheme lets you rewrite complex code using a fully declarative [Domain-Specific Language](https://www.wikiwand.com/en/Domain-specific_language) (DSL). While the scheme is powerful, the underlying concept is simple: find certain nodes, rewrite them, and recursively repeat the rewriting.
 
-The idea of Find & Patch comes from developing [ast-grep](https://ast-grep.github.io/), a tool using AST to find and replace code patterns. We realized that this approach can be generalized and extended to support more complex and diverse code transformations!
+The idea of Find & Patch comes from developing [ast-grep](https://astgrep.com/), a tool using AST to find and replace code patterns. We realized that this approach can be generalized and extended to support more complex and diverse code transformations!
 
 At the end of this article, we will compare Find & Patch to functional programming on the tree of syntax nodes. You can apply filter nodes using `rule`, map them via `transform`, and compose them with `rewriters`.
 
@@ -17,7 +17,7 @@ This gives you a lot of flexibility and expressiveness to manipulate your code!
 ## What is ast-grep?
 
 [ast-grep](https://github.com/ast-grep/ast-grep) is a tool to search and rewrite code based on ASTs. It is like `grep` for code, but with the power of ASTs.
-More concretely, ast-grep can find code patterns using its [rule system](https://ast-grep.github.io/guide/rule-config/atomic-rule.html). It can also rewrite the matched code using [meta-variables](https://ast-grep.github.io/guide/pattern-syntax.html#meta-variable) based on the rule.
+More concretely, ast-grep can find code patterns using its [rule system](https://astgrep.com/guide/rule-config/atomic-rule.html). It can also rewrite the matched code using [meta-variables](https://astgrep.com/guide/pattern-syntax.html#meta-variable) based on the rule.
 
 ast-grep's rewriting can be seen as two steps: finding target nodes and patching them with new text.
 
@@ -43,11 +43,11 @@ The meta-variable `$MSG` captures the argument of `console.log` and is used in t
 ast-grep also has several other fields to fine-tune the process. The core fields in ast-grep's rule map naturally to the idea of **Find & Patch**.
 
 * **Find**
-  * Find a target node based on the [`rule`](https://ast-grep.github.io/reference/rule.html)
-  * Filter the matched nodes based on [`constraints`](https://ast-grep.github.io/reference/yaml.html#constraints)
+  * Find a target node based on the [`rule`](https://astgrep.com/reference/rule.html)
+  * Filter the matched nodes based on [`constraints`](https://astgrep.com/reference/yaml.html#constraints)
 * **Patch**
-  * Rewrite the matched meta-variable based on [`transform`](https://ast-grep.github.io/reference/yaml/transformation.html)
-  * Replace the matched node with [`fix`](https://ast-grep.github.io/reference/yaml/fix.html), which can use the transformed meta-variables.
+  * Rewrite the matched meta-variable based on [`transform`](https://astgrep.com/reference/yaml/transformation.html)
+  * Replace the matched node with [`fix`](https://astgrep.com/reference/yaml/fix.html), which can use the transformed meta-variables.
 
 ## Limitation of the Current Workflow
 
@@ -110,7 +110,7 @@ We can, taking the previous barrel import as an example, first match the import 
 
 ## Intriguing Example
 
-The idea above is implemented by a new [`rewriters`](https://ast-grep.github.io/reference/yaml/rewriter.html) field and a new [`rewrite`](https://ast-grep.github.io/reference/yaml/transformation.html#rewrite) transformation.
+The idea above is implemented by a new [`rewriters`](https://astgrep.com/reference/yaml/rewriter.html) field and a new [`rewrite`](https://astgrep.com/reference/yaml/transformation.html#rewrite) transformation.
 
 **Our first step is to write a rule to capture the import statement.**
 
@@ -163,7 +163,7 @@ Note the `joinBy` field in the transform section. It specifies how to join the r
 
 **Finally, we can use the transformed `IMPORTS` in the `fix` field to replace the original import statement.**
 
-The final rule will be like this. See the [online playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBpbXBvcnQgeyQkJElERU5UU30gZnJvbSAnLi9iYXJyZWwnXG5yZXdyaXRlcnM6XG4tIGlkOiByZXdyaXRlLWlkZW50aWZlclxuICBydWxlOlxuICAgIHBhdHRlcm46ICRJREVOVFxuICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgZml4OiBpbXBvcnQgJElERU5UIGZyb20gJy4vYmFycmVsLyRJREVOVCdcbnRyYW5zZm9ybTpcbiAgSU1QT1JUUzpcbiAgICByZXdyaXRlOlxuICAgICAgcmV3cml0ZXJzOiBbcmV3cml0ZS1pZGVudGlmZXJdXG4gICAgICBzb3VyY2U6ICQkJElERU5UU1xuICAgICAgam9pbkJ5OiBcIlxcblwiXG5maXg6ICRJTVBPUlRTIiwic291cmNlIjoiaW1wb3J0IHsgYSwgYiwgYyB9IGZyb20gJy4vYmFycmVsJzsifQ==).
+The final rule will be like this. See the [online playground](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJjb25maWciOiJydWxlOlxuICBwYXR0ZXJuOiBpbXBvcnQgeyQkJElERU5UU30gZnJvbSAnLi9iYXJyZWwnXG5yZXdyaXRlcnM6XG4tIGlkOiByZXdyaXRlLWlkZW50aWZlclxuICBydWxlOlxuICAgIHBhdHRlcm46ICRJREVOVFxuICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgZml4OiBpbXBvcnQgJElERU5UIGZyb20gJy4vYmFycmVsLyRJREVOVCdcbnRyYW5zZm9ybTpcbiAgSU1QT1JUUzpcbiAgICByZXdyaXRlOlxuICAgICAgcmV3cml0ZXJzOiBbcmV3cml0ZS1pZGVudGlmZXJdXG4gICAgICBzb3VyY2U6ICQkJElERU5UU1xuICAgICAgam9pbkJ5OiBcIlxcblwiXG5maXg6ICRJTVBPUlRTIiwic291cmNlIjoiaW1wb3J0IHsgYSwgYiwgYyB9IGZyb20gJy4vYmFycmVsJzsifQ==).
 
 ```yaml
 rule:

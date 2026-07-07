@@ -11,7 +11,7 @@ head:
       content: How to Debug ast-grep Rule Effectively
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/how-to-debug.html
+      content: https://astgrep.com/blog/how-to-debug.html
   - - meta
     - property: og:description
       content: Learn how to debug ast-grep rules effectively by simplifying code and rules step by step.
@@ -35,7 +35,7 @@ When your rule doesn't work, resist the urge to add more conditions or make the 
 
 Here's a step-by-step process to debug any ast-grep rule:
 
-1. **Set up a reproducible test case.** Use `ast-grep scan -r test.yml test.file` or the [online playground](https://ast-grep.github.io/playground.html) to quickly iterate on your code and rule.
+1. **Set up a reproducible test case.** Use `ast-grep scan -r test.yml test.file` or the [online playground](https://astgrep.com/playground.html) to quickly iterate on your code and rule.
 
 2. **Reduce the code to a minimal example.** Delete everything unrelated to the rule. If your rule should match a function call, remove all the surrounding code until you have just the essential lines.
 
@@ -50,7 +50,7 @@ Let's see this workflow in action with real examples.
 
 ## Example 1: The SQL Injection Detector
 
-Consider this rule designed to [detect potential SQL injection](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiPERpYWxvZyAkJCQ+IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IHNvbWVfc3FsaV9ydWxlXG5sYW5ndWFnZTogcHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWC5leGVjdXRlKCQkJClcbiAgaGFzOlxuICAgIGtpbmQ6IGFyZ3VtZW50X2xpc3RcbiAgICBoYXM6XG4gICAgICBudGhDaGlsZDogMVxuICAgICAgYW55OlxuICAgICAgICAtIGtpbmQ6IGlkZW50aWZpZXJcbiAgICAgICAgICBwYXR0ZXJuOiAkVkFSXG4gICAgICAgIC0gaGFzOlxuICAgICAgICAgICAgc3RvcEJ5OiBlbmRcbiAgICAgICAgICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgICAgICAgICAgIHBhdHRlcm46ICRWQVJcbiAgaW5zaWRlOlxuICAgIHN0b3BCeTogZW5kXG4gICAga2luZDogbW9kdWxlXG4gICAgaGFzOlxuICAgICAgc3RvcEJ5OiBlbmRcbiAgICAgIGtpbmQ6IGFzc2lnbm1lbnRcbiAgICAgIHBhdHRlcm46ICRWQVIgPSAkJCQiLCJzb3VyY2UiOiJkZWYgdGVzdF9zcWxfaW5qZWN0aW9uX2RldGVjdGlvbigpOlxuICAgIFwiXCJcIlRlc3QgY2FzZSBmb3Igc3RhdGljIGFuYWx5c2lzIHRvb2xzIGRldGVjdGluZyBTUUwgaW5qZWN0aW9uIHZ1bG5lcmFiaWxpdGllc1wiXCJcIlxuICAgICMgU2V0dXAgdGVzdCBkYXRhYmFzZVxuICAgIGRiID0gRGF0YWJhc2VNYW5hZ2VyKCc6bWVtb3J5OicpXG4gICAgdXNlcl9pbnB1dCA9IHJlcS5xdWVyeS5wYXJhbVxuICAgIHZ1bG5fcGFyYW0gPSBjb21wdXRlX2Jhc2VkX29uX2lucHV0KHVzZXJfaW5wdXQpXG4gICAgZGIuZXhlY3V0ZShmXCJEUk9QIFRBQkxFIElGIEVYSVNUUyB7dnVsbl9wYXJhbX1cIikgICMgVnVsbmVyYWJsZSwgYnV0IG5vdCBkZXRlY3RlZCEifQ==) vulnerabilities in Python:
+Consider this rule designed to [detect potential SQL injection](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiPERpYWxvZyAkJCQ+IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IHNvbWVfc3FsaV9ydWxlXG5sYW5ndWFnZTogcHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWC5leGVjdXRlKCQkJClcbiAgaGFzOlxuICAgIGtpbmQ6IGFyZ3VtZW50X2xpc3RcbiAgICBoYXM6XG4gICAgICBudGhDaGlsZDogMVxuICAgICAgYW55OlxuICAgICAgICAtIGtpbmQ6IGlkZW50aWZpZXJcbiAgICAgICAgICBwYXR0ZXJuOiAkVkFSXG4gICAgICAgIC0gaGFzOlxuICAgICAgICAgICAgc3RvcEJ5OiBlbmRcbiAgICAgICAgICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgICAgICAgICAgIHBhdHRlcm46ICRWQVJcbiAgaW5zaWRlOlxuICAgIHN0b3BCeTogZW5kXG4gICAga2luZDogbW9kdWxlXG4gICAgaGFzOlxuICAgICAgc3RvcEJ5OiBlbmRcbiAgICAgIGtpbmQ6IGFzc2lnbm1lbnRcbiAgICAgIHBhdHRlcm46ICRWQVIgPSAkJCQiLCJzb3VyY2UiOiJkZWYgdGVzdF9zcWxfaW5qZWN0aW9uX2RldGVjdGlvbigpOlxuICAgIFwiXCJcIlRlc3QgY2FzZSBmb3Igc3RhdGljIGFuYWx5c2lzIHRvb2xzIGRldGVjdGluZyBTUUwgaW5qZWN0aW9uIHZ1bG5lcmFiaWxpdGllc1wiXCJcIlxuICAgICMgU2V0dXAgdGVzdCBkYXRhYmFzZVxuICAgIGRiID0gRGF0YWJhc2VNYW5hZ2VyKCc6bWVtb3J5OicpXG4gICAgdXNlcl9pbnB1dCA9IHJlcS5xdWVyeS5wYXJhbVxuICAgIHZ1bG5fcGFyYW0gPSBjb21wdXRlX2Jhc2VkX29uX2lucHV0KHVzZXJfaW5wdXQpXG4gICAgZGIuZXhlY3V0ZShmXCJEUk9QIFRBQkxFIElGIEVYSVNUUyB7dnVsbl9wYXJhbX1cIikgICMgVnVsbmVyYWJsZSwgYnV0IG5vdCBkZXRlY3RlZCEifQ==) vulnerabilities in Python:
 
 ```yaml
 id: some_sqli_rule
@@ -154,7 +154,7 @@ Here's the problem: when we have both assignments in the code, the `inside` rule
 
 Since `something ≠ vuln_param`, the combined rule fails.
 
-This is due to [rule matching order sensitivity](https://ast-grep.github.io/advanced/faq.html#why-is-rule-matching-order-sensitive). In YAML, sibling keys are processed in an implementation-defined order. The `inside` rule executes first, binding `$VAR` to `something`, so the subsequent `has` rule cannot match.
+This is due to [rule matching order sensitivity](https://astgrep.com/advanced/faq.html#why-is-rule-matching-order-sensitive). In YAML, sibling keys are processed in an implementation-defined order. The `inside` rule executes first, binding `$VAR` to `something`, so the subsequent `has` rule cannot match.
 
 ### Step 4: The Fix
 
@@ -188,7 +188,7 @@ rule:
 
 By putting `has` before `inside` in the `all` array, we ensure `$VAR` is first bound to the identifier in the execute call, and then we verify that this same variable was assigned earlier.
 
-Inspecing the [playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiPERpYWxvZyAkJCQ+IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IHNvbWVfc3FsaV9ydWxlXG5sYW5ndWFnZTogcHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWC5leGVjdXRlKCQkJClcbiAgYWxsOlxuICAgIC0gaGFzOlxuICAgICAgICBraW5kOiBhcmd1bWVudF9saXN0XG4gICAgICAgIGhhczpcbiAgICAgICAgICBudGhDaGlsZDogMVxuICAgICAgICAgIGFueTpcbiAgICAgICAgICAgIC0ga2luZDogaWRlbnRpZmllclxuICAgICAgICAgICAgICBwYXR0ZXJuOiAkVkFSXG4gICAgICAgICAgICAtIGhhczpcbiAgICAgICAgICAgICAgICBzdG9wQnk6IGVuZFxuICAgICAgICAgICAgICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgICAgICAgICAgICAgICBwYXR0ZXJuOiAkVkFSXG4gICAgLSBpbnNpZGU6XG4gICAgICAgIHN0b3BCeTogZW5kXG4gICAgICAgIGtpbmQ6IG1vZHVsZVxuICAgICAgICBoYXM6XG4gICAgICAgICAgc3RvcEJ5OiBlbmRcbiAgICAgICAgICBraW5kOiBhc3NpZ25tZW50XG4gICAgICAgICAgcGF0dGVybjogJFZBUiA9ICQkJCIsInNvdXJjZSI6ImRlZiB0ZXN0X3NxbF9pbmplY3Rpb25fZGV0ZWN0aW9uKCk6XG4gICAgXCJcIlwiVGVzdCBjYXNlIGZvciBzdGF0aWMgYW5hbHlzaXMgdG9vbHMgZGV0ZWN0aW5nIFNRTCBpbmplY3Rpb24gdnVsbmVyYWJpbGl0aWVzXCJcIlwiXG4gICAgIyBTZXR1cCB0ZXN0IGRhdGFiYXNlXG4gICAgZGIgPSBEYXRhYmFzZU1hbmFnZXIoJzptZW1vcnk6JylcbiAgICB1c2VyX2lucHV0ID0gcmVxLnF1ZXJ5LnBhcmFtXG4gICAgdnVsbl9wYXJhbSA9IGNvbXB1dGVfYmFzZWRfb25faW5wdXQodXNlcl9pbnB1dClcbiAgICBkYi5leGVjdXRlKGZcIkRST1AgVEFCTEUgSUYgRVhJU1RTIHt2dWxuX3BhcmFtfVwiKSAgIyBWdWxuZXJhYmxlLCBidXQgbm90IGRldGVjdGVkISJ9) now shows the correct match!
+Inspecing the [playground](https://astgrep.com/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiPERpYWxvZyAkJCQ+IiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoiIiwiY29uZmlnIjoiaWQ6IHNvbWVfc3FsaV9ydWxlXG5sYW5ndWFnZTogcHl0aG9uXG5ydWxlOlxuICBwYXR0ZXJuOiAkWC5leGVjdXRlKCQkJClcbiAgYWxsOlxuICAgIC0gaGFzOlxuICAgICAgICBraW5kOiBhcmd1bWVudF9saXN0XG4gICAgICAgIGhhczpcbiAgICAgICAgICBudGhDaGlsZDogMVxuICAgICAgICAgIGFueTpcbiAgICAgICAgICAgIC0ga2luZDogaWRlbnRpZmllclxuICAgICAgICAgICAgICBwYXR0ZXJuOiAkVkFSXG4gICAgICAgICAgICAtIGhhczpcbiAgICAgICAgICAgICAgICBzdG9wQnk6IGVuZFxuICAgICAgICAgICAgICAgIGtpbmQ6IGlkZW50aWZpZXJcbiAgICAgICAgICAgICAgICBwYXR0ZXJuOiAkVkFSXG4gICAgLSBpbnNpZGU6XG4gICAgICAgIHN0b3BCeTogZW5kXG4gICAgICAgIGtpbmQ6IG1vZHVsZVxuICAgICAgICBoYXM6XG4gICAgICAgICAgc3RvcEJ5OiBlbmRcbiAgICAgICAgICBraW5kOiBhc3NpZ25tZW50XG4gICAgICAgICAgcGF0dGVybjogJFZBUiA9ICQkJCIsInNvdXJjZSI6ImRlZiB0ZXN0X3NxbF9pbmplY3Rpb25fZGV0ZWN0aW9uKCk6XG4gICAgXCJcIlwiVGVzdCBjYXNlIGZvciBzdGF0aWMgYW5hbHlzaXMgdG9vbHMgZGV0ZWN0aW5nIFNRTCBpbmplY3Rpb24gdnVsbmVyYWJpbGl0aWVzXCJcIlwiXG4gICAgIyBTZXR1cCB0ZXN0IGRhdGFiYXNlXG4gICAgZGIgPSBEYXRhYmFzZU1hbmFnZXIoJzptZW1vcnk6JylcbiAgICB1c2VyX2lucHV0ID0gcmVxLnF1ZXJ5LnBhcmFtXG4gICAgdnVsbl9wYXJhbSA9IGNvbXB1dGVfYmFzZWRfb25faW5wdXQodXNlcl9pbnB1dClcbiAgICBkYi5leGVjdXRlKGZcIkRST1AgVEFCTEUgSUYgRVhJU1RTIHt2dWxuX3BhcmFtfVwiKSAgIyBWdWxuZXJhYmxlLCBidXQgbm90IGRldGVjdGVkISJ9) now shows the correct match!
 
 
 ## Example 2: The Missing Case Statement
@@ -307,6 +307,6 @@ When a rule unexpectedly fails to match:
 
 4. **Iterate systematically.** Don't guess. Remove one thing at a time, test, observe, repeat.
 
-5. **Use the right tools.** The [online playground](https://ast-grep.github.io/playground.html) provides instant feedback and AST visualization. Use it liberally.
+5. **Use the right tools.** The [online playground](https://astgrep.com/playground.html) provides instant feedback and AST visualization. Use it liberally.
 
 Happy debugging!

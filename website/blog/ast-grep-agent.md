@@ -11,7 +11,7 @@ head:
       content: ast-grep's Journey to AI Generated Rules
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/ast-grep-agent.html
+      content: https://astgrep.com/blog/ast-grep-agent.html
   - - meta
     - property: og:description
       content: Advancements in AI have made it possible to generate ast-grep rules with a well-written prompt.

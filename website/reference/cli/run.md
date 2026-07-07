@@ -34,7 +34,7 @@ String to replace the matched AST node
 
 ### `-l, --lang <LANG>`
 
-The language of the pattern. For full language list, visit https://ast-grep.github.io/reference/languages.html
+The language of the pattern. For full language list, visit https://astgrep.com/reference/languages.html
 
 ### `--debug-query[=<format>]`
 
@@ -50,7 +50,7 @@ Possible values:
 
 AST kind to extract sub-part of pattern to match.
 
-selector defines the sub-syntax node kind that is the actual matcher of the pattern. See https://ast-grep.github.io/guide/rule-config/atomic-rule.html#pattern-object.
+selector defines the sub-syntax node kind that is the actual matcher of the pattern. See https://astgrep.com/guide/rule-config/atomic-rule.html#pattern-object.
 
 ### `-k, --kind <KIND>`
 

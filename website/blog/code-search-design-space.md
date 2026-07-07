@@ -11,13 +11,13 @@ head:
       content: Design Space for Code Search Query
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/code-search-design-space.html
+      content: https://astgrep.com/blog/code-search-design-space.html
   - - meta
     - property: og:description
       content: A review of the design space for code search tools.
   - - meta
     - property: og:image
-      content: https://ast-grep.github.io/image/blog/query-design.png
+      content: https://astgrep.com/image/blog/query-design.png
 ---
 
 # Design Space for Code Search Query
@@ -251,7 +251,7 @@ Configuration files are more expressive than patterns and still relatively easy 
 
 Program-based eDSLs provide direct access to the AST through AST node objects.
 
-Examples of programmatic APIs include [JSCodeshift](https://jscodeshift.com/build/api-reference/), the [Code Property Graph](https://docs.joern.io/code-property-graph/) from [Joern](https://joern.io/), and ast-grep's [NAPI](https://ast-grep.github.io/guide/api-usage.html).
+Examples of programmatic APIs include [JSCodeshift](https://jscodeshift.com/build/api-reference/), the [Code Property Graph](https://docs.joern.io/code-property-graph/) from [Joern](https://joern.io/), and ast-grep's [NAPI](https://astgrep.com/guide/api-usage.html).
 
 :::code-group
 ```typescript [@ast-grep/napi]

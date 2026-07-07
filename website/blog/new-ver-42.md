@@ -12,7 +12,7 @@ head:
       content: ast-grep 0.42 - The Answer to Code Searching
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/new-ver-42.html
+      content: https://astgrep.com/blog/new-ver-42.html
   - - meta
     - property: og:description
       content: 'ast-grep 0.42: parameterized utilities, ESQuery-style selectors, and improved LSP diagnostics for injected languages.'

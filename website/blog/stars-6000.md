@@ -12,7 +12,7 @@ head:
       content: ast-grep got 6000 stars!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/stars-6000.html
+      content: https://astgrep.com/blog/stars-6000.html
   - - meta
     - property: og:description
       content: ast-grep has recently reached 6000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -20,7 +20,7 @@ head:
 
 # ast-grep got 6000 stars!
 
-We are thrilled to announce that [ast-grep](https://ast-grep.github.io/), the powerful code search tool, has reached a stellar milestone of 6000 stars on GitHub! This is a testament to the community's trust in our tool and the continuous improvements we've made. Let's dive into the latest features and enhancements that make ast-grep the go-to tool for developers worldwide.
+We are thrilled to announce that [ast-grep](https://astgrep.com/), the powerful code search tool, has reached a stellar milestone of 6000 stars on GitHub! This is a testament to the community's trust in our tool and the continuous improvements we've made. Let's dive into the latest features and enhancements that make ast-grep the go-to tool for developers worldwide.
 
 ![ast-grep 6k stars](/image/blog/stars-6k.png)
 

@@ -11,7 +11,7 @@ head:
       content: 'Announcing the Book: Mastering ast-grep'
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/optimize-ast-grep.html
+      content: https://astgrep.com/blog/optimize-ast-grep.html
   - - meta
     - property: og:description
       content: Mastering ast-grep, a comprehensive guide designed to bridge the gap between basic tool reference and advanced structural search mastery.

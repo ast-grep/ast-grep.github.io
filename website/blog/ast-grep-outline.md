@@ -11,7 +11,7 @@ head:
       content: Introducing ast-grep Outline
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/ast-grep-outline.html
+      content: https://astgrep.com/blog/ast-grep-outline.html
   - - meta
     - property: og:description
       content: ast-grep Outline gives humans and coding agents a fast, syntax-aware table of contents for source code without building an index.

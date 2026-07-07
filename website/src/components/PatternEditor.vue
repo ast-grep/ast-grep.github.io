@@ -71,7 +71,7 @@ function changeFocusNode(e: any) {
           :language="language"
           :highlights="highlights"/>
         <p class="pattern-separator">
-          <a target="_blank" href="https://ast-grep.github.io/guide/rewrite-code.html">ⓘ</a>
+          <a target="_blank" href="https://astgrep.com/guide/rewrite-code.html">ⓘ</a>
           Rewrite
         </p>
         <Monaco

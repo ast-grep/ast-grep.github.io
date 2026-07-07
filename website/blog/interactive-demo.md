@@ -11,7 +11,7 @@ head:
       content: Interactive Code Fixes with Multiple Options!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/interactive-demo.html
+      content: https://astgrep.com/blog/interactive-demo.html
   - - meta
     - property: og:description
       content: Today, we're thrilled to showcase a game-changing feature, multi-option interactive code fixes!

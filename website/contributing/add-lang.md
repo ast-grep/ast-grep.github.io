@@ -26,7 +26,7 @@ If your language satisfies the requirements above, congratulations! Let's see ho
 
 ## Add to ast-grep Core
 
-ast-grep has several distinct use cases: [CLI tool](https://crates.io/crates/ast-grep), [n-api lib](https://www.npmjs.com/package/@ast-grep/napi) and [web playground](https://ast-grep.github.io/playground.html).
+ast-grep has several distinct use cases: [CLI tool](https://crates.io/crates/ast-grep), [n-api lib](https://www.npmjs.com/package/@ast-grep/napi) and [web playground](https://astgrep.com/playground.html).
 
 Adding a language includes two steps. The first step is to add the language to ast-grep core.
 The core repository is multi-crate workspace hosted at [GitHub](https://github.com/ast-grep/ast-grep). The relevant crate is [language](https://github.com/ast-grep/ast-grep/tree/main/crates/language), which defines the supported languages and their tree-sitter grammars.

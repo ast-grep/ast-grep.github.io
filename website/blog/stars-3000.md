@@ -12,7 +12,7 @@ head:
       content: ast-grep got 3000 stars!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/stars-3000.html
+      content: https://astgrep.com/blog/stars-3000.html
   - - meta
     - property: og:description
       content: ast-grep has recently reached 3000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -26,7 +26,7 @@ I am very excited and thankful to share with you that ast-grep, a code search an
 
 ## What is ast-grep?
 
-[ast-grep](https://ast-grep.github.io) is a tool that allows you to search and transform code using abstract syntax trees (ASTs). ASTs are tree-like representations of the structure and meaning of source code. By using ASTs, ast-grep can perform more accurate and powerful operations than regular expressions or plain text search.
+[ast-grep](https://astgrep.com) is a tool that allows you to search and transform code using abstract syntax trees (ASTs). ASTs are tree-like representations of the structure and meaning of source code. By using ASTs, ast-grep can perform more accurate and powerful operations than regular expressions or plain text search.
 
 ast-grep supports multiple programming languages, such as JavaScript, [TypeScript](/catalog/typescript/), Python, [Ruby](/catalog/ruby/), Java, C#, [Rust](/catalog/rust/), and more. You can write [patterns](/guide/pattern-syntax.html) and rules in [YAML](/guide/rule-config/atomic-rule.html) format to specify what you want to match and how you want to transform it. You can also use the command-line interface (CLI) or the web-based [playground](/playground.html) to run ast-grep on your code.
 
@@ -67,7 +67,7 @@ ast-grep has many plans and goals for the future to make it more useful and user
 
 ## How to get involved?
 
-If you are interested in ast-grep and want to try it out, you can install it from [npm](https://www.npmjs.com/package/@ast-grep/cli) or [GitHub](https://github.com/ast-grep/ast-grep). You can also visit the [website](https://ast-grep.github.io/) to learn more about the features, documentation, and examples of ast-grep.
+If you are interested in ast-grep and want to try it out, you can install it from [npm](https://www.npmjs.com/package/@ast-grep/cli) or [GitHub](https://github.com/ast-grep/ast-grep). You can also visit the [website](https://astgrep.com/) to learn more about the features, documentation, and examples of ast-grep.
 
 If you want to contribute to the code or documentation of ast-grep, we have prepared a thorough [contribution guide](/contributing/how-to.html) for you! You can also report issues, suggest features, or ask questions on the issue tracker.
 

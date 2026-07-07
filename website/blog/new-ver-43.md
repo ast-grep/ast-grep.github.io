@@ -12,7 +12,7 @@ head:
       content: ast-grep 0.43 - Search Code and Markdown with Structure
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/new-ver-43.html
+      content: https://astgrep.com/blog/new-ver-43.html
   - - meta
     - property: og:description
       content: 'ast-grep 0.43 adds Markdown support and brings ESQuery-style selectors to the run command for fast structural queries from the CLI.'

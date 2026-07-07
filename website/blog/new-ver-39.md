@@ -12,7 +12,7 @@ head:
       content: ast-grep new release 0.39
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/new-ver-39.html
+      content: https://astgrep.com/blog/new-ver-39.html
   - - meta
     - property: og:description
       content: 'ast-grep 0.39 includes new languages support, better file config and Esquery style kind.'

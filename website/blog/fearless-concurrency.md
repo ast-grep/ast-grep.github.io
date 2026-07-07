@@ -11,18 +11,18 @@ head:
       content: An Example of Rust's Fearless Concurrency
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/fearless-concurrency.html
+      content: https://astgrep.com/blog/fearless-concurrency.html
   - - meta
     - property: og:description
       content: ast-grep shows how Rust's fearless concurrency works in practice. Learn how to design concurrent systems in Rust and the trade-offs involved.
   - - meta
     - property: og:image
-      content: https://ast-grep.github.io/image/blog/concurrent.jpg
+      content: https://astgrep.com/image/blog/concurrent.jpg
 ---
 
 # An Example of Rust's Fearless Concurrency
 
-Rust is famous for its "fearless concurrency." It's a bold claim, but what does it actually *mean*? How does Rust let you write concurrent code without constantly battling race conditions? [ast-grep](https://ast-grep.github.io/)'s [recent refactor](https://github.com/ast-grep/ast-grep/discussions/1710) is a great example of Rust's concurrency model in action.
+Rust is famous for its "fearless concurrency." It's a bold claim, but what does it actually *mean*? How does Rust let you write concurrent code without constantly battling race conditions? [ast-grep](https://astgrep.com/)'s [recent refactor](https://github.com/ast-grep/ast-grep/discussions/1710) is a great example of Rust's concurrency model in action.
 
 ## Old Architecture of ast-grep's Printer
 

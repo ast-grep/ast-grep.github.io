@@ -12,7 +12,7 @@ head:
       content: 'YAML vs DSL: comparison is subjective'
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/yaml-vs-dsl.html
+      content: https://astgrep.com/blog/yaml-vs-dsl.html
   - - meta
     - property: og:description
       content: YAML and DSL are two different approaches to configure rule in structural search. The question "which is better" is largely subjective.
@@ -220,4 +220,4 @@ Consider these points when you want to have objective comparison:
 * Integration with API, how you bring type-safe DSL into your general purpose programming language, like [graphql](https://github.com/Quramy/ts-graphql-plugin) and [styled component](https://github.com/styled-components/typescript-styled-plugin).
 * Broader ecosystem support, such as GitHub language detection, AI support, etc.
 
-If you are going to use native tooling in your JavaScript/TypeScript project, I recommend you to use [oxlint](https://oxc.rs/) and, if you need simple custom rules, [ast-grep](https://ast-grep.github.io/).
+If you are going to use native tooling in your JavaScript/TypeScript project, I recommend you to use [oxlint](https://oxc.rs/) and, if you need simple custom rules, [ast-grep](https://astgrep.com/).

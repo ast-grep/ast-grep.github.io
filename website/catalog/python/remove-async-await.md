@@ -10,7 +10,7 @@ In this example, we want to remove the `async` keyword from a function definitio
 
 By default, ast-grep will not apply overlapping replacements. This means `await` keywords will not be modified because they are inside the async function body.
 
-However, we can use the [`rewriter`](https://ast-grep.github.io/reference/yaml/rewriter.html) to apply changes inside the matched function body.
+However, we can use the [`rewriter`](https://astgrep.com/reference/yaml/rewriter.html) to apply changes inside the matched function body.
 
 ### YAML
 

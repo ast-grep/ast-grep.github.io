@@ -72,7 +72,7 @@ let showFullTree = shallowRef(false)
       <label class="tree-toggle-label" title="Show unnamed nodes in CST">
         <input class="tree-toggle" type="checkbox" v-model="showFullTree">
         Show Full Tree
-        <a target="_blank" href="https://ast-grep.github.io/advanced/core-concepts.html">ⓘ</a>
+        <a target="_blank" href="https://astgrep.com/advanced/core-concepts.html">ⓘ</a>
       </label>
     </template>
     <template #panel>
