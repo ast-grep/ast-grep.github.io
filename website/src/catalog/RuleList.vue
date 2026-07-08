@@ -59,10 +59,10 @@ const ruleMetaData = computed(() => getRuleMetaData(props.filter, sortBy.value))
           <ol>
             <li>
               Read the
-              <a href="/reference/rule.html" target="_blank">rule</a> and
-              <a href="/reference/yaml.html" target="_blank">YAML</a> doc.</li>
+              <a href="/reference/rule" target="_blank">rule</a> and
+              <a href="/reference/yaml" target="_blank">YAML</a> doc.</li>
             <li>Write your own rule in the
-              <a href="/playground.html" target="_blank">
+              <a href="/playground" target="_blank">
                 playground
               </a>.
             </li>

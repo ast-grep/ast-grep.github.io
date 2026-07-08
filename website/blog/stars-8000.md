@@ -12,7 +12,7 @@ head:
       content: ast-grep Rockets to 8000 Stars!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/stars-8000.html
+      content: https://astgrep.com/blog/stars-8000
   - - meta
     - property: og:description
       content: ast-grep has recently reached 6000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -37,46 +37,46 @@ ast-grep is rapidly becoming a truly polyglot code analysis powerhouse!  We've s
 
 **Dynamic Languages in APIs:** Python and JavaScript API users, rejoice!  You can now tap into dynamic language support within [PyO3](https://github.com/ast-grep/ast-grep/blob/main/crates/pyo3/tests/test_register_lang.py) and [napi](https://github.com/ast-grep/ast-grep/blob/main/crates/napi/__test__/custom.spec.ts). This unlocks exciting possibilities for extending ast-grep's reach and integrating it into even more diverse and dynamic environments.
 
-**Embedded Language in HTML:** We've refined support for registering [embedded languages](/advanced/language-injection.html) in the CLI, giving you even more flexibility when dealing with complex code structures like searching JavaScript/CSS in HTML.
+**Embedded Language in HTML:** We've refined support for registering [embedded languages](/advanced/language-injection) in the CLI, giving you even more flexibility when dealing with complex code structures like searching JavaScript/CSS in HTML.
 
 ## More Powerful Rules & Patterns
 
 We've been laser-focused on making the ast-grep's rule system an even more powerful and precise tool for code manipulation:
 
-**CSS inspired `nthChild` Matcher:** [nthChild](/guide/rule-config/atomic-rule.html#nthchild) is a rule to find nodes based on their positions in the parent node's children list. It is heavily inspired by CSS's nth-child pseudo-class and helps you target specific nodes in a more granular way.
+**CSS inspired `nthChild` Matcher:** [nthChild](/guide/rule-config/atomic-rule#nthchild) is a rule to find nodes based on their positions in the parent node's children list. It is heavily inspired by CSS's nth-child pseudo-class and helps you target specific nodes in a more granular way.
 
-**Pinpoint Precision with `range` Matchers:**  Need to refine your rules to target a very specific section of code, even down to the character? ast-grep now supports [range](/guide/rule-config/atomic-rule.html#range) matchers! You can define rules that activate only within a particular line *and* character column range. This is useful for interacting with external tools like compilers.
+**Pinpoint Precision with `range` Matchers:**  Need to refine your rules to target a very specific section of code, even down to the character? ast-grep now supports [range](/guide/rule-config/atomic-rule#range) matchers! You can define rules that activate only within a particular line *and* character column range. This is useful for interacting with external tools like compilers.
 
-**Pattern with `--selector` and `--strictness` in `sg run`:** Need to fine tune your search pattern? The `--selector` and `--strictness` flag in [`sg run`](/reference/cli/run.html#run-specific-options) gives you fine-grained control over pattern matching.
+**Pattern with `--selector` and `--strictness` in `sg run`:** Need to fine tune your search pattern? The `--selector` and `--strictness` flag in [`sg run`](/reference/cli/run#run-specific-options) gives you fine-grained control over pattern matching.
 
-**Simplified Suppression with `ast-grep-ignore`:**  [Suppressing rules](/guide/project/severity.html) just got simpler! You can now use the `ast-grep-ignore` comment directly on the same line as the code you want to exclude.  Less clutter, more control.
+**Simplified Suppression with `ast-grep-ignore`:**  [Suppressing rules](/guide/project/severity) just got simpler! You can now use the `ast-grep-ignore` comment directly on the same line as the code you want to exclude.  Less clutter, more control.
 
 **More Robust Partial Pattern Snippet** The `ERROR` node in patterns can now match *anything*. This makes partial pattern snippet even more robust.
 
 ## Sharpening the Code Search CLI
 
-**Glob Path Matching & Symbolic Link Traversal Unleashed:**  CLI users can now leverage the power of [glob patterns](/reference/cli/run.html#globs-globs) to specify file paths and effortlessly traverse [symbolic links](/reference/cli/run.html#follow).  Navigating and analyzing your projects is now more intuitive than ever.
+**Glob Path Matching & Symbolic Link Traversal Unleashed:**  CLI users can now leverage the power of [glob patterns](/reference/cli/run#globs-globs) to specify file paths and effortlessly traverse [symbolic links](/reference/cli/run#follow).  Navigating and analyzing your projects is now more intuitive than ever.
 
-**Rule Entity Inspection & Overwrite: Deeper Insights, More Control:** Gain insights by `--inspect` CLI flag with [semi-structured tracing output](/reference/cli/scan.html#inspect-granularity). This feature empowers advanced users with deeper debugging and customization capabilities.
+**Rule Entity Inspection & Overwrite: Deeper Insights, More Control:** Gain insights by `--inspect` CLI flag with [semi-structured tracing output](/reference/cli/scan#inspect-granularity). This feature empowers advanced users with deeper debugging and customization capabilities.
 
 **Contextual Code Scanning with Before/After Flags:** Enhance your CLI scan results with surrounding code context using the new `context`, `before`, and `after` flags. Understand the bigger picture around your matches at a glance.
 
 **Know Your Impact: Fixed Rules Count:**  The CLI now prints a count of fixed rules, giving you immediate feedback on the scope of your code modifications.
 
-**Debugging Supercharged:** We've significantly improved debugging with prettified pattern output, Debug AST/CST visualization, and colorized output via the [`--debug-query`](/reference/cli/run.html#debug-query-format) flag.  Troubleshooting and refining your rules is now a much smoother and more visual experience.
+**Debugging Supercharged:** We've significantly improved debugging with prettified pattern output, Debug AST/CST visualization, and colorized output via the [`--debug-query`](/reference/cli/run#debug-query-format) flag.  Troubleshooting and refining your rules is now a much smoother and more visual experience.
 
 
 ## Enhanced Tooling and API Experience
 
 We're committed to providing a seamless developer experience across all of ast-grep's interfaces:
 
-**Typed `SgNode` and `SgRoot` in NAPI:**  For our NAPI users, we've introduced [typed `SgNode` and `SgRoot`](/blog/typed-napi.html), significantly improving type safety and code clarity when working with the API. This enhancement is [initiated](https://github.com/ast-grep/ast-grep/pull/1661) by [mohebifar](https://github.com/mohebifar) from [Codemod](https://codemod.com/).
+**Typed `SgNode` and `SgRoot` in NAPI:**  For our NAPI users, we've introduced [typed `SgNode` and `SgRoot`](/blog/typed-napi), significantly improving type safety and code clarity when working with the API. This enhancement is [initiated](https://github.com/ast-grep/ast-grep/pull/1661) by [mohebifar](https://github.com/mohebifar) from [Codemod](https://codemod.com/).
 
 **Rule Config in `SgNode` Match Methods:**  Flexibility at your fingertips! Rule configurations can now be [passed directly](https://github.com/ast-grep/ast-grep/pull/1730) to `SgNode` match methods like `matches`, `has`, `inside`, `follows`, and `precedes`.  Configure your rules dynamically within your code. This feature is also contributed by [mohebifar](https://codemod.com/).
 
 **New `fieldChildren`:**  The new `fieldChildren` method in NAPI and PyO3 provides easier access to named children nodes, simplifying AST traversal and manipulation in your API integrations.
 
-**Powerful Code Modification in PyO3/NAPI:**  Unlock advanced code modification features with Fix Related Features and Modify Edit Range in [PyO3](/guide/api-usage/py-api.html#fix-code)/[NAPI](/guide/api-usage/js-api.html#fix-code).  Refactoring and code transformation just got even more powerful from within your Python and JavaScript code.
+**Powerful Code Modification in PyO3/NAPI:**  Unlock advanced code modification features with Fix Related Features and Modify Edit Range in [PyO3](/guide/api-usage/py-api#fix-code)/[NAPI](/guide/api-usage/js-api#fix-code).  Refactoring and code transformation just got even more powerful from within your Python and JavaScript code.
 
 **Smaller, Faster NAPI Binaries:** We've reduced the NAPI binary size, resulting in smaller downloads and faster installations – get up and running with ast-grep even quicker!
 
@@ -88,7 +88,7 @@ The ast-grep website isn't just a static page; it's your interactive command cen
 
 **Documentation Deep Dive:**  We've massively expanded and clarified the documentation, with deeper dives into crucial topics, clearer explanations of pattern objects, a comprehensive FAQ, and enhanced API documentation.  Whether you're a beginner or an expert, you'll find valuable resources to level up your ast-grep skills.
 
-**Revamped Blog Section:** Dive into in-depth articles and latest news in the [brand-new blog section](/blog.html).  Stay up-to-date with the latest ast-grep insights and learn from real-world examples.
+**Revamped Blog Section:** Dive into in-depth articles and latest news in the [brand-new blog section](/blog).  Stay up-to-date with the latest ast-grep insights and learn from real-world examples.
 
 **Improved Sections & Navigation:**  Finding what you need is now easier than ever with a reorganized and polished section and improved overall website navigation.
 
@@ -96,7 +96,7 @@ The ast-grep website isn't just a static page; it's your interactive command cen
 
 ### Interactive Example Catalog:  Learn by Doing!
 
-The [example catalog](https://ast-grep.github.io/catalog) has received a major upgrade, transforming it into an interactive learning environment:
+The [example catalog](https://astgrep.com/catalog) has received a major upgrade, transforming it into an interactive learning environment:
 
 **Interactive Rule Exploration:** Dive deep into rules with interactive features like Rule Display & Extraction, MetaVar Panel, Matched Labeling, Pattern Debugger, Selector Explorer, and Pattern Configuration & Icons.  Dissect rules, understand their components, and visualize how they work – all in your browser!
 
@@ -108,7 +108,7 @@ See [the youtube video](https://www.youtube.com/watch?v=oNbOoBhVL8o) for a live 
 
 ### Playground Power-Ups: Your Online Rule Lab
 
-The online playground at [https://ast-grep.github.io/](https://ast-grep.github.io/) is now an even more powerful lab for experimenting and refining your rules:
+The online playground at [https://astgrep.com/](https://astgrep.com/) is now an even more powerful lab for experimenting and refining your rules:
 
 **Parser Version Visibility:**  Small popups now display the tree-sitter version used in the playground, giving you valuable context for your rule testing.
 
@@ -136,7 +136,7 @@ Reaching over 8000 stars is an absolutely fantastic milestone, and it's all than
 
 **Get Started & Get Involved Today!**
 
-* **Explore the Enhanced Website:** Dive into the wealth of resources at [https://ast-grep.github.io/](https://ast-grep.github.io/)
+* **Explore the Enhanced Website:** Dive into the wealth of resources at [https://astgrep.com/](https://astgrep.com/)
 * **Star us on GitHub!** Show your support and help us reach the next milestone: [Star the GitHub Repo](https://github.com/ast-grep/ast-grep)
 * **Try out the New Features & Give Feedback:** Join the conversation on [Discord](https://discord.com/invite/4YZjf6htSQ) and tell us what you think!
 * **Contribute Rules to the Example Catalog:** Share your expertise and help others by [contributing rules](https://github.com/ast-grep/ast-grep.github.io/tree/main/website/catalog).

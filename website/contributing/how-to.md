@@ -25,13 +25,13 @@ We appreciate your feedback on the project. Whether you have a feature request, 
 
 - **Feature Request**: If you have an idea for a new feature or an enhancement for an existing feature, please create an issue on the [main repo](https://github.com/ast-grep/ast-grep/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=%5Bfeature%5D) with the label `enhancement`. Please describe your idea with examples and explain why it would be useful for the project and the users.
 
-- **Bug Report**: If you encounter a bug or an error while using ast-grep, please create an issue on the [main repo](https://github.com/ast-grep/ast-grep/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=%5Bfeature%5D) with the label `bug`. Please provide as much information as possible to help us reproduce and fix the bug, such as the version of ast-grep, the command or query you used, the expected and actual results, any error messages or screenshots, and preferably a [playground link](/playground.html) reproducing the issue.
+- **Bug Report**: If you encounter a bug or an error while using ast-grep, please create an issue on the [main repo](https://github.com/ast-grep/ast-grep/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=%5Bfeature%5D) with the label `bug`. Please provide as much information as possible to help us reproduce and fix the bug, such as the version of ast-grep, the command or query you used, the expected and actual results, any error messages or screenshots, and preferably a [playground link](/playground) reproducing the issue.
 
 ## Contributing Code
 
 We welcome your code contributions to the project. Whether you want to fix a bug, implement a feature, improve the documentation, or add a new integration, we are grateful for your help. You can use the following repositories to contribute your code:
 
-- **CLI Main Repo**: The [main repository for ast-grep](https://github.com/ast-grep/ast-grep) command-line interface (CLI). It contains the core logic and functionality of ast-grep. For small features or typo fixes, you can fork this repository and submit pull requests with your changes. [This guide](/contributing/development.html) may help you set up essential tools for development. _For larger features or big changes, please make an issue for discussion before jumping into it._
+- **CLI Main Repo**: The [main repository for ast-grep](https://github.com/ast-grep/ast-grep) command-line interface (CLI). It contains the core logic and functionality of ast-grep. For small features or typo fixes, you can fork this repository and submit pull requests with your changes. [This guide](/contributing/development) may help you set up essential tools for development. _For larger features or big changes, please make an issue for discussion before jumping into it._
 
 <!-- Please follow the [code style guide] and the [testing guide] before submitting your pull requests. -->
 
@@ -60,7 +60,7 @@ We encourage you to share your knowledge and experience with ast-grep with other
 
 - **Curate a rule collections**: Using ast-grep as linter in your project can showcase the power and versatility of ast-grep! Linting open source projects shows how ast-grep can be used for various purposes and domains. [ast-grep/eslint](https://github.com/ast-grep/eslint), for example, is a collection of eslint rule implemented in ast-grep YAML.
 
-- **Sharing Rules**: Sharing your rules on ast-grep's [example catalog](/catalog/index.html) can inspire more people to harness the power of AST! Example catalog is a place where users can browse, search, and submit rules. You can use [the template](https://github.com/ast-grep/ast-grep.github.io/blob/main/website/catalog/rule-template.md) to add your example [here](https://github.com/ast-grep/ast-grep.github.io/tree/main/website/catalog).
+- **Sharing Rules**: Sharing your rules on ast-grep's [example catalog](/catalog/index) can inspire more people to harness the power of AST! Example catalog is a place where users can browse, search, and submit rules. You can use [the template](https://github.com/ast-grep/ast-grep.github.io/blob/main/website/catalog/rule-template.md) to add your example [here](https://github.com/ast-grep/ast-grep.github.io/tree/main/website/catalog).
 
 Thank you for your interest in contributing to the ast-grep project. We are grateful for your help and support. We hope you enjoy using and improving ast-grep as much as we do. If you have any questions or issues, please feel free to contact us on [GitHub](https://github.com/ast-grep/ast-grep) or [Discord](https://discord.gg/4YZjf6htSQ). We look forward to hearing from you soon! 😊
 

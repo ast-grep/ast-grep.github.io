@@ -12,7 +12,7 @@ head:
       content: ast-grep got 6000 stars!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/stars-6000.html
+      content: https://astgrep.com/blog/stars-6000
   - - meta
     - property: og:description
       content: ast-grep has recently reached 6000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -20,19 +20,19 @@ head:
 
 # ast-grep got 6000 stars!
 
-We are thrilled to announce that [ast-grep](https://ast-grep.github.io/), the powerful code search tool, has reached a stellar milestone of 6000 stars on GitHub! This is a testament to the community's trust in our tool and the continuous improvements we've made. Let's dive into the latest features and enhancements that make ast-grep the go-to tool for developers worldwide.
+We are thrilled to announce that [ast-grep](https://astgrep.com/), the powerful code search tool, has reached a stellar milestone of 6000 stars on GitHub! This is a testament to the community's trust in our tool and the continuous improvements we've made. Let's dive into the latest features and enhancements that make ast-grep the go-to tool for developers worldwide.
 
 ![ast-grep 6k stars](/image/blog/stars-6k.png)
 
 
 ## Feature Enhancements
 
-- **Rewriters Addition**: We've added support for rewriters [#855](https://github.com/ast-grep/ast-grep/pull/855), enabling complex code transformations and refactoring with ease. The new feature unlocks a novel functional programming like code rewrite scheme: [find and patch](/advanced/find-n-patch.html). Check out our previous [blog post](https://dev.to/herrington_darkholme/find-patch-a-novel-functional-programming-like-code-rewrite-scheme-3964) for more details.
+- **Rewriters Addition**: We've added support for rewriters [#855](https://github.com/ast-grep/ast-grep/pull/855), enabling complex code transformations and refactoring with ease. The new feature unlocks a novel functional programming like code rewrite scheme: [find and patch](/advanced/find-n-patch). Check out our previous [blog post](https://dev.to/herrington_darkholme/find-patch-a-novel-functional-programming-like-code-rewrite-scheme-3964) for more details.
 
 ![rewriter](/image/blog/rewriter.png)
 
 
-- **Error/Warning Suppression Support**: The new feature [#446](https://github.com/ast-grep/ast-grep/pull/446) allows users to suppress specific errors or warnings via the [code comment](/guide/project/lint-rule.html#suppress-linting-error) `ast-grep-ignore`. ast-grep also [respects suppression comments](https://github.com/ast-grep/ast-grep/issues/1019) in Language Server Protocol (LSP), making it easier to manage warnings and errors in your codebase.
+- **Error/Warning Suppression Support**: The new feature [#446](https://github.com/ast-grep/ast-grep/pull/446) allows users to suppress specific errors or warnings via the [code comment](/guide/project/lint-rule#suppress-linting-error) `ast-grep-ignore`. ast-grep also [respects suppression comments](https://github.com/ast-grep/ast-grep/issues/1019) in Language Server Protocol (LSP), making it easier to manage warnings and errors in your codebase.
 
 
 - **Enhanced Rule Constraints**: The ast-grep rule `constraints` previously only accepted `pattern`, `kind` and `regex`.
@@ -40,7 +40,7 @@ Now it accepts a full rule [#855](https://github.com/ast-grep/ast-grep/pull/855)
 
 ## VSCode extension
 
-The [ast-grep VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode) is an official [VSCode integration](/guide/tools/editors.html) for this CLI tool. It unleashes the power of structural search and replace (SSR) directly into your editor.
+The [ast-grep VSCode extension](https://marketplace.visualstudio.com/items?itemName=ast-grep.ast-grep-vscode) is an official [VSCode integration](/guide/tools/editors) for this CLI tool. It unleashes the power of structural search and replace (SSR) directly into your editor.
 
 ### Notable Features
 - **Search**: Find code patterns with syntax tree.

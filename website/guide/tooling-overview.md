@@ -25,8 +25,8 @@ ast-grep outline src --items exports
 ast-grep outline src/parser.ts --match Parser --view expanded
 ```
 
-See the [outline guide](/guide/outline-code.html) and
-[outline CLI reference](/reference/cli/outline.html) for details.
+See the [outline guide](/guide/outline-code) and
+[outline CLI reference](/reference/cli/outline) for details.
 
 ## Interactive Mode
 
@@ -82,7 +82,7 @@ The format of the JSON output is an array of match objects.
 ]
 ```
 
-See [JSON mode doc](/guide/tools/json.html) for more detailed explanation and examples.
+See [JSON mode doc](/guide/tools/json) for more detailed explanation and examples.
 
 ## Run One Single Query or One Single Rule
 
@@ -216,7 +216,7 @@ If you want to automate [ast-grep linting](https://github.com/marketplace/action
 
 For example, you can run ast-grep linting every time you push a new commit to your main branch.
 
-To use ast-grep in GitHub Action, you need to [set up a project](/guide/scan-project.html) first. You can do this by running `ast-grep new` in your terminal, which will guide you through the process of creating a configuration file and a rules file.
+To use ast-grep in GitHub Action, you need to [set up a project](/guide/scan-project) first. You can do this by running `ast-grep new` in your terminal, which will guide you through the process of creating a configuration file and a rules file.
 
 Next, you need to create a workflow file for GitHub Action. This is a YAML file that defines the steps and actions that will be executed when a certain event occurs. You can create a workflow file named `ast-grep.yml` under the `.github/workflows/` folder in your repository, with the following content:
 
@@ -235,7 +235,7 @@ jobs:
 ```
 
 This workflow file tells GitHub Action to run ast-grep linting on every push event, using the latest Ubuntu image and the official ast-grep action.
-The action will check out your code and run [`ast-grep scan`](/reference/cli.html#ast-grep-scan) on it, reporting any errors or warnings.
+The action will check out your code and run [`ast-grep scan`](/reference/cli#ast-grep-scan) on it, reporting any errors or warnings.
 
 That's it! You have successfully set up ast-grep linting in GitHub Action. Now, every time you push a new commit to your main branch, GitHub Action will automatically run ast-grep linting and show you the results. You can see an example of how it looks like below.
 

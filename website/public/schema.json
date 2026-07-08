@@ -29,7 +29,7 @@
       }
     },
     "transform": {
-      "description": "A dictionary for metavariable manipulation. Dict key is the new variable name.\nDict value is a [transformation] that specifies how meta var is processed.\nSee [transformation doc](https://ast-grep.github.io/reference/yaml/transformation.html).",
+      "description": "A dictionary for metavariable manipulation. Dict key is the new variable name.\nDict value is a [transformation] that specifies how meta var is processed.\nSee [transformation doc](https://astgrep.com/reference/yaml/transformation).",
       "type": [
         "object",
         "null"
@@ -39,7 +39,7 @@
       }
     },
     "fix": {
-      "description": "A pattern string or a FixConfig object to auto fix the issue.\nIt can reference metavariables appeared in rule.\nSee details in fix [object reference](https://ast-grep.github.io/reference/yaml/fix.html#fixconfig).",
+      "description": "A pattern string or a FixConfig object to auto fix the issue.\nIt can reference metavariables appeared in rule.\nSee details in fix [object reference](https://astgrep.com/reference/yaml/fix#fixconfig).",
       "anyOf": [
         {
           "$ref": "#/$defs/SerializableFixer"
@@ -722,7 +722,7 @@
           }
         },
         "transform": {
-          "description": "A dictionary for metavariable manipulation. Dict key is the new variable name.\nDict value is a [transformation] that specifies how meta var is processed.\nSee [transformation doc](https://ast-grep.github.io/reference/yaml/transformation.html).",
+          "description": "A dictionary for metavariable manipulation. Dict key is the new variable name.\nDict value is a [transformation] that specifies how meta var is processed.\nSee [transformation doc](https://astgrep.com/reference/yaml/transformation).",
           "type": [
             "object",
             "null"
@@ -732,7 +732,7 @@
           }
         },
         "fix": {
-          "description": "A pattern string or a FixConfig object to auto fix the issue.\nIt can reference metavariables appeared in rule.\nSee details in fix [object reference](https://ast-grep.github.io/reference/yaml/fix.html#fixconfig).",
+          "description": "A pattern string or a FixConfig object to auto fix the issue.\nIt can reference metavariables appeared in rule.\nSee details in fix [object reference](https://astgrep.com/reference/yaml/fix#fixconfig).",
           "anyOf": [
             {
               "$ref": "#/$defs/SerializableFixer"

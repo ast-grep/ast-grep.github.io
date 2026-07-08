@@ -12,7 +12,7 @@ head:
       content: 'ast-grep: 5000 stars and beyond!'
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/stars-5000.html
+      content: https://astgrep.com/blog/stars-5000
   - - meta
     - property: og:description
       content: ast-grep has recently reached 5000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -27,7 +27,7 @@ We are thrilled to announce that ast-grep has reached 5000 stars on [GitHub](htt
 
 ## Why ast-grep?
 
-[ast-grep](https://ast-grep.github.io/) is a tool that allows you to search and transform code using abstract syntax trees (ASTs). ASTs are tree-like representations of the structure and meaning of source code. By using ASTs, ast-grep can perform more accurate and powerful operations than regular expressions or plain text search.
+[ast-grep](https://astgrep.com/) is a tool that allows you to search and transform code using abstract syntax trees (ASTs). ASTs are tree-like representations of the structure and meaning of source code. By using ASTs, ast-grep can perform more accurate and powerful operations than regular expressions or plain text search.
 
 We have introduced a lot of new features in the past few months, and we want to share them with you. We hope that you will find them useful and that they will help you write better code.
 
@@ -37,18 +37,18 @@ We have introduced a lot of new features in the past few months, and we want to 
 * We have redesigned and implemented a [new pattern engine](https://x.com/hd_nvim/status/1735850666235687241) inspired by [difftastic](https://github.com/Wilfred/difftastic). Now, patterns use Rust structures to represent the syntax of code, instead of tree-sitter objects. This improves performance by minimizing tree traversal and allows for more reliable and user-friendly pattern-matching.
 
 ### CLI
-* You can now use [`--inline-rules`](https://ast-grep.github.io/reference/cli/scan.html#inline-rules-rule-text) to run rules without creating any files on your disk! You can pass everything, pattern/rule/input, as a string. This is great for scripting!
-* [`--stdin`](https://ast-grep.github.io/reference/cli/run.html#stdin) will always wait for your input so you can match some code written in your terminal.
-* You can also select [custom languages](https://ast-grep.github.io/advanced/custom-language.html) in [`ast-grep new`](https://ast-grep.github.io/reference/cli/new.html).
+* You can now use [`--inline-rules`](https://astgrep.com/reference/cli/scan#inline-rules-rule-text) to run rules without creating any files on your disk! You can pass everything, pattern/rule/input, as a string. This is great for scripting!
+* [`--stdin`](https://astgrep.com/reference/cli/run#stdin) will always wait for your input so you can match some code written in your terminal.
+* You can also select [custom languages](https://astgrep.com/advanced/custom-language) in [`ast-grep new`](https://astgrep.com/reference/cli/new).
 
 ### Language Support
 * We have added support for three new languages: bash, php and elixir.
 * We have updated our language support to include golang's generic syntax and python's pattern matching syntax.
-* You can try out kotlin on our [playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoia290bGluIiwicXVlcnkiOiJrb3RsaW4iLCJyZXdyaXRlIjoiJEEgPz89ICRCOyIsImNvbmZpZyI6IiIsInNvdXJjZSI6ImZ1biBtaW5hbWkoKSB7XG4gICAgdmFsIGtvdGxpbiA9IFwi5Y2X44GT44Go44KK44KTXCJcbn0ifQ==)!
+* You can try out kotlin on our [playground](https://astgrep.com/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoia290bGluIiwicXVlcnkiOiJrb3RsaW4iLCJyZXdyaXRlIjoiJEEgPz89ICRCOyIsImNvbmZpZyI6IiIsInNvdXJjZSI6ImZ1biBtaW5hbWkoKSB7XG4gICAgdmFsIGtvdGxpbiA9IFwi5Y2X44GT44Go44KK44KTXCJcbn0ifQ==)!
 
 ### Rule
-* You can now use `expandStart` and `expandEnd` to [adjust the fix range](https://ast-grep.github.io/reference/yaml/fix.html#fixconfig) selection for more precise code transformations.
-* You can also use [`languageGlob`](https://ast-grep.github.io/reference/sgconfig.html#languageglobs) to register alias languages for extension override, which gives you more flexibility in handling different file types.
+* You can now use `expandStart` and `expandEnd` to [adjust the fix range](https://astgrep.com/reference/yaml/fix#fixconfig) selection for more precise code transformations.
+* You can also use [`languageGlob`](https://astgrep.com/reference/sgconfig#languageglobs) to register alias languages for extension override, which gives you more flexibility in handling different file types.
 
 ### Node/Python API
 * We have added to napi a new function [parseAsync](https://github.com/ast-grep/ast-grep/blob/beb6f50e936809071e6bacae2c854aefa8e46d11/crates/napi/index.d.ts#L104-L111), which allows you to leverage multiple cores in Node.js for faster code parsing.
@@ -56,10 +56,10 @@ We have introduced a lot of new features in the past few months, and we want to 
 * You can now use [`getTransformed`](https://github.com/ast-grep/ast-grep/blob/beb6f50e936809071e6bacae2c854aefa8e46d11/crates/napi/index.d.ts#L75) in napi to get the transformed code as a string.
 
 ### Doc
-* We have improved our [napi](https://ast-grep.github.io/guide/api-usage/js-api.html)/[pyo3](https://ast-grep.github.io/guide/api-usage/py-api.html) documentation and added sandbox/colab links for you to try out ast-grep online!
-* We have also updated our [transformation](https://ast-grep.github.io/reference/yaml/transformation.html) and [code fix](https://ast-grep.github.io/reference/yaml/fix.html) documentation with more examples and explanations.
-* We have added new language examples for [go](https://ast-grep.github.io/catalog/go/) and [python](https://ast-grep.github.io/catalog/python/), which show you how to use ast-grep with these popular languages.
-* We have created an ast-grep [bot](https://ast-grep.github.io/guide/introduction.html#check-out-discord-bot) on [discord](https://discord.com/invite/4YZjf6htSQ), which can answer your questions and provide tips and tricks on using ast-grep.
+* We have improved our [napi](https://astgrep.com/guide/api-usage/js-api)/[pyo3](https://astgrep.com/guide/api-usage/py-api) documentation and added sandbox/colab links for you to try out ast-grep online!
+* We have also updated our [transformation](https://astgrep.com/reference/yaml/transformation) and [code fix](https://astgrep.com/reference/yaml/fix) documentation with more examples and explanations.
+* We have added new language examples for [go](https://astgrep.com/catalog/go/) and [python](https://astgrep.com/catalog/python/), which show you how to use ast-grep with these popular languages.
+* We have created an ast-grep [bot](https://astgrep.com/guide/introduction#check-out-discord-bot) on [discord](https://discord.com/invite/4YZjf6htSQ), which can answer your questions and provide tips and tricks on using ast-grep.
 
 ### Community
 * We are excited to see that some awesome projects are using ast-grep for their code transformations, such as:
@@ -105,7 +105,7 @@ The new steps are similar to the existing **_"Find and Patch"_** workflow, but w
 
 This is like doing syntax tree oriented programming. We can apply different rules to different sub-nodes, just like using conditional statements. We can also apply rules to multiple sub-nodes, just like using loops. _"Find and Patch" is kind of a specialized "Functional Programming" over the AST!_
 
-That said, applying sub-rules is an advanced feature that requires a lot of learning and practice. When in doubt, you can always use the existing [N-API](https://ast-grep.github.io/guide/api-usage/js-api.html)/[PyO3](https://ast-grep.github.io/guide/api-usage/py-api.html) workflow!
+That said, applying sub-rules is an advanced feature that requires a lot of learning and practice. When in doubt, you can always use the existing [N-API](https://astgrep.com/guide/api-usage/js-api)/[PyO3](https://astgrep.com/guide/api-usage/py-api) workflow!
 
 ## Thank you!
 

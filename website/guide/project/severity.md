@@ -51,7 +51,7 @@ console.log('suppressed') // ast-grep-ignore
 console.log('suppressed') // ast-grep-ignore: no-console
 ```
 
-See the [playground](https://ast-grep.github.io/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRDQUxMRVIgOj0gJmZvb3t9IiwicmV3cml0ZSI6IiIsImNvbmZpZyI6ImlkOiBuby1jb25zb2xlXG5sYW5ndWFnZTogSmF2YVNjcmlwdFxucnVsZTpcbiAgcGF0dGVybjogY29uc29sZS5sb2coJEEpIiwic291cmNlIjoiY29uc29sZS5sb2coJ2hlbGxvJykgIC8vIG1hdGNoXG4vLyBhc3QtZ3JlcC1pZ25vcmVcbmNvbnNvbGUubG9nKCdzdXBwcmVzc2VkJykgLy8gc3VwcHJlc3NlZFxuLy8gYXN0LWdyZXAtaWdub3JlOiBuby1jb25zb2xlXG5jb25zb2xlLmxvZygnc3VwcHJlc3NlZCcpIC8vIHN1cHByZXNzZWRcbi8vIGFzdC1ncmVwLWlnbm9yZTogb3RoZXItcnVsZVxuY29uc29sZS5sb2coJ3dvcmxkJykgLy8gbWF0Y2hcbiJ9) in action.
+See the [playground](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiRDQUxMRVIgOj0gJmZvb3t9IiwicmV3cml0ZSI6IiIsImNvbmZpZyI6ImlkOiBuby1jb25zb2xlXG5sYW5ndWFnZTogSmF2YVNjcmlwdFxucnVsZTpcbiAgcGF0dGVybjogY29uc29sZS5sb2coJEEpIiwic291cmNlIjoiY29uc29sZS5sb2coJ2hlbGxvJykgIC8vIG1hdGNoXG4vLyBhc3QtZ3JlcC1pZ25vcmVcbmNvbnNvbGUubG9nKCdzdXBwcmVzc2VkJykgLy8gc3VwcHJlc3NlZFxuLy8gYXN0LWdyZXAtaWdub3JlOiBuby1jb25zb2xlXG5jb25zb2xlLmxvZygnc3VwcHJlc3NlZCcpIC8vIHN1cHByZXNzZWRcbi8vIGFzdC1ncmVwLWlnbm9yZTogb3RoZXItcnVsZVxuY29uc29sZS5sb2coJ3dvcmxkJykgLy8gbWF0Y2hcbiJ9) in action.
 
 These are the rules for suppression comments:
 
@@ -109,10 +109,10 @@ But it is enabled, by default, only **when all rules are enabled**.
 
 More specifically, [these conditions](https://github.com/ast-grep/ast-grep/blob/553f5e5ac577b6d2e0904c423bb5dbd27804328b/crates/cli/src/scan.rs#L68-L73) must be met:
 
-1. No rule is [disabled](/guide/project/severity.html#override-severity-on-cli) by the `--off` flag on the CLI. `severity: off` configured in the YAML rule file does not count.
-2. The CLI [`--rule`](/reference/cli/scan.html#r-rule-rule-file) flag is not used.
-3. The CLI [`--inline-rules`](/reference/cli/scan.html#inline-rules-rule-text) flag is not used.
-4. The CLI [`--filter`](/reference/cli/scan.html#filter-regex) flag is not used.
+1. No rule is [disabled](/guide/project/severity#override-severity-on-cli) by the `--off` flag on the CLI. `severity: off` configured in the YAML rule file does not count.
+2. The CLI [`--rule`](/reference/cli/scan#r-rule-rule-file) flag is not used.
+3. The CLI [`--inline-rules`](/reference/cli/scan#inline-rules-rule-text) flag is not used.
+4. The CLI [`--filter`](/reference/cli/scan#filter-regex) flag is not used.
 
 :::tip Unused suppression report only happens in `ast-grep scan`
 If a rule is skipped during a scan, it is possible to mistakenly report a suppression comment as unused.
@@ -145,7 +145,7 @@ With `no-suppress-all` enabled, developers are required to always specify which 
 
 ## Inspect Rule Severity
 
-Finally, ast-grep provides a CLI flag [`--inspect`](/reference/cli/scan.html#inspect-granularity) to debug what rules are enabled and their severity levels. This is useful to understand the rule configuration and to debug why a rule is not triggered.
+Finally, ast-grep provides a CLI flag [`--inspect`](/reference/cli/scan#inspect-granularity) to debug what rules are enabled and their severity levels. This is useful to understand the rule configuration and to debug why a rule is not triggered.
 
 ```bash
 ast-grep scan --inspect entity

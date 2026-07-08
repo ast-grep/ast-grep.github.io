@@ -12,7 +12,7 @@ head:
       content: ast-grep gets more LLM support!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/more-llm-support.html
+      content: https://astgrep.com/blog/more-llm-support
   - - meta
     - property: og:description
       content: ast-grep is getting even better with enhanced Large Language Model (LLM) support. This exciting development opens up new possibilities for developers to analyze, understand, and transform code more efficiently. Let's dive into the details of these new features.
@@ -40,7 +40,7 @@ On the other hand, ast-grep faces challenges due to the limited training data av
 
 The general usage of `llms.txt` is as follows:
 
-1. Visit [https://ast-grep.github.io/llms-full.txt](https://ast-grep.github.io/llms-full.txt) and copy the full documentation text
+1. Visit [https://astgrep.com/llms-full.txt](https://astgrep.com/llms-full.txt) and copy the full documentation text
 2. Paste these documents into your conversation with your preferred AI chatbot
 3. Ask AI questions about ast-grep
 

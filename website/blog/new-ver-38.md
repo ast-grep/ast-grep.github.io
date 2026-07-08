@@ -12,7 +12,7 @@ head:
       content: ast-grep new release 0.38
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/new-ver-38.html
+      content: https://astgrep.com/blog/new-ver-38
   - - meta
     - property: og:description
       content: ast-grep 0.38 brings some fantastic new features to improve your code searching and linting experience, alongside a significant internal shift.
@@ -34,7 +34,7 @@ One of the exciting new additions is the `labels` field for your rule configurat
 
 ![Example of Customizable Code Highlighting](/image/blog/labels-demo.png)
 
-But the benefits don't stop at individual understanding. The labels field offers a fantastic way to embed more guidance directly into your rules, and it allow you to share coding best practices, style guide reminders, or domain-specific knowledge across your entire team. This feature helps disseminate expertise and maintain consistency effortlessly. For example, [Sam Wight](https://github.com/samwightt), the labels feature's proposer, is using ast-grep to help his team to write better [Angular code](/catalog/typescript/missing-component-decorator.html)!
+But the benefits don't stop at individual understanding. The labels field offers a fantastic way to embed more guidance directly into your rules, and it allow you to share coding best practices, style guide reminders, or domain-specific knowledge across your entire team. This feature helps disseminate expertise and maintain consistency effortlessly. For example, [Sam Wight](https://github.com/samwightt), the labels feature's proposer, is using ast-grep to help his team to write better [Angular code](/catalog/typescript/missing-component-decorator)!
 
 ![Example of VSCode](/image/blog/labels-vscode.jpeg)
 
@@ -84,7 +84,7 @@ These changes are part of the larger effort to decouple ast-grep from tree-sitte
 
 We believe these changes, especially the move towards parser independence and the enhanced diagnostic labeling, will make ast-grep an even more powerful and user-friendly tool for your everyday development tasks.
 
-Head over to our [GitHub repo](https://github.com/ast-grep/ast-grep)  to grab the latest version. Check out the [documentation](https://ast-grep.github.io/) for more details on how to use the new features.
+Head over to our [GitHub repo](https://github.com/ast-grep/ast-grep)  to grab the latest version. Check out the [documentation](https://astgrep.com/) for more details on how to use the new features.
 
 We're excited to see how you use ast-grep 0.38! As always, your feedback is invaluable, so please don't hesitate to open issues or discussions on our GitHub repository.
 

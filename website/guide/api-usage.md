@@ -21,9 +21,9 @@ Applying ast-grep's `fix` using JS/Python API is still experimental. See [this i
 
 ast-grep provides support for these programming languages:
 
-- **JavaScript:** Powered by napi.rs, ast-grep's JavaScript API is the most robust and reliable. [Explore JavaScript API](/guide/api-usage/js-api.html)
+- **JavaScript:** Powered by napi.rs, ast-grep's JavaScript API is the most robust and reliable. [Explore JavaScript API](/guide/api-usage/js-api)
 
-- **Python:** ast-grep's PyO3 interface is the latest addition to climb the syntax tree! [Discover Python API](/guide/api-usage/py-api.html)
+- **Python:** ast-grep's PyO3 interface is the latest addition to climb the syntax tree! [Discover Python API](/guide/api-usage/py-api)
 
 - **Rust:** ast-grep's Rust API is the most efficient way, but also the most challenging way, to use ast-grep. You can refer to [ast_grep_core](https://docs.rs/ast-grep-core/latest/ast_grep_core/) if you are familiar with Rust.
 

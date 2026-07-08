@@ -109,7 +109,7 @@ An outline rule file is a stream of YAML documents. Each document defines one
 extractor. Separate documents with `---`.
 
 For every supported field, see the
-[Outline Rule Fields Reference](/reference/outline-rule-fields.html).
+[Outline Rule Fields Reference](/reference/outline-rule-fields).
 
 ```yaml
 id: rust-struct
@@ -166,9 +166,9 @@ omitted, `outline` still emits the entry name and range. Add a signature when
 the extra text helps users or agents choose what to read next, such as a
 function parameter list, class header, or field type.
 
-Use [`transform`](/guide/rewrite/transform.html) when the matched node is
+Use [`transform`](/guide/rewrite/transform) when the matched node is
 larger than the text you want to print. The same transformation syntax can also
-use [`rewriters`](/guide/rewrite/rewriter.html) for more advanced AST-based
+use [`rewriters`](/guide/rewrite/rewriter) for more advanced AST-based
 text generation. For example, a Rust struct match includes the body, but the
 outline signature usually only needs the declaration header:
 

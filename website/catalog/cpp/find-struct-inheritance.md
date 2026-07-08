@@ -1,6 +1,6 @@
 ## Find Struct Inheritance
 
-* [Playground Link](/playground.html#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiY3BwIiwicXVlcnkiOiJzdHJ1Y3QgJFNPTUVUSElORzogICRJTkhFUklUU19GUk9NIHsgJCQkQk9EWTsgfSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6InN0cnVjdCBGb286IEJhciB7fTtcblxuc3RydWN0IEJhcjogQmF6IHtcbiAgaW50IGEsIGI7XG59In0=)
+* [Playground Link](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiY3BwIiwicXVlcnkiOiJzdHJ1Y3QgJFNPTUVUSElORzogICRJTkhFUklUU19GUk9NIHsgJCQkQk9EWTsgfSIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IiIsImNvbmZpZyI6IiIsInNvdXJjZSI6InN0cnVjdCBGb286IEJhciB7fTtcblxuc3RydWN0IEJhcjogQmF6IHtcbiAgaW50IGEsIGI7XG59In0=)
 
 ### Description
 
@@ -27,7 +27,7 @@ struct_specifier
 ```
 :::
 
-If it is not possible to write a full pattern, [YAML rule](/guide/rule-config.html) is a better choice.
+If it is not possible to write a full pattern, [YAML rule](/guide/rule-config) is a better choice.
 
 
 ### Pattern

@@ -12,7 +12,7 @@ head:
       content: ast-grep new release 0.39
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/new-ver-39.html
+      content: https://astgrep.com/blog/new-ver-39
   - - meta
     - property: og:description
       content: 'ast-grep 0.39 includes new languages support, better file config and Esquery style kind.'
@@ -24,7 +24,7 @@ ast-grep 0.39 is out! This release includes new languages support, better file c
 
 ## Esquery Style Kind
 
-ast-grep now supports [ESQuery style](https://github.com/estools/esquery) kind in the `kind` field of the rule configuration. This allows you to write more concise rule in ast-grep. Under the hood, it is equivalent to [relational rules](/guide/rule-config/relational-rule.html) like `has`.
+ast-grep now supports [ESQuery style](https://github.com/estools/esquery) kind in the `kind` field of the rule configuration. This allows you to write more concise rule in ast-grep. Under the hood, it is equivalent to [relational rules](/guide/rule-config/relational-rule) like `has`.
 
 ESQuery is a library for querying the AST using a [CSS style selector](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Basic_selectors) system.
 
@@ -103,7 +103,7 @@ ast-grep 0.39 adds support for the following languages:
 
 ## `file`  in rule config is relative to the project config file
 
-Previously, the files section appears to be treated as relative to the current working directory from which ast-grep was invoked rather than the dir containing the [sgconfig.yml](/reference/sgconfig.html) file.
+Previously, the files section appears to be treated as relative to the current working directory from which ast-grep was invoked rather than the dir containing the [sgconfig.yml](/reference/sgconfig) file.
 
 This has been changed in 0.39, so now the `files` section is relative to the project config file.
 

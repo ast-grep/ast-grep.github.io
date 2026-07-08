@@ -100,7 +100,7 @@ class SgNode:
     def find_all(self, config: Config) -> List[SgNode]: ...
 ```
 
-`find` has two overloads: one takes keyword arguments of [`Rule`](/reference/api.html#rule), and the other takes a [`Config`](/reference/api.html#config) object.
+`find` has two overloads: one takes keyword arguments of [`Rule`](/reference/api#rule), and the other takes a [`Config`](/reference/api#config) object.
 
 ### Search with Rule
 Using keyword arguments rule is the most straightforward way to search for nodes.
@@ -126,7 +126,7 @@ assert len(strings) == 1
 
 You can also use a `Config` object to search for nodes. This is similar to directly use YAML in the command line.
 
-The main difference between using `Config` and using `Rule` is that `Config` has more options to control the search behavior, like [`constraints`](/guide/rule-config.html#constraints) and [`utils`](/guide/rule-config/utility-rule.html).
+The main difference between using `Config` and using `Rule` is that `Config` has more options to control the search behavior, like [`constraints`](/guide/rule-config#constraints) and [`utils`](/guide/rule-config/utility-rule).
 
 ```python
 # will find a string node with text 'hello world'
@@ -153,9 +153,9 @@ root.root().find({
 
 Once we find a node, we can use the following methods to get meta variables from the search.
 
-The `get_match` method returns the single node that matches the [single meta variable](/guide/pattern-syntax.html#meta-variable).
+The `get_match` method returns the single node that matches the [single meta variable](/guide/pattern-syntax#meta-variable).
 
-And the `get_multiple_matches` returns a list of nodes that match the [multi meta variable](/guide/pattern-syntax.html#multi-meta-variable).
+And the `get_multiple_matches` returns a list of nodes that match the [multi meta variable](/guide/pattern-syntax#multi-meta-variable).
 
 ```python
 class SgNode:

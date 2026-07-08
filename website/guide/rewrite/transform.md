@@ -77,7 +77,7 @@ Later transformations can use the variables that were transformed before. This a
 :::
 
 ## Supported `transformation`
-We have several different transformations available now. Please check out [transformation reference](/reference/yaml/transformation.html) for more details.
+We have several different transformations available now. Please check out [transformation reference](/reference/yaml/transformation) for more details.
 
 * `replace`: Use a regular expression to replace the text in a meta-variable with a new text.
 * `substring`: Create a new string by cutting off leading and trailing characters.
@@ -100,7 +100,7 @@ transform:
       by: release$REG               # Refer to REG just like a meta-variable
 fix: $NEW_FN($$$ARGS)
 ```
-which will result in [the following change](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoiaWQ6IGRlYnVnLXRvLXJlbGVhc2Vcbmxhbmd1YWdlOiBqc1xucnVsZToge3BhdHRlcm46ICRPTERfRk4oJCQkQVJHUyl9ICAgIyBDYXB0dXJlIE9MRF9GTlxuY29uc3RyYWludHM6IHtPTERfRk46IHtyZWdleDogXmRlYnVnfX0gICMgT25seSBtYXRjaCBpZiBpdCBzdGFydHMgd2l0aCAnZGVidWcnXG50cmFuc2Zvcm06XG4gIE5FV19GTjpcbiAgICByZXBsYWNlOlxuICAgICAgc291cmNlOiAkT0xEX0ZOXG4gICAgICByZXBsYWNlOiBkZWJ1Zyg/PFJFRz4uKikgICAgICAjIENhcHR1cmUgZXZlcnl0aGluZyBmb2xsb3dpbmcgJ2RlYnVnJyBhcyBSRUdcbiAgICAgIGJ5OiByZWxlYXNlJFJFRyAgICAgICAgICAgICAgICMgUmVmZXIgdG8gUkVHIGp1c3QgbGlrZSBhIG1ldGEtdmFyaWFibGVcbmZpeDogJE5FV19GTigkJCRBUkdTKSIsInNvdXJjZSI6ImRlYnVnRm9vKGFyZzEsIGFyZzIpICAifQ==):
+which will result in [the following change](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6IiIsInJld3JpdGUiOiIiLCJzdHJpY3RuZXNzIjoic21hcnQiLCJzZWxlY3RvciI6IkVSUk9SIiwiY29uZmlnIjoiaWQ6IGRlYnVnLXRvLXJlbGVhc2Vcbmxhbmd1YWdlOiBqc1xucnVsZToge3BhdHRlcm46ICRPTERfRk4oJCQkQVJHUyl9ICAgIyBDYXB0dXJlIE9MRF9GTlxuY29uc3RyYWludHM6IHtPTERfRk46IHtyZWdleDogXmRlYnVnfX0gICMgT25seSBtYXRjaCBpZiBpdCBzdGFydHMgd2l0aCAnZGVidWcnXG50cmFuc2Zvcm06XG4gIE5FV19GTjpcbiAgICByZXBsYWNlOlxuICAgICAgc291cmNlOiAkT0xEX0ZOXG4gICAgICByZXBsYWNlOiBkZWJ1Zyg/PFJFRz4uKikgICAgICAjIENhcHR1cmUgZXZlcnl0aGluZyBmb2xsb3dpbmcgJ2RlYnVnJyBhcyBSRUdcbiAgICAgIGJ5OiByZWxlYXNlJFJFRyAgICAgICAgICAgICAgICMgUmVmZXIgdG8gUkVHIGp1c3QgbGlrZSBhIG1ldGEtdmFyaWFibGVcbmZpeDogJE5FV19GTigkJCRBUkdTKSIsInNvdXJjZSI6ImRlYnVnRm9vKGFyZzEsIGFyZzIpICAifQ==):
 ```js
 debugFoo(arg1, arg2)  // [!code --]
 releaseFoo(arg1, arg2)  // [!code ++]
@@ -200,4 +200,4 @@ The string style transformation syntax is only available in ast-grep 0.38.3 and 
 
 ## Even More Advanced Transformations
 
-We can use rewriters in the [`rewrite`](/guide/rewrite/rewriter.html) transformation to apply dynamic transformations to the AST. We will cover it in next section.
+We can use rewriters in the [`rewrite`](/guide/rewrite/rewriter) transformation to apply dynamic transformations to the AST. We will cover it in next section.

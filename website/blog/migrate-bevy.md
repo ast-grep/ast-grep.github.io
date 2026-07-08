@@ -11,7 +11,7 @@ head:
       content: Migrating Bevy can be easier with (semi-)automation
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/migrate-bevy.html
+      content: https://astgrep.com/blog/migrate-bevy
   - - meta
     - property: og:description
       content: In this article, we will show you how to make migration easier by using some command line tools.
@@ -25,7 +25,7 @@ Bevy is a fast and flexible game engine written in Rust. It aims to provide a mo
 However, the shiny new engine is also an evolving project that periodically introduces breaking changes in its API.
 Bevy's migration guide is comprehensive, but daunting. It is sometimes overwhelmingly long because it covers many topics and scenarios.
 
-In this article, we will show you how to make migration easier by using some command line tools such as [`git`](https://git-scm.com/), [`cargo`](https://doc.rust-lang.org/cargo/) and [`ast-grep`](https://ast-grep.github.io/). These tools can help you track the changes, search for specific patterns in your code, and automate API migration. Hope you can migrate your Bevy projects with less hassle and more confidence by following our tips.
+In this article, we will show you how to make migration easier by using some command line tools such as [`git`](https://git-scm.com/), [`cargo`](https://doc.rust-lang.org/cargo/) and [`ast-grep`](https://astgrep.com/). These tools can help you track the changes, search for specific patterns in your code, and automate API migration. Hope you can migrate your Bevy projects with less hassle and more confidence by following our tips.
 
 ----
 
@@ -40,7 +40,7 @@ Upgrading consists of four big steps: **make a clean git branch**, **updating th
 
 ## Preparation
 
-Before we start, we need to make sure that we have the following tools installed: [Rust](https://rustup.rs/), [git](https://git-scm.com/) and [ast-grep](https://ast-grep.github.io/).
+Before we start, we need to make sure that we have the following tools installed: [Rust](https://rustup.rs/), [git](https://git-scm.com/) and [ast-grep](https://astgrep.com/).
 
 Compared to the other two tools, ast-grep is lesser-known. In short it can do search and replace based on [abstract syntax trees](https://www.wikiwand.com/en/Abstract_syntax_tree). You can install it via [`cargo`](https://crates.io/crates/ast-grep) or [`brew`](https://formulae.brew.sh/formula/ast-grep).
 
@@ -145,7 +145,7 @@ From [migration guide](https://bevyengine.org/learn/migration-guides/0.9-0.10/):
 
 > The `CoreStage` (... more omitted) enums have been replaced with `CoreSet` (... more omitted). The same scheduling guarantees have been preserved.
 
-So we just need to change the import name. [Using ast-grep is trivial here](https://ast-grep.github.io/guide/introduction.html#introduction).
+So we just need to change the import name. [Using ast-grep is trivial here](https://astgrep.com/guide/introduction#introduction).
 We need to provide a pattern, `-p`, for it to search as well as a rewrite string, `-r` to replace the old API with the new one. The command should be quite self-explanatory.
 
 ```
@@ -224,7 +224,7 @@ ast-grep \
 
 This pattern deserves some explanation.
 
-`$STAGE` and `$OWN_STAGE` are [meta-variables](https://ast-grep.github.io/guide/pattern-syntax.html#meta-variable).
+`$STAGE` and `$OWN_STAGE` are [meta-variables](https://astgrep.com/guide/pattern-syntax#meta-variable).
 
 meta-variable is a wildcard expression that can match any single AST node. So we effectively find all `add_stage_after` call. We can also use meta-variables in the rewrite string and ast-grep will replace them with the captured AST nodes. ast-grep's meta-variables are very similar to regular expression's dot `.`, except they are not textual.
 

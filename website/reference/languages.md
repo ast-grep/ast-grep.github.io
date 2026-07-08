@@ -40,5 +40,5 @@ The table below lists all languages that are supported by ast-grep.
 ----
 
 :::tip Pro Tips
-You can use [`languageGlobs`](/reference/sgconfig.html#languageglobs) to customize languages' extension mapping.
+You can use [`languageGlobs`](/reference/sgconfig#languageglobs) to customize languages' extension mapping.
 :::

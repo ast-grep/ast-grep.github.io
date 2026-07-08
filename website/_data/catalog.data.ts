@@ -22,7 +22,7 @@ export default createContentLoader('catalog/**/*.md', {
   transform(raw): RuleMeta[] {
     return raw
       .filter(({ url }) => {
-        return url.endsWith('.html') && !url.includes('rule-template')
+        return !url.endsWith('/') && !url.includes('rule-template')
       })
       .map(extractRuleInfo)
       .sort((a, b) => a.id.localeCompare(b.id))

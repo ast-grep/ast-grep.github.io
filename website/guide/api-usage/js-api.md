@@ -116,11 +116,11 @@ The argument is called `Matcher` in ast-grep JS.
 
 A `Matcher` can be one of the three types: `string`, `number` or `object`.
 
-* `string` is parsed as a [pattern](/guide/pattern-syntax.html). e.g. `'console.log($A)'`
+* `string` is parsed as a [pattern](/guide/pattern-syntax). e.g. `'console.log($A)'`
 
 * `number` is interpreted as the node's kind. In tree-sitter, an AST node's type is represented by a number called kind id. Different syntax node has different kind ids. You can convert a kind name like `function` to the numeric representation by calling the `kind` function. e.g. `kind(Lang.JavaScript, 'function')`.
 
-* A `NapiConfig` has a similar type of [config object](/reference/yaml.html). See details below.
+* A `NapiConfig` has a similar type of [config object](/reference/yaml). See details below.
 
 ```ts
 // basic find example
@@ -154,9 +154,9 @@ Note, `find` returns `null` if no node is found. `findAll` returns an empty arra
 
 Once we find a node, we can use the following methods to get meta variables from the search.
 
-The `getMatch` method returns the single node that matches the [single meta variable](/guide/pattern-syntax.html#meta-variable).
+The `getMatch` method returns the single node that matches the [single meta variable](/guide/pattern-syntax#meta-variable).
 
-And the `getMultipleMatches` returns an array of nodes that match the [multi meta variable](/guide/pattern-syntax.html#multi-meta-variable).
+And the `getMultipleMatches` returns an array of nodes that match the [multi meta variable](/guide/pattern-syntax#multi-meta-variable).
 
 ```ts
 // search

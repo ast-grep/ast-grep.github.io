@@ -30,7 +30,7 @@ ast-grep is a versatile tool for searching, linting and rewriting code in variou
 
 > Think ast-grep as an hybrid of [grep](https://www.gnu.org/software/grep/manual/grep.html), [eslint](https://eslint.org/) and [codemod](https://github.com/facebookincubator/fastmod).
 
-Wanna try it out? Check out the [quick start guide](/guide/quick-start)! Or see some [examples](/catalog/) to get a sense of what ast-grep can do. We also have a [playground](/playground.html) for you to try out ast-grep online!
+Wanna try it out? Check out the [quick start guide](/guide/quick-start)! Or see some [examples](/catalog/) to get a sense of what ast-grep can do. We also have a [playground](/playground) for you to try out ast-grep online!
 
 ## Supported Languages
 
@@ -76,7 +76,7 @@ In comparison to Babel, we can complete this hello-world task in ast-grep trivia
 ast-grep -p "console.log"
 ```
 
-See [playground](/playground.html) in action!
+See [playground](/playground) in action!
 
 Upon the simple pattern code, we can build a series of operators to compose complex matching rules for various scenarios.
 

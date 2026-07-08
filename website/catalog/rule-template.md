@@ -2,7 +2,7 @@
 ## Your Rule Name <Badge type="tip" text="Has Fix" />
 
 
-* [Playground Link](/playground.html#)
+* [Playground Link](/playground#)
 
 ### Description
 

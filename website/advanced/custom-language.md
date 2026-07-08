@@ -91,7 +91,7 @@ tree-sitter test
 ## Register Language in `sgconfig.yml`
 
 Once you have compiled the dynamic library for your custom language, you need to register it in the `sgconfig.yml` file.
-You can use the command [`ast-grep new`](/guide/scan-project.html#create-scaffolding) to create a project and find the configuration file in the project root.
+You can use the command [`ast-grep new`](/guide/scan-project#create-scaffolding) to create a project and find the configuration file in the project root.
 
 You need to add a new entry under the `customLanguages` key with the name of your custom language and some properties:
 
@@ -154,7 +154,7 @@ Now `outline` can load the extractor from project configuration:
 ast-grep outline src -l mojo
 ```
 
-See [outline rule fields reference](/reference/outline-rule-fields.html) for all
+See [outline rule fields reference](/reference/outline-rule-fields) for all
 supported fields.
 
 ## Use It!

@@ -12,7 +12,7 @@ head:
       content: ast-grep 0.42 - The Answer to Code Searching
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/new-ver-42.html
+      content: https://astgrep.com/blog/new-ver-42
   - - meta
     - property: og:description
       content: 'ast-grep 0.42: parameterized utilities, ESQuery-style selectors, and improved LSP diagnostics for injected languages.'
@@ -32,7 +32,7 @@ Don't panic — let's dive in.
 Parameterized utilities are **experimental**. The current implementation is hacky, dirty, and quick — a prototype to gather real-world feedback. The API, behavior, and semantics **may change, break, or even be removed entirely** in future releases. That said, we encourage adventurous users to try it out! Please report bugs and share your feedback at [ast-grep/ast-grep](https://github.com/ast-grep/ast-grep).
 :::
 
-The biggest feature in this release has landed: [parameterized utilities](https://github.com/ast-grep/ast-grep/issues/1298). [Global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules) in ast-grep let you define reusable rule components shared across your project, but previously they were static — you couldn't customize them for different contexts. Now, global utilities can accept arguments, making them far more flexible and reducing duplication in your rule configurations.
+The biggest feature in this release has landed: [parameterized utilities](https://github.com/ast-grep/ast-grep/issues/1298). [Global utility rules](/guide/rule-config/utility-rule#global-utility-rules) in ast-grep let you define reusable rule components shared across your project, but previously they were static — you couldn't customize them for different contexts. Now, global utilities can accept arguments, making them far more flexible and reducing duplication in your rule configurations.
 
 ### The Problem
 
@@ -82,7 +82,7 @@ Parameterized utilities solve both problems: they eliminate duplication and prov
 
 Think of parameterized utilities as **functions for your rules**. You declare parameters in the utility name, and then pass arguments when you call it with `matches`:
 
-Define a parameterized [global utility](/guide/rule-config/utility-rule.html#global-utility-rules) in a file under your `utils/` directory:
+Define a parameterized [global utility](/guide/rule-config/utility-rule#global-utility-rules) in a file under your `utils/` directory:
 
 ```yaml{3,12}
 # utils/audit-log-call.yml
@@ -183,7 +183,7 @@ If you can't see the `$` definition in your rule file, you can't use it.
 
 ### Key Usage Rules
 
-- **Only [global utility rules](/guide/rule-config/utility-rule.html#global-utility-rules)** (separate YAML files in the `utils/` directory with `id`, `language`, and `rule`) can declare parameters. Local `utils:` entries in rule config files remain zero-argument helpers.
+- **Only [global utility rules](/guide/rule-config/utility-rule#global-utility-rules)** (separate YAML files in the `utils/` directory with `id`, `language`, and `rule`) can declare parameters. Local `utils:` entries in rule config files remain zero-argument helpers.
 - **All declared arguments must be provided** at the call site — no optional parameters.
 - **Arguments are rules**, not strings. Each argument value is a full ast-grep rule object.
 - **Meta-variable isolation**: argument rules match in their own isolated scope. They don't read or write the caller's meta-variables during matching — exports happen only after the entire parameterized rule matches successfully.
@@ -286,7 +286,7 @@ inside:
 
 Select nodes by their position among siblings, using the familiar `An+B` syntax. You can even combine it with an `of selector` clause to filter which siblings count. Both `An+B` and `An+B of selector` are supported.
 
-These are equivalent to ast-grep's [`nthChild` rule](/reference/rule.html#nthchild):
+These are equivalent to ast-grep's [`nthChild` rule](/reference/rule#nthchild):
 
 :::code-group
 

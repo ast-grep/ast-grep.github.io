@@ -4,7 +4,7 @@ You can always see up-to-date command line options using `ast-grep --help`.
 ast-grep has several subcommands as listed below.
 
 ## `ast-grep run`
-Run one time search or rewrite in command line. This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is equivalent to `ast-grep run -p 'foo()'`. [View detailed reference.](/reference/cli/run.html)
+Run one time search or rewrite in command line. This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is equivalent to `ast-grep run -p 'foo()'`. [View detailed reference.](/reference/cli/run)
 
 ### Usage
 
@@ -22,14 +22,14 @@ ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 |-------|------|-------------|
 | -p| --pattern `<PATTERN>` |  AST pattern to match. |
 |   | --selector `<KIND>`   |  AST kind to extract sub-part of pattern to match. |
-| -k| --kind `<KIND>`       |  AST kind to match. Accepts ESQuery-style selectors. See [ESQuery Style Kind](/reference/rule/esquery.html). |
+| -k| --kind `<KIND>`       |  AST kind to match. Accepts ESQuery-style selectors. See [ESQuery Style Kind](/reference/rule/esquery). |
 | -r| --rewrite `<REWRITE>` |  String to replace the matched AST node. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
 |   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 |   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature, template] |
 |   | --follow   |  Follow symbolic links |
 |   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
-|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
+|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
 | -j| --threads `<NUM>`     | Set the approximate number of threads to use [default: heuristic]
 | -i| --interactive         |  Start interactive edit session. Code rewrite only happens inside a session. |
@@ -44,7 +44,7 @@ ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 |-h | --help                | Print help |
 
 ## `ast-grep outline`
-Explore code structure for symbols, imports, exports, and members. [View detailed reference.](/reference/cli/outline.html)
+Explore code structure for symbols, imports, exports, and members. [View detailed reference.](/reference/cli/outline)
 
 ### Usage
 
@@ -79,7 +79,7 @@ ast-grep outline [OPTIONS] [PATHS]...
 |-h | --help | Print help |
 
 ## `ast-grep scan`
-Scan and rewrite code by configuration. [View detailed reference.](/reference/cli/scan.html)
+Scan and rewrite code by configuration. [View detailed reference.](/reference/cli/scan)
 
 ### Usage
 
@@ -108,7 +108,7 @@ ast-grep scan [OPTIONS] [PATHS]...
 | | --format `<FORMAT>` |  Output warning/error messages in different formats [possible values: github, sarif] |
 | -U | --update-all | Apply all rewrite without confirmation |
 | | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
-|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview.html#enable-stdin-mode) |
+|   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
 |   |  --inspect `<GRANULARITY>`  | Inspect information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary, entity]|
 |   | --error`[=<RULE_ID>...]`| Set rule severity to error
@@ -125,7 +125,7 @@ ast-grep scan [OPTIONS] [PATHS]...
 | -h| --help|Print help|
 
 ## `ast-grep test`
-Test ast-grep rules. See [testing guide](/guide/test-rule.html) for more details. [View detailed reference.](/reference/cli/test.html)
+Test ast-grep rules. See [testing guide](/guide/test-rule) for more details. [View detailed reference.](/reference/cli/test)
 
 ### Usage
 
@@ -150,7 +150,7 @@ ast-grep test [OPTIONS]
 
 ## `ast-grep new`
 
-Create new ast-grep project or items like rules/tests. [View detailed reference.](/reference/cli/new.html)
+Create new ast-grep project or items like rules/tests. [View detailed reference.](/reference/cli/new)
 
 
 ### Usage
@@ -183,7 +183,7 @@ ast-grep new [COMMAND] [OPTIONS] [NAME]
 
 ## `ast-grep lsp`
 
-Start a language server to [report diagnostics](/guide/scan-project.html) in your project. This is useful for editor integration. See [editor integration](/guide/tools/editors.html) for more details.
+Start a language server to [report diagnostics](/guide/scan-project) in your project. This is useful for editor integration. See [editor integration](/guide/tools/editors) for more details.
 
 ### Usage
 

@@ -1,7 +1,7 @@
 <!-- Remove Badge if it does not have fix-->
 ## Rewrite Check to Yoda Condition <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground.html#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImMiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoiaWQ6IG1heS10aGUtZm9yY2UtYmUtd2l0aC15b3Vcbmxhbmd1YWdlOiBjXG5ydWxlOlxuICBwYXR0ZXJuOiAkQSA9PSAkQiBcbiAgaW5zaWRlOlxuICAgIGtpbmQ6IHBhcmVudGhlc2l6ZWRfZXhwcmVzc2lvblxuICAgIGluc2lkZToge2tpbmQ6IGlmX3N0YXRlbWVudH1cbmNvbnN0cmFpbnRzOlxuICBCOiB7IGtpbmQ6IG51bWJlcl9saXRlcmFsIH1cbmZpeDogJEIgPT0gJEEiLCJzb3VyY2UiOiJpZiAobXlOdW1iZXIgPT0gNDIpIHsgLyogLi4uICovfVxuaWYgKG5vdE1hdGNoID09IGFub3RoZXIpIHt9XG5pZiAobm90TWF0Y2gpIHt9In0=)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImMiLCJxdWVyeSI6IiRDOiAkVCA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwicmV3cml0ZSI6IiRDOiBMaXN0WyRUXSA9IHJlbGF0aW9uc2hpcCgkJCRBLCB1c2VsaXN0PVRydWUsICQkJEIpIiwiY29uZmlnIjoiaWQ6IG1heS10aGUtZm9yY2UtYmUtd2l0aC15b3Vcbmxhbmd1YWdlOiBjXG5ydWxlOlxuICBwYXR0ZXJuOiAkQSA9PSAkQiBcbiAgaW5zaWRlOlxuICAgIGtpbmQ6IHBhcmVudGhlc2l6ZWRfZXhwcmVzc2lvblxuICAgIGluc2lkZToge2tpbmQ6IGlmX3N0YXRlbWVudH1cbmNvbnN0cmFpbnRzOlxuICBCOiB7IGtpbmQ6IG51bWJlcl9saXRlcmFsIH1cbmZpeDogJEIgPT0gJEEiLCJzb3VyY2UiOiJpZiAobXlOdW1iZXIgPT0gNDIpIHsgLyogLi4uICovfVxuaWYgKG5vdE1hdGNoID09IGFub3RoZXIpIHt9XG5pZiAobm90TWF0Y2gpIHt9In0=)
 
 ### Description
 
@@ -22,7 +22,7 @@ constraints:                        # with the constraint that
 fix: $B == $A
 ```
 
-The rule targets an equality comparison, denoted by the [pattern](/guide/pattern-syntax.html) `$A == $B`. This comparison must occur [inside](/reference/rule.html#inside) an `if_statement`. Additionally, there’s a [constraint](/reference/yaml.html#constraints) that the right side of the comparison, `$B`, must be a number_literal like `42`.
+The rule targets an equality comparison, denoted by the [pattern](/guide/pattern-syntax) `$A == $B`. This comparison must occur [inside](/reference/rule#inside) an `if_statement`. Additionally, there’s a [constraint](/reference/yaml#constraints) that the right side of the comparison, `$B`, must be a number_literal like `42`.
 
 ### Example
 

@@ -56,7 +56,7 @@ transform:
 ```
 
 :::tip Pro tip
-You can use regular expression capture groups in the `replace` field and refer to them in the `by` field. See [replace guide](/guide/rewrite/transform.html#rewrite-with-regex-capture-groups)
+You can use regular expression capture groups in the `replace` field and refer to them in the `by` field. See [replace guide](/guide/rewrite/transform#rewrite-with-regex-capture-groups)
 :::
 
 ## `substring`
@@ -236,7 +236,7 @@ For multiple meta-variables, ast-grep will find matched descendants nodes of eac
 
 A list of rewriter rules to apply to the source meta-variable. The rewrite rules work like ast-grep's fix mode.
 
-`rewriters` can only refer to the rules specified in [`rewriters`](/reference/yaml/rewriter.html) [section](/reference/yaml.html#rewriters).
+`rewriters` can only refer to the rules specified in [`rewriters`](/reference/yaml/rewriter) [section](/reference/yaml#rewriters).
 
 ast-grep will find nodes in the meta-variable's AST that match the rewriter rules, and rewrite them to the `fix` string/object in the matched rule.
 

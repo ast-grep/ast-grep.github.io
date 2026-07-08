@@ -10,7 +10,7 @@ Use `outline` to inspect file structure, imports, exports, and direct members
 before opening full source files.
 
 For the item/member concepts behind this output, see
-[How Outline Entries Work](/reference/outline-rules.html#how-outline-entries-work).
+[How Outline Entries Work](/reference/outline-rules#how-outline-entries-work).
 
 ## Usage
 
@@ -100,7 +100,7 @@ Each file is a stream of YAML documents. These rules are loaded in addition to
 bundled extractor definitions and any outline rules configured on custom
 languages in `sgconfig.yml`.
 
-See [outline extraction rule reference](/reference/outline-rules.html).
+See [outline extraction rule reference](/reference/outline-rules).
 
 ### `--no-default-outline-rules`
 

@@ -47,7 +47,7 @@ language: JavaScript
 * type: `Rule`
 * required: true
 
-The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule.html).
+The object specify the method to find matching AST nodes. See details in [rule object reference](/reference/rule).
 
 ```yaml
 rule:
@@ -59,7 +59,7 @@ rule:
 * type: `HashMap<String, Rule>`
 * required: false
 
-Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value is a [rule object](/reference/rule.html).
+Additional meta variables pattern to filter matches. The key is matched meta variable name without `$`. The value is a [rule object](/reference/rule).
 
 **Note, constraints only applies to the single meta variable like `$ARG`,** not multiple meta variable like `$$$ARGS`.
 So the key name must only refer to a single meta variable.
@@ -133,7 +133,7 @@ transform:
 * type: `String` or `FixConfig`
 * required: false
 
-A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix.html).
+A pattern or a `FixConfig` object to auto fix the issue. See details in [fix object reference](/reference/yaml/fix).
 
 It can reference meta variables that appeared in the rule.
 
@@ -150,11 +150,11 @@ fix: ""
 * type: `Array<Rewriter>`
 * required: false
 
-A list of rewriter rules that can be used in [`rewrite` transformation](/reference/yaml/transformation.html#rewrite).
+A list of rewriter rules that can be used in [`rewrite` transformation](/reference/yaml/transformation#rewrite).
 
 A rewriter rule is similar to ordinary YAML rule, but it ony contains _finding_ fields, _patching_ fields and `id`.
 
-Please also see [rewriter reference](/reference/yaml/rewriter.html) for details.
+Please also see [rewriter reference](/reference/yaml/rewriter) for details.
 
 **Example:**
 ```yaml
@@ -231,7 +231,7 @@ labels:
     message: "This is the function"
 ```
 
-Please also see [label guide](/guide/project/lint-rule.html#customize-code-highlighting) for details.
+Please also see [label guide](/guide/project/lint-rule#customize-code-highlighting) for details.
 
 ## Globbing
 
@@ -313,7 +313,7 @@ A typical globing process works as follows:
 
 :::warning `ignores` in YAML is different from `--no-ignore` in CLI
 ast-grep respects common ignore files like `.gitignore` and hidden files by default.
-To disable this behavior, use [`--no-ignore`](/reference/cli.html#scan) in CLI.
+To disable this behavior, use [`--no-ignore`](/reference/cli#scan) in CLI.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 
@@ -331,7 +331,7 @@ Documentation link to this rule. It will be displayed in editor extension if sup
 **Example:**
 
 ```yaml
-url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
+url: 'https://astgrep.com/catalog/python/#migrate-openai-sdk'
 ```
 
 ### `metadata`
@@ -340,7 +340,7 @@ url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
 
 Extra information for the rule. This section can include custom data for external program to consume. For example, CVE/OWASP information can be added here for security research.
 
-ast-grep will output `metadata` with matches in [`--json`](/reference/cli/scan.html#json-style) mode if [`--include-metadata`](/reference/cli/scan.html#include-metadata) is on.
+ast-grep will output `metadata` with matches in [`--json`](/reference/cli/scan#json-style) mode if [`--include-metadata`](/reference/cli/scan#include-metadata) is on.
 
 **Example:**
 

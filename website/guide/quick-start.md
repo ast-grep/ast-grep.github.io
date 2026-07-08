@@ -151,7 +151,7 @@ That's it! You have refactored the TypeScript source in minutes. Congratulations
 We hope you enjoy the power of AST editing with plain programming-language patterns. Next, learn more about writing patterns.
 
 :::tip Pattern does not work?
-See our FAQ for more [guidance](/advanced/faq.html) on writing patterns.
+See our FAQ for more [guidance](/advanced/faq) on writing patterns.
 :::
 
 <!--

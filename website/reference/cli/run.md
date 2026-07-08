@@ -34,7 +34,7 @@ String to replace the matched AST node
 
 ### `-l, --lang <LANG>`
 
-The language of the pattern. For full language list, visit https://ast-grep.github.io/reference/languages.html
+The language of the pattern. For full language list, visit https://astgrep.com/reference/languages
 
 ### `--debug-query[=<format>]`
 
@@ -50,17 +50,17 @@ Possible values:
 
 AST kind to extract sub-part of pattern to match.
 
-selector defines the sub-syntax node kind that is the actual matcher of the pattern. See https://ast-grep.github.io/guide/rule-config/atomic-rule.html#pattern-object.
+selector defines the sub-syntax node kind that is the actual matcher of the pattern. See https://astgrep.com/guide/rule-config/atomic-rule#pattern-object.
 
 ### `-k, --kind <KIND>`
 
 AST kind to match.
 
-`kind` accepts a single tree-sitter node kind or an ESQuery-style selector. See [ESQuery Style Kind](/reference/rule/esquery.html) for the supported selector syntax.
+`kind` accepts a single tree-sitter node kind or an ESQuery-style selector. See [ESQuery Style Kind](/reference/rule/esquery) for the supported selector syntax.
 
 ### `--strictness <STRICTNESS>`
 
-The strictness of the pattern. More strict algorithm will match less code. See [match algorithm deep dive](/advanced/match-algorithm.html) for more details.
+The strictness of the pattern. More strict algorithm will match less code. See [match algorithm deep dive](/advanced/match-algorithm) for more details.
 
 Possible values:
 - **cst**:       Match exact all node

@@ -197,7 +197,7 @@ all:
 
 ### `:nth-child`
 
-`:nth-child` maps to ast-grep's [`nthChild`](/reference/rule.html#nthchild) rule.
+`:nth-child` maps to ast-grep's [`nthChild`](/reference/rule#nthchild) rule.
 
 ```yaml
 kind: array > number:nth-child(2n+1)

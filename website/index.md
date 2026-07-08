@@ -18,16 +18,16 @@ hero:
   actions:
     - theme: brand
       text: Quickstart
-      link: /guide/quick-start.html
+      link: /guide/quick-start
     - theme: alt
       text: Intro
-      link: /guide/introduction.html
+      link: /guide/introduction
     - theme: alt
       text: Examples
       link: /catalog/
     - theme: alt
       text: With AI
-      link: /advanced/prompting.html
+      link: /advanced/prompting
 
 features:
   - icon: ⚡️
