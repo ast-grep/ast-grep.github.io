@@ -251,7 +251,7 @@ Configuration files are more expressive than patterns and still relatively easy 
 
 Program-based eDSLs provide direct access to the AST through AST node objects.
 
-Examples of programmatic APIs include [JSCodeshift](https://jscodeshift.com/build/api-reference/), the [Code Property Graph](https://docs.joern.io/code-property-graph/) from [Joern](https://joern.io/), and ast-grep's [NAPI](https://astgrep.com/guide/api-usage).
+Examples of programmatic APIs include [JSCodeshift](https://jscodeshift.com/build/api-reference/), the [Code Property Graph](https://docs.joern.io/code-property-graph/) from [Joern](https://joern.io/), and ast-grep's [NAPI](/guide/api-usage).
 
 :::code-group
 ```typescript [@ast-grep/napi]

@@ -47,7 +47,7 @@ Large Language Models (LLMs) with extensive context windows can be made highly e
 
 The `llms.txt` file for ast-grep is a compilation of the entire documentation, designed to be fed into an LLM's context. This method significantly reduces the likelihood of the model "hallucinating" or generating incorrect ast-grep rules by giving it a thorough and accurate knowledge base to draw from.
 
-You can find the full `llms.txt` file here: [https://astgrep.com/llms-full.txt](https://astgrep.com/llms-full.txt)
+You can find the full `llms.txt` file here: [https://astgrep.com/llms-full.txt](/llms-full.txt)
 
 By loading this text into your session with a capable LLM, you can ask more complex questions and receive more accurate and nuanced answers regarding ast-grep's features and usage.
 

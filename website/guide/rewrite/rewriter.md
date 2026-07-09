@@ -83,7 +83,7 @@ rule:
       pattern: $VAL
 ```
 
-This rule can match the keyword arguments in the `dict` function call and extract key and value in the argument to meta-variables `$KEY` and `$VAL` respectively. [For example](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoic3RhcnRfdGFnIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgZmllbGQ6IG5hbWVcbiAgICAgIHBhdHRlcm46ICRLRVlcbiAgLSBoYXM6XG4gICAgICBmaWVsZDogdmFsdWVcbiAgICAgIHBhdHRlcm46ICRWQUwiLCJzb3VyY2UiOiJkID0gZGljdChhPTEsIGI9MikifQ==), `dict(a=1)` will extract `a` to `$KEY` and `1` to `$VAL`.
+This rule can match the keyword arguments in the `dict` function call and extract key and value in the argument to meta-variables `$KEY` and `$VAL` respectively. [For example](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6InB5dGhvbiIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJzbWFydCIsInNlbGVjdG9yIjoic3RhcnRfdGFnIiwiY29uZmlnIjoicnVsZTpcbiAga2luZDoga2V5d29yZF9hcmd1bWVudFxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgZmllbGQ6IG5hbWVcbiAgICAgIHBhdHRlcm46ICRLRVlcbiAgLSBoYXM6XG4gICAgICBmaWVsZDogdmFsdWVcbiAgICAgIHBhdHRlcm46ICRWQUwiLCJzb3VyY2UiOiJkID0gZGljdChhPTEsIGI9MikifQ==), `dict(a=1)` will extract `a` to `$KEY` and `1` to `$VAL`.
 
 Then, we define the rule as a rewriter and add fix field to transform the keyword argument to a dictionary key-value pair.
 

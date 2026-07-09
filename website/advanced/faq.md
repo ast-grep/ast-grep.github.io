@@ -107,7 +107,7 @@ For example, [React Hook](https://react.dev/learn/reusing-logic-with-custom-hook
 
 You may start with pattern like `use$HOOK` or `io_uring_$FUNC`. However, they are not valid meta variable names since the AST node text does not start with the dollar sign.
 
-The workaround is using [`constraints`](https://astgrep.com/guide/project/lint-rule#constraints) in [YAML rule](https://astgrep.com/guide/project/lint-rule) and [`regex`](https://astgrep.com/guide/rule-config/atomic-rule#regex) rule.
+The workaround is using [`constraints`](/guide/project/lint-rule#constraints) in [YAML rule](/guide/project/lint-rule) and [`regex`](/guide/rule-config/atomic-rule#regex) rule.
 
 ```yaml
 rule:
@@ -145,7 +145,7 @@ ast-grep's rule matching is a step-by-step process. It matches one atomic rule a
 
 **Rule matching is ordered** because previous rules' matched meta-variables can affect later rules. Only the first rule can specify what a `$META_VAR` matches, and later rules can only match the content captured by the first rule without modifying it.
 
-Let's see an example. Suppose we want to find a recursive function in JavaScript. [This rule](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gcGF0dGVybjogZnVuY3Rpb24gJEYoKSB7ICQkJCB9XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==) can do the trick.
+Let's see an example. Suppose we want to find a recursive function in JavaScript. [This rule](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gcGF0dGVybjogZnVuY3Rpb24gJEYoKSB7ICQkJCB9XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==) can do the trick.
 
 :::code-group
 
@@ -170,7 +170,7 @@ function recurse() {
 
 The rule works because the pattern `function $F() { $$$ }` matches first, capturing `$F` as `recurse`. The later `has` rule then looks for a `recurse()` call based on the matched `$F`.
 
-If we [swap the order of rules](https://astgrep.com/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiAgLSBwYXR0ZXJuOiBmdW5jdGlvbiAkRigpIHsgJCQkIH1cbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==), it will produce no match.
+If we [swap the order of rules](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQiLCJxdWVyeSI6ImZvbygkJCRBLCBiLCAkJCRDKSIsInJld3JpdGUiOiIiLCJjb25maWciOiJpZDogcmVjdXJzaXZlLWNhbGxcbmxhbmd1YWdlOiBKYXZhU2NyaXB0XG5ydWxlOlxuICBhbGw6XG4gIC0gaGFzOlxuICAgICAgcGF0dGVybjogJEYoKVxuICAgICAgc3RvcEJ5OiBlbmRcbiAgLSBwYXR0ZXJuOiBmdW5jdGlvbiAkRigpIHsgJCQkIH1cbiIsInNvdXJjZSI6ImZ1bmN0aW9uIHJlY3Vyc2UoKSB7XG4gICAgZm9vKClcbiAgICByZWN1cnNlKClcbn0ifQ==), it will produce no match.
 
 ```yml [rule.yml]
 id: recursive-call

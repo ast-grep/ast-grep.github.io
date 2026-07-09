@@ -26,7 +26,7 @@ You need to [install ast-grep CLI](/guide/quick-start#installation) locally and 
 
 ### Structural Search
 
-Use [pattern](https://astgrep.com/guide/pattern-syntax) to structural search your codebase.
+Use [pattern](/guide/pattern-syntax) to structural search your codebase.
 
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -36,7 +36,7 @@ Use [pattern](https://astgrep.com/guide/pattern-syntax) to structural search you
 
 ### Structural Replace
 
-Use pattern to [replace](https://astgrep.com/guide/rewrite-code) matching code.
+Use pattern to [replace](/guide/rewrite-code) matching code.
 
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -47,7 +47,7 @@ Use pattern to [replace](https://astgrep.com/guide/rewrite-code) matching code.
 
 *Require LSP setup*
 
-Code linting and code actions require [setting up `sgconfig.yml`](https://astgrep.com/guide/scan-project) in your workspace root.
+Code linting and code actions require [setting up `sgconfig.yml`](/guide/scan-project) in your workspace root.
 
 | Feature         | Screenshot                                                                                                  |
 | --------------- | ----------------------------------------------------------------------------------------------------------- |

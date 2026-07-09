@@ -29,7 +29,7 @@ In this case, I did not pay enough attention to runtime details or opted for nai
 
 [ast-grep](https://astgrep.com/) is [my](https://github.com/HerringtonDarkholme) hobby project to help you search and rewrite code using [abstract syntax tree](https://www.wikiwand.com/en/Abstract_syntax_tree).
 
-Conceptually, ast-grep takes a piece of pattern code (think it like a regular expression but for AST), matches the pattern against your codebase and gives a list of matched AST nodes back to you. See the [playground](https://astgrep.com/playground) for a live demo.
+Conceptually, ast-grep takes a piece of pattern code (think it like a regular expression but for AST), matches the pattern against your codebase and gives a list of matched AST nodes back to you. See the [playground](/playground) for a live demo.
 
 I designed ast-grep's architecture with performance in mind. Here are a few performance related highlights:
 
