@@ -77,7 +77,7 @@ rule:
 
 ```yaml
 constraints:
-  ARG: { kind: 'string' } }
+  ARG: { kind: 'string' }
 ```
 
 ⚙️ Additional `constraints` rules to filter meta-variable matches.
@@ -145,7 +145,7 @@ fix: "logger.log($$$ARGS)"
 ```yaml
 fix:
   template: "logger.log($$$ARGS)"
-  expandEnd: rule
+  expandEnd: { regex: ',' }
 ```
 
 🔧 Fix also accepts `FixConfig` object.
