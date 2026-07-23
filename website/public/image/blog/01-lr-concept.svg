@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="470" viewBox="0 0 1440 470" role="img" aria-labelledby="title desc">
+  <title id="title">How an LR parser advances one history</title>
+  <desc id="desc">The lexer supplies a lookahead token. The token and current stack state select one parse-table action. Shift and reduce update one stack and repeat; accept publishes the syntax tree.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="470" rx="24" fill="#f8fafc"/>
+  <text x="55" y="55" font-family="ui-sans-serif, system-ui" font-size="28" font-weight="500" fill="#172033">LR: one table-guided history</text>
+  <text x="55" y="87" font-family="ui-sans-serif, system-ui" font-size="16" fill="#64748b">The table chooses one action; shift and reduce update one stack, then the loop continues.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="55" y="176" width="205" height="94" rx="16" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="310" y="176" width="255" height="94" rx="16" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="615" y="176" width="225" height="94" rx="16" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+  </g>
+  <text x="158" y="215" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="21" font-weight="500" fill="#172033">Lexer</text>
+  <text x="158" y="243" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="15" fill="#64748b">characters → tokens</text>
+  <text x="438" y="211" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="20" font-weight="500" fill="#172033">Lookup key</text>
+  <text x="438" y="239" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#475569">stack-top state</text>
+  <text x="438" y="260" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#475569">+ lookahead token</text>
+  <text x="728" y="215" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="21" font-weight="500" fill="#172033">Parse table</text>
+  <text x="728" y="243" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="15" fill="#64748b">returns one action</text>
+
+  <path d="M260 223 H310" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M565 223 H615" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="285" y="232" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="28" fill="#64748b">→</text>
+  <text x="590" y="232" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="28" fill="#64748b">→</text>
+
+  <g filter="url(#shadow)">
+    <rect x="900" y="108" width="250" height="76" rx="15" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="900" y="197" width="250" height="76" rx="15" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+    <rect x="900" y="286" width="250" height="76" rx="15" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  </g>
+  <text x="1025" y="137" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="18" font-weight="500" fill="#172033">SHIFT</text>
+  <text x="1025" y="162" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="14" fill="#475569">consume token · push leaf + state</text>
+  <text x="1025" y="226" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="18" font-weight="500" fill="#172033">REDUCE</text>
+  <text x="1025" y="251" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="14" fill="#475569">pop rule pieces · build parent · goto</text>
+  <text x="1025" y="315" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="18" font-weight="500" fill="#172033">ACCEPT</text>
+  <text x="1025" y="340" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="14" fill="#475569">the complete tree is valid</text>
+
+  <path d="M840 223 C870 223 870 146 900 146" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M840 223 H900" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M840 223 C870 223 870 324 900 324" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="872" y="154" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="26" fill="#64748b">↗</text>
+  <text x="872" y="232" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="28" fill="#64748b">→</text>
+  <text x="872" y="330" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="26" fill="#64748b">↘</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1210" y="106" width="175" height="174" rx="17" fill="#ffffff" stroke="#f97316" stroke-width="2"/>
+    <rect x="1240" y="211" width="115" height="42" rx="8" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+    <rect x="1240" y="165" width="115" height="42" rx="8" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+    <rect x="1240" y="119" width="115" height="42" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="2"/>
+    <rect x="1210" y="306" width="175" height="78" rx="17" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  </g>
+  <text x="1298" y="98" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="15" font-weight="500" fill="#475569">ONE STACK</text>
+  <text x="1298" y="146" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#334155">state</text>
+  <text x="1298" y="192" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#334155">state</text>
+  <text x="1298" y="238" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#334155">state · TOP</text>
+  <text x="1298" y="337" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="18" font-weight="500" fill="#172033">Syntax tree</text>
+  <text x="1298" y="362" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="14" fill="#475569">published on accept</text>
+
+  <path d="M1150 146 H1210" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1150 235 H1210" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1150 324 H1210" stroke="#64748b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1298 106 C1298 35 438 35 438 176" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="1180" y="155" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="25" fill="#64748b">→</text>
+  <text x="1180" y="244" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="25" fill="#64748b">→</text>
+  <text x="1180" y="333" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="25" fill="#64748b">→</text>
+  <text x="860" y="36" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="14" fill="#64748b">↺ next state + next lookahead</text>
+
+  <text x="720" y="430" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="16" fill="#475569">At every step there is one current state, one chosen action, and one parser history.</text>
+</svg>

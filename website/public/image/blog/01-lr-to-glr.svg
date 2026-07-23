@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="930" viewBox="0 0 1400 930" role="img" aria-labelledby="title desc">
+  <title id="title">A linear LR stack forks into a graph-structured stack and merges again</title>
+  <desc id="desc">Three stages show one linear stack, two GLR version heads sharing their older stack nodes after a conflict, and one compatible destination with two predecessor links after a merge.</desc>
+  <defs>
+    <style>
+      .title{font-family:Arial,sans-serif;font-size:30px;font-weight:700;fill:#172033}
+      .panel-title{font-family:Arial,sans-serif;font-size:22px;font-weight:700;fill:#172033}
+      .body{font-family:Arial,sans-serif;font-size:18px;font-weight:500;fill:#334155}
+      .small{font-family:Arial,sans-serif;font-size:16px;font-weight:500;fill:#475569}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:17px;font-weight:600;fill:#172033}
+      .shared{fill:#dff7f2;stroke:#087f6b;stroke-width:2.5}
+      .branch{fill:#fff1d6;stroke:#c66b00;stroke-width:2.5}
+      .head{fill:#eee8ff;stroke:#6d55b8;stroke-width:2.5}
+      .panel{fill:#ffffff;stroke:#d7dce3;stroke-width:1.5}
+      .guide{stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:6 6}
+      .step{fill:#172033}
+      .step-text{font-family:Arial,sans-serif;font-size:18px;font-weight:700;fill:#ffffff;text-anchor:middle}
+    </style>
+  </defs>
+
+  <rect width="1400" height="930" rx="24" fill="#faf8f3"/>
+  <text class="title" x="55" y="55">From one LR history to a graph—and back to one head</text>
+  <text class="body" x="55" y="86">Arrows point from the current parse toward older history. Their labels are syntax subtrees.</text>
+
+  <rect class="panel" x="45" y="115" width="1310" height="210" rx="18"/>
+  <circle class="step" cx="82" cy="158" r="22"/><text class="step-text" x="82" y="165">1</text>
+  <text class="panel-title" x="120" y="166">Before a conflict: one head, one linear history</text>
+  <rect class="shared" x="170" y="218" width="150" height="64" rx="13"/><text class="mono" x="215" y="257">state 0</text>
+  <rect class="shared" x="475" y="218" width="150" height="64" rx="13"/><text class="mono" x="520" y="257">state 2</text>
+  <rect class="head" x="790" y="218" width="160" height="64" rx="13"/><text class="mono" x="833" y="257">state 7</text>
+  <line x1="475" y1="250" x2="332" y2="250" stroke="#334155" stroke-width="2.5"/><polygon points="332,250 344,244 344,256" fill="#334155"/><text class="mono" x="347" y="235">expression</text>
+  <line x1="790" y1="250" x2="637" y2="250" stroke="#334155" stroke-width="2.5"/><polygon points="637,250 649,244 649,256" fill="#334155"/><text class="mono" x="690" y="235">"+"</text>
+  <text class="body" x="1015" y="240">One stack version</text>
+  <text class="small" x="1015" y="270">Its head is state 7.</text>
+
+  <rect class="panel" x="45" y="345" width="1310" height="260" rx="18"/>
+  <circle class="step" cx="82" cy="388" r="22"/><text class="step-text" x="82" y="395">2</text>
+  <text class="panel-title" x="120" y="396">Conflict: two version heads reuse the same green prefix</text>
+  <rect class="shared" x="170" y="455" width="150" height="64" rx="13"/><text class="mono" x="215" y="494">state 0</text>
+  <rect class="shared" x="475" y="455" width="150" height="64" rx="13"/><text class="mono" x="520" y="494">state 2</text>
+  <line x1="475" y1="487" x2="332" y2="487" stroke="#334155" stroke-width="2.5"/><polygon points="332,487 344,481 344,493" fill="#334155"/><text class="mono" x="347" y="472">expression</text>
+  <rect class="branch" x="810" y="405" width="175" height="64" rx="13"/><text class="mono" x="848" y="444">state 9</text>
+  <rect class="branch" x="810" y="525" width="175" height="64" rx="13"/><text class="mono" x="848" y="564">state 6</text>
+  <line x1="810" y1="437" x2="637" y2="478" stroke="#334155" stroke-width="2.5"/><polygon points="637,478 650,469 651,482" fill="#334155"/><text class="mono" x="670" y="428">shift "*"</text>
+  <line x1="810" y1="557" x2="637" y2="497" stroke="#334155" stroke-width="2.5"/><polygon points="637,497 651,493 650,506" fill="#334155"/><text class="mono" x="650" y="566">reduce expression</text>
+  <text class="body" x="1045" y="439">version A head</text>
+  <text class="body" x="1045" y="559">version B head</text>
+  <line class="guide" x1="1015" y1="402" x2="1015" y2="591"/>
+  <text class="small" x="1045" y="487">The prefix is not copied.</text>
+  <text class="small" x="1045" y="513">Only the heads diverge.</text>
+
+  <rect class="panel" x="45" y="625" width="1310" height="245" rx="18"/>
+  <circle class="step" cx="82" cy="668" r="22"/><text class="step-text" x="82" y="675">3</text>
+  <text class="panel-title" x="120" y="676">Later: equivalent destinations merge without erasing either history</text>
+  <rect class="shared" x="170" y="742" width="150" height="64" rx="13"/><text class="mono" x="215" y="781">state 2</text>
+  <rect class="branch" x="505" y="690" width="175" height="64" rx="13"/><text class="mono" x="543" y="729">path A</text>
+  <rect class="branch" x="505" y="795" width="175" height="64" rx="13"/><text class="mono" x="543" y="834">path B</text>
+  <line x1="505" y1="722" x2="332" y2="769" stroke="#334155" stroke-width="2.5"/><polygon points="332,769 345,761 346,774" fill="#334155"/><text class="small" x="370" y="718">subtree A</text>
+  <line x1="505" y1="827" x2="332" y2="780" stroke="#334155" stroke-width="2.5"/><polygon points="332,780 346,775 345,788" fill="#334155"/><text class="small" x="370" y="839">subtree B</text>
+  <rect class="head" x="870" y="742" width="190" height="64" rx="13"/><text class="mono" x="908" y="781">state 12</text>
+  <line x1="870" y1="762" x2="692" y2="722" stroke="#334155" stroke-width="2.5"/><polygon points="692,722 704,716 704,728" fill="#334155"/>
+  <line x1="870" y1="786" x2="692" y2="827" stroke="#334155" stroke-width="2.5"/><polygon points="692,827 704,821 704,833" fill="#334155"/>
+  <text class="body" x="1110" y="757">one current head</text>
+  <text class="small" x="1110" y="785">same state + input position</text>
+  <text class="small" x="1110" y="812">two predecessor paths remain</text>
+
+  <rect class="shared" x="55" y="892" width="18" height="18" rx="4"/><text class="small" x="83" y="907">shared history</text>
+  <rect class="branch" x="240" y="892" width="18" height="18" rx="4"/><text class="small" x="268" y="907">branch-only history</text>
+  <rect class="head" x="465" y="892" width="18" height="18" rx="4"/><text class="small" x="493" y="907">active or merged head</text>
+</svg>

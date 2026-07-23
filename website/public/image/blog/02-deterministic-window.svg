@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Deterministic window materialization</title>
+  <desc id="desc">A compact linear array handles ordinary shifts and reductions, then becomes equivalent graph stack nodes when ambiguity requires graph topology.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#334155"/></marker>
+    <style>.h{font-family:Arial,sans-serif;font-size:27px;font-weight:700;fill:#172033}.t{font-family:Arial,sans-serif;font-size:18px;font-weight:500;fill:#334155}.s{font-family:monospace;font-size:15px;font-weight:600;fill:#172033}.base{fill:#e8ecf9;stroke:#5965b3;stroke-width:3}.entry{fill:#dff7f2;stroke:#087f6b;stroke-width:3}.graph{fill:#fff1d6;stroke:#c66b00;stroke-width:3}.a{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#arrow)}.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:8 8}</style>
+  </defs>
+  <rect width="1200" height="620" rx="24" fill="#faf8f3"/>
+  <text class="h" x="55" y="62">Cheap mode: store only the linear suffix</text>
+  <rect class="base" x="70" y="154" width="170" height="92" rx="16"/><text class="s" x="91" y="190">materialized GSS</text><text class="t" x="119" y="220">base</text>
+  <rect class="entry" x="305" y="140" width="185" height="120" rx="16"/><text class="s" x="344" y="178">entry 0</text><text class="t" x="331" y="210">state + subtree</text><text class="t" x="324" y="238">cumulative metrics</text>
+  <rect class="entry" x="520" y="140" width="185" height="120" rx="16"/><text class="s" x="559" y="178">entry 1</text><text class="t" x="546" y="210">state + subtree</text><text class="t" x="539" y="238">cumulative metrics</text>
+  <rect class="entry" x="735" y="140" width="185" height="120" rx="16"/><text class="s" x="774" y="178">entry 2</text><text class="t" x="761" y="210">state + subtree</text><text class="t" x="754" y="238">cumulative metrics</text>
+  <line x1="305" y1="200" x2="258" y2="200" stroke="#334155" stroke-width="3"/><polygon points="240,200 258,190 258,210" fill="#334155"/>
+  <line x1="520" y1="200" x2="508" y2="200" stroke="#334155" stroke-width="3"/><polygon points="490,200 508,190 508,210" fill="#334155"/>
+  <line x1="735" y1="200" x2="723" y2="200" stroke="#334155" stroke-width="3"/><polygon points="705,200 723,190 723,210" fill="#334155"/>
+  <text class="t" x="950" y="170">shift = append one entry</text><text class="t" x="950" y="205">reduce = replace the last N</text><text class="t" x="950" y="232">entries with one parent</text><text class="t" x="950" y="260">no new graph nodes yet</text>
+  <path class="dash" d="M60 320H1140"/>
+  <text class="h" x="55" y="376">Conflict or recovery: materialize the equivalent GSS chain</text>
+  <rect class="base" x="70" y="455" width="170" height="92" rx="16"/><text class="s" x="91" y="493">materialized GSS</text><text class="t" x="119" y="523">base</text>
+  <rect class="graph" x="330" y="455" width="150" height="92" rx="46"/><text class="s" x="365" y="507">node 0</text>
+  <rect class="graph" x="580" y="455" width="150" height="92" rx="46"/><text class="s" x="615" y="507">node 1</text>
+  <rect class="graph" x="830" y="455" width="150" height="92" rx="46"/><text class="s" x="865" y="507">node 2</text>
+  <line x1="330" y1="501" x2="258" y2="501" stroke="#334155" stroke-width="3"/><polygon points="240,501 258,491 258,511" fill="#334155"/>
+  <line x1="580" y1="501" x2="498" y2="501" stroke="#334155" stroke-width="3"/><polygon points="480,501 498,491 498,511" fill="#334155"/>
+  <line x1="830" y1="501" x2="748" y2="501" stroke="#334155" stroke-width="3"/><polygon points="730,501 748,491 748,511" fill="#334155"/>
+  <text class="t" x="995" y="476">same path metrics</text><text class="t" x="995" y="508">same ownership</text><text class="t" x="995" y="540">ready for GLR paths</text>
+</svg>

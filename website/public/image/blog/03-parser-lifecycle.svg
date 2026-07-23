@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Parser microbenchmark and application lifecycles</title>
+  <desc id="desc">A parser microbenchmark reuses one parser and amortizes a virtual arena, while the original ast-grep lifecycle creates one parser and virtual mapping for every file.</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#334155"/></marker><style>.h{font-family:Arial,sans-serif;font-size:28px;font-weight:700;fill:#172033}.t{font-family:Arial,sans-serif;font-size:17px;font-weight:500;fill:#334155}.s{font-family:monospace;font-size:15px;font-weight:600;fill:#172033}.good{fill:#dff7f2;stroke:#087f6b;stroke-width:3}.bad{fill:#fff1d6;stroke:#c66b00;stroke-width:3}.neutral{fill:#eef2ff;stroke:#5965b3;stroke-width:3}.line{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#a)}.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:8 8}</style></defs>
+  <rect width="1200" height="680" rx="24" fill="#faf8f3"/>
+  <text class="h" x="55" y="62">Microbenchmark: one parser, lifecycle amortized</text>
+  <rect class="neutral" x="65" y="120" width="180" height="82" rx="16"/><text class="s" x="103" y="154">create parser</text><text class="t" x="98" y="183">reserve arena once</text>
+  <rect class="good" x="330" y="120" width="150" height="82" rx="16"/><text class="s" x="374" y="169">parse 1</text>
+  <rect class="good" x="555" y="120" width="150" height="82" rx="16"/><text class="s" x="599" y="169">parse 2</text>
+  <rect class="good" x="780" y="120" width="150" height="82" rx="16"/><text class="s" x="824" y="169">parse N</text>
+  <rect class="neutral" x="1010" y="120" width="130" height="82" rx="16"/><text class="s" x="1037" y="154">destroy</text><text class="t" x="1030" y="183">unmap once</text>
+  <path d="M330 161H255" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#a)"/><path d="M555 161H490" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#a)"/><path d="M780 161H715" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#a)"/><path d="M1010 161H940" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#a)"/>
+  <path class="dash" d="M55 270H1145"/>
+  <text class="h" x="55" y="326">Original ast-grep: the “one-time” cost happens per file</text>
+  <rect class="bad" x="65" y="385" width="300" height="155" rx="18"/><text class="s" x="95" y="424">file 1</text><text class="t" x="95" y="458">mmap 4 GiB · mprotect</text><text class="t" x="95" y="489">parse + traverse</text><text class="t" x="95" y="520">munmap</text>
+  <rect class="bad" x="450" y="385" width="300" height="155" rx="18"/><text class="s" x="480" y="424">file 2</text><text class="t" x="480" y="458">mmap 4 GiB · mprotect</text><text class="t" x="480" y="489">parse + traverse</text><text class="t" x="480" y="520">munmap</text>
+  <rect class="bad" x="835" y="385" width="300" height="155" rx="18"/><text class="s" x="865" y="424">file 2,311</text><text class="t" x="865" y="458">mmap 4 GiB · mprotect</text><text class="t" x="865" y="489">parse + traverse</text><text class="t" x="865" y="520">munmap</text>
+  <path d="M450 462H375" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#a)"/><path d="M835 462H760" fill="none" stroke="#334155" stroke-width="3" marker-end="url(#a)"/>
+  <rect class="neutral" x="300" y="585" width="600" height="60" rx="18"/><text class="t" x="337" y="622">Fix: parser reuse + 256 KiB on-demand malloc/realloc growth</text>
+</svg>

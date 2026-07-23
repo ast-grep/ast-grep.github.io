@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Separable decisions in the subtree arena architecture</title>
+  <desc id="desc">Six interacting design decisions surround a central subtree arena: handle, storage, record shape, children, movement, and reclamation.</desc>
+  <defs><style>.h{font-family:Arial,sans-serif;font-size:30px;font-weight:700;fill:#172033}.t{font-family:Arial,sans-serif;font-size:17px;font-weight:500;fill:#334155}.k{font-family:Arial,sans-serif;font-size:19px;font-weight:700;fill:#172033}.box{fill:#fff;stroke:#5965b3;stroke-width:2}.hot{fill:#fff1d6;stroke:#c66b00;stroke-width:3}.line{stroke:#94a3b8;stroke-width:2}</style></defs>
+  <rect width="1200" height="620" rx="24" fill="#faf8f3"/>
+  <text class="h" x="60" y="58">“Use an arena” leaves most of the design undecided</text>
+  <rect class="hot" x="430" y="286" width="340" height="130" rx="28"/><text class="h" x="485" y="340">SUBTREE ARENA</text><text class="t" x="478" y="377">storage owner ≠ complete architecture</text>
+  <line class="line" x1="430" y1="316" x2="330" y2="220"/><line class="line" x1="430" y1="352" x2="330" y2="352"/><line class="line" x1="430" y1="395" x2="330" y2="502"/>
+  <line class="line" x1="770" y1="316" x2="870" y2="220"/><line class="line" x1="770" y1="352" x2="870" y2="352"/>
+  <line class="line" x1="600" y1="286" x2="600" y2="190"/>
+  <rect class="box" x="50" y="145" width="280" height="115" rx="16"/><text class="k" x="72" y="179">Handle</text><text class="t" x="72" y="208">pointer · physical index</text><text class="t" x="72" y="234">logical ID · inline value</text>
+  <rect class="box" x="50" y="295" width="280" height="115" rx="16"/><text class="k" x="72" y="329">Children</text><text class="t" x="72" y="358">coallocated · separate block</text><text class="t" x="72" y="384">global range · handle table</text>
+  <rect class="box" x="50" y="445" width="280" height="115" rx="16"/><text class="k" x="72" y="479">Reclamation</text><text class="t" x="72" y="508">refcount · rewind · free list</text><text class="t" x="72" y="534">sweep · semispace · compact</text>
+  <rect class="box" x="870" y="145" width="280" height="115" rx="16"/><text class="k" x="892" y="179">Record shape</text><text class="t" x="892" y="208">compact leaf · full leaf</text><text class="t" x="892" y="234">general · specialized internal</text>
+  <rect class="box" x="870" y="295" width="280" height="115" rx="16"/><text class="k" x="892" y="329">Movement</text><text class="t" x="892" y="358">stable address · movable base</text><text class="t" x="892" y="384">record compaction · location table</text>
+  <rect class="box" x="475" y="85" width="250" height="105" rx="16"/><text class="k" x="497" y="119">Storage</text><text class="t" x="497" y="148">malloc · pages · contiguous</text><text class="t" x="497" y="174">size-segregated arrays</text>
+</svg>

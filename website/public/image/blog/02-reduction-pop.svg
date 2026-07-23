@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">A parser reduction replaces two stack children with one parent</title>
+  <desc id="desc">Before reduction, child A and child B occupy two consecutive steps leading to the current stack top. Reducing two children removes those steps, keeps the same older history, and pushes one parent containing A and B.</desc>
+  <defs>
+    <style>
+      .title{font-family:Arial,sans-serif;font-size:28px;font-weight:700;fill:#172033}
+      .lane{font-family:Arial,sans-serif;font-size:17px;font-weight:700;letter-spacing:1.5px;fill:#64748b}
+      .body{font-family:Arial,sans-serif;font-size:19px;font-weight:600;fill:#172033}
+      .label{font-family:Arial,sans-serif;font-size:18px;font-weight:600;fill:#087f6b}
+      .note{font-family:Arial,sans-serif;font-size:17px;font-weight:500;fill:#475569}
+      .state{fill:#e5eeff;stroke:#4267a9;stroke-width:2.5}
+      .history{fill:#f1f3f6;stroke:#94a3b8;stroke-width:2}
+    </style>
+  </defs>
+
+  <rect width="1200" height="520" rx="24" fill="#faf8f3"/>
+  <text class="title" x="55" y="58">A reduction replaces recent stack steps with one parent</text>
+  <text class="note" x="55" y="84">LOGICAL ORDER → arrows show parsing progress; stored stack links point backward.</text>
+
+  <text class="lane" x="55" y="135">BEFORE</text>
+  <rect class="history" x="155" y="96" width="210" height="82" rx="14"/>
+  <text class="body" x="205" y="145">older history</text>
+
+  <line x1="365" y1="137" x2="490" y2="137" stroke="#087f6b" stroke-width="4"/>
+  <polygon points="500,137 484,128 484,146" fill="#087f6b"/>
+  <text class="label" x="397" y="117">child A</text>
+
+  <rect class="state" x="505" y="96" width="170" height="82" rx="14"/>
+  <text class="body" x="535" y="145">parser state</text>
+
+  <line x1="675" y1="137" x2="800" y2="137" stroke="#087f6b" stroke-width="4"/>
+  <polygon points="810,137 794,128 794,146" fill="#087f6b"/>
+  <text class="label" x="707" y="117">child B</text>
+
+  <rect class="state" x="815" y="96" width="170" height="82" rx="14"/>
+  <text class="body" x="852" y="145">current top</text>
+
+  <line x1="900" y1="188" x2="900" y2="300" stroke="#c66b00" stroke-width="3"/>
+  <polygon points="900,312 890,294 910,294" fill="#c66b00"/>
+  <text class="body" x="930" y="235">reduce 2</text>
+  <text class="note" x="930" y="263">A + B become one parent</text>
+
+  <text class="lane" x="55" y="356">AFTER</text>
+  <rect class="history" x="155" y="317" width="210" height="82" rx="14"/>
+  <text class="body" x="184" y="366">same older history</text>
+
+  <line x1="365" y1="358" x2="800" y2="358" stroke="#087f6b" stroke-width="4"/>
+  <polygon points="810,358 794,349 794,367" fill="#087f6b"/>
+  <rect x="500" y="325" width="180" height="38" rx="8" fill="#faf8f3"/>
+  <text class="label" x="518" y="351">parent(A, B)</text>
+
+  <rect class="state" x="815" y="317" width="170" height="82" rx="14"/>
+  <text class="body" x="864" y="366">new top</text>
+
+  <rect x="155" y="444" width="830" height="42" rx="10" fill="#dff7f2" stroke="#87cfc1" stroke-width="1.5"/>
+  <text class="note" x="190" y="471">“Pop” removes the two stack steps. Child A and child B survive inside their new parent.</text>
+</svg>

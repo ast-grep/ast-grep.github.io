@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920" role="img" aria-labelledby="title desc">
+  <title id="title">Physical GLR stack and subtree representation before the arena redesign</title>
+  <desc id="desc">A stack head owns a 160-byte stack node. Its highlighted 16-byte link owns a predecessor stack-node reference and an eight-byte subtree. The subtree is either a complete inline leaf or a pointer to a full leaf or variable-sized internal syntax allocation.</desc>
+  <defs>
+    <style>
+      .title{font-family:Arial,sans-serif;font-size:30px;font-weight:700;fill:#172033}
+      .subtitle{font-family:Arial,sans-serif;font-size:18px;font-weight:400;fill:#475569}
+      .panel-title{font-family:Arial,sans-serif;font-size:21px;font-weight:700;fill:#172033}
+      .body{font-family:Arial,sans-serif;font-size:18px;font-weight:500;fill:#172033}
+      .small{font-family:Arial,sans-serif;font-size:16px;font-weight:500;fill:#475569}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:17px;font-weight:600;fill:#172033}
+      .panel{fill:#ffffff;stroke:#d7dce3;stroke-width:1.5}
+      .stack{fill:#e5eeff;stroke:#4267a9;stroke-width:2.5}
+      .link{fill:#fff1d6;stroke:#c66b00;stroke-width:2.5}
+      .syntax{fill:#dff7f2;stroke:#087f6b;stroke-width:2.5}
+      .muted{fill:#f1f3f6;stroke:#94a3b8;stroke-width:1.5}
+      .divider{stroke:#94a3b8;stroke-width:1.5}
+    </style>
+  </defs>
+
+  <rect width="1400" height="920" rx="24" fill="#faf8f3"/>
+  <text class="title" x="55" y="55">The GLR graph in memory</text>
+  <text class="subtitle" x="55" y="86">Pre-arena checkpoint: parser control is blue, graph edges are orange, and recognized syntax is green.</text>
+
+  <rect class="panel" x="45" y="115" width="1310" height="310" rx="18"/>
+  <text class="panel-title" x="75" y="158">1. One version head owns the current parser configuration</text>
+
+  <rect class="stack" x="85" y="205" width="220" height="105" rx="14"/>
+  <text class="mono" x="120" y="243">Stack.heads[0]</text>
+  <text class="body" x="130" y="277">StackHead</text>
+  <text class="small" x="108" y="299">active version 0</text>
+
+  <line x1="305" y1="257" x2="388" y2="257" stroke="#334155" stroke-width="2.5"/>
+  <polygon points="388,257 376,251 376,263" fill="#334155"/>
+  <text class="small" x="322" y="244">owns</text>
+
+  <rect class="stack" x="400" y="183" width="665" height="205" rx="16"/>
+  <text class="mono" x="430" y="220">StackNode — 160 bytes</text>
+  <rect class="muted" x="430" y="243" width="230" height="54" rx="10"/>
+  <text class="body" x="455" y="276">state + position</text>
+  <rect class="muted" x="675" y="243" width="355" height="54" rx="10"/>
+  <text class="body" x="706" y="276">cost + count + precedence</text>
+  <text class="small" x="430" y="329">eight inline predecessor-link slots</text>
+  <rect class="link" x="430" y="343" width="67" height="28" rx="6"/><text class="mono" x="454" y="364">0</text>
+  <rect class="muted" x="507" y="343" width="67" height="28" rx="6"/><text class="mono" x="531" y="364">1</text>
+  <rect class="muted" x="584" y="343" width="67" height="28" rx="6"/><text class="mono" x="608" y="364">2</text>
+  <rect class="muted" x="661" y="343" width="67" height="28" rx="6"/><text class="mono" x="685" y="364">3</text>
+  <rect class="muted" x="738" y="343" width="67" height="28" rx="6"/><text class="mono" x="762" y="364">4</text>
+  <rect class="muted" x="815" y="343" width="67" height="28" rx="6"/><text class="mono" x="839" y="364">5</text>
+  <rect class="muted" x="892" y="343" width="67" height="28" rx="6"/><text class="mono" x="916" y="364">6</text>
+  <rect class="muted" x="969" y="343" width="67" height="28" rx="6"/><text class="mono" x="993" y="364">7</text>
+
+  <text class="body" x="1110" y="235">Ordinary push:</text>
+  <text class="small" x="1110" y="267">slot 0 is live</text>
+  <text class="small" x="1110" y="293">slots 1–7 are empty</text>
+  <text class="body" x="1110" y="337">A merge may fill</text>
+  <text class="small" x="1110" y="365">alternate slots later.</text>
+
+  <text class="small" x="430" y="408">slot 0 enlarged below ↓</text>
+
+  <rect class="panel" x="45" y="450" width="1310" height="420" rx="18"/>
+  <text class="panel-title" x="75" y="493">2. A link joins parser history to recognized syntax</text>
+
+  <rect class="link" x="115" y="530" width="385" height="118" rx="15"/>
+  <text class="mono" x="145" y="565">StackLink — 16 bytes</text>
+  <line class="divider" x1="307" y1="580" x2="307" y2="632"/>
+  <text class="body" x="145" y="608">predecessor</text>
+  <text class="small" x="169" y="630">pointer</text>
+  <text class="body" x="348" y="608">Subtree</text>
+  <text class="small" x="352" y="630">8-byte value</text>
+
+  <line x1="210" y1="648" x2="210" y2="718" stroke="#334155" stroke-width="2.5"/>
+  <polygon points="210,718 204,706 216,706" fill="#334155"/>
+  <rect class="stack" x="100" y="725" width="220" height="82" rx="13"/>
+  <text class="mono" x="135" y="759">StackNode</text>
+  <text class="small" x="132" y="785">older parser state</text>
+
+  <line x1="405" y1="648" x2="405" y2="689" stroke="#334155" stroke-width="2.5"/>
+  <line x1="405" y1="689" x2="610" y2="689" stroke="#334155" stroke-width="2.5"/>
+  <line x1="405" y1="689" x2="405" y2="718" stroke="#334155" stroke-width="2.5"/>
+  <line x1="610" y1="689" x2="610" y2="718" stroke="#334155" stroke-width="2.5"/>
+  <polygon points="405,718 399,706 411,706" fill="#334155"/>
+  <polygon points="610,718 604,706 616,706" fill="#334155"/>
+
+  <rect class="syntax" x="345" y="725" width="235" height="82" rx="13"/>
+  <text class="mono" x="382" y="758">inline leaf</text>
+  <text class="small" x="372" y="785">complete in 8 bytes</text>
+
+  <rect class="syntax" x="600" y="725" width="235" height="82" rx="13"/>
+  <text class="mono" x="632" y="758">heap pointer</text>
+  <text class="small" x="634" y="785">full/internal node</text>
+
+  <line x1="835" y1="766" x2="875" y2="766" stroke="#334155" stroke-width="2.5"/>
+  <line x1="875" y1="766" x2="875" y2="620" stroke="#334155" stroke-width="2.5"/>
+  <line x1="875" y1="620" x2="930" y2="620" stroke="#334155" stroke-width="2.5"/>
+  <polygon points="930,620 918,614 918,626" fill="#334155"/>
+
+  <text class="small" x="945" y="548">variable-size internal allocation</text>
+  <rect class="syntax" x="930" y="565" width="395" height="102" rx="14"/>
+  <rect class="muted" x="950" y="587" width="78" height="56" rx="8"/>
+  <text class="mono" x="966" y="621">child</text>
+  <rect class="muted" x="1038" y="587" width="78" height="56" rx="8"/>
+  <text class="mono" x="1054" y="621">child</text>
+  <text class="body" x="1129" y="621">…</text>
+  <rect class="syntax" x="1167" y="577" width="138" height="76" rx="9"/>
+  <text class="mono" x="1188" y="608">heap data</text>
+  <text class="small" x="1202" y="634">88 bytes</text>
+  <text class="small" x="930" y="695">The handle points to the metadata at the end.</text>
+  <text class="small" x="930" y="719">child_count locates the handles stored before it.</text>
+
+  <text class="body" x="930" y="780">A link owns syntax temporarily.</text>
+  <text class="small" x="930" y="808">A reduction moves child handles into a parent,</text>
+  <text class="small" x="930" y="832">then pushes that parent on another stack link.</text>
+
+  <rect class="stack" x="55" y="889" width="18" height="18" rx="4"/><text class="small" x="83" y="904">parser control</text>
+  <rect class="link" x="230" y="889" width="18" height="18" rx="4"/><text class="small" x="258" y="904">predecessor edge</text>
+  <rect class="syntax" x="440" y="889" width="18" height="18" rx="4"/><text class="small" x="468" y="904">recognized syntax</text>
+</svg>

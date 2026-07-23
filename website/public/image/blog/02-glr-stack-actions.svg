@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+  <title id="title">How Tree-sitter shifts, branches, reduces, and merges on its GLR stack</title>
+  <desc id="desc">Three panels show a shift adding a new current node linked backward to older history, a conflict creating multiple version heads that share history and may later merge, and a reduction walking backward links to collect child subtrees and find the older goto state.</desc>
+  <defs>
+    <style>
+      .title{font-family:Arial,sans-serif;font-size:29px;font-weight:700;fill:#172033}
+      .panel-title{font-family:Arial,sans-serif;font-size:20px;font-weight:700;fill:#172033}
+      .body{font-family:Arial,sans-serif;font-size:17px;font-weight:600;fill:#172033}
+      .small{font-family:Arial,sans-serif;font-size:15px;font-weight:500;fill:#475569}
+      .syntax-label{font-family:Arial,sans-serif;font-size:15px;font-weight:600;fill:#087f6b}
+      .version{fill:#fff1d6;stroke:#c66b00;stroke-width:2}
+      .state{fill:#e5eeff;stroke:#4267a9;stroke-width:2.5}
+      .shared{fill:#f1f3f6;stroke:#94a3b8;stroke-width:2}
+      .parent{fill:#dff7f2;stroke:#087f6b;stroke-width:2.5}
+      .merge{fill:#f3e8ff;stroke:#7e22ce;stroke-width:2.5}
+      .panel{fill:#ffffff;stroke:#d7dce3;stroke-width:1.5}
+    </style>
+  </defs>
+
+  <rect width="1400" height="860" rx="24" fill="#faf8f3"/>
+  <text class="title" x="55" y="55">Tree-sitter's GLR stack: heads move forward, links point backward</text>
+
+  <rect class="panel" x="45" y="85" width="1310" height="205" rx="18"/>
+  <text class="panel-title" x="75" y="125">1. Shift: extend one version</text>
+  <text class="small" x="75" y="151">The head moves to a new state. The new node points backward and carries the shifted token.</text>
+
+  <rect class="version" x="80" y="185" width="150" height="62" rx="13"/>
+  <text class="body" x="104" y="223">version 0 head</text>
+  <line x1="230" y1="216" x2="287" y2="216" stroke="#334155" stroke-width="3"/>
+  <polygon points="300,216 282,206 282,226" fill="#334155"/>
+
+  <rect class="state" x="300" y="175" width="165" height="82" rx="14"/>
+  <text class="body" x="340" y="210">new state</text>
+  <text class="small" x="326" y="235">newest node</text>
+
+  <line x1="465" y1="216" x2="592" y2="216" stroke="#087f6b" stroke-width="4"/>
+  <polygon points="605,216 587,206 587,226" fill="#087f6b"/>
+  <text class="syntax-label" x="492" y="197">shifted token</text>
+
+  <rect class="shared" x="605" y="175" width="170" height="82" rx="14"/>
+  <text class="body" x="636" y="210">previous state</text>
+  <text class="small" x="644" y="235">older node</text>
+
+  <line x1="775" y1="216" x2="902" y2="216" stroke="#64748b" stroke-width="3"/>
+  <polygon points="915,216 897,206 897,226" fill="#64748b"/>
+  <text class="small" x="806" y="197">older syntax</text>
+  <rect class="shared" x="915" y="185" width="180" height="62" rx="13"/>
+  <text class="body" x="950" y="223">shared history</text>
+  <text class="small" x="1140" y="222">backward direction →</text>
+
+  <rect class="panel" x="45" y="310" width="1310" height="245" rx="18"/>
+  <text class="panel-title" x="75" y="350">2. Conflict and merge: several futures, both histories preserved</text>
+  <text class="small" x="75" y="376">A conflict creates two heads. If they later become compatible, one current node keeps two backward links.</text>
+
+  <text class="small" x="75" y="407">BEFORE MERGE</text>
+  <rect class="version" x="75" y="420" width="105" height="46" rx="10"/>
+  <text class="small" x="91" y="448">head A</text>
+  <rect class="version" x="75" y="485" width="105" height="46" rx="10"/>
+  <text class="small" x="91" y="513">head B</text>
+  <line x1="180" y1="443" x2="222" y2="443" stroke="#334155" stroke-width="3"/>
+  <polygon points="235,443 217,433 217,453" fill="#334155"/>
+  <line x1="180" y1="508" x2="222" y2="508" stroke="#334155" stroke-width="3"/>
+  <polygon points="235,508 217,498 217,518" fill="#334155"/>
+  <rect class="state" x="235" y="414" width="125" height="58" rx="12"/>
+  <text class="small" x="265" y="448">current A</text>
+  <rect class="state" x="235" y="479" width="125" height="58" rx="12"/>
+  <text class="small" x="265" y="513">current B</text>
+  <line x1="360" y1="443" x2="402" y2="443" stroke="#087f6b" stroke-width="3"/>
+  <polygon points="415,443 397,433 397,453" fill="#087f6b"/>
+  <line x1="360" y1="508" x2="402" y2="508" stroke="#087f6b" stroke-width="3"/>
+  <polygon points="415,508 397,498 397,518" fill="#087f6b"/>
+  <rect class="shared" x="415" y="414" width="120" height="58" rx="12"/>
+  <text class="small" x="450" y="448">past A</text>
+  <rect class="shared" x="415" y="479" width="120" height="58" rx="12"/>
+  <text class="small" x="450" y="513">past B</text>
+
+  <line x1="655" y1="395" x2="655" y2="535" stroke="#d7dce3" stroke-width="2"/>
+
+  <text class="small" x="705" y="407">AFTER MERGE</text>
+  <rect class="version" x="705" y="447" width="105" height="52" rx="10"/>
+  <text class="small" x="722" y="478">one head</text>
+  <line x1="810" y1="473" x2="852" y2="473" stroke="#334155" stroke-width="3"/>
+  <polygon points="865,473 847,463 847,483" fill="#334155"/>
+  <rect class="merge" x="865" y="437" width="145" height="72" rx="14"/>
+  <text class="small" x="891" y="467">shared current</text>
+  <text class="small" x="900" y="489">configuration</text>
+  <line x1="1010" y1="459" x2="1062" y2="435" stroke="#087f6b" stroke-width="3"/>
+  <polygon points="1075,429 1054,427 1063,446" fill="#087f6b"/>
+  <line x1="1010" y1="487" x2="1062" y2="511" stroke="#087f6b" stroke-width="3"/>
+  <polygon points="1075,517 1063,500 1054,519" fill="#087f6b"/>
+  <rect class="shared" x="1075" y="402" width="120" height="54" rx="12"/>
+  <text class="small" x="1110" y="434">past A</text>
+  <rect class="shared" x="1075" y="490" width="120" height="54" rx="12"/>
+  <text class="small" x="1110" y="522">past B</text>
+  <text class="small" x="1215" y="445">two</text>
+  <text class="small" x="1215" y="467">backward</text>
+  <text class="small" x="1215" y="489">links</text>
+
+  <rect class="panel" x="45" y="575" width="1310" height="240" rx="18"/>
+  <text class="panel-title" x="75" y="615">3. Reduce: search backward and collect syntax from links</text>
+  <text class="small" x="75" y="641">A reduction of two children follows two backward links. A fork would create another search route.</text>
+
+  <rect class="version" x="80" y="690" width="140" height="58" rx="12"/>
+  <text class="body" x="99" y="725">version head</text>
+  <line x1="220" y1="719" x2="277" y2="719" stroke="#334155" stroke-width="3"/>
+  <polygon points="290,719 272,709 272,729" fill="#334155"/>
+  <rect class="state" x="290" y="678" width="155" height="82" rx="14"/>
+  <text class="body" x="324" y="713">current state</text>
+  <text class="small" x="329" y="738">cursor starts</text>
+
+  <line x1="445" y1="719" x2="582" y2="719" stroke="#087f6b" stroke-width="4"/>
+  <polygon points="595,719 577,709 577,729" fill="#087f6b"/>
+  <text class="syntax-label" x="478" y="698">child B · step 1</text>
+  <rect class="state" x="595" y="678" width="155" height="82" rx="14"/>
+  <text class="body" x="630" y="713">older state</text>
+  <text class="small" x="634" y="738">cursor moves</text>
+
+  <line x1="750" y1="719" x2="887" y2="719" stroke="#087f6b" stroke-width="4"/>
+  <polygon points="900,719 882,709 882,729" fill="#087f6b"/>
+  <text class="syntax-label" x="783" y="698">child A · step 2</text>
+  <rect class="shared" x="900" y="678" width="180" height="82" rx="14"/>
+  <text class="body" x="930" y="713">endpoint state</text>
+  <text class="small" x="923" y="738">used for parent goto</text>
+
+  <rect class="parent" x="1135" y="678" width="165" height="82" rx="14"/>
+  <text class="body" x="1166" y="713">parent(A, B)</text>
+  <text class="small" x="1168" y="738">pushed afterward</text>
+  <path d="M1080 719 C1100 719 1105 719 1122 719" stroke="#087f6b" stroke-width="3" fill="none"/>
+  <polygon points="1135,719 1117,709 1117,729" fill="#087f6b"/>
+
+  <text class="small" x="75" y="793">The version head points to the newest node. Reduction follows the stored arrows toward older states.</text>
+</svg>
