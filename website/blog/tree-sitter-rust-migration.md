@@ -294,10 +294,10 @@ to disguise as inevitability.
 
 Compact runtime types punish well-intentioned abstraction.
 
-One experiment replaced the compact eight-byte `Subtree` representation with a
-direct, explicit Rust enum. It was pleasant to inspect and sixteen bytes wide.
-Parse time increased by **19.74%**. The CPU was apparently unmoved by the
-improved semantic clarity.
+One experiment replaced the compact eight-byte `Subtree` representation—a
+C-style union whose field access required `unsafe`—with a direct, explicit Rust
+enum. It was pleasant to inspect and sixteen bytes wide. Parse time increased
+by **19.74%**. The CPU was apparently unmoved by the improved semantic clarity.
 
 The answer was not to abandon readable APIs. It was to separate interface from
 representation. Internal methods could expose meaningful operations while the

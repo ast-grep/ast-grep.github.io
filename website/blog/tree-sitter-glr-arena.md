@@ -33,26 +33,19 @@ temporary **GLR stack graph**, which remembers possible parse histories. On the
 other is the **syntax tree** being built for the caller. Following one reduction
 through both structures gave the rest of the investigation a path.
 
-## Where the investigation landed
+The stack produced the clearest result. In the seven-language performance
+corpus, **98.898% of released graph nodes had one predecessor**. Keeping that
+common history linear until GLR behavior was actually needed improved the
+geometric mean by **9.01%**. Syntax storage was less obedient: compact
+arena-backed references survived the experiments, but no isolated “arena
+speedup” did.
 
-The stack produced the clean result. In the repository's seven-language
-performance corpus, **98.898% of released graph nodes had one predecessor**.
-The retained **deterministic window** keeps that common history linear and
-builds the graph only when generalized behavior needs it. That change improved
-the seven-language geometric mean by **9.01%**.
-
-Syntax storage was less obedient. The retained runtime eventually used compact
-arena-backed references, but the experiments never isolated an “arena
-speedup.” Then the combined parser checkpoint delivered the perfect ending:
-Rust parsed roughly **30% faster than C**.
-
-It was not the ending. ast-grep used the same runtime and became slower than its
-C-backed build.
-
-This post follows the parser-side investigation: why a graph was built for a
-line, why delaying it worked, and why “use an arena” turned into several
-separate decisions. The final post starts with the apparent victory and follows
-the application failure that overturned it.
+At the combined parser checkpoint, Rust was roughly **30% faster than C**—yet
+ast-grep became slower than its C-backed build. This post follows the
+parser-side investigation: why a graph was built for a line, why delaying it
+worked, and why “use an arena” became several separate decisions. The final
+post takes the apparent parser victory into the application-level failure that
+overturned it.
 
 ## One reduction connects the stack graph to the syntax tree
 

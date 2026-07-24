@@ -25,3 +25,16 @@
   color: var(--vp-c-danger-1);
   font-weight: 600;
 }
+
+.medium-zoom-image {
+  cursor: zoom-in;
+}
+
+.medium-zoom-image--opened {
+  cursor: zoom-out;
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 100;
+}

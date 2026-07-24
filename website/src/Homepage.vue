@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Theme from 'vitepress/theme'
+import ImageZoom from './components/ImageZoom.vue'
 import Features from './homepage/Features.vue'
 import Languages from './homepage/Languages.vue'
 import Ecosystem from './homepage/Ecosystem.vue'
@@ -35,4 +36,5 @@ provide('toggle-appearance', async () => {
       <Ecosystem />
     </template>
   </Theme.Layout>
+  <ImageZoom />
 </template>
