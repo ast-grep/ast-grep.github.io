@@ -15,3 +15,13 @@
 .dark {
   --vp-custom-selector-option-text: #213547;
 }
+
+.benchmark-positive {
+  color: var(--vp-c-green-1);
+  font-weight: 600;
+}
+
+.benchmark-negative {
+  color: var(--vp-c-danger-1);
+  font-weight: 600;
+}

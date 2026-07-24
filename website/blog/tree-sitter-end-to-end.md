@@ -8,7 +8,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: The Parser Got Faster. The Application Got Slower.
+      content: Optimizing Tree-sitter for End-to-End ast-grep Performance
   - - meta
     - property: og:url
       content: https://astgrep.com/blog/tree-sitter-end-to-end
@@ -17,7 +17,7 @@ head:
       content: Why a parser-only speedup made ast-grep slower, and how profiling virtual memory, arena growth, tree traversal, and the full application repaired it.
 ---
 
-# The Parser Got Faster. The Application Got Slower.
+# Optimizing Tree-sitter for End-to-End ast-grep Performance
 
 *Part 4 of 4 — end-to-end validation*
 

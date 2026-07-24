@@ -8,7 +8,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: I Asked ChatGPT to Rewrite Tree-sitter in Rust. Then Things Got Weird.
+      content: How ast-grep Rewrote Tree-sitter in Rust and Made It 30% Faster
   - - meta
     - property: og:url
       content: https://astgrep.com/blog/tree-sitter-rust-rewrite
@@ -17,14 +17,22 @@ head:
       content: The complete adventure of using AI to rewrite Tree-sitter's C core in Rust, simplify it, optimize it, and discover that a faster parser could still make ast-grep slower.
 ---
 
-# I Asked ChatGPT to Rewrite Tree-sitter in Rust. Then Things Got Weird.
+# How ast-grep Rewrote Tree-sitter in Rust and Made It 30% Faster
 
 *Part 1 of 4 — the complete adventure*
 
 ast-grep rewrote Tree-sitter in Rust. The current core is faster at parsing,
 faster at reading the completed tree, and faster in ast-grep itself.
 
-![Current Rust-versus-C parsing, traversal, ast-grep, and RSS results](/image/blog/00-current-scoreboard.svg)
+![Rust core runtime performance compared with C](/image/blog/00-current-performance.svg)
+
+**Performance and peak RSS**
+
+| Benchmark | C / normal | Rust | Difference |
+| --- | ---: | ---: | ---: |
+| Raw parsing | Throughput: 100<br>RSS: 8.48–21.41 MiB | Throughput: <span class="benchmark-positive">129.74</span><br>RSS: <span class="benchmark-negative">8.42–25.70 MiB</span> | <span class="benchmark-positive">+29.74% throughput</span><br><span class="benchmark-negative">+20.0% RSS upper bound</span> |
+| Tree traversal | Throughput: 100<br>RSS: 20.38 MiB | Throughput: <span class="benchmark-positive">110.16</span><br>RSS: <span class="benchmark-negative">22.20 MiB</span> | <span class="benchmark-positive">+10.16% throughput</span><br><span class="benchmark-negative">+8.9% RSS</span> |
+| Complete ast-grep outline | User CPU: 1.233 s<br>RSS: 26.52 MiB | User CPU: <span class="benchmark-positive">0.960 s</span><br>RSS: <span class="benchmark-negative">34.43 MiB</span> | <span class="benchmark-positive">−22.2% user CPU</span><br><span class="benchmark-negative">+29.8% RSS</span> |
 
 Rust won every parser and traversal fixture, and ast-grep produced exactly the
 same outline. Memory is the tradeoff: the Rust build uses about 8 MiB more in
@@ -33,8 +41,11 @@ the ast-grep run. On the much larger TypeScript stress corpus, it peaks at
 
 That is the ending. Getting there was another matter.
 
+
+## Why Rewrite Tree-sitter?
+
 Every serious ast-grep performance investigation eventually arrived at the
-same place: Tree-sitter.
+same place: **Tree-sitter**.
 
 ast-grep could make its rules faster. It could prune work, cache configuration,
 and avoid visiting irrelevant syntax. But every file still had to become a
@@ -51,7 +62,7 @@ grammar ecosystem built on top of all of it.
 For one person, this was not a weekend project. It was a Herculean task wearing
 a header file.
 
-So nothing happened.
+_So nothing happened._
 
 Then the stories started appearing. Bun described its AI-assisted
 [Zig-to-Rust migration](https://bun.com/blog/bun-in-rust), while
@@ -67,7 +78,7 @@ question and get an answer before the decade ended.
 
 So I instructed ChatGPT to rewrite Tree-sitter's C core in Rust.
 
-The first rule was conservative: change the language, not the behavior.
+**The first rule was conservative: change the language, not the behavior.**
 ChatGPT translated one part at a time, checking each step against the existing
 tests and real grammars. The public interface stayed compatible, and the first
 Rust version followed the C code closely enough to compare when something
@@ -82,9 +93,9 @@ Then I tried to understand the code. I could not. The mechanical C-to-Rust port
 had accumulated layers of overlapping optimizations, and soon the parser began
 segfaulting. I now had a speedup I could neither explain nor trust. So the
 mission changed: stop optimizing, delete the features this AI-first runtime did
-not need, and rewrite the remaining C-style Rust into code I could reason about.
+not need, and **rewrite the remaining C-style Rust into code I could reason about.**
 
-Only after that cleanup did I return to performance. Profiles and academic
+**Only after that cleanup did I return to performance**. Profiles and academic
 parser research led to two major changes: keep the common parser stack linear,
 and allocate syntax nodes from shared blocks of memory. That produced real
 parser gains—and then ast-grep became slower. The investigation had to expand
@@ -96,9 +107,7 @@ The three posts after this one contain the layouts, algorithms, profiles, and
 failed candidates. This post is the entire adventure for everyone who quite
 reasonably does not want to spend an evening tracing parser memory by hand.
 
-![The rewrite adventure from translation to end-to-end validation](/image/blog/00-adventure-map.svg)
-
-## First, what kind of machine was I rewriting?
+## Tree-sitter's Parsing Architecture
 
 Tree-sitter takes source code and produces a syntax tree. A lexer turns
 characters into tokens such as `identifier`, `+`, and `number`. The parser then
@@ -131,7 +140,7 @@ expensive lesson.
 That is enough parser theory for the overview. The first technical deep dive
 builds the complete model from a tiny expression and follows it into GLR.
 
-## The first rewrite: make C behavior appear in Rust
+## First Step: Preserve C Behavior in Rust
 
 The first goal was not elegance. It was parity.
 
@@ -176,7 +185,7 @@ when the project was sitting on the shelf.
 
 Naturally, I immediately asked for more.
 
-## Then I typed `/goal improve the perf by 20%`
+## Why the First Optimization Attempt Failed
 
 The target was vibe coding in its purest form. The method was more deliberate.
 I directed ChatGPT to use proper profiling tools, understand the runtime's data
@@ -218,7 +227,7 @@ The performance number had arrived before understanding. That reversed the
 project. I stopped asking ChatGPT to make the pile faster and started asking it
 to make the system explainable.
 
-## The second rewrite: delete, then make the remainder readable
+## Phase 2: Reduce Scope and Improve Readability
 
 The cleanup had two parts:
 
@@ -229,7 +238,7 @@ The cleanup had two parts:
 Neither step promised a heroic benchmark. Both were prerequisites for trusting
 the next one.
 
-### Delete the lifecycle this runtime does not serve
+### Remove Incremental Parsing from the Target Runtime
 
 At first, “rewrite Tree-sitter” implied preserving every feature. Then the
 target workload forced a better question: preserving it for whom?
@@ -273,7 +282,7 @@ boundary, never because a feature happened to be inconvenient.
 Deletion turned out to be the first real optimization technique: remove work
 whose use case has already left the building.
 
-### Rewrite the retained C-style Rust for humans
+### Refactor the Retained Runtime for Maintainability
 
 A line-by-line translation is only readable if the reader already knows the
 original line by line. I instructed ChatGPT to break the monolithic,
@@ -306,7 +315,7 @@ enough that a segfault, invariant failure, or suspicious allocation had an
 address in the architecture. Only then could performance work become more than
 high-speed archaeology.
 
-## The actual performance work: make the common case simple
+## GLR and Memory-Layout Optimizations
 
 Once I could understand the runtime, I directed ChatGPT back toward
 **reduction**, the operation the parser performs constantly. A reduction takes
@@ -357,7 +366,7 @@ For a moment, the parser benchmarks looked excellent.
 
 Then I asked ChatGPT to build ast-grep against it.
 
-## The parser got faster. ast-grep got slower.
+## End-to-End Performance Findings
 
 The agent ran that binary across opencode, a real TypeScript repository. At
 that historical checkpoint, the parser-only benchmark put this Rust
@@ -378,9 +387,10 @@ the design look harmless. Across a repository, however, reserve and release
 happened thousands of times. I directed ChatGPT to replace it with an ordinary
 small allocation that grew only when needed.
 
-The CPU failure appeared on opencode. The memory sequence below used a separate
-TypeScript stress corpus with one ast-grep worker, held constant from the first
-1.04 GiB result through the final 91.2 MiB result.
+The CPU regression appeared in the ast-grep benchmark that used the opencode
+repository as its corpus. The memory sequence below used a separate TypeScript
+stress corpus with one ast-grep worker, held constant from the first 1.04 GiB
+result through the final 91.2 MiB result.
 
 That removed one problem and exposed another. Old arena blocks remained alive
 when the storage grew, pushing a serial run to **1.04 GiB** of memory. ChatGPT
@@ -410,7 +420,7 @@ time, some prevented a memory disaster, and others recovered time while reading
 the completed tree. The detailed posts and performance ledger separate the
 individual experiments; this overview keeps the principles that connect them.
 
-## The real change was how I worked with AI
+## Lessons from the AI-Assisted Rewrite
 
 At the beginning, AI increased the amount of code a single instruction could
 set in motion. That was enough to make the rewrite possible and nowhere near

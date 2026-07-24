@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="600" viewBox="0 0 1440 600" role="img" aria-labelledby="title desc">
+  <title id="title">Rust core runtime performance versus C</title>
+  <desc id="desc">Rust parsing throughput is 29.74 percent higher than C, tree traversal throughput is 10.16 percent higher than C, and the Rust-backed ast-grep outline uses 22.2 percent less user CPU time than the normal build.</desc>
+  <defs>
+    <filter id="shadow" x="-5%" y="-10%" width="110%" height="125%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="600" fill="#f6f7fb"/>
+
+  <text x="48" y="55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="650" fill="#0f172a">Runtime performance</text>
+  <text x="48" y="86" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#64748b">Latest Rust core compared directly with C</text>
+
+  <g transform="translate(1120 42)" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#334155">
+    <circle cx="7" cy="7" r="7" fill="#64748b"/>
+    <text x="23" y="12">C / normal</text>
+    <circle cx="145" cy="7" r="7" fill="#f97316"/>
+    <text x="161" y="12">Rust</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="40" y="116" width="1360" height="430" rx="22" fill="#ffffff"/>
+  </g>
+  <path d="M40 138a22 22 0 0 1 22-22h1316a22 22 0 0 1 22 22v48H40z" fill="#f1f5f9"/>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="0.8" fill="#475569">
+    <text x="68" y="158">BENCHMARK</text>
+    <text x="366" y="148">COMPARISON</text>
+    <text x="366" y="169" font-size="12" font-weight="500" letter-spacing="0" fill="#64748b">Throughput index for parser and traversal · CPU seconds for ast-grep</text>
+    <text x="1120" y="158">RESULT</text>
+  </g>
+
+  <g stroke="#e2e8f0">
+    <line x1="40" y1="186" x2="1400" y2="186"/>
+    <line x1="40" y1="306" x2="1400" y2="306"/>
+    <line x1="40" y1="426" x2="1400" y2="426"/>
+    <line x1="338" y1="116" x2="338" y2="546"/>
+    <line x1="1080" y1="116" x2="1080" y2="546"/>
+  </g>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="68" y="226" font-size="20" font-weight="650" fill="#0f172a">Raw parsing</text>
+    <text x="68" y="253" font-size="14" fill="#64748b">40 fixtures · 7 languages</text>
+    <text x="68" y="276" font-size="13" fill="#94a3b8">Higher is better</text>
+
+    <text x="366" y="222" font-size="14" fill="#475569">C</text>
+    <rect x="425" y="204" width="340" height="22" rx="5" fill="#64748b"/>
+    <text x="779" y="221" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#334155">100</text>
+    <text x="366" y="273" font-size="14" font-weight="600" fill="#c2410c">Rust</text>
+    <rect x="425" y="255" width="440" height="22" rx="5" fill="#f97316"/>
+    <text x="879" y="272" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#334155">129.74</text>
+
+    <rect x="1120" y="210" width="240" height="72" rx="14" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="1240" y="241" text-anchor="middle" font-size="25" font-weight="700" fill="#c2410c">+29.74%</text>
+    <text x="1240" y="265" text-anchor="middle" font-size="13" fill="#9a3412">parsing throughput</text>
+  </g>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="68" y="346" font-size="20" font-weight="650" fill="#0f172a">Tree traversal</text>
+    <text x="68" y="373" font-size="14" fill="#64748b">Common tree reads</text>
+    <text x="68" y="396" font-size="13" fill="#94a3b8">Higher is better</text>
+
+    <text x="366" y="342" font-size="14" fill="#475569">C</text>
+    <rect x="425" y="324" width="340" height="22" rx="5" fill="#64748b"/>
+    <text x="779" y="341" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#334155">100</text>
+    <text x="366" y="393" font-size="14" font-weight="600" fill="#c2410c">Rust</text>
+    <rect x="425" y="375" width="375" height="22" rx="5" fill="#f97316"/>
+    <text x="814" y="392" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#334155">110.16</text>
+
+    <rect x="1120" y="330" width="240" height="72" rx="14" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="1240" y="361" text-anchor="middle" font-size="25" font-weight="700" fill="#c2410c">+10.16%</text>
+    <text x="1240" y="385" text-anchor="middle" font-size="13" fill="#9a3412">traversal throughput</text>
+  </g>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="68" y="466" font-size="20" font-weight="650" fill="#0f172a">ast-grep outline</text>
+    <text x="68" y="493" font-size="14" fill="#64748b">opencode · one worker</text>
+    <text x="68" y="516" font-size="13" fill="#94a3b8">Lower is better</text>
+
+    <text x="366" y="462" font-size="14" fill="#475569">Normal</text>
+    <rect x="425" y="444" width="440" height="22" rx="5" fill="#64748b"/>
+    <text x="879" y="461" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#334155">1.233 s</text>
+    <text x="366" y="513" font-size="14" font-weight="600" fill="#c2410c">Rust</text>
+    <rect x="425" y="495" width="343" height="22" rx="5" fill="#f97316"/>
+    <text x="782" y="512" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="600" fill="#334155">0.960 s</text>
+
+    <rect x="1120" y="450" width="240" height="72" rx="14" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="1240" y="481" text-anchor="middle" font-size="25" font-weight="700" fill="#c2410c">−22.2%</text>
+    <text x="1240" y="505" text-anchor="middle" font-size="13" fill="#9a3412">user CPU time</text>
+  </g>
+
+  <text x="720" y="579" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Parser and traversal: geometric mean across 40 fixtures · ast-grep: complete outline of opencode</text>
+</svg>

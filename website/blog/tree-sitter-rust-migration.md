@@ -8,7 +8,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Rewriting Tree-sitter's C Core Without Breaking Its Ecosystem
+      content: "Rewriting Tree-sitter's C Core in Rust: Migration and Compatibility"
   - - meta
     - property: og:url
       content: https://astgrep.com/blog/tree-sitter-rust-migration
@@ -17,7 +17,7 @@ head:
       content: How an AI-assisted migration moved Tree-sitter's runtime from C to Rust while preserving its retained ABI, generated grammars, and external scanners.
 ---
 
-# Rewriting Tree-sitter's C Core Without Breaking Its Ecosystem
+# Rewriting Tree-sitter's C Core in Rust: Migration and Compatibility
 
 *Part 2 of 4 — migration, subtraction, and readability*
 
@@ -228,7 +228,7 @@ baseline.
 
 ## The feature list had to meet the actual workload
 
-The [adventure overview](tree-sitter-rust-rewrite.md#delete-the-lifecycle-this-runtime-does-not-serve)
+The [adventure overview](tree-sitter-rust-rewrite.md#remove-incremental-parsing-from-the-target-runtime)
 explains the product boundary: editors benefit from incremental reuse, while
 this ast-grep branch parses complete snapshots. Here, the interesting part is
 what that decision removed from the runtime.
@@ -343,7 +343,7 @@ and reduction bookkeeping worth investigating; a runtime audit then found that
 **98.898% of released graph nodes had only one predecessor**. The generalized
 stack was built for forks, but its measured released-node population was
 overwhelmingly linear. Continue with
-[My GLR Parser Built a Graph for a Straight Line. The Arena Had Opinions.](tree-sitter-glr-arena.md).
+[Improving Tree-sitter's GLR Algorithm and Memory Layout](tree-sitter-glr-arena.md).
 
 ## Appendix: How LR and GLR work
 

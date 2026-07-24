@@ -8,7 +8,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: My GLR Parser Built a Graph for a Straight Line. The Arena Had Opinions.
+      content: Improving Tree-sitter's GLR Algorithm and Memory Layout
   - - meta
     - property: og:url
       content: https://astgrep.com/blog/tree-sitter-glr-arena
@@ -17,7 +17,7 @@ head:
       content: How profiling Tree-sitter's GLR stack led to lazy graph materialization, compact arena-backed syntax nodes, and a long series of failed performance experiments.
 ---
 
-# My GLR Parser Built a Graph for a Straight Line. The Arena Had Opinions.
+# Improving Tree-sitter's GLR Algorithm and Memory Layout
 
 *Part 3 of 4 — simplification and performance*
 
@@ -625,7 +625,7 @@ At the combined checkpoint, the parser-only gate put Rust roughly **30% ahead
 of C**. The application result went the other way. The final post follows that
 contradiction through lifecycle, resident memory, traversal, and the follow-up
 parser work revealed by the application profile:
-[The Parser Got Faster. The Application Got Slower.](tree-sitter-end-to-end.md)
+[Optimizing Tree-sitter for End-to-End ast-grep Performance](tree-sitter-end-to-end.md)
 
 For the complete project in one sitting, start with
 [the adventure overview](tree-sitter-rust-rewrite.md). Readers who want the
