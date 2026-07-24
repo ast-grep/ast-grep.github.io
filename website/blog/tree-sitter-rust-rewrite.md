@@ -21,12 +21,27 @@ head:
 
 *Part 1 of 4 — the complete adventure*
 
-ast-grep rewrote Tree-sitter in Rust. The current core is faster at parsing,
-faster at reading the completed tree, and faster in ast-grep itself.
+ast-grep rewrote Tree-sitter's C core in Rust, with AI writing the code. The
+new core is faster at parsing, faster at reading the completed tree, and
+faster in ast-grep itself. (The title's “30%” is the parser-only number;
+end-to-end, ast-grep runs about 22% faster.)
+
+Two quick introductions before the numbers. ast-grep — the structural
+code-search tool this blog belongs to — searches code by syntax rather than by
+text, so every file it touches must first become a syntax tree.
+[Tree-sitter](https://tree-sitter.github.io/) is the parser framework that
+builds that tree: you give it a grammar definition, and it generates a fast
+parser for that language. Born in the editor world, it now powers an enormous
+ecosystem of grammars and tools.
 
 ![Rust core runtime performance compared with C](/image/blog/00-current-performance.svg)
 
-**Performance and peak RSS**
+**Performance and peak RSS.** Throughput is normalized so the unmodified C
+build (“C / normal”) scores 100; higher is better. RSS is peak resident
+memory, and the raw-parsing row shows it as a range because it varies across
+the benchmark's language fixtures. The outline row is ast-grep's real
+workload: parse every file in a repository, then walk each completed tree to
+extract a structural outline.
 
 | Benchmark | C / normal | Rust | Difference |
 | --- | ---: | ---: | ---: |
@@ -36,11 +51,23 @@ faster at reading the completed tree, and faster in ast-grep itself.
 
 Rust won every parser and traversal fixture, and ast-grep produced exactly the
 same outline. Memory is the tradeoff: the Rust build uses about 8 MiB more in
-the ast-grep run. On the much larger TypeScript stress corpus, it peaks at
-**91.2 MiB**.
+the ast-grep run. On the much larger TypeScript stress corpus — the TypeScript
+compiler repository's test-baseline tree, this project's memory torture test —
+it peaks at **91.2 MiB**. That figure is a triumph, not a confession: earlier
+in the project, the same corpus peaked above 1 GiB.
+
+The result is not a 1:1 replacement for upstream Tree-sitter. It is a narrower
+runtime built for AI coding agents that analyze complete file snapshots:
+
+- Existing generated languages and parsers remain compatible.
+- Native loading of WebAssembly-compiled languages and incremental old-tree
+  reuse were removed.
+- Compatibility still requires many raw pointers and `unsafe` blocks.
+
+That boundary keeps the grammar ecosystem useful for agentic coding while
+removing editor-specific machinery the target workload does not need.
 
 That is the ending. Getting there was another matter.
-
 
 ## Why Rewrite Tree-sitter?
 
@@ -54,64 +81,41 @@ foundation and, increasingly, the ceiling.
 
 I had dreamed about rewriting or deeply optimizing it for years. The dream
 usually lasted until I opened the runtime. There was a mature C implementation,
-binary compatibility with generated languages, external scanners, error
-recovery, incremental parsing, ambiguous grammars, reference-counted trees,
-several language bindings, and a small matter of not breaking the enormous
-grammar ecosystem built on top of all of it.
+binary compatibility, external scanners, error recovery, incremental parsing,
+ambiguous grammars, several language bindings, and a small matter of not
+breaking the enormous grammar ecosystem built on top of all of it.
 
 For one person, this was not a weekend project. It was a Herculean task wearing
 a header file.
 
 _So nothing happened._
 
-Then the stories started appearing. Bun described its AI-assisted
-[Zig-to-Rust migration](https://bun.com/blog/bun-in-rust), while
-[pgrust](https://github.com/malisper/pgrust) explored an AI-assisted PostgreSQL
-rewrite and Roc documented a
-[Rust-to-Zig migration](https://rtfeldman.com/rust-to-zig). None proved that
-rewriting Tree-sitter was wise. They showed that such experiments had become
-cheap enough for one person to attempt.
+Then AI-assisted rewrite attempts started appearing everywhere—[Bun](https://bun.com/blog/bun-in-rust),
+[pgrust](https://github.com/malisper/pgrust), and
+[Roc](https://rtfeldman.com/rust-to-zig) among them. They did not prove that
+rewriting Tree-sitter was wise, make the runtime smaller, or make parser theory
+less strange. They showed that the experiment had become cheap enough for one
+person to attempt, giving me enough leverage to ask the unreasonable question
+and get an answer before the decade ended.
 
-AI did not make the runtime smaller, and it certainly did not make parser
-theory less strange. It gave me enough leverage to ask the unreasonable
-question and get an answer before the decade ended.
+So I instructed ChatGPT to rewrite Tree-sitter's C core in Rust. The project
+moved from a compatibility-first translation, through a fast but unreadable
+optimization attempt, to a simpler runtime and real parser gains—only to
+discover that a faster parser could still make ast-grep slower.
 
-So I instructed ChatGPT to rewrite Tree-sitter's C core in Rust.
-
-**The first rule was conservative: change the language, not the behavior.**
-ChatGPT translated one part at a time, checking each step against the existing
-tests and real grammars. The public interface stayed compatible, and the first
-Rust version followed the C code closely enough to compare when something
-broke. Translate first. Redesign later.
-
-The rewrite was only the beginning. As soon as the Rust core passed those
-tests, I gave ChatGPT another instruction: `/goal improve the perf by 20%`.
-It returned a version that the benchmarks said was roughly twenty percent
-faster. For one brief moment, this looked absurdly easy.
-
-Then I tried to understand the code. I could not. The mechanical C-to-Rust port
-had accumulated layers of overlapping optimizations, and soon the parser began
-segfaulting. I now had a speedup I could neither explain nor trust. So the
-mission changed: stop optimizing, delete the features this AI-first runtime did
-not need, and **rewrite the remaining C-style Rust into code I could reason about.**
-
-**Only after that cleanup did I return to performance**. Profiles and academic
-parser research led to two major changes: keep the common parser stack linear,
-and allocate syntax nodes from shared blocks of memory. That produced real
-parser gains—and then ast-grep became slower. The investigation had to expand
-beyond the parser benchmark into memory, tree traversal, and the complete
-application lifecycle. The parser, it turned out, was only the first half of
-the adventure.
-
-The three posts after this one contain the layouts, algorithms, profiles, and
-failed candidates. This post is the entire adventure for everyone who quite
-reasonably does not want to spend an evening tracing parser memory by hand.
+The rest of this post follows that journey: what worked, what had to be
+reverted, and what it took to turn a parser benchmark win into an application
+win.
 
 ## Tree-sitter's Parsing Architecture
 
-Tree-sitter takes source code and produces a syntax tree. A lexer turns
-characters into tokens such as `identifier`, `+`, and `number`. The parser then
-uses a generated table and a stack to decide what each token means.
+Tree-sitter takes source code and produces a syntax tree. Each supported
+language begins as a grammar definition that Tree-sitter compiles into
+generated parsing tables and lexer code; when this series says “generated
+languages,” “generated grammars,” or “generated tables,” it means those
+artifacts. At runtime, a lexer turns characters into tokens such as
+`identifier`, `+`, and `number`. The parser then uses the generated table and
+a stack to decide what each token means.
 
 Most of the time, the table requests one of two operations:
 
@@ -137,8 +141,7 @@ tree, traversed by ast-grep, and eventually released. Optimizing only their
 birth while ignoring the rest of that lifetime would later produce a rather
 expensive lesson.
 
-That is enough parser theory for the overview. The first technical deep dive
-builds the complete model from a tiny expression and follows it into GLR.
+That is enough parser theory for the overview.
 
 ## First Step: Preserve C Behavior in Rust
 
@@ -161,7 +164,7 @@ The rewrite contract was deliberately conservative:
 In one sentence: preserve everything the ecosystem can observe, then make the
 inside replaceable.
 
-I instructed ChatGPT/Codex to translate the runtime one part at a time: basic
+I instructed ChatGPT to translate the runtime one part at a time: basic
 utilities, tree storage, lexing, the parser stack, tree navigation, and finally
 the parser loop. The agent read the C and Rust code, wrote patches, fixed
 compiler errors, ran tests, and investigated mismatches. I supplied the goals,
@@ -174,11 +177,6 @@ and much of the experimental code were produced by the agent under my
 direction. Without AI, this project would still be an idea I occasionally
 mentioned before wisely changing the subject.
 
-The new core preserved the C ABI, generated parsers, external scanners, public
-tree behavior, and bindings. The first Rust implementation also preserved a
-great deal of the C implementation's shape. That was intentional: when parity
-failed, similar control flow made the difference findable.
-
 The C core had become Rust. It compiled. It passed the tests. Existing grammars
 could use it. This was already the kind of result that had looked impossible
 when the project was sitting on the shelf.
@@ -187,47 +185,25 @@ Naturally, I immediately asked for more.
 
 ## Why the First Optimization Attempt Failed
 
-The target was vibe coding in its purest form. The method was more deliberate.
-I directed ChatGPT to use proper profiling tools, understand the runtime's data
-layouts and ownership, and look for algorithmic changes instead of merely
-polishing individual instructions. The agent traced those paths, proposed
-implementations, and produced patches across the stack, subtree storage, and
-parser loop. I chose the major directions; the agent explored and implemented
-them. But the code arrived faster than I could build a mental model of
-everything it was changing.
+The request was pure vibe coding — one line typed into a `/goal` command. The
+process behind it was more careful than that: I directed ChatGPT to use proper
+profiling tools, understand the runtime's data layouts and ownership, and look
+for algorithmic changes instead of merely polishing individual instructions.
+The benchmarks duly crossed the requested line. Then I opened the code and
+could not follow it. Layers of overlapping AI-generated optimizations sat on
+top of a mechanical C-to-Rust translation, and soon the parser began
+segfaulting: no friendly Rust panic, no failed assertion, the process simply
+left. A parser that is twenty percent faster and occasionally disappears is
+not an optimization. It is a benchmark with a jump scare.
 
-The performance measurements at the time said it had worked. They crossed the
-requested line: roughly twenty percent.
+I reverted the optimization work entirely. The twenty percent went with it,
+and the performance the project eventually reached came later, from the clean,
+layered work described below.
+[Part 2](tree-sitter-rust-migration.md) tells this story in full. What matters
+here is how it reversed the project: I stopped asking ChatGPT to make the pile
+faster and started asking it to make the system explainable.
 
-This should have been the triumphant ending.
-
-Instead, I opened the code.
-
-The parser was now a layer of AI-generated optimization over a mechanical
-C-to-Rust translation. The individual changes looked plausible. Together they
-were unreadable. I could not explain which ownership rule made a pointer valid,
-which fast path preserved GLR behavior, or which benchmark result belonged to
-which overlapping experiment. The number said “faster.” The code said nothing
-I could safely repeat.
-
-Then the worst thing happened: segfaults.
-
-Not a friendly Rust panic with a useful stack trace. Not a failed assertion
-pointing at an invariant. The process simply left. Somewhere inside a parser
-full of shared subtrees, compatibility boundaries, stack links, and optimized
-unsafe code, an address had become fiction.
-
-What was I supposed to debug? I could not explain what the code was doing, let
-alone why it had decided to leave the process.
-
-A parser that is twenty percent faster and occasionally disappears is not an
-optimization. It is a benchmark with a jump scare.
-
-The performance number had arrived before understanding. That reversed the
-project. I stopped asking ChatGPT to make the pile faster and started asking it
-to make the system explainable.
-
-## Phase 2: Reduce Scope and Improve Readability
+## Second Step: Reduce Scope and Improve Readability
 
 The cleanup had two parts:
 
@@ -249,29 +225,24 @@ frame. Incremental parsing lets the runtime reuse the old tree and rebuild only
 the affected region. In that world, reparsing the complete file after every
 keystroke is needless work.
 
-That was not the world of this branch.
-
-ast-grep and the AI coding-agent tools I cared about operate on complete file
-snapshots. An agent reads a file, analyzes or rewrites it, and asks the tool to
-process the new snapshot. There is no editor-owned syntax tree advancing one
-keystroke at a time. A fresh parse is not a degraded fallback; it is the normal
-operation.
-
-Once those workloads sat next to each other, the boundary became clear:
-
-- **Complete snapshots, not keystrokes.** Fresh parsing would be the intended
-  path, so editor-specific old-tree reuse did not belong in every core parser
-  structure.
-- **Native tools set the performance target.** The browser WebAssembly build
-  remained, but native loading of Wasm-compiled language grammars was removed;
-  neither defined this optimization workload.
-- **Keep the public contract stable.** Existing callers could retain the same
-  API even when this implementation stopped using an old tree during parsing.
+That was not the world of this branch. ast-grep and the AI coding-agent tools
+I cared about operate on complete file snapshots: an agent reads a file,
+analyzes or rewrites it, and asks the tool to process the new snapshot. There
+is no editor-owned syntax tree advancing one keystroke at a time. A fresh
+parse is not a degraded fallback; it is the normal operation.
 
 So I decided to remove incremental old-tree reuse and instructed ChatGPT to do
 it. The public parameter remains for compatibility, but this runtime parses
-fresh. The machinery for finding and reusing pieces of the old tree disappeared
-from the hot implementation.
+fresh. The machinery for finding and reusing pieces of the old tree — and it
+reached into a surprising number of core structures — disappeared from the hot
+implementation; [Part 2](tree-sitter-rust-migration.md) inventories exactly
+what went.
+
+A second, separate scope cut rode along with it: native loading of
+Wasm-compiled grammars. Tree-sitter can compile a grammar to WebAssembly and
+load it at runtime — a capability distinct from the browser Wasm build, which
+stayed. Native tools set this project's performance target, and runtime Wasm
+grammar loading was not part of that workload.
 
 This is not a proposal that upstream Tree-sitter should abandon incremental
 parsing. It is a product decision for a narrower runtime aimed at file-at-a-time
@@ -289,22 +260,16 @@ original line by line. I instructed ChatGPT to break the monolithic,
 pointer-heavy port into more idiomatic internal Rust—without making the
 ABI-facing types “idiomatic” in ways that would break existing grammars.
 
-The cleanup followed another small set of rules:
-
-- **Make ownership visible.** Internal raw-pointer parameters became references
-  or slices where their lifetimes were local and provable.
-- **Represent absence explicitly.** Sentinel pointers and magic states became
-  `Option` or named states.
-- **Return values normally.** Out-parameters became return values when the C ABI
-  did not require them.
-- **Localize mutation.** Large modules split by responsibility, and changes to
-  state moved closer to the code responsible for that state.
-- **Hide density behind readable operations.** Frequently copied tree
-  references stayed compact, but pointer arithmetic and ownership rules
-  acquired narrow APIs and names.
-- **Keep compatibility ugly where it is real.** Generated-language layouts and
-  exported functions remained C-shaped because another binary had already
-  committed to that shape.
+The cleanup was less a redesign than a long series of small promotions.
+Internal raw-pointer parameters became references or slices wherever their
+lifetimes were local and provable; a sentinel pointer meaning “no node here”
+became an honest `Option`. Out-parameters turned into return values where the
+C ABI did not demand them, large modules split by responsibility so mutation
+sat next to the state it changed, and the dense tricks that had to stay —
+compact indexes into the tree, pointer arithmetic — were hidden behind narrow,
+named operations. Where compatibility was real, the code stayed deliberately
+ugly: generated-language layouts and exported functions remained C-shaped,
+because another binary had already committed to that shape.
 
 That cleanup made questions answerable: Who owns this piece of the tree? Can
 this reference survive when its storage grows? Why does one reduction create a
@@ -312,15 +277,13 @@ temporary parser state only to delete it immediately?
 
 The important output was not prettier syntax. It was a runtime organized well
 enough that a segfault, invariant failure, or suspicious allocation had an
-address in the architecture. Only then could performance work become more than
-high-speed archaeology.
+address in the architecture.
 
 ## GLR and Memory-Layout Optimizations
 
 Once I could understand the runtime, I directed ChatGPT back toward
-**reduction**, the operation the parser performs constantly. A reduction takes
-a few pieces of syntax the parser has already recognized and combines them into
-one larger piece. For example, `a`, `+`, and `b` become an addition expression.
+**reduction** — the “reduce” from the architecture section above, and the
+operation the parser performs constantly.
 
 That small operation touches both major data structures. It removes the
 children from the parser's working stack, then stores them under a new parent in
@@ -333,9 +296,9 @@ The successful changes eventually fell into four simple principles:
   one straight path, so the parser no longer builds a graph until the input
   actually forks. Work needed mainly for editing is also kept out of a fresh
   parse when possible.
-- **Make allocation cheap, and references small.** Asking the general-purpose
+- **Make allocation cheap, and indexes small.** Asking the general-purpose
   allocator for every internal syntax node is expensive. An arena obtains a
-  growing block and serves many nodes from it. Separately, compact references
+  growing block and serves many nodes from it. Separately, compact indexes
   reduce the bytes moved between the parser stack and the tree.
 - **Do repeated work once.** The parser prepares common grammar lookups ahead of
   time, and the tree reader avoids looking up the same children repeatedly.
@@ -350,17 +313,16 @@ real ambiguity: switch to the full graph
 ```
 
 The 99% number described the problem, but not the solution. I directed ChatGPT
-Pro to review academic work on generalized parsers, and the result pointed to
-an older lesson: do not build the general structure until the input actually
-needs it. The arena was a separate idea and required its own experiments. The
-linear stack avoided graph bookkeeping; the arena reduced calls to the general
-allocator. Making references smaller was yet another layout choice, and it did
-not become faster automatically. Several versions lost before the pieces paid
-for themselves.
+(in research mode rather than coding mode, this time) to review academic work
+on generalized parsers, and the result pointed to an older lesson: do not
+build the general structure until the input actually needs it. The arena was a
+separate idea and required its own experiments. The linear stack avoided graph
+bookkeeping; the arena reduced calls to the general allocator. Making the
+indexes smaller was yet another layout choice, and it did not become faster
+automatically. Several versions lost before the pieces paid for themselves.
 
-The exact representations and failed alternatives belong in the later posts.
-The important result here is simpler: ordinary parsing stopped paying the full
-price of rare ambiguity and separate allocation for every internal syntax node.
+The important result: ordinary parsing stopped paying the full price of rare
+ambiguity and of separate allocation for every internal syntax node.
 
 For a moment, the parser benchmarks looked excellent.
 
@@ -369,8 +331,8 @@ Then I asked ChatGPT to build ast-grep against it.
 ## End-to-End Performance Findings
 
 The agent ran that binary across opencode, a real TypeScript repository. At
-that historical checkpoint, the parser-only benchmark put this Rust
-implementation roughly **30% ahead of the C runtime**.
+that point, the parser-only benchmark put this Rust implementation roughly
+**30% ahead of the C runtime**.
 
 The application was slower.
 
@@ -382,43 +344,41 @@ thousands of files, then walked every completed tree to extract its outline.
 The benchmark had measured only the middle of that journey.
 
 The first arena reserved a huge virtual memory region every time a parser was
-created. It did not immediately consume all that physical memory, which had made
-the design look harmless. Across a repository, however, reserve and release
-happened thousands of times. I directed ChatGPT to replace it with an ordinary
-small allocation that grew only when needed.
+created. It did not immediately consume all that physical memory, which had
+made the design look harmless. Across a repository, however, that reservation
+happened thousands of times, and each one cost real work: a fresh round of
+reserve-and-release syscalls, plus the page-fault and page-table churn behind
+them, repeated for every file. That churn — not parsing — was the CPU
+regression on the opencode corpus. I directed ChatGPT to replace the
+reservation with an ordinary small allocation that grew only when needed.
 
-The CPU regression appeared in the ast-grep benchmark that used the opencode
-repository as its corpus. The memory sequence below used a separate TypeScript
-stress corpus with one ast-grep worker, held constant from the first 1.04 GiB
-result through the final 91.2 MiB result.
-
-That removed one problem and exposed another. Old arena blocks remained alive
-when the storage grew, pushing a serial run to **1.04 GiB** of memory. ChatGPT
-changed the internal references so the arena could move as it grew and the old
-blocks could be released. The peak fell to about **492 MiB**.
-
-Still far too much.
-
-The obvious suspect was dead syntax nodes. I directed ChatGPT through two
-attempts to reclaim them; neither changed the result. Only after I asked the
-agent to count memory by purpose did the real answer appear: **468.2 MB**
-belonged to temporary child buffers, not the tree nodes I had told it to
-reclaim. The agent reused those buffers and brought the peak down to
-**91.2 MiB**.
+That removed one problem and exposed another: memory. On the separate
+TypeScript stress corpus, measured with one ast-grep worker throughout, the
+arena's early growth strategy kept old blocks alive and pushed peak memory to
+**1.04 GiB**. Getting from there to the final **91.2 MiB** took several rounds
+of arena surgery — including one twist where the memory I kept telling ChatGPT
+to reclaim turned out not to be the memory actually being wasted.
+[Part 4](tree-sitter-end-to-end.md) has the traces and the culprit; I will not
+spoil the reveal here.
 
 The completed tree had one more surprise. Compact indexes helped while building
 it, but ast-grep had to look them up while reading it. Some parser time had
 simply moved into tree traversal. ChatGPT changed the tree reader to look up
 each group of children once instead of repeatedly, recovering that cost.
 
-The end-to-end failure did not invalidate the parser work. It invalidated the
-old meaning of “worked.” From then on, a performance result needed to cover
-parsing, memory, reading the tree, and the complete application lifecycle.
+Those repairs — ordinary allocation instead of a per-parser virtual-memory
+ceremony, and a tree reader that resolves each group of children once — closed
+the regression, and together with a later round of parser-side tuning they
+became the numbers at the top of this post: the outline run finishing with
+**22.2% less user CPU** than the C build. The end-to-end failure did not
+invalidate the parser work. It invalidated the old meaning of “worked.” From
+then on, a performance result needed to cover parsing, memory, reading the
+tree, and the complete application lifecycle.
 
 There was no single magic patch behind these results. Some changes saved parser
 time, some prevented a memory disaster, and others recovered time while reading
-the completed tree. The detailed posts and performance ledger separate the
-individual experiments; this overview keeps the principles that connect them.
+the completed tree. This overview keeps the principles that connect the
+individual experiments; the detailed posts take them apart.
 
 ## Lessons from the AI-Assisted Rewrite
 
@@ -446,12 +406,12 @@ find the expensive work
         -> retain, revise, or reject
 ```
 
-ChatGPT/Codex did not gradually become infallible. I gradually learned enough
+ChatGPT did not gradually become infallible. I gradually learned enough
 about the runtime to give it narrower problems, challenge bundled assumptions,
 and demand evidence at the correct boundary. The segfaulting early speedup, the
 arena's memory explosion, and the slower application all arrived behind
 reasonable-looking code and encouraging local results. Profiles and tests had
-to be less impressionable than either participant.
+to catch what both of us missed.
 
 By the end, the collaboration had found its proper division of labor. ChatGPT
 could explore implementation space at a pace I could never match by hand. My
@@ -461,16 +421,17 @@ evidence decided which parts returned.
 
 That is the whole adventure. The remaining posts slow it down:
 
-1. [The C-to-Rust migration, feature scope, and readability rewrite](tree-sitter-rust-migration.md)
-   explains LR/GLR carefully, decides what this branch retains, and shows how
-   the compatibility boundary survived.
-2. [The simplification and performance campaign](tree-sitter-glr-arena.md)
+1. [Rewriting Tree-sitter's C Core in Rust: Migration and Compatibility](tree-sitter-rust-migration.md)
+   covers the migration itself, the `/goal` run and its revert, what this
+   branch deleted, and how the compatibility boundary survived.
+2. [Improving Tree-sitter's GLR Algorithm and Memory Layout](tree-sitter-glr-arena.md)
    explains why the parser built a graph for an almost-always-linear workload,
    then follows the many decisions hidden inside “use an arena.”
-3. [The ast-grep reality check](tree-sitter-end-to-end.md) contains
-   the memory traces, traversal investigation, benchmark rules, and final
-   performance lessons.
+3. [Optimizing Tree-sitter for End-to-End ast-grep Performance](tree-sitter-end-to-end.md)
+   contains the memory traces, the traversal investigation, the benchmark
+   rules — and a further round of parser-side optimization (lookup indexes,
+   single-action dispatch) driven by the application profile.
 
-The short version is that AI gave me a chance to move the load-bearing wall.
-The rest of the project was discovering, one benchmark at a time, which roof
-beam had come with it.
+The short version is that AI gave me the chance to move a load-bearing wall.
+The rest of the project was discovering, one benchmark at a time, everything
+else that wall had been holding up.

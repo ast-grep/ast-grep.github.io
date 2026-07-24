@@ -23,63 +23,65 @@ head:
 
 ## Thirty percent faster. Slower where it mattered.
 
-The previous post reached what should have been a victory. At that historical
-checkpoint, the seven-language parser-only gate put the Rust core roughly
-**30% ahead of C**. Then ast-grep used the same runtime to scan a real
-TypeScript repository and ran slower than its C-backed build. That
-contradiction is the subject of this final post.
+First, the premise, for anyone landing on this post directly. Tree-sitter is a
+parser framework: it turns source code into syntax trees that tools can query.
+This series follows a rewrite of its C runtime in Rust—behind the same binary
+interface, so existing grammars keep working—for **ast-grep**, the structural
+code-search tool built on top of it. As throughout the series, I directed the
+experiments and ChatGPT wrote the code. This is the finale, where the
+application finally gets its say.
+
+The [previous post](tree-sitter-glr-arena.md) reached what should have been a
+victory. The project measured itself with **gates**—pass/fail benchmark
+thresholds a change had to clear before it was retained—and the parser-only
+gate, a seven-language parsing benchmark, put the Rust core roughly **30%
+ahead of C**. Then ast-grep used the same runtime to scan a real TypeScript
+repository and ran slower than its C-backed build. That contradiction is the
+subject of this final post.
 
 The parser benchmark had not lied. It had measured one phase of a larger
 system: parse already-loaded source with a ready parser, then stop when the
-tree is returned. ast-grep also creates and configures parsers, incurs arena
-lifecycles across thousands of files, and traverses every completed tree. The
+tree is returned. ast-grep also creates and configures parsers, sets up and
+tears down per-parse memory across thousands of files, and traverses every
+completed tree. The
 Rust rewrite had made the measured phase faster while moving new costs into
 work the benchmark never saw.
 
-The investigation therefore had to expand one boundary at a time. First, prove
-that the ast-grep binary really contained the local runtime. Then trace the
-parser's complete lifecycle, follow resident memory to the allocation that
-owned it, benchmark the published tree as something an application reads, and
-profile the whole worker again as each old hotspot disappeared. Every change
-needed a paired Rust control and a correctness gate; otherwise AI could produce
-wrong answers faster than I could name them.
+Finding those costs meant expanding the measurement one boundary at a time
+until “faster” covered the whole application. It ends well—the exact numbers
+wait at the finish line—but the road there runs through a virtual-memory
+storm, a gigabyte of retired arenas, and garbage that turned out to be the
+wrong garbage.
 
-At the current endpoint, the seven-language Rust core parses **29.74% faster
-than C** and traverses trees **10.16% faster**. On single-threaded opencode
-outline, ast-grep uses **22.2% less user CPU** and **21.6% less wall time** than
-the C-backed build, with **7.92 MiB** higher peak resident set size (RSS).
-Those are separate parser, traversal, and application controls—not percentages
-to add together.
-
-The historical “roughly 30%” and the final **29.74%** happen to be close, but
-they are not the same measurement. The first belongs to the parser checkpoint
-that triggered the application failure. The second is the later, exact
-Rust-versus-C rerun after the lifecycle and traversal problems were repaired.
-
-The previous post reported the retained design first. To show where that design
-came from, this post now rewinds to the first ast-grep run—before the arena
-lifecycle and read-side repairs existed.
+One measurement convention carries through everything that follows: unless a
+comparison says otherwise, each change is judged against the Rust revision
+immediately before it. C answers the broad rewrite question, not whether one
+new Rust branch helped.
 
 ## First, prove the contradiction
 
 Before profiling, I had to rule out the boring explanation: perhaps ast-grep
-was not actually using the local runtime. I instructed ChatGPT to rebuild it
-from my Tree-sitter checkout, verify the Rust arena symbols in the binary,
-compare its output, and rerun the outline workload.
+was not actually using the local runtime. ChatGPT rebuilt it from my
+Tree-sitter checkout, verified the Rust arena symbols in the binary, compared
+its output, and reran the **opencode outline** workload: ast-grep parsing
+opencode, a real-world TypeScript repository, and walking every parsed file's
+tree to extract an outline.
 
 The binary was correct. The output matched. The contradiction survived.
 
-I told ChatGPT to stop optimizing and profile the complete lifecycle—not only
-`ts_parser_parse`. The parser gate ended when a tree was returned; the
-application also paid for parser setup, arena creation and release, and reading
-that tree. From here onward, “faster” needed separate evidence for construction,
+So the instruction changed: stop optimizing and profile the complete
+lifecycle—not only `ts_parser_parse`. The parser gate ended when a tree was
+returned; the application also paid for parser setup, arena creation and
+release, and reading that tree. From here onward, “faster” needed separate evidence for construction,
 parsing, traversal, and the complete application.
 
 ## The 4 GiB arena was “only virtual” 2,291 times
 
-The first arena reserved a 4 GiB virtual address range with `mmap`. It committed
-64 KiB chunks with `mprotect` as the bump cursor advanced, then released the
-mapping with `munmap`.
+The runtime allocates syntax nodes from an **arena**: one big buffer with a
+cursor, where allocating means bumping the cursor forward and everything is
+released at once when the buffer is. The first arena reserved a 4 GiB virtual
+address range with `mmap`. It committed 64 KiB chunks with `mprotect` as the
+bump cursor advanced, then released the mapping with `munmap`.
 
 This looked reasonable in the parser benchmark:
 
@@ -90,10 +92,12 @@ This looked reasonable in the parser benchmark:
 
 Then ast-grep created a parser for each file.
 
+![Parser microbenchmark lifecycle versus repository-wide application lifecycle](/image/blog/03-parser-lifecycle.svg)
+
 ChatGPT returned with the syscall trace. There it was: the “one-time”
 virtual-memory setup was happening once per file. Thousands of times.
 
-On opencode's 2,311 TypeScript files, the custom and normal builds produced:
+On opencode's 2,311 TypeScript files, the arena and normal builds produced:
 
 | System call | Arena build | Normal build |
 | --- | ---: | ---: |
@@ -101,9 +105,13 @@ On opencode's 2,311 TypeScript files, the custom and normal builds produced:
 | `mprotect` | 10,086 | 38 |
 | `munmap` | 2,305 | 23 |
 
-There were 2,291 actual 4 GiB reserve-plus-64-KiB-commit lifecycles. A system
-trace followed them from `subtree_pool_ensure_arena` through leaf construction,
-parser advance, `ts_parser_parse`, and finally ast-grep's document creation.
+Matching each 4 GiB reservation against its corresponding release paired up
+2,291 full reserve-plus-64-KiB-commit arena lifecycles—nearly one per file;
+the leftover calls were ordinary allocator and loader traffic. The trace
+followed them from `subtree_pool_ensure_arena` (a **subtree** is Tree-sitter's
+record for a single syntax node; the pool is where they live) through leaf
+construction, parser advance, `ts_parser_parse`, and finally ast-grep's
+document creation.
 
 The parser had slightly reduced user-space parse CPU. It had also become an
 enthusiastic virtual-memory benchmark.
@@ -117,15 +125,15 @@ runtime's excuse. Constructing a parser still had to be a reasonable operation
 for every other caller. The allocator itself had to stop turning each new
 parser into a 4 GiB virtual-memory ceremony.
 
-![Parser microbenchmark lifecycle versus repository-wide application lifecycle](/image/blog/03-parser-lifecycle.svg)
-
 ## Ordinary allocation removed the VM lifecycle
 
-I instructed ChatGPT to replace the 4 GiB virtual reservation with on-demand
-allocation. A parser now starts with only the arena header. Its first syntax
-record allocates **256 KiB** with `malloc`, and later growth rounds the required
-size to the next power of two. The arena no longer needed a fixed virtual
-address because subtree handles were offsets from its current base.
+The fix was to make construction ordinary. ChatGPT replaced the 4 GiB virtual
+reservation with on-demand allocation: a parser now starts with only the arena
+header, its first syntax record allocates **256 KiB** with `malloc`, and later
+growth rounds the required size to the next power of two. The arena no longer
+needed a fixed virtual address because **subtree handles**—the compact
+references the runtime hands around instead of raw pointers—were offsets from
+its current base.
 
 The first implementation could not yet grow that block with `realloc`. Subtree
 handles survived a move, but some temporary `SubtreeArray` values—growable
@@ -159,9 +167,17 @@ existing subtree handles and child arrays still resolved correctly. Old arena
 generations were no longer necessary: one allocation represented the current
 arena, and one release could free it.
 
-This reduced peak RSS from about 1.04 GiB to **492.2 MiB**. The retired chain
+This reduced peak RSS from about 1.04 GiB to **492.2 MiB**. It was not free: a
+matched Rust-to-Rust gate run put the change at **−2.14%** parse throughput,
+attributed to resolving movable array offsets on hot reduce paths—memory
+bought with a little speed, knowingly. The retired chain
 was gone, so it could no longer explain the remaining half gigabyte. Something
-inside a single parse was advancing the live arena far beyond the 150 MiB gate.
+inside a single parse was advancing the live arena far beyond the **150 MiB
+gate**—the project's memory budget for this one-worker stress-corpus run, the
+line peak RSS had to stay under for the memory design to count as acceptable.
+The ceiling was pre-registered before the experiment ran: generous but finite
+headroom over the roughly 79 MiB the C-backed build reported on the same
+corpus.
 Dead subtree nodes looked like the obvious suspect. The next allocation profile
 showed that they were not.
 
@@ -169,13 +185,17 @@ showed that they were not.
 
 A 273,957-byte TypeScript fixture advanced the arena bump cursor to
 **474,329,448 bytes**, forcing a 512 MiB capacity. Instrumentation showed that
-all large-arena boundaries had one owner, so published trees were not retaining
-the space.
+all large-arena boundaries had one owner. In plain terms: nothing outside the
+in-progress parse was holding that memory. **Published trees**—trees already
+handed back to the caller, immutable from then on—were not the retainers; the
+parse itself was.
 
 At my direction, ChatGPT first tried reclaiming uniquely owned nodes at the top
-of the bump stack. The peak barely moved. The next candidate restored exact
-reference counts, cascading release, and node-record free lists. The peak still
-hovered around 494 MiB.
+of the bump stack—the most recently allocated bytes, the only ones a cursor can
+cheaply take back. The peak barely moved. The next candidate restored exact
+reference counts, cascading release, and node-record **free lists**: lists of
+released blocks kept around to satisfy later allocations of the same kind. The
+peak still hovered around 494 MiB.
 
 Two increasingly sophisticated node-reclamation designs. The same roughly 494
 MiB peak. Again? Either the instrumentation was wrong or the entire explanation
@@ -189,6 +209,11 @@ Allocation counters finally ended the argument:
 | Temporary `SubtreeArray` capacities | 468.2 MB |
 | Everything else combined | about 1.9 MB |
 
+(The rows sum to 470.1 MB, about 4 MB short of the 474.3 MB total measured on
+the bump-only build: the counters ran on the free-list prototype, where
+roughly 4.2 MB of node-record allocations were served from free lists and
+never advanced the bump cursor.)
+
 The GC question changed immediately. The problem was no longer “How do dead
 subtree nodes return arena space?” It was “Why do temporary child-array
 capacities never get reused during this one parse?” Same RSS graph. Completely
@@ -196,11 +221,12 @@ different design axis.
 
 The pathological parse created and replaced large temporary child buffers.
 Because the arena was bump-only, superseded capacities remained physical until
-the next parse epoch even when the logical array had moved on.
+the arena reset for the next parse, even when the logical array had moved on.
 
-The retained fix reused those temporary buffers. A **free list** is a collection
-of blocks that are no longer in use but can satisfy a later allocation. Here,
-64 lists cover the small child-array capacities the parser commonly requests.
+The retained fix reused those temporary buffers through free lists—the same
+idea that had just failed for node records, now pointed at the right
+allocation class. There are 64 lists, one per exact capacity, enough to span
+the small child-array sizes the parser commonly requests.
 When an array grows and leaves its old buffer behind, that block enters the list
 for its exact capacity. The next array requesting the same capacity takes the
 block instead of advancing the arena's bump cursor.
@@ -209,15 +235,15 @@ The lists are intrusive: because a released block no longer contains live
 children, its first four bytes store the arena offset of the next available
 block. This needs neither a separate bookkeeping allocation nor a raw pointer
 that would break if the arena moved. Reuse starts only after the arena exceeds
-**16 MiB**; ordinary small parses keep the simpler bump-only path, and published
-arenas remain immutable.
+**16 MiB**—a round threshold whose whole job is to keep ordinary small parses
+on the simpler bump-only path—and published arenas remain immutable.
 
 Peak RSS on the same one-worker ast-grep corpus fell to **91.2 MiB**, below the
 150 MiB gate. Parse throughput decreased by **1.10%** across languages. I kept
 the change because an order-of-magnitude application memory correction was
 worth a one-percent parser cost.
 
-Ninety-one point two MiB. Below the gate. The project was alive again.
+After a gigabyte, then half a gigabyte, 91.2 MiB felt like a different runtime.
 
 This is not subtree garbage collection. It is scratch-buffer reuse, selected
 because the profile named scratch buffers.
@@ -233,18 +259,19 @@ Smaller handles reduced traffic while the parser built the tree, but readers
 now had to add the arena base to each handle before accessing a node. The parse
 benchmark measured the benefit and stopped before paying that read cost.
 
-I instructed ChatGPT to add a separate traversal benchmark. It parsed each
-fixture once outside the timed region, then repeatedly walked the completed tree
-in preorder while reading data typical of an ast-grep consumer:
+Reading needed its own benchmark. The new traversal benchmark parsed each
+fixture once outside the timed region, then repeatedly walked the completed
+tree in preorder while reading data typical of an ast-grep consumer:
 
 - kind ID;
 - byte range;
 - named-node status; and
 - error-node status.
 
-The first four-byte indexed version was **2.40% slower** than the pre-arena Rust
-representation across all seven languages. The parser had become faster by
-making its output slower to read.
+The first four-byte indexed version was **2.40% slower** than the pre-arena
+Rust build—the one deliberate exception to the usual control, since the whole
+representation was under judgment—across all seven languages. The parser had
+become faster by making its output slower to read.
 
 One possible response was to convert the accepted tree into a second,
 reader-optimized representation. That would add a full tree pass and duplicate
@@ -252,38 +279,42 @@ representation logic, so I deferred it while the arena layout was still
 changing. Two later changes made the arena records less wasteful:
 
 - **Internal nodes stopped reserving leaf storage.** A full leaf may need bytes
-  from an external scanner or an error lookahead character. A parent node never
-  uses either, so internal and leaf records received separate shapes instead of
-  sharing one record large enough for both.
+  from an **external scanner**—a hand-written lexer extension some grammars use
+  for context-sensitive tokens, preserved through the compatibility work in
+  [the migration post](tree-sitter-rust-migration.md)—or an error lookahead
+  character, the input character the parser was examining when it recorded an
+  error. A parent node never uses either, so internal and leaf records received
+  separate shapes instead of sharing one record large enough for both.
 - **Column dependence became lazy.** Some tokens depend on their starting
-  column, and Tree-sitter's editing APIs may need to know whether a parent
+  column—that is how indentation-sensitive grammars decide where a block
+  ends—and Tree-sitter's editing APIs may need to know whether a parent
   contains one. The old path propagated that fact into every new parent during
   reduction. The new path keeps it on leaves and reconstructs the parent's
   answer from its children only when the editing code asks.
 
 When ChatGPT reran the same traversal benchmark after those changes, the
-complete kernel was **1.71% faster** than the pre-arena control. This was an
+complete kernel was **1.71% faster** than the pre-arena Rust build. This was an
 endpoint comparison, not a claim that either change alone caused the gain. It
 was enough to rule out an expensive representation conversion.
 
-The new profile still found repeated work in child iteration. One cursor step
-resolved the same parent handle several times: to check the child count, obtain
-the current child, and read the next child's padding. Published arenas do not
-move, so the iterator could resolve the parent's child slice once and keep that
-pointer for the duration of the operation.
+The new profile still found repeated work in child iteration through the
+**tree cursor**, Tree-sitter's stateful API for walking a tree node by node.
+One cursor step resolved the same parent handle several times: to check the
+child count, obtain the current child, and read the next child's padding.
+Published arenas do not move, so the iterator could resolve the parent's child
+slice once and keep that pointer for the duration of the operation.
 
 That narrow cache improved traversal throughput by **5.43%**, with all seven
-languages positive. In a later outline run, after ast-grep began reusing parser
-instances across files, it used **1.12% less user CPU**, added a noise-sized
-0.62 MiB of RSS, and produced byte-identical output.
+languages positive. In a later outline run, ast-grep used **1.12% less user
+CPU**, added a noise-sized 0.62 MiB of RSS, and produced byte-identical output.
 
 I asked ChatGPT to try two broader caching optimizations. Both failed and were
 removed:
 
 - Caching a 36-byte bundle of size, padding, flags, and other metadata for every
-  child regressed traversal by **1.71%**.
+  child regressed traversal by about 1.7%.
 - Returning a smaller parent-setup bundle—child pointer, child count, and
-  production ID—regressed traversal by **1.20%** in every language.
+  production ID—regressed traversal by about 1.2% in every language.
 
 Both experiments copied more data through the iterator than their avoided
 lookups were worth. The retained optimization caches only the resolved child
@@ -300,8 +331,9 @@ The original outline path constructed and configured a parser for every file.
 ast-grep then began retaining parser instances across files handled by the same
 worker, so repeated parser and language setup could be amortized. This did not
 replace the allocator fix—the runtime still needed sane construction—but it
-removed redundant application work that ast-grep controlled. In the next
-profile, `set_language` fell from a former 15.8% of worker CPU to 0.11%. The
+removed redundant application work that ast-grep controlled. Profiling before
+the change had put `set_language`—the call that installs a grammar into a
+parser—at 15.8% of worker CPU; in the next profile it measured 0.11%. The
 change worked so well that it exposed the next layer:
 
 | Exclusive area | Worker CPU |
@@ -313,12 +345,15 @@ change worked so well that it exposed the next layer:
 | Parser stack operations | 10.4% |
 | Reduction functions | 5.2% |
 
-The profile sent the investigation back into the parser. The result most
-directly enabled by parser reuse was table lookup: its preparation cost could
-now be amortized across files. Generated tables group symbols sharing a value,
-then use a short linear scan. I first instructed ChatGPT to try cache-like and
-group-skipping ideas. They were small, unstable, or negative across the full
-language set.
+The profile sent the investigation back into the parser. One piece of
+background first: Tree-sitter compiles each grammar into a generated
+parser—static parse tables, compressed to save space, that the runtime
+consults for every token. Those generated tables are what this section is
+about, and the compression is the cost: tables group symbols sharing a value,
+then use a short linear scan to find an entry. Parser reuse made that lookup
+the natural next target, because its preparation cost could now be amortized
+across files. Cache-like and group-skipping ideas went first; they were small,
+unstable, or negative across the full language set.
 
 The retained mechanism was not a cache. When a parser installs a language, it
 materializes direct lookup arrays for the mappings otherwise stored in the
@@ -334,7 +369,19 @@ answer two different questions:
 
 The terminal index also reduced parser-cached opencode outline user CPU from an
 average 1.233 seconds to 1.172 seconds—about **5.0%**—but increased application
-RSS by **5.88 MiB**. The generated language ABI and checked-in parser sources
+RSS by **5.88 MiB**. (Readers cross-checking the
+[overview post](tree-sitter-rust-rewrite.md) may notice 1.233 s appears in its
+results table as the C build's outline CPU. That is a coincidence, not a
+mislabel: the pre-index Rust build happened to match the C build's outline time
+to the millisecond.) A 1.42% parser-gate gain surfacing as a 5.0%
+application-CPU reduction is less strange than it looks. The parser-cached
+outline profile had shown the action interpreter as the largest single block
+left—**17.5%** of exclusive CPU once parser reuse removed `set_language`—and
+the terminal index removes exactly the compressed-row scans that block spends
+its time in. opencode's real files hammer that dispatch path far harder than
+the gate's fixtures do; in the gate itself, even the TypeScript fixtures
+gained only 0.86%.
+The generated language ABI and checked-in parser sources
 remained unchanged; the opaque parser owned the projection.
 
 That last detail matters. A benchmark-corpus-specific cache learns recent
@@ -350,10 +397,12 @@ several actions and initialized bookkeeping that only generalized parsing
 needed.
 
 The retained path dispatches one shift, reduce, accept, or recovery action
-directly. Entries with several actions still use the complete GLR dispatcher.
-Against the immediately preceding Rust revision, this improved parse
-throughput by **2.78%** across the seven-language corpus, with no meaningful
-change in peak RSS.
+directly. Entries with several actions still use the complete **GLR**
+(Generalized LR) dispatcher—the machinery that lets Tree-sitter pursue several
+parse interpretations at once when a grammar is genuinely ambiguous, and the
+subject of [the previous post](tree-sitter-glr-arena.md). Measured against the
+preceding Rust revision, the direct path improved parse throughput by **2.78%**
+across the seven-language corpus, with no meaningful change in peak RSS.
 
 ### Let ordinary ASCII remain ordinary
 
@@ -362,30 +411,31 @@ runs for essentially every source byte. Most bytes were ordinary UTF-8 ASCII,
 already inside the current input chunk and inside the source range ast-grep had
 asked Tree-sitter to parse.
 
-I instructed ChatGPT to add a guarded runtime path for that case: advance the
-byte and column directly, then load the next byte without entering the full
-seek-and-decode path. Newlines, non-ASCII input, chunk boundaries,
-included-range boundaries, and other encodings still use the complete path.
-Against the immediately preceding Rust revision, the shortcut improved parse
-throughput by **2.70%** across all seven languages, with no meaningful peak RSS
-change.
+So the common case got a guarded shortcut: advance the byte and column
+directly, then load the next byte without entering the full seek-and-decode
+path. Newlines, non-ASCII input, chunk boundaries, included-range boundaries
+(callers may restrict parsing to selected byte ranges of a file), and other
+encodings still use the complete path. The shortcut improved parse throughput
+by **2.70%** across all seven languages, with no meaningful peak RSS change.
 
-The change stayed inside the runtime. I deferred modifications to generated
-lexers because users bring grammar artifacts produced by many generator
-versions and toolchains; this repository's corpus cannot prescribe how every
-external grammar must be regenerated.
+The change stayed inside the runtime. I deferred touching generated lexers—the
+lexing half of those generated grammar artifacts—because users bring artifacts
+produced by many generator versions and toolchains; this repository's corpus
+cannot prescribe how every external grammar must be regenerated.
 
 The profile suggested all three changes; it did not prove any of them. Each
-result still had to beat the immediately preceding Rust revision across the
-complete language corpus. By this point, that distinction between a promising
-profile and a retained optimization governed every performance claim.
+result still had to beat the preceding Rust revision across the complete
+language corpus. By this point, that distinction between a promising profile
+and a retained optimization governed every performance claim.
 
 ## The benchmark rules stopped being optional
 
-By this point the experiment ledger was as important as any individual fast
-path. The early `/goal improve the perf by 20%` phase had produced overlapping
-changes whose results were hard to attribute. Now every AI-generated candidate
-had to answer a narrower brief:
+These rules did not arrive at the end of the project; they hardened the moment
+they were needed. The early `/goal improve the perf by 20%` phase had produced
+overlapping changes whose results were hard to attribute, and the wrong-garbage
+episode—two sophisticated fixes for a problem the profile had never
+named—turned the habits into requirements. Every experiment above already ran
+under them. Each ChatGPT-generated candidate had to answer a narrower brief:
 
 - What exact operation disappears?
 - Which immediately preceding Rust revision is the control?
@@ -393,17 +443,18 @@ had to answer a narrower brief:
 - Which corpus and lifecycle exercise the change?
 - What result kills the idea?
 
-The agent could still write the patch and run the machinery. It could no longer
-declare victory with a fast number from a different architecture. Each
-candidate used the immediately preceding Rust revision as its control; C
-answered the broad rewrite question, not whether one new Rust branch helped.
+ChatGPT could still write the patch and run the machinery. It could no longer
+declare victory with a fast number from a different architecture: the control
+was always the immediately preceding Rust revision, exactly as the convention
+at the top of this post promised.
 The gate covered 40 checked-in fixtures across C++, Go, Java, JavaScript,
 Python, Rust, and TypeScript. Samples used process CPU time, calibrated
 duration, medians, standard deviation, and a five-percent
 coefficient-of-variation limit.
 
 Correctness gates included core fixtures, ABI checks, ast-grep integration,
-recovery-heavy cases, cursor parity, and byte-identical output. Performance
+recovery-heavy cases (fixtures full of syntax errors, to exercise error
+recovery), cursor parity, and byte-identical output. Performance
 results were classified as:
 
 - **retain**: broad, reproducible improvement with acceptable complexity;
@@ -411,7 +462,8 @@ results were classified as:
 - **reject**: record the result and remove the code.
 
 This protected the project from its most persuasive adversary: a short
-benchmark run that agreed with me.
+benchmark run that agreed with me. The rules earned their keep on one
+experiment in particular.
 
 The accepted syntax is temporarily a directed acyclic graph (DAG) when several
 parents share a subtree. Before publication, Tree-sitter's balancing pass walks
@@ -425,34 +477,51 @@ That sentence could summarize an alarming number of performance projects.
 
 ## What “faster” finally meant
 
-By the final checkpoint, “faster” no longer meant one green parser chart. It
-meant a stack of decisions whose benefits had survived at different scales:
+By the end, “faster” no longer meant one green parser chart. It meant a stack
+of decisions whose benefits had survived at different scales:
 
-- Rust owns the runtime behind the existing C/generated-language ABI.
-- The common deterministic suffix avoids materializing GLR stack nodes.
-- Subtrees use dense four-byte tagged arena-relative offsets.
-- Internal records and hot metadata are specialized selectively.
-- Parser-private sharing avoids published-tree atomic costs.
-- Child arrays remain coallocated for locality but recycle under demonstrated
-  pressure.
-- Published cursor operations cache only proven short-lived resolutions.
-- Parser-private sparse indexes accelerate compressed table lookup without
-  changing generated languages.
-- A guarded ASCII path removes common runtime lexer work.
+- Rust owns the runtime behind the existing C ABI, so generated grammars and
+  their callers work unchanged.
+- The deterministic window from [the previous post](tree-sitter-glr-arena.md)
+  keeps the parser on a simple linear stack until the input actually needs
+  GLR's graph.
+- Syntax nodes refer to each other through compact four-byte arena offsets
+  instead of full pointers.
+- Node records store only what they use: parents no longer reserve leaf-only
+  storage, and column tracking became lazy.
+- While a parse is private to one thread, nodes share cheaply; only published
+  trees pay the atomic bookkeeping that cross-thread safety requires (a split
+  the previous post walks through).
+- Child arrays sit next to their parents for locality, and their scratch
+  buffers are recycled once a parse grows large.
+- The tree cursor caches a resolved child address only for the one operation
+  where it is known to stay valid.
+- Each parser builds its own sparse direct-lookup arrays over the grammar's
+  compressed tables, so generated grammars need no regeneration.
+- Ordinary ASCII bytes skip the full character-decoding path.
 
-The final checkpoint keeps those scopes separate:
+Today, the retained results keep those scopes separate:
 
-| Scope | Current retained result |
+| Scope | Retained result |
 | --- | ---: |
 | Parser throughput | **+29.74%** versus C, equal weight per language |
 | Tree traversal | **+10.16%** versus C, equal weight per language |
-| opencode outline, Rust versus C-backed build, one worker | **22.2% less user CPU**, **21.6% less wall time**, **+7.92 MiB peak RSS** |
+| opencode outline, Rust versus C-backed build, one worker | **22.2% less user CPU**, **21.6% less wall time**, **+7.91 MiB peak RSS** |
 
 The ast-grep comparison produced byte-identical output. These numbers are not
 additive, and the C comparisons do not attribute the total gap to any one
-patch. Individual changes still require same-session Rust-to-Rust controls;
-parser throughput, traversal, application CPU, and RSS answer different
-questions.
+patch—parser throughput, traversal, application CPU, and RSS answer different
+questions. And the **29.74%** here is not the opening's “roughly 30%”
+resurfacing: that one belonged to the parser checkpoint that triggered the
+application failure, while this one is the exact Rust-versus-C rerun after the
+lifecycle and read-side repairs.
+
+Careful readers adding up the retained parser gains might expect the final
+figure to sit above the checkpoint, not just under it. It does not, because
+the memory repairs were not free: the retired-generation removal cost 2.14% of
+parser-gate throughput and the child-buffer reuse another 1.10%, and the later
+index work recovered only part of that. The 29.74% is what remained after
+paying, on purpose, for the gigabyte.
 
 That may be the most important lesson from the rewrite. “Faster” is not a
 property of a data structure in isolation. It is a claim about a workload, a
@@ -472,8 +541,8 @@ TypeScript file capable of consuming 474 MB of bump progress before breakfast.
 The rewrite made the runtime easier to change. The experiments made it harder
 to fool.
 
-AI made the exploration dramatically faster. It did not decide which result
-was correct. The 4 GiB VM storm, the false refcount win, and the invalid
+ChatGPT made the exploration dramatically faster. It did not decide which
+result was correct. The 4 GiB VM storm, the false refcount win, and the invalid
 balancing optimization all arrived as plausible code. Only application traces,
 invariant tests, and paired performance gates turned fast code generation into
 engineering progress.

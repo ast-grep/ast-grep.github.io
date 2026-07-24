@@ -21,10 +21,17 @@ head:
 
 *Part 3 of 4 — simplification and performance*
 
-The previous post ended with a Rust runtime I could finally reason about. That
-made it safe to return to performance, but not to repeat `/goal improve the perf
-by 20%`. This time I asked ChatGPT to trace one expensive operation at a time
-and show which allocation, ownership transfer, or traversal could disappear.
+If you are arriving here directly: Tree-sitter is the parsing library that
+turns source code into syntax trees, and this series follows a rewrite of its
+C runtime in Rust for ast-grep, the code-search tool this parser serves. The
+working arrangement throughout is that I direct and ChatGPT implements,
+occasionally in long autonomous runs launched with a `/goal` prompt.
+
+[The previous post](tree-sitter-rust-migration.md) ended with a Rust runtime I
+could finally reason about. That made it safe to return to performance, but not
+to repeat `/goal improve the perf by 20%`. This time I asked ChatGPT to trace
+one expensive operation at a time and show which allocation, ownership
+transfer, or traversal could disappear.
 
 I began with reduction: the moment when the parser replaces several recognized
 pieces of syntax with their parent. Reduction sits at the boundary between two
@@ -33,29 +40,29 @@ temporary **GLR stack graph**, which remembers possible parse histories. On the
 other is the **syntax tree** being built for the caller. Following one reduction
 through both structures gave the rest of the investigation a path.
 
-The stack produced the clearest result. In the seven-language performance
-corpus, **98.898% of released graph nodes had one predecessor**. Keeping that
-common history linear until GLR behavior was actually needed improved the
-geometric mean by **9.01%**. Syntax storage was less obedient: compact
-arena-backed references survived the experiments, but no isolated “arena
-speedup” did.
+The stack produced the clearest discovery of the project: a generalized graph
+structure that spends almost its entire life as a straight line. Syntax
+storage was less obedient. The tidy instruction “use an arena” unraveled into
+several separate design decisions, and most of their first drafts failed.
 
-At the combined parser checkpoint, Rust was roughly **30% faster than C**—yet
-ast-grep became slower than its C-backed build. This post follows the
-parser-side investigation: why a graph was built for a line, why delaying it
-worked, and why “use an arena” became several separate decisions. The final
-post takes the apparent parser victory into the application-level failure that
-overturned it.
+This post follows the parser-side investigation: why a graph was built for a
+line, why delaying it worked, and what the failed experiments taught that the
+successful ones could not. As [the overview](tree-sitter-rust-rewrite.md)
+previewed, the parser victory at the end of this post does not survive contact
+with the application; the final post follows that reversal.
 
 ## One reduction connects the stack graph to the syntax tree
 
-The previous post explained LR and GLR in detail. The compact recap is that LR
-selects shift, reduce, or accept from `(parse state, lookahead)` and advances one
-stack; GLR preserves multiple valid actions as stack versions that share a
+[The previous post explained LR and GLR in
+detail](tree-sitter-rust-migration.md#appendix-how-lr-and-glr-work). The
+compact recap: an LR parser selects shift, reduce, or accept from
+`(parse state, lookahead)` and advances one stack. **GLR**—Generalized
+LR—exists because real grammars sometimes leave several actions valid at once;
+instead of guessing, the parser carries every candidate parse forward until
+more input settles the question, and all of those candidates share one
 graph-structured stack.
 
-An ordinary LR parser has one current stack. Tree-sitter's GLR parser can have
-several current possibilities, called **versions**. Each version has a
+Tree-sitter calls each of those candidates a **version**. Each version has a
 `StackHead`, but copying a version does not copy its complete history. The heads
 point into a shared graph of `StackNode`s instead.
 
@@ -71,9 +78,12 @@ The generated parse table drives both. A **shift** recognizes one token and
 pushes its leaf subtree. A **reduce** walks backward over one or more links,
 collects their subtrees as children, builds an internal subtree, and pushes it
 in the corresponding goto state. If several actions or pop paths are valid, the
-runtime retains several versions. Compatible versions can merge when state,
-position, error cost, and external-scanner state permit the same continuation;
-their incoming links preserve the distinct histories.
+runtime retains several versions. Compatible versions can merge when they
+permit the same continuation: the same state and position, the same error cost
+(a running measure of how much error recovery a version has needed), and the
+same external-scanner state (an external scanner is a grammar's hand-written
+lexer extension for context-sensitive tokens). Their incoming links preserve
+the distinct histories.
 
 ![Tree-sitter shifts, branches into versions, reduces backward through links, and merges compatible histories](/image/blog/02-glr-stack-actions.svg)
 
@@ -81,22 +91,21 @@ Rejected versions are not merely removed from a list. Releasing their heads can
 release an entire private stack history and the speculative subtrees stored on
 its links. Shared history survives because another head or link still owns it.
 
-Now follow one concrete reduction. Start with a stack version whose parse table
-says to reduce two children. Its `StackHead` points to the current `StackNode`.
-The links below that node contain the recent syntax and lead toward older parser
+Now follow one concrete reduction: a stack version whose parse table says to
+reduce two children. Its `StackHead` points to the current `StackNode`, and the
+links below that node contain the recent syntax, leading toward older parser
 states.
 
 ![A reduction replacing two stack children with one parent](/image/blog/02-reduction-pop.svg)
 
-The diagram shows the logical stack from older to newer. In memory, Tree-sitter
+The diagram shows the logical stack from older to newer; in memory, Tree-sitter
 stores the links in the opposite direction so a reduction can walk backward
-from the current top.
-
-Suppose the grammar says to reduce two children. Tree-sitter starts a **DFS
-pop cursor** at the version's current node. The cursor holds the current stack
-node, the accumulated child handles, and the remaining grammar-child count. It
-follows two links backward, collects the subtrees carried by those links, and
-stops at the predecessor state underneath them.
+from the current top. Tree-sitter starts a **DFS pop cursor** at the version's
+current node. The cursor holds the current stack node, the accumulated child
+**handles**—a handle is a compact value, an index or other stand-in for a
+pointer, that names a subtree without being its address—and the remaining
+grammar-child count. It follows two links backward, collects the subtrees
+carried by those links, and stops at the predecessor state underneath them.
 
 If a node has several backward links, the history has forked. Tree-sitter copies
 the cursor and follows every route. Each completed route produces its own
@@ -104,8 +113,11 @@ temporary stack version. The parser builds a parent from that route's children,
 looks up what state should follow that new parent, and pushes it. Compatible
 versions can then merge again.
 
-The pop path retained every collected child before releasing the old
-stack links, so each child survived the ownership transfer into its new parent.
+Because competing versions can share the same speculative syntax, subtrees are
+reference-counted: each owner registers its interest, and a subtree is freed
+only when its last owner lets go. The pop path retained every collected child
+before releasing the old stack links, so each child survived the ownership
+transfer into its new parent.
 On a single linear path, those reference-count operations were a compensating
 increment and decrement; on a branching pop, they were required for correctness.
 
@@ -117,11 +129,16 @@ before a fork existed.
 
 ## The allocation profile found a graph waiting for a fork
 
-I instructed ChatGPT to distribute the parser's allocation costs by mechanism.
-The instrumented Rust runtime parsed all 40 files in the seven-language
-performance corpus with one validation parse and one measured parse per file.
-The counters covered both passes; percentages and means describe the same
-complete corpus. The audit pointed first at the GLR stack:
+Rather than asking for speed again, I asked ChatGPT for an audit: distribute
+the parser's allocation costs by mechanism. The instrumented Rust runtime
+parsed the seven-language performance corpus—40 checked-in source files,
+called **fixtures**, across C++, Go, Java, JavaScript, Python, Rust, and
+TypeScript, the suite behind
+[the previous post's](tree-sitter-rust-migration.md) Rust-versus-C parity
+checks—with one
+validation parse and one measured parse per file. The counters covered both
+passes; percentages and means describe the same complete corpus. The audit
+pointed first at the GLR stack:
 
 | Observation | Result |
 | --- | ---: |
@@ -147,19 +164,19 @@ journey:
   array slot, and removed;
 - the parser checked for another version to merge with, but none existed; and
 - the parent was pushed through a 160-byte graph node with room for eight
-  histories, while using one.
+  histories, while using one (the appendix shows this record's exact layout).
 
-The **127.4 MB** of unused link-slot writes was the physical receipt: records
-prepared room for alternate histories that never arrived. Tree-sitter was
-carrying mountaineering equipment through an airport because there might
-eventually be a hill. This number is cumulative write traffic across both
-corpus passes, not memory held at one moment.
+The **127.4 MB** of unused link-slot writes—cumulative write traffic across
+both corpus passes, not memory held at any one moment—was the physical
+receipt: records prepared room for alternate histories that never arrived.
+Tree-sitter was carrying mountaineering equipment through an airport because
+there might eventually be a hill.
 
 The machinery was correct. It was simply arriving before ambiguity or recovery
 needed it. Once that connection was visible, the 160-byte stack node stopped
 looking like a respectable data structure and started looking like evidence.
 
-The audit also changed how I directed the AI. Earlier prompts had asked for
+The audit also changed how I directed ChatGPT. Earlier prompts had asked for
 performance and received plausible local optimizations. Now I could name the
 work to remove: the unbranched search, the canceling ownership operations, the
 temporary version, the empty merge check, and the mostly unused graph record.
@@ -167,14 +184,20 @@ temporary version, the empty merge check, and the mostly unused graph record.
 I asked ChatGPT to shrink each graph record, attach a cheaper linear tail,
 specialize the reduction path, and reuse the search's temporary storage. Each
 made some part of the journey cheaper while keeping the journey. The benchmark
-was unimpressed.
+remained unimpressed: the best of the four moved the forty-fixture gate by
+less than a point—and even that shrank from +1.09% to +0.58% on the longer
+confirmation run—while every variant regressed at least one language,
+sometimes by double digits. The naive linear tail was the worst offender,
+losing 23–43% per language. The ledger's verdict on the whole category:
+making one branch cheaper rarely moves total parse time.
 
 That changed the question from “How cheaply can the common case use the graph?”
 to “Why should the graph exist before the parse branches?”
 
 ## The literature offered a principle, not a patch
 
-At this point I instructed ChatGPT Pro to survey GLR research. Most of the ideas
+At this point I sent ChatGPT to the library: survey the GLR research and report
+what still applied. Most of the ideas
 were less new than expected. The messy `/goal improve the perf by 20%` phase had
 already tried rough versions of many of them. Others required changing grammars,
 generators, or generated parsers, which would break the rule that existing
@@ -201,10 +224,10 @@ case was not a simpler graph. It was not a graph yet.
 
 ## The deterministic window: delay the graph
 
-I instructed ChatGPT to keep recent, unambiguous parser progress in a compact
-linear list. I called that list the **deterministic window**. The complete GLR
-graph still existed underneath it, ready for the cases that genuinely needed
-branching.
+The design that came out of those conversations keeps recent, unambiguous
+parser progress in a compact linear list. I called that list the
+**deterministic window**. The complete GLR graph still existed underneath it,
+ready for the cases that genuinely needed branching.
 
 ![A linear deterministic window becoming the full GLR graph](/image/blog/02-deterministic-window.svg)
 
@@ -222,11 +245,11 @@ never happened: no graph allocation, no temporary version, and no compensating
 retain/release pair.
 
 When a multi-action cell, recovery, acceptance, stack-version mutation, or
-graph traversal appears, the parser expands the list into the **same graph it
-would previously have built eagerly** and continues through the existing GLR
-implementation. Syntax-tree construction does not change. Parsing rules do not
-change. Only the time at which the parser pays for its generalized history
-changes.
+graph traversal appears, the parser **materializes** the window: it expands the
+list into the **same graph it would previously have built eagerly** and
+continues through the existing GLR implementation. Syntax-tree construction
+does not change. Parsing rules do not change. Only the time at which the
+parser pays for its generalized history changes.
 
 That distinction made the design tractable. This was not a second parser with
 similar behavior. It was the old parser with delayed representation.
@@ -254,15 +277,20 @@ more like the old parser. No guessed threshold decides whether a grammar is
 Finally, delayed work must remain exactly equivalent to eager work. Debug builds
 checked that expanding a window reproduced the same parser state and saved
 path metrics—position, error cost, node count, and dynamic precedence—and that
-subtree ownership moved once at each boundary. Those details belong in the
-appendix; the governing principle is simpler: **postpone the representation,
+subtree ownership moved once at each boundary. Those checks are debug-build
+machinery; the governing principle is simpler: **postpone the representation,
 never the correctness.**
 
 ## The deterministic window improved parsing by about nine percent
 
 I asked ChatGPT to run a paired same-session A/B benchmark with window entry
-enabled and disabled. It used seven languages, five repetitions, and a 200 ms
-minimum fixture sample time:
+enabled and disabled: seven languages, five repetitions, and a minimum sample
+time of 200 ms per fixture, so short files were timed over many runs instead of
+one noisy one. That pairing discipline governs every number in this post: each
+candidate is measured against the immediately preceding Rust revision in the
+same session, and must pass the correctness gates before it stays. The final
+post spells out the [full benchmark rules](tree-sitter-end-to-end.md); this
+summary is enough to read the tables here.
 
 | Language | Throughput change |
 | --- | ---: |
@@ -276,10 +304,11 @@ minimum fixture sample time:
 | **Seven-language geometric mean** | **+9.01%** |
 
 This was an implementation gate, not a universal nine-percent claim: some
-fixture samples were noisier than the later publication threshold. Still, every
-language improved, and the combined result was well beyond the observed pair
-noise. I instructed ChatGPT to repeat the correctness, recovery, ownership, and
-forced-materialization checks. They held, so the implementation stayed.
+fixture samples were noisier than the stricter variance limit later adopted
+for published results. Still, every language improved, and the combined result
+was well beyond the observed pair noise. The correctness, recovery, ownership,
+and forced-materialization checks all ran again and held, so the
+implementation stayed.
 
 The result succeeded where the local shortcuts had failed because it removed
 the generalized phase from the common path instead of making that phase a
@@ -299,21 +328,22 @@ The next instruction sounded beautifully precise:
 
 > Put heap-backed subtrees in one contiguous arena and refer to them by index.
 
-The experiment history did not preserve a clean Rust pair for either
-per-node allocation versus a direct-pointer arena or direct pointers versus
-arena-relative indexes. I therefore cannot assign a standalone throughput gain
-to “the arena” or “the index.” The arena amortized allocator calls and enabled
-the later handle and ownership designs; those later changes were measured
-individually.
-
-Several conversations later, this turned out to be four nouns wearing a trench
-coat.
+Several conversations later, that one tidy sentence turned out to be half a
+dozen design decisions wearing a trench coat.
 
 An arena says where allocations share storage and lifetime. It does not decide
 whether references are pointers or indexes, whether records move, where
 children live, how sharing is detected, or what happens when the tree is
 returned to its caller. I had initially asked ChatGPT for one answer. Useful
 progress began when I separated the decisions.
+
+One methodological confession applies to this whole era, so it is stated here
+once. The experiment history did not preserve a clean Rust pair for either
+per-node allocation versus a direct-pointer arena or direct pointers versus
+arena-relative indexes. I therefore cannot assign a standalone throughput gain
+to “the arena” or “the index.” The arena amortized allocator calls and enabled
+the later handle and ownership designs; those later changes were measured
+individually, and only they carry honest percentages.
 
 I can give away the design that survived before visiting the wreckage. One
 growable allocation holds many syntax records. Compact four-byte tagged arena
@@ -328,36 +358,22 @@ For this runtime, the arena question separated into six decisions:
 
 ![The separable decisions hidden inside an arena design](/image/blog/02-arena-design-axes.svg)
 
-- **Handle — How does the parser refer to a syntax node?** Handles are copied
-  through the parser stack and stored in a parent's child list, so their size
-  and lookup cost are both hot. **Possible designs:** direct pointer, physical
-  arena index, stable logical ID, or an inline-or-index value.
+- **Handle:** how the parser refers to a syntax node—hot in both size and
+  lookup cost, because handles are copied through the parser stack and stored
+  in every parent's child list.
+- **Storage:** where the node's actual bytes live, anywhere from one heap
+  allocation per node to one contiguous arena.
+- **Record shape:** what exactly is stored for one node, since a token leaf
+  and an internal parent need different information.
+- **Children:** where a parent keeps its variable-length list of child
+  handles, which affects both construction and later traversal.
+- **Movement:** what is allowed to move—growing one allocation may move its
+  base, and a design must say which movement its handles can survive.
+- **Lifetime:** when memory can be reused—node by node the moment each dies,
+  or in bulk when a larger region is reclaimed.
 
-- **Storage — Where do the node's actual bytes live?** The handle only names a
-  node; its record still needs an allocation that owns the symbol, size, flags,
-  and other metadata. **Possible designs:** per-node allocation, stable pages,
-  one contiguous arena, or size-segregated arrays.
-
-- **Record shape — What exactly is stored for one node?** A token leaf and an
-  internal parent need different information, so one universal record may
-  waste space on the common case. **Possible designs:** compact and full leaf
-  records, one general internal header, or kind-specialized internal headers.
-
-- **Children — Where does a parent keep its children?** An internal node owns a
-  variable list of child handles, and their location affects both construction
-  and later traversal. **Possible designs:** coallocated prefix, separate block,
-  global child range, or logical handle table.
-
-- **Movement — What is allowed to move?** Growing one allocation may move its
-  base; compaction may also move individual records inside it. A design must
-  say which movement its handles can survive. **Possible designs:** permanently
-  stable addresses, a movable base with relative indexes, physical-index
-  rewriting during compaction, or stable IDs resolved through a location table.
-
-- **Lifetime — When can memory be reused?** A dead node may release its own
-  storage immediately, or its bytes may remain until a larger storage region
-  is reclaimed. **Possible designs:** reference counting, bulk arena rewind,
-  free lists, mark-sweep, or semispace copying.
+The experiment sections below introduce the candidate designs for each axis as
+they become relevant.
 
 These decisions are separable but coupled. Handle form constrains movement;
 child placement affects locality and reclamation. The experiments therefore
@@ -390,15 +406,16 @@ without invalidating references. It did not make record access faster. A
 pointer already held the final address; an index required adding the arena's
 current base address first.
 
-The direct-pointer arena and this indexed endpoint were not preserved as a
-paired Rust benchmark, so there is no clean index-versus-pointer throughput
-delta. The available measurements provided no evidence that the index improved
-throughput. I retained it as relocation infrastructure, not as a speedup.
+As the confession above records, no clean index-versus-pointer throughput
+delta exists, and the available measurements provided no evidence that the
+index improved throughput. I retained it as relocation infrastructure, not as
+a speedup.
 
 That conclusion mattered because the upper 32 bits of the handle looked
-available. I instructed ChatGPT to pack frequently read metadata there—symbol,
-child count, and flags—so reduction might avoid resolving the arena record.
-Two screens against the immediately preceding Rust revision used the nine
+available, and the temptation was hard to resist: pack frequently read
+metadata there—symbol, child count, and flags—so reduction might avoid
+resolving the arena record. ChatGPT built it, and I ran two quick screening
+benchmarks against the immediately preceding Rust revision, using the nine
 reduction-heavy Go and Java fixtures. The packed version lost every fixture:
 **-2.31%** and **-2.76%**, averaging **-2.54%**. I rejected it before the full
 forty-fixture gate.
@@ -477,9 +494,10 @@ every valid byte offset even, so the low bit carries the record-kind tag without
 discarding an otherwise usable offset bit. The handle therefore covers almost
 the complete 4 GiB `u32` byte-offset domain. A wider offset would not improve
 locality, throughput, or **resident set size (RSS)**, the process's resident
-pages. A wider offset can be revisited when a real input reaches the limit, not
-when a larger number becomes emotionally appealing. The handle width was
-settled; the location of the handles inside each parent was not.
+pages. A wider offset can be revisited on the day a real input reaches the
+limit; until then, the small handle is a feature, not a frugality to apologize
+for. The handle width was settled; the location of the handles inside each
+parent was not.
 
 ### The children rejected a cleaner address
 
@@ -519,11 +537,15 @@ geometric mean. Then the timeout test failed.
 The GLR stack had shared some nodes only temporarily while it explored
 competing parses. After losing branches were discarded, the accepted tree could
 be the sole owner again, but the sticky bit still remembered the earlier
-sharing. Tree-sitter balances deeply repeated syntax before returning the tree,
-and that pass may modify only uniquely owned nodes. Too many nodes looked
-shared, balancing skipped work it needed to perform, and the stress case timed
-out. The impressive benchmark had measured a parser that was avoiding required
-work.
+sharing. That mattered because of a pass Tree-sitter runs at the finish line:
+deeply repetitive syntax—statement after statement, item after item—parses
+into lopsided, deeply nested subtrees, so before returning the tree,
+Tree-sitter runs a **balancing pass** that restructures those runs into a
+flatter shape. Balancing rewrites nodes in place, which is safe only for
+nodes it uniquely owns; anything shared must be copied first. Too many nodes
+looked shared, balancing skipped work it needed to perform, and the stress
+case timed out. The impressive benchmark had measured a parser that was
+avoiding required work.
 
 ChatGPT then walked the accepted syntax graph and reconstructed which nodes were
 actually shared before balancing. Correctness returned, but the version that
@@ -532,12 +554,13 @@ exact atomic-reference-count control. Removing the counts alone was not a safe
 throughput win.
 
 That failure exposed a better boundary. During parsing, the arena belongs to one
-parser thread, so its nodes use cheap `Cell<bool>` sharing markers and rejected
-branches do not trigger per-node release cascades. Before balancing, the
-accepted-graph walk restores the exact sharing information that mutation needs.
-After the tree is published and may cross threads, each node switches to a
-relaxed `AtomicBool` copy-on-write marker, while one atomic owner count keeps the
-complete arena allocation alive.
+parser thread, so its nodes use cheap `Cell<bool>` sharing markers—a
+non-thread-safe flag—and rejected branches do not trigger per-node release
+cascades. Before balancing, the accepted-graph walk restores the exact sharing
+information that mutation needs. After the tree is published and may cross
+threads, each node switches to a relaxed `AtomicBool` copy-on-write marker—a
+thread-safe flag—while one atomic owner count keeps the complete arena
+allocation alive.
 
 This phase-specific design improved parse throughput by **3.35%** against exact
 atomic reference counting, with no meaningful change in peak RSS. It removed
@@ -548,8 +571,8 @@ question: should a collector recover those holes?
 
 ### Garbage collection arrived before there was garbage worth collecting
 
-Four-byte tagged offsets made a moving collector possible in principle. I
-instructed ChatGPT to implement the simplest copying-collector experiment,
+Four-byte tagged offsets made a moving collector possible in principle, and
+curiosity won. ChatGPT implemented the simplest copying-collector experiment,
 often called **semispace collection**: after a successful parse, copy the
 accepted tree into fresh space, rewrite its indexes, and discard the old
 parser-private arena.
@@ -557,8 +580,9 @@ parser-private arena.
 All tests passed and both versions produced identical trees. The forty-fixture
 geometric mean regressed **37.45%**, and peak RSS rose while the old and copied
 trees coexisted. The benchmark deleted each tree before the next parse, so the
-control could already rewind the complete arena. The collector copied every
-live syntax occurrence and reclaimed nothing useful.
+control could already **rewind** the complete arena: reset its allocation
+cursor back to the start, freeing everything it held in one step. The
+collector copied every live syntax occurrence and reclaimed nothing useful.
 
 Negative 37.45% is not a subtle hint. It is a benchmark clearing its throat and
 asking everyone to leave.
@@ -592,9 +616,8 @@ Here is the final comparison against the original C representation:
 | **Movement** | A completed heap node has a stable address, so its direct pointers remain valid | The private arena may move while growing; relative offsets remain valid. A published arena no longer moves |
 | **Lifetime** | Atomic per-node reference counts establish uniqueness and recursively free or pool unreachable records | Parser-private sharing markers, exact accepted-graph reconstruction, published copy-on-write markers, and one owner count for bulk arena lifetime; no collector |
 
-There is no honest single “arena speedup” to print beside that list. The history
-contains no paired evidence that indexing alone improved throughput; each later
-experiment compared against the Rust revision immediately before it. The
+There is still no honest single “arena speedup” to print beside that list—the
+confession from the start of this era stands. The
 evidence supports the individual choices, not an invented sum of their
 percentages.
 
@@ -602,7 +625,11 @@ percentages.
 
 The final design was not the original arena idea with a few details polished.
 It was what remained after profiles, failed layouts, correctness traps, and
-paired controls removed the attractive mistakes:
+paired controls removed the attractive mistakes. If I could hand one sentence
+to someone starting the same fight, it would be this: profile for the work
+that should not exist rather than the code that merely runs hot, and treat any
+benchmark number that arrives without its paired control as a rumor. Everything
+below survived that rule:
 
 - deterministic execution stays linear until real ambiguity needs a graph;
 - four-byte tagged arena offsets reduce bytes moved through stacks and child
@@ -615,15 +642,24 @@ paired controls removed the attractive mistakes:
 - parser-private and published trees use different sharing mechanisms.
 
 At the combined checkpoint, the parser-only gate put Rust roughly **30% ahead
-of C**. The application result went the other way. The final post follows that
-contradiction through lifecycle, resident memory, traversal, and the follow-up
-parser work revealed by the application profile:
-[Optimizing Tree-sitter for End-to-End ast-grep Performance](tree-sitter-end-to-end.md)
+of C**. Readers checking the arithmetic will notice that the paired gains
+documented here—9.01%, 2.04%, 1.88%, and 3.35%—do not compound to thirty
+percent; the rest of the distance from the migration's near-parity baseline
+accumulated across the unpaired arena and index-era transitions covered by the
+earlier confession. The application result went the other way. The final post
+follows that contradiction through lifecycle, resident memory, traversal, and
+the follow-up parser work revealed by the application profile:
+[Optimizing Tree-sitter for End-to-End ast-grep Performance](tree-sitter-end-to-end.md).
 
 For the complete project in one sitting, start with
-[the adventure overview](tree-sitter-rust-rewrite.md). Readers who want the
-runtime mechanics rather than the experiment narrative can continue into the
-implementation appendix below.
+[the adventure overview](tree-sitter-rust-rewrite.md).
+
+---
+
+*The story ends here. What follows is reference material: how Tree-sitter's GLR
+machinery is actually implemented—record layouts, handle encoding, and the
+lifecycle of a stack node. For the theory side, how LR and GLR work at all, see
+[the previous post's appendix](tree-sitter-rust-migration.md#appendix-how-lr-and-glr-work).*
 
 ## Appendix: Tree-sitter's GLR implementation, end to end
 
@@ -662,24 +698,17 @@ The names are dangerously similar, so here is the precise distinction:
 
 ![The physical relationship among a stack head, stack node, stack link, and subtree](/image/blog/02-gss-runtime-layout.svg)
 
-The most important detail is that syntax lives on the **link**, not in the
-stack node. Logically, the parser moves forward like this:
-
-```text
-predecessor state -- recognize this subtree --> current state
-```
-
-The runtime stores that relationship backward:
-
-```text
-current StackNode -- StackLink{subtree} --> predecessor StackNode
-```
-
-Backward links make a reduction natural: begin at the current head, walk toward
-older states, and collect syntax from the links along the way. They also allow
-sharing. Two histories can reach the same state and input position through
-different predecessors. One current node can keep both arrivals as two links,
-sharing the configuration that has the same future without erasing either past.
+The conceptual side—why stack nodes and subtrees are different kinds of node,
+and why versions fork and merge—is built up in
+[the previous post's appendix](tree-sitter-rust-migration.md#appendix-how-lr-and-glr-work).
+The implementation consequence matters most here: syntax lives on the
+**link**, not in the stack node, and links are stored backward
+(`current StackNode -- StackLink{subtree} --> predecessor StackNode`). Backward
+links make a reduction natural—begin at the current head, walk toward older
+states, and collect syntax from the links along the way—and they allow
+sharing: two histories that reach the same state and input position can be
+kept as two links on one current node, sharing the configuration that has the
+same future without erasing either past.
 
 ### What a materialized stack node costs
 
@@ -756,7 +785,9 @@ one version + one lookahead
 ### Shift: put one recognized token on one edge
 
 The lexer returns a leaf `Subtree`. [`parser_shift`](https://github.com/HerringtonDarkholme/tree-sitter/blob/subtree-arena-gc/lib/src_rust/parser/actions.rs)
-normalizes its `extra` flag if necessary and calls `stack_push` with the next
+normalizes its `extra` flag—**extras** are grammar-designated tokens such as
+whitespace and comments that may appear anywhere without belonging to a
+rule—and calls `stack_push` with the next
 state.
 
 On the generalized path, `stack_push` creates a `StackNode`. Link zero points to
@@ -779,10 +810,10 @@ window.
 
 ### Conflict: versions name futures, links preserve pasts
 
-When the grammar permits several actions, Tree-sitter must preserve several
-possible futures. It represents each current possibility with a `StackHead`.
-Creating another version retains the same current node rather than copying all
-nodes beneath it.
+When the grammar permits several actions, Tree-sitter represents each current
+possibility with a `StackHead`; the previous post's appendix covers why forking
+beats copying. At the implementation level, creating another version retains
+the same current node rather than copying any nodes beneath it.
 
 ```text
 version 0 head --+
@@ -814,9 +845,9 @@ The pop is a depth-first traversal implemented by
 1. Start one iterator at the selected version's head node.
 2. Follow links backward and collect each link's subtree.
 3. When a node has alternate links, clone the iterator state for those paths.
-4. Count ordinary syntax toward the reduction length. Whitespace, comments,
-   and other grammar-designated **extras** travel with the result without
-   counting as the requested children.
+4. Count ordinary syntax toward the reduction length. Extras—the whitespace
+   and comment tokens defined in the shift step above—travel with the result
+   without counting as the requested children.
 5. At the requested depth, reverse the collected handles into source order and
    return a `StackSlice`.
 6. If different paths end at different predecessor nodes, create a version for
@@ -880,12 +911,12 @@ different syntax histories that reached it.
 ### Pause, reject, recover, and release
 
 A version with no valid action is first paused, not immediately destroyed. If
-another version advances successfully, condensation can discard the paused
-one. If every promising version is paused, Tree-sitter resumes the best one and
-enters error recovery.
+another version advances successfully, a cleanup-and-ranking step called
+**condensation** can discard the paused one. If every promising version is
+paused, Tree-sitter resumes the best one and enters error recovery.
 
 [`parser_condense_stack`](https://github.com/HerringtonDarkholme/tree-sitter/blob/subtree-arena-gc/lib/src_rust/parser/advance.rs) is the frontier's
-customs desk. This cleanup and ranking step—called **condensation**—removes
+customs desk. Condensation removes
 halted versions, compares versions by recovery cost and progress, merges
 compatible ones, caps the number of survivors, and decides whether a paused
 version must be recovered or can be discarded.
@@ -912,17 +943,18 @@ parse can reach that speculative work.
 
 ### Where the deterministic window fits
 
-The optimized runtime does not replace this GLR implementation. It places a
-linear suffix above it:
+The optimized runtime does not replace this GLR implementation. It places the
+deterministic window—also described as a linear suffix of the stack—above it:
 
 ```text
 materialized shared graph <- base node | compact deterministic entries -> head
 ```
 
 As long as there is one active version and an operation needs no graph topology,
-shift and reduce work in that suffix. A conflict, recovery operation, graph
-walk, version mutation, or diagnostic logger first converts every entry into
-the equivalent `StackNode` chain. The generalized code then proceeds unchanged.
+shift and reduce work inside that window. A conflict, recovery operation, graph
+walk, version mutation, or diagnostic logger first materializes the window,
+converting every entry into the equivalent `StackNode` chain. The generalized
+code then proceeds unchanged.
 
 After condensation leaves one healthy active version, the window can begin
 again above the surviving materialized graph. The optimization is therefore

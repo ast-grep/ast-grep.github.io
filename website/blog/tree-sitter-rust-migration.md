@@ -23,28 +23,33 @@ head:
 
 ## The hard part began after the rewrite worked
 
-The overview told the whole adventure. This post slows down the rewrite itself:
-how the migration stayed compatible, why the first performance campaign became
-untrustworthy, what this branch deleted, and how the surviving runtime became
-Rust I could reason about.
+Tree-sitter's C runtime is the kind of code you are not supposed to touch.
+Thousands of already-compiled grammars call into it and expect symbol names,
+layouts, and calling conventions to be exactly where they left them. The
+premise of this post is simple and slightly absurd: translate that runtime
+into Rust without any of those compiled binaries noticing—and then keep going.
 
-The sequence matters. ChatGPT first translated the runtime conservatively
-behind the existing tests and C **application binary interface (ABI)**. Then a
-multi-day `/goal improve the perf by 20%` run produced fast, opaque code—and
-segfaults. I stopped the performance work, removed features outside the
-fresh-snapshot workload, and instructed ChatGPT to rewrite the remainder for
-humans.
+One clarification before anything else, for readers arriving from a search
+engine: this is not upstream Tree-sitter. It is ast-grep's fork of the
+Tree-sitter runtime, rewritten for ast-grep's own workload;
+[the adventure overview](tree-sitter-rust-rewrite.md) (Part 1) tells the
+complete story in one sitting. This post, Part 2 of 4, slows down on the
+rewrite itself: how the migration stayed compatible with existing grammars and
+their **external scanners**—the hand-written C lexer extensions grammars ship
+for context-sensitive tokens—what this branch deleted, and how the surviving
+runtime became Rust I could reason about.
 
-That stage ended with a Rust runtime near C performance. Existing grammars and
-external scanners still worked through the retained ABI, while ownership and
-control flow could finally be followed one subsystem at a time. Before tracing
-the migration, the next section establishes the small amount of LR and GLR
-vocabulary it needs.
+I should also introduce my collaborator. I did not hand-type this rewrite: I
+set the direction and constraints, and ChatGPT wrote the code. My first
+instruction was deliberately boring—turn the C into Rust that behaves
+identically, keeping the existing tests green and everything compiled code can
+see unchanged. Where that led, and where it went sideways, takes the rest of
+this post. First, the next section establishes the small amount of LR and GLR
+vocabulary the story needs.
 
-For the complete project in one sitting, start with
-[the adventure overview](tree-sitter-rust-rewrite.md). The optional
-[LR/GLR appendix](#appendix-how-lr-and-glr-work) retains the detailed parser
-walkthrough.
+*(The optional [LR/GLR appendix](#appendix-how-lr-and-glr-work) sits after the
+conclusion as reference material: the full parser-theory walkthrough for the
+curious.)*
 
 ## Before rewriting it: what Tree-sitter actually runs
 
@@ -60,19 +65,14 @@ The execution pipeline has two main parts. The **lexer** turns source bytes into
 tokens. The **parser** combines those tokens into syntax nodes. Tree-sitter's
 parser is based on **LR parsing**, which reads input left to right and recognizes
 larger grammar constructs bottom-up. It keeps a numbered parse state, looks at
-the next token—the **lookahead**—and uses `(state, lookahead)` to select an
-action:
-
-- **shift** consumes the token, creates its syntax leaf, and enters another
-  state;
-- **reduce** replaces a recognized sequence with one parent subtree, then uses
-  the goto table to find the state after that parent; and
-- **accept** returns the completed tree.
+the next token—the **lookahead**—and uses `(state, lookahead)` to select one
+action: **shift** the token and enter another state, **reduce** a recognized
+sequence into one parent subtree, or **accept** the completed tree.
 
 ![An LR parser uses the lookahead token and one stack state to choose one shift, reduce, or accept action](/image/blog/01-lr-concept.svg)
 
 The stack is the parser's memory. It records both the states reached so far and
-the recognized syntax between them. A shift extends that history. A reduction
+the recognized syntax between them. A shift extends that history; a reduction
 walks backward over part of it, takes the corresponding syntax values as
 children, and pushes their new parent.
 
@@ -91,147 +91,165 @@ internal reference to recognized syntax: either a token or a parent built by a
 reduction. Stack links carry these references, and GLR versions may share both
 structures, but their ownership and allocation rules are different.
 
+Two more features complete the picture. **Incremental parsing** is
+Tree-sitter's flagship editor feature: when a document changes, the runtime
+takes the edit plus the previous syntax tree, reuses the parts the edit did
+not touch, and re-parses only the affected region. That is why highlighting
+in a Tree-sitter-powered editor keeps up with typing—a keystroke never costs
+a full re-parse. And some grammars ship the external scanner mentioned above,
+loaded alongside the generated tables.
+
 This was the machine being rewritten: lexer execution, generated-table lookup,
-LR actions, GLR histories, syntax construction, error recovery, and the public
-tree API. The algorithm could not be treated as a black box, because the later
-performance work would reach into almost every one of those boundaries.
+LR actions, GLR histories, incremental reuse, external scanning, syntax
+construction, error recovery, and the public tree API. The algorithm could not
+be treated as a black box, because the later work would reach into almost
+every one of those subsystems.
 
 ## First: change the language, not the behavior
 
 Before ChatGPT translated the first subsystem, I gave the migration a narrow
-contract:
-
-- the existing tests would remain unchanged and serve as the first behavioral
-  oracle;
-- generated grammars and external scanners would keep working;
-- public layouts and calling conventions would stay compatible; and
-- the first Rust implementation would resemble the C closely enough to debug
-  failures by comparison.
-
-The unchanged suite gave the translation a fixed target, but it could not prove
-every ecosystem boundary. After the cutover, ChatGPT added Rust-versus-C
-comparisons over real language fixtures, ABI checks, and an ast-grep integration
-gate. Those tests asked whether generated grammars and downstream users still
-saw the same runtime, not merely whether its internal units passed.
-
-Tests changed only later, when the branch deliberately removed incremental
-parsing and native Wasm-language loading. Those edits recorded a new product
-boundary; they did not make the original translation easier to pass.
+contract. The existing tests would remain unchanged and serve as the first
+behavioral oracle. Generated grammars and external scanners would keep
+working, which meant public layouts and calling conventions stayed exactly
+where compiled code expected them. And the first Rust implementation would
+resemble the C closely enough to debug failures by comparing the two, line
+against line.
 
 The order mattered. First, reproduce the C runtime in Rust closely enough that
 a failing test still pointed somewhere useful. Redesigning ownership, control
 flow, and representation at the same time would have made every mismatch a
-murder mystery with three suspects and no witnesses.
+murder mystery with three suspects and no witnesses. Only after parity would
+the private internals become code a human could reason about. The first pass
+protected behavior. The later pass protected the next engineer—including me.
+The performance campaign between them would demonstrate, rather forcefully,
+why both were necessary.
 
-Only after parity would the private internals be rewritten into code a human
-could reason about. The first pass protected behavior. The later pass protected
-the next engineer—including me. The performance campaign between them would
-demonstrate, rather forcefully, why both were necessary.
+The unchanged suite gave the translation a fixed target, but it could not
+prove every promise to the ecosystem on its own. Later, once Rust took over
+the runtime—the cutover narrated in the next section—ChatGPT added
+Rust-versus-C comparisons over real language fixtures, binary-interface
+checks, and an ast-grep integration gate. Those tests asked whether generated
+grammars and downstream users still saw the same runtime, not merely whether
+its internal units passed. The tests themselves changed only much later, when
+this branch deliberately removed incremental parsing and native Wasm-language
+loading. Those edits recorded a new product decision, still ahead in this
+story; they did not make the original translation easier to pass.
 
-## Translation proceeded one subsystem at a time
+## I had ChatGPT migrate one subsystem at a time
 
-The C runtime carried years of hard-won behavior around lexing, included
-ranges, external scanners, error recovery, tree editing, changed ranges, query
-execution, and public navigation. Replacing all of it in one heroic commit
-would have made every failure equally mysterious.
+The C runtime carried years of hard-won behavior: lexing, external scanners,
+error recovery, tree editing, included ranges (parsing only designated slices
+of a file), changed ranges (reporting which parts of a tree an edit touched),
+query execution (running syntax-pattern searches over a tree), and public
+navigation. Replacing all of it in one heroic commit was never a serious
+option.
 
 I knew this because I had already tried broader AI-assisted rewrites. Without
 clear layers, the agent gradually lost its place in the system: translated
 pieces stopped agreeing about their assumptions, failures no longer pointed to
-one boundary, and each follow-up prompt inherited a state neither of us could
+one seam, and each follow-up prompt inherited a state neither of us could
 describe precisely. The rewrite became uncontrollable long before it became
 complete.
 
-Layering was the correction, not the original plan. This time I instructed
-ChatGPT to migrate the core in this order:
+<!-- TODO(author): add one concrete detail from a prior failed rewrite attempt (which subsystem it fell apart in, or one specific symptom) to ground this paragraph. -->
 
-1. **Allocation helpers, `Point`, `Length`, `ErrorCost`, and Unicode.** These
-   are the small values and low-level services used everywhere else: source
-   positions, byte and row extents, recovery cost, text decoding, and memory
-   allocation.
-2. **`Subtree` representation and ownership.** A subtree is Tree-sitter's
-   internal syntax value, either a token leaf or a parent produced by a
-   reduction. This layer defines how syntax is stored, shared, and released.
-3. **Generated-language tables.** These are the grammar-specific symbols,
-   states, actions, lexing functions, and metadata that the runtime interprets.
-4. **Lexer execution.** The lexer reads source input and asks the generated
-   language logic which token comes next.
-5. **The GLR stack.** `StackHead`, `StackNode`, and `StackLink` represent active
-   parse versions, their shared histories, and the subtrees recognized between
-   parser states.
-6. **`Tree`, `Node`, `TreeCursor`, and changed ranges.** These types expose the
-   completed syntax tree and let callers navigate or compare it.
-7. **The parser and reduction loop.** This final layer coordinates lexing,
-   table lookup, stack operations, syntax construction, recovery, and
-   acceptance.
+Layering was the correction, not the original plan. This time I had ChatGPT
+climb the runtime like a dependency ladder. It started with the small values
+everything else touches: allocation helpers, source positions and extents
+(`Point`, `Length`), recovery cost (`ErrorCost`), and Unicode decoding. On top
+of those came the `Subtree` layer—the compact syntax value introduced
+earlier—defining how recognized syntax is stored, shared, and released. Next
+were the generated-language tables, the grammar-specific symbols, states,
+actions, lexing functions, and metadata that the runtime interprets, and then
+the lexer that consults them to produce tokens. With syntax and tokens in
+place, the GLR stack crossed over: `StackHead`, `StackNode`, and `StackLink`,
+the machinery for active parse versions, their shared histories, and the
+subtrees recognized between parser states. Above that came `Tree`, `Node`,
+`TreeCursor`, and changed-range computation—the types that expose the
+completed tree to callers. The parser and reduction loop went last: the
+coordinator that ties lexing, table lookup, stack operations, syntax
+construction, recovery, and acceptance together.
 
 At each layer, the Rust initially stayed close to the C. This was not the final
 style, but it was a useful debugging instrument: recognizably equivalent
 control flow kept a parity failure inside a bounded search area.
 
 Once the final parser layer crossed over, Rust owned the active runtime. The
-browser WebAssembly build followed, and this branch retired its obsolete pure-C
-build path. Native loading of Wasm-compiled grammars was later removed because
-the target workload did not use it. A narrow C compatibility layer remained,
-but parsing, lexing, tree operations, and storage now came from Rust.
-
-That does not mean the C boundary disappeared. Rust implements the runtime side
-of the retained C ABI; existing generated parsers, external scanners, and
-callers remain compiled consumers of that boundary.
+browser WebAssembly build—the whole library compiled to Wasm so it can run in
+a web page—followed, and this branch retired its obsolete pure-C build path.
+A different Wasm feature, native loading of grammars themselves compiled to
+WebAssembly, was later removed because the target workload did not use it. A
+narrow C compatibility layer remained, but parsing, lexing, tree operations,
+and storage now came from Rust.
 
 ## The C boundary had to survive the Rust rewrite
 
-Generated Tree-sitter languages are already-compiled artifacts. They communicate
-with the runtime through an **ABI**: the exported symbol names, calling
-conventions, and exact layouts that compiled code expects to find. Changing the
-implementation from C to Rust did not grant permission to move that boundary.
+Rust owning the runtime did not make the C boundary disappear. Generated
+Tree-sitter languages are already-compiled artifacts. They communicate with
+the runtime through an **application binary interface (ABI)**: the exported
+symbol names, calling conventions, and exact layouts that compiled code
+expects to find. Changing the implementation from C to Rust did not grant
+permission to move that boundary; existing generated parsers, external
+scanners, and callers remain compiled consumers of it.
 
-The retained parser, tree, and generated-language interfaces therefore kept
-their C ABI. Rust types crossing that boundary use `#[repr(C)]`, and
-layout-sensitive structures are checked for the expected size. Behind the
-boundary, private Rust types are free to change. At the boundary, “more
-idiomatic” can mean “binary incompatible,” which is a remarkably expensive
-style preference.
+The parser, tree, and generated-language interfaces therefore kept their C
+ABI. Rust types crossing that boundary use `#[repr(C)]`, and layout-sensitive
+structures are checked for the expected size. Behind the boundary, private
+Rust types are free to change. At the boundary, “more idiomatic” can mean
+“binary incompatible,” which is a remarkably expensive style preference.
 
 There is a useful difference between “C-shaped because the agent has not cleaned
 it up” and “C-shaped because another binary has already baked this layout into
-its data.” The former invites another instruction. The latter invites tea and a
-size assertion.
+its data.” The former invites another cleanup prompt. The latter invites a
+size assertion and respectful distance.
 
-This guarantee applies to the interfaces the branch retained. Removing native
+This guarantee applies to the interfaces the branch kept. Removing native
 Wasm-language loading was an explicit product and API change, not something
 hidden inside the C-to-Rust translation.
 
 ## The benchmark crossed twenty percent. Then the parser crashed.
 
 Once the port passed its compatibility gates, I gave ChatGPT a much broader
-instruction: `/goal improve the perf by 20%`. I supplied the major directions—
-profile the runtime, understand its data layouts, and consider algorithmic as
-well as local changes—while the agent implemented and measured candidates.
+instruction: `/goal improve the perf by 20%`. `/goal` is the command that
+hands the agent an objective and kicks off a long autonomous run: it plans,
+implements, measures, and keeps going without waiting for me. I supplied the
+major directions—profile the runtime, understand its data layouts, and
+consider algorithmic as well as local changes—and then largely got out of the
+way.
 
-The `/goal` run continued through several days and nights with little human
+The run continued through several days and nights with little human
 supervision. ChatGPT profiled the runtime, implemented candidates, ran the
 gates, and used the results to choose the next change. In the narrow sense, it
 worked: the benchmark eventually crossed the twenty-percent target.
 
-Meanwhile, ownership paths, layout experiments, and fast paths accumulated
-faster than I could build a reliable model of them. Then the resulting parser
-began segfaulting. The autonomous run had produced a winning benchmark and an
-artifact I could not trust. A twenty-percent result is not an asset when nobody
-can explain which invariant bought it or which input will make it crash.
+But each time I looked, the diff had grown another layer: new ownership paths,
+layout experiments, and fast paths grafted over the previous day's, each
+individually plausible, the whole accumulating faster than I could build a
+reliable model of it. Then, after days of green benchmarks, the parser began
+segfaulting. Not a Rust panic with a stack trace, not a failed assertion—the
+process simply died, somewhere inside code neither of us could fully explain.
+The autonomous run had produced a winning benchmark and an artifact I could
+not trust. A twenty-percent result is not an asset when nobody can explain
+which invariant bought it or which input will make it crash.
 
-So I stopped the performance work. Before asking for another optimization, I
-needed to reduce the runtime's scope and make its remaining ownership rules
-locally understandable. The following deletion and readability work was not
-routine polish after the rewrite; it was how the rewrite regained a trustworthy
-baseline.
+So I did not merely stop the performance work—I reverted it. Every commit from
+the `/goal` run came out of the branch, and the twenty percent left with them.
+When this Rust runtime later reached parity with C, that result was earned by
+the deletion and readability work below, not salvaged from the run that
+crashed. Before asking for another optimization, I needed to reduce the
+runtime's scope and make its remaining ownership rules locally understandable.
+The following work was not routine polish after the rewrite; it was how the
+rewrite regained a trustworthy baseline.
 
 ## The feature list had to meet the actual workload
 
 The [adventure overview](tree-sitter-rust-rewrite.md#remove-incremental-parsing-from-the-target-runtime)
-explains the product boundary: editors benefit from incremental reuse, while
-this ast-grep branch parses complete snapshots. Here, the interesting part is
-what that decision removed from the runtime.
+explains the product reasoning: editors benefit from incremental reuse, while
+this ast-grep branch parses complete file snapshots. That argument had existed
+from the start of the project; the crashed performance run is what made acting
+on it urgent, because a runtime I now had to re-understand from scratch should
+be the smallest one the product actually needed. Here, the interesting part is
+what the decision removed from the runtime.
 
 I instructed ChatGPT to delete the incremental path while keeping `old_tree` in
 the parser API for compatibility. The parser no longer retains the previous
@@ -242,7 +260,7 @@ the current state and position—disappeared.
 That deletion continued into the hot loop. Lookahead selection stopped asking
 whether an old subtree could replace fresh lexing. The special path for
 breaking a reusable parent back into stack entries disappeared, as did the
-incremental-only reduction path and the pending-link metadata it required in
+incremental-only reduction path and the extra bookkeeping it required in
 the GLR stack. Fresh lexing and one ordinary reduction ownership path became
 the only way through the parser.
 
@@ -257,8 +275,8 @@ assumed.
 Once behavior was stable, the C-shaped translation had completed its mission.
 It was now possible to make the code explain itself.
 
-No grand redesign followed. Instead, ChatGPT made a long series of small,
-measured changes. Raw pointer conventions became ordinary Rust references,
+I did not ask for a grand redesign. Instead, I had ChatGPT make a long series
+of small, measured changes. Raw pointer conventions became ordinary Rust references,
 slices, return values, and explicit optional states where the ABI allowed it.
 Ownership operations gained names, mutation moved closer to the state it
 changed, and the parser's major responsibilities separated into focused
@@ -272,8 +290,9 @@ Gradually, the module structure began to tell the runtime story. The parser
 asks the lexer for a token, looks up actions through the language, manipulates
 histories through the stack, and builds subtrees. The accepted subtree becomes
 a tree; nodes and cursors expose public views over it. Recovery and balancing
-remain visible phases rather than surprising appendices inside one enormous
-function.
+(a pass in which Tree-sitter rebalances deeply repeated subtrees after
+parsing) remain visible phases rather than surprising appendices inside one
+enormous function.
 
 The goal was not maximum Rust flavor. It was local reasoning. A reader should
 be able to answer:
@@ -308,33 +327,35 @@ That became the general rule for cleanup:
 1. preserve the retained behavior and ABI;
 2. compare the change with the immediately preceding Rust implementation;
 3. keep clarity improvements that remain within noise;
-4. isolate compact or unsafe representation code behind narrow boundaries; and
+4. isolate compact or unsafe representation code behind narrow interfaces; and
 5. revert abstractions whose runtime cost overwhelms their maintenance value.
 
 Rust-versus-C measurements answered a broad question: had the rewrite reached
 competitive performance? Rust-to-Rust measurements answered the local one:
-did this change help? Confusing those controls makes a fast C implementation a
-very elaborate coin flip for judging a Rust refactor.
+did this change help? Mix the two up and you end up judging a small Rust
+refactor against a distant C baseline—an elaborate way of flipping a coin.
 
 ## What survived the rewrite
 
 The strange part is that the performance campaign became useful only after I
-stopped it. Its failure exposed the missing prerequisite: a runtime whose
-behavior could be preserved and whose internals could be understood at the
-same time.
+stopped and reverted it. Its failure exposed the missing prerequisite: a
+runtime whose behavior could be preserved and whose internals could be
+understood at the same time.
 
-That is what survived this stage. The Rust core kept the retained ecosystem
-boundary: existing generated grammars and external scanners still worked
+That is what survived this stage. The Rust core kept its promise to the
+ecosystem: existing generated grammars and external scanners still worked
 through the public C ABI. Incremental old-tree reuse and native loading of Wasm
-grammars remained explicit exclusions for this fresh-snapshot branch. Inside
-that boundary, the private machinery could finally be followed one subsystem
-at a time. At the last complete checkpoint before the later stack and arena
-work, Rust and C were at practical parity when the tested languages were
-weighted equally.
+grammars remained explicit exclusions for this fresh-snapshot branch. Behind
+the ABI, the private machinery could finally be followed one subsystem at a
+time. And with nothing inherited from the reverted `/goal` run, the layered
+work had to earn the performance back on its own: at the last complete
+checkpoint before the later stack and arena work (an arena serves many
+allocations from one shared memory block), Rust and C were at practical
+parity when the tested languages were weighted equally.
 
 That was enough to change the next question. I no longer had to ask, “Did the
 translation preserve Tree-sitter?” I could ask, “Why does this particular
-mechanism run on every parse?” The new module boundaries made allocations,
+mechanism run on every parse?” The new module organization made allocations,
 ownership transfers, stack-version churn, and repeated table work visible
 enough to investigate rather than merely inherit.
 
@@ -345,12 +366,21 @@ stack was built for forks, but its measured released-node population was
 overwhelmingly linear. Continue with
 [Improving Tree-sitter's GLR Algorithm and Memory Layout](tree-sitter-glr-arena.md).
 
+---
+
+*The story ends here; Part 3 picks it up. What follows is reference material
+for the curious: the LR and GLR theory behind everything above, built from one
+tiny expression. For the other half—how Tree-sitter's runtime actually
+implements this machinery with heads, nodes, and links—see
+[Part 3's appendix](tree-sitter-glr-arena.md#appendix-tree-sitter-s-glr-implementation-end-to-end).*
+
 ## Appendix: How LR and GLR work
 
 The rewrite story above needs only the short model: generated tables choose
 parser actions, a stack records the recognized history, and GLR can preserve
 several histories when one answer is not yet safe. This appendix builds the
-complete model from one tiny expression.
+complete model from one tiny expression; the runtime implementation side lives
+in Part 3's appendix.
 
 ### A parser is a table interpreter with a stack
 
@@ -459,9 +489,9 @@ or combined existing children into a parent.
 
 #### Tree-sitter stores two different kinds of node
 
-Tree-sitter calls the syntax value attached to a token or completed grammar
-rule a **subtree**. A leaf subtree might represent `2`. An internal subtree
-might represent the entire `1 + 2`.
+The first kind is the **subtree** defined back in the body: Tree-sitter's
+compact reference to recognized syntax. A leaf subtree might represent `2`. An
+internal subtree might represent the entire `1 + 2`.
 
 The parser stack has nodes too, but they are not syntax nodes. A Tree-sitter
 **stack node** stores a parse state and bookkeeping about that point in the
