@@ -26,6 +26,9 @@ new core is faster at parsing, faster at reading the completed tree, and
 faster in ast-grep itself. (The title's “30%” is the parser-only number;
 end-to-end, ast-grep runs about 22% faster.)
 
+Source repository:
+[HerringtonDarkholme/tree-sitter](https://github.com/HerringtonDarkholme/tree-sitter).
+
 Two quick introductions before the numbers. ast-grep — the structural
 code-search tool this blog belongs to — searches code by syntax rather than by
 text, so every file it touches must first become a syntax tree.

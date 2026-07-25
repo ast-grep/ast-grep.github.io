@@ -91,13 +91,9 @@ internal reference to recognized syntax: either a token or a parent built by a
 reduction. Stack links carry these references, and GLR versions may share both
 structures, but their ownership and allocation rules are different.
 
-Two more features complete the picture. **Incremental parsing** is
-Tree-sitter's flagship editor feature: when a document changes, the runtime
-takes the edit plus the previous syntax tree, reuses the parts the edit did
-not touch, and re-parses only the affected region. That is why highlighting
-in a Tree-sitter-powered editor keeps up with typing—a keystroke never costs
-a full re-parse. And some grammars ship the external scanner mentioned above,
-loaded alongside the generated tables.
+Upstream Tree-sitter also supports incremental tree reuse and grammar-provided
+external scanners. This runtime always parses fresh snapshots but retains
+external-scanner compatibility.
 
 This was the machine being rewritten: lexer execution, generated-table lookup,
 LR actions, GLR histories, incremental reuse, external scanning, syntax
@@ -154,21 +150,22 @@ complete.
 <!-- TODO(author): add one concrete detail from a prior failed rewrite attempt (which subsystem it fell apart in, or one specific symptom) to ground this paragraph. -->
 
 Layering was the correction, not the original plan. This time I had ChatGPT
-climb the runtime like a dependency ladder. It started with the small values
-everything else touches: allocation helpers, source positions and extents
-(`Point`, `Length`), recovery cost (`ErrorCost`), and Unicode decoding. On top
-of those came the `Subtree` layer—the compact syntax value introduced
-earlier—defining how recognized syntax is stored, shared, and released. Next
-were the generated-language tables, the grammar-specific symbols, states,
-actions, lexing functions, and metadata that the runtime interprets, and then
-the lexer that consults them to produce tokens. With syntax and tokens in
-place, the GLR stack crossed over: `StackHead`, `StackNode`, and `StackLink`,
-the machinery for active parse versions, their shared histories, and the
-subtrees recognized between parser states. Above that came `Tree`, `Node`,
-`TreeCursor`, and changed-range computation—the types that expose the
-completed tree to callers. The parser and reduction loop went last: the
-coordinator that ties lexing, table lookup, stack operations, syntax
-construction, recovery, and acceptance together.
+climb the runtime like a dependency ladder:
+
+- **Foundational values:** allocation helpers, source positions and extents
+  (`Point`, `Length`), recovery cost (`ErrorCost`), and Unicode decoding.
+- **Syntax storage:** the compact `Subtree` value and the rules for storing,
+  sharing, and releasing recognized syntax.
+- **Generated-language tables:** grammar-specific symbols, states, actions,
+  lexing functions, and metadata.
+- **Lexing:** the runtime that consults those tables to produce tokens.
+- **The GLR stack:** `StackHead`, `StackNode`, and `StackLink`, including active
+  parse versions, shared histories, and the subtrees between parser states.
+- **The public tree:** `Tree`, `Node`, `TreeCursor`, and changed-range
+  computation.
+- **The parser and reduction loop:** the final coordinator connecting lexing,
+  table lookup, stack operations, syntax construction, recovery, and
+  acceptance.
 
 At each layer, the Rust initially stayed close to the C. This was not the final
 style, but it was a useful debugging instrument: recognizably equivalent
