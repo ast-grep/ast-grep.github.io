@@ -27,6 +27,44 @@ The idea is that you can write full an valid code in the `context` field and use
 
 This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call) and [Go](/catalog/go/#match-function-call-in-golang). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config) can be more expressive and powerful.
 
+### Why does a Dart call pattern return no matches?
+
+Dart does not allow expressions at the top level. As a result, a standalone
+pattern such as `debugPrint($$$ARGS)` can be parsed as a `function_signature`
+instead of a `call_expression`. You can confirm the parsed node with
+[`--debug-query`](/reference/cli/run#debug-query-format):
+
+```sh
+ast-grep run -p 'debugPrint($$$ARGS)' -l dart --debug-query=pattern
+```
+
+For a direct call whose callee is an identifier, provide a valid enclosing
+function and select the call expression to remove the ambiguity:
+
+```sh
+ast-grep run \
+  -p 'void _() { debugPrint($$$ARGS); }' \
+  --selector call_expression \
+  -l dart
+```
+
+The equivalent YAML rule uses a [pattern object](/guide/rule-config/atomic-rule#pattern-object):
+
+```yaml
+id: find-direct-debug-print
+language: dart
+rule:
+  pattern:
+    context: 'void _() { debugPrint($$$ARGS); }'
+    selector: call_expression
+```
+
+This example intentionally matches only direct `debugPrint(...)` calls. Member
+or generic calls, calls inside arrow-function bodies, cascade calls, and
+constructor invocations can have different Dart AST shapes. Inspect each form
+with `--debug-query=cst`, then combine language-specific
+[`kind`](/guide/rule-config/atomic-rule#kind) and relational rules when needed.
+
 ## My Rule does not work, why?
 Here are some tips to debug your rule:
 * Use the [ast-grep playground](/playground) to test your rule.
