@@ -21,6 +21,8 @@ head:
 
 *Part 1 of 4 — the complete adventure*
 
+<iframe style="width:100%;aspect-ratio:16/9;" src="https://www.youtube.com/embed/cXxH9odZbrQ" title="Rewriting Tree-sitter's C core in Rust with AI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ast-grep rewrote Tree-sitter's C core in Rust, with AI writing the code. The
 new core is faster at parsing, faster at reading the completed tree, and
 faster in ast-grep itself. (The title's “30%” is the parser-only number;
