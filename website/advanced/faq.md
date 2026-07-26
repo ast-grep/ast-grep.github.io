@@ -59,11 +59,12 @@ rule:
     selector: call_expression
 ```
 
-This example intentionally matches only direct `debugPrint(...)` calls. Member
-or generic calls, calls inside arrow-function bodies, cascade calls, and
-constructor invocations can have different Dart AST shapes. Inspect each form
-with `--debug-query=cst`, then combine language-specific
-[`kind`](/guide/rule-config/atomic-rule#kind) and relational rules when needed.
+This example intentionally matches only direct `debugPrint(...)` calls. For a
+copy-ready rule that also covers member, null-aware, generic, parenthesized,
+null-asserted, common single-level arrow-body, and direct cascade calls, see
+[Find Dart Calls by Callee Name](/catalog/dart/#find-dart-calls-by-callee-name).
+That catalog entry includes an exact CLI command, a live Dart playground, and
+the rule's tested boundaries.
 
 ## My Rule does not work, why?
 Here are some tips to debug your rule:

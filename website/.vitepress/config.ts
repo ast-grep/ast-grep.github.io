@@ -75,6 +75,7 @@ const sidebar: DefaultTheme.Sidebar = [
     items: [
       { text: 'C', link: '/catalog/c/' },
       { text: 'C++', link: '/catalog/cpp/' },
+      { text: 'Dart', link: '/catalog/dart/' },
       { text: 'Go', link: '/catalog/go/' },
       { text: 'HTML', link: '/catalog/html/' },
       { text: 'Java', link: '/catalog/java/' },

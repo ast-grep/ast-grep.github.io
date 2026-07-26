@@ -44,6 +44,7 @@ export type ExampleLangs = keyof typeof languages
 export const languages = {
   c: 'C',
   cpp: 'C++',
+  dart: 'Dart',
   go: 'Go',
   html: 'HTML',
   java: 'Java',
