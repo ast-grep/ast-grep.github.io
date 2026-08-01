@@ -25,7 +25,7 @@ rule:
 
 The idea is that you can write full an valid code in the `context` field and use `selector` to select the sub-AST node.
 
-This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call) and [Go](/catalog/go/#match-function-call-in-golang). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config) can be more expressive and powerful.
+This trick can be used in other languages as well, like [C](/catalog/c/#match-function-call), [Go](/catalog/go/#match-function-call-in-golang), and [Dart](/catalog/dart/#why-does-a-dart-call-pattern-return-no-matches). That said, pattern is not always the best choice for code search. [Rule](/guide/rule-config) can be more expressive and powerful.
 
 ## My Rule does not work, why?
 Here are some tips to debug your rule:

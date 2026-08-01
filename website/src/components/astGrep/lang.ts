@@ -24,6 +24,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   csharp: 'C#',
   css: 'CSS',
   cpp: 'C++',
+  dart: 'Dart',
   elixir: 'Elixir',
   go: 'Go',
   hcl: 'HCL',
