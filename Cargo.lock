@@ -755,9 +755,9 @@ checksum = "c31d56021e873866c968588ed85ccdf56db5c426e44afdb4618c39895104b920"
 
 [[package]]
 name = "web-tree-sitter-sg"
-version = "0.25.11"
+version = "0.26.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c0830392f435fad1555c7f240ac3d948a1d4f6db66bd2ce7b2edcb382e99361b"
+checksum = "1f1a6730931139244ae1fd1f418ea1ac42128be03fa0da0cfcc36a0ea5fa6a7f"
 dependencies = [
  "js-sys",
  "wasm-bindgen",

@@ -413,6 +413,9 @@ impl<'a> SgNode<'a> for Node {
   fn is_error(&self) -> bool {
     self.0.is_error()
   }
+  fn is_extra(&self) -> bool {
+    self.0.is_extra()
+  }
 
   fn field(&self, name: &str) -> Option<Self> {
     self.0.child_for_field_name(name).map(Node)
