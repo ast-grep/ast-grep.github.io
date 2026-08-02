@@ -21,7 +21,7 @@
     "monaco-yaml": "5.4.0",
     "vitepress-plugin-llms": "1.13.4",
     "web-tree-sitter": "0.26.10",
-    "vue": "3.5.39"
+    "vue": "3.5.40"
   },
   "optionalDependencies": {
     "ast-grep-wasm": "file:./pkg/"
