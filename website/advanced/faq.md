@@ -128,7 +128,7 @@ ast-grep will not treat them as valid meta variable name.
 
 ast-grep does not support multiple languages in one rule because:
 
-1. **Different ASTs**: Similar languages still have different ASTs. For instance, [JS](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) and [TS](#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoidHlwZXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) have different parsing trees for the same function declaration code.
+1. **Different ASTs**: Similar languages still have different ASTs. For instance, [JS](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoiamF2YXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) and [TS](/playground#eyJtb2RlIjoiUGF0Y2giLCJsYW5nIjoidHlwZXNjcmlwdCIsInF1ZXJ5IjoiIiwicmV3cml0ZSI6IiIsInN0cmljdG5lc3MiOiJyZWxheGVkIiwic2VsZWN0b3IiOiIiLCJjb25maWciOiIiLCJzb3VyY2UiOiJmdW5jdGlvbiB0ZXN0KGEpIHt9In0=) have different parsing trees for the same function declaration code.
 2. **Different Kinds**: Similar languages may have different AST node kinds. Since ast-grep reports non-existing kinds as errors, there is no straightforward way to report error for kind only existing in one language.
 3. **Debugging Experience**: Mixing languages in one rule requires users to test the rule in both languages. This can be confusing and error-prone, especially when unexpected results occur.
 
