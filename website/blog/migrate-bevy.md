@@ -11,7 +11,7 @@ head:
       content: Migrating Bevy can be easier with (semi-)automation
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/migrate-bevy
+      content: https://ast-grep.github.io/blog/migrate-bevy
   - - meta
     - property: og:description
       content: In this article, we will show you how to make migration easier by using some command line tools.

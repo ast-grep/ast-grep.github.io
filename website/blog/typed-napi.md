@@ -12,13 +12,13 @@ head:
       content: ast-grep's Journey to Type Safety in Node API
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/typed-napi
+      content: https://ast-grep.github.io/blog/typed-napi
   - - meta
     - property: og:description
       content: ast-grep/napi now supports typed AST manipulation which is correct, concise, robust, and performant.
   - - meta
     - property: og:image
-      content: https://astgrep.com/image/blog/napi.jpg
+      content: https://ast-grep.github.io/image/blog/napi.jpg
 ---
 
 # ast-grep's Journey to Type Safety in Node API

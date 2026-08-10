@@ -11,7 +11,7 @@ head:
       content: "Rewriting Tree-sitter's C Core in Rust: Migration and Compatibility"
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/tree-sitter-rust-migration
+      content: https://ast-grep.github.io/blog/tree-sitter-rust-migration
   - - meta
     - property: og:description
       content: How an AI-assisted migration moved Tree-sitter's runtime from C to Rust while preserving its retained ABI, generated grammars, and external scanners.

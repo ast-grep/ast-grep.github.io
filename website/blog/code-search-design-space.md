@@ -11,13 +11,13 @@ head:
       content: Design Space for Code Search Query
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/code-search-design-space
+      content: https://ast-grep.github.io/blog/code-search-design-space
   - - meta
     - property: og:description
       content: A review of the design space for code search tools.
   - - meta
     - property: og:image
-      content: https://astgrep.com/image/blog/query-design.png
+      content: https://ast-grep.github.io/image/blog/query-design.png
 ---
 
 # Design Space for Code Search Query

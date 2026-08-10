@@ -206,7 +206,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   transformPageData(pageData) {
-    const canonicalUrl = `https://astgrep.com/${pageData.relativePath}`
+    const canonicalUrl = `https://ast-grep.github.io/${pageData.relativePath}`
       .replace(/index\.md$/, '')
       .replace(/\.md$/, '')
     pageData.frontmatter.head ??= []
@@ -285,6 +285,6 @@ export default defineConfig({
     },
   },
   sitemap: {
-    hostname: 'https://astgrep.com',
+    hostname: 'https://ast-grep.github.io',
   },
 })

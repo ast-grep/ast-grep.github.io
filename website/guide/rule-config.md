@@ -136,7 +136,7 @@ interface Pattern {
   strictness?: Strictness
 }
 
-// See https://astgrep.com/advanced/match-algorithm
+// See https://ast-grep.github.io/advanced/match-algorithm
 type Strictness =
   | 'cst'
   | 'smart'

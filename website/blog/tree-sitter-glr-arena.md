@@ -11,7 +11,7 @@ head:
       content: Improving Tree-sitter's GLR Algorithm and Memory Layout
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/tree-sitter-glr-arena
+      content: https://ast-grep.github.io/blog/tree-sitter-glr-arena
   - - meta
     - property: og:description
       content: How profiling Tree-sitter's GLR stack led to lazy graph materialization, compact arena-backed syntax nodes, and a long series of failed performance experiments.

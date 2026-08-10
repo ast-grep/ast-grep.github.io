@@ -12,7 +12,7 @@ head:
       content: 'ast-grep: 5000 stars and beyond!'
   - - meta
     - property: og:url
-      content: https://astgrep.com/blog/stars-5000
+      content: https://ast-grep.github.io/blog/stars-5000
   - - meta
     - property: og:description
       content: ast-grep has recently reached 5000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -27,7 +27,7 @@ We are thrilled to announce that ast-grep has reached 5000 stars on [GitHub](htt
 
 ## Why ast-grep?
 
-[ast-grep](https://astgrep.com/) is a tool that allows you to search and transform code using abstract syntax trees (ASTs). ASTs are tree-like representations of the structure and meaning of source code. By using ASTs, ast-grep can perform more accurate and powerful operations than regular expressions or plain text search.
+[ast-grep](https://ast-grep.github.io/) is a tool that allows you to search and transform code using abstract syntax trees (ASTs). ASTs are tree-like representations of the structure and meaning of source code. By using ASTs, ast-grep can perform more accurate and powerful operations than regular expressions or plain text search.
 
 We have introduced a lot of new features in the past few months, and we want to share them with you. We hope that you will find them useful and that they will help you write better code.
 
