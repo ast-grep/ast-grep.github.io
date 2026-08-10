@@ -29,7 +29,7 @@
   "devDependencies": {
     "@algolia/client-search": "5.56.0",
     "dprint": "0.55.2",
-    "markdown-it": "14.3.0",
+    "markdown-it": "15.0.0",
     "oxlint": "1.76.0",
     "search-insights": "2.17.3",
     "typescript": "6.0.3",
