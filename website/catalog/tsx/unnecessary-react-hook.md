@@ -18,8 +18,15 @@ utils:
   hook_call:
     has:
       kind: call_expression
-      regex: ^use
       stopBy: end
+      has:
+        any:
+          - kind: identifier
+            regex: ^use
+          - kind: member_expression
+            has:
+              field: property
+              regex: ^use
 rule:
   any:
   - pattern: function $FUNC($$$) { $$$ }
