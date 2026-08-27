@@ -57,6 +57,6 @@ func reset(entries map[string]int) {
 }
 ```
 
-### Contributed by
+### Credits
 
 Inspired by [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).

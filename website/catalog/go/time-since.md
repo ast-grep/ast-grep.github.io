@@ -45,6 +45,6 @@ func elapsed(start time.Time) time.Duration {
 }
 ```
 
-### Contributed by
+### Credits
 
 Inspired by [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).

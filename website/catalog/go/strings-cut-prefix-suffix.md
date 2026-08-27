@@ -102,6 +102,6 @@ if value, ok := strings.CutSuffix(name, ".tmp"); ok { // [!code ++]
 }
 ```
 
-### Contributed by
+### Credits
 
 Based on [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).

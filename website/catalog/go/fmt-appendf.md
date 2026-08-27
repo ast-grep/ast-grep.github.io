@@ -1,6 +1,6 @@
 ## Append formatted bytes with `fmt.Appendf` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwiY29uZmlnIjoiaWQ6IHVzZS1mbXQtYXBwZW5kZlxubGFuZ3VhZ2U6IEdvXG5zZXZlcml0eTogaGludFxubWVzc2FnZTogQXBwZW5kIGZvcm1hdHRlZCBieXRlcyBkaXJlY3RseSB3aXRoIGZtdC5BcHBlbmRmLlxucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBmdW5jIGYoKSB7ICRCVUZGRVIgPSBhcHBlbmQoJEJVRkZFUiwgW11ieXRlKGZtdC5TcHJpbnRmKCQkJEFSR1MpKS4uLikgfVxuICAgIHNlbGVjdG9yOiBhc3NpZ25tZW50X3N0YXRlbWVudFxuY29uc3RyYWludHM6XG4gIEJVRkZFUjpcbiAgICBraW5kOiBpZGVudGlmaWVyXG5maXg6ICRCVUZGRVIgPSBmbXQuQXBwZW5kZigkQlVGRkVSLCAkJCRBUkdTKSIsInNvdXJjZSI6InBhY2thZ2UgbWFpblxuXG5pbXBvcnQgXCJmbXRcIlxuXG5mdW5jIGFwcGVuZENvdW50KGJ1ZiBbXWJ5dGUsIGNvdW50IGludCkgW11ieXRlIHtcbiAgYnVmID0gYXBwZW5kKGJ1ZiwgW11ieXRlKGZtdC5TcHJpbnRmKFwiY291bnQ9JWRcIiwgY291bnQpKS4uLilcbiAgcmV0dXJuIGJ1ZlxufSJ9)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwiY29uZmlnIjoiaWQ6IHVzZS1mbXQtYXBwZW5kZlxubGFuZ3VhZ2U6IEdvXG5zZXZlcml0eTogaGludFxubWVzc2FnZTogQXBwZW5kIGZvcm1hdHRlZCBieXRlcyBkaXJlY3RseSB3aXRoIGZtdC5BcHBlbmRmLlxucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBmdW5jIGYoKSB7ICRCVUZGRVIgPSBhcHBlbmQoJEJVRkZFUiwgW11ieXRlKGZtdC5TcHJpbnRmKCQkJEFSR1MpKS4uLikgfVxuICAgIHNlbGVjdG9yOiBhc3NpZ25tZW50X3N0YXRlbWVudFxuY29uc3RyYWludHM6XG4gIEJVRkZFUjpcbiAgICBraW5kOiBpZGVudGlmaWVyXG5maXg6ICRCVUZGRVIgPSBmbXQuQXBwZW5kZigkQlVGRkVSLCAkJCRBUkdTKSIsInNvdXJjZSI6InBhY2thZ2UgbWFpblxuXG5pbXBvcnQgXCJmbXRcIlxuXG5mdW5jIGFwcGVuZENvdW50KGJ1ZiBbXWJ5dGUsIGNvdW50IGludCkgW11ieXRlIHtcblx0YnVmID0gYXBwZW5kKGJ1ZiwgW11ieXRlKGZtdC5TcHJpbnRmKFwiY291bnQ9JWRcIiwgY291bnQpKS4uLilcblx0cmV0dXJuIGJ1ZlxufSJ9)
 
 ### Description
 
@@ -33,8 +33,8 @@ package main
 import "fmt"
 
 func appendCount(buf []byte, count int) []byte {
-  buf = append(buf, []byte(fmt.Sprintf("count=%d", count))...)
-  return buf
+	buf = append(buf, []byte(fmt.Sprintf("count=%d", count))...)
+	return buf
 }
 ```
 
@@ -45,6 +45,6 @@ buf = append(buf, []byte(fmt.Sprintf("count=%d", count))...) // [!code --]
 buf = fmt.Appendf(buf, "count=%d", count) // [!code ++]
 ```
 
-### Contributed by
+### Credits
 
 Based on [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).

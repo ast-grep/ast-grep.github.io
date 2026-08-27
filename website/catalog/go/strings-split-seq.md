@@ -80,6 +80,6 @@ for field := range bytes.FieldsSeq(data) { // [!code ++]
 }
 ```
 
-### Contributed by
+### Credits
 
 Based on [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).

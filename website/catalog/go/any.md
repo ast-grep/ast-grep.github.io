@@ -39,6 +39,6 @@ func Decode(v interface{}) error { return nil } // [!code --]
 func Decode(v any) error { return nil } // [!code ++]
 ```
 
-### Contributed by
+### Credits
 
 Inspired by [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).
