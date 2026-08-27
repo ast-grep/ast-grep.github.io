@@ -40,17 +40,6 @@ func merge(dst, src map[string]int) {
 }
 ```
 
-### Diff
-
-```go
-func merge(dst, src map[string]int) {
-  for key, value := range src { // [!code --]
-    dst[key] = value // [!code --]
-  } // [!code --]
-  maps.Copy(dst, src) // [!code ++]
-}
-```
-
 ### Credits
 
 Based on [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).

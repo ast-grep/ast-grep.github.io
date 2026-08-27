@@ -56,17 +56,6 @@ func visitPairs(items []string) {
 
 The non-zero start and custom-step loops are intentionally not matched.
 
-### Diff
-
-```go
-func visit(items []string) {
-  for i := 0; i < len(items); i++ { // [!code --]
-  for i := range len(items) { // [!code ++]
-    process(items[i])
-  }
-}
-```
-
 ### Credits
 
 Inspired by [JetBrains' Go Modern Guidelines](https://github.com/JetBrains/go-modern-guidelines).
