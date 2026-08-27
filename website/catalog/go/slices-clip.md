@@ -1,6 +1,6 @@
 ## Prefer `slices.Clip` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogc2xpY2VzLWNsaXBcbmxhbmd1YWdlOiBHb1xucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBmdW5jIGYoKSB7ICRTTElDRSA9ICRTTElDRVs6bGVuKCRTTElDRSk6bGVuKCRTTElDRSldIH1cbiAgICBzZWxlY3RvcjogYXNzaWdubWVudF9zdGF0ZW1lbnRcbmNvbnN0cmFpbnRzOlxuICBTTElDRTpcbiAgICBraW5kOiBpZGVudGlmaWVyXG5maXg6ICRTTElDRSA9IHNsaWNlcy5DbGlwKCRTTElDRSkiLCJzb3VyY2UiOiJwYWNrYWdlIGV4YW1wbGVcblxuZnVuYyByZWxlYXNlQ2FwYWNpdHkoaXRlbXMgW11zdHJpbmcpIHtcblx0aXRlbXMgPSBpdGVtc1s6bGVuKGl0ZW1zKTpsZW4oaXRlbXMpXVxuXHR1c2UoaXRlbXMpXG59In0=)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogc2xpY2VzLWNsaXBcbmxhbmd1YWdlOiBHb1xucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiBmdW5jIGYoKSB7ICRTTElDRSA9ICRTTElDRVs6bGVuKCRTTElDRSk6bGVuKCRTTElDRSldIH1cbiAgICBzZWxlY3RvcjogYXNzaWdubWVudF9zdGF0ZW1lbnRcbmNvbnN0cmFpbnRzOlxuICBTTElDRTpcbiAgICBraW5kOiBpZGVudGlmaWVyXG5maXg6ICRTTElDRSA9IHNsaWNlcy5DbGlwKCRTTElDRSkiLCJzb3VyY2UiOiJpbXBvcnQgXCJzbGljZXNcIlxuXG5mdW5jIHJlbGVhc2VDYXBhY2l0eShpdGVtcyBbXXN0cmluZykge1xuXHRpdGVtcyA9IGl0ZW1zWzpsZW4oaXRlbXMpOmxlbihpdGVtcyldXG5cdHVzZShpdGVtcylcbn0ifQ==)
 
 ### Description
 
@@ -26,7 +26,7 @@ fix: $SLICE = slices.Clip($SLICE)
 ### Example
 
 ```go{4}
-package example
+import "slices"
 
 func releaseCapacity(items []string) {
 	items = items[:len(items):len(items)]
@@ -37,8 +37,13 @@ func releaseCapacity(items []string) {
 ### Diff
 
 ```go
-items = items[:len(items):len(items)] // [!code --]
-items = slices.Clip(items) // [!code ++]
+import "slices"
+
+func releaseCapacity(items []string) {
+	items = items[:len(items):len(items)] // [!code --]
+	items = slices.Clip(items) // [!code ++]
+	use(items)
+}
 ```
 
 ### Credits

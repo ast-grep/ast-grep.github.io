@@ -1,6 +1,6 @@
 ## Replace delete-all loops with `clear` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogdXNlLWNsZWFyXG5sYW5ndWFnZTogR29cbnJ1bGU6XG4gIHBhdHRlcm46XG4gICAgY29udGV4dDogfC1cbiAgICAgIGZvciAkS0VZIDo9IHJhbmdlICRNQVAge1xuICAgICAgICBkZWxldGUoJE1BUCwgJEtFWSlcbiAgICAgIH1cbiAgICBzdHJpY3RuZXNzOiBjc3RcbmZpeDogY2xlYXIoJE1BUCkiLCJzb3VyY2UiOiJwYWNrYWdlIGNhY2hlXG5cbmZ1bmMgcmVzZXQoZW50cmllcyBtYXBbc3RyaW5nXWludCkge1xuICBmb3Iga2V5IDo9IHJhbmdlIGVudHJpZXMge1xuICAgIGRlbGV0ZShlbnRyaWVzLCBrZXkpXG4gIH1cbn1cblxuZnVuYyByZXNldEFuZENvdW50KGVudHJpZXMgbWFwW3N0cmluZ11pbnQpIGludCB7XG4gIGNvdW50IDo9IDBcbiAgZm9yIGtleSA6PSByYW5nZSBlbnRyaWVzIHtcbiAgICBkZWxldGUoZW50cmllcywga2V5KVxuICAgIGNvdW50KytcbiAgfVxuICByZXR1cm4gY291bnRcbn0ifQ==)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogdXNlLWNsZWFyXG5sYW5ndWFnZTogR29cbnJ1bGU6XG4gIHBhdHRlcm46XG4gICAgY29udGV4dDogfC1cbiAgICAgIGZvciAkS0VZIDo9IHJhbmdlICRNQVAge1xuICAgICAgICBkZWxldGUoJE1BUCwgJEtFWSlcbiAgICAgIH1cbiAgICBzdHJpY3RuZXNzOiBjc3RcbmZpeDogY2xlYXIoJE1BUCkiLCJzb3VyY2UiOiJmdW5jIHJlc2V0KGVudHJpZXMgbWFwW3N0cmluZ11pbnQpIHtcbiAgZm9yIGtleSA6PSByYW5nZSBlbnRyaWVzIHtcbiAgICBkZWxldGUoZW50cmllcywga2V5KVxuICB9XG59In0=)
 
 ### Description
 
@@ -25,26 +25,13 @@ fix: clear($MAP)
 
 ### Example
 
-```go {4-6}
-package cache
-
+```go {2-4}
 func reset(entries map[string]int) {
   for key := range entries {
     delete(entries, key)
   }
 }
-
-func resetAndCount(entries map[string]int) int {
-  count := 0
-  for key := range entries {
-    delete(entries, key)
-    count++
-  }
-  return count
-}
 ```
-
-The second loop is not matched because it also updates `count`.
 
 ### Diff
 

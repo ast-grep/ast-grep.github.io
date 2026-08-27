@@ -1,6 +1,6 @@
 ## Prefer `slices.Reverse` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogc2xpY2VzLXJldmVyc2Vcbmxhbmd1YWdlOiBHb1xucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiB8XG4gICAgICBmb3IgJEksICRKIDo9IDAsIGxlbigkU0xJQ0UpLTE7ICRJIDwgJEo7ICRJLCAkSiA9ICRJKzEsICRKLTEge1xuICAgICAgICAkU0xJQ0VbJEldLCAkU0xJQ0VbJEpdID0gJFNMSUNFWyRKXSwgJFNMSUNFWyRJXVxuICAgICAgfVxuICAgIHNlbGVjdG9yOiBmb3Jfc3RhdGVtZW50XG4gICAgc3RyaWN0bmVzczogY3N0XG5jb25zdHJhaW50czpcbiAgSTpcbiAgICBraW5kOiBpZGVudGlmaWVyXG4gIEo6XG4gICAga2luZDogaWRlbnRpZmllclxuICBTTElDRTpcbiAgICBraW5kOiBpZGVudGlmaWVyXG5maXg6IHNsaWNlcy5SZXZlcnNlKCRTTElDRSkiLCJzb3VyY2UiOiJwYWNrYWdlIGV4YW1wbGVcblxuZnVuYyByZXZlcnNlKGl0ZW1zIFtdc3RyaW5nKSB7XG5cdGZvciBpLCBqIDo9IDAsIGxlbihpdGVtcyktMTsgaSA8IGo7IGksIGogPSBpKzEsIGotMSB7XG5cdFx0aXRlbXNbaV0sIGl0ZW1zW2pdID0gaXRlbXNbal0sIGl0ZW1zW2ldXG5cdH1cbn0ifQ==)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogc2xpY2VzLXJldmVyc2Vcbmxhbmd1YWdlOiBHb1xucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiB8XG4gICAgICBmb3IgJEksICRKIDo9IDAsIGxlbigkU0xJQ0UpLTE7ICRJIDwgJEo7ICRJLCAkSiA9ICRJKzEsICRKLTEge1xuICAgICAgICAkU0xJQ0VbJEldLCAkU0xJQ0VbJEpdID0gJFNMSUNFWyRKXSwgJFNMSUNFWyRJXVxuICAgICAgfVxuICAgIHNlbGVjdG9yOiBmb3Jfc3RhdGVtZW50XG4gICAgc3RyaWN0bmVzczogY3N0XG5jb25zdHJhaW50czpcbiAgSTpcbiAgICBraW5kOiBpZGVudGlmaWVyXG4gIEo6XG4gICAga2luZDogaWRlbnRpZmllclxuICBTTElDRTpcbiAgICBraW5kOiBpZGVudGlmaWVyXG5maXg6IHNsaWNlcy5SZXZlcnNlKCRTTElDRSkiLCJzb3VyY2UiOiJpbXBvcnQgXCJzbGljZXNcIlxuXG5mdW5jIHJldmVyc2UoaXRlbXMgW11zdHJpbmcpIHtcblx0Zm9yIGksIGogOj0gMCwgbGVuKGl0ZW1zKS0xOyBpIDwgajsgaSwgaiA9IGkrMSwgai0xIHtcblx0XHRpdGVtc1tpXSwgaXRlbXNbal0gPSBpdGVtc1tqXSwgaXRlbXNbaV1cblx0fVxufSJ9)
 
 ### Description
 
@@ -34,7 +34,7 @@ fix: slices.Reverse($SLICE)
 ### Example
 
 ```go{4-6}
-package example
+import "slices"
 
 func reverse(items []string) {
 	for i, j := 0, len(items)-1; i < j; i, j = i+1, j-1 {
@@ -46,10 +46,14 @@ func reverse(items []string) {
 ### Diff
 
 ```go
-for i, j := 0, len(items)-1; i < j; i, j = i+1, j-1 { // [!code --]
-	items[i], items[j] = items[j], items[i] // [!code --]
-} // [!code --]
-slices.Reverse(items) // [!code ++]
+import "slices"
+
+func reverse(items []string) {
+	for i, j := 0, len(items)-1; i < j; i, j = i+1, j-1 { // [!code --]
+		items[i], items[j] = items[j], items[i] // [!code --]
+	} // [!code --]
+	slices.Reverse(items) // [!code ++]
+}
 ```
 
 ### Credits

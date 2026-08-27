@@ -1,6 +1,6 @@
 ## Prefer `any` over `interface{}` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogdXNlLWFueVxubGFuZ3VhZ2U6IEdvXG5ydWxlOlxuICBwYXR0ZXJuOiBpbnRlcmZhY2V7fVxuZml4OiBhbnkiLCJzb3VyY2UiOiJwYWNrYWdlIGRlY29kZVxuXG5mdW5jIERlY29kZSh2IGludGVyZmFjZXt9KSBlcnJvciB7IHJldHVybiBuaWwgfVxuXG50eXBlIFN0cmluZ2VyIGludGVyZmFjZSB7XG4gIFN0cmluZygpIHN0cmluZ1xufSJ9)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogdXNlLWFueVxubGFuZ3VhZ2U6IEdvXG5ydWxlOlxuICBwYXR0ZXJuOiBpbnRlcmZhY2V7fVxuZml4OiBhbnkiLCJzb3VyY2UiOiJmdW5jIERlY29kZSh2IGludGVyZmFjZXt9KSBlcnJvciB7IHJldHVybiBuaWwgfSJ9)
 
 ### Description
 
@@ -20,17 +20,9 @@ fix: any
 
 ### Example
 
-```go {3}
-package decode
-
+```go {1}
 func Decode(v interface{}) error { return nil }
-
-type Stringer interface {
-  String() string
-}
 ```
-
-The non-empty `Stringer` interface is not matched.
 
 ### Diff
 

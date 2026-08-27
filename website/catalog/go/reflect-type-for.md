@@ -1,6 +1,6 @@
 ## Prefer `reflect.TypeFor` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogcmVmbGVjdC10eXBlLWZvclxubGFuZ3VhZ2U6IEdvXG5ydWxlOlxuICBwYXR0ZXJuOiByZWZsZWN0LlR5cGVPZigoKiRUWVBFKShuaWwpKS5FbGVtKClcbmZpeDogcmVmbGVjdC5UeXBlRm9yWyRUWVBFXSgpXG4iLCJzb3VyY2UiOiJwYWNrYWdlIGV4YW1wbGVcblxuaW1wb3J0IFwicmVmbGVjdFwiXG5cbmZ1bmMgdHlwZU9mW1QgYW55XSgpIHJlZmxlY3QuVHlwZSB7XG5cdHJldHVybiByZWZsZWN0LlR5cGVPZigoKlQpKG5pbCkpLkVsZW0oKVxufVxuIn0=)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwic3RyaWN0bmVzcyI6InNtYXJ0Iiwic2VsZWN0b3IiOiIiLCJjb25maWciOiJpZDogcmVmbGVjdC10eXBlLWZvclxubGFuZ3VhZ2U6IEdvXG5ydWxlOlxuICBwYXR0ZXJuOiByZWZsZWN0LlR5cGVPZigoKiRUWVBFKShuaWwpKS5FbGVtKClcbmZpeDogcmVmbGVjdC5UeXBlRm9yWyRUWVBFXSgpIiwic291cmNlIjoiaW1wb3J0IFwicmVmbGVjdFwiXG5cbmZ1bmMgdHlwZU9mW1QgYW55XSgpIHJlZmxlY3QuVHlwZSB7XG5cdHJldHVybiByZWZsZWN0LlR5cGVPZigoKlQpKG5pbCkpLkVsZW0oKVxufSJ9)
 
 ### Description
 
@@ -20,9 +20,7 @@ fix: reflect.TypeFor[$TYPE]()
 
 ### Example
 
-```go{6}
-package example
-
+```go{4}
 import "reflect"
 
 func typeOf[T any]() reflect.Type {
@@ -33,8 +31,12 @@ func typeOf[T any]() reflect.Type {
 ### Diff
 
 ```go
-typ := reflect.TypeOf((*T)(nil)).Elem() // [!code --]
-typ := reflect.TypeFor[T]() // [!code ++]
+import "reflect"
+
+func typeOf[T any]() reflect.Type {
+	return reflect.TypeOf((*T)(nil)).Elem() // [!code --]
+	return reflect.TypeFor[T]() // [!code ++]
+}
 ```
 
 ### Credits

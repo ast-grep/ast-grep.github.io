@@ -1,6 +1,6 @@
 ## Stream split results with `SplitSeq` and `FieldsSeq` <Badge type="tip" text="Has Fix" />
 
-* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwiY29uZmlnIjoiaWQ6IHVzZS1zcGxpdC1zZXFcbmxhbmd1YWdlOiBHb1xuc2V2ZXJpdHk6IGhpbnRcbm1lc3NhZ2U6IFN0cmVhbSBzcGxpdCByZXN1bHRzIHdpdGggYSBTZXEgaGVscGVyLlxucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiB8XG4gICAgICBmdW5jIGYoKSB7XG4gICAgICAgIGZvciBfLCAkSVRFTSA6PSByYW5nZSAkUEFDS0FHRS4kRlVOQ1RJT04oJCQkQVJHUykge1xuICAgICAgICAgICQkJEJPRFlcbiAgICAgICAgfVxuICAgICAgfVxuICAgIHNlbGVjdG9yOiBmb3Jfc3RhdGVtZW50XG5jb25zdHJhaW50czpcbiAgUEFDS0FHRTpcbiAgICByZWdleDogJ14oc3RyaW5nc3xieXRlcykkJ1xuICBGVU5DVElPTjpcbiAgICByZWdleDogJ14oU3BsaXR8RmllbGRzKSQnXG4gIElURU06XG4gICAgYWxsOlxuICAgICAgLSBraW5kOiBpZGVudGlmaWVyXG4gICAgICAtIG5vdDpcbiAgICAgICAgICByZWdleDogJ15fJCdcbnRyYW5zZm9ybTpcbiAgU0VRX0ZVTkNUSU9OOlxuICAgIHJlcGxhY2U6XG4gICAgICBzb3VyY2U6ICRGVU5DVElPTlxuICAgICAgcmVwbGFjZTogJyQnXG4gICAgICBieTogU2VxXG5maXg6IHwtXG4gIGZvciAkSVRFTSA6PSByYW5nZSAkUEFDS0FHRS4kU0VRX0ZVTkNUSU9OKCQkJEFSR1MpIHtcbiAgICAkJCRCT0RZXG4gIH0iLCJzb3VyY2UiOiJwYWNrYWdlIG1haW5cblxuaW1wb3J0IChcbiAgXCJieXRlc1wiXG4gIFwic3RyaW5nc1wiXG4pXG5cbmZ1bmMgdmlzaXQodGV4dCBzdHJpbmcsIGRhdGEgW11ieXRlKSB7XG4gIGZvciBfLCBwYXJ0IDo9IHJhbmdlIHN0cmluZ3MuU3BsaXQodGV4dCwgXCIsXCIpIHtcbiAgICB1c2VTdHJpbmcocGFydClcbiAgfVxuICBmb3IgXywgZmllbGQgOj0gcmFuZ2UgYnl0ZXMuRmllbGRzKGRhdGEpIHtcbiAgICB1c2VCeXRlcyhmaWVsZClcbiAgfVxufSJ9)
+* [Playground Link](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImdvIiwicXVlcnkiOiIiLCJyZXdyaXRlIjoiIiwiY29uZmlnIjoiaWQ6IHVzZS1zcGxpdC1zZXFcbmxhbmd1YWdlOiBHb1xuc2V2ZXJpdHk6IGhpbnRcbm1lc3NhZ2U6IFN0cmVhbSBzcGxpdCByZXN1bHRzIHdpdGggYSBTZXEgaGVscGVyLlxucnVsZTpcbiAgcGF0dGVybjpcbiAgICBjb250ZXh0OiB8XG4gICAgICBmdW5jIGYoKSB7XG4gICAgICAgIGZvciBfLCAkSVRFTSA6PSByYW5nZSAkUEFDS0FHRS4kRlVOQ1RJT04oJCQkQVJHUykge1xuICAgICAgICAgICQkJEJPRFlcbiAgICAgICAgfVxuICAgICAgfVxuICAgIHNlbGVjdG9yOiBmb3Jfc3RhdGVtZW50XG5jb25zdHJhaW50czpcbiAgUEFDS0FHRTpcbiAgICByZWdleDogJ14oc3RyaW5nc3xieXRlcykkJ1xuICBGVU5DVElPTjpcbiAgICByZWdleDogJ14oU3BsaXR8RmllbGRzKSQnXG4gIElURU06XG4gICAgYWxsOlxuICAgICAgLSBraW5kOiBpZGVudGlmaWVyXG4gICAgICAtIG5vdDpcbiAgICAgICAgICByZWdleDogJ15fJCdcbnRyYW5zZm9ybTpcbiAgU0VRX0ZVTkNUSU9OOlxuICAgIHJlcGxhY2U6XG4gICAgICBzb3VyY2U6ICRGVU5DVElPTlxuICAgICAgcmVwbGFjZTogJyQnXG4gICAgICBieTogU2VxXG5maXg6IHwtXG4gIGZvciAkSVRFTSA6PSByYW5nZSAkUEFDS0FHRS4kU0VRX0ZVTkNUSU9OKCQkJEFSR1MpIHtcbiAgICAkJCRCT0RZXG4gIH0iLCJzb3VyY2UiOiJpbXBvcnQgKFxuICBcImJ5dGVzXCJcbiAgXCJzdHJpbmdzXCJcbilcblxuZnVuYyB2aXNpdCh0ZXh0IHN0cmluZywgZGF0YSBbXWJ5dGUpIHtcbiAgZm9yIF8sIHBhcnQgOj0gcmFuZ2Ugc3RyaW5ncy5TcGxpdCh0ZXh0LCBcIixcIikge1xuICAgIHVzZVN0cmluZyhwYXJ0KVxuICB9XG4gIGZvciBfLCBmaWVsZCA6PSByYW5nZSBieXRlcy5GaWVsZHMoZGF0YSkge1xuICAgIHVzZUJ5dGVzKGZpZWxkKVxuICB9XG59In0=)
 
 ### Description
 
@@ -48,9 +48,7 @@ fix: |-
 
 ### Example
 
-```go {9-11,12-14}
-package main
-
+```go {7-9,10-12}
 import (
   "bytes"
   "strings"
@@ -69,14 +67,20 @@ func visit(text string, data []byte) {
 ### Diff
 
 ```go
-for _, part := range strings.Split(text, ",") { // [!code --]
-for part := range strings.SplitSeq(text, ",") { // [!code ++]
-  useString(part)
-}
+import (
+  "bytes"
+  "strings"
+)
 
-for _, field := range bytes.Fields(data) { // [!code --]
-for field := range bytes.FieldsSeq(data) { // [!code ++]
-  useBytes(field)
+func visit(text string, data []byte) {
+  for _, part := range strings.Split(text, ",") { // [!code --]
+  for part := range strings.SplitSeq(text, ",") { // [!code ++]
+    useString(part)
+  }
+  for _, field := range bytes.Fields(data) { // [!code --]
+  for field := range bytes.FieldsSeq(data) { // [!code ++]
+    useBytes(field)
+  }
 }
 ```
 
