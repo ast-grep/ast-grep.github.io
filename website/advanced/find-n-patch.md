@@ -8,7 +8,7 @@ In this post, we will introduce a different approach to code transformation call
 
 This scheme lets you rewrite complex code using a fully declarative [Domain-Specific Language](https://www.wikiwand.com/en/Domain-specific_language) (DSL). While the scheme is powerful, the underlying concept is simple: find certain nodes, rewrite them, and recursively repeat the rewriting.
 
-The idea of Find & Patch comes from developing [ast-grep](https://ast-grep.github.io/), a tool using AST to find and replace code patterns. We realized that this approach can be generalized and extended to support more complex and diverse code transformations!
+The idea of Find & Patch comes from developing [ast-grep](https://astgrep.com/), a tool using AST to find and replace code patterns. We realized that this approach can be generalized and extended to support more complex and diverse code transformations!
 
 At the end of this article, we will compare Find & Patch to functional programming on the tree of syntax nodes. You can apply filter nodes using `rule`, map them via `transform`, and compose them with `rewriters`.
 
