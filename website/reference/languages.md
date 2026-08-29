@@ -14,11 +14,12 @@ The table below lists all languages that are supported by ast-grep.
 |C | `c` | `c`,`h`|
 |Cpp | `cc`, `c++`, `cpp`, `cxx` | `cc`, `hpp`, `cpp`, `c++`, `hh`, `cxx`, `cu`, `ino`|
 |CSharp | `cs`, `csharp` | `cs`|
-|Css | `css` | `css`|
+|Css | `css` | `css`, `scss`|
+|Dart | `dart` | `dart`|
 |Elixir | `ex`, `elixir` | `ex`, `exs`|
 |Go | `go`, `golang` | `go`|
 |Haskell | `hs`, `haskell` | `hs`|
-|Hcl | `hcl` | `hcl`|
+|Hcl | `hcl` | `hcl`, `nomad`, `tf`, `tfvars`, `workflow`|
 |Html | `html` | `html`, `htm`, `xhtml`|
 |Java | `java` | `java`|
 |JavaScript | `javascript`, `js`, `jsx` | `cjs`, `js`, `mjs`, `jsx`|
@@ -33,9 +34,9 @@ The table below lists all languages that are supported by ast-grep.
 |Scala | `scala` | `scala`, `sc`, `sbt`|
 |Solidity | `solidity`, `sol` | `sol`|
 |Swift | `swift` | `swift`|
-|TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
-|Yaml | `yml` | `yml`, `yaml`|
+|TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
+|Yaml | `yaml`, `yml` | `yaml`, `yml`|
 
 ----
 

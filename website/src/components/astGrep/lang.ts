@@ -27,6 +27,7 @@ export const languageDisplayNames: Record<SupportedLang, string> = {
   dart: 'Dart',
   elixir: 'Elixir',
   go: 'Go',
+  haskell: 'Haskell',
   hcl: 'HCL',
   html: 'HTML',
   java: 'Java',
