@@ -185,6 +185,21 @@ Possible values:
 
 These rule option flags set the specified RULE_ID's severity to a specific level. You can specify multiple rules by using the flag multiple times, e.g., `--error=RULE_1 --error=RULE_2`. If no RULE_ID is provided, all rules will be set to the specified level, e.g., `--error`. Note, these flags must use `=` to specify its value.
 
+### `--min-severity <LEVEL>`
+
+Run only rules whose final severity is at least `LEVEL`.
+
+Possible values are `hint`, `info`, `warning`, `error`, and `off`. Values are
+case-insensitive. The default is `off`, which disables severity filtering.
+
+Severity overrides such as `--error=RULE_ID` are applied before this filter.
+The threshold also applies to built-in rules.
+
+```shell
+# Run only warning and error rules.
+ast-grep scan --min-severity warning
+```
+
 ### `--error[=<RULE_ID>...]`
 Set rule severity to error
 

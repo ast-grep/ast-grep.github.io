@@ -30,6 +30,29 @@ ast-grep scan --error=rule-id --warning=other-rule-id
 
 You can use multiple `--error`, `--warning`, `--info`, `--hint`, and `--off` flags to override multiple rules.
 
+## Filter by Minimum Severity
+
+Use `--min-severity` to run only rules at or above a severity threshold:
+
+```bash
+# Run warning and error rules, but skip hint and info rules.
+ast-grep scan --min-severity warning
+```
+
+The accepted levels are `hint`, `info`, `warning`, `error`, and `off`, and they
+are case-insensitive. The default value, `off`, preserves the usual behavior and
+runs rules at every enabled severity.
+
+Command-line severity overrides are applied before the threshold. For example,
+this command promotes `rule-id` to `error`, so it is included in the scan:
+
+```bash
+ast-grep scan --error=rule-id --min-severity error
+```
+
+See the [`scan` CLI reference](/reference/cli/scan#min-severity-level) for the
+complete option description.
+
 
 ## Ignore Linting Error
 
