@@ -78,11 +78,17 @@ See the [playground](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQ
 
 These are the rules for suppression comments:
 
+* `ast-grep-ignore` must be the first alphabetic text in the comment. A later
+  mention in ordinary prose is not treated as a suppression directive.
 * A comment with the content `ast-grep-ignore` will suppress the following line/the same line's diagnostic.
 * The magic word `ast-grep-ignore` alone will suppress _all_ kinds of diagnostics.
 * `ast-grep-ignore: <rule-id>` can turn off specific rules.
 * You can turn off multiple rules by providing a comma-separated list in the comment. e.g. `ast-grep-ignore: rule-1, rule-2`
 * Suppression comments will suppress the next line diagnostic if and only if there is no preceding ASTs on the same line.
+
+For example, `// ast-grep-ignore: no-console` is a directive, while
+`// This comment mentions ast-grep-ignore: no-console` is ordinary prose and
+does not suppress anything.
 
 ## File Level Suppression
 
