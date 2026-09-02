@@ -82,8 +82,10 @@ interface PatternTree {
 `initializeTreeSitter` initializes the shared runtime.
 `registerDynamicLanguage` loads language parsers. The remaining functions can
 be used after their language has been registered. Registration can be called
-again to add or update languages. `expandoChar` defaults to `$`; set another
-character for languages where `$` is valid syntax.
+again to add or update languages. The
+[`expandoChar`](/advanced/custom-language#register-language-in-sgconfig-yml)
+option defaults to `$`; set another character for languages where `$` is valid
+syntax.
 
 ## Core Concepts
 
