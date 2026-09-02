@@ -125,14 +125,12 @@ node.getMatch('ARG').text() // "hello world"
 ```ts
 class SgRoot {
   root(): SgNode
-  filename(): string
   getInnerTree(): Tree
 }
 ```
 
-`root()` returns the root `SgNode`. `filename()` returns `"anonymous"` for
-trees created by `parse`. The WASM-specific `getInnerTree()` method exposes the
-underlying `web-tree-sitter` `Tree` for low-level inspection.
+`root()` returns the root `SgNode`. The WASM-specific `getInnerTree()` method
+exposes the underlying `web-tree-sitter` `Tree` for low-level inspection.
 
 ### `SgNode`
 
