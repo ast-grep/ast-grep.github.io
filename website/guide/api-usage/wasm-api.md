@@ -301,19 +301,12 @@ class SgNode {
   nextAll(): Array<SgNode>
   prev(): SgNode | undefined
   prevAll(): Array<SgNode>
-  /** @deprecated Use children() instead. */
-  children_nodes(): Array<SgNode>
-  /** @deprecated Use parent() instead. */
-  parent_node(): SgNode | undefined
 }
 ```
 
 `children()` includes unnamed concrete-syntax-tree nodes such as operators and
 punctuation. `namedChildren()` returns only named AST nodes. `fieldChildren()`
 returns all children assigned to a named tree-sitter field.
-
-The older `children_nodes()` and `parent_node()` methods are deprecated aliases
-for `children()` and `parent()`.
 
 ## Fix code
 
