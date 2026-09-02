@@ -84,8 +84,8 @@ interface PatternTree {
 be used after their language has been registered. Registration can be called
 again to add or update languages. The
 [`expandoChar`](/advanced/custom-language#register-language-in-sgconfig-yml)
-option defaults to `$`; set another character for languages where `$` is valid
-syntax.
+option defaults to `$`; set another character for languages where `$VAR` is not
+valid syntax.
 
 ## Core Concepts
 
@@ -113,6 +113,9 @@ await initializeTreeSitter()
 await registerDynamicLanguage({
   javascript: {
     libraryPath: '/path/to/tree-sitter-javascript.wasm',
+  },
+  python: {
+    libraryPath: '/path/to/tree-sitter-python.wasm',
     expandoChar: 'µ',
   },
 })
