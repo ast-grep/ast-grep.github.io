@@ -25,9 +25,8 @@ ast-grep provides these language bindings and runtimes:
 
 - **Python:** ast-grep's PyO3 interface is the latest addition to climb the syntax tree! [Discover Python API](/guide/api-usage/py-api)
 
-- **WebAssembly:** `@ast-grep/wasm` provides the JavaScript API in browsers,
-  Deno, edge runtimes, and other WebAssembly environments. [Explore WebAssembly
-  API](/guide/api-usage/wasm-api)
+- **WebAssembly:** `@ast-grep/wasm` provides the JavaScript API in browsers and
+  other WebAssembly environments. [Explore WebAssembly API](/guide/api-usage/wasm-api)
 
 - **Rust:** ast-grep's Rust API is the most efficient way, but also the most challenging way, to use ast-grep. You can refer to [ast_grep_core](https://docs.rs/ast-grep-core/latest/ast_grep_core/) if you are familiar with Rust.
 
