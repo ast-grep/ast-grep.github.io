@@ -81,7 +81,9 @@ interface PatternTree {
 
 `initializeTreeSitter` initializes the shared runtime.
 `registerDynamicLanguage` loads language parsers. The remaining functions can
-be used after their language has been registered.
+be used after their language has been registered. Registration can be called
+again to add or update languages. `expandoChar` defaults to `$`; set another
+character for languages where `$` is valid syntax.
 
 ## Core Concepts
 
@@ -333,37 +335,6 @@ const edit = node.replace("console.error('bye world')")
 const newSource = root.commitEdits([edit])
 // "console.error('bye world')"
 ```
-
-## Use Other Language
-
-Unlike `@ast-grep/napi`, the WASM package does not ship with any predefined
-language parser. Call `initializeTreeSitter` once, then use
-`registerDynamicLanguage` before calling `parse`, `kind`, `pattern`, or
-`dumpPattern` for a language.
-
-```js
-import {
-  initializeTreeSitter,
-  registerDynamicLanguage,
-} from '@ast-grep/wasm'
-
-await initializeTreeSitter()
-
-await registerDynamicLanguage({
-  javascript: {
-    libraryPath: '/path/to/tree-sitter-javascript.wasm',
-  },
-  python: {
-    libraryPath: '/path/to/tree-sitter-python.wasm',
-    expandoChar: 'µ',
-  },
-})
-```
-
-`registerDynamicLanguage` accepts a map of language names to parser settings.
-It can be called multiple times to add or update languages. `expandoChar`
-defaults to `$`; choose another character for languages where `$` is valid
-syntax.
 
 For the implementation and package-level reference, see the
 [`@ast-grep/wasm` source](https://github.com/ast-grep/ast-grep/tree/main/crates/wasm).
