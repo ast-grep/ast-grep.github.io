@@ -21,14 +21,22 @@ pnpm add @ast-grep/wasm web-tree-sitter
 
 :::
 
-:::warning WASM setup
-The WASM package does not include predefined languages. Your application must
-serve the `tree-sitter.wasm` runtime and a tree-sitter WASM parser for every
-language it registers.
-:::
+## WASM Setup
 
-For example, a Vite application can copy the tree-sitter runtime into `public`
-with a `postinstall` script:
+Unlike `@ast-grep/napi`, the WASM package does not include predefined language
+parsers. Before parsing code, your application must make the tree-sitter WASM
+runtime available, initialize it, and register the parser for each language it
+uses.
+
+### Serve the WASM files
+
+Your application must serve two kinds of WASM files:
+
+* `tree-sitter.wasm`, the shared tree-sitter runtime
+* A tree-sitter parser such as `tree-sitter-javascript.wasm` for each language
+
+For example, a Vite application can copy the shared runtime into its `public`
+directory with a `postinstall` script:
 
 ```json
 {
@@ -40,52 +48,47 @@ with a `postinstall` script:
 
 See the
 [`web-tree-sitter` setup guide](https://github.com/tree-sitter/tree-sitter/tree/master/lib/binding_web#setup)
-for other environments.
+for setup instructions in other environments. Each language parser also needs
+a URL that your application can pass to `registerDynamicLanguage` as its
+`libraryPath`.
 
-## Main Functions
+### Initialize tree-sitter
 
-The package exports these top-level functions:
+Call `initializeTreeSitter` once before using the rest of the API. It
+initializes the shared tree-sitter WASM runtime:
 
-```ts
-interface WasmLangInfo {
-  libraryPath: string
-  expandoChar?: string
-}
+```js
+import { initializeTreeSitter } from '@ast-grep/wasm'
 
-function initializeTreeSitter(): Promise<void>
-function registerDynamicLanguage(
-  languages: Record<string, WasmLangInfo>,
-): Promise<void>
-function parse(lang: string, source: string): SgRoot
-function kind(lang: string, kindName: string): number
-function pattern(lang: string, pattern: string): object
-function dumpPattern(
-  lang: string,
-  pattern: string,
-  selector?: string,
-  strictness?: string,
-): PatternTree
-
-type PatternKind = 'terminal' | 'metaVar' | 'internal'
-
-interface PatternTree {
-  kind: string
-  pattern?: PatternKind
-  isNamed: boolean
-  text?: string
-  children: Array<PatternTree>
-  start: { line: number, column: number }
-  end: { line: number, column: number }
-}
+await initializeTreeSitter()
 ```
 
-`initializeTreeSitter` initializes the shared runtime.
-`registerDynamicLanguage` loads language parsers. The remaining functions can
-be used after their language has been registered. Registration can be called
+### Register languages
+
+Next, register every language your application needs and wait for its parser to
+load. The name used as the key is also the name passed to functions such as
+`parse` and `kind`:
+
+```js
+import { registerDynamicLanguage } from '@ast-grep/wasm'
+
+await registerDynamicLanguage({
+  javascript: {
+    libraryPath: '/path/to/tree-sitter-javascript.wasm',
+  },
+  python: {
+    libraryPath: '/path/to/tree-sitter-python.wasm',
+    // Use another expando character because $VAR is not valid Python syntax.
+    expandoChar: 'µ',
+  },
+})
+```
+
+`registerDynamicLanguage` accepts multiple languages at once and can be called
 again to add or update languages. The
 [`expandoChar`](/advanced/custom-language#register-language-in-sgconfig-yml)
-option defaults to `$`; set another character for languages where `$VAR` is not
-valid syntax.
+option defaults to `$`; use another character when `$VAR` is not valid syntax
+in the language.
 
 ## Core Concepts
 
@@ -94,37 +97,21 @@ The core concepts in the WebAssembly API are:
 * `SgRoot`: a class representing the whole syntax tree
 * `SgNode`: a node in the syntax tree
 
-A common workflow is:
+A common workflow after [setting up WASM](#wasm-setup) is:
 
-1. Initialize the tree-sitter WASM runtime once.
-2. Register each language's tree-sitter WASM parser.
-3. Parse source code and get its root `SgNode`.
-4. Search for nodes and inspect the results.
+1. Parse source code and get an `SgRoot`.
+2. Get the root `SgNode` by calling `ast.root()`.
+3. Find relevant nodes with patterns or rules.
+4. Collect information from the matched nodes.
 
 ```js
-import {
-  initializeTreeSitter,
-  parse,
-  registerDynamicLanguage,
-} from '@ast-grep/wasm'
+import { parse } from '@ast-grep/wasm'
 
-await initializeTreeSitter()
-
-await registerDynamicLanguage({
-  javascript: {
-    libraryPath: '/path/to/tree-sitter-javascript.wasm',
-  },
-  python: {
-    libraryPath: '/path/to/tree-sitter-python.wasm',
-    // set expandoChar since $ is not valid identifier in Py
-    expandoChar: 'µ',
-  },
-})
-
-const ast = parse('javascript', 'console.log("hello world")')
-const root = ast.root()
-const node = root.find('console.log($ARG)')
-node.getMatch('ARG').text() // "hello world"
+const ast = parse('javascript', 'console.log("hello world")') // 1. parse
+const root = ast.root()                                       // 2. get root
+const node = root.find('console.log($ARG)')                   // 3. find
+node.getMatch('ARG').text()                                   // 4. collect
+// "hello world"
 ```
 
 ### `SgRoot`
@@ -259,20 +246,6 @@ interface Pos {
 
 Position values are zero-indexed. In the WASM API, `index` is a character
 offset.
-
-For pattern debugging, `dumpPattern` returns the parsed pattern tree:
-
-```ts
-function dumpPattern(
-  lang: string,
-  pattern: string,
-  selector?: string,
-  strictness?: 'cst' | 'smart' | 'ast' | 'relaxed' | 'signature' | 'template',
-): PatternTree
-```
-
-The `PatternTree` shape is listed with the other
-[main functions](#main-functions).
 
 ## Refinement
 
