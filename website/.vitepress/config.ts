@@ -63,6 +63,7 @@ const sidebar: DefaultTheme.Sidebar = [
         items: [
           { text: 'JavaScript API', link: '/guide/api-usage/js-api' },
           { text: 'Python API', link: '/guide/api-usage/py-api' },
+          { text: 'WebAssembly API', link: '/guide/api-usage/wasm-api' },
           { text: 'Performance Tip', link: '/guide/api-usage/performance-tip' },
         ],
       },
