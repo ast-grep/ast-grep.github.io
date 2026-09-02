@@ -30,6 +30,29 @@ ast-grep scan --error=rule-id --warning=other-rule-id
 
 You can use multiple `--error`, `--warning`, `--info`, `--hint`, and `--off` flags to override multiple rules.
 
+## Filter by Minimum Severity
+
+Use `--min-severity` to run only rules at or above a severity threshold:
+
+```bash
+# Run warning and error rules, but skip hint and info rules.
+ast-grep scan --min-severity warning
+```
+
+The accepted levels are `hint`, `info`, `warning`, `error`, and `off`, and they
+are case-insensitive. The default value, `off`, preserves the usual behavior and
+runs rules at every enabled severity.
+
+Command-line severity overrides are applied before the threshold. For example,
+this command promotes `rule-id` to `error`, so it is included in the scan:
+
+```bash
+ast-grep scan --error=rule-id --min-severity error
+```
+
+See the [`scan` CLI reference](/reference/cli/scan#min-severity-level) for the
+complete option description.
+
 
 ## Ignore Linting Error
 
@@ -55,11 +78,17 @@ See the [playground](/playground#eyJtb2RlIjoiQ29uZmlnIiwibGFuZyI6ImphdmFzY3JpcHQ
 
 These are the rules for suppression comments:
 
+* `ast-grep-ignore` must be the first alphabetic text in the comment. A later
+  mention in ordinary prose is not treated as a suppression directive.
 * A comment with the content `ast-grep-ignore` will suppress the following line/the same line's diagnostic.
 * The magic word `ast-grep-ignore` alone will suppress _all_ kinds of diagnostics.
 * `ast-grep-ignore: <rule-id>` can turn off specific rules.
 * You can turn off multiple rules by providing a comma-separated list in the comment. e.g. `ast-grep-ignore: rule-1, rule-2`
 * Suppression comments will suppress the next line diagnostic if and only if there is no preceding ASTs on the same line.
+
+For example, `// ast-grep-ignore: no-console` is a directive, while
+`// This comment mentions ast-grep-ignore: no-console` is ordinary prose and
+does not suppress anything.
 
 ## File Level Suppression
 

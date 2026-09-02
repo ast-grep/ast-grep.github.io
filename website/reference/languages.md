@@ -25,6 +25,7 @@ The table below lists all languages that are supported by ast-grep.
 |Json | `json` | `json` |
 |Kotlin | `kotlin`, `kt` | `kt`, `ktm`, `kts`|
 |Lua | `lua` | `lua`|
+|Markdown | `markdown`, `md` | `markdown`, `md`|
 |Nix | `nix` | `nix`|
 |Php | `php` | `php` |
 |Python | `py`, `python` | `py`, `py3`, `pyi`, `bzl`|

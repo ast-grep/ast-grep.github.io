@@ -77,6 +77,14 @@ of the public surface:
 
 <OutlineStaticOutput variant="directory" />
 
+`outline` also inspects injected code in multi-language documents when ast-grep
+has a built-in or configured language injection and the injected language has
+outline rules. It merges host and injected entries in source order while
+keeping ranges relative to the original file. For example, JavaScript
+declarations inside an HTML or Vue `<script>` element appear in the document's
+outline. See [language injection](/advanced/language-injection) for how ast-grep
+identifies embedded languages.
+
 ## Prompt AI Agents
 
 `outline` works best when an agent knows to use it before broad file reads. The

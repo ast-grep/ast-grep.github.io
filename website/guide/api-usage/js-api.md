@@ -253,6 +253,7 @@ You can traverse the tree using the following methods, like using jQuery.
 ```ts
 export class SgNode {
   children(): Array<SgNode>
+  namedChildren(): Array<SgNode>
   field(name: string): SgNode | null
   parent(): SgNode | null
   child(nth: number): SgNode | null
@@ -262,6 +263,17 @@ export class SgNode {
   prev(): SgNode | null
   prevAll(): Array<SgNode>
 }
+```
+
+`children()` returns every direct child in the concrete syntax tree, including
+unnamed syntax such as operators and punctuation. `namedChildren()` returns
+only named AST nodes:
+
+```ts
+const root = parse(Lang.JavaScript, 'a + b').root()
+const sum = root.find('$A + $B')
+sum.children().map(node => node.text()) // ['a', '+', 'b']
+sum.namedChildren().map(node => node.text()) // ['a', 'b']
 ```
 
 ## Fix code
