@@ -318,10 +318,7 @@ const newSource = root.commitEdits([edit])
 
 ## Live Example
 
-For a live example, see this
-[parody](https://x.com/hd_nvim/status/2094255500653134271?s=20)
-[repo](https://github.com/HerringtonDarkholme/rust-beautifier), try the
-[live demo](https://rust-beautifier.vercel.app), and inspect its
+For a live example, see this [parody](https://x.com/hd_nvim/status/2094255500653134271?s=20) [repo](https://github.com/HerringtonDarkholme/rust-beautifier), try the [live demo](https://rust-beautifier.vercel.app), and inspect its
 [WASM-powered Rust transformer](https://github.com/HerringtonDarkholme/rust-beautifier/blob/main/app/lib/rust-transformer.ts).
 
 For the implementation and package-level reference, see the
