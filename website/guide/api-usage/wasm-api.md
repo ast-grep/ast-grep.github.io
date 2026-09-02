@@ -116,6 +116,7 @@ await registerDynamicLanguage({
   },
   python: {
     libraryPath: '/path/to/tree-sitter-python.wasm',
+    // set expandoChar since $ is not valid identifier in Py
     expandoChar: 'µ',
   },
 })
