@@ -5,6 +5,11 @@ runtimes, and other environments that support WebAssembly. Its API follows
 `@ast-grep/napi`, but uses `web-tree-sitter` and dynamically loaded WASM
 parsers.
 
+For a real-world example, see the
+[rust-beautifier repository](https://github.com/HerringtonDarkholme/rust-beautifier),
+try the [live demo](https://rust-beautifier.vercel.app), or inspect its
+[WASM-powered Rust transformer](https://github.com/HerringtonDarkholme/rust-beautifier/blob/main/app/lib/rust-transformer.ts).
+
 ## Installation
 
 Install the package and its `web-tree-sitter` peer dependency:
