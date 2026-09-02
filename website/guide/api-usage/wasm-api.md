@@ -113,6 +113,7 @@ await initializeTreeSitter()
 await registerDynamicLanguage({
   javascript: {
     libraryPath: '/path/to/tree-sitter-javascript.wasm',
+    expandoChar: 'µ',
   },
 })
 
