@@ -1,5 +1,6 @@
 import { DefaultTheme, defineConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
+import { addCodemodGrepLinkToCatalogPage } from '../_data/codemod-grep'
 
 const gaScript = `
 window.dataLayer = window.dataLayer || [];
@@ -214,6 +215,13 @@ export default defineConfig({
       'link',
       { rel: 'canonical', href: canonicalUrl },
     ])
+  },
+  markdown: {
+    config(md) {
+      md.core.ruler.before('normalize', 'catalog-codemod-grep-link', (state) => {
+        state.src = addCodemodGrepLinkToCatalogPage(state.src, String(state.env.path || ''))
+      })
+    },
   },
   vite: {
     plugins: [llmstxt()],
