@@ -339,6 +339,8 @@ const newSource = root.commitEdits([edit])
 // "console.error('bye world')"
 ```
 
+## Live Example
+
 For a live example, see the
 [rust-beautifier repository](https://github.com/HerringtonDarkholme/rust-beautifier),
 try the [live demo](https://rust-beautifier.vercel.app), or inspect its
