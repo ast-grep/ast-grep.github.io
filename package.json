@@ -27,7 +27,7 @@
     "ast-grep-wasm": "file:./pkg/"
   },
   "devDependencies": {
-    "@algolia/client-search": "5.56.0",
+    "@algolia/client-search": "5.57.0",
     "dprint": "0.57.0",
     "markdown-it": "15.0.0",
     "oxlint": "1.76.0",
