@@ -1,6 +1,7 @@
-import { JSON_SCHEMA, loadAll } from 'js-yaml'
 import { type ContentData, createContentLoader } from 'vitepress'
 import { ExampleLangs } from '../src/catalog/data'
+import { createCodemodGrepLink } from './codemod-grep'
+import { extractCatalogYaml, loadYAMLRules } from './utils'
 
 export interface RuleMeta {
   id: string
@@ -8,6 +9,7 @@ export interface RuleMeta {
   type: string
   link: string
   playgroundLink: string
+  grepLink: string | null
   language: ExampleLangs
   hasFix: boolean
   rules: string[]
@@ -40,7 +42,8 @@ function extractRuleInfo({ url, src }: ContentData): RuleMeta {
   const language = url.split('/')[2] as ExampleLangs
   const name = source.match(/##\s*([^<\n]+)/)?.[1] || ''
 
-  const yamls = extractYAMLRule(source)
+  const yaml = extractCatalogYaml(source)
+  const yamls = loadYAMLRules(yaml)
 
   return {
     id,
@@ -48,19 +51,12 @@ function extractRuleInfo({ url, src }: ContentData): RuleMeta {
     type,
     link: url,
     playgroundLink,
+    grepLink: createCodemodGrepLink({ language, playgroundLink, type, yaml }),
     language,
     hasFix,
     rules: extractUsedRules(yamls),
     features: extractUsedFeatures(yamls),
   }
-}
-
-function extractYAMLRule(source: string): Record<string, unknown>[] {
-  const yaml = source.match(/```ya?ml\n([\s\S]+?)\n```/)?.[1] || ''
-  if (!yaml) {
-    return []
-  }
-  return loadAll(yaml, null, { schema: JSON_SCHEMA }) as Record<string, unknown>[]
 }
 
 function extractUsedRules(yamls: Record<string, unknown>[]): string[] {
