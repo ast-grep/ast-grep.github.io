@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@algolia/client-search": "5.56.0",
-    "dprint": "0.57.0",
+    "dprint": "0.57.2",
     "markdown-it": "15.0.0",
     "oxlint": "1.76.0",
     "search-insights": "2.17.3",
