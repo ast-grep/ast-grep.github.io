@@ -32,6 +32,7 @@ To install by hand instead, copy the skill directories out of the plugin. Claude
 
 ```bash
 git clone https://github.com/ast-grep/agent-skill.git
+mkdir -p ~/.claude/skills
 cp -r agent-skill/ast-grep/skills/* ~/.claude/skills/
 ```
 
