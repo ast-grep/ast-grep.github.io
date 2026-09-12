@@ -15,16 +15,30 @@ This skill teaches Claude how to write and use ast-grep rules to perform advance
 - "Find functions with more than 3 parameters"
 - "Search for console.log calls inside class methods"
 
-Clone or download the [ast-grep skill repository](https://github.com/ast-grep/claude-skill) to your Claude Code skills directory:
+The skill lives in the [ast-grep agent-skill repository](https://github.com/ast-grep/agent-skill), which is a Claude Code plugin marketplace. Install it with:
 
 ```bash
-# If you have a skills directory configured
-cp -r ast-grep ~/.claude/skills/
-
-# Or place it wherever your Claude Code skills are located
+npx skills add ast-grep/agent-skill
 ```
 
-The skill should be automatically detected by Claude Code. You can verify by checking available skills in Claude Code.
+Or from inside Claude Code:
+
+```
+/plugin marketplace add ast-grep/agent-skill
+/plugin install ast-grep
+```
+
+To install by hand instead, copy the skill directories out of the plugin. Claude Code expects each skill's `SKILL.md` at the top level of its own directory, so the plugin directory itself is one level too high:
+
+```bash
+git clone https://github.com/ast-grep/agent-skill.git
+mkdir -p ~/.claude/skills
+cp -r agent-skill/ast-grep/skills/* ~/.claude/skills/
+```
+
+Claude Code then discovers the skill, which you can verify by checking its available skills.
+
+Discovered is not the same as preferred. Claude decides per query whether to reach for the skill, and it is always also holding a text-search tool that needs no setup. Name ast-grep in the request to invoke it directly, or set the standing instruction in the next section to make it the default.
 
 ## Simple Prompting in `AGENTS.md`
 
