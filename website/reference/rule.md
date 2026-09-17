@@ -12,7 +12,7 @@ Atomic rules are the most basic rules to match AST nodes. Relational rules filte
 
 All of these keys are optional. However, at least one of them must be present and **positive**.
 
-A rule is called **positive** if it only matches nodes with specific kinds. For example, a `kind` rule is positive because it only matches nodes with the kind specified by itself. A `pattern` rule is positive because the pattern itself has a kind and the matching node must have the same kind. A `regex` rule is not positive though because it matches any node as long as its text satisfies the regex.
+A rule is called **positive** if it only matches nodes with specific kinds. For example, a `kind` rule is positive because it only matches nodes with the kind specified by itself. A `pattern` rule is positive because the pattern itself has a kind and the matching node must have the same kind. A `regex` rule is not positive because it can match a node of any kind when the regex finds a match anywhere in the node's full text.
 
 ## Atomic Rules
 
@@ -79,7 +79,7 @@ See [ESQuery style kind](/reference/rule/esquery) for supported selectors and th
 ### `regex`
 * type: `String`
 
-A [Rust regular expression](https://docs.rs/regex/latest/regex/) to match the node's text. The regex must match the whole text of the node.
+A [Rust regular expression](https://docs.rs/regex/latest/regex/) matched against the node's full text, including its children. A match anywhere in the text satisfies the rule; use `^` and `$` to match the entire text.
 
 >  Its syntax is similar to Perl-style regular expressions, but lacks a few features like look around and backreferences.
 

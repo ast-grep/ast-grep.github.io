@@ -140,7 +140,7 @@ See [ESQuery style kind](/reference/rule/esquery) for supported selectors and th
 
 ## `regex`
 
-The `regex` atomic rule will match the AST node by its text against a Rust regular expression.
+The `regex` atomic rule searches the node's full text, including its children, using a Rust regular expression. A match anywhere in the text satisfies the rule; use `^` and `$` to match the entire text.
 
 ```yaml
 rule:

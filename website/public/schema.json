@@ -150,7 +150,7 @@
           "type": "string"
         },
         "regex": {
-          "description": "A Rust regular expression to match the node's text. https://docs.rs/regex/latest/regex/#syntax",
+          "description": "A Rust regular expression used to search the node's full text, including its children. A match anywhere in the text satisfies the rule. https://docs.rs/regex/latest/regex/#syntax",
           "type": "string"
         },
         "nthChild": {
@@ -380,7 +380,7 @@
           "type": "string"
         },
         "regex": {
-          "description": "A Rust regular expression to match the node's text. https://docs.rs/regex/latest/regex/#syntax",
+          "description": "A Rust regular expression used to search the node's full text, including its children. A match anywhere in the text satisfies the rule. https://docs.rs/regex/latest/regex/#syntax",
           "type": "string"
         },
         "nthChild": {

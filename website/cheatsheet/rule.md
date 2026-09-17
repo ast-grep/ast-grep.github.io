@@ -50,7 +50,7 @@ kind: if_statement
 regex: ^regex.+$
 ```
 
-🔍 Matches node text content against a [Rust regular expression](https://docs.rs/regex/latest/regex/)
+🔍 Searches the node's full text, including its children, with a [Rust regular expression](https://docs.rs/regex/latest/regex/)
 
 </Item>
 

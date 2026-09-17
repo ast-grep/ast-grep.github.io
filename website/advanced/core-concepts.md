@@ -35,7 +35,7 @@ However, ast-grep does not match patterns against the text directly. Instead, it
 _Therefore, the patterns you write must also be of valid syntax that can be compared with the code tree._
 
 :::tip Textual Search in ast-grep
-Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule#regex) to matches the text of a node by specifying a regular expression. This way, it is possible to combine textual and structural matching in ast-grep.
+Though `pattern` structurally matches code, you can use [the atomic rule `regex`](/guide/rule-config/atomic-rule#regex) to search the node's full text, including its children. This way, it is possible to combine textual and structural matching in ast-grep.
 :::
 
 
