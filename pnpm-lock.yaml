@@ -33,8 +33,8 @@ importers:
         specifier: 3.5.43
         version: 3.5.43(typescript@6.0.3)
       web-tree-sitter:
-        specifier: 0.26.11
-        version: 0.26.11
+        specifier: 0.27.1
+        version: 0.27.1
     devDependencies:
       '@algolia/client-search':
         specifier: 5.56.0
@@ -1696,8 +1696,8 @@ packages:
       typescript:
         optional: true
 
-  web-tree-sitter@0.26.11:
-    resolution: {integrity: sha512-Q5Dm3YTIXSXuH6FxX6RuzX2Qwpc4DPGiYMU87Wg5Z8OIStiQFiUex4zMDc0vBTw78EphaYJacncJghCHzbZptg==}
+  web-tree-sitter@0.27.1:
+    resolution: {integrity: sha512-qtx0VyUyNRHtL3ze7+v0hCKB/sLcAmY7ZAVp/ZK/bCj0yED8ptvNrr7Vd7DwDyKDWN9baqcUx4uaD2r2ql+6IA==}
 
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
@@ -3361,7 +3361,7 @@ snapshots:
     optionalDependencies:
       typescript: 6.0.3
 
-  web-tree-sitter@0.26.11: {}
+  web-tree-sitter@0.27.1: {}
 
   wrap-ansi@7.0.0:
     dependencies:
