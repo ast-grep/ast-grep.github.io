@@ -69,6 +69,36 @@ testConfigs:
 
 A list of string instructing where to discover ast-grep's [global utility rules](/guide/rule-config/utility-rule#global-utility-rules).
 
+## `noIgnore`
+* type: `List` of `String`
+* required: No
+
+A list of ignore-file categories to disregard when searching. The `run`,
+`scan`, and `outline` commands use these values.
+
+Possible values:
+
+* `hidden`: Search hidden files and directories.
+* `dot`: Do not respect `.ignore` files. Hidden files and directories remain
+  excluded unless `hidden` is also specified.
+* `exclude`: Do not respect repository-specific ignore files such as
+  `.git/info/exclude`.
+* `global`: Do not respect global ignore sources such as Git's
+  `core.excludesFile`.
+* `parent`: Do not respect ignore files in parent directories.
+* `vcs`: Do not respect version-control ignore files such as `.gitignore`. This
+  implies `parent` for version-control files; `.ignore` files remain effective.
+
+Command-line `--no-ignore` values are added to this list.
+
+**Example:**
+
+```yaml
+noIgnore:
+  - hidden
+  - vcs
+```
+
 ## `languageGlobs`
 * type: `HashMap<String, Array<String>>`
 * required: No
