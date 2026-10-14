@@ -158,14 +158,9 @@ Follow symbolic links while traversing directories.
 
 Do not respect hidden file system or ignore files.
 
-Possible values:
+Inherits values set in the [`noIgnore`](/reference/sgconfig#noignore) field of `sgconfig.yml`.
 
-* `hidden`
-* `dot`
-* `exclude`
-* `global`
-* `parent`
-* `vcs`
+See the [`noIgnore`](/reference/sgconfig#noignore) reference for possible values.
 
 ### `-j, --threads <NUM>`
 

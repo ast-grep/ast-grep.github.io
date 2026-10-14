@@ -63,7 +63,7 @@ ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 |   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 |   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature, template] |
 |   | --follow   |  Follow symbolic links |
-|   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   |  --no-ignore `<NO_IGNORE>`  | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.). Inherits [`noIgnore`](/reference/sgconfig#noignore) from project configuration. |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
 | -j| --threads `<NUM>`     | Set the approximate number of threads to use [default: heuristic]
@@ -108,7 +108,7 @@ ast-grep outline [OPTIONS] [PATHS]...
 |   | --no-default-outline-rules | Disable bundled extractor definitions. |
 |   | --globs `<GLOBS>` | Include or exclude file paths. |
 |   | --follow | Follow symbolic links. |
-|   | --no-ignore `<NO_IGNORE>` | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   | --no-ignore `<NO_IGNORE>` | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.). Inherits [`noIgnore`](/reference/sgconfig#noignore) from project configuration. |
 | -j| --threads `<NUM>` | Set the approximate number of threads to use [default: 0] |
 |   | --json`[=<STYLE>]` | Output outline entries in structured JSON [possible values: pretty, stream, compact] |
 |   | --color `<WHEN>` | Controls output color [default: auto] |
@@ -144,7 +144,7 @@ ast-grep scan [OPTIONS] [PATHS]...
 | | --json`[=<STYLE>]` | Output matches in structured JSON  [possible values: pretty, stream, compact] |
 | | --format `<FORMAT>` |  Output warning/error messages in different formats [possible values: github, sarif] |
 | -U | --update-all | Apply all rewrite without confirmation |
-| | --no-ignore `<NO_IGNORE>` | Do not respect ignore files. (.gitignore, .ignore, etc.) [possible values: hidden, dot, exclude, global, parent, vcs] |
+|   | --no-ignore `<NO_IGNORE>` | Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.). Inherits [`noIgnore`](/reference/sgconfig#noignore) from project configuration. |
 |   |  --stdin           | Enable search code from StdIn. See [link](/guide/tooling-overview#enable-stdin-mode) |
 |   | --globs `<GLOBS>`   | Include or exclude file paths
 |   |  --inspect `<GRANULARITY>`  | Inspect information for file/rule discovery and scanning [default: nothing] [possible values: nothing, summary, entity]|
