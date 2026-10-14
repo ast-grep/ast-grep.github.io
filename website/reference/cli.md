@@ -5,74 +5,36 @@ ast-grep has several subcommands as listed below.
 
 ## Global Options
 
-These options are available on every subcommand. Put them before the `--`
-separator, if one is used.
-
-| Short | Long | Description |
-|-------|------|-------------|
-| -c | --config `<CONFIG_FILE>` | Select the project configuration file. Defaults to discovering `sgconfig.yml`. |
-|    | --custom-languages `<CUSTOM_LANGUAGES>` | Set the native custom language loading policy [possible values: allow, ignore, trust, revoke]. |
+These options are available on every subcommand, before or after the subcommand
+name. Put them before the `--` separator, if one is used.
 
 ### `-c, --config <CONFIG_FILE>`
 
-Use the selected file as the project configuration. When omitted, ast-grep
-looks for `sgconfig.yml` in the current working directory and then its parents.
-This option is global, so it works with `run` as well as `scan` and the other
-subcommands, and can appear before or after the subcommand:
+Select the project configuration file. When omitted, ast-grep searches for
+`sgconfig.yml` in the current directory and its parents. This also applies to
+`run`, including the implicit `ast-grep -p` form.
 
-```shell
-ast-grep --config project/sgconfig.yml run --lang ts --pattern 'console.log($$$ARGS)'
-ast-grep run -c project/sgconfig.yml --lang ts --pattern 'console.log($$$ARGS)'
-```
-
-See [project discovery](/guide/project/project-config#project-discovery) for
-configuration lookup details.
+See [project discovery](/guide/project/project-config#project-discovery).
 
 ### `--custom-languages <CUSTOM_LANGUAGES>`
 
-Since ast-grep 0.50.0, native libraries registered under
-[`customLanguages`](/reference/sgconfig#customlanguages) are skipped unless you
-explicitly allow them or have previously trusted the project. Built-in languages
-do not require this option.
+Control loading of native parsers registered under `customLanguages`.
+Since 0.50.0, the default is to skip them unless the configuration is already
+trusted.
 
 | Value | Behavior |
 |-------|----------|
-| `allow` | Load the configured native libraries for this invocation without saving trust. Use this for reviewed projects in CI or other automation. |
-| `ignore` | Skip the native libraries and their configured `outlineRules`, even if the project is trusted. Does not remove saved trust. |
-| `trust` | Ask for confirmation, save trust for this configuration path, and load the native libraries. Requires an interactive terminal on both stdin and stderr. |
-| `revoke` | Remove saved trust for this configuration path and skip its native libraries and configured `outlineRules` for this invocation. |
+| `allow` | Load for this invocation without saving trust. |
+| `ignore` | Skip loading, even for a trusted configuration. Preserve saved trust. |
+| `trust` | Confirm interactively, save trust for the configuration path, and load. |
+| `revoke` | Remove saved trust and skip loading. |
 
-When the option is omitted, a previously trusted configuration loads its custom
-languages; all other configurations skip them. Skipping custom languages emits
-a warning when `customLanguages` is nonempty. It does not itself fail the
-command, but a rule, injection, or `--lang` that requires an unregistered custom
-language can still fail.
+Skipping custom languages also skips their configured `outlineRules`. Custom
+parsers execute native code; saved trust follows the canonical configuration
+path, not its contents.
 
-```shell
-# Allow loading once, including in trusted CI jobs.
-ast-grep scan --custom-languages allow
-
-# Review the project first, then approve the interactive prompt.
-ast-grep scan --custom-languages trust
-
-# Skip loading for one invocation, retaining saved trust.
-ast-grep scan --custom-languages ignore
-
-# Remove saved trust, selecting the configuration explicitly.
-ast-grep scan --config path/to/sgconfig.yml --custom-languages revoke
-```
-
-:::warning Native libraries execute code
-Custom parsers run with the permissions of the ast-grep process. Trust is saved
-for the canonical configuration file path, not a hash of the configuration or
-library. Later changes at that path do not trigger another approval. Review the
-configuration and referenced libraries before enabling them.
-:::
-
-Trust is stored locally in the user's ast-grep configuration directory. Set
-`AST_GREP_TRUST_DIR` to use a different directory for the trust store. This does
-not change how `sgconfig.yml` is discovered. For a full walkthrough, see
-[Enable Custom Language Loading](/advanced/custom-language#enable-custom-language-loading).
+See the [custom language loading guide](/advanced/custom-language#enable-custom-language-loading)
+for setup, CI usage, and trust management.
 
 ## `ast-grep run`
 Run one time search or rewrite in command line. This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is equivalent to `ast-grep run -p 'foo()'`. [View detailed reference.](/reference/cli/run)

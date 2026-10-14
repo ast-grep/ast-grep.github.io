@@ -205,8 +205,11 @@ This loading policy applies to the CLI only. JavaScript and Python APIs
 continue to use explicit language registration in application code, such as
 [`registerDynamicLanguage`](/guide/api-usage/js-api#use-other-language) in
 JavaScript.
-See [CLI global options](/reference/cli#global-options) for the policy reference
-and trust store location.
+
+Trust is stored locally in the user's ast-grep configuration directory. Set
+`AST_GREP_TRUST_DIR` to use a different directory for the trust store; this does
+not change project configuration discovery. See
+[CLI global options](/reference/cli#global-options) for the policy reference.
 
 ## Add Outline Support
 

@@ -109,17 +109,10 @@ The key of the dictionary is the custom language name. The value of the dictiona
 
 Please see the [guide](/advanced/custom-language) for detailed instructions.
 
-:::warning Native parser loading requires opt-in
-Since 0.50.0, configuring `customLanguages` does not automatically enable the
-native libraries in the CLI. After reviewing them, pass
-`--custom-languages allow` for one invocation or `--custom-languages trust` to
-approve this configuration interactively. Without an explicit policy, only
-previously trusted configurations load custom languages. `ignore` skips loading
-even for trusted projects; `revoke` also removes saved trust.
-
-Trust follows the canonical configuration path, so changing the configuration
-or libraries does not invalidate it. See [CLI loading policies](/reference/cli#global-options).
-:::
+Since 0.50.0, the CLI loads these native libraries only when explicitly allowed
+or when the configuration is trusted. See the
+[custom language loading guide](/advanced/custom-language#enable-custom-language-loading)
+for setup and trust management.
 
 A custom language configuration object has the following options.
 

@@ -129,20 +129,9 @@ Path to ast-grep root config.
 
 ### `--custom-languages <CUSTOM_LANGUAGES>`
 
-Control loading of native parsers from the project configuration. Possible
-values: `allow`, `ignore`, `trust`, `revoke`. Without an explicit policy,
-only previously trusted configurations load their custom languages.
-
-Custom language `outlineRules` are loaded only when the native parsers are
-enabled. Both `ignore` and `revoke` skip those configured rule files as well.
-Command-line `--outline-rules` files are still read, but rules for a custom
-language require that language's parser to be enabled.
-
-```shell
-ast-grep outline src -l mojo --custom-languages allow
-```
-
-See [global options](/reference/cli#global-options) for all policy behavior.
+Control loading of native parsers and their configured `outlineRules`. See
+[global options](/reference/cli#global-options) and the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading).
 
 ### `--stdin`
 

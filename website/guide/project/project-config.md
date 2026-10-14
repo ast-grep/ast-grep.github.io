@@ -31,7 +31,7 @@ my-awesome-project
 All the YAML files under `rules` folder will be treated as rule files by `ast-grep`, while`not-a-rule.yml` is ignored.
 
 
-**Note, the [`ast-grep scan`](/reference/cli#scan) command requires you have an `sgconfig.yml` in your project root.**
+**Note, [`ast-grep scan`](/reference/cli/scan) requires a project configuration unless you supply `--rule` or `--inline-rules`.**
 
 :::tip Pro tip
 We can also use directories in `node_modules` to reuse preconfigured rules published on npm!
@@ -58,28 +58,13 @@ such as [custom languages](/reference/sgconfig#customlanguages) and
 without `sgconfig.yml`, but `scan` requires a project config unless you supply
 `--rule` or `--inline-rules`.
 
-```bash
-ast-grep run --config path/to/sgconfig.yml --lang ts --pattern 'console.log($$$ARGS)'
-```
-
 ## Custom Language Loading
 
-Since 0.50.0, native parsers listed in `customLanguages` are ignored unless you
-enable them explicitly or have previously trusted the configuration. After
-reviewing the libraries, use `allow` for a single command, including CI jobs:
-
-```bash
-ast-grep scan --custom-languages allow
-```
-
-Use `trust` in an interactive terminal to approve the configuration for future
-commands. Trust is saved for its canonical file path and remains valid if the
-configuration or libraries change. Use `ignore` to skip custom parsers once, or
-`revoke` to remove saved trust. These policies are global options and also apply
-to `run`, `test`, `outline`, `new`, and `lsp`.
-
-See the [custom language guide](/advanced/custom-language#enable-custom-language-loading)
-and [CLI global options](/reference/cli#global-options) for details.
+Since 0.50.0, native parsers listed in `customLanguages` require explicit loading
+permission or saved project trust. The global `--custom-languages` option
+controls this behavior. See the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading)
+for setup, CI usage, and trust management.
 
 ## Project Inspection
 

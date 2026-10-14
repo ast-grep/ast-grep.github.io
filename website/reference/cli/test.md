@@ -19,12 +19,9 @@ Path to ast-grep root config, default is sgconfig.yml
 
 ### `--custom-languages <CUSTOM_LANGUAGES>`
 
-Control loading of native parsers from the project configuration. Possible
-values: `allow`, `ignore`, `trust`, `revoke`. Custom language rules require
-`allow` or a previously trusted configuration to run their tests.
-
-For example, use `ast-grep test --custom-languages allow` in trusted CI jobs.
-See [global options](/reference/cli#global-options) for all policy behavior.
+Control loading of native parsers used by custom language rules. See
+[global options](/reference/cli#global-options) and the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading).
 
 ### `-t, --test-dir <TEST_DIR>`
 
