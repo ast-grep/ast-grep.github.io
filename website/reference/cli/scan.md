@@ -51,16 +51,10 @@ This flags requires --json mode. Default is false.
 ### `--no-ignore <FILE_TYPE>`
 Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.).
 
-You can suppress multiple ignore files by passing `no-ignore` multiple times.
+You can suppress multiple ignore file types by passing this option multiple times.
+Inherits values set in the [`noIgnore`](/reference/sgconfig#noignore) field of `sgconfig.yml`.
 
-Possible values:
-- hidden:  Search hidden files and directories. By default, hidden files and directories are skipped
-- dot:     Don't respect .ignore files. This does *not* affect whether ast-grep will ignore files and directories whose names begin with a dot. For that, use --no-ignore hidden
-- exclude: Don't respect ignore files that are manually configured for the repository such as git's '.git/info/exclude'
-- global:  Don't respect ignore files that come from "global" sources such as git's `core.excludesFile` configuration option (which defaults to `$HOME/.config/git/ignore`)
-- parent:  Don't respect ignore files (.gitignore, .ignore, etc.) in parent directories
-- vcs:     Don't respect version control ignore files (.gitignore, etc.). This implies --no-ignore parent for VCS files. Note that .ignore files will continue to be respected
-
+See the [`noIgnore`](/reference/sgconfig#noignore) reference for possible values.
 ### `--stdin`
 
 Enable search code from StdIn.

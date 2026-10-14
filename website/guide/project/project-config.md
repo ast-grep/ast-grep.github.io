@@ -51,7 +51,14 @@ ast-grep scan --config path/to/config.yml
 You can put an `sgconfig.yml` in your home directory to set global configurations for `ast-grep`. XDG configuration directory is **NOT** supported yet.
 :::
 
-Project file discovery and `--config` option are also effective in the `ast-grep run` command. So you can use configurations like [custom languages](/reference/sgconfig#customlanguages) and [language globs](/reference/sgconfig#languageglobs). Note that `run` command does not require a `sgconfig.yml` file and will stil search code without it, but `scan` command will report an error if project config is not found.
+Project file discovery and the `--config` option also apply to the `ast-grep run`
+and `ast-grep outline` commands. You can use settings such as
+[custom languages](/reference/sgconfig#customlanguages),
+[language globs](/reference/sgconfig#languageglobs), and
+[file ignores](/reference/sgconfig#noignore) with these commands. The `run`
+command does not require an `sgconfig.yml` file and will still search code
+without it, but the `scan` command reports an error if project config is not
+found.
 
 ## Project Inspection
 
