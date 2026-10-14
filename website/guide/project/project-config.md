@@ -51,7 +51,35 @@ ast-grep scan --config path/to/config.yml
 You can put an `sgconfig.yml` in your home directory to set global configurations for `ast-grep`. XDG configuration directory is **NOT** supported yet.
 :::
 
-Project file discovery and `--config` option are also effective in the `ast-grep run` command. So you can use configurations like [custom languages](/reference/sgconfig#customlanguages) and [language globs](/reference/sgconfig#languageglobs). Note that `run` command does not require a `sgconfig.yml` file and will stil search code without it, but `scan` command will report an error if project config is not found.
+Project file discovery and the global `-c`/`--config` option also work with
+`ast-grep run`, including the implicit `ast-grep -p` form. You can use settings
+such as [custom languages](/reference/sgconfig#customlanguages) and
+[language globs](/reference/sgconfig#languageglobs). The `run` command works
+without `sgconfig.yml`, but `scan` requires a project config unless you supply
+`--rule` or `--inline-rules`.
+
+```bash
+ast-grep run --config path/to/sgconfig.yml --lang ts --pattern 'console.log($$$ARGS)'
+```
+
+## Custom Language Loading
+
+Since 0.50.0, native parsers listed in `customLanguages` are ignored unless you
+enable them explicitly or have previously trusted the configuration. After
+reviewing the libraries, use `allow` for a single command, including CI jobs:
+
+```bash
+ast-grep scan --custom-languages allow
+```
+
+Use `trust` in an interactive terminal to approve the configuration for future
+commands. Trust is saved for its canonical file path and remains valid if the
+configuration or libraries change. Use `ignore` to skip custom parsers once, or
+`revoke` to remove saved trust. These policies are global options and also apply
+to `run`, `test`, `outline`, `new`, and `lsp`.
+
+See the [custom language guide](/advanced/custom-language#enable-custom-language-loading)
+and [CLI global options](/reference/cli#global-options) for details.
 
 ## Project Inspection
 

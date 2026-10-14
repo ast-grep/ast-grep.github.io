@@ -37,9 +37,30 @@ The table below lists all languages that are supported by ast-grep.
 |TypeScript | `ts`, `typescript` | `ts`, `cts`, `mts`|
 |Tsx | `tsx` | `tsx`|
 |Yaml | `yml` | `yml`, `yaml`|
+|Zig | `zig` | `zig`|
 
 ----
 
 :::tip Pro Tips
 You can use [`languageGlobs`](/reference/sgconfig#languageglobs) to customize languages' extension mapping.
 :::
+
+## Zig
+
+Zig is built in starting with ast-grep 0.50.0. The CLI detects `.zig` files
+automatically; you can also select it with `--lang zig` or `language: Zig` in a
+YAML rule. No custom parser registration or loading permission is needed.
+
+For example, find Zig imports:
+
+```shell
+ast-grep run --lang zig --pattern 'const $NAME = @import($PATH);' .
+```
+
+Zig patterns support `$NAME` and `$$$ARGS` metavariables, as well as rewrites.
+For YAML editor validation, the release includes a
+[Zig rule schema](https://raw.githubusercontent.com/ast-grep/ast-grep/0.50.0/schemas/zig_rule.json).
+
+Parser support and outline extraction coverage are separate. In 0.50.0, Zig has
+no bundled outline extractor; use
+[custom outline rules](/reference/outline-rules#command-line) to define one.

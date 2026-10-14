@@ -11,11 +11,20 @@ However, not all Tree-sitter compatible languages are shipped with ast-grep comm
 
 If you want to use a custom language that is not built into ast-grep, you can compile it as a dynamic library first and load it via custom language registration.
 
-There will be three steps to achieve this:
+There are four steps:
 
 1. Install tree-sitter CLI and prepare the grammar file.
 2. Compile the custom language as a dynamic library.
 3. Register the custom language in ast-grep project config.
+4. Explicitly enable loading the native parser library.
+
+:::warning Changed in 0.50.0
+Registering a parser in `sgconfig.yml` no longer enables it automatically in
+the CLI. Custom parsers are native code and run with your permissions. Review
+the configuration and libraries, then use `--custom-languages allow` for one
+invocation or `--custom-languages trust` to approve the project interactively.
+Built-in languages do not need this opt-in.
+:::
 
 :::tip Pro Tip
 You can also reuse the dynamic library compiled by neovim. See [this link](https://github.com/nvim-treesitter/nvim-treesitter/#changing-the-parser-install-directory) to find where the parsers are.
@@ -108,7 +117,7 @@ customLanguages:
 
 The `libraryPath` property specifies the path to the dynamic library relative to the `sgconfig.yml` file or an absolute path. The `extensions` property specifies a list of file extensions for this language.
 The `expandoChar` property is optional and specifies a character that can be used instead of `$` for meta-variables in your pattern.
-The `outlineRules` property is optional and specifies an outline extraction rule file relative to `sgconfig.yml`. When it is set, `ast-grep outline` automatically loads the file for this custom language. You can still pass extra outline rules with `--outline-rules`; configured custom language rules load first.
+The `outlineRules` property is optional and specifies an outline extraction rule file relative to `sgconfig.yml`. When custom language loading is enabled, `ast-grep outline` loads the file for this custom language. You can still pass extra outline rules with `--outline-rules`; configured custom language rules load first.
 
 
 
@@ -119,6 +128,85 @@ ast-grep requires pattern to be a valid syntactical construct, but `$VAR` might 
 
 For example, `$VAR` is not valid in ~~[Python](https://github.com/ast-grep/ast-grep/blob/1b999b249110c157ae5026e546a3112cd64344f7/crates/language/src/python.rs#L15)~~ Mojo. So we need to replace it with `_VAR`.
 You can check the `expandoChar` of ast-grep's built-in languages [here](https://github.com/ast-grep/ast-grep/tree/main/crates/language/src).
+
+## Enable Custom Language Loading
+
+Since 0.50.0, the CLI skips native custom language libraries in untrusted
+projects by default. Merely adding `customLanguages` to `sgconfig.yml` is not
+enough. Choose a policy with the global `--custom-languages` option, which works
+with `run`, `scan`, `test`, `outline`, `new`, and `lsp`.
+
+### Allow One Invocation
+
+After reviewing the parser library and project configuration, enable the parser
+for one command:
+
+```bash
+ast-grep run -p 'print' -l mojo --custom-languages allow
+```
+
+`allow` does not save trust. Use it explicitly in trusted CI jobs and other
+non-interactive workflows, including scans and rule tests:
+
+```bash
+ast-grep scan --custom-languages allow
+ast-grep test --custom-languages allow
+```
+
+### Remember a Reviewed Project
+
+To enable the parser for future commands, run this in an interactive terminal:
+
+```bash
+ast-grep run -p 'print' -l mojo --custom-languages trust
+```
+
+ast-grep asks for confirmation before saving trust and loading the libraries.
+Both stdin and stderr must be terminals; `trust` fails in non-interactive
+environments. Use `allow` for automation. Once approved, subsequent commands
+using the same configuration can omit the option.
+
+:::warning Trust is tied to the configuration path
+ast-grep remembers the canonical path of the configuration file. It does not
+track the contents of the configuration or parser libraries. Changing either
+does not invalidate saved trust. Review updates to trusted parsers as you would
+updates to any executable dependency.
+:::
+
+### Skip Loading or Remove Trust
+
+Use `ignore` to skip custom parsers for one invocation, even in a trusted
+project. This preserves saved trust:
+
+```bash
+ast-grep scan --custom-languages ignore
+```
+
+Use `revoke` to remove saved trust and skip custom parsers for the current
+invocation:
+
+```bash
+ast-grep scan --custom-languages revoke
+```
+
+Both policies also skip `outlineRules` registered under `customLanguages`.
+Skipping the libraries produces a warning, but rules, injections, and `--lang`
+values that depend on a skipped parser can still cause an error. To scan only
+built-in languages, select rules that do not require the custom parser.
+
+All policies use the configuration discovered from the current directory or
+selected with the global `-c`/`--config` option:
+
+```bash
+ast-grep scan --config path/to/sgconfig.yml --custom-languages revoke
+```
+
+This loading policy applies to the CLI only. JavaScript and Python APIs
+continue to use explicit language registration in application code, such as
+[`registerDynamicLanguage`](/guide/api-usage/js-api#use-other-language) in
+JavaScript.
+See [CLI global options](/reference/cli#global-options) for the policy reference
+and trust store location.
 
 ## Add Outline Support
 
@@ -151,7 +239,7 @@ signature: fn $NAME($$$ARGS)
 Now `outline` can load the extractor from project configuration:
 
 ```shell
-ast-grep outline src -l mojo
+ast-grep outline src -l mojo --custom-languages allow
 ```
 
 See [outline rule fields reference](/reference/outline-rule-fields) for all
@@ -164,7 +252,7 @@ Now you are ready to use your custom language with ast-grep! You can use it as a
 For example, to search for all occurrences of `print` in mojo files, you can run:
 
 ```bash
-ast-grep -p "print" -l mojo
+ast-grep -p 'print' -l mojo --custom-languages allow
 ```
 
 Or you can write a rule in yaml like this:
@@ -176,6 +264,9 @@ severity: hint
 rule:
   pattern: print
 ```
+
+Run the rule with `ast-grep scan --custom-languages allow`, or omit the policy
+if you have already trusted this configuration.
 
 And that's it! You have successfully used a custom language with ast-grep!
 

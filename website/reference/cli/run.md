@@ -74,6 +74,22 @@ Possible values:
 
 ## Input Options
 
+### `-c, --config <CONFIG_FILE>`
+
+Select the project configuration file. When omitted, ast-grep searches for
+`sgconfig.yml` in the current directory and its parents. `run` can also work
+without a project configuration.
+
+### `--custom-languages <CUSTOM_LANGUAGES>`
+
+Control loading of native parsers from `customLanguages` in the project config.
+Possible values: `allow`, `ignore`, `trust`, `revoke`. Without an explicit policy,
+only previously trusted configurations load their custom languages.
+
+See [global options](/reference/cli#global-options) for policy behavior and
+[custom language setup](/advanced/custom-language#enable-custom-language-loading)
+for examples. This also applies when `run` is used implicitly with `ast-grep -p`.
+
 ### `--no-ignore <FILE_TYPE>`
 
 Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.).

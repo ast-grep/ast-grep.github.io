@@ -223,8 +223,14 @@ const artistsQuery = graphql`
 We can search the GraphQL fragment via this `--inline-rules` scan.
 
 ```sh
-ast-grep scan --inline-rules="{id: test, language: graphql, rule: {kind: fragment_spread}}"
+ast-grep scan --custom-languages allow --inline-rules="{id: test, language: graphql, rule: {kind: fragment_spread}}"
 ```
+
+Since 0.50.0, the CLI requires opt-in to load the native GraphQL parser. Use
+`allow` only after reviewing the configuration and library, or
+[trust the project](/advanced/custom-language#remember-a-reviewed-project)
+interactively before running without the flag. Injections that use only
+built-in languages do not need this opt-in.
 
 Output
 

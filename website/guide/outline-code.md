@@ -85,6 +85,36 @@ declarations inside an HTML or Vue `<script>` element appear in the document's
 outline. See [language injection](/advanced/language-injection) for how ast-grep
 identifies embedded languages.
 
+## Language Coverage
+
+Outline coverage depends on the bundled extraction rules for each language.
+In 0.50.0, Java outlines include the following constructs:
+
+| Java construct | Outline representation |
+| --- | --- |
+| Record | `struct` item with declared methods, fields, regular constructors, and compact constructors as members |
+| Module declaration | `module` item |
+| Import, including static and wildcard imports | Imported `module` item |
+| Enum constant | `enumMember` under its enum |
+| Annotation type | `interface` item |
+| Annotation element | `method` member under its annotation type |
+| Field, including private and protected fields | `field` member; use `--pub-members` to keep only fields marked public |
+
+To inspect annotation elements or record constructors, use an expanded member
+view:
+
+```shell
+ast-grep outline src/Route.java --view expanded
+ast-grep outline src/Point.java --type struct --view expanded
+```
+
+C and C++ outlines also extract symbol names through nested declarators, such
+as pointer and array declarations and fields.
+
+A built-in parser does not guarantee bundled outline rules. Zig, for example,
+supports searching and rewriting in 0.50.0 but needs
+[custom extraction rules](#custom-extraction-rules) for outlines.
+
 ## Prompt AI Agents
 
 `outline` works best when an agent knows to use it before broad file reads. The
@@ -469,9 +499,18 @@ customLanguages:
       outlineRules: outline/mylang.yml
 ```
 
-`outlineRules` is resolved relative to `sgconfig.yml` and is loaded
-automatically by `ast-grep outline`. Command-line `--outline-rules` files are
-loaded in addition to configured custom language outline rules.
+`outlineRules` is resolved relative to `sgconfig.yml`. Since 0.50.0, the native
+parser and its configured outline rules load only when custom language loading
+is enabled. For a reviewed parser, use:
+
+```shell
+ast-grep outline src -l mylang --custom-languages allow
+```
+
+You can also [trust the configuration interactively](/advanced/custom-language#remember-a-reviewed-project).
+The `ignore` and `revoke` policies skip both the parser and its `outlineRules`.
+Command-line `--outline-rules` files are loaded in addition to enabled custom
+language outline rules.
 
 To replace the bundled rules completely:
 
