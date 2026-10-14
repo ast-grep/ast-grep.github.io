@@ -75,5 +75,11 @@ You need to provide all required arguments via command line if this flag is true
 ### `-c, --config <CONFIG_FILE>`
 Path to ast-grep root config, default is sgconfig.yml
 
+### `--custom-languages <CUSTOM_LANGUAGES>`
+
+Control loading of native parsers when creating custom language rules or
+utilities. See [global options](/reference/cli#global-options) and the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading).
+
 ### `-h, --help`
 Print help (see a summary with '-h')

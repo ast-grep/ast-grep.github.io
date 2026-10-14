@@ -158,6 +158,13 @@ Or if you are using doomemacs, add to your `packages.el`
 
 ## LSP Server
 
+Since 0.50.0, `ast-grep lsp` also requires opt-in to load native parsers from
+`customLanguages`. After reviewing the project, approve it with
+`ast-grep scan --custom-languages trust` in an interactive terminal before
+starting the editor's server. Alternatively, configure the server command as
+`ast-grep lsp --custom-languages allow` for that invocation. Built-in languages
+need no opt-in. See [custom language loading](/advanced/custom-language#enable-custom-language-loading).
+
 Currently ast-grep support these LSP capabilities:
 
 ### Server capability

@@ -469,9 +469,18 @@ customLanguages:
       outlineRules: outline/mylang.yml
 ```
 
-`outlineRules` is resolved relative to `sgconfig.yml` and is loaded
-automatically by `ast-grep outline`. Command-line `--outline-rules` files are
-loaded in addition to configured custom language outline rules.
+`outlineRules` is resolved relative to `sgconfig.yml`. Since 0.50.0, the native
+parser and its configured outline rules load only when custom language loading
+is enabled. For a reviewed parser, use:
+
+```shell
+ast-grep outline src -l mylang --custom-languages allow
+```
+
+You can also [trust the configuration interactively](/advanced/custom-language#remember-a-reviewed-project).
+The `ignore` and `revoke` policies skip both the parser and its `outlineRules`.
+Command-line `--outline-rules` files are loaded in addition to enabled custom
+language outline rules.
 
 To replace the bundled rules completely:
 

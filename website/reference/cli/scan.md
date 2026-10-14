@@ -24,6 +24,12 @@ The paths to search. You can provide multiple paths separated by spaces
 ### `-c, --config <CONFIG_FILE>`
 Path to ast-grep root config, default is sgconfig.yml
 
+### `--custom-languages <CUSTOM_LANGUAGES>`
+
+Control loading of native parsers from the project configuration. See
+[global options](/reference/cli#global-options) and the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading).
+
 ### `-r, --rule <RULE_FILE>`
 Scan the codebase with the single rule located at the path RULE_FILE.
 

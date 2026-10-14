@@ -3,6 +3,39 @@
 You can always see up-to-date command line options using `ast-grep --help`.
 ast-grep has several subcommands as listed below.
 
+## Global Options
+
+These options are available on every subcommand, before or after the subcommand
+name. Put them before the `--` separator, if one is used.
+
+### `-c, --config <CONFIG_FILE>`
+
+Select the project configuration file. When omitted, ast-grep searches for
+`sgconfig.yml` in the current directory and its parents. This also applies to
+`run`, including the implicit `ast-grep -p` form.
+
+See [project discovery](/guide/project/project-config#project-discovery).
+
+### `--custom-languages <CUSTOM_LANGUAGES>`
+
+Control loading of native parsers registered under `customLanguages`.
+Since 0.50.0, the default is to skip them unless the configuration is already
+trusted.
+
+| Value | Behavior |
+|-------|----------|
+| `allow` | Load for this invocation without saving trust. |
+| `ignore` | Skip loading, even for a trusted configuration. Preserve saved trust. |
+| `trust` | Confirm interactively, save trust for the configuration path, and load. |
+| `revoke` | Remove saved trust and skip loading. |
+
+Skipping custom languages also skips their configured `outlineRules`. Custom
+parsers execute native code; saved trust follows the canonical configuration
+path, not its contents.
+
+See the [custom language loading guide](/advanced/custom-language#enable-custom-language-loading)
+for setup, CI usage, and trust management.
+
 ## `ast-grep run`
 Run one time search or rewrite in command line. This is the default command when you run the CLI, so `ast-grep -p 'foo()'` is equivalent to `ast-grep run -p 'foo()'`. [View detailed reference.](/reference/cli/run)
 
@@ -25,6 +58,8 @@ ast-grep run [OPTIONS] <--pattern <PATTERN>|--kind <KIND>> [PATHS]...
 | -k| --kind `<KIND>`       |  AST kind to match. Accepts ESQuery-style selectors. See [ESQuery Style Kind](/reference/rule/esquery). |
 | -r| --rewrite `<REWRITE>` |  String to replace the matched AST node. |
 | -l| --lang `<LANG>`       |  The language of the pattern query. ast-grep will infer the language based on file extension if this option is omitted. |
+| -c| --config `<CONFIG_FILE>` | Path to the project configuration file. Defaults to `sgconfig.yml` discovery. |
+|   | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 |   | --debug-query`[=<format>]` |  Print query pattern's tree-sitter AST. Requires lang be set explicitly. |
 |   | --strictness `<STRICTNESS>`   |  The strictness of the pattern [possible values: cst, smart, ast, relaxed, signature, template] |
 |   | --follow   |  Follow symbolic links |
@@ -67,6 +102,7 @@ ast-grep outline [OPTIONS] [PATHS]...
 |   | --pub-members | Display only public members in member views. |
 | -l| --lang `<LANG>` | Specify the input language. For path input, ast-grep parses only files of this language. Required with `--stdin`. |
 | -c| --config `<CONFIG_FILE>` | Path to ast-grep root config, default is `sgconfig.yml` |
+|   | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 |   | --stdin | Read source from StdIn. |
 |   | --outline-rules `<FILE>` | Load additional outline extractor definitions. These are added after custom language `outlineRules` from config. |
 |   | --no-default-outline-rules | Disable bundled extractor definitions. |
@@ -95,6 +131,7 @@ ast-grep scan [OPTIONS] [PATHS]...
 | Short | Long | Description |
 |-------|------|-------------|
 | -c | --config `<CONFIG_FILE>`| Path to ast-grep root config, default is `sgconfig.yml` |
+|    | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 | -r | --rule `<RULE_FILE>`| Scan the codebase with the single rule located at the path `RULE_FILE`.|
 |    | --inline-rules `<RULE_TEXT>` | Scan the codebase with a rule defined by the provided `RULE_TEXT` |
 |    | --filter `<REGEX>` |Scan the codebase with rules with ids matching `REGEX` |
@@ -138,6 +175,7 @@ ast-grep test [OPTIONS]
 | Short | Long | Description |
 |-------|------|-------------|
 | -c| --config `<CONFIG>`             |Path to the root ast-grep config YAML.|
+|   | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 | -t| --test-dir `<TEST_DIR>`         |the directories to search test YAML files.|
 |   | --snapshot-dir `<SNAPSHOT_DIR>` |Specify the directory name storing snapshots. Default to `__snapshots__`.|
 |   | --skip-snapshot-tests           |Only check if the test code is valid, without checking rule output. Turn it on when you want to ignore the output of rules|
@@ -179,6 +217,8 @@ ast-grep new [COMMAND] [OPTIONS] [NAME]
 | -l| `--lang <LANG>`         | The language of the item to create. |
 | -y| `--yes`                 | Accept all default options without interactive input during creation. |
 | -b| `--base-dir <BASE_DIR>` | Create new project/items in the folder specified by this argument `[default: .]` |
+| -c| --config `<CONFIG_FILE>` | Path to the project configuration file. Defaults to `sgconfig.yml` discovery. |
+|   | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 | -h| `--help`                | Print help (see more with '--help') |
 
 ## `ast-grep lsp`
@@ -196,6 +236,7 @@ ast-grep lsp
 | Short | Long | Description |
 |-------|------|-------------|
 | -c | --config `<CONFIG_FILE>`| Path to ast-grep root config, default is `sgconfig.yml` |
+|    | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 | -h| `--help`                | Print help (see more with '--help') |
 
 ## `ast-grep completions`

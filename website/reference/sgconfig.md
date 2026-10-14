@@ -109,6 +109,11 @@ The key of the dictionary is the custom language name. The value of the dictiona
 
 Please see the [guide](/advanced/custom-language) for detailed instructions.
 
+Since 0.50.0, the CLI loads these native libraries only when explicitly allowed
+or when the configuration is trusted. See the
+[custom language loading guide](/advanced/custom-language#enable-custom-language-loading)
+for setup and trust management.
+
 A custom language configuration object has the following options.
 
 ### `libraryPath`
@@ -149,8 +154,10 @@ The file extensions for this language.
 The path to the YAML file containing outline extraction rules for this custom
 language. The path is resolved relative to `sgconfig.yml`.
 
-When this field is set, `ast-grep outline` automatically loads the configured
-outline rules for the custom language. You can still pass additional
+When this field is set and custom language loading is enabled, `ast-grep outline`
+loads the configured outline rules for the custom language. The `ignore` and
+`revoke` loading policies skip these files along with the native libraries.
+You can still pass additional
 `--outline-rules` files on the command line; rules from `customLanguages` are
 loaded before command-line outline rule files.
 

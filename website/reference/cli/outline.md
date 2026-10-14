@@ -127,6 +127,12 @@ Path to ast-grep root config.
 `outline` uses project config for custom language registration and for
 `customLanguages.<name>.outlineRules`.
 
+### `--custom-languages <CUSTOM_LANGUAGES>`
+
+Control loading of native parsers and their configured `outlineRules`. See
+[global options](/reference/cli#global-options) and the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading).
+
 ### `--stdin`
 
 Read source from standard input.

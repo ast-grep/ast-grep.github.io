@@ -56,8 +56,11 @@ Rules can come from three places:
   `customLanguages.<name>.outlineRules` in `sgconfig.yml`.
 * **Command-line rules**: extra rule files passed with `--outline-rules`.
 
-By default, all applicable sources are combined. Custom language rules are
-loaded before command-line rules. Use `--no-default-outline-rules` when you want
+All enabled sources are combined. Custom language rules require
+[permission to load native parsers](/reference/cli#global-options); `ignore`
+and `revoke` skip the configured `outlineRules` as well as the libraries.
+Custom language rules are loaded before command-line rules.
+Use `--no-default-outline-rules` when you want
 the command-line rule set to replace the bundled default extractors.
 
 ## Load Custom Rules
@@ -81,7 +84,8 @@ customLanguages:
 ```
 
 `outlineRules` is resolved relative to `sgconfig.yml`. `ast-grep outline` loads
-these configured custom language rules automatically.
+these rules when custom language loading is enabled with `allow` or a trusted
+configuration. See [custom language setup](/advanced/custom-language#enable-custom-language-loading).
 
 Rules configured in `customLanguages` are loaded before command-line
 `--outline-rules` files.
@@ -403,7 +407,8 @@ For custom languages:
 1. Register the parser in `sgconfig.yml` with ast-grep's `customLanguages`.
 2. Write outline extractor documents with `language: <custom-language-name>`.
 3. Add the extractor file path to the custom language's `outlineRules` field.
-4. Run `ast-grep outline`.
+4. Review the parser and configuration, then run `ast-grep outline` with
+   `--custom-languages allow`, or trust the configuration interactively first.
 
 Conceptual example:
 
@@ -429,10 +434,12 @@ signature: def $NAME($$$ARGS)
 ```
 
 ```shell
-ast-grep outline src -l mylang
+ast-grep outline src -l mylang --custom-languages allow
 ```
 
-Unsupported languages return an empty outline and a successful exit status.
+Registered languages without outline extractors return an empty outline and a
+successful exit status. A custom parser that has not been enabled is not
+registered, so selecting it with `--lang` or in an extractor can instead fail.
 
 ## What Rules Should Not Do
 

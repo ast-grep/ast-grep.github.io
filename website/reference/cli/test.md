@@ -17,6 +17,12 @@ ast-grep test [OPTIONS]
 ### `-c, --config <CONFIG>`
 Path to ast-grep root config, default is sgconfig.yml
 
+### `--custom-languages <CUSTOM_LANGUAGES>`
+
+Control loading of native parsers used by custom language rules. See
+[global options](/reference/cli#global-options) and the
+[custom language guide](/advanced/custom-language#enable-custom-language-loading).
+
 ### `-t, --test-dir <TEST_DIR>`
 
 the directories to search test YAML files
