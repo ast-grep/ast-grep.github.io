@@ -11,7 +11,7 @@ head:
       content: How to Debug ast-grep Rule Effectively
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/how-to-debug
+      content: https://astgrep.com/blog/how-to-debug
   - - meta
     - property: og:description
       content: Learn how to debug ast-grep rules effectively by simplifying code and rules step by step.

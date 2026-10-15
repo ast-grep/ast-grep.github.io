@@ -331,7 +331,7 @@ Documentation link to this rule. It will be displayed in editor extension if sup
 **Example:**
 
 ```yaml
-url: 'https://ast-grep.github.io/catalog/python/#migrate-openai-sdk'
+url: 'https://astgrep.com/catalog/python/#migrate-openai-sdk'
 ```
 
 ### `metadata`
