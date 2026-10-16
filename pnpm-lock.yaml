@@ -15,8 +15,8 @@ importers:
         specifier: 4.0.9
         version: 4.0.9
       js-yaml:
-        specifier: 5.2.3
-        version: 5.2.3
+        specifier: 5.5.0
+        version: 5.5.0
       medium-zoom:
         specifier: ^1.1.0
         version: 1.1.0
@@ -63,10 +63,6 @@ importers:
       vue-tsc:
         specifier: 3.3.11
         version: 3.3.11(typescript@6.0.3)
-    optionalDependencies:
-      ast-grep-wasm:
-        specifier: file:./pkg/
-        version: file:pkg
 
 packages:
 
@@ -951,8 +947,8 @@ packages:
   argparse@3.0.0:
     resolution: {integrity: sha512-BOp5NMrHqKxmq/OLr+clzzrRxgOKSLkcjmkWuChp7Irqwn4s74WjOBPIgWfA/HMcBnVkZ5XEuf9uUqzlpfCQ6A==}
 
-  ast-grep-wasm@file:pkg:
-    resolution: {directory: pkg, type: directory}
+  argparse@3.0.3:
+    resolution: {integrity: sha512-Sn98ftV3KfsO8xfLPHG6oT8y+b0yvbrLgZjgPDXsharNY15tTAjqIsIju4S32nl6/iEUNNE4v+yL2Zhm8ooP3w==}
 
   bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -1132,8 +1128,8 @@ packages:
     resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
     hasBin: true
 
-  js-yaml@5.2.3:
-    resolution: {integrity: sha512-n+mUVyUX5bVv7G/G2zyIHOhdxfuU1dY2NOFzTQUWiMUbFss8b57NFlgCCaggU78wSw5KVS9cllzeLyzyR+n5nw==}
+  js-yaml@5.5.0:
+    resolution: {integrity: sha512-paNr4LFIFPjeeSmwNYdrb8FafLLG/Cr2Af3GjbsHJ5CxIjH4r0c2emlmRdAtpPAieP1gRVzk6buBbVP5gBMGAg==}
     hasBin: true
 
   jsonc-parser@3.3.1:
@@ -2440,8 +2436,7 @@ snapshots:
 
   argparse@3.0.0: {}
 
-  ast-grep-wasm@file:pkg:
-    optional: true
+  argparse@3.0.3: {}
 
   bail@2.0.2: {}
 
@@ -2618,9 +2613,9 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  js-yaml@5.2.3:
+  js-yaml@5.5.0:
     dependencies:
-      argparse: 2.0.1
+      argparse: 3.0.3
 
   jsonc-parser@3.3.1: {}
 
