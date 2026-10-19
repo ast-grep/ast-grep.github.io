@@ -58,7 +58,9 @@ This flags requires --json mode. Default is false.
 Do not respect hidden file system or ignore files (.gitignore, .ignore, etc.).
 
 You can suppress multiple ignore file types by passing this option multiple times.
-Inherits values set in the [`noIgnore`](/reference/sgconfig#noignore) field of `sgconfig.yml`.
+When omitted, this option inherits values from the
+[`noIgnore`](/reference/sgconfig#noignore) field of `sgconfig.yml`. Supplying
+one or more values overrides the configured list.
 
 See the [`noIgnore`](/reference/sgconfig#noignore) reference for possible values.
 ### `--stdin`

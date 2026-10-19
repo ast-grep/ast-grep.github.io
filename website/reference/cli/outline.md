@@ -158,7 +158,9 @@ Follow symbolic links while traversing directories.
 
 Do not respect hidden file system or ignore files.
 
-Inherits values set in the [`noIgnore`](/reference/sgconfig#noignore) field of `sgconfig.yml`.
+When omitted, this option inherits values from the
+[`noIgnore`](/reference/sgconfig#noignore) field of `sgconfig.yml`. Supplying
+one or more values overrides the configured list.
 
 See the [`noIgnore`](/reference/sgconfig#noignore) reference for possible values.
 

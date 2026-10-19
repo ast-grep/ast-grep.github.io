@@ -89,7 +89,8 @@ Possible values:
 * `vcs`: Do not respect version-control ignore files such as `.gitignore`. This
   implies `parent` for version-control files; `.ignore` files remain effective.
 
-Command-line `--no-ignore` values are added to this list.
+These values apply when no command-line `--no-ignore` options are supplied.
+Supplying one or more `--no-ignore` options overrides the configured list.
 
 **Example:**
 
