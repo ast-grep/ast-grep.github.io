@@ -103,9 +103,14 @@ const moreFeatures = computed(() => sortedFeatures.value.slice(2))
           </Badge>
         </a>
       </div>
-      <a :href="meta.playgroundLink" class="playground link" target="_blank">
-        Try in Playground →
-      </a>
+      <div class="rule-links">
+        <a :href="meta.playgroundLink" class="link" target="_blank">
+          Try in Playground →
+        </a>
+        <a v-if="meta.grepLink" :href="meta.grepLink" class="link" target="_blank">
+          Search in public repositories →
+        </a>
+      </div>
     </div>
   </li>
 </template>
@@ -178,7 +183,10 @@ a:hover {
 .rule-aux .rule-badges {
   justify-content: end;
 }
-.playground {
+.rule-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   font-size: 0.8em;
   white-space: nowrap;
   text-align: right;
@@ -214,6 +222,9 @@ a:hover {
   .rule-aux {
     flex: 1 0 auto;
     flex-direction: row;
+  }
+  .rule-links {
+    margin-left: auto;
   }
 }
 
