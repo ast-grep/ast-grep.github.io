@@ -313,7 +313,8 @@ A typical globing process works as follows:
 
 :::warning `ignores` in YAML is different from `--no-ignore` in CLI
 ast-grep respects common ignore files like `.gitignore` and hidden files by default.
-To disable this behavior, use [`--no-ignore`](/reference/cli#scan) in CLI.
+To disable this behavior, use [`--no-ignore`](/reference/cli/run#no-ignore-file-type)
+in the CLI or [`noIgnore`](/reference/sgconfig#noignore) in `sgconfig.yml`.
 `ignores` is a rule-wise configuration that only filters files that are not ignored by the CLI.
 :::
 

@@ -52,11 +52,13 @@ You can put an `sgconfig.yml` in your home directory to set global configuration
 :::
 
 Project file discovery and the global `-c`/`--config` option also work with
-`ast-grep run`, including the implicit `ast-grep -p` form. You can use settings
-such as [custom languages](/reference/sgconfig#customlanguages) and
-[language globs](/reference/sgconfig#languageglobs). The `run` command works
-without `sgconfig.yml`, but `scan` requires a project config unless you supply
-`--rule` or `--inline-rules`.
+`ast-grep run`, including the implicit `ast-grep -p` form, and
+`ast-grep outline`. You can use settings such as
+[custom languages](/reference/sgconfig#customlanguages),
+[language globs](/reference/sgconfig#languageglobs), and
+[file ignores](/reference/sgconfig#noignore) with these commands. The `run`
+command works without `sgconfig.yml`, but `scan` requires a project config
+unless you supply `--rule` or `--inline-rules`.
 
 ## Custom Language Loading
 
