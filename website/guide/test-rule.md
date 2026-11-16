@@ -122,6 +122,13 @@ test result: ok. 1 passed; 0 failed;
 
 ast-grep will report the passed rule and failed rule. The dots behind test case id represent passed cases.
 
+Since 0.51.2, the command fails if a selected test's `id` does not match a
+loaded rule or if no individual `valid` or `invalid` cases run. This includes
+an empty test directory, a `--filter` matching no tests, and tests with empty
+case lists. Rules with `severity: off` are skipped unless `--include-off` is
+supplied; if every selected rule is skipped, the command fails because no
+cases run.
+
 If we swap the test case and make them failed, we will get the following output.
 
 ```bash

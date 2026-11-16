@@ -6,6 +6,9 @@ outline: [2, 3]
 
 Test ast-grep rules.
 
+Since 0.51.2, exits with a failure if a selected test ID has no matching rule
+or if no test cases run. See the [testing guide](/guide/test-rule#test-case-configuration).
+
 ## Usage
 
 ```shell
