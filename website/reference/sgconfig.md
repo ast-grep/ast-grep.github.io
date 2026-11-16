@@ -129,6 +129,23 @@ The above configuration tells ast-grep to treat the files with `.vue`, `.svelte`
 This option can override the default language parser for a specific file extension, which is useful for rule reuse between similar languages like C/Cpp, or TS/TSX.
 :::
 
+## `outlineRules`
+
+* type: `HashMap<String, String>`
+* required: No
+* default: no additional project outline rules
+
+Since 0.51.3, maps built-in language names or aliases to outline extraction
+rule files. Keys are ASCII case-insensitive; custom language names are not
+accepted. Paths are resolved relative to `sgconfig.yml`.
+
+These rules are added to bundled extractors and load without custom language
+permission. `--no-default-outline-rules` disables only the bundled extractors;
+`--outline-rules` adds command-line files after the configured rules.
+
+See the [outline guide](/guide/outline-code#custom-extraction-rules) for setup
+and the [extraction rule reference](/reference/outline-rules) for the file format.
+
 ## `customLanguages`
 
 * type: `HashMap<String, CustomLang>`

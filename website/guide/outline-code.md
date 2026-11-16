@@ -458,6 +458,29 @@ syntax is not covered, you can load extra extractor definitions:
 ast-grep outline src --outline-rules project-outline.yml
 ```
 
+Since 0.51.3, you can save extra extractor paths for built-in languages in the
+top-level `outlineRules` mapping in `sgconfig.yml`:
+
+```yaml
+ruleDirs:
+  - rules
+outlineRules:
+  js: outline/javascript.yml
+  ts: outline/typescript.yml
+```
+
+Keys accept built-in language names and aliases, ignoring ASCII case. Paths
+are relative to `sgconfig.yml`. Each file contains extractor definitions in
+the [outline rule format](/reference/outline-rules#rule-file-format), including
+their `language` fields. Run `ast-grep outline src` to load these files
+automatically alongside the bundled extractors. No custom language permission
+is needed for these project rules.
+
+Command-line `--outline-rules` files are added after configured files. To use
+only your configured and command-line extractors, pass
+`--no-default-outline-rules`; it disables bundled extractors while retaining
+project rules.
+
 For a custom language registered in `sgconfig.yml`, prefer registering the
 outline rule file with the language itself:
 
@@ -479,8 +502,8 @@ ast-grep outline src -l mylang --custom-languages allow
 
 You can also [trust the configuration interactively](/advanced/custom-language#remember-a-reviewed-project).
 The `ignore` and `revoke` policies skip both the parser and its `outlineRules`.
-Command-line `--outline-rules` files are loaded in addition to enabled custom
-language outline rules.
+Enabled custom language outline rules load before top-level project
+`outlineRules`, followed by command-line `--outline-rules` files.
 
 To replace the bundled rules completely:
 

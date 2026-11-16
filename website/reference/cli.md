@@ -104,7 +104,7 @@ ast-grep outline [OPTIONS] [PATHS]...
 | -c| --config `<CONFIG_FILE>` | Path to ast-grep root config, default is `sgconfig.yml` |
 |   | --custom-languages `<CUSTOM_LANGUAGES>` | [Native custom language loading policy](#global-options): allow, ignore, trust, revoke. |
 |   | --stdin | Read source from StdIn. |
-|   | --outline-rules `<FILE>` | Load additional outline extractor definitions. These are added after custom language `outlineRules` from config. |
+|   | --outline-rules `<FILE>` | Load additional outline extractor definitions after project and enabled custom language `outlineRules` from config. |
 |   | --no-default-outline-rules | Disable bundled extractor definitions. |
 |   | --globs `<GLOBS>` | Include or exclude file paths. |
 |   | --follow | Follow symbolic links. |

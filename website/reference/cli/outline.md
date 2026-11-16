@@ -97,8 +97,9 @@ If an extractor omits member publicness, `outline` treats the member as public.
 Load additional outline extractor definitions.
 
 Each file is a stream of YAML documents. These rules are loaded in addition to
-bundled extractor definitions and any outline rules configured on custom
-languages in `sgconfig.yml`.
+bundled extractor definitions, top-level project `outlineRules`, and enabled
+custom language outline rules in `sgconfig.yml`. Command-line files load after
+configured files.
 
 See [outline extraction rule reference](/reference/outline-rules).
 
@@ -106,8 +107,8 @@ See [outline extraction rule reference](/reference/outline-rules).
 
 Disable bundled extractor definitions.
 
-Use this with `--outline-rules` when you want a project-specific extractor
-catalog to replace the built-in one.
+Project `outlineRules`, enabled custom language rules, and command-line
+`--outline-rules` files remain loaded.
 
 ## Input Options
 
@@ -124,8 +125,9 @@ Path to ast-grep root config.
 
 [default: `sgconfig.yml`]
 
-`outline` uses project config for custom language registration and for
-`customLanguages.<name>.outlineRules`.
+`outline` uses project config for top-level
+[`outlineRules`](/reference/sgconfig#outlinerules), custom language registration,
+and `customLanguages.<name>.outlineRules`.
 
 ### `--custom-languages <CUSTOM_LANGUAGES>`
 

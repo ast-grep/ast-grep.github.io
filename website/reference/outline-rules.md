@@ -48,20 +48,25 @@ the input files, then applies the rules for each file's language. Matching
 members, which are attached to the nearest containing item allowed by
 `parentRuleIds`.
 
-Rules can come from three places:
+Rules can come from four places:
 
 * **Default rules**: bundled extractors shipped with ast-grep for supported
   languages.
 * **Custom language rules**: rule files registered with
   `customLanguages.<name>.outlineRules` in `sgconfig.yml`.
+* **Project rules**: rule files for built-in languages registered with
+  top-level [`outlineRules`](/reference/sgconfig#outlinerules) in `sgconfig.yml`
+  (since 0.51.3).
 * **Command-line rules**: extra rule files passed with `--outline-rules`.
 
 All enabled sources are combined. Custom language rules require
 [permission to load native parsers](/reference/cli#global-options); `ignore`
-and `revoke` skip the configured `outlineRules` as well as the libraries.
-Custom language rules are loaded before command-line rules.
-Use `--no-default-outline-rules` when you want
-the command-line rule set to replace the bundled default extractors.
+and `revoke` skip their configured `outlineRules` as well as the libraries.
+Project rules do not require custom language permission. Enabled custom
+language rules load before project rules, followed by command-line rules.
+`--no-default-outline-rules` disables bundled extractors while retaining all
+other enabled sources. See the [outline guide](/guide/outline-code#custom-extraction-rules)
+for project setup.
 
 ## Load Custom Rules
 
