@@ -36,7 +36,8 @@ id: no-console-log
 
 Specify the language to parse and the file extension to include in matching.
 
-Valid values are: `Bash`, `C`, `Cpp`, `CSharp`, `Css`, `Elixir`, `Go`, `Haskell`, `Hcl`, `Html`, `Java`, `JavaScript`, `Json`, `Kotlin`, `Lua`, `Nix`, `Php`, `Python`, `Ruby`, `Rust`, `Scala`, `Solidity`, `Swift`, `Tsx`, `TypeScript`, `Yaml`
+See the [supported-language table](/reference/languages) for built-in languages
+and their aliases.
 
 **Example:**
 ```yaml
