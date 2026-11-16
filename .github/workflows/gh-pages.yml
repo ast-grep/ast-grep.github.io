@@ -16,8 +16,9 @@ jobs:
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
         with:
-          # Optional version of wasm-pack to install(eg. 'v0.9.1', 'latest')
-          version: 'latest'
+          # `latest` falls back to v0.9.1 after the wasm-pack repository redirect.
+          # Pin a modern release so wasm-opt supports wasm-bindgen's output.
+          version: 'v0.15.1'
 
       - name: Cache Rust Deps
         uses: actions/cache@v6
