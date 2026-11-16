@@ -96,6 +96,9 @@ Local rules must have the same language as their rule configuration file where u
 
 Global utility rules are defined in a separate file. But they are available across all rule configurations in the project.
 
+They are also available to `ast-grep scan --rule` and `--inline-rules` when
+ast-grep finds a project configuration with `utilDirs`.
+
 To create global utility rules, you first need a proper ast-grep project setup like below.
 
 ```yml

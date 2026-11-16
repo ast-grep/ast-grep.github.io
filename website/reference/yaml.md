@@ -8,6 +8,9 @@ ast-grep's rules are written in YAML files.
 
 One YAML file can contain multiple rules, separated by `---`.
 
+Unknown top-level rule keys are rejected. Put custom annotations in
+[`metadata`](#metadata).
+
 An ast-grep rule is a YAML object with the following keys:
 
 [[toc]]

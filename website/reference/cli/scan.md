@@ -35,11 +35,17 @@ Scan the codebase with the single rule located at the path RULE_FILE.
 
 This flags conflicts with --config. It is useful to run single rule without project setup.
 
+When a project configuration is found, the rule can reference global utilities
+from its [`utilDirs`](/reference/sgconfig#utildirs).
 
 ### `--inline-rules <RULE_TEXT>`
 Scan the codebase with a rule defined by the provided RULE_TEXT.
 
 Use this argument if you want to test a rule without creating a YAML file on disk. You can run multiple rules by separating them with `---` in the RULE_TEXT. --inline-rules is incompatible with --rule.
+
+Inline rules can reference global utilities from the project's
+[`utilDirs`](/reference/sgconfig#utildirs). See the
+[utility rule guide](/guide/rule-config/utility-rule#global-utility-rules).
 
 ### `--filter <REGEX>`
 Scan the codebase with rules with ids matching REGEX.
@@ -128,7 +134,7 @@ The [Extended Backus–Naur form](https://en.wikipedia.org/wiki/Extended_Backus%
 Possible values:
 - **nothing**: Do not show any tracing information
 - **summary**: Show summary about how many files are scanned and skipped
-- **entity**:  Show per-file/per-rule tracing information
+- **entity**: Show per-file/per-rule tracing information, including skipped file paths and `skipped=<reason>` (such as `emptyFile`, `fileTooLarge`, or `invalidUtf8`).
 
 ### `--format <FORMAT>`
 Output warning/error messages in different formats.

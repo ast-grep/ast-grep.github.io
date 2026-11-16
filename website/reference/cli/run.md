@@ -189,7 +189,7 @@ The [Extended Backus–Naur form](https://en.wikipedia.org/wiki/Extended_Backus%
 Possible values:
 - **nothing**: Do not show any tracing information
 - **summary**: Show summary about how many files are scanned and skipped
-- **entity**:  Show per-file/per-rule tracing information
+- **entity**: Show per-file/per-rule tracing information, including skipped file paths and `skipped=<reason>` (such as `emptyFile`, `fileTooLarge`, or `invalidUtf8`).
 
 ## Context Options
 
