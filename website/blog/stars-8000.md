@@ -12,7 +12,7 @@ head:
       content: ast-grep Rockets to 8000 Stars!
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/stars-8000
+      content: https://astgrep.com/blog/stars-8000
   - - meta
     - property: og:description
       content: ast-grep has recently reached 6000 stars on GitHub! This is a remarkable achievement for the project and I am deeply grateful for all the support and feedback that I have received from the open source community.
@@ -108,7 +108,7 @@ See [the youtube video](https://www.youtube.com/watch?v=oNbOoBhVL8o) for a live 
 
 ### Playground Power-Ups: Your Online Rule Lab
 
-The online playground at [https://ast-grep.github.io/](https://ast-grep.github.io/) is now an even more powerful lab for experimenting and refining your rules:
+The online playground at [https://astgrep.com/](https://astgrep.com/) is now an even more powerful lab for experimenting and refining your rules:
 
 **Parser Version Visibility:**  Small popups now display the tree-sitter version used in the playground, giving you valuable context for your rule testing.
 
@@ -136,7 +136,7 @@ Reaching over 8000 stars is an absolutely fantastic milestone, and it's all than
 
 **Get Started & Get Involved Today!**
 
-* **Explore the Enhanced Website:** Dive into the wealth of resources at [https://ast-grep.github.io/](https://ast-grep.github.io/)
+* **Explore the Enhanced Website:** Dive into the wealth of resources at [https://astgrep.com/](https://astgrep.com/)
 * **Star us on GitHub!** Show your support and help us reach the next milestone: [Star the GitHub Repo](https://github.com/ast-grep/ast-grep)
 * **Try out the New Features & Give Feedback:** Join the conversation on [Discord](https://discord.com/invite/4YZjf6htSQ) and tell us what you think!
 * **Contribute Rules to the Example Catalog:** Share your expertise and help others by [contributing rules](https://github.com/ast-grep/ast-grep.github.io/tree/main/website/catalog).
