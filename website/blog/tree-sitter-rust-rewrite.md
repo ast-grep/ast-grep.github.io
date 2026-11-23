@@ -11,7 +11,7 @@ head:
       content: How ast-grep Rewrote Tree-sitter in Rust and Made It 30% Faster
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/tree-sitter-rust-rewrite
+      content: https://astgrep.com/blog/tree-sitter-rust-rewrite
   - - meta
     - property: og:description
       content: The complete adventure of using AI to rewrite Tree-sitter's C core in Rust, simplify it, optimize it, and discover that a faster parser could still make ast-grep slower.

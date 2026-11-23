@@ -11,7 +11,7 @@ head:
       content: Optimizing Tree-sitter for End-to-End ast-grep Performance
   - - meta
     - property: og:url
-      content: https://ast-grep.github.io/blog/tree-sitter-end-to-end
+      content: https://astgrep.com/blog/tree-sitter-end-to-end
   - - meta
     - property: og:description
       content: Why a parser-only speedup made ast-grep slower, and how profiling virtual memory, arena growth, tree traversal, and the full application repaired it.
